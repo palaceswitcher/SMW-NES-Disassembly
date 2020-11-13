@@ -56,16 +56,24 @@ mus_Underwater = $2d
 mus_Ending = $2f
 
 ;ram defines
-PlayerXScreen = $0e
-PlayerXPosition = $0f
-Music = $008e
-SFX = $008f
-Event = $00df
-GameState = $00de
-GameType = $035f
+PlayerXScreen = $0E
+PlayerXPosition = $0F
+Music = $8E
+SFX = $8F
+Event = $DF
+GameState = $DE
+GameType = $035F
+PlayerCHRBank = $03C7
 PlayerState = $0624
 ItemBox = $0625
-MusicSpeed = $072c
+MusicSpeed = $072C
+;hardware ram defines
+PPUControl = $2000
+PPUMask = $2001
+PPUStatus = $2002
+PPUScroll = $2005
+PPUAddress = $2006
+PPUData = $2007
 
 ;--------------------------------------
 ;data chunks---
