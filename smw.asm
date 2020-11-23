@@ -56,24 +56,45 @@ mus_Underwater = $2d
 mus_Ending = $2f
 
 ;ram defines
-PlayerXScreen = $0E
-PlayerXPosition = $0F
+PlayerXScreen2 = $0E
+PlayerXPos2 = $0F
+PlayerYScreen2 = $10
+PlayerYPos2 = $11
 Music = $8E
 SFX = $8F
 Event = $DF
 GameState = $DE
 GameType = $035F
-PlayerCHRBank = $03C7
+BGBank1 = $03C5
+BGBank2 = $03CB
+BGBank3 = $03C6
+SpriteBank1 = $03C7
+SpriteBank2 = $03C8
+SpriteBank3 = $03C9
+SpriteBank4 = $03CA
+ObjectSlot = $0500
 PlayerState = $0624
 ItemBox = $0625
+FreezeFlag = $067D
+PauseFlag = $0709
 MusicSpeed = $072C
 ;hardware ram defines
 PPUControl = $2000
 PPUMask = $2001
 PPUStatus = $2002
+PPUOAM = $2003
+PPUOAMData = $2004
 PPUScroll = $2005
 PPUAddress = $2006
 PPUData = $2007
+DMCFrequency = $4010
+DMCRaw = $4011
+DMCStart = $4012
+DMCLength = $4013
+OAMDMA = $4014
+APUStatus = $4015
+Joy1 = $4016
+Joy2Frame = $4017
 
 ;--------------------------------------
 ;data chunks---
@@ -90,7 +111,6 @@ PPUData = $2007
 
 .incbin prg/prg037.bin
 ;4a010 - 4c00f
-;unknown atm 
 
 .incbin prg/prg038.bin
 ;4c010 - 4e00f
@@ -140,7 +160,7 @@ PPUData = $2007
 .incbin prg/prg053.bin
 ;6a010 - 6c00f
 
-.incbin prg/prg054.bin
+.incbin prg/prg054.asm
 ;6c010 - 6e00f
 
 .incbin prg/prg055.bin
@@ -169,9 +189,8 @@ PPUData = $2007
 
 .incbin prg/prg063.bin
 ;7e010 - 8000f
+;IRQ and level palette data
 
 ;--------------------------------------
-
-;vectors:	.dw IRQ
 
 .incbin SMW.chr
