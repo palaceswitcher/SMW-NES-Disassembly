@@ -8,7 +8,7 @@
 
 ;Here are some defines
 
-;sound effect defines
+;sound effect values
 sfx_SpinJump = $01
 sfx_Pause = $02
 sfx_Jump = $03
@@ -38,7 +38,7 @@ sfx_YoshiFireSpit = $1b
 sfx_Checkpoint = $1c
 sfx_Cutter = $1d
 
-;music defines
+;song values
 mus_Title = $20
 mus_GameOver = $21
 mus_Death = $22
@@ -55,15 +55,13 @@ mus_Castle = $2c
 mus_Underwater = $2d
 mus_Ending = $2f
 
-;ram defines
+;general ram defines
 PlayerXScreen2 = $0E
 PlayerXPos2 = $0F
 PlayerYScreen2 = $10
 PlayerYPos2 = $11
-Music = $8E
-SFX = $8F
-Event = $DF
-GameState = $DE
+Event = $00DF
+GameState = $00DE
 GameType = $035F
 BGBank1 = $03C5
 BGBank2 = $03CB
@@ -73,11 +71,20 @@ SpriteBank2 = $03C8
 SpriteBank3 = $03C9
 SpriteBank4 = $03CA
 ObjectSlot = $0500
+Player1YoshiStatus = $061F
 PlayerState = $0624
 ItemBox = $0625
 FreezeFlag = $067D
 PauseFlag = $0709
+
+;music ram defines
+Song = $8E
+SFX = $8F
+Pulse1Pitch = $070D
+Pulse2Pitch = $070E
+TrianglePitch = $070F
 MusicSpeed = $072C
+
 ;hardware ram defines
 PPUControl = $2000
 PPUMask = $2001
@@ -157,10 +164,12 @@ Joy2Frame = $4017
 .incbin prg/prg052.bin
 ;68010 - 6a00f
 
+;.base $8000 (asm not finished)
 .incbin prg/prg053.bin
+;.pad $a000, $00 (asm not finished)
 ;6a010 - 6c00f
 
-.incbin prg/prg054.asm
+.incbin prg/prg054.bin
 ;6c010 - 6e00f
 
 .incbin prg/prg055.bin
