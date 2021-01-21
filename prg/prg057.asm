@@ -1,5 +1,5 @@
-; 0x072010-0x07400F
-A000:	LDA $1D
+;disassembled by BZK 6502 Disassmebler
+A000:	LDA PlayerAction
 A002:	CMP $1E
 A004:	BEQ $A020
 A006:	BNE $A014
@@ -33,7 +33,7 @@ A035:	CPY $16
 A037:	BEQ $A03E
 A039:	STY $16
 A03B:	JSR $A185
-A03E:	LDA $1D
+A03E:	LDA PlayerAction
 A040:	STA $1E
 A042:	JSR $A17C
 A045:	JSR $A1B4
@@ -208,7 +208,7 @@ A15C:	STA $33
 A15E:	LDA PlayerState
 A161:	LDY Player1YoshiStatus
 A164:	BNE $A16E
-A166:	LDY $0636
+A166:	LDY PlayerCarryFlag
 A169:	BEQ $A16E
 A16B:	CLC
 A16C:	ADC #$05
@@ -695,7 +695,7 @@ A4FB:	.db $60
 A4FC:	LDY #$00
 A4FE:	LDA PlayerYSpeed
 A500:	BNE $A50B
-A502:	LDA ControllerInputHeld
+A502:	LDA ButtonsHeld
 A505:	AND #$04
 A507:	BEQ $A50B
 A509:	LDY #$06
@@ -713,13 +713,13 @@ A523:	LDA Player1YoshiStatus
 A526:	CMP #$02
 A528:	BCC $A537
 A52A:	LDY #$00
-A52C:	LDA ControllerInputHeld
+A52C:	LDA ButtonsHeld
 A52F:	AND #$04
 A531:	BEQ $A555
 A533:	LDY #$07
 A535:	BNE $A555
 A537:	LDY $0629
-A53A:	LDA ControllerInputHeld
+A53A:	LDA ButtonsHeld
 A53D:	AND #$04
 A53F:	BEQ $A547
 A541:	LDX $A571,Y
@@ -2219,10 +2219,10 @@ AC92:	.db $19
 AC93:	.db $1C
 AC94:	.db $1B
 AC95:	.db $FF
-AC96:	.db $1D
+AC96:	.db PlayerAction
 AC97:	.db $09
 AC98:	.db $0A
-AC99:	.db $1D
+AC99:	.db PlayerAction
 AC9A:	.db $FF
 AC9B:	.db $0A
 AC9C:	.db $09
@@ -2398,7 +2398,7 @@ ADD8:	JSR $B48B
 ADDB:	LDA #$04
 ADDD:	STA $05F1
 ADE0:	STA $50
-ADE2:	LDA $0636
+ADE2:	LDA PlayerCarryFlag
 ADE5:	CMP $0637
 ADE8:	BEQ $ADF0
 ADEA:	STA $0637
@@ -2419,7 +2419,7 @@ AE0A:	LDA #$FF
 AE0C:	STA InvincibilityTimer
 AE0F:	INC InvincibilityTimer
 AE12:	RTS
-AE13:	LDA ControllerInput	;
+AE13:	LDA ButtonsPressed	;
 AE16:	AND #$20			;
 AE18:	BEQ $AE4A			;branch if select is pressed
 AE1A:	LDA #$07
@@ -2506,7 +2506,7 @@ AE94:	BNE $AEB0
 AE96:	LDA $19
 AE98:	AND #$04
 AE9A:	BNE $AEAF
-AE9C:	LDA ControllerInputHeld
+AE9C:	LDA ButtonsHeld
 AE9F:	BNE $AEA3
 AEA1:	STA PlayerAction
 AEA3:	JSR $B565
@@ -2525,7 +2525,7 @@ AEBD:	BNE $AEDA
 AEBF:	LDA $19
 AEC1:	AND #$04
 AEC3:	BNE $AED9
-AEC5:	LDA ControllerInputHeld
+AEC5:	LDA ButtonsHeld
 AEC8:	AND #$04
 AECA:	BNE $AED0
 AECC:	LDA #$00
@@ -2548,7 +2548,7 @@ AEEE:	JSR $B34F
 AEF1:	JSR $B509
 AEF4:	JSR $B3DF
 AEF7:	JSR $AFA1
-AEFA:	LDA ControllerInputHeld
+AEFA:	LDA ButtonsHeld
 AEFD:	AND #$04
 AEFF:	BEQ $AF05
 AF01:	LDA #$07
@@ -2571,7 +2571,7 @@ AF25:	LDX #$0A
 AF27:	LDA BubbleFrequency
 AF2A:	BEQ $AF2E
 AF2C:	LDX #$0B
-AF2E:	STX $1D
+AF2E:	STX PlayerAction
 AF30:	PLA
 AF31:	PLA
 AF32:	RTS
@@ -2593,7 +2593,7 @@ AF54:	RTS
 AF55:	LDA $19
 AF57:	AND #$04
 AF59:	BEQ $AF69
-AF5B:	LDA ControllerInputHeld
+AF5B:	LDA ButtonsHeld
 AF5E:	AND #$80
 AF60:	BEQ $AF69
 AF62:	LDA PlayerYSpeed
@@ -2633,10 +2633,10 @@ AFA6:	BNE $AFC5
 AFA8:	LDA $062F
 AFAB:	AND $0630
 AFAE:	BNE $AFC5
-AFB0:	LDA ControllerInputHeld
+AFB0:	LDA ButtonsHeld
 AFB3:	AND #$04
 AFB5:	BNE $AFC5
-AFB7:	LDA ControllerInput
+AFB7:	LDA ButtonsPressed
 AFBA:	AND #$40
 AFBC:	BEQ $AFC5
 AFBE:	LDA #$13
@@ -2649,17 +2649,17 @@ AFCB:	BNE $AFF0
 AFCD:	LDA $062F
 AFD0:	AND $0630
 AFD3:	BNE $AFF0
-AFD5:	LDA ControllerInputHeld
+AFD5:	LDA ButtonsHeld
 AFD8:	AND #$04
 AFDA:	BNE $AFF0
-AFDC:	LDA ControllerInput
+AFDC:	LDA ButtonsPressed
 AFDF:	AND #$40
 AFE1:	BEQ $AFF0
 AFE3:	LDY #$11
 AFE5:	LDA BubbleFrequency
 AFE8:	BEQ $AFEB
 AFEA:	INY
-AFEB:	STY $1D
+AFEB:	STY PlayerAction
 AFED:	JSR $B00D
 AFF0:	RTS
 AFF1:	LDA PlayerState
@@ -2751,7 +2751,7 @@ B0A8:	LDX #$0B
 B0AA:	LDA PlayerYSpeed
 B0AC:	BNE $B0B0
 B0AE:	LDX #$01
-B0B0:	STX $1D
+B0B0:	STX PlayerAction
 B0B2:	JSR $B37C
 B0B5:	JSR $B3DF
 B0B8:	JSR $AFC6
@@ -2769,18 +2769,18 @@ B0D1:	BCS $B0DA
 B0D3:	JMP $B1C1
 B0D6:	RTS
 B0D7:	JSR $B1DE
-B0DA:	LDA ControllerInput
+B0DA:	LDA ButtonsPressed
 B0DD:	AND #$40
 B0DF:	BEQ $B11D
 B0E1:	LDA #$00
 B0E3:	STA $0613
 B0E6:	STA $0614
 B0E9:	LDY #$0C
-B0EB:	LDA ControllerInputHeld
+B0EB:	LDA ButtonsHeld
 B0EE:	AND #$04
 B0F0:	BEQ $B0F4
 B0F2:	LDY #$0E
-B0F4:	LDA ControllerInputHeld
+B0F4:	LDA ButtonsHeld
 B0F7:	AND #$03
 B0F9:	BEQ $B0FD
 B0FB:	LDY #$0D
@@ -2856,17 +2856,17 @@ B192:	RTS
 B193:	LDA $E1
 B195:	CMP #$09
 B197:	BCS $B1C0
-B199:	LDA ControllerInput
+B199:	LDA ButtonsPressed
 B19C:	AND #$40
 B19E:	BEQ $B1C0
 B1A0:	LDA #$19
 B1A2:	STA SFXRegister
 B1A4:	LDY #$09
-B1A6:	LDA ControllerInputHeld
+B1A6:	LDA ButtonsHeld
 B1A9:	AND #$04
 B1AB:	BEQ $B1AF
 B1AD:	LDY #$0B
-B1AF:	LDA ControllerInputHeld
+B1AF:	LDA ButtonsHeld
 B1B2:	AND #$03
 B1B4:	BEQ $B1BE
 B1B6:	LDY #$09
@@ -2876,11 +2876,11 @@ B1BC:	LDY #$0A
 B1BE:	STY $E1
 B1C0:	RTS
 B1C1:	LDY #$0F
-B1C3:	LDA ControllerInputHeld
+B1C3:	LDA ButtonsHeld
 B1C6:	AND #$04
 B1C8:	BEQ $B1CC
 B1CA:	LDY #$11
-B1CC:	LDA ControllerInputHeld
+B1CC:	LDA ButtonsHeld
 B1CF:	AND #$03
 B1D1:	BEQ $B1DB
 B1D3:	LDY #$0F
@@ -3061,13 +3061,13 @@ B348:	STY $A3
 B34A:	LDA #$1B
 B34C:	STA SFXRegister
 B34E:	RTS
-B34F:	LDA ControllerInputHeld
+B34F:	LDA ButtonsHeld
 B352:	AND #$01
 B354:	BEQ $B35D
 B356:	LDA $19
 B358:	AND #$BE
 B35A:	JMP $B368
-B35D:	LDA ControllerInputHeld
+B35D:	LDA ButtonsHeld
 B360:	AND #$02
 B362:	BEQ $B37B
 B364:	LDA $19
@@ -3083,13 +3083,13 @@ B375:	STA PlayerXSpeed
 B377:	LDA #$01
 B379:	STA PlayerAction
 B37B:	RTS
-B37C:	LDA ControllerInputHeld
+B37C:	LDA ButtonsHeld
 B37F:	AND #$01
 B381:	BEQ $B38A
 B383:	LDA $19
 B385:	AND #$BE
 B387:	JMP $B395
-B38A:	LDA ControllerInputHeld
+B38A:	LDA ButtonsHeld
 B38D:	AND #$02
 B38F:	BEQ $B3A4
 B391:	LDA $19
@@ -3105,13 +3105,13 @@ B3A2:	STA PlayerXSpeed
 B3A4:	RTS
 B3A5:	LDA $19
 B3A7:	STA $26
-B3A9:	LDA ControllerInputHeld
+B3A9:	LDA ButtonsHeld
 B3AC:	AND #$01
 B3AE:	BEQ $B3B7
 B3B0:	LDA $19
 B3B2:	AND #$BE
 B3B4:	JMP $B3C6
-B3B7:	LDA ControllerInputHeld
+B3B7:	LDA ButtonsHeld
 B3BA:	AND #$02
 B3BC:	BNE $B3C2
 B3BE:	LDA #$01
@@ -3134,11 +3134,11 @@ B3DC:	STA PlayerXSpeed
 B3DE:	RTS
 B3DF:	LDA BubbleFrequency
 B3E2:	BEQ $B426
-B3E4:	LDA $0636
+B3E4:	LDA PlayerCarryFlag
 B3E7:	BEQ $B402
 B3E9:	LDA #$20
 B3EB:	STA PlayerYSpeed
-B3ED:	LDA ControllerInputHeld	;
+B3ED:	LDA ButtonsHeld	;
 B3F0:	AND #$04				;
 B3F2:	BEQ $B3FB				;if down is held, make the player duck
 B3F4:	LDA $19
@@ -3149,10 +3149,10 @@ B3FB:	LDA $19
 B3FD:	ORA #$04
 B3FF:	STA $19
 B401:	RTS
-B402:	LDA ControllerInput
+B402:	LDA ButtonsPressed
 B405:	AND #$80
 B407:	BEQ $B425
-B409:	LDA ControllerInputHeld
+B409:	LDA ButtonsHeld
 B40C:	AND #$08
 B40E:	BEQ $B413
 B410:	JSR $B48B
@@ -3166,22 +3166,22 @@ B41F:	STA SFXRegister		;play swimming sound
 B421:	LDA #$0C
 B423:	STA PlayerAction
 B425:	RTS
-B426:	LDA ControllerInput
+B426:	LDA ButtonsPressed
 B429:	AND #$80
 B42B:	BEQ $B425
 B42D:	LDA PlayerYSpeed
 B42F:	BNE $B425
-B431:	LDA $0636
+B431:	LDA PlayerCarryFlag
 B434:	BNE $B43D
-B436:	LDA ControllerInputHeld
+B436:	LDA ButtonsHeld
 B439:	AND #$08
 B43B:	BNE $B475
 B43D:	LDY #$48
-B43F:	LDA ControllerInputHeld
+B43F:	LDA ButtonsHeld
 B442:	AND #$40
 B444:	BEQ $B448
 B446:	LDY #$58
-B448:	LDA ControllerInputHeld
+B448:	LDA ButtonsHeld
 B44B:	AND #$04
 B44D:	BEQ $B451
 B44F:	LDY #$28
@@ -3196,10 +3196,10 @@ B45F:	STA SFXRegister
 B461:	RTS
 B462:	LDA Player1YoshiStatus
 B465:	BEQ $B48A
-B467:	LDA ControllerInput
+B467:	LDA ButtonsPressed
 B46A:	AND #$80
 B46C:	BEQ $B48A
-B46E:	LDA ControllerInputHeld
+B46E:	LDA ButtonsHeld
 B471:	AND #$08
 B473:	BEQ $B48A
 B475:	JSR $B48B
@@ -3262,7 +3262,7 @@ B4F2:	RTS
 B4F3:	LDA $17
 B4F5:	CMP #$10
 B4F7:	BCC $B508
-B4F9:	LDA ControllerInput
+B4F9:	LDA ButtonsPressed
 B4FC:	AND #$80
 B4FE:	BEQ $B508
 B500:	LDA #$60
@@ -3272,10 +3272,10 @@ B506:	STA PlayerAction
 B508:	RTS
 B509:	LDA BubbleFrequency
 B50C:	BNE $B55B
-B50E:	LDA ControllerInputHeld
+B50E:	LDA ButtonsHeld
 B511:	AND #$03
 B513:	BEQ $B55C
-B515:	LDA ControllerInputHeld
+B515:	LDA ButtonsHeld
 B518:	AND #$40
 B51A:	BNE $B538
 B51C:	STA $0314
@@ -3316,12 +3316,12 @@ B55E:	BEQ $B55B
 B560:	LDA #$01
 B562:	STA PlayerAction
 B564:	RTS
-B565:	LDA ControllerInputHeld
+B565:	LDA ButtonsHeld
 B568:	AND #$04
 B56A:	BEQ $B570
 B56C:	LDA #$07
 B56E:	STA PlayerAction
-B570:	LDA ControllerInputHeld
+B570:	LDA ButtonsHeld
 B573:	AND #$08
 B575:	BEQ $B57B
 B577:	LDA #$08
@@ -3404,9 +3404,9 @@ B5F9:	STA PlayerAction
 B5FB:	RTS
 B5FC:	LDA Player1YoshiStatus
 B5FF:	BNE $B615
-B601:	LDA $0636
+B601:	LDA PlayerCarryFlag
 B604:	BNE $B615
-B606:	LDA ControllerInput	;
+B606:	LDA ButtonsPressed	;
 B609:	AND #$40			;
 B60B:	BEQ $B615			;branch if B is pressed
 B60D:	LDA #$08
@@ -3417,7 +3417,7 @@ B615:	RTS
 B616:	LDA #$30
 B618:	STA PlayerXSpeed
 B61A:	RTS
-B61B:	LDA ControllerInputHeld	;
+B61B:	LDA ButtonsHeld	;
 B61E:	AND #$40				;
 B620:	BNE $B627				;branch if B isn't held
 B622:	LDA #$0A
@@ -3437,7 +3437,7 @@ B639:	INC $34
 B63B:	LDA $19
 B63D:	AND #$04
 B63F:	BNE $B653
-B641:	LDA ControllerInput	;
+B641:	LDA ButtonsPressed	;
 B644:	AND $32				;
 B646:	BEQ $B653			;branch if start, select, and left are held?
 B648:	INC $15
@@ -3446,7 +3446,7 @@ B64C:	CMP $15
 B64E:	BCS $B668
 B650:	STA PlayerYSpeed
 B652:	RTS
-B653:	LDA ControllerInput	;
+B653:	LDA ButtonsPressed	;
 B656:	AND $34				;
 B658:	BEQ $B668			;branch if start, select, and left are held?
 B65A:	LDA $19
@@ -3457,16 +3457,16 @@ B662:	CMP $15
 B664:	BCS $B668
 B666:	STA PlayerYSpeed
 B668:	RTS
-B669:	LDA ControllerInputHeld
+B669:	LDA ButtonsHeld
 B66C:	AND #$40
 B66E:	BEQ $B67B
-B670:	LDA ControllerInputHeld
+B670:	LDA ButtonsHeld
 B673:	AND #$80
 B675:	BEQ $B67B
 B677:	LDA #$40
 B679:	STA PlayerYSpeed
 B67B:	RTS
-B67C:	LDA ControllerInputHeld
+B67C:	LDA ButtonsHeld
 B67F:	AND #$0F
 B681:	BNE $B68D
 B683:	LDA #$00
@@ -3477,10 +3477,10 @@ B68B:	STA PlayerAction
 B68D:	JSR $B6BF
 B690:	JSR $B694
 B693:	RTS
-B694:	LDA ControllerInput
+B694:	LDA ButtonsPressed
 B697:	AND #$80
 B699:	BEQ $B6BE
-B69B:	LDA ControllerInputHeld
+B69B:	LDA ButtonsHeld
 B69E:	AND #$08
 B6A0:	BNE $B6BE
 B6A2:	LDA #$50
@@ -3497,7 +3497,7 @@ B6B6:	STA $E1
 B6B8:	STA $06DC
 B6BB:	STA $06DD
 B6BE:	RTS
-B6BF:	LDA ControllerInputHeld
+B6BF:	LDA ButtonsHeld
 B6C2:	AND #$08
 B6C4:	BEQ $B6D7
 B6C6:	LDA $06DD
@@ -3508,7 +3508,7 @@ B6CF:	BEQ $B6D7
 B6D1:	LDA $19
 B6D3:	ORA #$04
 B6D5:	BNE $B6E7
-B6D7:	LDA ControllerInputHeld
+B6D7:	LDA ButtonsHeld
 B6DA:	AND #$04
 B6DC:	BEQ $B6EF
 B6DE:	LDA #$00
@@ -3526,13 +3526,13 @@ B6F7:	BEQ $B6FE
 B6F9:	LDA #$00
 B6FB:	STA PlayerXSpeed
 B6FD:	RTS
-B6FE:	LDA ControllerInputHeld
+B6FE:	LDA ButtonsHeld
 B701:	AND #$02
 B703:	BEQ $B70B
 B705:	LDA $19
 B707:	ORA #$41
 B709:	BNE $B716
-B70B:	LDA ControllerInputHeld
+B70B:	LDA ButtonsHeld
 B70E:	AND #$01
 B710:	BEQ $B71E
 B712:	LDA $19
@@ -3552,17 +3552,17 @@ B72C:	LDY #$00
 B72E:	LDA PlayerYSpeed
 B730:	BEQ $B734
 B732:	LDY #$0A
-B734:	LDA ControllerInputHeld
+B734:	LDA ButtonsHeld
 B737:	AND #$04
 B739:	BEQ $B73D
 B73B:	LDY #$07
 B73D:	LDA #$0D
 B73F:	STA $32
-B741:	STX $1D
+B741:	STX PlayerAction
 B743:	LDA $17
 B745:	CMP $32
 B747:	BCC $B769
-B749:	STY $1D
+B749:	STY PlayerAction
 B74B:	LDY #$01
 B74D:	LDA Player1YoshiStatus
 B750:	CMP #$01
@@ -3599,7 +3599,7 @@ B794:	JSR $B84B
 B797:	JSR $B874
 B79A:	LDX #$0D
 B79C:	LDY #$00
-B79E:	LDA ControllerInputHeld
+B79E:	LDA ButtonsHeld
 B7A1:	AND #$04
 B7A3:	BEQ $B7A7
 B7A5:	LDY #$07
@@ -3662,13 +3662,13 @@ B820:	RTS
 B821:	JSR $B37C
 B824:	JSR $B874
 B827:	LDX #$00
-B829:	LDA ControllerInputHeld
+B829:	LDA ButtonsHeld
 B82C:	AND #$03
 B82E:	BEQ $B835
 B830:	LDA $15
 B832:	BNE $B835
 B834:	INX
-B835:	STX $1D
+B835:	STX PlayerAction
 B837:	LDX #$00
 B839:	LDY #$40
 B83B:	JSR $B8C0
@@ -3678,13 +3678,13 @@ B843:	JSR $A14A
 B846:	LDA #$1A
 B848:	STA SFXRegister
 B84A:	RTS
-B84B:	LDA ControllerInputHeld
+B84B:	LDA ButtonsHeld
 B84E:	AND #$01
 B850:	BEQ $B859
 B852:	LDA $19
 B854:	AND #$FE
 B856:	JMP $B864
-B859:	LDA ControllerInputHeld
+B859:	LDA ButtonsHeld
 B85C:	AND #$02
 B85E:	BEQ $B873
 B860:	LDA $19
@@ -3698,7 +3698,7 @@ B86E:	CLC
 B86F:	ADC #$04
 B871:	STA PlayerXSpeed
 B873:	RTS
-B874:	LDA ControllerInput
+B874:	LDA ButtonsPressed
 B877:	AND #$80
 B879:	BEQ $B8A1
 B87B:	LDA BubbleFrequency
@@ -3710,7 +3710,7 @@ B886:	LDX #$03
 B888:	LDA PlayerYSpeed
 B88A:	BNE $B8A1
 B88C:	LDY #$60
-B88E:	LDA ControllerInputHeld
+B88E:	LDA ButtonsHeld
 B891:	AND #$04
 B893:	BEQ $B897
 B895:	LDY #$30
@@ -3781,7 +3781,7 @@ B91F:	STA $E1
 B921:	RTS
 B922:	LDA PlayerYSpeed
 B924:	BNE $B937
-B926:	LDA ControllerInput
+B926:	LDA ButtonsPressed
 B929:	AND #$80
 B92B:	BEQ $B937
 B92D:	LDA #$60
@@ -3812,7 +3812,7 @@ B959:	STA $28
 B95B:	LDA $28
 B95D:	BNE $B96A
 B95F:	LDA $0A
-B961:	STA PlayerXScreen
+B961:	STA PlayerXScreenDup
 B963:	LDA $0B
 B965:	STA $0F
 B967:	JMP $B993
@@ -3825,7 +3825,7 @@ B973:	SBC $28
 B975:	STA $0F
 B977:	LDA $0A
 B979:	SBC #$00
-B97B:	STA PlayerXScreen
+B97B:	STA PlayerXScreenDup
 B97D:	JMP $B993
 B980:	LDA $12
 B982:	CMP #$F0
@@ -3836,7 +3836,7 @@ B989:	ADC $28
 B98B:	STA $0F
 B98D:	LDA $0A
 B98F:	ADC #$00
-B991:	STA PlayerXScreen
+B991:	STA PlayerXScreenDup
 B993:	LDA PlayerYSpeed
 B995:	LSR
 B996:	LSR
@@ -3853,9 +3853,9 @@ B9A7:	STA $2B
 B9A9:	LDA $2B
 B9AB:	BNE $B9B8
 B9AD:	LDA $0C
-B9AF:	STA PlayerYScreen
+B9AF:	STA PlayerYScreenDup
 B9B1:	LDA $0D
-B9B3:	STA PlayerYPos
+B9B3:	STA PlayerYPosDup
 B9B5:	JMP $BA24
 B9B8:	LDA $19
 B9BA:	AND #$04
@@ -3866,16 +3866,16 @@ B9C2:	BCC $B9DF
 B9C4:	LDA $0D
 B9C6:	SEC
 B9C7:	SBC $2B
-B9C9:	STA PlayerYPos
+B9C9:	STA PlayerYPosDup
 B9CB:	LDA $0C
 B9CD:	SBC #$00
-B9CF:	STA PlayerYScreen
+B9CF:	STA PlayerYScreenDup
 B9D1:	LDA $11
 B9D3:	CMP #$F0
 B9D5:	BCC $B9DC
 B9D7:	SEC
 B9D8:	SBC #$10
-B9DA:	STA PlayerYPos
+B9DA:	STA PlayerYPosDup
 B9DC:	JMP $BA24
 B9DF:	LDA $13
 B9E1:	CMP #$E0
@@ -3900,16 +3900,16 @@ BA09:	RTS
 BA0A:	LDA $0D
 BA0C:	CLC
 BA0D:	ADC $2B
-BA0F:	STA PlayerYPos
+BA0F:	STA PlayerYPosDup
 BA11:	LDA $0C
 BA13:	ADC #$00
-BA15:	STA PlayerYScreen
+BA15:	STA PlayerYScreenDup
 BA17:	LDA $11
 BA19:	CMP #$F0
 BA1B:	BCC $BA24
 BA1D:	CLC
 BA1E:	ADC #$10
-BA20:	STA PlayerYPos
+BA20:	STA PlayerYPosDup
 BA22:	INC $10
 BA24:	LDA $13
 BA26:	CMP #$D0
@@ -3944,7 +3944,7 @@ BA5D:	SBC #$07
 BA5F:	STA $0F
 BA61:	LDA $0A
 BA63:	SBC #$00
-BA65:	STA PlayerXScreen
+BA65:	STA PlayerXScreenDup
 BA67:	JMP $BA7D
 BA6A:	LDA $28
 BA6C:	CMP #$07
@@ -3955,7 +3955,7 @@ BA73:	ADC #$07
 BA75:	STA $0F
 BA77:	LDA $0A
 BA79:	ADC #$00
-BA7B:	STA PlayerXScreen
+BA7B:	STA PlayerXScreenDup
 BA7D:	LDA $11
 BA7F:	SEC
 BA80:	SBC $0D
@@ -3972,16 +3972,16 @@ BA93:	BCC $BAAD
 BA95:	LDA $0D
 BA97:	SEC
 BA98:	SBC #$07
-BA9A:	STA PlayerYPos
+BA9A:	STA PlayerYPosDup
 BA9C:	LDA $0C
 BA9E:	SBC #$00
-BAA0:	STA PlayerYScreen
+BAA0:	STA PlayerYScreenDup
 BAA2:	LDA $11
 BAA4:	CMP #$F0
 BAA6:	BCC $BAAD
 BAA8:	SEC
 BAA9:	SBC #$10
-BAAB:	STA PlayerYPos
+BAAB:	STA PlayerYPosDup
 BAAD:	JMP $BAD0
 BAB0:	LDA $28
 BAB2:	CMP #$07
@@ -3989,16 +3989,16 @@ BAB4:	BCC $BAD0
 BAB6:	LDA $0D
 BAB8:	CLC
 BAB9:	ADC #$07
-BABB:	STA PlayerYPos
+BABB:	STA PlayerYPosDup
 BABD:	LDA $0C
 BABF:	ADC #$00
-BAC1:	STA PlayerYScreen
+BAC1:	STA PlayerYScreenDup
 BAC3:	LDA $11
 BAC5:	CMP #$F0
 BAC7:	BCC $BAD0
 BAC9:	CLC
 BACA:	ADC #$10
-BACC:	STA PlayerYPos
+BACC:	STA PlayerYPosDup
 BACE:	INC $10
 BAD0:	RTS
 BAD1:	.db $00
@@ -4033,7 +4033,7 @@ BAED:	.db $05
 BAEE:	.db $05
 BAEF:	.db $05
 BAF0:	.db $05
-BAF1:	LDX $1D
+BAF1:	LDX PlayerAction
 BAF3:	LDA $BC2F,X
 BAF6:	CLC
 BAF7:	ADC $0F
@@ -4100,7 +4100,7 @@ BB77:	STA $49
 BB79:	LDA $26
 BB7B:	BEQ $BB80
 BB7D:	JMP $BB09
-BB80:	LDX $1D
+BB80:	LDX PlayerAction
 BB82:	LDA $BC2F,X
 BB85:	ASL
 BB86:	STA $25
@@ -4171,18 +4171,18 @@ BC0D:	STA $49
 BC0F:	LDA $26
 BC11:	BEQ $BC16
 BC13:	JMP $BB95
-BC16:	LDX $1D
+BC16:	LDX PlayerAction
 BC18:	LDA $65
 BC1A:	CLC
 BC1B:	ADC $BC2F,X
 BC1E:	STA $0F
 BC20:	LDA $64
 BC22:	ADC #$00
-BC24:	STA PlayerXScreen
+BC24:	STA PlayerXScreenDup
 BC26:	LDA $67
-BC28:	STA PlayerYPos
+BC28:	STA PlayerYPosDup
 BC2A:	LDA $66
-BC2C:	STA PlayerYScreen
+BC2C:	STA PlayerYScreenDup
 BC2E:	RTS
 BC2F:	.db $05
 BC30:	.db $05
@@ -4222,7 +4222,7 @@ BC52:	LDA PlayerState
 BC55:	BEQ $BC59
 BC57:	LDY #$18
 BC59:	STY $2B
-BC5B:	LDX $1D
+BC5B:	LDX PlayerAction
 BC5D:	LDA $BC2F,X
 BC60:	CLC
 BC61:	ADC $0F
@@ -4280,7 +4280,7 @@ BCC8:	STA $8000
 BCCB:	LDA ($DA),Y
 BCCD:	STA $96
 BCCF:	JSR $BE6D
-BCD2:	LDX $1D
+BCD2:	LDX PlayerAction
 BCD4:	LDA $BC2F,X
 BCD7:	ASL
 BCD8:	STA $25
@@ -4329,14 +4329,14 @@ BD30:	LDA ($DA),Y
 BD32:	STA $96
 BD34:	JSR $BE6D
 BD37:	JSR $BE91
-BD3A:	LDX $1D
+BD3A:	LDX PlayerAction
 BD3C:	LDA $65
 BD3E:	CLC
 BD3F:	ADC $BC2F,X
 BD42:	STA $0F
 BD44:	LDA $64
 BD46:	ADC #$00
-BD48:	STA PlayerXScreen
+BD48:	STA PlayerXScreenDup
 BD4A:	LDY #$10
 BD4C:	LDA PlayerState
 BD4F:	BEQ $BD53
@@ -4345,13 +4345,13 @@ BD53:	STY $2B
 BD55:	LDA $67
 BD57:	CLC
 BD58:	ADC $2B
-BD5A:	STA PlayerYPos
+BD5A:	STA PlayerYPosDup
 BD5C:	BCS $BD62
 BD5E:	CMP #$F0
 BD60:	BCC $BD6C
 BD62:	CLC
 BD63:	ADC #$10
-BD65:	STA PlayerYPos
+BD65:	STA PlayerYPosDup
 BD67:	LDY $66
 BD69:	INY
 BD6A:	STY $10
@@ -4651,7 +4651,7 @@ BEB6:	CMP #$F8
 BEB8:	BNE $BEAD
 BEBA:	LDA #$00
 BEBC:	STA $15
-BEBE:	STA $14
+BEBE:	STA PlayerXSpeed
 BEC0:	LDA #$03
 BEC2:	STA $E1
 BEC4:	RTS
@@ -4773,7 +4773,7 @@ BF93:	LDA $0564,X
 BF96:	AND #$BF
 BF98:	STA $0564,X
 BF9B:	LDA #$00
-BF9D:	STA $0636
+BF9D:	STA PlayerCarryFlag
 BFA0:	LDA Player1YoshiStatus
 BFA3:	BEQ $BFAD
 BFA5:	LDA #$01
