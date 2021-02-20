@@ -1,0 +1,4853 @@
+;disassembled by BZK 6502 Disassembler
+sub9_8000:
+	LDX $A4
+	LDA $0578,X
+	AND #$7F
+	ASL
+	TAY
+	LDA ObjectState,X
+	AND #$20
+	BNE bra9_8013
+	JMP loc9_80A2
+bra9_8013:
+	JSR $B077
+	BNE bra9_8078
+	LDA $0578,X
+	AND #$7F
+	CMP #$07
+	BCS bra9_8024
+	INC $0578,X
+bra9_8024:
+	PHA
+	CLC
+	ADC ObjectYPos,X
+	STA ObjectYPos,X
+	PLA
+	BMI bra9_8036
+	LDA ObjectYScreen,X
+	ADC #$00
+	BPL bra9_803B
+bra9_8036:
+	LDA ObjectYScreen,X
+	SBC #$00
+bra9_803B:
+	STA ObjectYScreen,X
+	JSR $B057
+	BEQ bra9_804B
+	LDA ObjectState,X
+	EOR #$40
+	STA ObjectState,X
+bra9_804B:
+	LDY #$00
+	LDA ($32),Y
+	TAY
+	LDA ObjectState,X
+	AND #$40
+	BEQ bra9_805C
+	TYA
+	EOR #$FF
+	TAY
+	INY
+bra9_805C:
+	TYA
+	PHA
+	CLC
+	ADC ObjectXPos,X
+	STA ObjectXPos,X
+	PLA
+	BMI bra9_806F
+	LDA ObjectXScreen,X
+	ADC #$00
+	BPL bra9_8074
+bra9_806F:
+	LDA ObjectXScreen,X
+	SBC #$00
+bra9_8074:
+	STA ObjectXScreen,X
+	RTS
+bra9_8078:
+	LDA $AA
+	AND #$0F
+	STA $25
+	LDX $A4
+	LDA ObjectYPos,X
+	SEC
+	SBC $25
+	BCS bra9_808E
+	DEC ObjectYScreen,X
+	SEC
+	SBC #$10
+bra9_808E:
+	STA ObjectYPos,X
+	LDA ObjectState,X
+	AND #$C0
+	STA ObjectState,X
+	LDA $0578,X
+	AND #$80
+	STA $0578,X
+	RTS
+loc9_80A2:
+	INY
+	LDA ($32),Y
+	BMI bra9_80BD
+	JSR $B077
+	BNE bra9_80BD
+	LDA ObjectState,X
+	ORA #$20
+	STA ObjectState,X
+	LDA $0578,X
+	AND #$80
+	STA $0578,X
+	RTS
+bra9_80BD:
+	DEY
+	JSR $B057
+	BEQ bra9_80CB
+	LDA ObjectState,X
+	EOR #$40
+	STA ObjectState,X
+bra9_80CB:
+	LDA ObjectState,X
+	AND #$40
+	BEQ bra9_80DC
+	LDA ($32),Y
+	EOR #$FF
+	CLC
+	ADC #$01
+	JMP loc9_80DE
+bra9_80DC:
+	LDA ($32),Y
+loc9_80DE:
+	PHA
+	CLC
+	ADC ObjectXPos,X
+	STA ObjectXPos,X
+	PLA
+	BMI bra9_80F0
+	LDA ObjectXScreen,X
+	ADC #$00
+	BPL bra9_80F5
+bra9_80F0:
+	LDA ObjectXScreen,X
+	SBC #$00
+bra9_80F5:
+	STA ObjectXScreen,X
+	INY
+	LDA ($32),Y
+	PHA
+	CLC
+	ADC ObjectYPos,X
+	STA ObjectYPos,X
+	PLA
+	BMI bra9_810D
+	LDA ObjectYScreen,X
+	ADC #$00
+	BPL bra9_8112
+bra9_810D:
+	LDA ObjectYScreen,X
+	SBC #$00
+bra9_8112:
+	STA ObjectYScreen,X
+	INY
+	LDA ($32),Y
+	CMP #$FF
+	BNE bra9_8127
+	LDA ObjectState,X
+	EOR #$40
+	STA ObjectState,X
+	JMP loc9_8145
+bra9_8127:
+	AND #$F0
+	BEQ bra9_8145
+	LDA ($32),Y
+	AND #$3F
+	BNE bra9_813A
+	LDA $0578,X
+	AND #$80
+	STA $0578,X
+	RTS
+bra9_813A:
+	STA $32
+	LDA $0578,X
+	SEC
+	SBC $32
+	STA $0578,X
+bra9_8145:
+loc9_8145:
+	INC $0578,X
+	RTS
+	LDX $A4
+	LDA $0578,X
+	BPL bra9_8153
+	JMP $B5BB
+bra9_8153:
+	LDA #$06
+	STA $25
+	LDX $A4
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_8175
+	CMP #$FF
+	BEQ bra9_8175
+	JMP $A6B5
+bra9_8175:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_81B7
+	LDA $05DC,X
+	BPL bra9_81A6
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_81B7
+bra9_81A6:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_81B7:
+loc9_81B7:
+	LDA FreezeFlag
+	BEQ bra9_81BD
+	RTS
+bra9_81BD:
+	LDA ObjectState,X
+	AND #$1F
+	ASL
+	TAY
+	LDA tbl9_81D1,Y
+	STA $32
+	LDA tbl9_81D2,Y
+	STA $33
+	JMP ($32)
+tbl9_81D1:
+	.byte $BB
+tbl9_81D2:
+	.byte $A7
+	.byte $7B
+	.byte $AA
+	.byte $29
+	.byte $AB
+	.byte $DB
+	.byte $81
+	.byte $88
+	.byte $AD
+	LDX $A4
+	LDA $0578,X
+	BNE bra9_81FC
+	LDY #$00
+	LDA $05B4,X
+	BMI bra9_81EB
+	LDY #$40
+bra9_81EB:
+	STY $25
+	LDA ObjectState,X
+	AND #$BF
+	ORA $25
+	STA ObjectState,X
+	LDA #$01
+	STA $0578,X
+bra9_81FC:
+	JSR sub9_82AE
+	JSR $BEBC
+	JSR $A74D
+	LDA #$10
+	STA PlayerYSpeed
+	LDA PlayerAttributes
+	ORA #$04
+	EOR #$01
+	STA PlayerAttributes
+	LDA #$10
+	STA PlayerXSpeed
+	LDA #$01
+	JSR $BCD4
+	LDA #$12
+	STA SFXRegister
+	LDX $A4
+	LDA ObjectSlot,X
+	AND #$01
+	ORA #$94
+	STA ObjectSlot,X
+	LDA #$80
+	STA $0578,X
+	LDA ObjectXPos,X
+	CLC
+	ADC #$08
+	STA ObjectXPos,X
+	LDA ObjectXScreen,X
+	ADC #$00
+	STA ObjectXScreen,X
+	LDA ObjectYPos,X
+	CLC
+	ADC #$10
+	STA ObjectYPos,X
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_8265
+	CMP #$FF
+	BEQ bra9_8265
+	JMP $A6B5
+bra9_8265:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_82A7
+	LDA $05DC,X
+	BPL bra9_8296
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_82A7
+bra9_8296:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_82A7:
+loc9_82A7:
+	LDA FreezeFlag
+	BEQ bra9_82AD_RTS
+	RTS
+bra9_82AD_RTS:
+	RTS
+sub9_82AE:
+	LDA $062B
+	AND #$02
+	BNE bra9_82C6_RTS
+	LDA #$89
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR sub9_8000
+bra9_82C6_RTS:
+	RTS
+	LDY #$08
+	LDX $A4
+	LDA $0578,X
+	CMP #$10
+	BCC bra9_82D4
+	LDY #$04
+bra9_82D4:
+	STY $25
+	LDY #$00
+	LDA $062B
+	AND $25
+	BEQ bra9_82E1
+	LDY #$01
+bra9_82E1:
+	LDA ObjectState,X
+	AND #$40
+	STA $05F0
+	TYA
+	ASL
+	TAX
+	LDA tbl9_8309,X
+	STA $32
+	LDA tbl9_830A,X
+	STA $33
+	LDY #$80
+	LDX $A4
+	LDA ObjectSlot,X
+	AND #$01
+	BEQ bra9_8303
+	LDY #$C0
+bra9_8303:
+	STY $36
+	JSR $A118
+	RTS
+tbl9_8309:
+	.byte $0D
+tbl9_830A:
+	.byte $83
+	.byte $20
+	.byte $83
+	.byte $04
+	.byte $04
+	.byte $A5
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $03
+	.byte $04
+	.byte $05
+	.byte $FF
+	.byte $0A
+	.byte $0B
+	.byte $0C
+	.byte $FF
+	.byte $04
+	.byte $04
+	.byte $A5
+	.byte $0F
+	.byte $FF
+	.byte $10
+	.byte $11
+	.byte $12
+	.byte $13
+	.byte $14
+	.byte $15
+	.byte $16
+	.byte $17
+	.byte $18
+	.byte $19
+	.byte $1A
+	.byte $1B
+	.byte $1C
+	.byte $FF
+	LDX $A4
+	LDA $0578,X
+	BPL bra9_83A4
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_8356
+	CMP #$FF
+	BEQ bra9_8356
+	JMP $A6B5
+bra9_8356:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_8398
+	LDA $05DC,X
+	BPL bra9_8387
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_8398
+bra9_8387:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_8398:
+loc9_8398:
+	LDA FreezeFlag
+	BEQ bra9_839E
+	RTS
+bra9_839E:
+	LDA #$00
+	STA $0578,X
+	RTS
+bra9_83A4:
+	LDA #$06
+	STA $25
+	LDX $A4
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_83C6
+	CMP #$FF
+	BEQ bra9_83C6
+	JMP $A6B5
+bra9_83C6:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_8408
+	LDA $05DC,X
+	BPL bra9_83F7
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_8408
+bra9_83F7:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_8408:
+loc9_8408:
+	LDA FreezeFlag
+	BEQ bra9_840E
+	RTS
+bra9_840E:
+	LDA ObjectState,X
+	AND #$1F
+	ASL
+	TAY
+	LDA tbl9_8422,Y
+	STA $32
+	LDA tbl9_8423,Y
+	STA $33
+	JMP ($32)
+tbl9_8422:
+	.byte $BB
+tbl9_8423:
+	.byte $A7
+	.byte $7B
+	.byte $AA
+	.byte $29
+	.byte $AB
+	.byte $2C
+	.byte $84
+	.byte $88
+	.byte $AD
+	LDA $05B4,X
+	EOR #$40
+	STA $25
+	LDA ObjectState,X
+	AND #$BF
+	ORA $25
+	STA ObjectState,X
+	JSR sub9_84FE
+	JSR $B077
+	BEQ bra9_8448
+	JMP loc9_846E
+bra9_8448:
+	JSR $A6D4
+	JSR $BEBC
+	JSR $A74D
+	LDA #$10
+	STA PlayerYSpeed
+	LDA PlayerAttributes
+	ORA #$04
+	EOR #$01
+	STA PlayerAttributes
+	LDA #$10
+	STA PlayerXSpeed
+	LDA #$01
+	JSR $BCD4
+	LDA #$12
+	STA SFXRegister
+	JMP loc9_846E
+	RTS
+loc9_846E:
+	LDX $A4
+	LDA ObjectSlot,X
+	AND #$01
+	ORA #$94
+	STA ObjectSlot,X
+	LDA #$80
+	STA $0578,X
+	LDA ObjectXPos,X
+	CLC
+	ADC #$04
+	STA ObjectXPos,X
+	LDA ObjectXScreen,X
+	ADC #$00
+	STA ObjectXScreen,X
+	LDA ObjectYPos,X
+	CLC
+	ADC #$0E
+	STA ObjectYPos,X
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_84B5
+	CMP #$FF
+	BEQ bra9_84B5
+	JMP $A6B5
+bra9_84B5:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_84F7
+	LDA $05DC,X
+	BPL bra9_84E6
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_84F7
+bra9_84E6:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_84F7:
+loc9_84F7:
+	LDA FreezeFlag
+	BEQ bra9_84FD_RTS
+	RTS
+bra9_84FD_RTS:
+	RTS
+sub9_84FE:
+	LDA $062B
+	AND #$0E
+	BNE bra9_8516_RTS
+	LDA #$86
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR sub9_8000
+bra9_8516_RTS:
+	RTS
+	LDA $062B
+	LSR
+	LSR
+	LSR
+	AND #$06
+	TAY
+	LDA tbl9_8549,Y
+	STA $05F0
+	LDA tbl9_8548,Y
+	ASL
+	TAX
+	LDA tbl9_8550,X
+	STA $32
+	LDA tbl9_8551,X
+	STA $33
+	LDY #$80
+	LDX $A4
+	LDA ObjectSlot,X
+	AND #$01
+	BEQ bra9_8542
+	LDY #$C0
+bra9_8542:
+	STY $36
+	JSR $A118
+	RTS
+tbl9_8548:
+	.byte $00
+tbl9_8549:
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $40
+tbl9_8550:
+	.byte $54
+tbl9_8551:
+	.byte $85
+	.byte $63
+	.byte $85
+	.byte $03
+	.byte $04
+	.byte $A5
+	.byte $1D
+	.byte $1E
+	.byte $1F
+	.byte $22
+	.byte $23
+	.byte $24
+	.byte $27
+	.byte $28
+	.byte $FF
+	.byte $2C
+	.byte $2D
+	.byte $FF
+	.byte $03
+	.byte $04
+	.byte $A5
+	.byte $FF
+	.byte $20
+	.byte $21
+	.byte $FF
+	.byte $25
+	.byte $26
+	.byte $29
+	.byte $2A
+	.byte $2B
+	.byte $2E
+	.byte $2F
+	.byte $30
+loc9_8572:
+	LDX $A4
+	LDA $0578,X
+	BPL bra9_85E0
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_8595
+	CMP #$FF
+	BEQ bra9_8595
+	JMP $A6B5
+bra9_8595:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_85D7
+	LDA $05DC,X
+	BPL bra9_85C6
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_85D7
+bra9_85C6:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_85D7:
+loc9_85D7:
+	LDA FreezeFlag
+	BEQ bra9_85DD
+	RTS
+bra9_85DD:
+	JMP $B5BB
+bra9_85E0:
+	LDA #$06
+	STA $25
+	LDX $A4
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_8602
+	CMP #$FF
+	BEQ bra9_8602
+	JMP $A6B5
+bra9_8602:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_8644
+	LDA $05DC,X
+	BPL bra9_8633
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_8644
+bra9_8633:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_8644:
+loc9_8644:
+	LDA FreezeFlag
+	BEQ bra9_864A
+	RTS
+bra9_864A:
+	LDA ObjectState,X
+	AND #$1F
+	ASL
+	TAY
+	LDA tbl9_865E,Y
+	STA $32
+	LDA tbl9_865F,Y
+	STA $33
+	JMP ($32)
+tbl9_865E:
+	.byte $BB
+tbl9_865F:
+	.byte $A7
+	.byte $7B
+	.byte $AA
+	.byte $29
+	.byte $AB
+	.byte $68
+	.byte $86
+	.byte $88
+	.byte $AD
+	JSR sub9_8698
+	JSR $BEBC
+	JSR $A74D
+	LDA #$10
+	STA PlayerYSpeed
+	LDA PlayerAttributes
+	ORA #$04
+	EOR #$01
+	STA PlayerAttributes
+	LDA #$10
+	STA PlayerXSpeed
+	LDA #$01
+	JSR $BCD4
+	LDA #$12
+	STA SFXRegister
+	LDX $A4
+	INC ObjectSlot,X
+	INC ObjectSlot,X
+	LDA #$80
+	STA $0578,X
+	RTS
+sub9_8698:
+	LDA $0578,X
+	CMP #$03
+	BCS bra9_86A2
+	JMP loc9_86BB
+bra9_86A2:
+	LDA $062B
+	AND #$00
+	BNE bra9_86BA_RTS
+	LDA #$85
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR sub9_8000
+bra9_86BA_RTS:
+	RTS
+loc9_86BB:
+	LDA $062B
+	AND #$02
+	BNE bra9_86D3_RTS
+	LDA #$85
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR sub9_8000
+bra9_86D3_RTS:
+	RTS
+	LDX $A4
+	LDA #$06
+	STA $25
+	LDX $A4
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_86F8
+	CMP #$FF
+	BEQ bra9_86F8
+	JMP $A6B5
+bra9_86F8:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_873A
+	LDA $05DC,X
+	BPL bra9_8729
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_873A
+bra9_8729:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_873A:
+loc9_873A:
+	LDA FreezeFlag
+	BEQ bra9_8740
+	RTS
+bra9_8740:
+	LDA ObjectState,X
+	AND #$1F
+	ASL
+	TAY
+	LDA tbl9_8754,Y
+	STA $32
+	LDA tbl9_8755,Y
+	STA $33
+	JMP ($32)
+tbl9_8754:
+	.byte $BB
+tbl9_8755:
+	.byte $A7
+	.byte $7B
+	.byte $AA
+	.byte $29
+	.byte $AB
+	.byte $5E
+	.byte $87
+	.byte $88
+	.byte $AD
+	LDX $A4
+	LDA $0578,X
+	BPL bra9_87D7
+	JSR sub9_887E
+	JSR $B077
+	BEQ bra9_87D6_RTS
+	LDA #$00
+	STA $0578,X
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_878E
+	CMP #$FF
+	BEQ bra9_878E
+	JMP $A6B5
+bra9_878E:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_87D0
+	LDA $05DC,X
+	BPL bra9_87BF
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_87D0
+bra9_87BF:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_87D0:
+loc9_87D0:
+	LDA FreezeFlag
+	BEQ bra9_87D6_RTS
+	RTS
+bra9_87D6_RTS:
+	RTS
+bra9_87D7:
+	CMP #$0D
+	BEQ bra9_880C
+	CMP #$0F
+	BCS bra9_87E5
+	JSR sub9_881D
+	JMP loc9_87E8
+bra9_87E5:
+	JSR sub9_8865
+loc9_87E8:
+	JSR $BC3E
+	JSR $A74D
+	LDX $A4
+	LDA $0578,X
+	BEQ bra9_880B_RTS
+	LDA #$0F
+	STA $0578,X
+	LDA $05B4,X
+	AND #$40
+	STA $25
+	LDA ObjectState,X
+	AND #$BF
+	ORA $25
+	STA ObjectState,X
+bra9_880B_RTS:
+	RTS
+bra9_880C:
+	DEC ObjectSlot,X
+	DEC ObjectSlot,X
+	JSR $B5BB
+	LDA #$03
+	STA $0578,X
+	JMP loc9_8572
+sub9_881D:
+	LDA ObjectState,X
+	AND #$20
+	BEQ bra9_884C
+	LDA $062B
+	AND #$00
+	BNE bra9_883C
+	LDA #$84
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR sub9_8000
+bra9_883C:
+	LDA ObjectState,X
+	AND #$20
+	BNE bra9_884B_RTS
+	LDA ObjectState,X
+	AND #$F0
+	STA ObjectState,X
+bra9_884B_RTS:
+	RTS
+bra9_884C:
+	LDA $062B
+	AND #$1E
+	BNE bra9_8864_RTS
+	LDA #$84
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR sub9_8000
+bra9_8864_RTS:
+	RTS
+sub9_8865:
+	LDA $062B
+	AND #$00
+	BNE bra9_887D_RTS
+	LDA #$84
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR sub9_8000
+bra9_887D_RTS:
+	RTS
+sub9_887E:
+	LDA $062B
+	AND #$00
+	BNE bra9_8896_RTS
+	LDA #$85
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR sub9_8000
+bra9_8896_RTS:
+	RTS
+	LDX $A4
+	LDY #$08
+	LDA $0578,X
+	SEC
+	SBC #$09
+	BCC bra9_88A9
+	CMP #$04
+	BCS bra9_88A9
+	LDY #$04
+bra9_88A9:
+	STY $25
+	LDY #$02
+	LDA $062B
+	AND $25
+	BEQ bra9_88B6
+	LDY #$03
+bra9_88B6:
+	LDA ObjectState,X
+	AND #$C0
+	ORA #$80
+	STA $05F0
+	TYA
+	ASL
+	TAX
+	LDA tbl9_8915,X
+	STA $32
+	LDA tbl9_8916,X
+	STA $33
+	LDY #$80
+	LDX $A4
+	LDA ObjectSlot,X
+	AND #$01
+	BEQ bra9_88DA
+	LDY #$C0
+bra9_88DA:
+	STY $36
+	JSR $A118
+	RTS
+	LDX $A4
+	LDY #$00
+	LDA $062B
+	AND #$08
+	BEQ bra9_88ED
+	LDY #$01
+bra9_88ED:
+	LDA ObjectState,X
+	AND #$C0
+	STA $05F0
+	TYA
+	ASL
+	TAX
+	LDA tbl9_8915,X
+	STA $32
+	LDA tbl9_8916,X
+	STA $33
+	LDY #$80
+	LDX $A4
+	LDA ObjectSlot,X
+	AND #$01
+	BEQ bra9_890F
+	LDY #$C0
+bra9_890F:
+	STY $36
+	JSR $A118
+	RTS
+tbl9_8915:
+	.byte $1D
+tbl9_8916:
+	.byte $89
+	.byte $24
+	.byte $89
+	.byte $2B
+	.byte $89
+	.byte $32
+	.byte $89
+	.byte $02
+	.byte $02
+	.byte $A5
+	.byte $01
+	.byte $02
+	.byte $08
+	.byte $09
+	.byte $02
+	.byte $02
+	.byte $A5
+	.byte $06
+	.byte $07
+	.byte $0D
+	.byte $0E
+	.byte $02
+	.byte $02
+	.byte $A5
+	.byte $08
+	.byte $09
+	.byte $01
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $A5
+	.byte $0D
+	.byte $0E
+	.byte $06
+	.byte $07
+	LDX $A4
+	LDA $0578,X
+	BPL bra9_89AE
+	CMP #$81
+	BEQ bra9_89AB
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_8960
+	CMP #$FF
+	BEQ bra9_8960
+	JMP $A6B5
+bra9_8960:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_89A2
+	LDA $05DC,X
+	BPL bra9_8991
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_89A2
+bra9_8991:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_89A2:
+loc9_89A2:
+	LDA FreezeFlag
+	BEQ bra9_89A8
+	RTS
+bra9_89A8:
+	JMP $B5BB
+bra9_89AB:
+	JMP $B4FC
+bra9_89AE:
+	LDA #$06
+	STA $25
+	LDX $A4
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_89D0
+	CMP #$FF
+	BEQ bra9_89D0
+	JMP $A6B5
+bra9_89D0:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_8A12
+	LDA $05DC,X
+	BPL bra9_8A01
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_8A12
+bra9_8A01:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_8A12:
+loc9_8A12:
+	LDA FreezeFlag
+	BEQ bra9_8A18
+	RTS
+bra9_8A18:
+	LDA ObjectState,X
+	AND #$1F
+	ASL
+	TAY
+	LDA tbl9_8A2C,Y
+	STA $32
+	LDA tbl9_8A2D,Y
+	STA $33
+	JMP ($32)
+tbl9_8A2C:
+	.byte $BB
+tbl9_8A2D:
+	.byte $A7
+	.byte $7B
+	.byte $AA
+	.byte $29
+	.byte $AB
+	.byte $36
+	.byte $8A
+	.byte $88
+	.byte $AD
+	JSR sub9_8A45
+	JSR $A6D4
+	JSR $BC3E
+	JSR $A74D
+	JMP $BF74
+sub9_8A45:
+	LDA $062B
+	AND #$02
+	BNE bra9_8A5D_RTS
+	LDA #$86
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR sub9_8000
+bra9_8A5D_RTS:
+	RTS
+	LDA #$00
+	STA $05F0
+	LDA $062B
+	LSR
+	LSR
+	LSR
+	AND #$01
+	ASL
+	TAX
+	LDA tbl9_8A8A,X
+	STA $32
+	LDA tbl9_8A8B,X
+	STA $33
+	LDY #$80
+	LDX $A4
+	LDA ObjectSlot,X
+	AND #$01
+	BEQ bra9_8A84
+	LDY #$C0
+bra9_8A84:
+	STY $36
+	JSR $A118
+	RTS
+tbl9_8A8A:
+	.byte $8E
+tbl9_8A8B:
+	.byte $8A
+	.byte $95
+	.byte $8A
+	.byte $02
+	.byte $02
+	.byte $A6
+	.byte $14
+	.byte $15
+	.byte $16
+	.byte $17
+	.byte $02
+	.byte $02
+	.byte $A6
+	.byte $14
+	.byte $15
+	.byte $18
+	.byte $19
+	.byte $02
+	.byte $02
+	.byte $A6
+	.byte $1A
+	.byte $1B
+	.byte $1E
+	.byte $1F
+	.byte $02
+	.byte $02
+	.byte $A6
+	.byte $1C
+	.byte $1D
+	.byte $20
+	.byte $21
+	LDX $A4
+	LDA $0578,X
+	BMI bra9_8AB4
+	JMP loc9_8B27
+bra9_8AB4:
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_8AD0
+	CMP #$FF
+	BEQ bra9_8AD0
+	JMP $A6B5
+bra9_8AD0:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_8B12
+	LDA $05DC,X
+	BPL bra9_8B01
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_8B12
+bra9_8B01:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_8B12:
+loc9_8B12:
+	LDA FreezeFlag
+	BEQ bra9_8B18
+	RTS
+bra9_8B18:
+	LDA $0578,X
+	CMP #$81
+	BCS bra9_8B23
+	JSR $B5BB
+	RTS
+bra9_8B23:
+	JSR $B4FC
+	RTS
+loc9_8B27:
+	LDA #$06
+	STA $25
+	LDX $A4
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_8B49
+	CMP #$FF
+	BEQ bra9_8B49
+	JMP $A6B5
+bra9_8B49:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_8B8B
+	LDA $05DC,X
+	BPL bra9_8B7A
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_8B8B
+bra9_8B7A:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_8B8B:
+loc9_8B8B:
+	LDA FreezeFlag
+	BEQ bra9_8B91
+	RTS
+bra9_8B91:
+	LDA ObjectState,X
+	AND #$1F
+	ASL
+	TAY
+	LDA tbl9_8BA5,Y
+	STA $32
+	LDA tbl9_8BA6,Y
+	STA $33
+	JMP ($32)
+tbl9_8BA5:
+	.byte $BB
+tbl9_8BA6:
+	.byte $A7
+	.byte $7B
+	.byte $AA
+	.byte $29
+	.byte $AB
+	.byte $AF
+	.byte $8B
+	.byte $88
+	.byte $AD
+	LDA $06
+	AND #$00
+	BEQ bra9_8BB6
+	RTS
+bra9_8BB6:
+	LDA #$80
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR $B132
+	JSR $A6D4
+	JSR $BEBC
+	JSR $A74D
+	LDA #$10
+	STA PlayerYSpeed
+	LDA PlayerAttributes
+	ORA #$04
+	EOR #$01
+	STA PlayerAttributes
+	LDA #$10
+	STA PlayerXSpeed
+	LDA #$01
+	JSR $BCD4
+	LDA #$12
+	STA SFXRegister
+	LDX $A4
+	LDA #$81
+	STA $0578,X
+	RTS
+	LDX $A4
+	LDA ObjectState,X
+	AND #$40
+	STA $05F0
+	LDA #$00
+	ASL
+	TAX
+	LDA tbl9_8C1C,X
+	STA $32
+	LDA tbl9_8C1D,X
+	STA $33
+	LDY #$80
+	LDX $A4
+	LDA ObjectSlot,X
+	AND #$01
+	BEQ bra9_8C16
+	LDY #$C0
+bra9_8C16:
+	STY $36
+	JSR $A118
+	RTS
+tbl9_8C1C:
+	.byte $1E
+tbl9_8C1D:
+	.byte $8C
+	.byte $02
+	.byte $02
+	.byte $A6
+	.byte $2A
+	.byte $2B
+	.byte $2C
+	.byte $2D
+	LDY #$00
+	LDX $A4
+	LDA ObjectState,X
+	AND #$C0
+	STA $05F0
+	LDA ObjectState,X
+	BPL bra9_8C38
+	LDY #$01
+bra9_8C38:
+	TYA
+	ASL
+	TAX
+	LDA tbl9_8C58,X
+	STA $32
+	LDA tbl9_8C59,X
+	STA $33
+	LDY #$80
+	LDX $A4
+	LDA ObjectSlot,X
+	AND #$01
+	BEQ bra9_8C52
+	LDY #$C0
+bra9_8C52:
+	STY $36
+	JSR $A118
+	RTS
+tbl9_8C58:
+	.byte $5C
+tbl9_8C59:
+	.byte $8C
+	.byte $63
+	.byte $8C
+	.byte $02
+	.byte $02
+	.byte $A6
+	.byte $2E
+	.byte $2F
+	.byte $30
+	.byte $31
+	.byte $02
+	.byte $02
+	.byte $A6
+	.byte $30
+	.byte $31
+	.byte $2E
+	.byte $2F
+	LDX $A4
+	LDA $0578,X
+	BPL bra9_8C76
+	LDA #$00
+	STA $0578,X
+bra9_8C76:
+	LDA #$07
+	STA $25
+	LDX $A4
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_8C98
+	CMP #$FF
+	BEQ bra9_8C98
+	JMP $A6B5
+bra9_8C98:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_8CDA
+	LDA $05DC,X
+	BPL bra9_8CC9
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_8CDA
+bra9_8CC9:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_8CDA:
+loc9_8CDA:
+	LDA FreezeFlag
+	BEQ bra9_8CE0
+	RTS
+bra9_8CE0:
+	LDA ObjectState,X
+	AND #$1F
+	ASL
+	TAY
+	LDA tbl9_8CF4,Y
+	STA $32
+	LDA tbl9_8CF5,Y
+	STA $33
+	JMP ($32)
+tbl9_8CF4:
+	.byte $BB
+tbl9_8CF5:
+	.byte $A7
+	.byte $7B
+	.byte $AA
+	.byte $29
+	.byte $AB
+	.byte $FE
+	.byte $8C
+	.byte $88
+	.byte $AD
+	LDA $0578,X
+	CMP #$06
+	BCS bra9_8D73
+	LDA $06
+	AND #$1E
+	BNE bra9_8D0E
+	INC $0578,X
+bra9_8D0E:
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_8D2A
+	CMP #$FF
+	BEQ bra9_8D2A
+	JMP $A6B5
+bra9_8D2A:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_8D6C
+	LDA $05DC,X
+	BPL bra9_8D5B
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_8D6C
+bra9_8D5B:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_8D6C:
+loc9_8D6C:
+	LDA FreezeFlag
+	BEQ bra9_8D72_RTS
+	RTS
+bra9_8D72_RTS:
+	RTS
+bra9_8D73:
+	JSR sub9_8D7C
+	JSR $BC3E
+	JMP $BF74
+sub9_8D7C:
+	LDA $06
+	AND #$02
+	BEQ bra9_8D83
+	RTS
+bra9_8D83:
+	LDA #$87
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR $B485
+	RTS
+	LDY #$00
+	STY $05F0
+	LDX $A4
+	LDA $0578,X
+	CMP #$06
+	BCS bra9_8DA4
+	RTS
+bra9_8DA4:
+	CMP #$15
+	BCC bra9_8DAF
+	LDY #$02
+	LDA #$80
+	STA $05F0
+bra9_8DAF:
+	LDA $06
+	AND #$08
+	BEQ bra9_8DB6
+	INY
+bra9_8DB6:
+	TYA
+	ASL
+	TAX
+	LDA tbl9_8DD6,X
+	STA $32
+	LDA tbl9_8DD7,X
+	STA $33
+	LDY #$80
+	LDX $A4
+	LDA ObjectSlot,X
+	AND #$01
+	BEQ bra9_8DD0
+	LDY #$C0
+bra9_8DD0:
+	STY $36
+	JSR $A118
+	RTS
+tbl9_8DD6:
+	.byte $DE
+tbl9_8DD7:
+	.byte $8D
+	.byte $E5
+	.byte $8D
+	.byte $EC
+	.byte $8D
+	.byte $F3
+	.byte $8D
+	.byte $02
+	.byte $02
+	.byte $AD
+	.byte $2A
+	.byte $2B
+	.byte $2E
+	.byte $2F
+	.byte $02
+	.byte $02
+	.byte $AD
+	.byte $2C
+	.byte $2D
+	.byte $30
+	.byte $31
+	.byte $02
+	.byte $02
+	.byte $AD
+	.byte $2E
+	.byte $2F
+	.byte $2A
+	.byte $2B
+	.byte $02
+	.byte $02
+	.byte $AD
+	.byte $30
+	.byte $31
+	.byte $2C
+	.byte $2D
+	LDX $A4
+	LDA $0578,X
+	BMI bra9_8E04
+	JMP loc9_8E6B
+bra9_8E04:
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_8E20
+	CMP #$FF
+	BEQ bra9_8E20
+	JMP $A6B5
+bra9_8E20:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_8E62
+	LDA $05DC,X
+	BPL bra9_8E51
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_8E62
+bra9_8E51:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_8E62:
+loc9_8E62:
+	LDA FreezeFlag
+	BEQ bra9_8E68
+	RTS
+bra9_8E68:
+	JMP $B5BB
+loc9_8E6B:
+	LDA #$07
+	STA $25
+	LDX $A4
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_8E8D
+	CMP #$FF
+	BEQ bra9_8E8D
+	JMP $A6B5
+bra9_8E8D:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_8ECF
+	LDA $05DC,X
+	BPL bra9_8EBE
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_8ECF
+bra9_8EBE:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_8ECF:
+loc9_8ECF:
+	LDA FreezeFlag
+	BEQ bra9_8ED5
+	RTS
+bra9_8ED5:
+	LDA ObjectState,X
+	AND #$1F
+	ASL
+	TAY
+	LDA tbl9_8EE9,Y
+	STA $32
+	LDA tbl9_8EEA,Y
+	STA $33
+	JMP ($32)
+tbl9_8EE9:
+	.byte $BB
+tbl9_8EEA:
+	.byte $A7
+	.byte $7B
+	TAX
+	.byte $29
+	.byte $AB
+	.byte $F3
+	.byte $8E
+	DEY
+	.byte $AD
+	.byte $20
+	.byte $FC
+	.byte $8E
+	.byte $20
+	.byte $3E
+	.byte $BC
+	.byte $4C
+	.byte $74
+	.byte $BF
+	LDA $06
+	AND #$04
+	BEQ bra9_8F03
+	RTS
+bra9_8F03:
+	LDA #$88
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR $B132
+	RTS
+	LDX $A4
+	LDA ObjectState,X
+	AND #$40
+	STA $05F0
+	LDY #$00
+	LDA $0578,X
+	CMP #$20
+	BCS bra9_8F32
+	LDY #$02
+	LDA $05F0
+	ORA #$80
+	STA $05F0
+bra9_8F32:
+	LDA $06
+	AND #$08
+	BEQ bra9_8F39
+	INY
+bra9_8F39:
+	TYA
+	ASL
+	TAX
+	LDA tbl9_8F59,X
+	STA $32
+	LDA tbl9_8F5A,X
+	STA $33
+	LDY #$80
+	LDX $A4
+	LDA ObjectSlot,X
+	AND #$01
+	BEQ bra9_8F53
+	LDY #$C0
+bra9_8F53:
+	STY $36
+	JSR $A118
+	RTS
+tbl9_8F59:
+	.byte $61
+tbl9_8F5A:
+	.byte $8F
+	.byte $68
+	.byte $8F
+	.byte $6F
+	.byte $8F
+	.byte $76
+	.byte $8F
+	.byte $02
+	.byte $02
+	.byte $A7
+	.byte $2B
+	.byte $2C
+	.byte $36
+	.byte $37
+	.byte $02
+	.byte $02
+	.byte $A7
+	.byte $2D
+	.byte $2E
+	.byte $38
+	.byte $39
+	.byte $02
+	.byte $02
+	.byte $A7
+	.byte $36
+	.byte $37
+	.byte $2B
+	.byte $2C
+	.byte $02
+	.byte $02
+	.byte $A7
+	.byte $38
+	.byte $39
+	.byte $2D
+	.byte $2E
+	LDX $A4
+	LDA $0578,X
+	BMI bra9_8F87
+	JMP loc9_8FEF
+bra9_8F87:
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_8FA3
+	CMP #$FF
+	BEQ bra9_8FA3
+	JMP $A6B5
+bra9_8FA3:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_8FE5
+	LDA $05DC,X
+	BPL bra9_8FD4
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_8FE5
+bra9_8FD4:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_8FE5:
+loc9_8FE5:
+	LDA FreezeFlag
+	BEQ bra9_8FEB
+	RTS
+bra9_8FEB:
+	JSR $B5BB
+	RTS
+loc9_8FEF:
+	LDA #$07
+	STA $25
+	LDX $A4
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_9011
+	CMP #$FF
+	BEQ bra9_9011
+	JMP $A6B5
+bra9_9011:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_9053
+	LDA $05DC,X
+	BPL bra9_9042
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_9053
+bra9_9042:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_9053:
+loc9_9053:
+	LDA FreezeFlag
+	BEQ bra9_9059
+	RTS
+bra9_9059:
+	LDA ObjectState,X
+	AND #$1F
+	ASL
+	TAY
+	LDA tbl9_906D,Y
+	STA $32
+	LDA tbl9_906E,Y
+	STA $33
+	JMP ($32)
+tbl9_906D:
+	.byte $BB
+tbl9_906E:
+	.byte $A7
+	.byte $7B
+	.byte $AA
+	.byte $29
+	.byte $AB
+	.byte $75
+	.byte $90
+	LDA $06
+	AND #$00
+	BEQ bra9_907C
+	RTS
+bra9_907C:
+	LDA #$80
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR $B132
+	JSR $BC3E
+	JMP $BF74
+	LDX $A4
+	LDA ObjectState,X
+	AND #$40
+	STA $05F0
+	LDY #$00
+	LDA $062B
+	AND #$10
+	BEQ bra9_90A8
+	LDY #$01
+bra9_90A8:
+	TYA
+	ASL
+	TAX
+	LDA tbl9_90C8,X
+	STA $32
+	LDA tbl9_90C9,X
+	STA $33
+	LDY #$80
+	LDX $A4
+	LDA ObjectSlot,X
+	AND #$01
+	BEQ bra9_90C2
+	LDY #$C0
+bra9_90C2:
+	STY $36
+	JSR $A118
+	RTS
+tbl9_90C8:
+	.byte $CC
+tbl9_90C9:
+	.byte $90
+	.byte $D5
+	.byte $90
+	.byte $02
+	.byte $03
+	.byte $AB
+	.byte $0B
+	.byte $0C
+	.byte $13
+	.byte $14
+	.byte $1A
+	.byte $1B
+	.byte $02
+	.byte $03
+	.byte $AB
+	.byte $0D
+	.byte $0E
+	.byte $15
+	.byte $16
+	.byte $1A
+	.byte $1C
+	LDX $A4
+	LDA $0578,X
+	BMI bra9_90E8
+	JMP loc9_914F
+bra9_90E8:
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_9104
+	CMP #$FF
+	BEQ bra9_9104
+	JMP $A6B5
+bra9_9104:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_9146
+	LDA $05DC,X
+	BPL bra9_9135
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_9146
+bra9_9135:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_9146:
+loc9_9146:
+	LDA FreezeFlag
+	BEQ bra9_914C
+	RTS
+bra9_914C:
+	JMP $B5BB
+loc9_914F:
+	LDA #$07
+	STA $25
+	LDX $A4
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_9171
+	CMP #$FF
+	BEQ bra9_9171
+	JMP $A6B5
+bra9_9171:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_91B3
+	LDA $05DC,X
+	BPL bra9_91A2
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_91B3
+bra9_91A2:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_91B3:
+loc9_91B3:
+	LDA FreezeFlag
+	BEQ bra9_91B9
+	RTS
+bra9_91B9:
+	LDA ObjectState,X
+	AND #$1F
+	ASL
+	TAY
+	LDA tbl9_91CD,Y
+	STA $32
+	LDA tbl9_91CE,Y
+	STA $33
+	JMP ($32)
+tbl9_91CD:
+	.byte $BB
+tbl9_91CE:
+	.byte $A7
+	.byte $7B
+	.byte $AA
+	.byte $29
+	.byte $AB
+	.byte $D7
+	.byte $91
+	.byte $88
+	.byte $AD
+	LDA $0578,X
+	CMP #$40
+	BCS bra9_91E4
+	JSR sub9_9224
+	JMP loc9_91E7
+bra9_91E4:
+	JSR sub9_9260
+loc9_91E7:
+	JSR $A6D4
+	JSR $BEBC
+	JSR $A74D
+	LDA $0578,X
+	CMP #$40
+	BCS bra9_9221
+	LDA #$10
+	STA PlayerYSpeed
+	LDA PlayerAttributes
+	ORA #$04
+	EOR #$01
+	STA PlayerAttributes
+	LDA #$10
+	STA PlayerXSpeed
+	LDA #$01
+	JSR $BCD4
+	LDA #$12
+	STA SFXRegister
+	LDX $A4
+	LDA ObjectSlot,X
+	CLC
+	ADC #$02
+	STA ObjectSlot,X
+	LDA #$00
+	STA $0578,X
+	RTS
+bra9_9221:
+	JMP $BF74
+sub9_9224:
+	LDA $06
+	AND #$02
+	BEQ bra9_922B
+	RTS
+bra9_922B:
+	LDA #$8A
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR $B39B
+	LDX $A4
+	LDA $0578,X
+	BEQ bra9_9247
+	CMP #$20
+	BNE bra9_925F_RTS
+bra9_9247:
+	LDY #$00
+	LDA $05B4,X
+	BMI bra9_9250
+	LDY #$40
+bra9_9250:
+	STY $25
+	LDA ObjectState,X
+	AND #$BF
+	ORA $25
+	STA ObjectState,X
+	INC $0578,X
+bra9_925F_RTS:
+	RTS
+sub9_9260:
+	LDA $06
+	AND #$1E
+	BEQ bra9_9267
+	RTS
+bra9_9267:
+	LDA #$8A
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR $B39B
+	RTS
+	LDX $A4
+	LDA $0578,X
+	BPL bra9_9281
+	RTS
+bra9_9281:
+	CMP #$40
+	BCS bra9_9291
+	LDY #$00
+	LDA $06
+	AND #$10
+	BEQ bra9_929B
+	LDY #$01
+	BNE bra9_929B
+bra9_9291:
+	SEC
+	SBC #$40
+	AND #$07
+	TAY
+	LDA tbl9_92C3,Y
+	TAY
+bra9_929B:
+	LDA ObjectState,X
+	AND #$40
+	STA $05F0
+	TYA
+	ASL
+	TAX
+	LDA tbl9_92D0,X
+	STA $32
+	LDA tbl9_92D1,X
+	STA $33
+	LDY #$80
+	LDX $A4
+	LDA ObjectSlot,X
+	AND #$01
+	BEQ bra9_92BD
+	LDY #$C0
+bra9_92BD:
+	STY $36
+	JSR $A118
+	RTS
+tbl9_92C3:
+	.byte $02
+	.byte $02
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+tbl9_92D0:
+	.byte $D8
+tbl9_92D1:
+	.byte $92
+	.byte $DF
+	.byte $92
+	.byte $E6
+	.byte $92
+	.byte $ED
+	.byte $92
+	.byte $02
+	.byte $02
+	.byte $AD
+	.byte $01
+	.byte $02
+	.byte $09
+	.byte $0A
+	.byte $02
+	.byte $02
+	.byte $AD
+	.byte $03
+	.byte $04
+	.byte $0B
+	.byte $0C
+	.byte $02
+	.byte $02
+	.byte $AD
+	.byte $07
+	.byte $08
+	.byte $0F
+	.byte $10
+	.byte $02
+	.byte $02
+	.byte $AD
+	.byte $05
+	.byte $06
+	.byte $0D
+	.byte $0E
+	LDX $A4
+	LDA $0578,X
+	CMP #$05
+	BCS bra9_9303
+	JSR sub9_9385
+	JMP loc9_9306
+bra9_9303:
+	JSR sub9_939E
+loc9_9306:
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_9322
+	CMP #$FF
+	BEQ bra9_9322
+	JMP $A6B5
+bra9_9322:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_9364
+	LDA $05DC,X
+	BPL bra9_9353
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_9364
+bra9_9353:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_9364:
+loc9_9364:
+	LDA FreezeFlag
+	BEQ bra9_936A
+	RTS
+bra9_936A:
+	LDA $0578,X
+	CMP #$10
+	BCC bra9_9384_RTS
+	LDA ObjectSlot,X
+	SEC
+	SBC #$02
+	STA ObjectSlot,X
+	LDA #$00
+	STA ObjectState,X
+	LDA #$80
+	STA $0578,X
+bra9_9384_RTS:
+	RTS
+sub9_9385:
+	LDA $06
+	AND #$3F
+	BEQ bra9_938C
+	RTS
+bra9_938C:
+	LDA #$8C
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR $B132
+	RTS
+sub9_939E:
+	LDA $06
+	AND #$02
+	BEQ bra9_93A5
+	RTS
+bra9_93A5:
+	LDA #$8C
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR $B485
+	RTS
+	LDY #$00
+	LDX $A4
+	LDA ObjectState,X
+	AND #$40
+	STA $05F0
+	LDA $0578,X
+	CMP #$0D
+	BCC bra9_93CC
+	LDY #$01
+bra9_93CC:
+	TYA
+	ASL
+	TAX
+	LDA tbl9_93EC,X
+	STA $32
+	LDA tbl9_93ED,X
+	STA $33
+	LDY #$80
+	LDX $A4
+	LDA ObjectSlot,X
+	AND #$01
+	BEQ bra9_93E6
+	LDY #$C0
+bra9_93E6:
+	STY $36
+	JSR $A118
+	RTS
+tbl9_93EC:
+	.byte $F0
+tbl9_93ED:
+	.byte $93
+	.byte $F9
+	.byte $93
+	.byte $03
+	.byte $02
+	.byte $AD
+	.byte $FF
+	.byte $FF
+	.byte $11
+	.byte $15
+	.byte $16
+	.byte $17
+	.byte $03
+	.byte $02
+	.byte $AD
+	.byte $12
+	.byte $13
+	.byte $14
+	.byte $18
+	.byte $19
+	.byte $1A
+	LDX $A4
+	LDA $0578,X
+	BPL bra9_9470
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_9425
+	CMP #$FF
+	BEQ bra9_9425
+	JMP $A6B5
+bra9_9425:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_9467
+	LDA $05DC,X
+	BPL bra9_9456
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_9467
+bra9_9456:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_9467:
+loc9_9467:
+	LDA FreezeFlag
+	BEQ bra9_946D
+	RTS
+bra9_946D:
+	JMP $B5BB
+bra9_9470:
+	LDA #$07
+	STA $25
+	LDX $A4
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_9492
+	CMP #$FF
+	BEQ bra9_9492
+	.byte $4C
+	.byte $B5
+	.byte $A6
+bra9_9492:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_94D4
+	LDA $05DC,X
+	BPL bra9_94C3
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_94D4
+bra9_94C3:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_94D4:
+loc9_94D4:
+	LDA FreezeFlag
+	BEQ bra9_94DA
+	RTS
+bra9_94DA:
+	LDA ObjectState,X
+	AND #$1F
+	ASL
+	TAY
+	LDA tbl9_94EE,Y
+	STA $32
+	LDA tbl9_94EF,Y
+	STA $33
+	JMP ($32)
+tbl9_94EE:
+	.byte $BB
+tbl9_94EF:
+	.byte $A7
+	.byte $7B
+	.byte $AA
+	.byte $29
+	.byte $AB
+	.byte $F6
+	.byte $94
+	JSR sub9_9500
+	JSR $BEBC
+	JSR $BF74
+	RTS
+sub9_9500:
+	LDA $06
+	AND #$06
+	BEQ bra9_9507
+	RTS
+bra9_9507:
+	LDA #$83
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR $B132
+	RTS
+	LDX $A4
+	LDA ObjectState,X
+	AND #$40
+	STA $05F0
+	LDY #$00
+	LDA $0578,X
+	AND #$08
+	BNE bra9_9536
+	LDY #$01
+	LDA $062B
+	AND #$04
+	BNE bra9_9536
+	INY
+bra9_9536:
+	TYA
+	ASL
+	TAX
+	LDA tbl9_9556,X
+	STA $32
+	LDA tbl9_9557,X
+	STA $33
+	LDY #$80
+	LDX $A4
+	LDA ObjectSlot,X
+	AND #$01
+	BEQ bra9_9550
+	LDY #$C0
+bra9_9550:
+	STY $36
+	JSR $A118
+	RTS
+tbl9_9556:
+	.byte $5C
+tbl9_9557:
+	.byte $95
+	.byte $65
+	.byte $95
+	.byte $6E
+	.byte $95
+	.byte $03
+	.byte $02
+	.byte $AD
+	.byte $1B
+	.byte $1C
+	.byte $1D
+	.byte $1E
+	.byte $1F
+	.byte $20
+	.byte $03
+	.byte $02
+	.byte $AD
+	.byte $1B
+	.byte $1C
+	.byte $1D
+	.byte $21
+	.byte $1F
+	.byte $20
+	.byte $03
+	.byte $02
+	.byte $AD
+	.byte $1B
+	.byte $1C
+	.byte $22
+	.byte $1E
+	.byte $1F
+	.byte $23
+	LDX $A4
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_9595
+	CMP #$FF
+	BEQ bra9_9595
+	JMP $A6B5
+bra9_9595:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_95D7
+	LDA $05DC,X
+	BPL bra9_95C6
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_95D7
+bra9_95C6:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_95D7:
+loc9_95D7:
+	LDA FreezeFlag
+	BEQ bra9_95DD
+	RTS
+bra9_95DD:
+	LDA $0578,X
+	BPL bra9_960D
+	LDA #$00
+	STA $0578,X
+	LDA ObjectXPos,X
+	SEC
+	SBC #$0C
+	STA ObjectXPos,X
+	LDA ObjectXScreen,X
+	SBC #$00
+	STA ObjectXScreen,X
+	LDA ObjectYPos,X
+	SEC
+	SBC #$30
+	STA ObjectYPos,X
+	BCS bra9_960C_RTS
+	SEC
+	SBC #$10
+	STA ObjectYPos,X
+	DEC ObjectYScreen,X
+bra9_960C_RTS:
+	RTS
+bra9_960D:
+	LDX $A4
+	LDA $062B
+	AND #$07
+	BNE bra9_9621
+	INC $0578,X
+	LDA $0578,X
+	AND #$1F
+	STA $0578,X
+bra9_9621:
+	LDA $062B
+	AND #$03
+	BNE bra9_962B
+	JSR $BBC3
+bra9_962B:
+	JSR $BEBC
+	JSR $BF74
+	RTS
+	LDY #$00
+	LDX $A4
+	LDA #$00
+	ASL
+	TAX
+	LDA tbl9_9657,X
+	STA $32
+	LDA tbl9_9658,X
+	STA $33
+	LDY #$80
+	LDX $A4
+	LDA ObjectSlot,X
+	AND #$01
+	BEQ bra9_9651
+	LDY #$C0
+bra9_9651:
+	STY $36
+	JSR $A118
+	RTS
+tbl9_9657:
+	.byte $59
+tbl9_9658:
+	.byte $96
+	.byte $04
+	.byte $04
+	.byte $AC
+	.byte $FF
+	.byte $01
+	.byte $02
+	.byte $03
+	.byte $04
+	.byte $05
+	.byte $06
+	.byte $07
+	.byte $08
+	.byte $09
+	.byte $0A
+	.byte $0B
+	.byte $0D
+	.byte $0E
+	.byte $0F
+	.byte $10
+	LDX $A4
+	LDA $0578,X
+	BMI bra9_9676
+	JMP loc9_96DD
+bra9_9676:
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_9692
+	CMP #$FF
+	BEQ bra9_9692
+	JMP $A6B5
+bra9_9692:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_96D4
+	LDA $05DC,X
+	BPL bra9_96C3
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_96D4
+bra9_96C3:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_96D4:
+loc9_96D4:
+	LDA FreezeFlag
+	BEQ bra9_96DA
+	RTS
+bra9_96DA:
+	JMP $B5BB
+loc9_96DD:
+	LDA #$07
+	STA $25
+	LDX $A4
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_96FF
+	CMP #$FF
+	BEQ bra9_96FF
+	JMP $A6B5
+bra9_96FF:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_9741
+	LDA $05DC,X
+	BPL bra9_9730
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_9741
+bra9_9730:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_9741:
+loc9_9741:
+	LDA FreezeFlag
+	BEQ bra9_9747
+	RTS
+bra9_9747:
+	LDA ObjectState,X
+	AND #$1F
+	ASL
+	TAY
+	LDA tbl9_975B,Y
+	STA $32
+	LDA tbl9_975C,Y
+	STA $33
+	JMP ($32)
+tbl9_975B:
+	.byte $BB
+tbl9_975C:
+	.byte $A7
+	.byte $7B
+	.byte $AA
+	.byte $29
+	.byte $AB
+	.byte $65
+	.byte $97
+	.byte $88
+	.byte $AD
+	JSR sub9_978D
+	JSR $A6D4
+	JSR $BEBC
+	JSR $A74D
+	LDA #$10
+	STA PlayerYSpeed
+	LDA PlayerAttributes
+	ORA #$04
+	EOR #$01
+	STA PlayerAttributes
+	LDA #$10
+	STA PlayerXSpeed
+	LDA #$01
+	JSR $BCD4
+	LDA #$12
+	STA SFXRegister
+	JMP loc9_98D1
+sub9_978D:
+	LDA $06
+	AND #$02
+	BEQ bra9_9794
+	RTS
+bra9_9794:
+	LDA #$8B
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR $B39B
+	RTS
+	LDX $A4
+	LDA $0578,X
+	BMI bra9_97B0
+	JMP loc9_9817
+bra9_97B0:
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_97CC
+	CMP #$FF
+	BEQ bra9_97CC
+	JMP $A6B5
+bra9_97CC:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_980E
+	LDA $05DC,X
+	BPL bra9_97FD
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_980E
+bra9_97FD:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_980E:
+loc9_980E:
+	LDA FreezeFlag
+	BEQ bra9_9814
+	RTS
+bra9_9814:
+	JMP $B5BB
+loc9_9817:
+	LDA #$07
+	STA $25
+	LDX $A4
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_9839
+	CMP #$FF
+	BEQ bra9_9839
+	JMP $A6B5
+bra9_9839:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_987B
+	LDA $05DC,X
+	BPL bra9_986A
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_987B
+bra9_986A:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_987B:
+loc9_987B:
+	LDA FreezeFlag
+	BEQ bra9_9881
+	RTS
+bra9_9881:
+	LDA ObjectState,X
+	AND #$1F
+	ASL
+	TAY
+	LDA tbl9_9895,Y
+	STA $32
+	LDA tbl9_9896,Y
+	STA $33
+	JMP ($32)
+tbl9_9895:
+	.byte $BB
+tbl9_9896:
+	.byte $A7
+	.byte $7B
+	.byte $AA
+	.byte $29
+	.byte $AB
+	.byte $9F
+	.byte $98
+	.byte $88
+	.byte $AD
+	LDA $0578,X
+	CMP #$40
+	BCS bra9_98AC
+	JSR sub9_98E2
+	JMP loc9_98AF
+bra9_98AC:
+	JSR sub9_991E
+loc9_98AF:
+	JSR $A6D4
+	JSR $BEBC
+	JSR $A74D
+	LDA #$10
+	STA PlayerYSpeed
+	LDA PlayerAttributes
+	ORA #$04
+	EOR #$01
+	STA PlayerAttributes
+	LDA #$10
+	STA PlayerXSpeed
+	LDA #$01
+	JSR $BCD4
+	LDA #$12
+	STA SFXRegister
+loc9_98D1:
+	LDX $A4
+	LDA ObjectSlot,X
+	CLC
+	ADC #$06
+	STA ObjectSlot,X
+	LDA #$00
+	STA $0578,X
+	RTS
+sub9_98E2:
+	LDA $06
+	AND #$02
+	BEQ bra9_98E9
+	RTS
+bra9_98E9:
+	LDA #$8A
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR $B39B
+	LDX $A4
+	LDA $0578,X
+	BEQ bra9_9905
+	CMP #$20
+	BNE bra9_991D_RTS
+bra9_9905:
+	LDY #$00
+	LDA $05B4,X
+	BMI bra9_990E
+	LDY #$40
+bra9_990E:
+	STY $25
+	LDA ObjectState,X
+	AND #$BF
+	ORA $25
+	STA ObjectState,X
+	INC $0578,X
+bra9_991D_RTS:
+	RTS
+sub9_991E:
+	LDA $06
+	AND #$1E
+	BEQ bra9_9925
+	RTS
+bra9_9925:
+	LDA #$8A
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR $B39B
+	LDA $0578,X
+	CMP #$46
+	BNE bra9_997F_RTS
+	INC $0578,X
+	LDY ObjectCount
+	INC ObjectCount
+	LDA ObjectXPos,X
+	CLC
+	ADC #$08
+	STA ObjectXPos,Y
+	LDA ObjectXScreen,X
+	ADC #$00
+	STA ObjectXScreen,Y
+	LDA ObjectYPos,X
+	CLC
+	ADC #$08
+	STA ObjectYPos,Y
+	LDA ObjectYScreen,X
+	ADC #$00
+	STA ObjectYScreen,Y
+	LDA ObjectState,X
+	AND #$40
+	STA ObjectState,Y
+	LDA #$00
+	STA $0578,Y
+	STA GuidedObjStatus,Y
+	LDA ObjectSlot,X
+	CLC
+	ADC #$04
+	STA ObjectSlot,Y
+bra9_997F_RTS:
+	RTS
+	LDX $A4
+	LDA $0578,X
+	CMP #$40
+	BCS bra9_9995
+	LDY #$00
+	LDA $06
+	AND #$10
+	BEQ bra9_99A2
+	LDY #$01
+	BNE bra9_99A2
+bra9_9995:
+	LDY #$00
+	SEC
+	SBC #$43
+	BCC bra9_99A2
+	CMP #$03
+	BCS bra9_99A2
+	LDY #$02
+bra9_99A2:
+	LDA ObjectState,X
+	AND #$40
+	STA $05F0
+	TYA
+	ASL
+	TAX
+	LDA tbl9_99CA,X
+	STA $32
+	LDA tbl9_99CB,X
+	STA $33
+	LDY #$80
+	LDX $A4
+	LDA ObjectSlot,X
+	AND #$01
+	BEQ bra9_99C4
+	LDY #$C0
+bra9_99C4:
+	STY $36
+	JSR $A118
+	RTS
+tbl9_99CA:
+	.byte $D0
+tbl9_99CB:
+	.byte $99
+	.byte $DF
+	.byte $99
+	.byte $EE
+	.byte $99
+	.byte $03
+	.byte $04
+	.byte $AC
+	.byte $11
+	.byte $12
+	.byte $FF
+	.byte $15
+	.byte $17
+	.byte $FF
+	.byte $1F
+	.byte $20
+	.byte $21
+	.byte $28
+	.byte $29
+	.byte $2A
+	.byte $03
+	.byte $04
+	.byte $AC
+	.byte $13
+	.byte $14
+	.byte $FF
+	.byte $18
+	.byte $19
+	.byte $FF
+	.byte $1F
+	.byte $22
+	.byte $23
+	.byte $28
+	.byte $2B
+	.byte $2C
+	.byte $03
+	.byte $04
+	.byte $AC
+	.byte $13
+	.byte $14
+	.byte $FF
+	.byte $18
+	.byte $1A
+	.byte $1B
+	.byte $FF
+	.byte $24
+	.byte $23
+	.byte $FF
+	.byte $2D
+	.byte $2C
+	LDX $A4
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_9A1B
+	CMP #$FF
+	BEQ bra9_9A1B
+	JMP $A6B5
+bra9_9A1B:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_9A5D
+	LDA $05DC,X
+	BPL bra9_9A4C
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_9A5D
+bra9_9A4C:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_9A5D:
+loc9_9A5D:
+	LDA FreezeFlag
+	BEQ bra9_9A63
+	RTS
+bra9_9A63:
+	LDA $06
+	AND #$07
+	BNE bra9_9A86_RTS
+	INC $0578,X
+	LDA $0578,X
+	CMP #$20
+	BCC bra9_9A86_RTS
+	LDA ObjectSlot,X
+	SEC
+	SBC #$06
+	STA ObjectSlot,X
+	LDA #$00
+	STA ObjectState,X
+	LDA #$80
+	STA $0578,X
+bra9_9A86_RTS:
+	RTS
+	LDY #$00
+	LDX $A4
+	LDA ObjectState,X
+	AND #$40
+	STA $05F0
+	LDA $0578,X
+	CMP #$1D
+	BCC bra9_9AA2
+	LDY #$01
+	CMP #$31
+	BCC bra9_9AA2
+	LDY #$02
+bra9_9AA2:
+	TYA
+	ASL
+	TAX
+	LDA tbl9_9AC2,X
+	STA $32
+	LDA tbl9_9AC3,X
+	STA $33
+	LDY #$80
+	LDX $A4
+	LDA ObjectSlot,X
+	AND #$01
+	BEQ bra9_9ABC
+	LDY #$C0
+bra9_9ABC:
+	STY $36
+	JSR $A118
+	RTS
+tbl9_9AC2:
+	.byte $C8
+tbl9_9AC3:
+	.byte $9A
+	.byte $D7
+	.byte $9A
+	.byte $E6
+	.byte $9A
+	.byte $03
+	.byte $04
+	.byte $AC
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $36
+	.byte $37
+	.byte $38
+	.byte $03
+	.byte $04
+	.byte $AC
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $2E
+	.byte $2F
+	.byte $30
+	.byte $33
+	.byte $34
+	.byte $35
+	.byte $03
+	.byte $04
+	.byte $AC
+	.byte $11
+	.byte $12
+	.byte $FF
+	.byte $15
+	.byte $16
+	.byte $FF
+	.byte $1C
+	.byte $1D
+	.byte $1E
+	.byte $25
+	.byte $26
+	.byte $27
+	LDX $A4
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_9B13
+	CMP #$FF
+	BEQ bra9_9B13
+	JMP $A6B5
+bra9_9B13:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_9B55
+	LDA $05DC,X
+	BPL bra9_9B44
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_9B55
+bra9_9B44:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_9B55:
+loc9_9B55:
+	LDA FreezeFlag
+	BEQ bra9_9B5B
+	RTS
+bra9_9B5B:
+	LDA $06
+	AND #$00
+	BEQ bra9_9B62
+	RTS
+bra9_9B62:
+	LDA #$8B
+	ASL
+	TAY
+	LDA tbl9_9C5E,Y
+	STA $32
+	LDA tbl9_9C5F,Y
+	STA $33
+	JSR $B132
+	JSR $BEBC
+	JMP $BF74
+	LDY #$00
+	LDX $A4
+	LDA $06
+	AND #$0E
+	TAY
+	LDA tbl9_9BAB,Y
+	STA $05F0
+	LDA tbl9_9BAA,Y
+	ASL
+	TAX
+	LDA tbl9_9BBA,X
+	STA $32
+	LDA tbl9_9BBB,X
+	STA $33
+	LDY #$80
+	LDX $A4
+	LDA ObjectSlot,X
+	AND #$01
+	BEQ bra9_9BA4
+	LDY #$C0
+bra9_9BA4:
+	STY $36
+	JSR $A118
+	RTS
+tbl9_9BAA:
+	.byte $00
+tbl9_9BAB:
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $40
+	.byte $03
+	.byte $00
+	.byte $03
+	.byte $00
+	.byte $02
+	.byte $C0
+	.byte $02
+	.byte $80
+	.byte $00
+	.byte $00
+tbl9_9BBA:
+	.byte $C2
+tbl9_9BBB:
+	.byte $9B
+	.byte $C9
+	.byte $9B
+	.byte $D0
+	.byte $9B
+	.byte $D7
+	.byte $9B
+	.byte $02
+	.byte $02
+	.byte $AC
+	.byte $FF
+	.byte $31
+	.byte $39
+	.byte $3A
+	.byte $02
+	.byte $02
+	.byte $AC
+	.byte $FF
+	.byte $32
+	.byte $FF
+	.byte $3B
+	.byte $02
+	.byte $02
+	.byte $AC
+	.byte $39
+	.byte $3A
+	.byte $FF
+	.byte $31
+	.byte $02
+	.byte $02
+	.byte $AC
+	.byte $32
+	.byte $FF
+	.byte $3B
+	.byte $FF
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+tbl9_9C5E:
+	.byte $78
+tbl9_9C5F:
+	.byte $9C
+	.byte $7B
+	.byte $9C
+	.byte $78
+	.byte $9C
+	.byte $7E
+	.byte $9C
+	.byte $9F
+	.byte $9C
+	.byte $CC
+	.byte $9C
+	.byte $ED
+	.byte $9C
+	.byte $F0
+	.byte $9C
+	.byte $3B
+	.byte $9D
+	.byte $BC
+	.byte $9D
+	.byte $F3
+	.byte $9D
+	.byte $84
+	.byte $9E
+	.byte $87
+	.byte $9E
+	.byte $03
+	.byte $00
+	.byte $80
+	.byte $00
+	.byte $01
+	.byte $80
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $04
+	.byte $00
+	.byte $04
+	.byte $00
+	.byte $04
+	.byte $00
+	.byte $04
+	.byte $00
+	.byte $04
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $81
+	.byte $00
+	.byte $08
+	.byte $00
+	.byte $07
+	.byte $00
+	.byte $07
+	.byte $00
+	.byte $07
+	.byte $00
+	.byte $04
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $00
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $81
+	.byte $00
+	.byte $00
+	.byte $F8
+	.byte $00
+	.byte $FA
+	.byte $00
+	.byte $FB
+	.byte $00
+	.byte $FC
+	.byte $00
+	.byte $FD
+	.byte $00
+	.byte $FF
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $03
+	.byte $00
+	.byte $04
+	.byte $00
+	.byte $05
+	.byte $00
+	.byte $06
+	.byte $00
+	.byte $08
+	.byte $80
+	.byte $02
+	.byte $00
+	.byte $80
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $F6
+	.byte $00
+	.byte $F6
+	.byte $00
+	.byte $F6
+	.byte $00
+	.byte $F8
+	.byte $00
+	.byte $F8
+	.byte $00
+	.byte $F8
+	.byte $00
+	.byte $F8
+	.byte $00
+	.byte $FA
+	.byte $00
+	.byte $FA
+	.byte $00
+	.byte $FB
+	.byte $00
+	.byte $FB
+	.byte $00
+	.byte $FC
+	.byte $00
+	.byte $FD
+	.byte $00
+	.byte $FE
+	.byte $00
+	.byte $FF
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $03
+	.byte $00
+	.byte $04
+	.byte $00
+	.byte $05
+	.byte $00
+	.byte $05
+	.byte $00
+	.byte $06
+	.byte $00
+	.byte $06
+	.byte $00
+	.byte $08
+	.byte $00
+	.byte $08
+	.byte $00
+	.byte $08
+	.byte $00
+	.byte $08
+	.byte $00
+	.byte $0A
+	.byte $00
+	.byte $0A
+	.byte $00
+	.byte $0A
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $80
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $FA
+	.byte $02
+	.byte $FB
+	.byte $02
+	.byte $FC
+	.byte $02
+	.byte $FC
+	.byte $02
+	.byte $FD
+	.byte $02
+	.byte $FD
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FE
+	.byte $02
+	.byte $FF
+	.byte $02
+	.byte $FF
+	.byte $02
+	.byte $00
+	.byte $80
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $01
+	.byte $00
+	.byte $80
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $FE
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $FE
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $FE
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $81
+	.byte $9E
+	STA $33
+	JMP ($32)
+	.byte $BB
+	.byte $A7
+	.byte $7B
+	.byte $AA
+	.byte $29
+	.byte $AB
+	.byte $B8
+	.byte $9E
+	LDA $05B4,X
+	BPL bra9_9EE4_RTS
+	LDA #$23
+	STA MusicRegister
+	LDA #$06
+	STA Event
+	LDA $04F6
+	ASL
+	ASL
+	CLC
+	ADC $04F7
+	TAY
+	LDA $0399
+	BEQ bra9_9ED9
+	TYA
+	CLC
+	ADC #$1C
+	TAY
+bra9_9ED9:
+	LDA #$00
+	STA $06A2,Y
+	STA InvincibilityTimer
+	STA PlayerPowerupBuffer
+bra9_9EE4_RTS:
+	RTS
+	LDA PlayerState
+	BNE bra9_9EF6_RTS
+	INC PlayerState
+	LDA #$07
+	STA Event
+	LDA #$01
+	STA PlayerPowerupBuffer
+bra9_9EF6_RTS:
+	RTS
+	LDX $A4
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA $05A0,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA $05B4,X
+	STA $28
+	BEQ bra9_9F15
+	CMP #$FF
+	BEQ bra9_9F15
+	JMP $A6B5
+bra9_9F15:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA $05C8,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA $05DC,X
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ bra9_9F57
+	LDA $05DC,X
+	BPL bra9_9F46
+	LDA $05C8,X
+	CLC
+	ADC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	ADC #$00
+	STA $05DC,X
+	JMP loc9_9F57
+bra9_9F46:
+	LDA $05C8,X
+	SEC
+	SBC #$10
+	STA $05C8,X
+	LDA $05DC,X
+	SBC #$00
+	STA $05DC,X
+bra9_9F57:
+loc9_9F57:
+	LDA FreezeFlag
+	BEQ bra9_9F5D
+	RTS
+bra9_9F5D:
+	LDA $0578,X
+	BPL bra9_9F78
+	LDA $058C,X
+	CMP #$02
+	BEQ bra9_9F78
+	LDA #$00
+	STA $0578,X
+	LDA ObjectXPos,X
+	CLC
+	ADC #$0F
+	STA ObjectXPos,X
+	RTS
+bra9_9F78:
+	LDA $058C,X
+	CMP #$02
+	BEQ bra9_9F8D
+	LDA $05B4,X
+	BPL bra9_9F8C_RTS
+bra9_9F84:
+	INC $E0
+	LDX $0399
+	INC $036A,X
+bra9_9F8C_RTS:
+	RTS
+bra9_9F8D:
+	LDA $05B4,X
+	BPL bra9_9F84
+	RTS
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
