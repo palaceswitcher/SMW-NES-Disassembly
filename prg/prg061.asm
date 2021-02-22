@@ -1,6 +1,5 @@
-; 0x07A010-0x07C00F
-
-tbl5_A000:
+;disassembled by BZK 6502 Disassembler
+tbl6_A000:
 	.byte $00	;not sure what this data is for
 	.byte $00
 	.byte $00
@@ -257,7 +256,7 @@ tbl5_A000:
 	.byte $0F
 	.byte $0F
 	.byte $0F
-tbl5_A100:
+tbl6_A100:
 	.byte $00
 	.byte $10
 	.byte $20
@@ -514,7 +513,7 @@ tbl5_A100:
 	.byte $50
 	.byte $60
 	.byte $70
-tbl5_A200:
+tbl6_A200:
 	.byte $03
 	.byte $03
 	.byte $0C
@@ -1539,12 +1538,12 @@ tbl5_A200:
 	.byte $23
 	.byte $23
 	.byte $23
-sub5_A600:
+sub6_A600:
 	LDY $2B
 	LDA (PCPointerLowerByte),Y
-	BNE bra5_A607
+	BNE bra6_A607
 	RTS
-bra5_A607:
+bra6_A607:
 	STA $3E
 	TYA
 	CLC
@@ -1553,23 +1552,23 @@ bra5_A607:
 	TAY
 	LDA (PCPointerLowerByte),Y
 	CMP #$FF
-	BEQ bra5_A683
+	BEQ bra6_A683
 	STA $3F
 	LDX ObjectCount
 	LDA $3E
 	ASL
 	STA $058C,X
 	TAY
-	LDX tbl5_AA3A,Y
+	LDX tbl6_AA3A,Y
 	LDA $03CE,X
-	AND tbl5_AABA,Y
-	BNE bra5_A683
+	AND tbl6_AABA,Y
+	BNE bra6_A683
 	LDX ObjectCount
 	LDA $058C,X
 	TAY
-	LDX tbl5_AA3A,Y
+	LDX tbl6_AA3A,Y
 	LDA $03CE,X
-	ORA tbl5_AABA,Y
+	ORA tbl6_AABA,Y
 	STA $03CE,X
 	LDA $3F
 	AND #$0F
@@ -1578,7 +1577,7 @@ bra5_A607:
 	LDA ($DC),Y
 	STA ObjectSlot,X
 	TAY
-	LDA tbl5_A728,Y
+	LDA tbl6_A728,Y
 	STA $0578,X
 	LDA #$00
 	STA ObjectYScreen,X
@@ -1586,9 +1585,9 @@ bra5_A607:
 	LDA (PCPointerLowerByte),Y
 	AND #$F0
 	STA ObjectYPos,X
-	BEQ bra5_A664
+	BEQ bra6_A664
 	DEC ObjectYPos,X
-bra5_A664:
+bra6_A664:
 	LDA $65
 	AND #$F0
 	STA ObjectXPos,X
@@ -1599,9 +1598,9 @@ bra5_A664:
 	STA $0641,X
 	STA EnemyAnimFrame,X
 	STA GuidedObjStatus,X
-	JSR sub5_A705
+	JSR sub6_A705
 	INC ObjectCount
-bra5_A683:
+bra6_A683:
 	LDA $2B
 	CLC
 	ADC #$20
@@ -1609,7 +1608,7 @@ bra5_A683:
 	STY $2C
 	LDA (PCPointerLowerByte),Y
 	CMP #$FF
-	BEQ bra5_A704_RTS
+	BEQ bra6_A704_RTS
 	STA $3F
 	LDX ObjectCount
 	LDA $3E
@@ -1618,16 +1617,16 @@ bra5_A683:
 	INC $058C,X
 	LDA $058C,X
 	TAY
-	LDX tbl5_AA3A,Y
+	LDX tbl6_AA3A,Y
 	LDA $03CE,X
-	AND tbl5_AABA,Y
-	BNE bra5_A704_RTS
+	AND tbl6_AABA,Y
+	BNE bra6_A704_RTS
 	LDX ObjectCount
 	LDA $058C,X
 	TAY
-	LDX tbl5_AA3A,Y
+	LDX tbl6_AA3A,Y
 	LDA $03CE,X
-	ORA tbl5_AABA,Y
+	ORA tbl6_AABA,Y
 	STA $03CE,X
 	LDA $3F
 	AND #$0F
@@ -1636,7 +1635,7 @@ bra5_A683:
 	LDA ($DC),Y
 	STA ObjectSlot,X
 	TAY
-	LDA tbl5_A728,Y
+	LDA tbl6_A728,Y
 	STA $0578,X
 	LDA #$01
 	STA ObjectYScreen,X
@@ -1644,9 +1643,9 @@ bra5_A683:
 	LDA (PCPointerLowerByte),Y
 	AND #$F0
 	STA ObjectYPos,X
-	BEQ bra5_A6E5
+	BEQ bra6_A6E5
 	DEC ObjectYPos,X
-bra5_A6E5:
+bra6_A6E5:
 	LDA $65
 	AND #$F0
 	STA ObjectXPos,X
@@ -1657,11 +1656,11 @@ bra5_A6E5:
 	STA $0641,X
 	STA EnemyAnimFrame,X
 	STA GuidedObjStatus,X
-	JSR sub5_A705
+	JSR sub6_A705
 	INC ObjectCount
-bra5_A704_RTS:
+bra6_A704_RTS:
 	RTS
-sub5_A705:
+sub6_A705:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
@@ -1677,7 +1676,7 @@ sub5_A705:
 	SBC PlayerYScreenDup
 	STA $05DC,X
 	RTS
-tbl5_A728:
+tbl6_A728:
 	.byte $00
 	.byte $80
 	.byte $00
@@ -1934,13 +1933,13 @@ tbl5_A728:
 	.byte $80
 	.byte $80
 	.byte $80
-sub5_A828:
+sub6_A828:
 	LDA $04F6
 	ASL
 	TAX
-	LDA tbl5_A848,X
+	LDA tbl6_A848,X
 	STA $DC
-	LDA tbl5_A849,X
+	LDA tbl6_A849,X
 	STA $DD
 	LDA $04F7
 	ASL
@@ -1950,13 +1949,13 @@ sub5_A828:
 	CLC
 	ADC $DC
 	STA $DC
-	BCC bra5_A847_RTS
+	BCC bra6_A847_RTS
 	INC $DD
-bra5_A847_RTS:
+bra6_A847_RTS:
 	RTS
-tbl5_A848:
+tbl6_A848:
 	.byte $5A
-tbl5_A849:
+tbl6_A849:
 	.byte $A8
 	.byte $9A
 	.byte $A8
@@ -2454,7 +2453,7 @@ tbl5_A849:
 	.byte $00
 	.byte $00
 	.byte $00
-tbl5_AA3A:
+tbl6_AA3A:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -2583,7 +2582,7 @@ tbl5_AA3A:
 	.byte $0F
 	.byte $0F
 	.byte $0F
-tbl5_AABA:
+tbl6_AABA:
 	.byte $01
 	.byte $02
 	.byte $04
@@ -3328,7 +3327,7 @@ tbl5_AABA:
 	.byte $FF
 	.byte $FF
 	.byte $FF
-sub5_ADA2:
+sub6_ADA2:
 	LDA PPUStatus
 	LDA $00
 	ORA #$04
@@ -3339,33 +3338,33 @@ sub5_ADA2:
 	LDA NextBGColumn
 	STA PPUAddr
 	LDX #$00
-bra5_ADBD:
+bra6_ADBD:
 	LDA $0485,X
 	STA PPUData
 	INX
 	CPX #$1E
-	BCC bra5_ADBD
+	BCC bra6_ADBD
 	LDA PPUStatus
 	LDA $0480
 	ORA #$08
 	STA PPUAddr
 	LDA NextBGColumn
 	STA PPUAddr
-bra5_ADD9:
+bra6_ADD9:
 	LDA $0485,X
 	STA PPUData
 	INX
 	CPX #$38
-	BCC bra5_ADD9
+	BCC bra6_ADD9
 	LDA PPUStatus
 	LDA $00
 	AND #$FB
 	STA PPUCtrl
 	RTS
 	LDA $04C1
-	BEQ bra5_AE17_RTS
+	BEQ bra6_AE17_RTS
 	LDX #$00
-bra5_ADF6:
+bra6_ADF6:
 	LDA PPUStatus
 	LDA $04C1,X
 	STA PPUAddr
@@ -3377,33 +3376,33 @@ bra5_ADF6:
 	INX
 	INX
 	CPX #$30
-	BCC bra5_ADF6
+	BCC bra6_ADF6
 	LDA #$00
 	STA $04C1
-bra5_AE17_RTS:
+bra6_AE17_RTS:
 	RTS
 	LDA ButtonsPressed
 	AND #$80
-	BEQ bra5_AE2D
+	BEQ bra6_AE2D
 	INC ScrollStatus
 	LDA #$08
 	CMP ScrollStatus
-	BCS bra5_AE2C_RTS
+	BCS bra6_AE2C_RTS
 	STA ScrollStatus
-bra5_AE2C_RTS:
+bra6_AE2C_RTS:
 	RTS
-bra5_AE2D:
+bra6_AE2D:
 	LDA ButtonsPressed
 	AND #$40
-	BEQ bra5_AE42
+	BEQ bra6_AE42
 	INC $0327
 	LDA #$08
 	CMP $0327
-	BCS bra5_AE41_RTS
+	BCS bra6_AE41_RTS
 	STA $0327
-bra5_AE41_RTS:
+bra6_AE41_RTS:
 	RTS
-bra5_AE42:
+bra6_AE42:
 	LDA ScrollStatus
 	AND #$07
 	STA ScrollStatus
@@ -3412,38 +3411,38 @@ bra5_AE42:
 	STA $0327
 	LDA ButtonsHeld
 	AND #$01
-	BEQ bra5_AE61
+	BEQ bra6_AE61
 	LDA ScrollStatus
 	AND #$7F
 	STA ScrollStatus
-bra5_AE61:
+bra6_AE61:
 	LDA ButtonsHeld
 	AND #$02
-	BEQ bra5_AE70
+	BEQ bra6_AE70
 	LDA ScrollStatus
 	ORA #$80
 	STA ScrollStatus
-bra5_AE70:
+bra6_AE70:
 	LDA ButtonsHeld
 	AND #$04
-	BEQ bra5_AE7F
+	BEQ bra6_AE7F
 	LDA $0327
 	AND #$7F
 	STA $0327
-bra5_AE7F:
+bra6_AE7F:
 	LDA ButtonsHeld
 	AND #$08
-	BEQ bra5_AE8E_RTS
+	BEQ bra6_AE8E_RTS
 	LDA $0327
 	ORA #$80
 	STA $0327
-bra5_AE8E_RTS:
+bra6_AE8E_RTS:
 	RTS
-	JSR sub5_B85C
-	JSR sub5_BA4A
-	JSR sub5_B9CF
-	JSR sub5_BAD1
-	JSR sub5_BA21
+	JSR sub6_B85C
+	JSR sub6_BA4A
+	JSR sub6_B9CF
+	JSR sub6_BAD1
+	JSR sub6_BA21
 	LDA PlayerXScreenDup
 	STA PlayerXScreen
 	LDA PlayerXPosDup
@@ -3458,7 +3457,7 @@ bra5_AE8E_RTS:
 	STA $52
 	RTS
 	RTS
-sub5_AEB8:
+sub6_AEB8:
 	LDA $04F7
 	ASL
 	ASL
@@ -3466,16 +3465,16 @@ sub5_AEB8:
 	ASL
 	TAY
 	LDX #$00
-bra5_AEC2:
-	LDA tbl5_AED1,Y
+bra6_AEC2:
+	LDA tbl6_AED1,Y
 	STA $D0,X
 	INY
 	INX
 	CPX #$0C
-	BCC bra5_AEC2
-	JSR sub5_A828
+	BCC bra6_AEC2
+	JSR sub6_A828
 	RTS
-tbl5_AED1:
+tbl6_AED1:
 	.byte $00
 	.byte $80
 	.byte $00
@@ -3540,7 +3539,7 @@ tbl5_AED1:
 	.byte $86
 	.byte $00
 	.byte $00
-sub5_AF11:
+sub6_AF11:
 	LDA #$00
 	STA $9C
 	LDA $02
@@ -3559,63 +3558,63 @@ sub5_AF11:
 	LDX #$00
 	LDA $65
 	AND #$08
-	BEQ bra5_AF37
+	BEQ bra6_AF37
 	INX
-bra5_AF37:
+bra6_AF37:
 	STX $2A
 	LDX #$00
 	LDA $67
 	AND #$08
-	BEQ bra5_AF42
+	BEQ bra6_AF42
 	.byte $E8
-bra5_AF42:
+bra6_AF42:
 	STX $2D
-	JSR sub5_B056
+	JSR sub6_B056
 	LDA $04F5
 	STA $8000
 	LDX #$00
 	STX $28
-loc5_AF51:
+loc6_AF51:
 	LDX $28
 	LDA $6E,X
 	STA $5F
 	LDY $5F
 	LDA $2A
-	BNE bra5_AF68
+	BNE bra6_AF68
 	LDA ($D0),Y
 	STA $60
 	LDA ($D4),Y
 	STA $61
-	JMP loc5_AF70
-bra5_AF68:
+	JMP loc6_AF70
+bra6_AF68:
 	LDA ($D2),Y
 	STA $60
 	LDA ($D6),Y
 	STA $61
-loc5_AF70:
+loc6_AF70:
 	LDY $2D
-loc5_AF72:
+loc6_AF72:
 	LDA a: $60,Y
 	LDX $9C
 	STA $0485,X
 	LDA $9B
-	BEQ bra5_AFB4
+	BEQ bra6_AFB4
 	LDY $5F
 	LDA ($D8),Y
 	STA $6A
 	LDY $59
-	LDA tbl5_A000,Y
+	LDA tbl6_A000,Y
 	STA $25
 	LDA $5A
 	AND #$0F
 	TAX
-	LDA tbl5_A100,X
+	LDA tbl6_A100,X
 	ORA $25
 	STA $5C
 	TYA
 	AND #$7F
 	TAX
-	LDA tbl5_A200,X
+	LDA tbl6_A200,X
 	TAX
 	AND $6A
 	STA $37
@@ -3627,25 +3626,25 @@ loc5_AF72:
 	AND $25
 	ORA $37
 	STA $0400,Y
-bra5_AFB4:
+bra6_AFB4:
 	INC $9C
 	LDA $9C
 	CMP #$38
-	BCS bra5_AFF8
+	BCS bra6_AFF8
 	LDA $59
 	CLC
 	ADC #$20
 	STA $59
-	BCC bra5_AFC7
+	BCC bra6_AFC7
 	INC $5A
-bra5_AFC7:
+bra6_AFC7:
 	LDA $5A
 	AND #$03
 	CMP #$03
-	BNE bra5_AFE4
+	BNE bra6_AFE4
 	LDA $59
 	CMP #$C0
-	BCC bra5_AFE4
+	BCC bra6_AFE4
 	AND #$1F
 	STA $59
 	STA $0484
@@ -3653,18 +3652,18 @@ bra5_AFC7:
 	AND #$F8
 	EOR #$08
 	STA $5A
-bra5_AFE4:
+bra6_AFE4:
 	INC $2D
 	LDY $2D
 	CPY #$02
-	BCS bra5_AFEF
-	JMP loc5_AF72
-bra5_AFEF:
+	BCS bra6_AFEF
+	JMP loc6_AF72
+bra6_AFEF:
 	LDA #$00
 	STA $2D
 	INC $28
-	JMP loc5_AF51
-bra5_AFF8:
+	JMP loc6_AF51
+bra6_AFF8:
 	LDA $02
 	ROR
 	ROR
@@ -3674,7 +3673,7 @@ bra5_AFF8:
 	AND #$07
 	STA $5C
 	LDX #$00
-bra5_B005:
+bra6_B005:
 	LDY $5C
 	LDA $0400,Y
 	STA $04C3,X
@@ -3685,9 +3684,9 @@ bra5_B005:
 	TYA
 	LDY #$23
 	AND #$40
-	BEQ bra5_B01E
+	BEQ bra6_B01E
 	LDY #$2B
-bra5_B01E:
+bra6_B01E:
 	TYA
 	STA $04C1,X
 	LDA $5C
@@ -3699,7 +3698,7 @@ bra5_B01E:
 	INX
 	INX
 	CPX #$30
-	BCC bra5_B005
+	BCC bra6_B005
 	RTS
 	LDA $02
 	LSR
@@ -3719,27 +3718,27 @@ bra5_B01E:
 	AND #$03
 	ORA #$20
 	LDY $5B
-	BEQ bra5_B053
+	BEQ bra6_B053
 	ORA #$08
-bra5_B053:
+bra6_B053:
 	STA $5A
 	RTS
-sub5_B056:
+sub6_B056:
 	LDA $66
 	PHA
 	LDA $67
 	PHA
 	LDX #$00
-loc5_B05E:
+loc6_B05E:
 	CLC
 	LDA #$00
 	LDY $66
-	BEQ bra5_B06A
-bra5_B065:
+	BEQ bra6_B06A
+bra6_B065:
 	ADC $6D
 	DEY
-	BNE bra5_B065
-bra5_B06A:
+	BNE bra6_B065
+bra6_B06A:
 	CLC
 	ADC $64
 	TAY
@@ -3754,14 +3753,14 @@ bra5_B06A:
 	STA PCPointerLowerByte
 	TYA
 	AND #$20
-	BNE bra5_B08F
+	BNE bra6_B08F
 	LDA $04F3
 	STA $8000
-	JMP loc5_B095
-bra5_B08F:
+	JMP loc6_B095
+bra6_B08F:
 	LDA $04F4
 	STA $8000
-loc5_B095:
+loc6_B095:
 	LDA $65
 	LSR
 	LSR
@@ -3773,65 +3772,65 @@ loc5_B095:
 	ORA $25
 	TAY
 	STA $2B
-bra5_B0A6:
+bra6_B0A6:
 	LDA (PCPointerLowerByte),Y
-	BPL bra5_B0DF
+	BPL bra6_B0DF
 	STY $2B
 	STA $25
 	CMP #$A0
-	BNE bra5_B0BB
+	BNE bra6_B0BB
 	LDY $06DE
-	BEQ bra5_B0DF
+	BEQ bra6_B0DF
 	LDA #$E0
-	BMI bra5_B0DF
-bra5_B0BB:
+	BMI bra6_B0DF
+bra6_B0BB:
 	AND #$0F
 	TAY
-	LDA tbl5_BE75,Y
+	LDA tbl6_BE75,Y
 	STA $28
 	LDA $64
 	ASL
 	CLC
-	ADC tbl5_BE65,Y
+	ADC tbl6_BE65,Y
 	TAY
 	LDA $067E,Y
 	AND $28
-	BNE bra5_B0DD
+	BNE bra6_B0DD
 	LDY #$90
 	LDA $25
 	AND #$08
-	BEQ bra5_B0DB
+	BEQ bra6_B0DB
 	INY
-bra5_B0DB:
+bra6_B0DB:
 	STY $25
-bra5_B0DD:
+bra6_B0DD:
 	LDA $25
-bra5_B0DF:
+bra6_B0DF:
 	STA $6E,X
 	INX
 	CPX #$1C
-	BCS bra5_B0FC
+	BCS bra6_B0FC
 	LDA $2B
 	CLC
 	ADC #$10
 	STA $2B
 	LDY $2B
 	CMP #$F0
-	BCC bra5_B0A6
+	BCC bra6_B0A6
 	INC $66
 	LDA #$00
 	STA $67
-	JMP loc5_B05E
-bra5_B0FC:
+	JMP loc6_B05E
+bra6_B0FC:
 	LDA $2B
 	CLC
 	ADC #$10
 	STA $2B
 	STX $28
 	LDA $2A
-	BEQ bra5_B10C
-	JSR sub5_A600
-bra5_B10C:
+	BEQ bra6_B10C
+	JSR sub6_A600
+bra6_B10C:
 	LDX $28
 	PLA
 	STA $67
@@ -3855,21 +3854,21 @@ bra5_B10C:
 	.byte $00
 	.byte $00
 	.byte $00
-sub5_B126:
+sub6_B126:
 	LDA $59
 	TAY
-	LDA tbl5_A000,Y
+	LDA tbl6_A000,Y
 	STA $25
 	LDA $5A
 	AND #$0F
 	TAX
-	LDA tbl5_A100,X
+	LDA tbl6_A100,X
 	ORA $25
 	STA $5C
 	TYA
 	AND #$7F
 	TAX
-	LDA tbl5_A200,X
+	LDA tbl6_A200,X
 	TAX
 	AND $6A
 	STA $37
@@ -3884,12 +3883,12 @@ sub5_B126:
 	RTS
 	LDA $59
 	TAY
-	LDA tbl5_A000,Y
+	LDA tbl6_A000,Y
 	STA $25
 	LDA $5A
 	AND #$0F
 	TAX
-	LDA tbl5_A100,X
+	LDA tbl6_A100,X
 	ORA $25
 	STA $5C
 	RTS
@@ -3897,16 +3896,16 @@ sub5_B126:
 	CLC
 	ADC #$20
 	STA $59
-	BCC bra5_B178
+	BCC bra6_B178
 	INC $5A
-bra5_B178:
+bra6_B178:
 	LDA $5A
 	AND #$03
 	CMP #$03
-	BNE bra5_B19D_RTS
+	BNE bra6_B19D_RTS
 	LDA $59
 	CMP #$C0
-	BCC bra5_B19D_RTS
+	BCC bra6_B19D_RTS
 	AND #$1F
 	STA $59
 	STA $0484
@@ -3917,9 +3916,9 @@ bra5_B178:
 	STA $0483
 	LDA $9C
 	STA $0482
-bra5_B19D_RTS:
+bra6_B19D_RTS:
 	RTS
-	JSR sub5_AEB8
+	JSR sub6_AEB8
 	LDA $04F6
 	ASL
 	ASL
@@ -3938,61 +3937,61 @@ bra5_B19D_RTS:
 	ADC $04F7
 	TAY
 	LDA CurrentPlayer
-	BEQ bra5_B1C6
+	BEQ bra6_B1C6
 	TYA
 	CLC
 	ADC #$1C
 	TAY
-bra5_B1C6:
+bra6_B1C6:
 	LDA $06A2,Y
-	BEQ bra5_B1FD
-	LDA tbl5_B5EA,X
+	BEQ bra6_B1FD
+	LDA tbl6_B5EA,X
 	STA $04F5
-	LDA tbl5_B5EB,X
+	LDA tbl6_B5EB,X
 	STA $0310
-	LDA tbl5_B5E8,X
+	LDA tbl6_B5E8,X
 	AND #$C0
 	STA $061D
 	LDA #$E8
 	STA $061A
-	LDA tbl5_B5E8,X
+	LDA tbl6_B5E8,X
 	AND #$20
 	STA $06E0
 	STA $06E1
-	LDA tbl5_B5E8,X
+	LDA tbl6_B5E8,X
 	AND #$3F
 	STA $04F3
-	LDA tbl5_B5E9,X
-	JMP loc5_B22C
-bra5_B1FD:
-	LDA tbl5_B56E,X
+	LDA tbl6_B5E9,X
+	JMP loc6_B22C
+bra6_B1FD:
+	LDA tbl6_B56E,X
 	STA $04F5
-	LDA tbl5_B56F,X
+	LDA tbl6_B56F,X
 	STA $0310
-	LDA tbl5_B56C,X
+	LDA tbl6_B56C,X
 	AND #$C0
 	STA $061D
 	LDA #$E8
 	STA $061A
-	LDA tbl5_B56C,X
+	LDA tbl6_B56C,X
 	AND #$20
 	STA $06E0
 	STA $06E1
-	LDA tbl5_B56C,X
+	LDA tbl6_B56C,X
 	AND #$3F
 	STA $04F3
-	LDA tbl5_B56D,X
-loc5_B22C:
-	JSR sub5_B34A
+	LDA tbl6_B56D,X
+loc6_B22C:
+	JSR sub6_B34A
 	LDA #$12
 	STA $6D
 	LDY #$00
 	STY $04FA
 	STA $04FB
 	LDY $04F7
-	LDA tbl5_B5E0,Y
+	LDA tbl6_B5E0,Y
 	STA $8C
-	LDA tbl5_B5E4,Y
+	LDA tbl6_B5E4,Y
 	STA $8D
 	LDA $04F6
 	ASL
@@ -4002,23 +4001,23 @@ loc5_B22C:
 	ADC $04F7
 	TAX
 	LDA CurrentPlayer
-	BEQ bra5_B25D
+	BEQ bra6_B25D
 	TXA
 	CLC
 	ADC #$1C
 	TAX
-bra5_B25D:
+bra6_B25D:
 	LDA $06A2,X
-	BEQ bra5_B26D
-	LDA tbl5_B76E,Y
+	BEQ bra6_B26D
+	LDA tbl6_B76E,Y
 	STA PCPointerLowerByte
-	LDA tbl5_B76F,Y
-	JMP loc5_B275
-bra5_B26D:
-	LDA tbl5_B676,Y
+	LDA tbl6_B76F,Y
+	JMP loc6_B275
+bra6_B26D:
+	LDA tbl6_B676,Y
 	STA PCPointerLowerByte
-	LDA tbl5_B677,Y
-loc5_B275:
+	LDA tbl6_B677,Y
+loc6_B275:
 	STA PCPointerUpperByte
 	LDA $04F7
 	ASL
@@ -4068,17 +4067,17 @@ loc5_B275:
 	STA InterruptMode
 	LDX #$00
 	LDA #$FF
-bra5_B2D1:
+bra6_B2D1:
 	STA $067E,X
 	INX
 	CPX #$24
-	BCC bra5_B2D1
+	BCC bra6_B2D1
 	LDX #$00
-bra5_B2DB:
+bra6_B2DB:
 	STA $03F6,X
 	INX
 	CPX #$08
-	BCC bra5_B2DB
+	BCC bra6_B2DB
 	LDA #$00
 	STA Player1YoshiCoins
 	STA Player2YoshiCoins
@@ -4098,13 +4097,13 @@ bra5_B2DB:
 	STA $06ED
 	STA $06EE
 	LDX #$00
-bra5_B317:
+bra6_B317:
 	STA GuidedObjStatus,X
 	INX
 	CPX #$14
-	BCC bra5_B317
+	BCC bra6_B317
 	LDA CurrentPlayer
-	BNE bra5_B337
+	BNE bra6_B337
 	LDA $06DA
 	STA PlayerState
 	LDA $0393
@@ -4112,7 +4111,7 @@ bra5_B317:
 	STA Player2YoshiStatus
 	STA $0621
 	RTS
-bra5_B337:
+bra6_B337:
 	LDA $06DB
 	STA PlayerState
 	LDA $0394
@@ -4120,12 +4119,12 @@ bra5_B337:
 	STA Player2YoshiStatus
 	STA $0621
 	RTS
-sub5_B34A:
+sub6_B34A:
 	CMP #$32
-	BEQ bra5_B352
+	BEQ bra6_B352
 	CMP #$3D
-	BNE bra5_B365
-bra5_B352:
+	BNE bra6_B365
+bra6_B352:
 	ASL
 	ASL
 	TAX
@@ -4137,7 +4136,7 @@ bra5_B352:
 	INX
 	STX $03CC
 	RTS
-bra5_B365:
+bra6_B365:
 	ASL
 	ASL
 	STA $03CD
@@ -4173,21 +4172,21 @@ bra5_B365:
 	STA $5A
 	LDA #$20
 	STA $26
-loc5_B3B6:
-	JSR sub5_B056
+loc6_B3B6:
+	JSR sub6_B056
 	LDA $04F5
 	STA $8000
 	LDA #$00
 	STA $2A
-loc5_B3C3:
+loc6_B3C3:
 	LDA #$00
 	STA $27
 	STA $2D
 	LDX $27
-bra5_B3CB:
+bra6_B3CB:
 	LDA $6E,X
 	STA $5F
-	JSR sub5_B658
+	JSR sub6_B658
 	LDX $2D
 	LDA $60
 	STA $0485,X
@@ -4199,49 +4198,49 @@ bra5_B3CB:
 	INC $27
 	LDX $27
 	CPX #$1C
-	BCC bra5_B3CB
+	BCC bra6_B3CB
 	LDA $5A
 	STA $0480
 	STA $31
 	LDA $59
 	STA NextBGColumn
 	STA $30
-	JSR sub5_ADA2
+	JSR sub6_ADA2
 	LDA $2A
-	BNE bra5_B438
+	BNE bra6_B438
 	LDX #$00
 	STX $36
 	LDX $36
-bra5_B405:
+bra6_B405:
 	LDA $6E,X
 	TAY
 	LDA ($D8),Y
 	STA $6A
-	JSR sub5_B126
+	JSR sub6_B126
 	LDA $59
 	CLC
 	ADC #$40
 	STA $59
-	BCC bra5_B41A
+	BCC bra6_B41A
 	INC $5A
-bra5_B41A:
+bra6_B41A:
 	LDA $59
 	CMP #$C0
-	BCC bra5_B430
+	BCC bra6_B430
 	LDA $5A
 	CMP #$23
-	BNE bra5_B430
+	BNE bra6_B430
 	LDA $59
 	AND #$1F
 	STA $59
 	LDA #$28
 	STA $5A
-bra5_B430:
+bra6_B430:
 	INC $36
 	LDX $36
 	CPX #$1C
-	BCC bra5_B405
-bra5_B438:
+	BCC bra6_B405
+bra6_B438:
 	INC $30
 	LDA $30
 	STA $59
@@ -4251,90 +4250,90 @@ bra5_B438:
 	INC $2A
 	LDA $2A
 	CMP #$02
-	BCS bra5_B44F
-	JMP loc5_B3C3
-bra5_B44F:
+	BCS bra6_B44F
+	JMP loc6_B3C3
+bra6_B44F:
 	LDA $26
-	BEQ bra5_B461
+	BEQ bra6_B461
 	LDA $65
 	CLC
 	ADC #$10
 	STA $65
-	BCC bra5_B45E
+	BCC bra6_B45E
 	INC $64
-bra5_B45E:
-	JMP loc5_B3B6
-bra5_B461:
+bra6_B45E:
+	JMP loc6_B3B6
+bra6_B461:
 	LDA PPUStatus
 	LDA #$23
 	STA PPUAddr
 	LDA #$C0
 	STA PPUAddr
 	LDX #$00
-bra5_B470:
+bra6_B470:
 	LDA $0400,X
 	STA PPUData
 	INX
 	CPX #$40
-	BCC bra5_B470
+	BCC bra6_B470
 	LDA PPUStatus
 	LDA #$2B
 	STA PPUAddr
 	LDA #$C0
 	STA PPUAddr
-bra5_B488:
-	JSR sub5_B4B1
+bra6_B488:
+	JSR sub6_B4B1
 	LDA $0400,X
 	STA PPUData
 	INX
 	CPX #$80
-	BCC bra5_B488
-	JSR sub5_BCA9
-	JSR sub5_B49D
+	BCC bra6_B488
+	JSR sub6_BCA9
+	JSR sub6_B49D
 	RTS
-sub5_B49D:
+sub6_B49D:
 	LDA InterruptMode
 	CMP #$04
-	BNE bra5_B4B0_RTS
+	BNE bra6_B4B0_RTS
 	LDA #$A8
 	STA $02
 	LDA #$CF
 	STA $03
 	LDA #$02
 	STA $5B
-bra5_B4B0_RTS:
+bra6_B4B0_RTS:
 	RTS
-sub5_B4B1:
+sub6_B4B1:
 	LDA $0310
 	ASL
 	TAY
-	LDA tbl5_B51C,Y
+	LDA tbl6_B51C,Y
 	STA $36
 	AND #$F0
 	STA $37
-	LDA tbl5_B51D,Y
+	LDA tbl6_B51D,Y
 	STA $38
 	AND #$F0
 	STA $39
 	LDY #$00
 	LDA $38
-bra5_B4CC:
+bra6_B4CC:
 	STA $0478,Y
 	INY
 	CPY #$08
-	BCC bra5_B4CC
+	BCC bra6_B4CC
 	LDA $36
 	STA $047B
 	STA $047C
 	LDY #$00
-bra5_B4DE:
+bra6_B4DE:
 	LDA $0470,Y
 	AND #$0F
 	ORA $37
 	STA $0470,Y
 	INY
 	CPY #$06
-	BCC bra5_B4DE
+	BCC bra6_B4DE
 	LDA $0472
 	AND #$0F
 	ORA $39
@@ -4355,9 +4354,9 @@ bra5_B4DE:
 	ORA $39
 	STA $0477
 	RTS
-tbl5_B51C:
+tbl6_B51C:
 	.byte $FF
-tbl5_B51D:
+tbl6_B51D:
 	.byte $AA
 	.byte $00
 	.byte $AA
@@ -4437,13 +4436,13 @@ tbl5_B51D:
 	.byte $AA
 	.byte $00
 	.byte $00
-tbl5_B56C:
+tbl6_B56C:
 	.byte $00
-tbl5_B56D:
+tbl6_B56D:
 	.byte $00
-tbl5_B56E:
+tbl6_B56E:
 	.byte $1C
-tbl5_B56F:
+tbl6_B56F:
 	.byte $00
 	.byte $01
 	.byte $01
@@ -4557,23 +4556,23 @@ tbl5_B56F:
 	.byte $3D
 	.byte $23
 	.byte $22
-tbl5_B5E0:
+tbl6_B5E0:
 	.byte $00
 	.byte $40
 	.byte $80
 	.byte $C0
-tbl5_B5E4:
+tbl6_B5E4:
 	.byte $86
 	.byte $86
 	.byte $86
 	.byte $86
-tbl5_B5E8:
+tbl6_B5E8:
 	.byte $00
-tbl5_B5E9:
+tbl6_B5E9:
 	.byte $00
-tbl5_B5EA:
+tbl6_B5EA:
 	.byte $1C
-tbl5_B5EB:
+tbl6_B5EB:
 	.byte $00
 	.byte $01
 	.byte $01
@@ -4683,26 +4682,26 @@ tbl5_B5EB:
 	.byte $23
 	.byte $23
 	.byte $1D
-sub5_B658:
+sub6_B658:
 	LDA $04F5
 	STA $8000
 	LDY $5F
 	LDA $2A
-	BNE bra5_B66D
+	BNE bra6_B66D
 	LDA ($D0),Y
 	STA $60
 	LDA ($D4),Y
 	STA $61
 	RTS
-bra5_B66D:
+bra6_B66D:
 	LDA ($D2),Y
 	STA $60
 	LDA ($D6),Y
 	STA $61
 	RTS
-tbl5_B676:
+tbl6_B676:
 	.byte $86
-tbl5_B677:
+tbl6_B677:
 	.byte $B6
 	.byte $A6
 	.byte $B6
@@ -4950,9 +4949,9 @@ tbl5_B677:
 	.byte $00
 	.byte $FF
 	.byte $00
-tbl5_B76E:
+tbl6_B76E:
 	.byte $7C
-tbl5_B76F:
+tbl6_B76F:
 	.byte $B7
 	.byte $9C
 	.byte $B7
@@ -5190,23 +5189,23 @@ tbl5_B76F:
 	.byte $00
 	.byte $FF
 	.byte $00
-sub5_B85C:
+sub6_B85C:
 	LDA PlayerXPosDup
 	SEC
 	SBC $52
 	STA $28
 	LDA PlayerXScreenDup
 	SBC $51
-	BPL bra5_B872
+	BPL bra6_B872
 	LDA $28
 	EOR #$FF
 	SEC
 	ADC #$00
 	STA $28
-bra5_B872:
+bra6_B872:
 	LDA $28
 	CMP #$40
-	BCS bra5_B8C1
+	BCS bra6_B8C1
 	LDA #$40
 	STA PlayerSprXPos
 	LDA PlayerXPosDup
@@ -5216,16 +5215,16 @@ bra5_B872:
 	LDA PlayerXScreenDup
 	SBC #$00
 	STA $55
-	BPL bra5_B894
+	BPL bra6_B894
 	LDA $56
 	EOR #$FF
 	SEC
 	ADC #$00
 	STA $56
-bra5_B894:
+bra6_B894:
 	LDA $060F
 	CMP $55
-	BNE bra5_B8BE
+	BNE bra6_B8BE
 	LDA #$00
 	STA $56
 	LDY $060F
@@ -5236,7 +5235,7 @@ bra5_B894:
 	SBC $56
 	STA PlayerSprXPos
 	CMP #$10
-	BCS bra5_B8BE
+	BCS bra6_B8BE
 	LDA #$10
 	STA PlayerXPosDup
 	STA PlayerSprXPos
@@ -5244,12 +5243,12 @@ bra5_B894:
 	STA PlayerXScreenDup
 	LDA #$00
 	STA PlayerXSpeed
-bra5_B8BE:
-	JMP loc5_B90C
-bra5_B8C1:
+bra6_B8BE:
+	JMP loc6_B90C
+bra6_B8C1:
 	LDA $28
 	CMP #$90
-	BCC bra5_B902
+	BCC bra6_B902
 	LDA #$90
 	STA PlayerSprXPos
 	LDA PlayerXPosDup
@@ -5259,16 +5258,16 @@ bra5_B8C1:
 	LDA PlayerXScreenDup
 	SBC #$00
 	STA $55
-	BPL bra5_B8E3
+	BPL bra6_B8E3
 	LDA $56
 	EOR #$FF
 	SEC
 	ADC #$00
 	STA $56
-bra5_B8E3:
+bra6_B8E3:
 	LDA $0610
 	CMP $55
-	BNE bra5_B8FF
+	BNE bra6_B8FF
 	STA $55
 	LDA #$00
 	STA $56
@@ -5278,41 +5277,41 @@ bra5_B8E3:
 	STA PlayerSprXPos
 	LDA PlayerXScreenDup
 	SBC $55
-	BPL bra5_B8FF
+	BPL bra6_B8FF
 	STA PlayerSprXPos
-bra5_B8FF:
-	JMP loc5_B90C
-bra5_B902:
+bra6_B8FF:
+	JMP loc6_B90C
+bra6_B902:
 	STA PlayerSprXPos
 	LDA $51
 	STA $55
 	LDA $52
 	STA $56
-loc5_B90C:
+loc6_B90C:
 	LDA PlayerYPosDup
 	SEC
 	SBC $54
 	STA $2B
 	LDA PlayerYScreenDup
 	SBC $53
-	BPL bra5_B922
+	BPL bra6_B922
 	LDA $2B
 	EOR #$FF
 	SEC
 	ADC #$00
 	STA $2B
-bra5_B922:
+bra6_B922:
 	LDA PlayerYScreenDup
 	CMP $53
-	BEQ bra5_B92F
+	BEQ bra6_B92F
 	LDA $2B
 	SEC
 	SBC #$10
 	STA $2B
-bra5_B92F:
+bra6_B92F:
 	LDA $2B
 	CMP #$40
-	BCS bra5_B96E
+	BCS bra6_B96E
 	LDA #$40
 	STA PlayerSprYPos
 	LDA PlayerYPosDup
@@ -5322,16 +5321,16 @@ bra5_B92F:
 	LDA PlayerYScreenDup
 	SBC #$00
 	STA $57
-	BPL bra5_B951
+	BPL bra6_B951
 	LDA $58
 	EOR #$FF
 	SEC
 	ADC #$00
 	STA $58
-bra5_B951:
+bra6_B951:
 	LDA $060D
 	CMP $57
-	BNE bra5_B96B
+	BNE bra6_B96B
 	LDA #$00
 	STA $57
 	STA $58
@@ -5341,13 +5340,13 @@ bra5_B951:
 	STA PlayerSprYPos
 	LDA PlayerYScreenDup
 	SBC $57
-	BPL bra5_B96B
-bra5_B96B:
-	JMP loc5_B9C1
-bra5_B96E:
+	BPL bra6_B96B
+bra6_B96B:
+	JMP loc6_B9C1
+bra6_B96E:
 	LDA $2B
 	CMP #$B0
-	BCC bra5_B9B6
+	BCC bra6_B9B6
 	LDA #$B0
 	STA PlayerSprYPos
 	LDA PlayerYPosDup
@@ -5357,7 +5356,7 @@ bra5_B96E:
 	LDA PlayerYScreenDup
 	SBC #$00
 	STA $57
-	BPL bra5_B999
+	BPL bra6_B999
 	LDA $58
 	EOR #$FF
 	SEC
@@ -5368,10 +5367,10 @@ bra5_B96E:
 	SEC
 	ADC #$00
 	STA $57
-bra5_B999:
+bra6_B999:
 	LDA $060E
 	CMP $57
-	BNE bra5_B9B3
+	BNE bra6_B9B3
 	STA $57
 	LDA #$00
 	STA $58
@@ -5381,47 +5380,47 @@ bra5_B999:
 	STA PlayerSprYPos
 	LDA PlayerYScreenDup
 	SBC $57
-	BPL bra5_B9B3
-bra5_B9B3:
-	JMP loc5_B9C1
-bra5_B9B6:
+	BPL bra6_B9B3
+bra6_B9B3:
+	JMP loc6_B9C1
+bra6_B9B6:
 	STA PlayerSprYPos
 	LDA $53
 	STA $57
 	LDA $54
 	STA $58
 	RTS
-loc5_B9C1:
+loc6_B9C1:
 	LDA $57
 	CMP PlayerYScreenDup
-	BEQ bra5_B9CE_RTS
+	BEQ bra6_B9CE_RTS
 	LDA $58
 	SEC
 	SBC #$10
 	STA $58
-bra5_B9CE_RTS:
+bra6_B9CE_RTS:
 	RTS
-sub5_B9CF:
+sub6_B9CF:
 	SEC
 	LDA $56
 	SBC $52
 	STA ScrollStatus
 	LDA $55
 	SBC $51
-	BPL bra5_B9EA
+	BPL bra6_B9EA
 	LDA ScrollStatus
 	EOR #$FF
 	SEC
 	ADC #$00
 	ORA #$80
 	STA ScrollStatus
-bra5_B9EA:
+bra6_B9EA:
 	LDA ScrollStatus
-	BEQ bra5_BA20_RTS
+	BEQ bra6_BA20_RTS
 	LDA $52
 	EOR $56
 	AND #$F8
-	BEQ bra5_BA20_RTS
+	BEQ bra6_BA20_RTS
 	LDA $51
 	STA $64
 	LDA $52
@@ -5431,22 +5430,22 @@ bra5_B9EA:
 	LDA #$00
 	STA $67
 	LDA ScrollStatus
-	BMI bra5_BA18
+	BMI bra6_BA18
 	INC $64
-	JSR sub5_AF11
+	JSR sub6_AF11
 	LDX $51
 	INX
 	STX $04F2
 	RTS
-bra5_BA18:
-	JSR sub5_AF11
+bra6_BA18:
+	JSR sub6_AF11
 	LDA $51
 	STA $04F2
-bra5_BA20_RTS:
+bra6_BA20_RTS:
 	RTS
-sub5_BA21:
+sub6_BA21:
 	LDA ScrollStatus
-	BMI bra5_BA34
+	BMI bra6_BA34
 	CLC
 	ADC $02
 	STA $02
@@ -5455,7 +5454,7 @@ sub5_BA21:
 	LDA $55
 	STA $51
 	RTS
-bra5_BA34:
+bra6_BA34:
 	AND #$7F
 	STA ScrollStatus
 	LDA $02
@@ -5467,38 +5466,38 @@ bra5_BA34:
 	LDA $55
 	STA $51
 	RTS
-sub5_BA4A:
+sub6_BA4A:
 	SEC
 	LDA $58
 	SBC $54
 	STA $0327
 	LDA $57
 	SBC $53
-	BPL bra5_BA65
+	BPL bra6_BA65
 	LDA $0327
 	EOR #$FF
 	SEC
 	ADC #$00
 	ORA #$80
 	STA $0327
-bra5_BA65:
+bra6_BA65:
 	LDA $57
 	CMP $53
-	BEQ bra5_BA73_RTS
+	BEQ bra6_BA73_RTS
 	LDA $0327
 	AND #$8F
 	STA $0327
-bra5_BA73_RTS:
+bra6_BA73_RTS:
 	RTS
 	LDA $0327
-	BEQ bra5_BA81_RTS
+	BEQ bra6_BA81_RTS
 	LDA $54
 	EOR $58
 	AND #$F8
-	BNE bra5_BA82
-bra5_BA81_RTS:
+	BNE bra6_BA82
+bra6_BA81_RTS:
 	RTS
-bra5_BA82:
+bra6_BA82:
 	LDA $51
 	STA $64
 	LDA $52
@@ -5508,20 +5507,20 @@ bra5_BA82:
 	LDA $54
 	STA $67
 	LDA $0327
-	BMI bra5_BA9A
+	BMI bra6_BA9A
 	INC $66
 	RTS
-bra5_BA9A:
+bra6_BA9A:
 	LDA $67
 	SEC
 	SBC #$08
-	BCS bra5_BAAA
+	BCS bra6_BAAA
 	DEC $66
 	CMP #$F0
-	BCC bra5_BAAA
+	BCC bra6_BAAA
 	SEC
 	SBC #$10
-bra5_BAAA:
+bra6_BAAA:
 	STA $67
 	LDA $5B
 	STA $28
@@ -5531,40 +5530,40 @@ bra5_BAAA:
 	SBC #$08
 	STA $03
 	CMP #$F0
-	BCC bra5_BAC8
+	BCC bra6_BAC8
 	SEC
 	SBC #$10
 	STA $03
 	LDA $5B
 	EOR #$02
 	STA $5B
-bra5_BAC8:
+bra6_BAC8:
 	LDA $2B
 	STA $03
 	LDA $28
 	STA $5B
 	RTS
-sub5_BAD1:
+sub6_BAD1:
 	LDA $0327
-	BMI bra5_BAF3
+	BMI bra6_BAF3
 	CLC
 	ADC $03
 	STA $03
 	CMP #$F0
-	BCC bra5_BAEA
+	BCC bra6_BAEA
 	CLC
 	ADC #$10
 	STA $03
 	LDA $5B
 	EOR #$02
 	STA $5B
-bra5_BAEA:
+bra6_BAEA:
 	LDA $58
 	STA $54
 	LDA $57
 	STA $53
 	RTS
-bra5_BAF3:
+bra6_BAF3:
 	AND #$07
 	STA $25
 	LDA $03
@@ -5572,14 +5571,14 @@ bra5_BAF3:
 	SBC $25
 	STA $03
 	CMP #$F0
-	BCC bra5_BB0D
+	BCC bra6_BB0D
 	SEC
 	SBC #$10
 	STA $03
 	LDA $5B
 	EOR #$02
 	STA $5B
-bra5_BB0D:
+bra6_BB0D:
 	LDA $58
 	STA $54
 	LDA $57
@@ -5587,22 +5586,22 @@ bra5_BB0D:
 	RTS
 	LDA InterruptMode
 	CMP #$04
-	BEQ bra5_BB34_RTS
+	BEQ bra6_BB34_RTS
 	LDA $03A1
-	BNE bra5_BB34_RTS
+	BNE bra6_BB34_RTS
 	LDA $037D
 	ASL
 	TAY
-	LDA tbl5_BB35,Y
+	LDA tbl6_BB35,Y
 	STA PCPointerLowerByte
-	LDA tbl5_BB36,Y
+	LDA tbl6_BB36,Y
 	STA PCPointerUpperByte
 	JMP (PCPointerLowerByte)
-bra5_BB34_RTS:
+bra6_BB34_RTS:
 	RTS
-tbl5_BB35:
+tbl6_BB35:
 	.byte $3F
-tbl5_BB36:
+tbl6_BB36:
 	.byte $BB
 	.byte $6D
 	.byte $BB
@@ -5612,55 +5611,55 @@ tbl5_BB36:
 	.byte $BB
 	.byte $EF
 	.byte $BB
-	JSR sub5_BC1F
+	JSR sub6_BC1F
 	INC $037D
 	LDX #$00
 	LDA CurrentPlayer
-	BEQ bra5_BB4E
+	BEQ bra6_BB4E
 	LDX #$01
-bra5_BB4E:
+bra6_BB4E:
 	LDA $036A,X
 	STA $34
 	LDA #$00
 	STA $35
 	LDA #$0B
 	STA $26
-	JSR sub5_BC52
+	JSR sub6_BC52
 	LDY #$00
 	LDX #$01
-bra5_BB62:
+bra6_BB62:
 	LDA $0378,Y
 	STA $03A5,X
 	INY
 	DEX
-	BPL bra5_BB62
+	BPL bra6_BB62
 	RTS
-	JSR sub5_BC1F
+	JSR sub6_BC1F
 	INC $037D
 	LDX #$04
 	LDA #$00
-bra5_BB77:
+bra6_BB77:
 	STA $03A5,X
 	DEX
-	BPL bra5_BB77
+	BPL bra6_BB77
 	LDX #$00
 	LDA CurrentPlayer
-	BEQ bra5_BB86
+	BEQ bra6_BB86
 	LDX #$01
-bra5_BB86:
+bra6_BB86:
 	LDA $036C,X
 	STA $25
-	BEQ bra5_BB99_RTS
+	BEQ bra6_BB99_RTS
 	LDY #$00
 	LDA #$06
-bra5_BB91:
+bra6_BB91:
 	STA $03A5,Y
 	INY
 	CPY $25
-	BCC bra5_BB91
-bra5_BB99_RTS:
+	BCC bra6_BB91
+bra6_BB99_RTS:
 	RTS
-	JSR sub5_BC1F
+	JSR sub6_BC1F
 	INC $037D
 	LDA $036E
 	STA $34
@@ -5668,84 +5667,84 @@ bra5_BB99_RTS:
 	STA $35
 	LDA #$0B
 	STA $26
-	JSR sub5_BC52
+	JSR sub6_BC52
 	LDY #$00
 	LDX #$02
-bra5_BBB5:
+bra6_BBB5:
 	LDA $0378,Y
 	STA $03A5,X
 	INY
 	DEX
-	BPL bra5_BBB5
+	BPL bra6_BBB5
 	RTS
-	JSR sub5_BC1F
+	JSR sub6_BC1F
 	INC $037D
 	LDX #$00
 	LDA CurrentPlayer
-	BEQ bra5_BBCF
+	BEQ bra6_BBCF
 	LDX #$02
-bra5_BBCF:
+bra6_BBCF:
 	LDA #$0B
 	STA $26
 	LDA $0372,X
 	STA $34
 	LDA $0373,X
 	STA $35
-	JSR sub5_BC52
+	JSR sub6_BC52
 	LDY #$00
 	LDX #$04
-bra5_BBE4:
+bra6_BBE4:
 	LDA $0378,Y
 	STA $03A5,X
 	INY
 	DEX
-	BPL bra5_BBE4
+	BPL bra6_BBE4
 	RTS
-	JSR sub5_BC1F
+	JSR sub6_BC1F
 	LDA #$00
 	STA $037D
 	LDX #$00
 	LDA CurrentPlayer
-	BEQ bra5_BC00
+	BEQ bra6_BC00
 	LDX #$01
-bra5_BC00:
+bra6_BC00:
 	LDA $0376,X
 	STA $34
 	LDA #$00
 	STA $35
 	LDA #$0B
 	STA $26
-	JSR sub5_BC52
+	JSR sub6_BC52
 	LDY #$00
 	LDX #$01
-bra5_BC14:
+bra6_BC14:
 	LDA $0378,Y
 	STA $03A5,X
 	INY
 	DEX
-	BPL bra5_BC14
+	BPL bra6_BC14
 	RTS
-sub5_BC1F:
+sub6_BC1F:
 	LDA $037D
 	ASL
 	ASL
 	TAX
-	LDA tbl5_BC3E,X
+	LDA tbl6_BC3E,X
 	STA $03A1
-	LDA tbl5_BC3F,X
+	LDA tbl6_BC3F,X
 	STA $03A2
-	LDA tbl5_BC40,X
+	LDA tbl6_BC40,X
 	STA $03A3
-	LDA tbl5_BC41,X
+	LDA tbl6_BC41,X
 	STA $03A4
 	RTS
-tbl5_BC3E:
+tbl6_BC3E:
 	.byte $2B
-tbl5_BC3F:
+tbl6_BC3F:
 	.byte $84
-tbl5_BC40:
+tbl6_BC40:
 	.byte $01
-tbl5_BC41:
+tbl6_BC41:
 	.byte $02
 	.byte $2B
 	.byte $68
@@ -5763,14 +5762,14 @@ tbl5_BC41:
 	.byte $7C
 	.byte $01
 	.byte $02
-sub5_BC52:
+sub6_BC52:
 	LDA #$00
 	STA $39
 	STA $25
 	LDA #$0A
 	STA $38
-bra5_BC5C:
-	JSR sub5_BC83
+bra6_BC5C:
+	JSR sub6_BC83
 	LDA PCPointerLowerByte
 	CLC
 	ADC $26
@@ -5779,24 +5778,24 @@ bra5_BC5C:
 	INC $25
 	LDA $25
 	CMP #$05
-	BCC bra5_BC5C
+	BCC bra6_BC5C
 	LDY #$04
-bra5_BC73:
+bra6_BC73:
 	LDA $0378,Y
 	CMP $26
-	BNE bra5_BC82_RTS
+	BNE bra6_BC82_RTS
 	LDA #$00
 	STA $0378,Y
 	DEY
-	BNE bra5_BC73
-bra5_BC82_RTS:
+	BNE bra6_BC73
+bra6_BC82_RTS:
 	RTS
-sub5_BC83:
+sub6_BC83:
 	LDA #$00
 	STA PCPointerLowerByte
 	STA PCPointerUpperByte
 	LDX #$10
-bra5_BC8B:
+bra6_BC8B:
 	ASL $34
 	ROL $35
 	ROL PCPointerLowerByte
@@ -5807,15 +5806,15 @@ bra5_BC8B:
 	TAY
 	LDA PCPointerUpperByte
 	SBC $39
-	BCC bra5_BCA5
+	BCC bra6_BCA5
 	INC $34
 	STA PCPointerUpperByte
 	STY PCPointerLowerByte
-bra5_BCA5:
+bra6_BCA5:
 	DEX
-	BNE bra5_BC8B
+	BNE bra6_BC8B
 	RTS
-sub5_BCA9:
+sub6_BCA9:
 	LDA #$2B
 	STA PPUAddr
 	LDA #$40
@@ -5823,31 +5822,31 @@ sub5_BCA9:
 	LDX #$00
 	LDA InterruptMode
 	CMP #$04
-	BEQ bra5_BCD9
+	BEQ bra6_BCD9
 	LDA CurrentPlayer
-	BNE bra5_BCCD
-bra5_BCC1:
-	LDA tbl5_BCE5,X
+	BNE bra6_BCCD
+bra6_BCC1:
+	LDA tbl6_BCE5,X
 	STA PPUData
 	INX
 	CPX #$80
-	BCC bra5_BCC1
+	BCC bra6_BCC1
 	RTS
-bra5_BCCD:
-	LDA tbl5_BD65,X
+bra6_BCCD:
+	LDA tbl6_BD65,X
 	STA PPUData
 	INX
 	CPX #$80
-	BCC bra5_BCCD
+	BCC bra6_BCCD
 	RTS
-bra5_BCD9:
-	LDA tbl5_BDE5,X
+bra6_BCD9:
+	LDA tbl6_BDE5,X
 	STA PPUData
 	INX
 	CPX #$80
-	BCC bra5_BCD9
+	BCC bra6_BCD9
 	RTS
-tbl5_BCE5:
+tbl6_BCE5:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -5976,7 +5975,7 @@ tbl5_BCE5:
 	.byte $00
 	.byte $00
 	.byte $00
-tbl5_BD65:
+tbl6_BD65:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -6105,7 +6104,7 @@ tbl5_BD65:
 	.byte $00
 	.byte $00
 	.byte $00
-tbl5_BDE5:
+tbl6_BDE5:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -6234,7 +6233,7 @@ tbl5_BDE5:
 	.byte $00
 	.byte $00
 	.byte $00
-tbl5_BE65:
+tbl6_BE65:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -6251,7 +6250,7 @@ tbl5_BE65:
 	.byte $01
 	.byte $01
 	.byte $01
-tbl5_BE75:
+tbl6_BE75:
 	.byte $01
 	.byte $02
 	.byte $04
@@ -6282,9 +6281,9 @@ tbl5_BE75:
 	STX BGBank3
 	INX
 	STX $03CC
-	JSR sub5_BEE7
-	JSR sub5_BF09
-	JSR sub5_BEBE
+	JSR sub6_BEE7
+	JSR sub6_BF09
+	JSR sub6_BEBE
 	JSR $F176
 	LDA #$18
 	STA PPUController
@@ -6293,20 +6292,20 @@ tbl5_BE75:
 	STA $00
 	LDA PPUStatus
 	RTS
-sub5_BEBE:
+sub6_BEBE:
 	LDA #$3F
 	STA PPUAddr
 	LDA #$00
 	STA PPUAddr
 	LDX #$00
-bra5_BECA:
-	LDA tbl5_BED6,X
+bra6_BECA:
+	LDA tbl6_BED6,X
 	STA PPUData
 	INX
 	CPX #$11
-	BCC bra5_BECA
+	BCC bra6_BECA
 	RTS
-tbl5_BED6:
+tbl6_BED6:
 	.byte $0E
 	.byte $3B
 	.byte $16
@@ -6324,11 +6323,11 @@ tbl5_BED6:
 	.byte $16
 	.byte $30
 	.byte $0E
-sub5_BEE7:
+sub6_BEE7:
 	LDX #$00
-	LDA tbl5_BF60,X
+	LDA tbl6_BF60,X
 	STA PCPointerLowerByte
-	LDA tbl5_BF61,X
+	LDA tbl6_BF61,X
 	STA PCPointerUpperByte
 	LDA PCPointerLowerByte
 	CLC
@@ -6338,9 +6337,9 @@ sub5_BEE7:
 	ADC #$00
 	STA PCPointerUpperByte
 	RTS
-tbl5_BF01:
+tbl6_BF01:
 	.byte $00
-tbl5_BF02:
+tbl6_BF02:
 	.byte $20
 	.byte $00
 	.byte $24
@@ -6348,7 +6347,7 @@ tbl5_BF02:
 	.byte $28
 	.byte $00
 	.byte $2C
-sub5_BF09:
+sub6_BF09:
 	LDA #$00
 	STA PPUCtrl
 	STA $2001
@@ -6357,46 +6356,46 @@ sub5_BF09:
 	TAX
 	LDY #$00
 	LDA PPUStatus
-	LDA tbl5_BF02,X
+	LDA tbl6_BF02,X
 	STA PPUAddr
-	LDA tbl5_BF01,X
+	LDA tbl6_BF01,X
 	STA PPUAddr
-loc5_BF26:
+loc6_BF26:
 	LDA (PCPointerLowerByte),Y
-	BPL bra5_BF44
+	BPL bra6_BF44
 	CMP #$FF
-	BEQ bra5_BF58_RTS
+	BEQ bra6_BF58_RTS
 	AND #$7F
 	STA $2B
-bra5_BF32:
-	JSR sub5_BF59
+bra6_BF32:
+	JSR sub6_BF59
 	LDA (PCPointerLowerByte),Y
 	STA PPUData
 	DEC $2B
-	BNE bra5_BF32
-	JSR sub5_BF59
-	JMP loc5_BF26
-bra5_BF44:
+	BNE bra6_BF32
+	JSR sub6_BF59
+	JMP loc6_BF26
+bra6_BF44:
 	STA $2B
-	JSR sub5_BF59
+	JSR sub6_BF59
 	LDA (PCPointerLowerByte),Y
-bra5_BF4B:
+bra6_BF4B:
 	STA PPUData
 	DEC $2B
-	BNE bra5_BF4B
-	JSR sub5_BF59
-	JMP loc5_BF26
-bra5_BF58_RTS:
+	BNE bra6_BF4B
+	JSR sub6_BF59
+	JMP loc6_BF26
+bra6_BF58_RTS:
 	RTS
-sub5_BF59:
+sub6_BF59:
 	INC PCPointerLowerByte
-	BNE bra5_BF5F_RTS
+	BNE bra6_BF5F_RTS
 	INC PCPointerUpperByte
-bra5_BF5F_RTS:
+bra6_BF5F_RTS:
 	RTS
-tbl5_BF60:
+tbl6_BF60:
 	.byte $BA
-tbl5_BF61:
+tbl6_BF61:
 	.byte $AB
 	.byte $04
 	STA ObjectState,X
@@ -6405,50 +6404,50 @@ tbl5_BF61:
 	PLA
 	PLA
 	RTS
-	JSR sub5_BF7A
+	JSR sub6_BF7A
 	PLA
 	PLA
 	RTS
 	LDA InvincibilityTimer
-	BEQ bra5_BF7A
+	BEQ bra6_BF7A
 	RTS
-bra5_BF7A:
-sub5_BF7A:
+bra6_BF7A:
+sub6_BF7A:
 	LDX $A4
 	LDA ObjectSlot,X
 	CMP #$48
-	BCC bra5_BF87
+	BCC bra6_BF87
 	CMP #$4C
-	BCC bra5_BF9B
-bra5_BF87:
+	BCC bra6_BF9B
+bra6_BF87:
 	LDA $05B4,X
-	BMI bra5_BF93
+	BMI bra6_BF93
 	LDA ObjectState,X
 	ORA #$40
-	BNE bra5_BF98
-bra5_BF93:
+	BNE bra6_BF98
+bra6_BF93:
 	LDA ObjectState,X
 	AND #$BF
-bra5_BF98:
+bra6_BF98:
 	STA ObjectState,X
-bra5_BF9B:
+bra6_BF9B:
 	LDA #$00
 	STA PlayerCarryFlag
 	LDA Player1YoshiStatus
-	BEQ bra5_BFAD
+	BEQ bra6_BFAD
 	LDA #$01
 	STA $05FD
-	JMP loc5_BFC0
-bra5_BFAD:
+	JMP loc6_BFC0
+bra6_BFAD:
 	LDA PlayerState
-	BEQ bra5_BFD2
+	BEQ bra6_BFD2
 	LDA #$00
 	STA PlayerState
 	LDA #$01
 	STA PlayerPowerupBuffer
 	LDA #$07
 	STA Event
-loc5_BFC0:
+loc6_BFC0:
 	LDA #$D0
 	STA InvincibilityTimer
 	LDA #$0C
@@ -6457,7 +6456,7 @@ loc5_BFC0:
 	AND #$E0
 	STA ObjectState,X
 	RTS
-bra5_BFD2:
+bra6_BFD2:
 	LDA #$04
 	STA Event
 	LDA #$00

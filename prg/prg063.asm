@@ -1,5 +1,4 @@
-; 0x07E010-0x08000F
-
+;disassembled by BZK 6502 Disassembler
 	PHP
 	PHA
 	TXA
@@ -17,7 +16,7 @@
 	ORA $5B
 	STA $00
 	STA PPUCtrl
-	JSR sub2_F6E0
+	JSR sub3_F6E0
 	LDA BGBank1
 	STA $9000
 	LDA BGBank2
@@ -41,8 +40,8 @@
 	PLA
 	PLP
 	RTI
-	JMP loc2_EF10
-	JMP loc2_EFE0
+	JMP loc3_EF10
+	JMP loc3_EFE0
 	PHP
 	PHA
 	TXA
@@ -50,7 +49,7 @@
 	TYA
 	PHA
 	LDA $0480
-	BEQ bra2_E0E8
+	BEQ bra3_E0E8
 	LDA PPUStatus
 	LDA $00
 	ORA #$04
@@ -61,32 +60,32 @@
 	LDA NextBGColumn
 	STA PPUAddr
 	LDX #$00
-bra2_E088:
+bra3_E088:
 	LDA $0485,X
 	STA PPUData
 	INX
 	CPX #$1E
-	BCC bra2_E088
+	BCC bra3_E088
 	LDA PPUStatus
 	LDA $0480
 	ORA #$08
 	STA PPUAddr
 	LDA NextBGColumn
 	STA PPUAddr
-bra2_E0A4:
+bra3_E0A4:
 	LDA $0485,X
 	STA PPUData
 	INX
 	CPX #$38
-	BCC bra2_E0A4
+	BCC bra3_E0A4
 	LDA PPUStatus
 	LDA $00
 	AND #$FB
 	STA PPUCtrl
 	LDA $04C1
-	BEQ bra2_E0E1
+	BEQ bra3_E0E1
 	LDX #$00
-bra2_E0C0:
+bra3_E0C0:
 	LDA PPUStatus
 	LDA $04C1,X
 	STA PPUAddr
@@ -98,22 +97,22 @@ bra2_E0C0:
 	INX
 	INX
 	CPX #$30
-	BCC bra2_E0C0
+	BCC bra3_E0C0
 	LDA #$00
 	STA $04C1
-bra2_E0E1:
+bra3_E0E1:
 	LDA #$00
 	STA $0480
-	BEQ bra2_E0F0
-bra2_E0E8:
+	BEQ bra3_E0F0
+bra3_E0E8:
 	LDA $03A1
-	BEQ bra2_E0F0
-	JSR sub2_F20F
-bra2_E0F0:
+	BEQ bra3_E0F0
+	JSR sub3_F20F
+bra3_E0F0:
 	LDA $03E4
-	BEQ bra2_E0F8
-	JSR sub2_F5CE
-bra2_E0F8:
+	BEQ bra3_E0F8
+	JSR sub3_F5CE
+bra3_E0F8:
 	LDA #$00
 	STA PPUOAMAddr
 	LDA #$02
@@ -124,31 +123,31 @@ bra2_E0F8:
 	STA PPUScroll
 	LDY $03
 	LDA $0633
-	BEQ bra2_E12F
+	BEQ bra3_E12F
 	CMP #$30
-	BCC bra2_E11E
+	BCC bra3_E11E
 	LDA #$00
 	STA $0633
-	BEQ bra2_E12F
-bra2_E11E:
+	BEQ bra3_E12F
+bra3_E11E:
 	INC $0633
 	LDA $06
 	AND #$04
-	BNE bra2_E12F
+	BNE bra3_E12F
 	CPY #$EC
-	BCS bra2_E12F
+	BCS bra3_E12F
 	INY
 	INY
 	INY
 	INY
-bra2_E12F:
+bra3_E12F:
 	STY PPUScroll
 	LDA $00
 	AND #$FC
 	ORA $5B
 	STA $00
 	STA PPUCtrl
-	JSR sub2_F6E0
+	JSR sub3_F6E0
 	LDA BGBank1
 	STA $9000
 	LDA BGBank2
@@ -165,8 +164,8 @@ bra2_E12F:
 	STA $9006
 	LDA SpriteBank4
 	STA $9007
-	JSR sub2_F7DA
-	JSR sub2_F19F
+	JSR sub3_F7DA
+	JSR sub3_F19F
 	LDA #$3A
 	STA $8000
 	LDA #$3B
@@ -192,14 +191,14 @@ bra2_E12F:
 	STA PPUMask
 	STA PPUCtrl
 	LDX #$02
-bra2_E1A5:
+bra3_E1A5:
 	BIT PPUStatus
-	BPL bra2_E1A5
-bra2_E1AA:
+	BPL bra3_E1A5
+bra3_E1AA:
 	BIT PPUStatus
-	BMI bra2_E1AA
+	BMI bra3_E1AA
 	DEX
-	BNE bra2_E1A5
+	BNE bra3_E1A5
 	LDA #$3E
 	STA $8002
 	LDA #$3F
@@ -232,15 +231,15 @@ bra2_E1AA:
 	LDA PPUStatus
 	LDA #$10
 	TAX
-bra2_E202:
+bra3_E202:
 	STA PPUAddr
 	STA PPUAddr
 	EOR #$10
 	DEX
-	BNE bra2_E202
+	BNE bra3_E202
 	LDA #$00
 	LDX #$00
-bra2_E211:
+bra3_E211:
 	STA $00,X
 	STA SpriteMem,X
 	STA $0300,X
@@ -249,9 +248,9 @@ bra2_E211:
 	STA $0600,X
 	STA $0700,X
 	DEX
-	BNE bra2_E211
+	BNE bra3_E211
 	LDA #$00
-	JSR sub2_FFD0
+	JSR sub3_FFD0
 	LDA #$3A
 	STA $8000
 	LDA #$3B
@@ -272,7 +271,7 @@ bra2_E211:
 	LDA #$4C
 	STA $063A
 	LDX #$04
-	LDA tbl2_EF08,X
+	LDA tbl3_EF08,X
 	STA $063B
 	LDA #$00E0
 	STA $063C
@@ -282,39 +281,39 @@ bra2_E211:
 	LDA #$18
 	STA PPUMask
 	STA $01
-bra2_E277:
-loc2_E277:
+bra3_E277:
+loc3_E277:
 	INC $00E4
 	LDA $06
 	CMP $07
-	BEQ bra2_E277
+	BEQ bra3_E277
 	STA $07
 	LDA #$01
 	STA $062D
-	JSR sub2_E2AB
+	JSR sub3_E2AB
 	LDA #$00
 	STA $062D
 	LDX #$00
 	LDA a:GameState
-	BNE bra2_E298
+	BNE bra3_E298
 	LDX #$04
-bra2_E298:
-	LDA tbl2_EF08,X
+bra3_E298:
+	LDA tbl3_EF08,X
 	STA $063B
 	LDA $02
 	STA XScroll
 	LDA $03
 	STA YScroll
-	JMP loc2_E277
-sub2_E2AB:
+	JMP loc3_E277
+sub3_E2AB:
 	LDA a:GameState
-	BNE bra2_E317
+	BNE bra3_E317
 	LDX #$04
-	LDA tbl2_EF08,X
+	LDA tbl3_EF08,X
 	STA $063B
-	JMP loc2_E2BE
-	JMP loc2_E317
-loc2_E2BE:
+	JMP loc3_E2BE
+	JMP loc3_E317
+loc3_E2BE:
 	LDX #$29
 	STX $09
 	STX $8001
@@ -323,14 +322,14 @@ loc2_E2BE:
 	LDA a:Event
 	ASL
 	TAY 
-	LDA tbl2_E2DB,Y 
+	LDA tbl3_E2DB,Y 
 	STA $32
-	LDA tbl2_E2DC,Y
+	LDA tbl3_E2DC,Y
 	STA $33
 	JMP ($32)
-tbl2_E2DB:
+tbl3_E2DB:
 	.byte $E5
-tbl2_E2DC:
+tbl3_E2DC:
 	.byte $E2
 	.byte $16
 	.byte $E3
@@ -342,40 +341,40 @@ tbl2_E2DC:
 	.byte $E3
 	LDA ButtonsPressed
 	AND #$80
-	BEQ bra2_E2FE
+	BEQ bra3_E2FE
 	INC $04F7
 	LDA $04F7
 	CMP #$04
-	BCC bra2_E2FE
+	BCC bra3_E2FE
 	LDA #$00
 	STA $04F7
 	INC $04F6
-bra2_E2FE:
+bra3_E2FE:
 	LDA ButtonsPressed
 	AND #$10
-	BEQ bra2_E315
+	BEQ bra3_E315
 	INC a:GameState
 	LDA #$00
 	STA a:Event
 	LDA #$05
 	STA $0312
-	JSR sub2_F919
-bra2_E315:
+	JSR sub3_F919
+bra3_E315:
 	RTS
 	RTS
-bra2_E317:
-loc2_E317:
+bra3_E317:
+loc3_E317:
 	LDA a:Event
 	ASL
 	TAY
-	LDA tbl2_E329,Y
+	LDA tbl3_E329,Y
 	STA $32
-	LDA tbl2_E32A,Y
+	LDA tbl3_E32A,Y
 	STA $33
 	JMP ($32)
-tbl2_E329:
+tbl3_E329:
 	.byte $53
-tbl2_E32A:
+tbl3_E32A:
 	.byte $E3
 	.byte $72
 	.byte $E3
@@ -432,14 +431,14 @@ tbl2_E32A:
 	LDA $00E0
 	ASL
 	TAY
-	LDA tbl2_E384,Y
+	LDA tbl3_E384,Y
 	STA $32
-	LDA tbl2_E385,Y
+	LDA tbl3_E385,Y
 	STA $33
 	JMP ($32)
-tbl2_E384:
+tbl3_E384:
 	.byte $88
-tbl2_E385:
+tbl3_E385:
 	.byte $E3
 	.byte $DD
 	.byte $E3
@@ -450,13 +449,13 @@ tbl2_E385:
 	STA $01
 	LDX #$00
 	TXA
-bra2_E397:
+bra3_E397:
 	STA ObjectSlot,X
 	INX
 	CPX #$14
-	BCC bra2_E397
+	BCC bra3_E397
 	STA $05F1
-	JSR sub2_E904
+	JSR sub3_E904
 	LDA #$3C
 	STA $8000
 	LDA #$3D
@@ -475,77 +474,77 @@ bra2_E397:
 	STA $00
 	LDA #$01
 	STA $D001
-	JSR sub2_F0CB
+	JSR sub3_F0CB
 	INC $00E0
 	RTS
 	.byte $2C
 	.byte $01
 	LDA #$00
 	STA $0311
-	JSR sub2_E6E0
-	JSR sub2_F919
+	JSR sub3_E6E0
+	JSR sub3_F919
 	LDA #$00
 	STA $52
 	STA $00E0
 	LDA $04F5
 	CMP #$23
-	BNE bra2_E405
+	BNE bra3_E405
 	LDA $51
-	BNE bra2_E405
+	BNE bra3_E405
 	LDA $04F7
-	BEQ bra2_E405
+	BEQ bra3_E405
 	LDA #$05
 	STA a:Event
 	RTS
-bra2_E405:
+bra3_E405:
 	INC a:Event
 	RTS
 	LDA $00E0
-	BEQ bra2_E411
-	JMP loc2_E498
-bra2_E411:
+	BEQ bra3_E411
+	JMP loc3_E498
+bra3_E411:
 	LDX #$02
-	LDA tbl2_EF08,X
+	LDA tbl3_EF08,X
 	STA $063B
 	LDA PauseFlag
-	BNE bra2_E442
+	BNE bra3_E442
 	LDA #$39
 	STA $8001
 	LDA $06E6
-	BNE bra2_E42B
+	BNE bra3_E42B
 	JSR $ACAC
-bra2_E42B:
+bra3_E42B:
 	LDA $06EF
-	BEQ bra2_E437
+	BEQ bra3_E437
 	LDA #$00
 	STA $06EF
 	STA $14
-bra2_E437:
+bra3_E437:
 	LDA BubbleFrequency
-	BEQ bra2_E445
+	BEQ bra3_E445
 	LDA $06
 	AND #$01
-	BEQ bra2_E445
-bra2_E442:
-	JMP loc2_E45F
-bra2_E445:
-	JSR sub2_ED14
+	BEQ bra3_E445
+bra3_E442:
+	JMP loc3_E45F
+bra3_E445:
+	JSR sub3_ED14
 	LDA $0635
-	BEQ bra2_E45F
+	BEQ bra3_E45F
 	INC $0634
 	LDA $0634
 	CMP #$3B
-	BCC bra2_E45F
+	BCC bra3_E45F
 	DEC $0635
 	LDA #$00
 	STA $0634
-bra2_E45F:
-loc2_E45F:
+bra3_E45F:
+loc3_E45F:
 	LDA $06E6
-	BNE bra2_E47C
+	BNE bra3_E47C
 	LDA ButtonsPressed
 	AND #$10
-	BEQ bra2_E47C
+	BEQ bra3_E47C
 	LDA #$00
 	STA JYEasterEggInput
 	LDA PauseFlag
@@ -553,34 +552,34 @@ loc2_E45F:
 	STA PauseFlag
 	LDA #$02
 	STA SFXRegister
-bra2_E47C:
+bra3_E47C:
 	LDA PauseFlag
-	BEQ bra2_E494
-	JSR sub2_E9DC
+	BEQ bra3_E494
+	JSR sub3_E9DC
 	LDA ButtonsPressed
 	AND #$20
-	BEQ bra2_E494
+	BEQ bra3_E494
 	INC $00E0
 	LDX CurrentPlayer
 	INC Player1Lives,X
-bra2_E494:
-	JSR sub2_F27F
+bra3_E494:
+	JSR sub3_F27F
 	RTS
-loc2_E498:
+loc3_E498:
 	LDA #$00
 	STA $0311
-	JSR sub2_E6D5
-	JSR sub2_F919
-	JSR sub2_E904
+	JSR sub3_E6D5
+	JSR sub3_F919
+	JSR sub3_E904
 	LDA #$00
 	STA PauseFlag
 	STA a:GameState
 	STA $00E0
 	LDA #$16
 	STA a:Event
-	JSR sub2_E4BA
+	JSR sub3_E4BA
 	RTS
-sub2_E4BA:
+sub3_E4BA:
 	LDX CurrentPlayer
 	LDA PlayerState
 	STA $06DA,X
@@ -590,14 +589,14 @@ sub2_E4BA:
 	LDA $00E0
 	ASL
 	TAY
-	LDA tbl2_E4DC,Y
+	LDA tbl3_E4DC,Y
 	STA $32
-	LDA tbl2_E4DD,Y
+	LDA tbl3_E4DD,Y
 	STA $33
 	JMP ($32)
-tbl2_E4DC:
+tbl3_E4DC:
 	.byte $E4
-tbl2_E4DD:
+tbl3_E4DD:
 	.byte $E4
 	.byte $EC
 	.byte $E4
@@ -611,26 +610,26 @@ tbl2_E4DD:
 	RTS
 	LDX #$00
 	LDY #$3C
-	JSR sub2_E5B6
+	JSR sub3_E5B6
 	INC $00E0
 	RTS
 	LDA #$00
 	STA $0311
-	JSR sub2_E6D5
-	JSR sub2_F919
-	JSR sub2_E904
+	JSR sub3_E6D5
+	JSR sub3_F919
+	JSR sub3_E904
 	INC $00E0
 	RTS
 	LDY $060B
-	LDA tbl2_EB24,Y
+	LDA tbl3_EB24,Y
 	STA $32
-	LDA tbl2_EB25,Y
+	LDA tbl3_EB25,Y
 	STA $33
-	LDA tbl2_EA10,Y
+	LDA tbl3_EA10,Y
 	STA $34
-	LDA tbl2_EA11,Y
+	LDA tbl3_EA11,Y
 	STA $35
-	JSR sub2_E870
+	JSR sub3_E870
 	LDA #$01
 	STA a:Event
 	LDA #$00
@@ -641,14 +640,14 @@ tbl2_E4DD:
 	LDA $00E0
 	ASL
 	TAY
-	LDA tbl2_E546,Y
+	LDA tbl3_E546,Y
 	STA $32
-	LDA tbl2_E547,Y
+	LDA tbl3_E547,Y
 	STA $33
 	JMP ($32)
-tbl2_E546:
+tbl3_E546:
 	.byte $4E
-tbl2_E547:
+tbl3_E547:
 	.byte $E5
 	.byte $70
 	.byte $E5
@@ -662,13 +661,13 @@ tbl2_E547:
 	STA $06E0
 	STA $14
 	STA $15
-	JSR sub2_E5D4
+	JSR sub3_E5D4
 	LDA #$22
 	STA MusicRegister
 	LDX #$00
 	LDY #$28
-	JSR sub2_E5B6
-	JSR sub2_F27F
+	JSR sub3_E5B6
+	JSR sub3_F27F
 	INC $00E0
 	RTS
 	LDA #$00
@@ -678,47 +677,47 @@ tbl2_E547:
 	LDA $19
 	ORA #$04
 	STA $19
-	JSR sub2_E5D4
+	JSR sub3_E5D4
 	INC $00E0
 	RTS
 	LDA #$00
 	STA $14
-	JSR sub2_E5D4
+	JSR sub3_E5D4
 	LDX #$04
 	LDY #$3B
-	JSR sub2_E5B6
+	JSR sub3_E5B6
 	INC $00E0
 	RTS
 	LDA #$00
 	STA $0311
-	JSR sub2_E6D5
-	JSR sub2_F919
-	JSR sub2_E904
+	JSR sub3_E6D5
+	JSR sub3_F919
+	JSR sub3_E904
 	LDA #$00
 	STA a:GameState
 	STA $00E0
 	LDA #$16
 	STA a:Event
-	JSR sub2_E4BA
+	JSR sub3_E4BA
 	RTS
-sub2_E5B6:
+sub3_E5B6:
 	INC $0611
 	CPY $0611
-	BCS bra2_E5CB
+	BCS bra3_E5CB
 	LDA #$00
 	STA $0611
 	INC $0612
 	CPX $0612
-	BCC bra2_E5CE
-bra2_E5CB:
+	BCC bra3_E5CE
+bra3_E5CB:
 	PLA
 	PLA
 	RTS
-bra2_E5CE:
+bra3_E5CE:
 	LDA #$00
 	STA $0612
 	RTS
-sub2_E5D4:
+sub3_E5D4:
 	LDA #$39
 	STA $8001
 	JSR $ACA5
@@ -740,13 +739,13 @@ sub2_E5D4:
 	JSR $A080
 	JSR $A089
 	JSR $A000
-	JSR sub2_E9C4
+	JSR sub3_E9C4
 	RTS
-	JSR sub2_ED14
-	JSR sub2_F27F
+	JSR sub3_ED14
+	JSR sub3_F27F
 	LDA ButtonsPressed
 	AND #$C0
-	BEQ bra2_E62F
+	BEQ bra3_E62F
 	LDA #$00
 	STA Player1YoshiStatus
 	LDA #$39
@@ -754,18 +753,18 @@ sub2_E5D4:
 	JSR $A14A
 	LDA #$03
 	STA $00E0
-bra2_E62F:
+bra3_E62F:
 	LDA $00E0
 	ASL
 	TAY
-	LDA tbl2_E641,Y
+	LDA tbl3_E641,Y
 	STA $32
-	LDA tbl2_E642,Y
+	LDA tbl3_E642,Y
 	STA $33
 	JMP ($32)
-tbl2_E641:
+tbl3_E641:
 	.byte $49
-tbl2_E642:
+tbl3_E642:
 	.byte $E6
 	.byte $8B
 	.byte $E6
@@ -774,7 +773,7 @@ tbl2_E642:
 	.byte $B0
 	.byte $E6
 	LDA $15
-	BNE bra2_E68A
+	BNE bra3_E68A
 	LDA #$01
 	STA $1D
 	LDA #$10
@@ -784,10 +783,10 @@ tbl2_E642:
 	STA $19
 	LDA PlayerSprXPos
 	CMP #$80
-	BCC bra2_E68A
+	BCC bra3_E68A
 	LDA Player1YoshiStatus
-	BEQ bra2_E681
-	JSR sub2_E965
+	BEQ bra3_E681
+	JSR sub3_E965
 	LDA #$01
 	STA $0620
 	LDA #$50
@@ -800,12 +799,12 @@ tbl2_E642:
 	LDA #$01
 	STA SFXRegister
 	RTS
-bra2_E681:
+bra3_E681:
 	LDA PlayerSprXPos
 	CMP #$B0
-	BCC bra2_E68A
+	BCC bra3_E68A
 	INC $00E0
-bra2_E68A:
+bra3_E68A:
 	RTS
 	LDA #$08
 	STA $1D
@@ -813,7 +812,7 @@ bra2_E68A:
 	STA $14
 	LDX #$01
 	LDY #$3B
-	JSR sub2_E5B6
+	JSR sub3_E5B6
 	INC $00E0
 	RTS
 	LDA #$01
@@ -822,9 +821,9 @@ bra2_E68A:
 	STA $14
 	LDA PlayerSprXPos
 	CMP #$C8
-	BCC bra2_E6AF
+	BCC bra3_E6AF
 	INC $00E0
-bra2_E6AF:
+bra3_E6AF:
 	RTS
 	LDA $04F6
 	ASL
@@ -843,20 +842,20 @@ bra2_E6AF:
 	STA $0612
 	STA $1D
 	RTS
-sub2_E6D5:
+sub3_E6D5:
 	LDA $0312
 	AND #$80
-	BEQ bra2_E6EC
+	BEQ bra3_E6EC
 	LDA #$05
-	BNE bra2_E6E9
-sub2_E6E0:
+	BNE bra3_E6E9
+sub3_E6E0:
 	LDA $0312
 	AND #$80
-	BEQ bra2_E6EC
+	BEQ bra3_E6EC
 	LDA #$00
-bra2_E6E9:
+bra3_E6E9:
 	STA $0312
-bra2_E6EC:
+bra3_E6EC:
 	RTS
 	LDA #$39
 	STA $8001
@@ -869,18 +868,18 @@ bra2_E6EC:
 	LDA #$3D
 	STA $8001
 	JSR $AE8F
-	JSR sub2_E9C4
+	JSR sub3_E9C4
 	LDA $00E0
 	ASL
 	TAY
-	LDA tbl2_E71F,Y
+	LDA tbl3_E71F,Y
 	STA $32
-	LDA tbl2_E720,Y
+	LDA tbl3_E720,Y
 	STA $33
 	JMP ($32)
-tbl2_E71F:
+tbl3_E71F:
 	.byte $27
-tbl2_E720:
+tbl3_E720:
 	.byte $E7
 	.byte $48
 	.byte $E7
@@ -889,11 +888,11 @@ tbl2_E720:
 	.byte $74
 	.byte $E7
 	LDA $15
-	BNE bra2_E747
+	BNE bra3_E747
 	LDA #$01
 	STA $0311
-	JSR sub2_E6D5
-	JSR sub2_F919
+	JSR sub3_E6D5
+	JSR sub3_F919
 	LDA #$01
 	STA $1D
 	LDA #$20
@@ -902,27 +901,27 @@ tbl2_E720:
 	AND #$BE
 	STA $19
 	INC $00E0
-bra2_E747:
+bra3_E747:
 	RTS
 	LDA #$10
 	STA $14
 	LDA PlayerSprXPos
 	CMP #$98
-	BCC bra2_E768
+	BCC bra3_E768
 	LDA #$10
 	STA $1D
 	LDA #$00
 	STA $14
 	LDA #$01
 	STA $0311
-	JSR sub2_E6E0
-	JSR sub2_F919
+	JSR sub3_E6E0
+	JSR sub3_F919
 	INC $00E0
-bra2_E768:
+bra3_E768:
 	RTS
 	LDX #$02
 	LDY #$3B
-	JSR sub2_E5B6
+	JSR sub3_E5B6
 	INC $00E0
 	RTS
 	LDA #$01
@@ -932,15 +931,15 @@ bra2_E768:
 	STA $14
 	LDA #$00
 	STA $0311
-	JSR sub2_E6D5
-	JSR sub2_F919
-	JSR sub2_E904
+	JSR sub3_E6D5
+	JSR sub3_F919
+	JSR sub3_E904
 	LDA #$00
 	STA a:GameState
 	STA $00E0
 	LDA #$16
 	STA a:Event
-	JSR sub2_E4BA
+	JSR sub3_E4BA
 	RTS
 	INC a:Event
 	RTS
@@ -960,7 +959,7 @@ bra2_E768:
 	JSR $A080
 	JSR $A089
 	JSR $A000
-	JSR sub2_E9C4
+	JSR sub3_E9C4
 	RTS
 	LDA #$39
 	STA $8001
@@ -978,65 +977,65 @@ bra2_E768:
 	LDA #$80
 	STA $3C
 	JSR $A089
-	JSR sub2_E9C4
+	JSR sub3_E9C4
 	LDA $00E0
 	ASL
 	TAY
-	LDA tbl2_E80F,Y
+	LDA tbl3_E80F,Y
 	STA $32
-	LDA tbl2_E810,Y
+	LDA tbl3_E810,Y
 	STA $33
 	JMP ($32)
-tbl2_E80F:
+tbl3_E80F:
 	.byte $13
-tbl2_E810:
+tbl3_E810:
 	.byte $E8
 	.byte $1E
 	.byte $E8
 	LDX #$06
 	LDY #$3B
-	JSR sub2_E5B6
+	JSR sub3_E5B6
 	INC $00E0
 	RTS
 	LDY #$03
 	LDA #$01
-	BEQ bra2_E826
+	BEQ bra3_E826
 	LDY #$06
-bra2_E826:
+bra3_E826:
 	STY $32
 	LDY #$01
 	LDA $04F6
 	CMP $32
-	BNE bra2_E83D
+	BNE bra3_E83D
 	LDA $04F7
 	CMP #$03
-	BNE bra2_E83D
+	BNE bra3_E83D
 	STY $037E
-	BNE bra2_E840
-bra2_E83D:
+	BNE bra3_E840
+bra3_E83D:
 	STY UnlockNextLevel
-bra2_E840:
+bra3_E840:
 	LDA #$00
 	STA $0311
-	JSR sub2_E6D5
-	JSR sub2_F919
-	JSR sub2_E904
+	JSR sub3_E6D5
+	JSR sub3_F919
+	JSR sub3_E904
 	LDA #$00
 	STA a:GameState
 	STA $00E0
 	LDA #$16
 	STA a:Event
-	JSR sub2_E4BA
+	JSR sub3_E4BA
 	RTS
 	LDA $00E0
-	BNE bra2_E86F
+	BNE bra3_E86F
 	LDA #$3D
 	STA $8001
 	JSR $BE85
 	INC $00E0
-bra2_E86F:
+bra3_E86F:
 	RTS
-sub2_E870:
+sub3_E870:
 	LDY $060C
 	LDX #$01
 	STX InterruptMode
@@ -1096,10 +1095,10 @@ sub2_E870:
 	INY
 	LDA ($34),Y
 	CMP #$32
-	BNE bra2_E8ED
+	BNE bra3_E8ED
 	LDA #$04
 	STA InterruptMode
-bra2_E8ED:
+bra3_E8ED:
 	LDA #$3D
 	STA $8001
 	LDA ($34),Y
@@ -1111,9 +1110,9 @@ bra2_E8ED:
 	LDA ($34),Y
 	STA $0310
 	RTS
-sub2_E904:
-	JSR sub2_F176
-	JSR sub2_E959
+sub3_E904:
+	JSR sub3_F176
+	JSR sub3_E959
 	LDA #$01
 	STA $0621
 	STA $0623
@@ -1138,27 +1137,27 @@ sub2_E904:
 	STA $8001
 	JSR $A14A
 	JSR $A000
-	JSR sub2_E9C4
+	JSR sub3_E9C4
 	LDX #$70
 	LDA #$00
-bra2_E950:
+bra3_E950:
 	STA $0400,X
 	INX
 	CPX #$80
-	BCC bra2_E950
+	BCC bra3_E950
 	RTS
-sub2_E959:
+sub3_E959:
 	LDA #$00
 	TAX
-bra2_E95C:
+bra3_E95C:
 	STA $03CE,X
 	INX
 	CPX #$16
-	BCC bra2_E95C
+	BCC bra3_E95C
 	RTS
-sub2_E965:
+sub3_E965:
 	LDA Player1YoshiStatus
-	BEQ bra2_E9C3
+	BEQ bra3_E9C3
 	LDA $19
 	STA $0622
 	LDA #$00
@@ -1181,7 +1180,7 @@ sub2_E965:
 	LDY #$08
 	LDA $0622
 	AND #$40
-	BEQ bra2_E9A7
+	BEQ bra3_E9A7
 	.byte $A5
 	.byte $19
 	.byte $29
@@ -1190,7 +1189,7 @@ sub2_E965:
 	.byte $19
 	.byte $A0
 	.byte $18
-bra2_E9A7:
+bra3_E9A7:
 	STY $32
 	SEC
 	LDA PlayerXPosDup
@@ -1204,9 +1203,9 @@ bra2_E9A7:
 	LDA #$30
 	STA $14
 	INC ObjectCount
-bra2_E9C3:
+bra3_E9C3:
 	RTS
-sub2_E9C4:
+sub3_E9C4:
 	LDA #$14
 	STA $3C
 	LDA #$39
@@ -1217,29 +1216,29 @@ sub2_E9C4:
 	STA $8001
 	JSR $A0F3
 	RTS
-sub2_E9DC:
+sub3_E9DC:
 	LDA ButtonsPressed
 	CMP #$10
-	BEQ bra2_EA01
+	BEQ bra3_EA01
 	LDA ButtonsPressed
-	BEQ bra2_EA01
+	BEQ bra3_EA01
 	LDX JYEasterEggInput
-	BMI bra2_EA01
-	CMP tbl2_EA08,X
-	BNE bra2_EA02
+	BMI bra3_EA01
+	CMP tbl3_EA08,X
+	BNE bra3_EA02
 	INC JYEasterEggInput
 	LDA JYEasterEggInput
 	CMP #$08
-	BCC bra2_EA01
+	BCC bra3_EA01
 	LDA #$0A
 	STA a:Event
-bra2_EA01:
+bra3_EA01:
 	RTS
-bra2_EA02:
+bra3_EA02:
 	LDA #$00
 	STA JYEasterEggInput
 	RTS
-tbl2_EA08:
+tbl3_EA08:
 	.byte $08	;JY logo inputs
 	.byte $01	;
 	.byte $80	;
@@ -1248,9 +1247,9 @@ tbl2_EA08:
 	.byte $40	;
 	.byte $08	;
 	.byte $02	;
-tbl2_EA10:
+tbl3_EA10:
 	.byte $48
-tbl2_EA11:
+tbl3_EA11:
 	.byte $EA
 	.byte $48
 	.byte $EA
@@ -1526,9 +1525,9 @@ tbl2_EA11:
 	.byte $32
 	.byte $26
 	.byte $24
-tbl2_EB24:
+tbl3_EB24:
 	.byte $5C
-tbl2_EB25:
+tbl3_EB25:
 	.byte $EB
 	.byte $5C
 	.byte $EB
@@ -2024,7 +2023,7 @@ tbl2_EB25:
 	.byte $00
 	.byte $FF
 	.byte $00
-sub2_ED14:
+sub3_ED14:
 	LDA #$39
 	STA $8001
 	JSR $A000
@@ -2043,9 +2042,9 @@ sub2_ED14:
 	JSR $A080
 	JSR $A089
 	JSR $A000
-	JSR sub2_E9C4
+	JSR sub3_E9C4
 	RTS
-sub2_ED48:
+sub3_ED48:
 	LDA #$24
 	STA $8002
 	LDA $D03E,Y
@@ -2058,7 +2057,7 @@ sub2_ED48:
 	STA $35
 	LDA #$00
 	STA $060C
-	JSR sub2_E870
+	JSR sub3_E870
 	INC $00E0
 	LDA #$00
 	STA $06DE
@@ -2067,14 +2066,14 @@ sub2_ED48:
 	LDA $00E0
 	ASL
 	TAY
-	LDA tbl2_ED87,Y
+	LDA tbl3_ED87,Y
 	STA $32
-	LDA tbl2_ED88,Y
+	LDA tbl3_ED88,Y
 	STA $33
 	JMP ($32)
-tbl2_ED87:
+tbl3_ED87:
 	.byte $93
-tbl2_ED88:
+tbl3_ED88:
 	.byte $ED
 	.byte $AA
 	.byte $ED
@@ -2090,10 +2089,10 @@ tbl2_ED88:
 	STA $06E0
 	LDA #$00
 	STA $1D
-	JSR sub2_E5D4
+	JSR sub3_E5D4
 	LDA #$0A
 	STA SFXRegister
-	JSR sub2_F27F
+	JSR sub3_F27F
 	INC $00E0
 	RTS
 	LDA #$00
@@ -2104,25 +2103,25 @@ tbl2_ED88:
 	AND #$FB
 	LDY a:Event
 	CPY #$13
-	BNE bra2_EDBF
+	BNE bra3_EDBF
 	ORA #$04
-bra2_EDBF:
+bra3_EDBF:
 	STA $19
-	JSR sub2_E5D4
+	JSR sub3_E5D4
 	LDX #$01
 	LDY #$16
-	JSR sub2_E5B6
+	JSR sub3_E5B6
 	INC $00E0
 	RTS
 	LDA #$00
 	STA $0311
-	JSR sub2_E6D5
-	JSR sub2_F919
-	JSR sub2_E904
+	JSR sub3_E6D5
+	JSR sub3_F919
+	JSR sub3_E904
 	INC $00E0
 	RTS
 	LDY #$38
-	JSR sub2_ED48
+	JSR sub3_ED48
 	LDA #$00
 	STA BubbleFrequency
 	LDA #$3D
@@ -2134,8 +2133,8 @@ bra2_EDBF:
 	LDA #$00
 	STA $06E1
 	RTS
-	JSR sub2_ED14
-	JSR sub2_F27F
+	JSR sub3_ED14
+	JSR sub3_F27F
 	LDA #$01
 	STA $1D
 	LDA #$10
@@ -2145,21 +2144,21 @@ bra2_EDBF:
 	STA $19
 	LDX #$01
 	LDY #$1E
-	JSR sub2_E5B6
+	JSR sub3_E5B6
 	LDA #$02
 	STA a:Event
 	RTS
 	LDA $00E0
 	ASL
 	TAY
-	LDA tbl2_EE35,Y
+	LDA tbl3_EE35,Y
 	STA $32
-	LDA tbl2_EE36,Y
+	LDA tbl3_EE36,Y
 	STA $33
 	JMP ($32)
-tbl2_EE35:
+tbl3_EE35:
 	.byte $CF
-tbl2_EE36:
+tbl3_EE36:
 	.byte $ED
 	.byte $3D
 	.byte $EE
@@ -2174,15 +2173,15 @@ tbl2_EE36:
 	ADC $04F7
 	ASL
 	TAY
-	JSR sub2_ED48
+	JSR sub3_ED48
 	LDA #$3D
 	STA $8001
 	JSR $A828
 	LDA #$20
 	STA $06E0
 	RTS
-	JSR sub2_ED14
-	JSR sub2_F27F
+	JSR sub3_ED14
+	JSR sub3_F27F
 	LDA #$00
 	STA $1D
 	LDA #$10
@@ -2190,21 +2189,21 @@ tbl2_EE36:
 	LDA $19
 	AND #$FB
 	LDY $06E9
-	BNE bra2_EE72
+	BNE bra3_EE72
 	ORA #$04
-bra2_EE72:
+bra3_EE72:
 	STA $19
 	LDA #$FF
 	STA $06EA
 	LDA $0611
 	CMP #$02
-	BNE bra2_EE84
+	BNE bra3_EE84
 	LDA #$0A
 	STA SFXRegister
-bra2_EE84:
+bra3_EE84:
 	LDX #$00
 	LDY #$19
-	JSR sub2_E5B6
+	JSR sub3_E5B6
 	LDA #$00
 	STA $06E0
 	LDA #$02
@@ -2213,14 +2212,14 @@ bra2_EE84:
 	LDA $00E0
 	ASL
 	TAY
-	LDA tbl2_EEA8,Y
+	LDA tbl3_EEA8,Y
 	STA $32
-	LDA tbl2_EEA9,Y
+	LDA tbl3_EEA9,Y
 	STA $33
 	JMP ($32)
-tbl2_EEA8:
+tbl3_EEA8:
 	.byte $93
-tbl2_EEA9:
+tbl3_EEA9:
 	.byte $ED
 	.byte $AA
 	.byte $ED
@@ -2235,15 +2234,15 @@ tbl2_EEA9:
 	LDY #$3A
 	LDA a:Event
 	CMP #$0F
-	BEQ bra2_EEBF
+	BEQ bra3_EEBF
 	LDY #$3C
-bra2_EEBF:
-	JSR sub2_ED48
+bra3_EEBF:
+	JSR sub3_ED48
 	LDA #$20
 	STA $06E0
 	RTS
-	JSR sub2_ED14
-	JSR sub2_F27F
+	JSR sub3_ED14
+	JSR sub3_F27F
 	LDA #$0F
 	STA $1D
 	LDA #$50
@@ -2255,13 +2254,13 @@ bra2_EEBF:
 	STA $19
 	LDA $0611
 	CMP #$02
-	BNE bra2_EEEB
+	BNE bra3_EEEB
 	LDA #$10
 	STA SFXRegister
-bra2_EEEB:
+bra3_EEEB:
 	LDX #$00
 	LDY #$19
-	JSR sub2_E5B6
+	JSR sub3_E5B6
 	LDA #$00
 	STA $06E0
 	LDA #$02
@@ -2272,7 +2271,7 @@ bra2_EEEB:
 	LDA #$0C
 	STA a:Event
 	RTS
-tbl2_EF08:
+tbl3_EF08:
 	.byte $62
 	.byte $E0
 	.byte $00
@@ -2281,7 +2280,7 @@ tbl2_EF08:
 	.byte $E0
 	.byte $5F
 	.byte $E0
-loc2_EF10:
+loc3_EF10:
 	PHP
 	PHA
 	TXA
@@ -2291,16 +2290,16 @@ loc2_EF10:
 	LDA #$3D
 	STA $8001
 	LDA $0480
-	BEQ bra2_EF2B
-	JSR sub2_F055
-	JSR sub2_F0A2
+	BEQ bra3_EF2B
+	JSR sub3_F055
+	JSR sub3_F0A2
 	LDA #$00
 	STA $0480
-bra2_EF2B:
+bra3_EF2B:
 	LDA $03A1
-	BEQ bra2_EF33
-	JSR sub2_F20F
-bra2_EF33:
+	BEQ bra3_EF33
+	JSR sub3_F20F
+bra3_EF33:
 	LDA #$00
 	STA PPUOAMAddr
 	LDA #$02
@@ -2316,19 +2315,19 @@ bra2_EF33:
 	STA $00
 	STA PPUCtrl
 	LDA $032D
-	BNE bra2_EF67
+	BNE bra3_EF67
 	LDA $02
 	STA PPUScroll
 	LDA $03
 	STA PPUScroll
-	JMP loc2_EF73
-bra2_EF67:
+	JMP loc3_EF73
+bra3_EF67:
 	LDA $0330
 	STA PPUScroll
 	LDA $0331
 	STA PPUScroll
-loc2_EF73:
-	JSR sub2_F6E0
+loc3_EF73:
+	JSR sub3_F6E0
 	LDX BGBank1
 	STX $9000
 	INX
@@ -2345,14 +2344,14 @@ loc2_EF73:
 	STA $9006
 	LDA SpriteBank4
 	STA $9007
-	JSR sub2_F19F
+	JSR sub3_F19F
 	INC $0313
 	LDA $0313
 	CMP #$3C
-	BCC bra2_EFB4
+	BCC bra3_EFB4
 	AND #$00
 	STA $0313
-bra2_EFB4:
+bra3_EFB4:
 	LDA #$00
 	STA $3C
 	INC $06
@@ -2361,14 +2360,14 @@ bra2_EFB4:
 	LDA #$3B
 	STA $8001
 	LDA a:GameState
-	BNE bra2_EFD9
+	BNE bra3_EFD9
 	JSR $85BE
 	JSR $862A
 	LDA $08
 	STA $8000
 	LDA $09
 	STA $8001
-bra2_EFD9:
+bra3_EFD9:
 	PLA
 	TAY
 	PLA
@@ -2376,7 +2375,7 @@ bra2_EFD9:
 	PLA
 	PLP
 	RTI
-loc2_EFE0:
+loc3_EFE0:
 	PHP
 	PHA
 	TXA
@@ -2391,19 +2390,19 @@ loc2_EFE0:
 	STA $00
 	STA PPUCtrl
 	LDA $032D
-	BNE bra2_F008
+	BNE bra3_F008
 	LDA $02
 	STA PPUScroll
 	LDA $03
 	STA PPUScroll
-	JMP loc2_F014
-bra2_F008:
+	JMP loc3_F014
+bra3_F008:
 	LDA $0330
 	STA PPUScroll
 	LDA $0331
 	STA PPUScroll
-loc2_F014:
-	JSR sub2_F6E0
+loc3_F014:
+	JSR sub3_F6E0
 	LDX $03C5
 	STX $9000
 	INX
@@ -2428,15 +2427,15 @@ loc2_F014:
 	PLP
 	RTI
 	LDX #$3C
-bra2_F04C:
+bra3_F04C:
 	LDY #$3C
-bra2_F04E:
+bra3_F04E:
 	DEY
-	BNE bra2_F04E
+	BNE bra3_F04E
 	DEX
-	BNE bra2_F04C
+	BNE bra3_F04C
 	RTS
-sub2_F055:
+sub3_F055:
 	LDA PPUStatus
 	LDA $00
 	ORA #$04
@@ -2447,34 +2446,34 @@ sub2_F055:
 	LDA NextBGColumn
 	STA PPUAddr
 	LDX #$00
-bra2_F070:
+bra3_F070:
 	LDA $0485,X
 	STA PPUData
 	INX
 	CPX #$1E
-	BCC bra2_F070
+	BCC bra3_F070
 	LDA PPUStatus
 	LDA $0480
 	ORA #$08
 	STA PPUAddr
 	LDA NextBGColumn
 	STA PPUAddr
-bra2_F08C:
+bra3_F08C:
 	LDA $0485,X
 	STA PPUData
 	INX
 	CPX $B0
-	BCC bra2_F08C
+	BCC bra3_F08C
 	LDA PPUStatus
 	LDA $00
 	AND #$FB
 	STA PPUCtrl
 	RTS
-sub2_F0A2:
+sub3_F0A2:
 	LDA $04C1
-	BEQ bra2_F0CA
+	BEQ bra3_F0CA
 	LDX #$00
-bra2_F0A9:
+bra3_F0A9:
 	LDA PPUStatus
 	LDA $04C1,X
 	STA PPUAddr
@@ -2486,22 +2485,22 @@ bra2_F0A9:
 	INX
 	INX
 	CPX $B1
-	BCC bra2_F0A9
+	BCC bra3_F0A9
 	LDA #$00
 	STA $04C1
-bra2_F0CA:
+bra3_F0CA:
 	RTS
-sub2_F0CB:
+sub3_F0CB:
 	LDA $04F6
 	ASL
 	ASL
 	CLC
 	ADC $04F7
 	TAX
-	LDA tbl2_F0DB,X
+	LDA tbl3_F0DB,X
 	STA MusicRegister
 	RTS
-tbl2_F0DB:
+tbl3_F0DB:
 	.byte $29	;1-1 Music
 	.byte $28	;1-2 Music
 	.byte $20	;1-3 Music
@@ -2573,12 +2572,12 @@ tbl2_F0DB:
 	STX $9003
 	STA $C002
 	RTS
-bra2_F156:
+bra3_F156:
 	LDA PPUStatus
-	BPL bra2_F156
-bra2_F15B:
+	BPL bra3_F156
+bra3_F15B:
 	LDA PPUStatus
-	BPL bra2_F15B
+	BPL bra3_F15B
 	RTS
 	ASL
 	TAY
@@ -2593,18 +2592,18 @@ bra2_F15B:
 	LDA ($34),Y
 	STA $33
 	JMP ($32)
-sub2_F176:
+sub3_F176:
 	LDA #$F8
 	LDX #$00
-bra2_F17A:
+bra3_F17A:
 	STA SpriteMem,X
 	INX
 	INX
 	INX
 	INX
-	BNE bra2_F17A
+	BNE bra3_F17A
 	RTS
-sub2_F184:
+sub3_F184:
 	ASL
 	ASL
 	CLC
@@ -2614,19 +2613,19 @@ sub2_F184:
 	STX PPUAddr
 	LDY #$03
 	LDA #$FF
-bra2_F195:
+bra3_F195:
 	STA PPUData
 	DEX
-	BNE bra2_F195
+	BNE bra3_F195
 	DEY
-	BPL bra2_F195
+	BPL bra3_F195
 	RTS
-sub2_F19F:
-	JSR sub2_F1C9
+sub3_F19F:
+	JSR sub3_F1C9
 	LDX #$00
-	JSR sub2_F1A8
+	JSR sub3_F1A8
 	INX
-sub2_F1A8:
+sub3_F1A8:
 	LDA ButtonsHeld,X
 	EOR $030E,X
 	AND ButtonsHeld,X
@@ -2635,13 +2634,13 @@ sub2_F1A8:
 	STA $030E,X
 	AND #$0C
 	CMP #$0C
-	BNE bra2_F1C8
+	BNE bra3_F1C8
 	LDA ButtonsHeld,X
 	AND #$FB
 	STA ButtonsHeld,X
-bra2_F1C8:
+bra3_F1C8:
 	RTS
-sub2_F1C9:
+sub3_F1C9:
 	LDA #$01
 	STA Joy1
 	LDA #$00
@@ -2658,13 +2657,13 @@ sub2_F1C9:
 	LSR
 	TAX
 	STA Joy1
-	JSR sub2_F1EC
+	JSR sub3_F1EC
 	INX
-sub2_F1EC:
+sub3_F1EC:
 	LDA #$00
 	STA $063E
 	LDY #$08
-bra2_F1F3:
+bra3_F1F3:
 	PHA
 	LDA Joy1,X
 	STA $063D
@@ -2675,58 +2674,58 @@ bra2_F1F3:
 	PLA
 	ROL $063E
 	DEY
-	BNE bra2_F1F3
+	BNE bra3_F1F3
 	ORA $063E
 	STA ButtonsHeld,X
 	RTS
-sub2_F20F:
+sub3_F20F:
 	LDA $03A1
-	BEQ bra2_F258
+	BEQ bra3_F258
 	LDA $03A0
 	ORA $00
 	AND #$7F
 	STA PPUCtrl
 	LDY #$00
 	LDX #$00
-bra2_F222:
+bra3_F222:
 	LDA PPUStatus
 	LDA $03A1
 	STA PPUAddr
 	LDA $03A2
 	STA PPUAddr
-bra2_F231:
+bra3_F231:
 	LDA $03A5,X
 	STA PPUData
 	INY
 	INX
 	CPY $03A4
-	BCC bra2_F231
+	BCC bra3_F231
 	LDA $03A2
 	CLC
 	ADC #$20
 	STA $03A2
-	BCC bra2_F24C
+	BCC bra3_F24C
 	INC $03A1
-bra2_F24C:
+bra3_F24C:
 	LDY #$00
 	DEC $03A3
-	BNE bra2_F222
+	BNE bra3_F222
 	LDA #$00
 	STA $03A1
-bra2_F258:
+bra3_F258:
 	RTS
 	TXA
 	ADC $00E4
 	STA $00E4
 	AND #$01
-	BNE bra2_F270
+	BNE bra3_F270
 	TXA
 	ADC $00E4
 	TYA
 	ADC $00E4
 	STA $00E4
 	RTS
-bra2_F270:
+bra3_F270:
 	ADC $00E4
 	STA $00E4
 	ROR
@@ -2734,25 +2733,25 @@ bra2_F270:
 	ADC $00E4
 	STA $00E4
 	RTS
-sub2_F27F:
+sub3_F27F:
 	LDA InterruptMode
 	CMP #$04
-	BEQ bra2_F29D
+	BEQ bra3_F29D
 	LDA $03A1
-	BNE bra2_F29D
+	BNE bra3_F29D
 	LDA $037D
 	ASL
 	TAY
-	LDA tbl2_F29E,Y
+	LDA tbl3_F29E,Y
 	STA $32
-	LDA tbl2_F29F,Y
+	LDA tbl3_F29F,Y
 	STA $33
 	JMP ($32)
-bra2_F29D:
+bra3_F29D:
 	RTS
-tbl2_F29E:
+tbl3_F29E:
 	.byte $A8
-tbl2_F29F:
+tbl3_F29F:
 	.byte $F2
 	.byte $D6
 	.byte $F2
@@ -2762,55 +2761,55 @@ tbl2_F29F:
 	.byte $F3
 	.byte $58
 	.byte $F3
-	JSR sub2_F388
+	JSR sub3_F388
 	INC $037D
 	LDX #$00
 	LDA CurrentPlayer
-	BEQ bra2_F2B7
+	BEQ bra3_F2B7
 	LDX #$01
-bra2_F2B7:
+bra3_F2B7:
 	LDA Player1Lives,X
 	STA $34
 	LDA #$00
 	STA $35
 	LDA #$0B
 	STA $26
-	JSR sub2_F3BB
+	JSR sub3_F3BB
 	LDY #$00
 	LDX #$01
-bra2_F2CB:
+bra3_F2CB:
 	LDA $0378,Y
 	STA $03A5,X
 	INY
 	DEX
-	BPL bra2_F2CB
+	BPL bra3_F2CB
 	RTS
-	JSR sub2_F388
+	JSR sub3_F388
 	INC $037D
 	LDX #$04
 	LDA #$00
-bra2_F2E0:
+bra3_F2E0:
 	STA $03A5,X
 	DEX
-	BPL bra2_F2E0
+	BPL bra3_F2E0
 	LDX #$00
 	LDA CurrentPlayer
-	BEQ bra2_F2EF
+	BEQ bra3_F2EF
 	LDX #$01
-bra2_F2EF:
+bra3_F2EF:
 	LDA Player1YoshiCoins,X
 	STA $25
-	BEQ bra2_F302
+	BEQ bra3_F302
 	LDY #$00
 	LDA #$06
-bra2_F2FA:
+bra3_F2FA:
 	STA $03A5,Y
 	INY
 	CPY $25
-	BCC bra2_F2FA
-bra2_F302:
+	BCC bra3_F2FA
+bra3_F302:
 	RTS
-	JSR sub2_F388
+	JSR sub3_F388
 	INC $037D
 	LDA $036E
 	STA $34
@@ -2818,84 +2817,84 @@ bra2_F302:
 	STA $35
 	LDA #$0B
 	STA $26
-	JSR sub2_F3BB
+	JSR sub3_F3BB
 	LDY #$00
 	LDX #$02
-bra2_F31E:
+bra3_F31E:
 	LDA $0378,Y
 	STA $03A5,X
 	INY
 	DEX
-	BPL bra2_F31E
+	BPL bra3_F31E
 	RTS
-	JSR sub2_F388
+	JSR sub3_F388
 	INC $037D
 	LDX #$00
 	LDA CurrentPlayer
-	BEQ bra2_F338
+	BEQ bra3_F338
 	LDX #$02
-bra2_F338:
+bra3_F338:
 	LDA #$0B
 	STA $26
 	LDA $0372,X
 	STA $34
 	LDA $0373,X
 	STA $35
-	JSR sub2_F3BB
+	JSR sub3_F3BB
 	LDY #$00
 	LDX #$04
-bra2_F34D:
+bra3_F34D:
 	LDA $0378,Y
 	STA $03A5,X
 	INY
 	DEX
-	BPL bra2_F34D
+	BPL bra3_F34D
 	RTS
-	JSR sub2_F388
+	JSR sub3_F388
 	LDA #$00
 	STA $037D
 	LDX #$00
 	LDA CurrentPlayer
-	BEQ bra2_F369
+	BEQ bra3_F369
 	LDX #$01
-bra2_F369:
+bra3_F369:
 	LDA Player1Coins,X
 	STA $34
 	LDA #$00
 	STA $35
 	LDA #$0B
 	STA $26
-	JSR sub2_F3BB
+	JSR sub3_F3BB
 	LDY #$00
 	LDX #$01
-bra2_F37D:
+bra3_F37D:
 	LDA $0378,Y
 	STA $03A5,X
 	INY
 	DEX
-	BPL bra2_F37D
+	BPL bra3_F37D
 	RTS
-sub2_F388:
+sub3_F388:
 	LDA $037D
 	ASL
 	ASL
 	TAX
-	LDA tbl2_F3A7,X
+	LDA tbl3_F3A7,X
 	STA $03A1
-	LDA tbl2_F3A8,X
+	LDA tbl3_F3A8,X
 	STA $03A2
-	LDA tbl2_F3A9,X
+	LDA tbl3_F3A9,X
 	STA $03A3
-	LDA tbl2_F3AA,X
+	LDA tbl3_F3AA,X
 	STA $03A4
 	RTS
-tbl2_F3A7:
+tbl3_F3A7:
 	.byte $2B
-tbl2_F3A8:
+tbl3_F3A8:
 	.byte $84
-tbl2_F3A9:
+tbl3_F3A9:
 	.byte $01
-tbl2_F3AA:
+tbl3_F3AA:
 	.byte $02
 	.byte $2B
 	.byte $68
@@ -2913,14 +2912,14 @@ tbl2_F3AA:
 	.byte $7C
 	.byte $01
 	.byte $02
-sub2_F3BB:
+sub3_F3BB:
 	LDA #$00
 	STA $39
 	STA $25
 	LDA #$0A
 	STA $38
-bra2_F3C5:
-	JSR sub2_F3EC
+bra3_F3C5:
+	JSR sub3_F3EC
 	LDA $32
 	CLC
 	ADC $26
@@ -2929,24 +2928,24 @@ bra2_F3C5:
 	INC $25
 	LDA $25
 	CMP #$05
-	BCC bra2_F3C5
+	BCC bra3_F3C5
 	LDY #$04
-bra2_F3DC:
+bra3_F3DC:
 	LDA $0378,Y
 	CMP $26
-	BNE bra2_F3EB
+	BNE bra3_F3EB
 	LDA #$00
 	STA $0378,Y
 	DEY
-	BNE bra2_F3DC
-bra2_F3EB:
+	BNE bra3_F3DC
+bra3_F3EB:
 	RTS
-sub2_F3EC:
+sub3_F3EC:
 	LDA #$00
 	STA $32
 	STA $33
 	LDX #$10
-bra2_F3F4:
+bra3_F3F4:
 	ASL $34
 	ROL $35
 	ROL $32
@@ -2957,13 +2956,13 @@ bra2_F3F4:
 	TAY
 	LDA $33
 	SBC $39
-	BCC bra2_F40E
+	BCC bra3_F40E
 	INC $34
 	STA $33
 	STY $32
-bra2_F40E:
+bra3_F40E:
 	DEX
-	BNE bra2_F3F4
+	BNE bra3_F3F4
 	RTS
 	LDA #$2B
  	STA PPUAddr
@@ -2972,31 +2971,31 @@ bra2_F40E:
  	LDX #$00
  	LDA InterruptMode
  	CMP #$04
- 	BEQ bra2_F442
+ 	BEQ bra3_F442
  	LDA CurrentPlayer
- 	BNE bra2_F436
-bra2_F42A:
- 	LDA tbl2_F44E,X
+ 	BNE bra3_F436
+bra3_F42A:
+ 	LDA tbl3_F44E,X
  	STA PPUData
  	INX
  	CPX #$80
- 	BCC bra2_F42A
+ 	BCC bra3_F42A
 	RTS
-bra2_F436:
-	LDA tbl2_F4CE,X
+bra3_F436:
+	LDA tbl3_F4CE,X
  	STA PPUData
  	INX
  	CPX #$80
- 	BCC bra2_F436
+ 	BCC bra3_F436
  	RTS
-bra2_F442:
- 	LDA tbl2_F54E,X
+bra3_F442:
+ 	LDA tbl3_F54E,X
  	STA PPUData
 	INX
  	CPX #$80
- 	BCC bra2_F442
+ 	BCC bra3_F442
  	RTS
-tbl2_F44E:
+tbl3_F44E:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -3125,7 +3124,7 @@ tbl2_F44E:
 	.byte $00
 	.byte $00
 	.byte $00
-tbl2_F4CE:
+tbl3_F4CE:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -3254,7 +3253,7 @@ tbl2_F4CE:
 	.byte $00
 	.byte $00
 	.byte $00
-tbl2_F54E:
+tbl3_F54E:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -3383,21 +3382,21 @@ tbl2_F54E:
 	.byte $00
 	.byte $00
 	.byte $00
-sub2_F5CE:
+sub3_F5CE:
 	LDX #$00
-loc2_F5D0:
+loc3_F5D0:
 	LDA $03E4,X
-	BEQ bra2_F5DA
-	BMI bra2_F5E3
-	JMP loc2_F668
-bra2_F5DA:
+	BEQ bra3_F5DA
+	BMI bra3_F5E3
+	JMP loc3_F668
+bra3_F5DA:
 	LDA #$00
 	STA $03FE
 	STA $03E4
 	RTS
-bra2_F5E3:
+bra3_F5E3:
 	CMP #$8E
-	BCS bra2_F623
+	BCS bra3_F623
 	LDA $03E5,X
 	STA PPUAddr
 	LDA $03E6,X
@@ -3421,8 +3420,8 @@ bra2_F5E3:
 	INX
 	INX
 	INX
-	JMP loc2_F5D0
-bra2_F623:
+	JMP loc3_F5D0
+bra3_F623:
 	LDA $03E5,X
 	STA PPUAddr
 	LDA $03E6,X
@@ -3446,12 +3445,12 @@ bra2_F623:
 	INX
 	INX
 	INX
-	JMP loc2_F5D0
+	JMP loc3_F5D0
 	LDA #$00
 	STA $03FE
 	STA $03E4
 	RTS
-loc2_F668:
+loc3_F668:
 	LDA $03E5,X
 	STA PPUAddr
 	LDA $03E6,X
@@ -3463,29 +3462,29 @@ loc2_F668:
 	ADC #$00
 	STA $25
 	LDY $03E4
-	LDA tbl2_F6AB,Y
+	LDA tbl3_F6AB,Y
 	STA PPUData
-	LDA tbl2_F6AC,Y
+	LDA tbl3_F6AC,Y
 	STA PPUData
 	LDA $25
 	STA PPUAddr
 	LDA $28
 	STA PPUAddr
-	LDA tbl2_F6AD,Y
+	LDA tbl3_F6AD,Y
 	STA PPUData
-	LDA tbl2_F6AE,Y
+	LDA tbl3_F6AE,Y
 	STA PPUData
 	INX
 	INX
 	INX
-	JMP loc2_F5D0
-tbl2_F6AB:
+	JMP loc3_F5D0
+tbl3_F6AB:
 	.byte $00
-tbl2_F6AC:
+tbl3_F6AC:
 	.byte $E0
-tbl2_F6AD:
+tbl3_F6AD:
 	.byte $E1
-tbl2_F6AE:
+tbl3_F6AE:
 	.byte $E2
 	.byte $E3
 	.byte $D0
@@ -3520,28 +3519,28 @@ tbl2_F6AE:
 	STA $0601
 	LDA $F721
 	STA $0602
-	JMP loc2_F6F3
-sub2_F6E0:
+	JMP loc3_F6F3
+sub3_F6E0:
 	LDA #$4C
 	STA $0600
 	LDA InterruptMode
 	ASL
 	TAX
-	LDA tbl2_F71A,X
+	LDA tbl3_F71A,X
 	STA $0601
-	LDA tbl2_F71B,X
-loc2_F6F3:
+	LDA tbl3_F71B,X
+loc3_F6F3:
 	STA $0602
 	LDX InterruptMode
 	LDA PPUStatus
-	LDA tbl2_F70E,X
+	LDA tbl3_F70E,X
 	STA $C002
 	STA $C005
 	LDA #$FB
 	STA $C004
 	STA $C003
 	RTS
-tbl2_F70E:
+tbl3_F70E:
 	.byte $08
 	.byte $CC	;Status bar height
 	.byte $80
@@ -3554,9 +3553,9 @@ tbl2_F70E:
 	.byte $08
 	.byte $64
 	.byte $D0	;Status bar height (level)
-tbl2_F71A:
+tbl3_F71A:
 	.byte $52
-tbl2_F71B:
+tbl3_F71B:
 	.byte $F1
 	.byte $51
 	.byte $F7
@@ -3595,100 +3594,100 @@ tbl2_F71B:
 	BNE $F751
 	JMP $F7C5
 	LDA $0607
-	BNE bra2_F759
-	JMP loc2_F7CE
-bra2_F759:
+	BNE bra3_F759
+	JMP loc3_F7CE
+bra3_F759:
 	CMP #$01
-	BNE bra2_F760
-	JMP loc2_F85A
-bra2_F760:
+	BNE bra3_F760
+	JMP loc3_F85A
+bra3_F760:
 	CMP #$02
-	BNE bra2_F767
-	JMP loc2_F899
-bra2_F767:
+	BNE bra3_F767
+	JMP loc3_F899
+bra3_F767:
 	CMP #$03
-	BNE bra2_F76E
-	JMP loc2_F7C5
-bra2_F76E:
+	BNE bra3_F76E
+	JMP loc3_F7C5
+bra3_F76E:
 	LDA $0607
-	BNE bra2_F776
-	JMP loc2_F8AC
-bra2_F776:
+	BNE bra3_F776
+	JMP loc3_F8AC
+bra3_F776:
 	CMP #$01
-	BNE bra2_F77D
-	JMP loc2_F8B5
-bra2_F77D:
+	BNE bra3_F77D
+	JMP loc3_F8B5
+bra3_F77D:
 	CMP #$02
-	BNE bra2_F784
-	JMP loc2_F7C5
-bra2_F784:
+	BNE bra3_F784
+	JMP loc3_F7C5
+bra3_F784:
 	CMP #$03
-	BNE bra2_F78B
-	JMP loc2_F7C5
-bra2_F78B:
+	BNE bra3_F78B
+	JMP loc3_F7C5
+bra3_F78B:
 	LDA $0607
-	BNE bra2_F793
-	JMP loc2_F7CE
-bra2_F793:
+	BNE bra3_F793
+	JMP loc3_F7CE
+bra3_F793:
 	CMP #$01
-	BNE bra2_F79A
-	JMP loc2_F899
-bra2_F79A:
+	BNE bra3_F79A
+	JMP loc3_F899
+bra3_F79A:
 	CMP #$02
-	BNE bra2_F7A1
-	JMP loc2_F7C5
-bra2_F7A1:
+	BNE bra3_F7A1
+	JMP loc3_F7C5
+bra3_F7A1:
 	CMP #$03
-	BNE bra2_F7A8
-	JMP loc2_F7C5
-bra2_F7A8:
+	BNE bra3_F7A8
+	JMP loc3_F7C5
+bra3_F7A8:
 	LDA $0607
-	BNE bra2_F7B0
-	JMP loc2_F8D7
-bra2_F7B0:
+	BNE bra3_F7B0
+	JMP loc3_F8D7
+bra3_F7B0:
 	CMP #$01
-	BNE bra2_F7B7
-	JMP loc2_F7C5
-bra2_F7B7:
+	BNE bra3_F7B7
+	JMP loc3_F7C5
+bra3_F7B7:
 	CMP #$02
-	BNE bra2_F7BE
-	JMP loc2_F7C5
-bra2_F7BE:
+	BNE bra3_F7BE
+	JMP loc3_F7C5
+bra3_F7BE:
 	CMP #$03
-	BNE bra2_F7C5
-	JMP loc2_F7C5
-bra2_F7C5:
-loc2_F7C5:
+	BNE bra3_F7C5
+	JMP loc3_F7C5
+bra3_F7C5:
+loc3_F7C5:
 	STA $E000
 	LDA #$00
 	STA $0607
 	RTS
-loc2_F7CE:
+loc3_F7CE:
 	INC $0607
 	LDA #$20
 	STA $C003
 	STA $C003
 	RTS
-sub2_F7DA:
+sub3_F7DA:
 	LDA PauseFlag
-	BNE bra2_F811
+	BNE bra3_F811
 	LDA $04F5
 	CMP #$26
-	BNE bra2_F7EA
-	JSR sub2_F90B
+	BNE bra3_F7EA
+	JSR sub3_F90B
 	RTS
-bra2_F7EA:
+bra3_F7EA:
 	LDA $04F5
 	CMP #$23
-	BEQ bra2_F811
+	BEQ bra3_F811
 	CMP #$2B
-	BEQ bra2_F811
+	BEQ bra3_F811
 	LDA $03CD
 	LSR
 	TAY
-	LDA tbl2_F812,Y
+	LDA tbl3_F812,Y
 	STA $A6
-	LDA tbl2_F813,Y
+	LDA tbl3_F813,Y
 	STA $A7
 	LDA $06
 	AND #$18
@@ -3698,11 +3697,11 @@ bra2_F7EA:
 	TAY
 	LDA ($A6),Y
 	STA $9003
-bra2_F811:
+bra3_F811:
 	RTS
-tbl2_F812:
+tbl3_F812:
 	.byte $4E
-tbl2_F813:
+tbl3_F813:
 	.byte $F8
 	.byte $4E
 	.byte $F8
@@ -3774,15 +3773,15 @@ tbl2_F813:
 	.byte $C5
 	.byte $C6
 	.byte $C7
-loc2_F85A:
+loc3_F85A:
 	LDA #$1D
 	STA $C002
 	STA $C003
 	STA $C005
 	LDX #$0C
-bra2_F867:
+bra3_F867:
 	DEX
-	BNE bra2_F867
+	BNE bra3_F867
 	LDX #$2B
 	LDY #$40
 	STX PPUAddr
@@ -3802,27 +3801,27 @@ bra2_F867:
 	LDA #$EF
 	STA $9003
 	RTS
-loc2_F899:
+loc3_F899:
 	STA $C002
 	LDX #$0C
-bra2_F89E:
+bra3_F89E:
 	DEX
-	BNE bra2_F89E
+	BNE bra3_F89E
 	LDA #$10
 	STA PPUMask
 	LDA #$00
 	STA $0607
 	RTS
-loc2_F8AC:
+loc3_F8AC:
 	LDA #$00
 	STA $0607
 	STA $C002
 	RTS
-loc2_F8B5:
+loc3_F8B5:
 	LDX #$0C
-bra2_F8B7:
+bra3_F8B7:
 	DEX
-	BNE bra2_F8B7
+	BNE bra3_F8B7
 	LDX #$2B
 	LDY #$40
 	STX PPUAddr
@@ -3835,7 +3834,7 @@ bra2_F8B7:
 	LDA #$00
 	STA $0607
 	RTS
-loc2_F8D7:
+loc3_F8D7:
 	LDX #$22
 	LDY #$D8
 	STX PPUAddr
@@ -3857,107 +3856,107 @@ loc2_F8D7:
 	STA $9003
 	STA $C002
 	RTS
-sub2_F90B:
+sub3_F90B:
 	LDY ClownCarFace
-	LDA tbl2_F915,Y
+	LDA tbl3_F915,Y
 	STA $9000
 	RTS
-tbl2_F915:
+tbl3_F915:
 	.byte $C8
 	.byte $C9
 	.byte $CA
 	.byte $CB
-sub2_F919:
+sub3_F919:
 	LDA $0310
 	ASL
 	ASL
 	TAY
 	LDA CurrentPlayer
-	BEQ bra2_F939
-	LDA tbl2_FA96,Y
+	BEQ bra3_F939
+	LDA tbl3_FA96,Y
 	STA $30
-	LDA tbl2_FA97,Y
+	LDA tbl3_FA97,Y
 	STA $31
-	LDA tbl2_FA94,Y
+	LDA tbl3_FA94,Y
 	STA $32
-	LDA tbl2_FA95,Y
-	JMP loc2_F94B
-bra2_F939:
-	LDA tbl2_F9FE,Y
+	LDA tbl3_FA95,Y
+	JMP loc3_F94B
+bra3_F939:
+	LDA tbl3_F9FE,Y
 	STA $30
-	LDA tbl2_F9FF,Y
+	LDA tbl3_F9FF,Y
 	STA $31
-	LDA tbl2_F9FC,Y
+	LDA tbl3_F9FC,Y
 	STA $32
-	LDA tbl2_F9FD,Y
-loc2_F94B:
+	LDA tbl3_F9FD,Y
+loc3_F94B:
 	STA $33
 	LDA $0311
 	ASL
 	ASL
 	TAY
-	LDA tbl2_FE8C,Y
+	LDA tbl3_FE8C,Y
 	STA $34
-	LDA tbl2_FE8D,Y
+	LDA tbl3_FE8D,Y
 	STA $35
-	LDA tbl2_FE8E,Y
+	LDA tbl3_FE8E,Y
 	STA $2E
-	LDA tbl2_FE8F,Y
+	LDA tbl3_FE8F,Y
 	STA $2F
 	LDA $03A1
-	BNE bra2_F9E7
+	BNE bra3_F9E7
 	LDA $06
 	AND #$03
-	BNE bra2_F9E7
+	BNE bra3_F9E7
 	LDX $0312
-	LDA tbl2_F9F3,X
+	LDA tbl3_F9F3,X
 	STA $25
 	LDY #$00
 	LDX #$00
-bra2_F97E:
+bra3_F97E:
 	LDA ($34),Y
-	BPL bra2_F987
+	BPL bra3_F987
 	LDA ($32),Y
-	JMP loc2_F990
-bra2_F987:
+	JMP loc3_F990
+bra3_F987:
 	LDA ($32),Y
 	SEC
 	SBC $25
-	BPL bra2_F990
+	BPL bra3_F990
 	LDA #$FF
-bra2_F990:
-loc2_F990:
+bra3_F990:
+loc3_F990:
 	CPY #$00
-	BNE bra2_F99A
+	BNE bra3_F99A
 	STA $03B5
-	JMP loc2_F99D
-bra2_F99A:
+	JMP loc3_F99D
+bra3_F99A:
 	STA $03A5,X
-loc2_F99D:
+loc3_F99D:
 	INX
 	INY
 	CPY #$10
-	BNE bra2_F97E
+	BNE bra3_F97E
 	LDY #$01
 	LDX #$11
-bra2_F9A7:
+bra3_F9A7:
 	LDA ($2E),Y
-	BPL bra2_F9B0
+	BPL bra3_F9B0
 	LDA ($30),Y
-	JMP loc2_F9B9
-bra2_F9B0:
+	JMP loc3_F9B9
+bra3_F9B0:
 	LDA ($30),Y
 	SEC
 	SBC $25
-	BPL bra2_F9B9
+	BPL bra3_F9B9
 	LDA #$FF
-bra2_F9B9:
-loc2_F9B9:
+bra3_F9B9:
+loc3_F9B9:
 	STA $03A5,X
 	INX
 	INY
 	CPY #$10
-	BNE bra2_F9A7
+	BNE bra3_F9A7
 	LDA #$3F
 	STA $03A1
 	LDA #$00
@@ -3970,19 +3969,19 @@ loc2_F9B9:
 	INC $0312
 	LDA $0312
 	CMP #$05
-	BEQ bra2_F9EA
+	BEQ bra3_F9EA
 	CMP #$09
-	BEQ bra2_F9EA
-bra2_F9E7:
+	BEQ bra3_F9EA
+bra3_F9E7:
 	PLA
 	PLA
 	RTS
-bra2_F9EA:
+bra3_F9EA:
 	LDA #$80
 	ORA $0312
 	STA $0312
 	RTS
-tbl2_F9F3:
+tbl3_F9F3:
 	.byte $40
 	.byte $30
 	.byte $20
@@ -3992,13 +3991,13 @@ tbl2_F9F3:
 	.byte $20
 	.byte $30
 	.byte $40
-tbl2_F9FC:
+tbl3_F9FC:
 	.byte $2C
-tbl2_F9FD:
+tbl3_F9FD:
 	.byte $FB
-tbl2_F9FE:
+tbl3_F9FE:
 	.byte $4C
-tbl2_F9FF:
+tbl3_F9FF:
 	.byte $FD
 	.byte $3C
 	.byte $FB
@@ -4148,13 +4147,13 @@ tbl2_F9FF:
 	.byte $FD
 	.byte $CC
 	.byte $FD
-tbl2_FA94:
+tbl3_FA94:
 	.byte $2C
-tbl2_FA95:
+tbl3_FA95:
 	.byte $FB
-tbl2_FA96:
+tbl3_FA96:
 	.byte $DC
-tbl2_FA97:
+tbl3_FA97:
 	.byte $FD
 	.byte $3C
 	.byte $FB
@@ -5168,13 +5167,13 @@ tbl2_FA97:
 	.byte $28
 	.byte $16
 	.byte $0E
-tbl2_FE8C:
+tbl3_FE8C:
 	.byte $94
-tbl2_FE8D:
+tbl3_FE8D:
 	.byte $FE
-tbl2_FE8E:
+tbl3_FE8E:
 	.byte $94
-tbl2_FE8F:
+tbl3_FE8F:
 	.byte $FE
 	.byte $94
 	.byte $FE
@@ -5496,16 +5495,16 @@ tbl2_FE8F:
 	.byte $01
 	.byte $01
 	.byte $01
-sub2_FFD0:
+sub3_FFD0:
 	LDA #$05
 	STA $5800
 	STA $5801
 	LDA #$00
-	JSR sub2_F184
-bra2_FFDD:
+	JSR sub3_F184
+bra3_FFDD:
 	LDA $5800
 	CMP #$19
-	BNE bra2_FFDD
+	BNE bra3_FFDD
 	RTS
 	.byte $01
 	.byte $01

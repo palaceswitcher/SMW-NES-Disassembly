@@ -1,13 +1,13 @@
 ;disassembled by BZK 6502 Disassembler
 	.byte $C8
-	.byte $C0	;these are logged but i dont know what they're for
-	.byte $08	;
-	.byte $C1	;
-	.byte $48	;
-	.byte $C1	;
-	.byte $88	;
-	.byte $C1	
-	.byte $C8	;(nothing else here is logged unless stated otherwise)
+	.byte $C0
+	.byte $08
+	.byte $C1
+	.byte $48
+	.byte $C1
+	.byte $88
+	.byte $C1
+	.byte $C8
 	.byte $C1
 	.byte $08
 	.byte $C2
@@ -199,10 +199,10 @@
 	.byte $D0
 	.byte $C8
 	.byte $D0
+	.byte $00	;sprite palette mappings start
 	.byte $00
 	.byte $00
 	.byte $00
-	.byte $00
 	.byte $01
 	.byte $01
 	.byte $01
@@ -4064,6 +4064,8 @@
 	.byte $00
 	.byte $00
 	.byte $01
+	.byte $00
+	.byte $00
 	.byte $00
 	.byte $00
 	.byte $00
@@ -4095,13 +4097,11 @@
 	.byte $00
 	.byte $00
 	.byte $00
-	.byte $00	;these are logged too
-	.byte $00	;for whatever reason
-	.byte $00	;
-	.byte $00	;
 	.byte $00
 	.byte $00
 	.byte $00
+	.byte $00
+	.byte $00
 	.byte $03
 	.byte $03
 	.byte $02
@@ -4358,7 +4358,7 @@
 	.byte $03
 	.byte $03
 	.byte $03
-	.byte $02
+	.byte $02	;sprite palette mappings end
 	.byte $FF
 	.byte $00
 	.byte $FF
