@@ -268,7 +268,7 @@ tbl5_805F:
 	.byte $02
 	.byte $0A
 	.byte $95
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $15
 	.byte $16
@@ -351,7 +351,7 @@ tbl5_805F:
 	.byte $02
 	.byte $11
 	.byte $95
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $15
 	.byte $16
@@ -1120,14 +1120,14 @@ tbl5_8645:
 	BCS bra5_86BC_RTS
 	JSR sub5_86BD
 	JSR sub5_86C6
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BEQ bra5_86BC_RTS
 	LDA #$F7
 	STA InvincibilityTimer
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$FB
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$30
 	STA PlayerYSpeed
 	LDA #$0F
@@ -1947,15 +1947,15 @@ tbl5_8CA6:
 	LDX $A4
 	LDA #$81
 	STA $0578,X
-	LDA $E1
+	LDA PlayerState
 	CMP #$03
 	BEQ bra5_8CDE
 	LDA #$30
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
 	EOR #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$30
 	STA PlayerXSpeed
 bra5_8CDE:
@@ -2136,15 +2136,15 @@ bra5_8E27:
 	STA ObjectState,X
 	RTS
 bra5_8E32:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BEQ bra5_8E4E_RTS
 	LDA ONOFFBlockFlag
 	EOR #$01
 	STA ONOFFBlockFlag
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$FB
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$20
 	STA PlayerYSpeed
 	LDA #$16
@@ -2667,17 +2667,17 @@ bra5_9231:
 	LDA $1E
 	CMP #$08
 	BNE bra5_9262_RTS
-	LDA $04F5
+	LDA DataBank2
 	CMP #$23
 	BEQ bra5_9262_RTS
 	LDA $1E
 	CMP #$08
 	BNE bra5_9262_RTS
-	LDA $04F6
+	LDA WorldNumber
 	ASL
 	ASL
 	CLC
-	ADC $04F7
+	ADC LevelNumber
 	ASL
 	STA $060B
 	LDA #$03
@@ -2781,8 +2781,8 @@ tbl5_92B7:
 	.byte $0E
 	.byte $0F
 	.byte $10
-	.byte $17
-	.byte $17
+	.byte PlayerAnimationFrame
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $18
 	.byte $19
@@ -2915,7 +2915,7 @@ bra5_9370:
 	STA PlayerYSpeed
 	STA PlayerXSpeed
 	LDA #$03
-	STA $E1
+	STA PlayerState
 	STA $06DC
 	LDA #$0D
 	STA PlayerAction
@@ -2929,7 +2929,7 @@ bra5_9395:
 	BNE bra5_93A7_RTS
 bra5_939F:
 	LDA #$00
-	STA $E1
+	STA PlayerState
 	LDA #$0A
 	STA PlayerAction
 bra5_93A7_RTS:
@@ -3050,7 +3050,7 @@ bra5_947A:
 bra5_9481_RTS:
 	RTS
 bra5_9482:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra5_94A1_RTS
 	LDA $05DC,X
@@ -3091,7 +3091,7 @@ bra5_94C4:
 bra5_94CB_RTS:
 	RTS
 bra5_94CC:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra5_94EB_RTS
 	LDA $05DC,X
@@ -3135,7 +3135,7 @@ bra5_950E:
 	STA PlayerYSpeed
 	RTS
 sub5_9522:
-	LDA $E1
+	LDA PlayerState
 	CMP #$03
 	BEQ bra5_9529
 	RTS
@@ -3377,7 +3377,7 @@ tbl5_96A2:
 	.byte $12
 	.byte $10
 	.byte $13
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $16
 	.byte $19
@@ -3712,7 +3712,7 @@ bra5_98E4:
 	BNE bra5_9920_RTS
 bra5_98F6:
 	LDY #$06
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$40
 	BEQ bra5_9900
 	LDY #$0A
@@ -3754,7 +3754,7 @@ bra5_9940:
 	LDA tbl5_994A,Y
 	STA Event
 	LDA #$00
-	STA $E0
+	STA LevelTransitionFlag
 	RTS
 tbl5_994A:
 	.byte $13
@@ -3988,7 +3988,7 @@ tbl5_9AC4:
 	LDA #$40
 	STA EnemyAnimFrame,X
 	LDY #$22
-	LDA PlayerState
+	LDA PlayerPowerup
 	BNE bra5_9AE4
 	LDA Player1YoshiStatus	;unlogged
 	BNE bra5_9AE4	;unlogged
@@ -4033,7 +4033,7 @@ bra5_9B20:
 	BCS bra5_9B2F_RTS
 	LDA PlayerYSpeed
 	BEQ bra5_9B2F_RTS
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BEQ bra5_9B2F_RTS
 	INC GuidedObjStatus,X

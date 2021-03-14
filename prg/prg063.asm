@@ -5,7 +5,7 @@
 	PHA
 	TYA
 	PHA
-	LDA $01
+	LDA PPUMaskControl
 	STA PPUMask
 	LDA XScroll
 	STA PPUScroll
@@ -18,21 +18,21 @@
 	STA PPUCtrl
 	JSR sub3_F6E0
 	LDA BGBank1
-	STA $9000
+	STA M90_BG_CHR0
 	LDA BGBank2
-	STA $9001
+	STA M90_BG_CHR1
 	LDA BGBank3
-	STA $9002
-	LDA $03CC
-	STA $9003
+	STA M90_BG_CHR2
+	LDA BGBank4		;these registers go unused
+	STA M90_BG_CHR3	;
 	LDA SpriteBank1
-	STA $9004
+	STA M90_SP_CHR0
 	LDA SpriteBank2
-	STA $9005
+	STA M90_SP_CHR1
 	LDA SpriteBank3
-	STA $9006
+	STA M90_SP_CHR2
 	LDA SpriteBank4
-	STA $9007
+	STA M90_SP_CHR3
 	PLA
 	TAY
 	PLA
@@ -48,14 +48,14 @@
 	PHA
 	TYA
 	PHA
-	LDA $0480
+	LDA ColumnFinishFlag
 	BEQ bra3_E0E8
 	LDA PPUStatus
 	LDA $00
 	ORA #$04
 	STA PPUCtrl
 	LDA PPUStatus
-	LDA $0480
+	LDA ColumnFinishFlag
 	STA PPUAddr
 	LDA NextBGColumn
 	STA PPUAddr
@@ -67,7 +67,7 @@ bra3_E088:
 	CPX #$1E
 	BCC bra3_E088
 	LDA PPUStatus
-	LDA $0480
+	LDA ColumnFinishFlag
 	ORA #$08
 	STA PPUAddr
 	LDA NextBGColumn
@@ -102,7 +102,7 @@ bra3_E0C0:
 	STA $04C1
 bra3_E0E1:
 	LDA #$00
-	STA $0480
+	STA ColumnFinishFlag
 	BEQ bra3_E0F0
 bra3_E0E8:
 	LDA $03A1
@@ -117,7 +117,7 @@ bra3_E0F8:
 	STA PPUOAMAddr
 	LDA #$02
 	STA OAMDMA
-	LDA $01
+	LDA PPUMaskControl
 	STA PPUMask
 	LDA $02
 	STA PPUScroll
@@ -149,27 +149,27 @@ bra3_E12F:
 	STA PPUCtrl
 	JSR sub3_F6E0
 	LDA BGBank1
-	STA $9000
+	STA M90_BG_CHR0
 	LDA BGBank2
-	STA $9001
+	STA M90_BG_CHR1
 	LDA BGBank3
-	STA $9002
-	LDA $03CC
-	STA $9003
+	STA M90_BG_CHR2
+	LDA BGBank4
+	STA M90_BG_CHR3
 	LDA SpriteBank1
-	STA $9004
+	STA M90_SP_CHR0
 	LDA SpriteBank2
-	STA $9005
+	STA M90_SP_CHR1
 	LDA SpriteBank3
-	STA $9006
+	STA M90_SP_CHR2
 	LDA SpriteBank4
-	STA $9007
+	STA M90_SP_CHR3
 	JSR sub3_F7DA
 	JSR sub3_F19F
 	LDA #$3A
-	STA $8000
+	STA M90_PRG0
 	LDA #$3B
-	STA $8001
+	STA M90_PRG1
 	JSR $85BE
 	JSR $862A
 	LDA #$00
@@ -182,12 +182,12 @@ bra3_E12F:
 	PLA
 	PLP
 	RTI
-	SEI
-	CLD
+	SEI	;
+	CLD	;standard 2a03/6502 init
 	LDX #$FF
 	TXS
 	LDA #$00
-	STA $C002
+	STA M90_IRQ_DISABLE
 	STA PPUMask
 	STA PPUCtrl
 	LDX #$02
@@ -200,9 +200,9 @@ bra3_E1AA:
 	DEX
 	BNE bra3_E1A5
 	LDA #$3E
-	STA $8002
+	STA M90_PRG2
 	LDA #$3F
-	STA $8003
+	STA M90_PRG3
 	LDA #$85
 	STA $C001
 	LDA #$3E
@@ -222,12 +222,12 @@ bra3_E1AA:
 	LDA #$01
 	STA $D001
 	LDA #$0F
-	STA $4015
+	STA APUStatus
 	LDA #$00
-	STA $4010
+	STA DMCFreq
 	LDA #$40
-	STA $4017
-	STA $C002
+	STA Joy2Frame
+	STA M90_IRQ_DISABLE
 	LDA PPUStatus
 	LDA #$10
 	TAX
@@ -239,25 +239,25 @@ bra3_E202:
 	BNE bra3_E202
 	LDA #$00
 	LDX #$00
-bra3_E211:
+ClearMemory:
 	STA $00,X
-	STA SpriteMem,X
+	STA $0200,X
 	STA $0300,X
 	STA $0400,X
-	STA ObjectSlot,X
+	STA $0500,X
 	STA $0600,X
 	STA $0700,X
 	DEX
-	BNE bra3_E211
+	BNE ClearMemory
 	LDA #$00
 	JSR sub3_FFD0
 	LDA #$3A
-	STA $8000
+	STA M90_PRG0
 	LDA #$3B
-	STA $8001
+	STA M90_PRG1
 	JSR $85D6
 	LDA #$20
-	STA $8E
+	STA MusicRegister
 	JSR $8E24
 	INC $0700
 	LDA #$00
@@ -267,7 +267,7 @@ bra3_E211:
 	ORA $0312
 	STA $0312
 	LDA #$03
-	STA PlayerState
+	STA PlayerPowerup
 	LDA #$4C
 	STA $063A
 	LDX #$04
@@ -280,7 +280,7 @@ bra3_E211:
 	STA $00
 	LDA #$18
 	STA PPUMask
-	STA $01
+	STA PPUMaskControl
 bra3_E277:
 loc3_E277:
 	INC $00E4
@@ -323,10 +323,10 @@ loc3_E2BE:
 	ASL
 	TAY 
 	LDA tbl3_E2DB,Y 
-	STA $32
+	STA PCPointerLowerByte
 	LDA tbl3_E2DC,Y
-	STA $33
-	JMP ($32)
+	STA PCPointerUpperByte
+	JMP (PCPointerLowerByte)
 tbl3_E2DB:
 	.byte $E5
 tbl3_E2DC:
@@ -342,13 +342,13 @@ tbl3_E2DC:
 	LDA ButtonsPressed
 	AND #$80
 	BEQ bra3_E2FE
-	INC $04F7
-	LDA $04F7
+	INC LevelNumber
+	LDA LevelNumber
 	CMP #$04
 	BCC bra3_E2FE
 	LDA #$00
-	STA $04F7
-	INC $04F6
+	STA LevelNumber
+	INC WorldNumber
 bra3_E2FE:
 	LDA ButtonsPressed
 	AND #$10
@@ -368,10 +368,10 @@ loc3_E317:
 	ASL
 	TAY
 	LDA tbl3_E329,Y
-	STA $32
+	STA PCPointerLowerByte
 	LDA tbl3_E32A,Y
-	STA $33
-	JMP ($32)
+	STA PCPointerUpperByte
+	JMP (PCPointerLowerByte)
 tbl3_E329:
 	.byte $53
 tbl3_E32A:
@@ -416,15 +416,15 @@ tbl3_E32A:
 	.byte $ED
 	.byte $FD
 	.byte $EE
-	LDA $0620
+	LDA Player2YoshiStatus
 	STA Player1YoshiStatus
 	LDA #$80
 	ORA $0312
 	STA $0312
 	LDA #$3C
-	STA $8000
+	STA M90_PRG0
 	LDA #$3D
-	STA $8001
+	STA M90_PRG1
 	JSR $B19E
 	INC a:Event
 	RTS
@@ -432,10 +432,10 @@ tbl3_E32A:
 	ASL
 	TAY
 	LDA tbl3_E384,Y
-	STA $32
+	STA PCPointerLowerByte
 	LDA tbl3_E385,Y
-	STA $33
-	JMP ($32)
+	STA PCPointerUpperByte
+	JMP (PCPointerLowerByte)
 tbl3_E384:
 	.byte $88
 tbl3_E385:
@@ -446,7 +446,7 @@ tbl3_E385:
 	STA PPUCtrl
 	STA $00
 	STA PPUMask
-	STA $01
+	STA PPUMaskControl
 	LDX #$00
 	TXA
 bra3_E397:
@@ -454,12 +454,12 @@ bra3_E397:
 	INX
 	CPX #$14
 	BCC bra3_E397
-	STA $05F1
+	STA YoshiXScreen
 	JSR sub3_E904
 	LDA #$3C
-	STA $8000
+	STA M90_PRG0
 	LDA #$3D
-	STA $8001
+	STA M90_PRG1
 	JSR $B38E
 	LDA $E3DB
 	STA $036E
@@ -467,8 +467,8 @@ bra3_E397:
 	LDA $E3DC
 	STA $036F
 	STA $0371
-	LDA #$18
-	STA $01
+	LDA #%00011000		;
+	STA PPUMaskControl	;sets ppu mask for levels
 	LDA #$88
 	STA PPUCtrl
 	STA $00
@@ -486,12 +486,12 @@ bra3_E397:
 	LDA #$00
 	STA $52
 	STA $00E0
-	LDA $04F5
+	LDA DataBank2
 	CMP #$23
 	BNE bra3_E405
 	LDA $51
 	BNE bra3_E405
-	LDA $04F7
+	LDA LevelNumber
 	BEQ bra3_E405
 	LDA #$05
 	STA a:Event
@@ -509,7 +509,7 @@ bra3_E411:
 	LDA PauseFlag
 	BNE bra3_E442
 	LDA #$39
-	STA $8001
+	STA M90_PRG1
 	LDA $06E6
 	BNE bra3_E42B
 	JSR $ACAC
@@ -518,9 +518,9 @@ bra3_E42B:
 	BEQ bra3_E437
 	LDA #$00
 	STA $06EF
-	STA $14
+	STA PlayerXSpeed
 bra3_E437:
-	LDA BubbleFrequency
+	LDA UnderwaterFlag
 	BEQ bra3_E445
 	LDA $06
 	AND #$01
@@ -529,15 +529,15 @@ bra3_E442:
 	JMP loc3_E45F
 bra3_E445:
 	JSR sub3_ED14
-	LDA $0635
+	LDA PSwitchSeconds
 	BEQ bra3_E45F
-	INC $0634
-	LDA $0634
-	CMP #$3B
-	BCC bra3_E45F
-	DEC $0635
-	LDA #$00
-	STA $0634
+	INC PSwitchFrameCount
+	LDA PSwitchFrameCount	;
+	CMP #$3B				;if less than 59 frames pass,
+	BCC bra3_E45F			;branch
+	DEC PSwitchSeconds		;if not, decrement the amount of seconds left
+	LDA #$00				;
+	STA PSwitchFrameCount	;set frame count back to zero
 bra3_E45F:
 loc3_E45F:
 	LDA $06E6
@@ -553,12 +553,12 @@ loc3_E45F:
 	LDA #$02
 	STA SFXRegister
 bra3_E47C:
-	LDA PauseFlag
-	BEQ bra3_E494
+	LDA PauseFlag		;load pause status
+	BEQ bra3_E494		;branch
 	JSR sub3_E9DC
-	LDA ButtonsPressed
-	AND #$20
-	BEQ bra3_E494
+	LDA ButtonsPressed	;
+	AND #$20			;if select pressed
+	BEQ bra3_E494		;exit to map
 	INC $00E0
 	LDX CurrentPlayer
 	INC Player1Lives,X
@@ -581,19 +581,19 @@ loc3_E498:
 	RTS
 sub3_E4BA:
 	LDX CurrentPlayer
-	LDA PlayerState
+	LDA PlayerPowerup
 	STA $06DA,X
-	LDA $0620
+	LDA Player2YoshiStatus
 	STA $0393,X
 	RTS
 	LDA $00E0
 	ASL
 	TAY
 	LDA tbl3_E4DC,Y
-	STA $32
+	STA PCPointerLowerByte
 	LDA tbl3_E4DD,Y
-	STA $33
-	JMP ($32)
+	STA PCPointerUpperByte
+	JMP (PCPointerLowerByte)
 tbl3_E4DC:
 	.byte $E4
 tbl3_E4DD:
@@ -622,9 +622,9 @@ tbl3_E4DD:
 	RTS
 	LDY $060B
 	LDA tbl3_EB24,Y
-	STA $32
+	STA PCPointerLowerByte
 	LDA tbl3_EB25,Y
-	STA $33
+	STA PCPointerUpperByte
 	LDA tbl3_EA10,Y
 	STA $34
 	LDA tbl3_EA11,Y
@@ -641,10 +641,10 @@ tbl3_E4DD:
 	ASL
 	TAY
 	LDA tbl3_E546,Y
-	STA $32
+	STA PCPointerLowerByte
 	LDA tbl3_E547,Y
-	STA $33
-	JMP ($32)
+	STA PCPointerUpperByte
+	JMP (PCPointerLowerByte)
 tbl3_E546:
 	.byte $4E
 tbl3_E547:
@@ -656,11 +656,11 @@ tbl3_E547:
 	.byte $97
 	.byte $E5
 	LDA #$11
-	STA $1D
+	STA PlayerAction
 	LDA #$00
 	STA $06E0
-	STA $14
-	STA $15
+	STA PlayerXSpeed
+	STA PlayerYSpeed
 	JSR sub3_E5D4
 	LDA #$22
 	STA MusicRegister
@@ -671,17 +671,17 @@ tbl3_E547:
 	INC $00E0
 	RTS
 	LDA #$00
-	STA $14
+	STA PlayerXSpeed
 	LDA #$70
-	STA $15
-	LDA $19
+	STA PlayerYSpeed
+	LDA PlayerMovement
 	ORA #$04
-	STA $19
+	STA PlayerMovement
 	JSR sub3_E5D4
 	INC $00E0
 	RTS
 	LDA #$00
-	STA $14
+	STA PlayerXSpeed
 	JSR sub3_E5D4
 	LDX #$04
 	LDY #$3B
@@ -718,27 +718,27 @@ bra3_E5CE:
 	STA $0612
 	RTS
 sub3_E5D4:
-	LDA #$39
-	STA $8001
-	JSR $ACA5
-	JSR $A000
-	LDA #$36
-	STA $8001
-	JSR $A150
-	JSR $A0D9
-	JSR $A000
-	LDA #$3D
-	STA $8001
-	JSR $AE8F
+	LDA #57			;
+	STA M90_PRG1	;loads bank 57 into 2nd prg bank
+	JSR jmp_57_ACA5
+	JSR jmp_57_A000
+	LDA #54			;
+	STA M90_PRG1	;loads bank 54 into 2nd prg bank
+	JSR jmp_54_A150
+	JSR jmp_54_A0D9
+	JSR jmp_54_A000
+	LDA #61			;
+	STA M90_PRG1	;loads bank 61 into 2nd prg bank
+	JSR jmp_61_AE8F
 	LDA #$00
 	STA $062B
-	LDA #$34
-	STA $8001
+	LDA #52		;
+	STA M90_PRG1	;loads bank 52 into 2nd prg bank
 	LDA #$80
 	STA $3C
-	JSR $A080
-	JSR $A089
-	JSR $A000
+	JSR jmp_52_A080
+	JSR jmp_52_A089
+	JSR jmp_52_A000
 	JSR sub3_E9C4
 	RTS
 	JSR sub3_ED14
@@ -749,7 +749,7 @@ sub3_E5D4:
 	LDA #$00
 	STA Player1YoshiStatus
 	LDA #$39
-	STA $8001
+	STA M90_PRG1
 	JSR $A14A
 	LDA #$03
 	STA $00E0
@@ -758,10 +758,10 @@ bra3_E62F:
 	ASL
 	TAY
 	LDA tbl3_E641,Y
-	STA $32
+	STA PCPointerLowerByte
 	LDA tbl3_E642,Y
-	STA $33
-	JMP ($32)
+	STA PCPointerUpperByte
+	JMP (PCPointerLowerByte)	;jumps to currently loaded PC pointer
 tbl3_E641:
 	.byte $49
 tbl3_E642:
@@ -772,15 +772,15 @@ tbl3_E642:
 	.byte $E6
 	.byte $B0
 	.byte $E6
-	LDA $15
+	LDA PlayerYSpeed
 	BNE bra3_E68A
 	LDA #$01
-	STA $1D
+	STA PlayerAction
 	LDA #$10
-	STA $14
-	LDA $19
+	STA PlayerXSpeed
+	LDA PlayerMovement
 	AND #$BE
-	STA $19
+	STA PlayerMovement
 	LDA PlayerSprXPos
 	CMP #$80
 	BCC bra3_E68A
@@ -788,15 +788,15 @@ tbl3_E642:
 	BEQ bra3_E681
 	JSR sub3_E965
 	LDA #$01
-	STA $0620
+	STA Player2YoshiStatus
 	LDA #$50
-	STA $15
-	LDA $19
+	STA PlayerYSpeed
+	LDA PlayerMovement
 	ORA #$04
-	STA $19
+	STA PlayerMovement
 	LDA #$05
-	STA $1D
-	LDA #$01
+	STA PlayerAction
+	LDA #sfxSpinJump
 	STA SFXRegister
 	RTS
 bra3_E681:
@@ -807,29 +807,29 @@ bra3_E681:
 bra3_E68A:
 	RTS
 	LDA #$08
-	STA $1D
+	STA PlayerAction
 	LDA #$00
-	STA $14
+	STA PlayerXSpeed
 	LDX #$01
 	LDY #$3B
 	JSR sub3_E5B6
 	INC $00E0
 	RTS
 	LDA #$01
-	STA $1D
+	STA PlayerAction
 	LDA #$10
-	STA $14
+	STA PlayerXSpeed
 	LDA PlayerSprXPos
 	CMP #$C8
 	BCC bra3_E6AF
 	INC $00E0
 bra3_E6AF:
 	RTS
-	LDA $04F6
+	LDA WorldNumber
 	ASL
 	ASL
 	CLC
-	ADC $04F7
+	ADC LevelNumber
 	ASL
 	STA $060B
 	LDA #$00
@@ -840,7 +840,7 @@ bra3_E6AF:
 	STA $00E0
 	STA $0611
 	STA $0612
-	STA $1D
+	STA PlayerAction
 	RTS
 sub3_E6D5:
 	LDA $0312
@@ -857,26 +857,26 @@ bra3_E6E9:
 	STA $0312
 bra3_E6EC:
 	RTS
-	LDA #$39
-	STA $8001
-	JSR $A000
-	LDA #$36
-	STA $8001
-	JSR $A000
-	LDA #$34
-	STA $8001
-	LDA #$3D
-	STA $8001
-	JSR $AE8F
+	LDA #57
+	STA M90_PRG1
+	JSR jmp_57_A000
+	LDA #54
+	STA M90_PRG1
+	JSR jmp_54_A000
+	LDA #52
+	STA M90_PRG1
+	LDA #61
+	STA M90_PRG1
+	JSR jmp_61_AE8F
 	JSR sub3_E9C4
 	LDA $00E0
 	ASL
 	TAY
 	LDA tbl3_E71F,Y
-	STA $32
+	STA PCPointerLowerByte
 	LDA tbl3_E720,Y
-	STA $33
-	JMP ($32)
+	STA PCPointerUpperByte
+	JMP (PCPointerLowerByte)
 tbl3_E71F:
 	.byte $27
 tbl3_E720:
@@ -887,31 +887,31 @@ tbl3_E720:
 	.byte $E7
 	.byte $74
 	.byte $E7
-	LDA $15
+	LDA PlayerYSpeed
 	BNE bra3_E747
 	LDA #$01
 	STA $0311
 	JSR sub3_E6D5
 	JSR sub3_F919
 	LDA #$01
-	STA $1D
+	STA PlayerAction
 	LDA #$20
-	STA $14
-	LDA $19
+	STA PlayerXSpeed
+	LDA PlayerMovement
 	AND #$BE
-	STA $19
+	STA PlayerMovement
 	INC $00E0
 bra3_E747:
 	RTS
 	LDA #$10
-	STA $14
+	STA PlayerXSpeed
 	LDA PlayerSprXPos
 	CMP #$98
 	BCC bra3_E768
 	LDA #$10
-	STA $1D
+	STA PlayerAction
 	LDA #$00
-	STA $14
+	STA PlayerXSpeed
 	LDA #$01
 	STA $0311
 	JSR sub3_E6E0
@@ -926,9 +926,9 @@ bra3_E768:
 	RTS
 	LDA #$01
 	STA UnlockNextLevel
-	STA $1D
+	STA PlayerAction
 	LDA #$20
-	STA $14
+	STA PlayerXSpeed
 	LDA #$00
 	STA $0311
 	JSR sub3_E6D5
@@ -943,17 +943,17 @@ bra3_E768:
 	RTS
 	INC a:Event
 	RTS
-	LDA #$39
-	STA $8001
+	LDA #57			;
+	STA M90_PRG1	;loads bank 57 into 2nd prg bank
 	JSR $ACA5
 	JSR $AD04
 	JSR $A000
-	LDA #$36
-	STA $8001
+	LDA #54			;
+	STA M90_PRG1	;loads bank 54 into 2nd prg bank
 	LDA #$00
 	STA $062B
-	LDA #$34
-	STA $8001
+	LDA #52			;
+	STA M90_PRG1	;loads bank 52 into 2nd prg bank
 	LDA #$80
 	STA $3C
 	JSR $A080
@@ -961,19 +961,19 @@ bra3_E768:
 	JSR $A000
 	JSR sub3_E9C4
 	RTS
-	LDA #$39
-	STA $8001
+	LDA #57
+	STA M90_PRG1
 	JSR $A000
-	LDA #$36
-	STA $8001
+	LDA #54
+	STA M90_PRG1
 	JSR $A150
 	JSR $A07E
 	JSR $A000
-	LDA #$3D
-	STA $8001
+	LDA #61
+	STA M90_PRG1
 	JSR $AE8F
 	LDA #$34
-	STA $8001
+	STA M90_PRG1
 	LDA #$80
 	STA $3C
 	JSR $A089
@@ -982,10 +982,10 @@ bra3_E768:
 	ASL
 	TAY
 	LDA tbl3_E80F,Y
-	STA $32
+	STA PCPointerLowerByte
 	LDA tbl3_E810,Y
-	STA $33
-	JMP ($32)
+	STA PCPointerUpperByte
+	JMP (PCPointerLowerByte)
 tbl3_E80F:
 	.byte $13
 tbl3_E810:
@@ -1004,10 +1004,10 @@ tbl3_E810:
 bra3_E826:
 	STY $32
 	LDY #$01
-	LDA $04F6
+	LDA WorldNumber
 	CMP $32
 	BNE bra3_E83D
-	LDA $04F7
+	LDA LevelNumber
 	CMP #$03
 	BNE bra3_E83D
 	STY $037E
@@ -1030,7 +1030,7 @@ bra3_E840:
 	LDA $00E0
 	BNE bra3_E86F
 	LDA #$3D
-	STA $8001
+	STA M90_PRG1
 	JSR $BE85
 	INC $00E0
 bra3_E86F:
@@ -1039,15 +1039,15 @@ sub3_E870:
 	LDY $060C
 	LDX #$01
 	STX InterruptMode
-	LDA ($32),Y
+	LDA (PCPointerLowerByte),Y
 	AND #$7F
 	STA $51
-	STA $64
+	STA PlayerWallColPos
 	LDA #$00
 	STA $52
 	STA $65
 	INY
-	LDA ($32),Y
+	LDA (PCPointerLowerByte),Y
 	STA $53
 	ASL
 	STA $5B
@@ -1058,26 +1058,26 @@ sub3_E870:
 	LDA $51
 	STA PlayerXScreen
 	INY
-	LDA ($32),Y
+	LDA (PCPointerLowerByte),Y
 	STA PlayerXPos
 	STA PlayerSprXPos
 	LDA $53
 	STA PlayerYScreen
 	INY
-	LDA ($32),Y
+	LDA (PCPointerLowerByte),Y
 	STA PlayerYPos
 	STA PlayerSprYPos
 	INY
-	LDA ($32),Y
+	LDA (PCPointerLowerByte),Y
 	STA $060F
 	INY
-	LDA ($32),Y
+	LDA (PCPointerLowerByte),Y
 	STA ScreenCount
 	INY
-	LDA ($32),Y
+	LDA (PCPointerLowerByte),Y
 	STA $060D
 	INY
-	LDA ($32),Y
+	LDA (PCPointerLowerByte),Y
 	STA $060E
 	LDA $060C
 	LSR
@@ -1088,10 +1088,10 @@ sub3_E870:
 	STA $06E1
 	LDA ($34),Y
 	AND #$C0
-	STA BubbleFrequency
+	STA UnderwaterFlag
 	LDA ($34),Y
 	AND #$DF
-	STA $04F3
+	STA DataBank1
 	INY
 	LDA ($34),Y
 	CMP #$32
@@ -1100,12 +1100,12 @@ sub3_E870:
 	STA InterruptMode
 bra3_E8ED:
 	LDA #$3D
-	STA $8001
+	STA M90_PRG1
 	LDA ($34),Y
 	JSR $B34A
 	INY
 	LDA ($34),Y
-	STA $04F5
+	STA DataBank2
 	INY
 	LDA ($34),Y
 	STA $0310
@@ -1115,15 +1115,15 @@ sub3_E904:
 	JSR sub3_E959
 	LDA #$01
 	STA $0621
-	STA $0623
+	STA YoshiTongueState
 	LDA #$90
 	STA SpriteBank2
 	LDA #$00
-	STA $14
-	STA $15
-	STA $19
+	STA PlayerXSpeed
+	STA PlayerYSpeed
+	STA PlayerMovement
 	STA $1A
-	STA $1D
+	STA PlayerAction
 	STA $00E1
 	STA $0611
 	STA $0612
@@ -1134,7 +1134,7 @@ sub3_E904:
 	STA PlayerCarryFlag
 	STA InvincibilityTimer
 	LDA #$39
-	STA $8001
+	STA M90_PRG1
 	JSR $A14A
 	JSR $A000
 	JSR sub3_E9C4
@@ -1158,15 +1158,15 @@ bra3_E95C:
 sub3_E965:
 	LDA Player1YoshiStatus
 	BEQ bra3_E9C3
-	LDA $19
+	LDA PlayerMovement
 	STA $0622
 	LDA #$00
 	STA Player1YoshiStatus
 	LDA #$39
-	STA $8001
+	STA M90_PRG1
 	JSR $A14A
 	LDA #$02
-	STA $05F1
+	STA YoshiXScreen
 	LDA $11
 	SEC
 	SBC #$20
@@ -1174,9 +1174,9 @@ sub3_E965:
 	LDA PlayerYScreenDup
 	SBC #$00
 	STA $05F5
-	LDA $19
+	LDA PlayerMovement
 	ORA #$01
-	STA $19
+	STA PlayerMovement
 	LDY #$08
 	LDA $0622
 	AND #$40
@@ -1194,14 +1194,14 @@ bra3_E9A7:
 	SEC
 	LDA PlayerXPosDup
 	SBC $32
-	STA $05F2
+	STA YoshiXPos
 	LDA PlayerXScreenDup
 	SBC #$00
 	STA $05F3
 	LDA #$00
 	STA $05F6
 	LDA #$30
-	STA $14
+	STA PlayerXSpeed
 	INC ObjectCount
 bra3_E9C3:
 	RTS
@@ -1209,11 +1209,11 @@ sub3_E9C4:
 	LDA #$14
 	STA $3C
 	LDA #$39
-	STA $8001
+	STA M90_PRG1
 	JSR $A23B
 	JSR $A8DE
 	LDA #$34
-	STA $8001
+	STA M90_PRG1
 	JSR $A0F3
 	RTS
 sub3_E9DC:
@@ -1465,14 +1465,14 @@ tbl3_EA11:
 	.byte $27
 	.byte $23
 	.byte $1C
-	.byte $17
-	.byte $17
+	.byte PlayerAnimationFrame
+	.byte PlayerAnimationFrame
 	.byte $21
-	.byte $17
-	.byte $17
-	.byte $17
+	.byte PlayerAnimationFrame
+	.byte PlayerAnimationFrame
+	.byte PlayerAnimationFrame
 	.byte $21
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $0B
 	.byte $0B
 	.byte $1E
@@ -2025,18 +2025,18 @@ tbl3_EB25:
 	.byte $00
 sub3_ED14:
 	LDA #$39
-	STA $8001
+	STA M90_PRG1
 	JSR $A000
 	LDA #$36
-	STA $8001
+	STA M90_PRG1
 	JSR $A150
 	JSR $A07E
 	JSR $A000
 	LDA #$3D
-	STA $8001
+	STA M90_PRG1
 	JSR $AE8F
 	LDA #$34
-	STA $8001
+	STA M90_PRG1
 	LDA #$80
 	STA $3C
 	JSR $A080
@@ -2046,11 +2046,11 @@ sub3_ED14:
 	RTS
 sub3_ED48:
 	LDA #$24
-	STA $8002
+	STA M90_PRG2
 	LDA $D03E,Y
-	STA $32
+	STA PCPointerLowerByte
 	LDA $D03F,Y
-	STA $33
+	STA PCPointerUpperByte
 	LDA $D000,Y
 	STA $34
 	LDA $D001,Y
@@ -2067,10 +2067,10 @@ sub3_ED48:
 	ASL
 	TAY
 	LDA tbl3_ED87,Y
-	STA $32
+	STA PCPointerLowerByte
 	LDA tbl3_ED88,Y
-	STA $33
-	JMP ($32)
+	STA PCPointerUpperByte
+	JMP (PCPointerLowerByte)
 tbl3_ED87:
 	.byte $93
 tbl3_ED88:
@@ -2088,7 +2088,7 @@ tbl3_ED88:
 	LDA #$20
 	STA $06E0
 	LDA #$00
-	STA $1D
+	STA PlayerAction
 	JSR sub3_E5D4
 	LDA #$0A
 	STA SFXRegister
@@ -2096,17 +2096,17 @@ tbl3_ED88:
 	INC $00E0
 	RTS
 	LDA #$00
-	STA $14
+	STA PlayerXSpeed
 	LDA #$10
-	STA $15
-	LDA $19
+	STA PlayerYSpeed
+	LDA PlayerMovement
 	AND #$FB
 	LDY a:Event
 	CPY #$13
 	BNE bra3_EDBF
 	ORA #$04
 bra3_EDBF:
-	STA $19
+	STA PlayerMovement
 	JSR sub3_E5D4
 	LDX #$01
 	LDY #$16
@@ -2123,9 +2123,9 @@ bra3_EDBF:
 	LDY #$38
 	JSR sub3_ED48
 	LDA #$00
-	STA BubbleFrequency
+	STA UnderwaterFlag
 	LDA #$3D
-	STA $8001
+	STA M90_PRG1
 	LDA $A858
 	STA $00DC
 	LDA $A859
@@ -2136,12 +2136,12 @@ bra3_EDBF:
 	JSR sub3_ED14
 	JSR sub3_F27F
 	LDA #$01
-	STA $1D
+	STA PlayerAction
 	LDA #$10
-	STA $14
-	LDA $19
+	STA PlayerXSpeed
+	LDA PlayerMovement
 	AND #$BE
-	STA $19
+	STA PlayerMovement
 	LDX #$01
 	LDY #$1E
 	JSR sub3_E5B6
@@ -2152,10 +2152,10 @@ bra3_EDBF:
 	ASL
 	TAY
 	LDA tbl3_EE35,Y
-	STA $32
+	STA PCPointerLowerByte
 	LDA tbl3_EE36,Y
-	STA $33
-	JMP ($32)
+	STA PCPointerUpperByte
+	JMP (PCPointerLowerByte)
 tbl3_EE35:
 	.byte $CF
 tbl3_EE36:
@@ -2166,16 +2166,16 @@ tbl3_EE36:
 	.byte $E3
 	.byte $DD
 	.byte $E3
-	LDA $04F6
+	LDA WorldNumber
 	ASL
 	ASL
 	CLC
-	ADC $04F7
+	ADC LevelNumber
 	ASL
 	TAY
 	JSR sub3_ED48
 	LDA #$3D
-	STA $8001
+	STA M90_PRG1
 	JSR $A828
 	LDA #$20
 	STA $06E0
@@ -2183,16 +2183,16 @@ tbl3_EE36:
 	JSR sub3_ED14
 	JSR sub3_F27F
 	LDA #$00
-	STA $1D
+	STA PlayerAction
 	LDA #$10
-	STA $15
-	LDA $19
+	STA PlayerYSpeed
+	LDA PlayerMovement
 	AND #$FB
 	LDY $06E9
 	BNE bra3_EE72
 	ORA #$04
 bra3_EE72:
-	STA $19
+	STA PlayerMovement
 	LDA #$FF
 	STA $06EA
 	LDA $0611
@@ -2213,10 +2213,10 @@ bra3_EE84:
 	ASL
 	TAY
 	LDA tbl3_EEA8,Y
-	STA $32
+	STA PCPointerLowerByte
 	LDA tbl3_EEA9,Y
-	STA $33
-	JMP ($32)
+	STA PCPointerUpperByte
+	JMP (PCPointerLowerByte)
 tbl3_EEA8:
 	.byte $93
 tbl3_EEA9:
@@ -2244,14 +2244,14 @@ bra3_EEBF:
 	JSR sub3_ED14
 	JSR sub3_F27F
 	LDA #$0F
-	STA $1D
+	STA PlayerAction
 	LDA #$50
-	STA $15
-	STA $14
-	LDA $19
+	STA PlayerYSpeed
+	STA PlayerXSpeed
+	LDA PlayerMovement
 	ORA #$04
 	AND #$BE
-	STA $19
+	STA PlayerMovement
 	LDA $0611
 	CMP #$02
 	BNE bra3_EEEB
@@ -2288,13 +2288,13 @@ loc3_EF10:
 	TYA
 	PHA
 	LDA #$3D
-	STA $8001
-	LDA $0480
+	STA M90_PRG1
+	LDA ColumnFinishFlag
 	BEQ bra3_EF2B
 	JSR sub3_F055
 	JSR sub3_F0A2
 	LDA #$00
-	STA $0480
+	STA ColumnFinishFlag
 bra3_EF2B:
 	LDA $03A1
 	BEQ bra3_EF33
@@ -2304,7 +2304,7 @@ bra3_EF33:
 	STA PPUOAMAddr
 	LDA #$02
 	STA OAMDMA
-	LDA $01
+	LDA PPUMaskControl
 	STA PPUMask
 	LDA #$00
 	STA PPUAddr
@@ -2329,21 +2329,21 @@ bra3_EF67:
 loc3_EF73:
 	JSR sub3_F6E0
 	LDX BGBank1
-	STX $9000
+	STX M90_BG_CHR0
 	INX
-	STX $9001
+	STX M90_BG_CHR1
 	LDX BGBank3
-	STX $9002
+	STX M90_BG_CHR2
 	INX
-	STX $9003
+	STX M90_BG_CHR3
 	LDA SpriteBank1
-	STA $9004
+	STA M90_SP_CHR0
 	LDA SpriteBank2
-	STA $9005
+	STA M90_SP_CHR1
 	LDA SpriteBank3
-	STA $9006
+	STA M90_SP_CHR2
 	LDA SpriteBank4
-	STA $9007
+	STA M90_SP_CHR3
 	JSR sub3_F19F
 	INC $0313
 	LDA $0313
@@ -2356,17 +2356,17 @@ bra3_EFB4:
 	STA $3C
 	INC $06
 	LDA #$3A
-	STA $8000
+	STA M90_PRG0
 	LDA #$3B
-	STA $8001
+	STA M90_PRG1
 	LDA a:GameState
 	BNE bra3_EFD9
 	JSR $85BE
 	JSR $862A
 	LDA $08
-	STA $8000
+	STA M90_PRG0
 	LDA $09
-	STA $8001
+	STA M90_PRG1
 bra3_EFD9:
 	PLA
 	TAY
@@ -2382,7 +2382,7 @@ loc3_EFE0:
 	PHA
 	TYA
 	PHA
-	LDA $01
+	LDA PPUMaskControl
 	STA PPUMask
 	LDA $00
 	AND #$FC
@@ -2404,21 +2404,21 @@ bra3_F008:
 loc3_F014:
 	JSR sub3_F6E0
 	LDX $03C5
-	STX $9000
+	STX M90_BG_CHR0
 	INX
-	STX $9001
+	STX M90_BG_CHR1
 	LDX $03C6
-	STX $9002
+	STX M90_BG_CHR2
 	INX
-	STX $9003
+	STX M90_BG_CHR3
 	LDA SpriteBank1
-	STA $9004
+	STA M90_SP_CHR0
 	LDA SpriteBank2
-	STA $9005
+	STA M90_SP_CHR1
 	LDA SpriteBank3
-	STA $9006
+	STA M90_SP_CHR2
 	LDA SpriteBank4
-	STA $9007
+	STA M90_SP_CHR3
 	PLA
 	TAY
 	PLA
@@ -2441,7 +2441,7 @@ sub3_F055:
 	ORA #$04
 	STA PPUCtrl
 	LDA PPUStatus
-	LDA $0480
+	LDA ColumnFinishFlag
 	STA PPUAddr
 	LDA NextBGColumn
 	STA PPUAddr
@@ -2453,7 +2453,7 @@ bra3_F070:
 	CPX #$1E
 	BCC bra3_F070
 	LDA PPUStatus
-	LDA $0480
+	LDA ColumnFinishFlag
 	ORA #$08
 	STA PPUAddr
 	LDA NextBGColumn
@@ -2491,11 +2491,11 @@ bra3_F0A9:
 bra3_F0CA:
 	RTS
 sub3_F0CB:
-	LDA $04F6
+	LDA WorldNumber
 	ASL
 	ASL
 	CLC
-	ADC $04F7
+	ADC LevelNumber
 	TAX
 	LDA tbl3_F0DB,X
 	STA MusicRegister
@@ -2531,13 +2531,13 @@ tbl3_F0DB:
 	.byte $2C	;7-4 Music
 	.byte $29	;Yoshi's House Music
 	LDX #$F0
-	STX $9000
+	STX M90_BG_CHR0
 	INX
-	STX $9001
+	STX M90_BG_CHR1
 	LDX $0362
-	STX $9002
+	STX M90_BG_CHR2
 	INX
-	STX $9003
+	STX M90_BG_CHR3
 	LDY #$21
 	LDA $02
 	LSR
@@ -2550,7 +2550,7 @@ tbl3_F0DB:
 	LDA $02
 	STA PPUScroll
 	STA PPUScroll
-	STA $C002
+	STA M90_IRQ_DISABLE
 	RTS
 	LDA PPUStatus
 	LDA #$2B
@@ -2563,14 +2563,14 @@ tbl3_F0DB:
 	LDA #$0E
 	STA PPUMask
 	LDX #$EC
-	STX $9000
+	STX M90_BG_CHR0
 	INX
-	STX $9001
+	STX M90_BG_CHR1
 	INX
-	STX $9002
+	STX M90_BG_CHR2
 	INX
-	STX $9003
-	STA $C002
+	STX M90_BG_CHR3
+	STA M90_IRQ_DISABLE
 	RTS
 bra3_F156:
 	LDA PPUStatus
@@ -2587,11 +2587,11 @@ bra3_F15B:
 	STA $35
 	INY
 	LDA ($34),Y
-	STA $32
+	STA PCPointerLowerByte
 	INY
 	LDA ($34),Y
-	STA $33
-	JMP ($32)
+	STA PCPointerUpperByte
+	JMP (PCPointerLowerByte)
 sub3_F176:
 	LDA #$F8
 	LDX #$00
@@ -2734,19 +2734,19 @@ bra3_F270:
 	STA $00E4
 	RTS
 sub3_F27F:
-	LDA InterruptMode
-	CMP #$04
-	BEQ bra3_F29D
+	LDA InterruptMode	;
+	CMP #$04			;if interrupt mode is set to 4,
+	BEQ bra3_F29D		;branch
 	LDA $03A1
 	BNE bra3_F29D
 	LDA $037D
 	ASL
 	TAY
 	LDA tbl3_F29E,Y
-	STA $32
+	STA PCPointerLowerByte
 	LDA tbl3_F29F,Y
-	STA $33
-	JMP ($32)
+	STA PCPointerUpperByte
+	JMP (PCPointerLowerByte)
 bra3_F29D:
 	RTS
 tbl3_F29E:
@@ -2920,7 +2920,7 @@ sub3_F3BB:
 	STA $38
 bra3_F3C5:
 	JSR sub3_F3EC
-	LDA $32
+	LDA PCPointerLowerByte
 	CLC
 	ADC $26
 	LDY $25
@@ -2942,23 +2942,23 @@ bra3_F3EB:
 	RTS
 sub3_F3EC:
 	LDA #$00
-	STA $32
-	STA $33
+	STA PCPointerLowerByte
+	STA PCPointerUpperByte
 	LDX #$10
 bra3_F3F4:
 	ASL $34
 	ROL $35
 	ROL $32
 	ROL $33
-	LDA $32
+	LDA PCPointerLowerByte
 	SEC
 	SBC $38
 	TAY
-	LDA $33
+	LDA PCPointerUpperByte
 	SBC $39
 	BCC bra3_F40E
 	INC $34
-	STA $33
+	STA PCPointerUpperByte
 	STY $32
 bra3_F40E:
 	DEX
@@ -3534,11 +3534,11 @@ loc3_F6F3:
 	LDX InterruptMode
 	LDA PPUStatus
 	LDA tbl3_F70E,X
-	STA $C002
-	STA $C005
+	STA M90_IRQ_DISABLE
+	STA M90_IRQ_COUNTER
 	LDA #$FB
 	STA $C004
-	STA $C003
+	STA M90_IRQ_ENABLE
 	RTS
 tbl3_F70E:
 	.byte $08
@@ -3665,19 +3665,19 @@ loc3_F7C5:
 loc3_F7CE:
 	INC $0607
 	LDA #$20
-	STA $C003
-	STA $C003
+	STA M90_IRQ_ENABLE
+	STA M90_IRQ_ENABLE
 	RTS
 sub3_F7DA:
 	LDA PauseFlag
 	BNE bra3_F811
-	LDA $04F5
+	LDA DataBank2
 	CMP #$26
 	BNE bra3_F7EA
 	JSR sub3_F90B
 	RTS
 bra3_F7EA:
-	LDA $04F5
+	LDA DataBank2
 	CMP #$23
 	BEQ bra3_F811
 	CMP #$2B
@@ -3696,7 +3696,7 @@ bra3_F7EA:
 	LSR
 	TAY
 	LDA ($A6),Y
-	STA $9003
+	STA M90_BG_CHR3
 bra3_F811:
 	RTS
 tbl3_F812:
@@ -3775,9 +3775,9 @@ tbl3_F813:
 	.byte $C7
 loc3_F85A:
 	LDA #$1D
-	STA $C002
-	STA $C003
-	STA $C005
+	STA M90_IRQ_DISABLE
+	STA M90_IRQ_ENABLE
+	STA M90_IRQ_COUNTER
 	LDX #$0C
 bra3_F867:
 	DEX
@@ -3793,16 +3793,16 @@ bra3_F867:
 	STA PPUScroll
 	INC $0607
 	LDA #$EC
-	STA $9000
+	STA M90_BG_CHR0
 	LDA #$ED
-	STA $9001
+	STA M90_BG_CHR1
 	LDA #$EE
-	STA $9002
+	STA M90_BG_CHR2
 	LDA #$EF
-	STA $9003
+	STA M90_BG_CHR3
 	RTS
 loc3_F899:
-	STA $C002
+	STA M90_IRQ_DISABLE
 	LDX #$0C
 bra3_F89E:
 	DEX
@@ -3815,7 +3815,7 @@ bra3_F89E:
 loc3_F8AC:
 	LDA #$00
 	STA $0607
-	STA $C002
+	STA M90_IRQ_DISABLE
 	RTS
 loc3_F8B5:
 	LDX #$0C
@@ -3847,19 +3847,19 @@ loc3_F8D7:
 	LDA #$00
 	STA $0607
 	LDA #$C8
-	STA $9000
+	STA M90_BG_CHR0
 	LDA #$C9
-	STA $9001
+	STA M90_BG_CHR1
 	LDA #$CA
-	STA $9002
+	STA M90_BG_CHR2
 	LDA #$CB
-	STA $9003
-	STA $C002
+	STA M90_BG_CHR3
+	STA M90_IRQ_DISABLE
 	RTS
 sub3_F90B:
 	LDY ClownCarFace
 	LDA tbl3_F915,Y
-	STA $9000
+	STA M90_BG_CHR0
 	RTS
 tbl3_F915:
 	.byte $C8
@@ -3878,7 +3878,7 @@ sub3_F919:
 	LDA tbl3_FA97,Y
 	STA $31
 	LDA tbl3_FA94,Y
-	STA $32
+	STA PCPointerLowerByte
 	LDA tbl3_FA95,Y
 	JMP loc3_F94B
 bra3_F939:
@@ -3887,10 +3887,10 @@ bra3_F939:
 	LDA tbl3_F9FF,Y
 	STA $31
 	LDA tbl3_F9FC,Y
-	STA $32
+	STA PCPointerLowerByte
 	LDA tbl3_F9FD,Y
 loc3_F94B:
-	STA $33
+	STA PCPointerUpperByte
 	LDA $0311
 	ASL
 	ASL
@@ -3916,10 +3916,10 @@ loc3_F94B:
 bra3_F97E:
 	LDA ($34),Y
 	BPL bra3_F987
-	LDA ($32),Y
+	LDA (PCPointerLowerByte),Y
 	JMP loc3_F990
 bra3_F987:
-	LDA ($32),Y
+	LDA (PCPointerLowerByte),Y
 	SEC
 	SBC $25
 	BPL bra3_F990
@@ -4365,7 +4365,7 @@ tbl3_FA97:
 	.byte $20
 	.byte $0E
 	.byte $27
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $37
 	.byte $11
 	.byte $11
@@ -4430,7 +4430,7 @@ tbl3_FA97:
 	.byte $0E
 	.byte $38
 	.byte $27
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $01
 	.byte $2C
 	.byte $1C
@@ -4446,7 +4446,7 @@ tbl3_FA97:
 	.byte $01
 	.byte $38
 	.byte $27
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $0E
 	.byte $11
 	.byte $21
@@ -4461,7 +4461,7 @@ tbl3_FA97:
 	.byte $30
 	.byte $0E
 	.byte $27
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $37
 	.byte $30
 	.byte $11
@@ -4509,7 +4509,7 @@ tbl3_FA97:
 	.byte $30
 	.byte $0E
 	.byte $27
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $37
 	.byte $0E
 	.byte $2C
@@ -4558,7 +4558,7 @@ tbl3_FA97:
 	.byte $01
 	.byte $38
 	.byte $27
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $0E
 	.byte $11
 	.byte $3C
@@ -4573,7 +4573,7 @@ tbl3_FA97:
 	.byte $20
 	.byte $0E
 	.byte $27
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $37
 	.byte $0E
 	.byte $01
@@ -4637,7 +4637,7 @@ tbl3_FA97:
 	.byte $30
 	.byte $0E
 	.byte $27
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $37
 	.byte $0E
 	.byte $21
@@ -4749,7 +4749,7 @@ tbl3_FA97:
 	.byte $20
 	.byte $0E
 	.byte $27
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $37
 	.byte $0E
 	.byte $11
@@ -4765,7 +4765,7 @@ tbl3_FA97:
 	.byte $30
 	.byte $0E
 	.byte $27
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $37
 	.byte $0E
 	.byte $11
@@ -4781,7 +4781,7 @@ tbl3_FA97:
 	.byte $30
 	.byte $0E
 	.byte $27
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $37
 	.byte $0E
 	.byte $11
@@ -4797,7 +4797,7 @@ tbl3_FA97:
 	.byte $30
 	.byte $0E
 	.byte $27
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $37
 	.byte $0E
 	.byte $2A

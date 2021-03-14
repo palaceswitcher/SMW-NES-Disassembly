@@ -273,10 +273,10 @@ bra9_81FC:
 	JSR $A74D
 	LDA #$10
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
 	EOR #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$10
 	STA PlayerXSpeed
 	LDA #$01
@@ -434,7 +434,7 @@ tbl9_830A:
 	.byte $14
 	.byte $15
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -583,10 +583,10 @@ bra9_8448:
 	JSR $A74D
 	LDA #$10
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
 	EOR #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$10
 	STA PlayerXSpeed
 	LDA #$01
@@ -876,10 +876,10 @@ tbl9_865F:
 	JSR $A74D
 	LDA #$10
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
 	EOR #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$10
 	STA PlayerXSpeed
 	LDA #$01
@@ -1436,7 +1436,7 @@ tbl9_8A8B:
 	.byte $14
 	.byte $15
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $02
 	.byte $02
 	.byte $A6
@@ -1608,10 +1608,10 @@ bra9_8BB6:
 	JSR $A74D
 	LDA #$10
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
 	EOR #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$10
 	STA PlayerXSpeed
 	LDA #$01
@@ -2478,10 +2478,10 @@ loc9_91E7:
 	BCS bra9_9221
 	LDA #$10
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
 	EOR #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$10
 	STA PlayerXSpeed
 	LDA #$01
@@ -2779,7 +2779,7 @@ tbl9_93ED:
 	.byte $11
 	.byte $15
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $03
 	.byte $02
 	.byte $AD
@@ -3258,10 +3258,10 @@ tbl9_975C:
 	JSR $A74D
 	LDA #$10
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
 	EOR #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$10
 	STA PlayerXSpeed
 	LDA #$01
@@ -3422,10 +3422,10 @@ loc9_98AF:
 	JSR $A74D
 	LDA #$10
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
 	EOR #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$10
 	STA PlayerXSpeed
 	LDA #$01
@@ -3574,7 +3574,7 @@ tbl9_99CB:
 	.byte $12
 	.byte $FF
 	.byte $15
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $FF
 	.byte $1F
 	.byte $20
@@ -4638,11 +4638,11 @@ tbl9_9C5F:
 	STA MusicRegister
 	LDA #$06
 	STA Event
-	LDA $04F6
+	LDA WorldNumber
 	ASL
 	ASL
 	CLC
-	ADC $04F7
+	ADC LevelNumber
 	TAY
 	LDA $0399
 	BEQ bra9_9ED9
@@ -4657,9 +4657,9 @@ bra9_9ED9:
 	STA PlayerPowerupBuffer
 bra9_9EE4_RTS:
 	RTS
-	LDA PlayerState
+	LDA PlayerPowerup
 	BNE bra9_9EF6_RTS
-	INC PlayerState
+	INC PlayerPowerup
 	LDA #$07
 	STA Event
 	LDA #$01

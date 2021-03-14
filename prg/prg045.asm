@@ -7,8 +7,8 @@
 	STA PCPointerUpperByte
 	LDA #$00
 	STA PCPointerLowerByte
-	LDA $04F3
-	STA $8000
+	LDA DataBank1
+	STA M90_PRG0
 	LDA $65
 	LSR
 	LSR
@@ -21,14 +21,14 @@
 	TAY
 	LDA (PCPointerLowerByte),Y
 	TAY
-	LDA $04F5
-	STA $8000
+	LDA DataBank2
+	STA M90_PRG0
 	LDA ($DA),Y
 	CMP #$78
 	BCC bra12_9F7A_RTS
 	STA $96
 	LDA #$3C
-	STA $8000
+	STA M90_PRG0
 	JSR $8000
 bra12_9F7A_RTS:
 	RTS
@@ -55,7 +55,7 @@ bra12_9F7A_RTS:
 	.byte $3B
 	.byte $D8
 	.byte $74
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $48
 	.byte $2B
 	.byte $C3
@@ -107,7 +107,7 @@ bra12_9F7A_RTS:
 	.byte $3B
 	.byte $D8
 	.byte $74
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $48
 	.byte $2B
 	.byte $C3

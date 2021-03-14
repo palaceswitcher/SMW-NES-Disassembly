@@ -34,7 +34,7 @@ tbl2_8001:
 	.byte $14
 	.byte $15
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -359,7 +359,7 @@ tbl2_8001:
 	.byte $14
 	.byte $15
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -1293,7 +1293,7 @@ tbl2_8901:
 	.byte $8C
 	.byte $0F
 	.byte $8D
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8D
 	.byte $1F
 	.byte $8D
@@ -1879,7 +1879,7 @@ tbl2_8A51:
 	.byte $0E
 	.byte $0F
 	.byte $14
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $04
 	.byte $04
@@ -1930,7 +1930,7 @@ tbl2_8A51:
 	.byte $14
 	.byte $15
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -2033,7 +2033,7 @@ tbl2_8A51:
 	.byte $14
 	.byte $13
 	.byte $FF
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $16
 	.byte $FF
 	.byte $FF
@@ -2199,7 +2199,7 @@ tbl2_8A51:
 	.byte $02
 	.byte $09
 	.byte $0A
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $02
 	.byte $03
@@ -2343,7 +2343,7 @@ tbl2_8A51:
 	.byte $02
 	.byte $09
 	.byte $0A
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $02
 	.byte $03
@@ -2770,7 +2770,7 @@ tbl2_8E72:
 	.byte $FF
 	.byte $15
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -2834,7 +2834,7 @@ tbl2_8E72:
 	.byte $FF
 	.byte $00
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -3096,7 +3096,7 @@ tbl2_90C4:
 	.byte $91
 	.byte $11
 	.byte $91
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $91
 	.byte $20
 	.byte $91
@@ -4643,9 +4643,9 @@ tbl2_9754:
 	.byte $D0
 	.byte $97
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $FF
 	.byte $19
 	.byte $1A
@@ -4781,7 +4781,7 @@ bra2_97DF:
 	.byte $0E
 	.byte $00
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $18
 	.byte $19
@@ -4947,7 +4947,7 @@ tbl2_988A:
 	.byte $00
 	.byte $15
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -4955,7 +4955,7 @@ tbl2_988A:
 	.byte $1B
 	.byte $1C
 	.byte $1D
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $1E
 	.byte $1F
 	.byte $00
@@ -5176,7 +5176,7 @@ bra2_99CC:
 	TAX
 	LDA tbl2_9A8D,X
 	STA $51
-	STA $64
+	STA PlayerWallColPos
 	STA PlayerXScreen
 	LDA tbl2_9A8E,X
 	STA $52

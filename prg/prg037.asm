@@ -356,7 +356,7 @@ bra_82C8_RTS:
 	RTS
 sub_82C9:
 	JSR sub_82EA
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$01
 	BNE bra_82DF
 	LDA $05B4,X
@@ -379,7 +379,7 @@ sub_82EA:
 	LDA $A97B,Y
 	STA $38
 	LDY #$10
-	LDA PlayerState
+	LDA PlayerPowerup
 	BEQ bra_8300
 	LDY #$18
 bra_8300:
@@ -640,7 +640,7 @@ tbl_84A4:
 	.byte $11
 	.byte $12
 	.byte $FF
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -1415,7 +1415,7 @@ tbl_8939:
 	.byte $FF
 	.byte $15
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $12
 	.byte $13
 	.byte $14
@@ -2269,7 +2269,7 @@ tbl_8EFC:
 	.byte $00
 tbl_8EFD:
 	.byte $8F
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8F
 	.byte $04
 	.byte $05
@@ -2778,7 +2778,7 @@ bra_921D:
 	STA $05F6
 	INC BowserStatus
 	LDA #$37
-	STA $05F2
+	STA YoshiXPos
 	LDA #$38
 	STA $05F3
 	RTS
@@ -2792,7 +2792,7 @@ tbl_9230:
 	.byte $05
 	.byte $FF
 	JSR sub_91B5
-	LDA $05F2
+	LDA YoshiXPos
 	ASL
 	TAY
 	JSR $B896
@@ -2947,7 +2947,7 @@ bra_935C:
 	LDA $05F3
 	EOR #$01
 	STA $05F3
-	STA $05F2
+	STA YoshiXPos
 	RTS
 	INC $05F6
 	LDA $05F6
@@ -3414,7 +3414,7 @@ loc_970B_RTS:
 	BMI bra_975B
 	LDY #$00
 bra_975B:
-	STY PlayerAttributes
+	STY PlayerMovement
 	LDA #musEnding
 	STA MusicRegister
 	RTS
@@ -3970,7 +3970,7 @@ bra_9862:
 	.byte $0E
 	.byte $56
 	.byte $13
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $59
 	.byte $5B
 	.byte $1F

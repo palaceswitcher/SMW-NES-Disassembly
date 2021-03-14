@@ -3627,7 +3627,7 @@
 	LDA $96	;useless duplicate code to pad out the bank
 	AND #$0F
 	TAX
-	LDA $64
+	LDA PlayerWallColPos
 	ASL
 	CLC
 	ADC tbl2_EF17,X
@@ -3985,7 +3985,7 @@ tbl2_EF47:
 	.byte $16
 	.byte $16
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $C7
 	.byte $F2
 	.byte $27
@@ -4276,7 +4276,7 @@ tbl2_F047:
 	.byte $07
 	.byte $00
 	.byte $01
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $07
 	.byte $00
 	.byte $0B
@@ -4293,7 +4293,7 @@ tbl2_F047:
 	.byte $07
 	.byte $00
 	.byte $01
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $07
 	.byte $00
 	.byte $0B

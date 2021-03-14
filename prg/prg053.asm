@@ -1,5 +1,5 @@
 ;disassembled by BZK 6502 Disassembler
-	LDA $05F2
+	LDA YoshiXPos
 	SEC
 	SBC PlayerXPosDup
 	STA $05F9
@@ -41,7 +41,7 @@ bra7_8049:
 	STA $05FC
 bra7_805A:
 loc7_805A:
-	LDA $05F1
+	LDA YoshiXScreen
 	AND #$7F
 	ASL
 	TAY
@@ -71,12 +71,12 @@ tbl7_806F:
 	TAX
 	LDA tbl7_80A2,X
 	BMI bra7_8091
-	STA $05F8
+	STA YoshiAnimation
 	INC $05F6
 bra7_80905_RTS:
 	RTS
 bra7_8091:
-	INC $05F1
+	INC YoshiXScreen
 	LDA $05F6
 	AND #$F0
 	STA $05F6
@@ -100,7 +100,7 @@ tbl7_80A2:
 	JSR $B758
 	BNE bra7_80C5
 	LDA #$04
-	STA $05F1
+	STA YoshiXScreen
 	LDA #$00
 	STA $05F7
 	RTS
@@ -127,7 +127,7 @@ bra7_80E7:
 	BEQ bra7_80F0
 	LDA #$09
 bra7_80F0:
-	STA $05F8
+	STA YoshiAnimation
 	LDA tbl7_813C,Y
 	BMI bra7_8111
 	CLC
@@ -223,7 +223,7 @@ bra7_8176:
 	CLC
 	ADC #$0A
 bra7_8183:
-	STA $05F8
+	STA YoshiAnimation
 	INC $05F6
 bra7_81895_RTS:
 	RTS
@@ -244,7 +244,7 @@ tbl7_818A:
 	JSR $B758
 	BNE bra7_81DE
 	LDA #$06
-	STA $05F8
+	STA YoshiAnimation
 	LDA $05F7
 	AND #$7F
 	CMP #$07
@@ -310,7 +310,7 @@ bra7_81F4:
 	STA $50
 	LDY #$03
 bra7_8208:
-	STY $05F1
+	STY YoshiXScreen
 	RTS
 sub7_820C:
 	LDA PlayerCarryFlag
@@ -318,13 +318,13 @@ sub7_820C:
 	LDA $0622
 	AND #$40
 	BNE bra7_8222
-	LDA $05F2
+	LDA YoshiXPos
 	CLC
 	ADC #$10
 	PHA
 	JMP loc7_8229
 bra7_8222:
-	LDA $05F2
+	LDA YoshiXPos
 	CLC
 	ADC #$24
 	PHA
@@ -359,17 +359,17 @@ loc7_8229:
 	LDA $32
 	CMP #$08
 	BCS bra7_826C
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra7_826C
 	LDA #$06
-	STA $E1
+	STA PlayerState
 bra7_826C:
-	LDA $E1
+	LDA PlayerState
 	CMP #$07
 	BNE bra7_827B5_RTS
 	LDA #$00
-	STA $05F1
+	STA YoshiXScreen
 	LDA #$0D
 	STA SFXRegister
 bra7_827B5_RTS:
@@ -380,11 +380,11 @@ bra7_827B5_RTS:
 	BEQ bra7_8286
 	RTS
 bra7_8286:
-	LDA $05F1
+	LDA YoshiXScreen
 	BNE bra7_828C
 	RTS
 bra7_828C:
-	LDA $05F8
+	LDA YoshiAnimation
 	ASL
 	TAX
 	LDA tbl7_82A2,X
@@ -679,7 +679,7 @@ loc7_83EE:
 	JSR $BD3D
 	LDA Player1YoshiStatus
 	BNE bra7_83FB
-	LDA $05F1
+	LDA YoshiXScreen
 	BEQ bra7_840B
 bra7_83FB:
 	LDA #$05
@@ -743,18 +743,18 @@ loc7_8474:
 	STA FreezeFlag
 	LDA $0578,X
 	AND #$7F
-	CMP #$17
+	CMP #PlayerAnimationFrame
 	BCC bra7_84C25_RTS
 	LDA #$00
 	STA ObjectSlot,X
 	STA $05F7
 	STA $05F6
 	STA $0622
-	STA $05F8
+	STA YoshiAnimation
 	LDA #$01
-	STA $05F1
+	STA YoshiXScreen
 	LDA ObjectXPos,X
-	STA $05F2
+	STA YoshiXPos
 	LDA ObjectXScreen,X
 	STA $05F3
 	SEC
@@ -892,7 +892,7 @@ tbl7_85AB:
 	.byte $AB
 	.byte $B8
 	.byte $85
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $AE
 	.byte $89
 	.byte $86
@@ -957,7 +957,7 @@ bra7_862A:
 	JSR $AB6B
 	LDA PlayerYSpeed
 	BEQ bra7_8653
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra7_86525_RTS
 	LDA #$01
@@ -976,16 +976,16 @@ bra7_8653:
 	BEQ bra7_866B
 	LDA #$20
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$04
 	STA PlayerAction
 	LDA #$03
 	STA SFXRegister
 	RTS
 bra7_866B:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$01
 	BNE bra7_867E
 	LDA $05B4,X
@@ -1130,7 +1130,7 @@ tbl7_8772:
 	.byte $AB
 	.byte $89
 	.byte $87
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $AE
 	.byte $4C
 	.byte $88
@@ -1205,7 +1205,7 @@ bra7_87FB:
 	JSR $AB6B
 	LDA PlayerYSpeed
 	BEQ bra7_881E
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra7_881D5_RTS
 	LDA #$00
@@ -1222,12 +1222,12 @@ bra7_881E:
 	BEQ bra7_882E
 	LDA #$20
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
-	STA PlayerAttributes
+	STA PlayerMovement
 	RTS
 bra7_882E:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$01
 	BNE bra7_8841
 	LDA $05B4,X
@@ -1406,9 +1406,9 @@ loc7_899A:
 	BEQ bra7_89A0
 	RTS
 bra7_89A0:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDY #$50
 	LDA ButtonsHeld
 	AND #$80
@@ -1590,15 +1590,15 @@ tbl7_8AE9:
 	BEQ bra7_8B3F
 	LDA PlayerYSpeed
 	BEQ bra7_8B34
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra7_8B335_RTS
 bra7_8B15:
 	LDA #$20
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$04
 	STA PlayerAction
 	LDA #$0F
@@ -1613,9 +1613,9 @@ bra7_8B335_RTS:
 bra7_8B34:
 	LDA #$20
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
-	STA PlayerAttributes
+	STA PlayerMovement
 	RTS
 bra7_8B3F:
 	LDA $1E
@@ -1824,9 +1824,9 @@ tbl7_8CC1:
 	JSR $A74D
 	LDA #$30
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA ObjectSlot,X
 	CMP #$38
 	BEQ bra7_8CEB
@@ -2043,7 +2043,7 @@ bra7_8E7F:
 	LDA #$00
 	STA ObjectState,Y
 bra7_8E8B:
-	STA $062F
+	STA FireballSlot
 	RTS
 	LDX $A4
 	JSR sub7_8F50
@@ -2082,7 +2082,7 @@ bra7_8ECC:
 	LDA #$00
 	STA ObjectState,Y
 bra7_8ED8:
-	STA $0630
+	STA FireballSlot2
 	RTS
 	LDX $A4
 	LDA ObjectXPos,X
@@ -3024,7 +3024,7 @@ tbl7_95AC:
 	.byte $02
 	.byte $02
 	.byte $90
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $1F
 	.byte $20
@@ -3063,7 +3063,7 @@ tbl7_95AC:
 	.byte $01
 	.byte $01
 	.byte $84
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $02
 	.byte $02
 	.byte $90
@@ -3789,11 +3789,11 @@ bra7_9B25:
 	BPL bra7_9B4E
 	LDA #$00
 	STA $0578,X
-	LDA $04F6
+	LDA WorldNumber
 	ASL
 	ASL
 	CLC
-	ADC $04F7
+	ADC LevelNumber
 	TAY
 	LDA CurrentPlayer
 	BEQ bra7_9B43
@@ -3876,11 +3876,11 @@ bra7_9BB3:
 	STA SFXRegister
 	LDA #$00
 	STA ObjectSlot,X
-	LDA $04F6
+	LDA WorldNumber
 	ASL
 	ASL
 	CLC
-	ADC $04F7
+	ADC LevelNumber
 	TAY
 	LDA CurrentPlayer
 	BEQ bra7_9BD5
@@ -4260,11 +4260,11 @@ tbl7_9EB1:
 	STA MusicRegister
 	LDA #$06
 	STA Event
-	LDA $04F6
+	LDA WorldNumber
 	ASL
 	ASL
 	CLC
-	ADC $04F7
+	ADC LevelNumber
 	TAY
 	LDA CurrentPlayer
 	BEQ bra7_9ED9
@@ -4280,9 +4280,9 @@ bra7_9ED9:
 bra7_9EE45_RTS:
 	RTS
 sub7_9EE5:
-	LDA PlayerState
+	LDA PlayerPowerup
 	BNE bra7_9EF65_RTS
-	INC PlayerState
+	INC PlayerPowerup
 	LDA #$07
 	STA Event
 	LDA #$01

@@ -186,7 +186,7 @@ bra13_99CC:
 	TAX
 	LDA tbl13_9A8D,X
 	STA $51
-	STA $64
+	STA PlayerWallColPos
 	STA PlayerXScreen
 	LDA tbl13_9A8E,X
 	STA $52

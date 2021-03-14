@@ -1,5 +1,6 @@
 ;disassembled with BZK 6502 Disassembler
-	LDA $E1
+jmp_39_E000:
+	LDA PlayerState
 	CMP #$03
 	BNE bra_E02C
 	LDA $06DC
@@ -18,7 +19,7 @@ bra_E01D:
 	BEQ bra_E02C
 bra_E023:
 	LDA #$00
-	STA $E1
+	STA PlayerState
 	LDA #$0A
 	STA PlayerAction
 	RTS
@@ -304,13 +305,13 @@ bra_E14E:
 	LDA Player1YoshiStatus
 	BEQ bra_E160
 	LDA #$01
-	STA $05FD
+	STA HurtFlag
 	JMP loc_E173
 bra_E160:
-	LDA PlayerState
+	LDA PlayerPowerup
 	BEQ bra_E185
 	LDA #$00
-	STA PlayerState
+	STA PlayerPowerup
 	LDA #$01
 	STA PlayerPowerupBuffer
 	LDA #$07
@@ -328,8 +329,8 @@ bra_E185:
 	LDA #$04
 	STA Event
 	LDA #$00
-	STA $E0
-	STA $E1
+	STA LevelTransitionFlag
+	STA PlayerState
 	STA $06DC
 	STA $06DD
 	RTS
@@ -351,7 +352,7 @@ bra_E185:
 	STA PlayerYSpeed
 	STA PlayerXSpeed
 	LDA #$03
-	STA $E1
+	STA PlayerState
 	LDA #$0D
 	STA PlayerAction
 bra_E1C1_RTS:
@@ -360,17 +361,17 @@ bra_E1C2:
 	LDA PlayerYSpeed
 	BEQ bra_E1C1_RTS
 	JMP loc_E1F4
-	LDA $04F5
+	LDA DataBank2
 	CMP #$23
 	BEQ bra_E1F2_RTS
 	LDA $1E
 	CMP #$08
 	BNE bra_E1F2_RTS
-	LDA $04F6
+	LDA WorldNumber
 	ASL
 	ASL
 	CLC
-	ADC $04F7
+	ADC LevelNumber
 	ASL
 	STA $060B
 	LDA #$03
@@ -388,7 +389,7 @@ bra_E1F2_RTS:
 loc_E1F4:
 	LDA #$01
 	STA $95
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra_E224
 	LDA $65
@@ -514,7 +515,7 @@ bra_E291:
 	RTS
 	LDA #$01
 	STA $95
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BEQ bra_E2AA
 	LDA PlayerXSpeed
@@ -546,7 +547,7 @@ bra_E2AA:
 	LDA #$00
 	STA PlayerYSpeed
 bra_E2D0:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$01
 	BEQ bra_E2E2
 	LDA PlayerXSpeed
@@ -681,7 +682,7 @@ tbl_E2EE:
 	.db $0B
 	LDA #$01
 	STA $95
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BEQ bra_E376
 	LDA PlayerXSpeed
@@ -713,7 +714,7 @@ bra_E376:
 	LDA #$00
 	STA PlayerYSpeed
 bra_E39A:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$01
 	BNE bra_E3AE
 	LDA PlayerXSpeed
@@ -953,7 +954,7 @@ tbl_E3BC:
 	LDA #$00
 bra_E499:
 	STA PlayerXSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra_E4C5_RTS
 	LDA $65
@@ -1135,7 +1136,7 @@ tbl_E4DE:
 	.db $0A
 	.db $0B
 	.db $0B
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra_E58B
 	LDA $67
@@ -1171,14 +1172,14 @@ bra_E58B:
 	AND #$F0
 	STA $65
 	LDA PlayerXScreen
-	STA $64
+	STA PlayerWallColPos
 	JMP loc_E5C1_RTS
 bra_E5B7:
 	LDA PlayerXPos
 	ORA #$0F
 	STA $65
 	LDA PlayerXScreen
-	STA $64
+	STA PlayerWallColPos
 bra_E5C1_RTS:
 loc_E5C1_RTS:
 	RTS
@@ -1198,14 +1199,14 @@ bra_E5C7:
 	AND #$F0
 	STA $65
 	LDA PlayerXScreenDup
-	STA $64
+	STA PlayerWallColPos
 	JMP loc_E5ED
 bra_E5E3:
 	LDA PlayerXPosDup
 	ORA #$0F
 	STA $65
 	LDA PlayerXScreenDup
-	STA $64
+	STA PlayerWallColPos
 loc_E5ED:
 	LDA PlayerYPosDup
 	SEC
@@ -1250,14 +1251,14 @@ loc_E60F:
 	AND #$F0
 	STA $65
 	LDA $0A
-	STA $64
+	STA PlayerWallColPos
 	JMP loc_E64C
 bra_E642:
 	LDA $0B
 	ORA #$0F
 	STA $65
 	LDA $0A
-	STA $64
+	STA PlayerWallColPos
 bra_E64C:
 loc_E64C:
 	LDA $0D
@@ -1308,7 +1309,7 @@ sub_E698:
 	LDA $96
 	AND #$07
 	BNE bra_E6B7
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$01
 	BEQ bra_E6A9
 	INC PlayerXSpeed
@@ -1327,13 +1328,13 @@ bra_E6B4:
 bra_E6B7:
 	CMP #$05
 	BCS bra_E6E9
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra_E6C5
 	LDA #$00
 	STA $15
 bra_E6C5:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$01
 	BEQ bra_E6D0
 	LDA #$10
@@ -1349,16 +1350,16 @@ bra_E6D0:
 	STA PlayerXSpeed
 	RTS
 bra_E6DE:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$10
 	STA PlayerXSpeed
 	RTS
 bra_E6E9:
 	CMP #$05
 	BNE bra_E711
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra_E6FE
 	LDA $14
@@ -1376,26 +1377,26 @@ bra_E6FE:
 loc_E706:
 	LDA #$00
 	STA PlayerXSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$FE
-	STA PlayerAttributes
+	STA PlayerMovement
 	RTS
 bra_E711:
 	JMP loc_E714
 loc_E714:
 	LDA PlayerYSpeed
 	BEQ bra_E735
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BEQ bra_E727
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 	JMP loc_E72D
 bra_E727:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$FE
-	STA PlayerAttributes
+	STA PlayerMovement
 loc_E72D:
 	LDA #$04
 	CLC
@@ -1408,17 +1409,17 @@ bra_E735:
 loc_E738:
 	LDA PlayerYSpeed
 	BEQ bra_E759
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BEQ bra_E74B
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$FE
-	STA PlayerAttributes
+	STA PlayerMovement
 	JMP loc_E751
 bra_E74B:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 loc_E751:
 	LDA #$04
 	CLC
@@ -1501,9 +1502,9 @@ bra_E7CD:
 	SBC #$10
 	ORA #$0F
 	STA $65
-	LDA $64
+	LDA PlayerWallColPos
 	SBC #$00
-	STA $64
+	STA PlayerWallColPos
 	RTS
 	LDA #$01
 	STA $95
@@ -1692,17 +1693,17 @@ loc_E900:
 bra_E909:
 	CMP #$01
 	BNE bra_E935
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$01
 	BNE bra_E91E
 	LDA #$02
 	STA $15
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$FB
-	STA PlayerAttributes
+	STA PlayerMovement
 	RTS
 bra_E91E:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BEQ bra_E934_RTS
 	LDA PlayerYSpeed
@@ -1720,7 +1721,7 @@ bra_E935:
 	CMP #$02
 	BNE bra_E95E
 	LDY #$00
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$01
 	BEQ bra_E943
 	LDY #$01
@@ -1737,9 +1738,9 @@ bra_E951:
 	STA PlayerXSpeed
 	LDA #$04
 	STA $15
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
-	STA PlayerAttributes
+	STA PlayerMovement
 	RTS
 bra_E95E:
 	CMP #$03
@@ -1774,7 +1775,7 @@ sub_E98C:
 	LDA $96
 	AND #$07
 	BNE bra_E9AB
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$01
 	BNE bra_E99D
 	INC $14
@@ -1793,13 +1794,13 @@ bra_E9A8:
 bra_E9AB:
 	CMP #$05
 	BCS bra_E9DD
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra_E9B9
 	LDA #$00
 	STA $15
 bra_E9B9:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$01
 	BNE bra_E9C4
 	LDA #$20
@@ -1815,16 +1816,16 @@ bra_E9C4:
 	BEQ bra_E9D2
 	RTS
 bra_E9D2:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$FE
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$20
 	STA PlayerXSpeed
 	RTS
 bra_E9DD:
 	CMP #$05
 	BNE bra_EA05
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra_E9F2
 	LDA $14
@@ -1842,9 +1843,9 @@ bra_E9F2:
 loc_E9FA:
 	LDA #$00
 	STA PlayerXSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 	RTS
 bra_EA05:
 	JMP loc_E738
@@ -1921,9 +1922,9 @@ bra_EA79:
 	ADC #$10
 	AND #$F0
 	STA $65
-	LDA $64
+	LDA PlayerWallColPos
 	ADC #$00
-	STA $64
+	STA PlayerWallColPos
 	RTS
 	.db $47
 	.db $2A
@@ -2862,7 +2863,7 @@ tbl_EE19:
 	LDA $96
 	AND #$0F
 	TAX
-	LDA $64
+	LDA PlayerWallColPos
 	ASL
 	CLC
 	ADC tbl_EF17,X
@@ -3825,9 +3826,9 @@ loc_F254:
 	ADC #$10
 	AND #$F0
 	STA $65
-	LDA $64
+	LDA PlayerWallColPos
 	ADC #$00
-	STA $64
+	STA PlayerWallColPos
 	RTS
 bra_F26F:
 	LDA $65
@@ -3835,12 +3836,12 @@ bra_F26F:
 	SBC #$10
 	ORA #$0F
 	STA $65
-	LDA $64
+	LDA PlayerWallColPos
 	SBC #$00
-	STA $64
+	STA PlayerWallColPos
 	RTS
 loc_F27F:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra_F28D
 	LDA $67
@@ -3875,7 +3876,7 @@ loc_F2A9:
 bra_F2B4:
 	STA PlayerXSpeed
 	RTS
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra_F2C5
 	LDA $67
@@ -3910,7 +3911,7 @@ bra_F2E7:
 	BMI bra_F2F3
 	RTS
 bra_F2F3:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra_F304_RTS
 	LDA $67
@@ -3934,22 +3935,22 @@ bra_F30E:
 	BMI bra_F31A
 	RTS
 bra_F31A:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BEQ bra_F323
 	JMP loc_F2A9
 bra_F323:
 	LDA #$00
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$01
 	BNE bra_F339
 	LDA PlayerXSpeed
 	CMP #$10
 	BCS bra_F33D
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 bra_F339:
 	LDA #$12
 	STA PlayerXSpeed
@@ -3988,14 +3989,14 @@ loc_F35C:
 	BPL bra_F368
 	RTS
 bra_F368:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BEQ bra_F371
 	JMP loc_F2A9
 bra_F371:
 	LDA #$00
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$01
 	BEQ bra_F389
 	LDA PlayerXSpeed
@@ -4003,8 +4004,8 @@ bra_F371:
 	BCS bra_F38D
 	LDA #$01
 	EOR #$FF
-	AND PlayerAttributes
-	STA PlayerAttributes
+	AND PlayerMovement
+	STA PlayerMovement
 bra_F389:
 	LDA #$12
 	STA PlayerXSpeed
@@ -4012,7 +4013,7 @@ bra_F38D:
 	LDA $65
 	AND #$0F
 	TAY
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$01
 	BEQ bra_F3A1
 	LDA $67
@@ -4055,7 +4056,7 @@ bra_F3C7:
 	JSR sub_F3EA
 	LDA $26
 	BNE bra_F3E9_RTS
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BEQ bra_F3D7
 	JMP loc_F2A9
@@ -4072,7 +4073,7 @@ bra_F3D7:
 bra_F3E9_RTS:
 	RTS
 sub_F3EA:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$01
 	BEQ bra_F406
 	LDA PlayerXSpeed
@@ -4097,9 +4098,9 @@ bra_F406:
 	CLC
 	ADC #$01
 	STA $65
-	LDA $64
+	LDA PlayerWallColPos
 	ADC #$00
-	STA $64
+	STA PlayerWallColPos
 	LDA $32
 	EOR $65
 	AND #$F0
@@ -4108,7 +4109,7 @@ bra_F406:
 	STA $26
 bra_F428_RTS:
 	RTS
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra_F433
 	LDA #$00
@@ -4128,7 +4129,7 @@ bra_F43C:
 	BMI bra_F44B
 	RTS
 bra_F44B:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BEQ bra_F454
 	JMP loc_F2A9
@@ -4157,7 +4158,7 @@ bra_F462:
 	BPL bra_F47D
 	RTS
 bra_F47D:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BEQ bra_F486
 	JMP loc_F2A9
@@ -4178,7 +4179,7 @@ bra_F494:
 	ORA tbl_F3AB,Y
 	STA $67
 	RTS
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra_F4D9_RTS
 	LDA PlayerXSpeed

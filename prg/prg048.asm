@@ -475,10 +475,10 @@ tbl4_836F:
 	JSR $BEBC
 	LDA #$30
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
 	EOR #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$30
 	STA PlayerXSpeed
 	LDA #$01
@@ -739,10 +739,10 @@ tbl4_8575:
 	JSR $BEBC
 	LDA #$30
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
 	EOR #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$30
 	STA PlayerXSpeed
 	LDA #$01
@@ -1277,10 +1277,10 @@ tbl4_899F:
 	JSR $BEBC
 	LDA #$30
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
 	EOR #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$30
 	STA PlayerXSpeed
 	LDA #$01
@@ -1645,10 +1645,10 @@ tbl4_8C76:
 	JSR $BEBC
 	LDA #$30
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
 	EOR #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$30
 	STA PlayerXSpeed
 	LDA #$01
@@ -1815,7 +1815,7 @@ sub4_8DEC:
 	LDA $0578,X
 	BNE bra4_8E0B
 	LDA $062B
-	ADC $05A1,X
+	ADC GoalTapeDistance,X
 	LSR
 	ADC $05C8,X
 	AND #$03
@@ -2007,10 +2007,10 @@ tbl4_8F62:
 	JSR $BEBC
 	LDA #$30
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
 	EOR #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$30
 	STA PlayerXSpeed
 	LDA #$01
@@ -2380,7 +2380,7 @@ tbl4_9123:
 	.byte $0B
 	.byte $0C
 	.byte $0D
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $19
 	.byte $25
@@ -2429,7 +2429,7 @@ tbl4_9123:
 	.byte $0D
 	.byte $FF
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $23
 	.byte $24
@@ -2564,7 +2564,7 @@ tbl4_9123:
 	.byte $0C
 	.byte $FF
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $FF
 	.byte $25
 	.byte $26
@@ -2990,7 +2990,7 @@ bra4_9582:
 	LDA $0578,X
 	CMP #$20
 	BCC bra4_95D0
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$40
 	STA $25
 	LDA $05B4,X
@@ -3029,7 +3029,7 @@ bra4_95D0:
 	LDA ObjectState,X
 	AND #$20
 	BNE bra4_962E
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$40
 	STA $25
 	LDA $05B4,X
@@ -3072,7 +3072,7 @@ bra4_961A:
 	STA ObjectState,X
 	RTS
 bra4_962E:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$40
 	STA $25
 	LDA $05B4,X
@@ -3501,14 +3501,14 @@ tbl4_994A:
 	.byte $02
 	.byte $02
 	.byte $AB
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $1D
 	.byte $1E
 	.byte $02
 	.byte $02
 	.byte $AB
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $19
 	.byte $1F
 	.byte $20
@@ -3552,7 +3552,7 @@ tbl4_9983:
 	.byte $22
 	.byte $1E
 	.byte $1A
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $13
 	.byte $0F
 	.byte $0B
@@ -3628,7 +3628,7 @@ tbl4_9983:
 	.byte $0B
 	.byte $0F
 	.byte $13
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $1A
 	.byte $1E
 	.byte $22

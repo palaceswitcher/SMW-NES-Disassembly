@@ -359,7 +359,7 @@ tbl8_823B:
 	.byte $94
 	.byte $FF
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $FF
 	.byte $23
 	.byte $24
@@ -1185,7 +1185,7 @@ tbl8_8880:
 	.byte $10
 	.byte $13
 	.byte $14
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $02
 	.byte $03
@@ -1617,7 +1617,7 @@ tbl8_8B06:
 	.byte $0E
 	.byte $0F
 	.byte $14
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $03
 	.byte $03
@@ -2751,7 +2751,7 @@ bra8_936A:
 loc8_9374:
 	LDA $06E1
 	PHA
-	LDA $04F5
+	LDA DataBank2
 	CMP #$26
 	BNE bra8_938D
 	LDY #$00
@@ -2790,7 +2790,7 @@ tbl8_9396:
 	.byte $14
 	.byte $15
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $04
 	.byte $03
 	.byte $AE
@@ -3017,9 +3017,9 @@ bra8_9541:
 	BEQ bra8_9535
 	LDA #$20
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$04
 	STA PlayerAction
 	LDA #$0F
@@ -3113,7 +3113,7 @@ bra8_95F6:
 	BPL bra8_960A
 	AND #$BF
 	STA $34
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$40
 	ORA $34
 	STA ObjectState,X
@@ -3837,11 +3837,11 @@ bra8_9B25:
 	BPL bra8_9B4E
 	LDA #$00
 	STA $0578,X
-	LDA $04F6
+	LDA WorldNumber
 	ASL
 	ASL
 	CLC
-	ADC $04F7
+	ADC LevelNumber
 	TAY
 	LDA CurrentPlayer
 	BEQ bra8_9B43
@@ -3924,11 +3924,11 @@ bra8_9BB3:
 	STA SFXRegister
 	LDA #$00
 	STA ObjectSlot,X
-	LDA $04F6
+	LDA WorldNumber
 	ASL
 	ASL
 	CLC
-	ADC $04F7
+	ADC LevelNumber
 	TAY
 	LDA CurrentPlayer
 	BEQ bra8_9BD5
@@ -4308,11 +4308,11 @@ tbl8_9EB1:
 	STA MusicRegister
 	LDA #$06
 	STA Event
-	LDA $04F6
+	LDA WorldNumber
 	ASL
 	ASL
 	CLC
-	ADC $04F7
+	ADC LevelNumber
 	TAY
 	LDA CurrentPlayer
 	BEQ bra8_9ED9
@@ -4328,9 +4328,9 @@ bra8_9ED9:
 bra8_9EE4_RTS:
 	RTS
 sub8_9EE5:
-	LDA PlayerState
+	LDA PlayerPowerup
 	BNE bra8_9EF6_RTS
-	INC PlayerState
+	INC PlayerPowerup
 	LDA #$07
 	STA Event
 	LDA #$01

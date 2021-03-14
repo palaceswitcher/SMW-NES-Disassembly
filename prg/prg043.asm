@@ -480,7 +480,7 @@ tbl3_8EFC:
 	.byte $00
 tbl3_8EFD:
 	.byte $8F
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8F
 	.byte $04
 	.byte $05
@@ -726,7 +726,7 @@ bra3_8FF4:
 	.byte $FF
 	.byte $FF
 	.byte $FF
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $1B
 	.byte $2C
 	.byte $28
@@ -2371,7 +2371,7 @@ loc3_970B_RTS:
 	BMI bra3_975B
 	LDY #$00
 bra3_975B:
-	STY PlayerAttributes
+	STY PlayerMovement
 	LDA #$2F
 	STA MusicRegister
 	RTS

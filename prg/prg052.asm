@@ -1,4 +1,5 @@
 ;disassembled by BZK 6502 Disassembler
+jmp_52_A000:
 	LDY ItemBox
 	BNE bra2_A006
 	RTS
@@ -75,10 +76,12 @@ tbl2_A077:
 	.byte $03
 	.byte $00
 	.byte $00
+jmp_52_A080:
 	LDA #$35
-	STA $8000
+	STA M90_PRG0
 	JSR $827C
 	RTS
+jmp_52_A089:
 	LDA $06
 	AND #$01
 	BNE bra2_A0A3
@@ -121,7 +124,7 @@ bra2_A0C7:
 	STA $AD
 	STA $25
 	LDA $25
-	STA $8000
+	STA M90_PRG0
 	LDA ObjectSlot,X
 	BMI bra2_A0E4
 	ASL
@@ -177,7 +180,7 @@ sub2_A10D:
 	ASL
 	TAX
 	LDA #$2F
-	STA $8002
+	STA M90_PRG2
 	LDA $C000,X
 	STA $30
 	LDA $C001,X
@@ -440,7 +443,7 @@ sub2_A2DE:
 	ASL
 	TAX
 	LDA #$2F
-	STA $8002
+	STA M90_PRG2
 	LDA $C000,X
 	STA $30
 	LDA $C001,X
@@ -694,7 +697,7 @@ tbl2_A45B:
 	ASL
 	TAX
 	LDA #$2F
-	STA $8002
+	STA M90_PRG2
 	LDA $C000,X
 	STA $30
 	LDA $C001,X
@@ -1052,11 +1055,11 @@ bra2_A6B2:
 	CPX $2D
 	BCC bra2_A6B2
 bra2_A6B9:
-	LDA $04F6
+	LDA WorldNumber
 	ASL
 	ASL
 	CLC
-	ADC $04F7
+	ADC LevelNumber
 	TAY
 	LDA tbl2_A71F,Y
 	BNE bra2_A6CC
@@ -1474,21 +1477,21 @@ tbl2_A83C:
 	.byte $8C
 	.byte $DE
 	.byte $8C
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8E
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8E
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8E
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8E
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8E
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8E
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8E
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8E
 	.byte $90
 	.byte $8F
@@ -2089,9 +2092,9 @@ tbl2_AABC:
 	.byte $88
 	.byte $97
 	.byte $88
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $85
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $85
 	.byte $5E
 	.byte $8A
@@ -2661,7 +2664,7 @@ loc2_ADA5:
 	ASL
 	TAX
 	LDA #$2F
-	STA $8002
+	STA M90_PRG2
 	LDA $C000,X
 	STA $30
 	LDA $C001,X

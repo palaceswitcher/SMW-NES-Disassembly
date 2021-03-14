@@ -1,7 +1,7 @@
 ;disassembled by BZK 6502 Disassembler
 	.incbin tilesets/ts_unused3.bin
 	
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $00
 	.byte $00
 	.byte $00
@@ -50,7 +50,7 @@
 	SEC
 	SBC PlayerXPosDup
 	STA $05A0,X
-	LDA a:$17,X
+	LDA a:PlayerAnimationFrame,X
 	.byte $00
 	.byte $00
 	.byte $00
@@ -97,7 +97,7 @@
 	LDA $05DC,X
 	ADC #$00
 	STA $05DC,X
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $00
 	.byte $00
 bra14_8683:
@@ -149,7 +149,7 @@ tbl14_86B1:
 	BCC bra14_86C0
 	LDY #$02
 bra14_86C0:
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $00
 	.byte $00
 	.byte $00
@@ -475,7 +475,7 @@ tbl14_8EFC:
 	.byte $00
 tbl14_8EFD:
 	.byte $8F
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8F
 	.byte $04
 	.byte $05

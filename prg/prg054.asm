@@ -1,5 +1,6 @@
 ;disassembled by BZK 6502 Disassembler
-	LDA $05F1
+jmp_54_A000:
+	LDA YoshiXScreen
 	BNE bra3_A006
 	RTS
 bra3_A006:
@@ -9,15 +10,15 @@ bra3_A006:
 	LDA #$35
 	STA $AC
 	LDA $AC
-	STA $8000
+	STA M90_PRG0
 	LDA #$33
-	STA $8003
+	STA M90_PRG3
 	JSR $8000
 	LDA #$3F
-	STA $8003
+	STA M90_PRG3
 	RTS
 bra3_A023:
-	LDA $05F2
+	LDA YoshiXPos
 	SEC
 	SBC PlayerXPosDup
 	STA $05F9
@@ -66,7 +67,7 @@ bra3_A080:
 	LDA ObjectSlot,X
 	BEQ bra3_A08F
 	LDA #$33
-	STA $8003
+	STA M90_PRG3
 	JSR sub3_A09C
 bra3_A08F:
 	LDX $A4
@@ -74,7 +75,7 @@ bra3_A08F:
 	CPX ObjectCount
 	BCC bra3_A080
 	LDA #$3F
-	STA $8003
+	STA M90_PRG3
 	RTS
 sub3_A09C:
 	LDY ObjectSlot,X
@@ -90,7 +91,7 @@ bra3_A0A6:
 bra3_A0AE:
 	STA $AC
 	LDA $AC
-	STA $8000
+	STA M90_PRG0
 	LDA ObjectSlot,X
 	BMI bra3_A0C9
 	ASL
@@ -109,6 +110,7 @@ bra3_A0C9:
 	STA $33
 	JMP ($32)
 	RTS
+jmp_54_A0D9:
 	LDX #$00
 bra3_A0DB:
 	STX $A4
@@ -167,6 +169,7 @@ bra3_A148:
 	CPX ObjectCount
 	BCC bra3_A0DB
 	RTS
+jmp_54_A150:
 	LDX #$00
 bra3_A152:
 	LDA ObjectSlot,X
@@ -547,21 +550,21 @@ tbl3_A1B6:
 	.byte $8C
 	.byte $DE
 	.byte $8C
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8E
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8E
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8E
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8E
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8E
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8E
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8E
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $8E
 	.byte $90
 	.byte $8F
@@ -1162,9 +1165,9 @@ tbl3_A436:
 	.byte $88
 	.byte $97
 	.byte $88
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $85
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $85
 	.byte $5E
 	.byte $8A
@@ -1514,7 +1517,7 @@ loc3_A6B5:
 	RTS
 	LDA Player1YoshiStatus
 	BNE bra3_A6E0_RTS
-	LDA PlayerState
+	LDA PlayerPowerup
 	CMP #$03
 	BCS bra3_A6E1
 bra3_A6E0_RTS:
@@ -1587,9 +1590,9 @@ bra3_A74C_RTS:
 bra3_A758:
 	LDA #$20
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$04
 	STA PlayerAction
 	LDA #$0F
@@ -1649,17 +1652,17 @@ bra3_A7BA_RTS:
 	BNE bra3_A7C4
 	JMP loc3_A852
 bra3_A7C4:
-	LDA $0623
+	LDA YoshiTongueState
 	CMP #$01
 	BEQ bra3_A7CE
 bra3_A7CB:
 	JMP loc3_A852
 bra3_A7CE:
 	LDX $A4
-	LDA $E1
+	LDA PlayerState
 	CMP #$09
 	BCC bra3_A7CB
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$40
 	BNE bra3_A7E3
 	LDA $05B4,X
@@ -1669,7 +1672,7 @@ bra3_A7E3:
 	LDA $05B4,X
 	BPL bra3_A7CB
 bra3_A7E8:
-	LDX $17
+	LDX PlayerAnimationFrame
 	CPX #$06
 	BCC bra3_A852
 	LDA tbl3_A85F,X
@@ -1717,13 +1720,13 @@ bra3_A83D:
 	SEC
 bra3_A83E:
 	BCS bra3_A852
-	LDX $17
+	LDX PlayerAnimationFrame
 	LDA tbl3_A86D,X
-	STA $17
+	STA PlayerAnimationFrame
 	LDX $A4
 	INC ObjectState,X
 	LDA $25
-	STA $0623
+	STA YoshiTongueState
 	RTS
 bra3_A852:
 loc3_A852:
@@ -2278,7 +2281,7 @@ tbl3_A97B:
 	.byte $20
 	.byte $20
 	LDY $A4
-	LDX $17
+	LDX PlayerAnimationFrame
 	CPX #$0C
 	BCC bra3_AA8D
 	LDA ObjectState,Y
@@ -2302,7 +2305,7 @@ bra3_AA8D:
 	ADC #$04
 	EOR #$FF
 	STA $36
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$40
 	BNE bra3_AAC2
 	LDA PlayerXPosDup
@@ -2444,7 +2447,7 @@ bra3_AB9C:
 	AND #$40
 	STA PlayerCarryFlag
 	BEQ bra3_AC08
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$40
 	BNE bra3_ABBB
 	LDA PlayerXPosDup
@@ -2497,7 +2500,7 @@ bra3_AC05:
 	PLA
 	RTS
 bra3_AC08:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$40
 	ORA #$05
 	TAY
@@ -2522,7 +2525,7 @@ bra3_AC17:
 	AND #$40
 	STA PlayerCarryFlag
 	BEQ bra3_ACA2
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$40
 	BNE bra3_AC4D
 	LDA PlayerXPosDup
@@ -2606,7 +2609,7 @@ bra3_ACC2_RTS:
 	AND #$40
 	STA PlayerCarryFlag
 	BEQ bra3_ACA2
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$40
 	BNE bra3_ACF0
 	LDA PlayerXPosDup
@@ -2795,7 +2798,7 @@ sub3_AE37:
 	CMP #$06
 	BNE bra3_AE97_RTS
 	LDY $A4
-	LDA PlayerState
+	LDA PlayerPowerup
 	CMP #$04
 	BNE bra3_AE48
 	LDA #$03
@@ -2817,13 +2820,13 @@ bra3_AE5F:
 	BEQ bra3_AE97_RTS
 	CMP #$01
 	BNE bra3_AE74
-	LDY PlayerState
+	LDY PlayerPowerup
 	BEQ bra3_AE74
 	LDY ItemBox
 	BEQ bra3_AE7B
 	BNE bra3_AE7E
 bra3_AE74:
-	STA PlayerState
+	STA PlayerPowerup
 	LDA $32
 	BEQ bra3_AE7E
 bra3_AE7B:
@@ -3295,8 +3298,8 @@ bra3_B0D8:
 	CLC
 	ADC $A9
 	TAY
-	LDA $04F5
-	STA $8000
+	LDA DataBank2
+	STA M90_PRG0
 	LDA ($8C),Y
 	TAY
 	AND #$1F
@@ -3309,18 +3312,18 @@ bra3_B0D8:
 	AND #$F0
 	ORA $FE00,Y
 	TAY
-	LDA $04F3
-	STA $8000
+	LDA DataBank1
+	STA M90_PRG0
 	LDA ($34),Y
 	TAY
-	LDA $04F5
-	STA $8000
+	LDA DataBank2
+	STA M90_PRG0
 	LDA ($DA),Y
 	TAY
 	LDA $FF00,Y
 	PHA
 	LDA $AC
-	STA $8000
+	STA M90_PRG0
 	LDY $2B
 	PLA
 	RTS
@@ -3332,7 +3335,7 @@ bra3_B0D8:
 	STA $33
 	JSR sub3_B132
 	LDA $AC
-	STA $8000
+	STA M90_PRG0
 	RTS
 sub3_B132:
 	LDX $A4
@@ -3433,7 +3436,7 @@ sub3_B1DA:
 	STA $33
 	JSR sub3_B1EF
 	LDA $AC
-	STA $8000
+	STA M90_PRG0
 	RTS
 sub3_B1EF:
 	LDX $A4
@@ -3685,7 +3688,7 @@ bra3_B3B1:
 	STA $33
 	JSR sub3_B3C9
 	LDA $AC
-	STA $8000
+	STA M90_PRG0
 	RTS
 sub3_B3C9:
 	LDX $A4
@@ -3787,7 +3790,7 @@ bra3_B46C:
 	STA $33
 	JSR sub3_B485
 	LDA $AC
-	STA $8000
+	STA M90_PRG0
 	RTS
 sub3_B485:
 	LDX $A4
@@ -3965,7 +3968,7 @@ bra3_B5C8:
 	STA $33
 	JSR sub3_B5E2
 	LDA $AC
-	STA $8000
+	STA M90_PRG0
 	RTS
 sub3_B5E2:
 	LDA $05F7
@@ -4024,8 +4027,8 @@ bra3_B643:
 	TYA
 	PHA
 	CLC
-	ADC $05F2
-	STA $05F2
+	ADC YoshiXPos
+	STA YoshiXPos
 	PLA
 	BMI bra3_B656
 	LDA $05F3
@@ -4092,8 +4095,8 @@ bra3_B6C3:
 loc3_B6C5:
 	PHA
 	CLC
-	ADC $05F2
-	STA $05F2
+	ADC YoshiXPos
+	STA YoshiXPos
 	PLA
 	BMI bra3_B6D7
 	LDA $05F3
@@ -4181,7 +4184,7 @@ bra3_B763:
 	LDA #$22
 bra3_B767:
 	STA $38
-	LDA $05F2
+	LDA YoshiXPos
 	CLC
 	ADC $36
 	STA $A8
@@ -4269,7 +4272,7 @@ sub3_B7F2:
 	STA $33
 	JSR sub3_B807
 	LDA $AC
-	STA $8000
+	STA M90_PRG0
 	RTS
 sub3_B807:
 	LDX $A4
@@ -4612,7 +4615,7 @@ loc3_BA56:
 	BCS bra3_BA6A_RTS
 	LDA PlayerYSpeed
 	BEQ bra3_BA6A_RTS
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra3_BA6A_RTS
 	LDY $3F
@@ -4874,7 +4877,7 @@ tbl3_BC1E:
 	LDA tbl3_A97B,Y
 	STA $38
 	LDY #$10
-	LDA PlayerState
+	LDA PlayerPowerup
 	BEQ bra3_BC56
 	LDY #$18
 bra3_BC56:
@@ -4932,20 +4935,20 @@ bra3_BCA6_RTS:
 	LDA #$30
 	STA PlayerYSpeed
 	STA PlayerXSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
 	AND #$BE
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$01
 	JMP loc3_BCD4
 	LDA #$12
 	STA SFXRegister
 	LDA #$08
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
 	EOR #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$08
 	STA PlayerXSpeed
 	LDA #$01
@@ -5043,7 +5046,7 @@ bra3_BD6C:
 	LDA #$F2
 	STA GuidedObjStatus,X
 	LDY #$22
-	LDA PlayerState
+	LDA PlayerPowerup
 	BNE bra3_BD7F
 	LDA Player1YoshiStatus
 	BNE bra3_BD7F
@@ -5091,13 +5094,13 @@ bra3_BDBB:
 	BEQ bra3_BDCE
 	LDA PlayerYSpeed
 	BEQ bra3_BE27
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BEQ bra3_BE27
 bra3_BDCE:
 loc3_BDCE:
 	INC $0578,X
-	LDA PlayerState
+	LDA PlayerPowerup
 	BNE bra3_BDE6
 	LDA ObjectSlot,X
 	CMP #$0C
@@ -5223,7 +5226,7 @@ bra3_BEB7:
 	LDA tbl3_A97B,Y
 	STA $38
 	LDY #$10
-	LDA PlayerState
+	LDA PlayerPowerup
 	BEQ bra3_BED4
 	LDY #$18
 bra3_BED4:
@@ -5287,7 +5290,7 @@ bra3_BF25:
 	BEQ bra3_BF41
 	CMP #$0E
 	BEQ bra3_BF41
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra3_BF51
 bra3_BF41:
@@ -5347,13 +5350,13 @@ bra3_BF9B:
 	LDA Player1YoshiStatus
 	BEQ bra3_BFAD
 	LDA #$01
-	STA $05FD
+	STA HurtFlag
 	JMP loc3_BFC0
 bra3_BFAD:
-	LDA PlayerState
+	LDA PlayerPowerup
 	BEQ bra3_BFD2
 	LDA #$00
-	STA PlayerState
+	STA PlayerPowerup
 	LDA #$01
 	STA PlayerPowerupBuffer
 	LDA #$07
@@ -5371,8 +5374,8 @@ bra3_BFD2:
 	LDA #$04
 	STA Event
 	LDA #$00
-	STA $E0
-	STA $E1
+	STA LevelTransitionFlag
+	STA PlayerState
 	STA $06DC
 	STA $06DD
 	RTS

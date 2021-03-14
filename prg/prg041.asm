@@ -2,119 +2,118 @@
 	LDA a:Event
 	ASL
 	TAY
-	LDA tbl_A012,Y
-	STA $32
-	LDA tbl_A013,Y
-	STA $33
-	JMP ($32)
+	LDA tbl_A012,Y			;
+	STA PCPointerLowerByte	;Load the lower byte of the pointer
+	LDA tbl_A013,Y			;
+	STA PCPointerUpperByte	;Load the upper byte of the pointer
+	JMP (PCPointerLowerByte)	;Jump to the pointer that was just loaded
 tbl_A012:
-	.byte $74
-tbl_A013:
-	.byte $A0
-	.byte $A2
-	.byte $A0
-	.byte $95
-	.byte $A6
-	.byte $06
-	.byte $A7
-	.byte $61
-	.byte $A7
-	.byte $A6
-	.byte $A7
-	.byte $9E
-	.byte $A0
-	.byte $D3
-	.byte $A7
-	.byte $FF
-	.byte $A7
-	.byte $6F
-	.byte $A8
-	.byte $92
-	.byte $A8
-	.byte $FE
-	.byte $A8
-	.byte $24
-	.byte $A9
-	.byte $33
-	.byte $A9
-	.byte $A7
-	.byte $A9
-	.byte $27
-	.byte $A9
-	.byte $33
-	.byte $A9
-	.byte $1D
-	.byte $AB
-	.byte $27
-	.byte $A9
-	.byte $8D
-	.byte $AC
-	.byte $27
-	.byte $A9
-	.byte $29
-	.byte $AD
-	.byte $5C
-	.byte $AD
-	.byte $7E
-	.byte $AD
-	.byte $C5
-	.byte $AD
-	.byte $27
-	.byte $A9
-	.byte $09
-	.byte $AE
-	.byte $8A
-	.byte $99
-	.byte $B9
-	.byte $AE
-	.byte $13
-	.byte $AF
-	.byte $13
-	.byte $AF
-	.byte $14
-	.byte $AF
-	.byte $27
-	.byte $A9
-	.byte $1F
-	.byte $AF
-	.byte $4C
-	.byte $AF
-	.byte $27
-	.byte $A9
-	.byte $93
-	.byte $AF
-	.byte $FF
-	.byte $A7
-	.byte $6F
-	.byte $A8
-	.byte $92
-	.byte $A8
-	.byte $28
-	.byte $9B
-	.byte $F3
-	.byte $AF
-	.byte $13
-	.byte $B0
-	.byte $27
-	.byte $A9
-	.byte $AF
-	.byte $AF
-	.byte $27
-	.byte $A9
-	.byte $3E
-	.byte $B0
-	.byte $27
-	.byte $A9
-	.byte $62
-	.byte $B0
-	LDA #$2A
-	STA $08
-	STA $8000
+			.byte $74
+tbl_A013:	.byte $A0
+			.byte $A2
+			.byte $A0
+			.byte $95
+			.byte $A6
+			.byte $06
+			.byte $A7
+			.byte $61
+			.byte $A7
+			.byte $A6
+			.byte $A7
+			.byte $9E
+			.byte $A0
+			.byte $D3
+			.byte $A7
+			.byte $FF
+			.byte $A7
+			.byte $6F
+			.byte $A8
+			.byte $92
+			.byte $A8
+			.byte $FE
+			.byte $A8
+			.byte $24
+			.byte $A9
+			.byte $33
+			.byte $A9
+			.byte $A7
+			.byte $A9
+			.byte $27
+			.byte $A9
+			.byte $33
+			.byte $A9
+			.byte $1D
+			.byte $AB
+			.byte $27
+			.byte $A9
+			.byte $8D
+			.byte $AC
+			.byte $27
+			.byte $A9
+			.byte $29
+			.byte $AD
+			.byte $5C
+			.byte $AD
+			.byte $7E
+			.byte $AD
+			.byte $C5
+			.byte $AD
+			.byte $27
+			.byte $A9
+			.byte $09
+			.byte $AE
+			.byte $8A
+			.byte $99
+			.byte $B9
+			.byte $AE
+			.byte $13
+			.byte $AF
+			.byte $13
+			.byte $AF
+			.byte $14
+			.byte $AF
+			.byte $27
+			.byte $A9
+			.byte $1F
+			.byte $AF
+			.byte $4C
+			.byte $AF
+			.byte $27
+			.byte $A9
+			.byte $93
+			.byte $AF
+			.byte $FF
+			.byte $A7
+			.byte $6F
+			.byte $A8
+			.byte $92
+			.byte $A8
+			.byte $28
+			.byte $9B
+			.byte $F3
+			.byte $AF
+			.byte $13
+			.byte $B0
+			.byte $27
+			.byte $A9
+			.byte $AF
+			.byte $AF
+			.byte $27
+			.byte $A9
+			.byte $3E
+			.byte $B0
+			.byte $27
+			.byte $A9
+			.byte $62
+			.byte $B0
+	LDA #42
+	STA $08			;
+	STA M90_PRG0	;swap first bank to bank 42
 	LDA #$00
-	STA $04F6
-	STA $04F7
-	LDA #$0F
-	STA Player1Lives
+	STA WorldNumber	;clear world and level numbers
+	STA LevelNumber	
+	LDA #$0F		;
+	STA Player1Lives;set life count to 15 for both players
 	STA Player2Lives
 	LDA #$01
 	STA LevelsCompleted
@@ -131,27 +130,27 @@ tbl_A013:
 	STA $0100
 	JSR sub_B800
 	LDA #$00
-	STA $3C
-	STA PlayerXSpeed
-	STA PlayerYSpeed
-	STA PlayerAttributes
-	STA PlayerSpriteAttributes
-	LDA #$2A
-	STA $8000
+	STA $3C						;
+	STA PlayerXSpeed			;clears player speed and other variables
+	STA PlayerYSpeed			;
+	STA PlayerMovement			;
+	STA PlayerSpriteAttributes	;
+	LDA #42			;
+	STA M90_PRG0	;swap 1st bank to bank 42
 	LDA #$00
 	STA WorldSelectNum
 	JSR sub_AACB
 	LDA #$00
 	JSR $9A44
 	JSR sub_AE8A
-	LDA $04F6
+	LDA WorldNumber
 	ASL
 	ASL
 	CLC
-	ADC $04F7
+	ADC LevelNumber
 	STA $0310
-	LDA #musTitle
-	STA MusicRegister
+	LDA #musTitle		;
+	STA MusicRegister	;play title music
 	LDA #$00
 	STA $0311
 	STA $0312
@@ -206,97 +205,94 @@ sub_A107:
 	.byte $02
 	.byte $0B
 tbl_A155:
-	.byte $01
-tbl_A156:
-	.byte $00
-tbl_A157:
-	.byte $07
-tbl_A158:
-	.byte $A9
-	.byte $01
-	.byte $90
-	.byte $0D
-	.byte $70
-	.byte $02
-	.byte $30
-	.byte $07
-	.byte $A9
-	.byte $02
-	.byte $A0
-	.byte $0D
-	.byte $70
-	.byte $03
-	.byte $30
-	.byte $0D
-	.byte $80
-	.byte $04
-	.byte $00
-	.byte $09
-	.byte $A9
-	.byte $04
-	.byte $B0
-	.byte $09
-	.byte $A9
-	.byte $05
-	.byte $30
-	.byte $0D
-	.byte $50
-	.byte $05
-	.byte $C0
-	.byte $07
-	.byte $A9
-	.byte $06
-	.byte $30
-	.byte $0D
-	.byte $58
-	.byte $06
-	.byte $60
-	.byte $07
-	.byte $A9
-	.byte $08
-	.byte $30
-	.byte $0D
-	.byte $80
-	.byte $08
-	.byte $F0
-	.byte $0D
-	.byte $60
-	.byte $0A
-	.byte $30
-	.byte $0D
-	.byte $60
-	.byte $0A
-	.byte $60
-	.byte $0D
-	.byte $A9
-	.byte $0B
-	.byte $45
-	.byte $09
-	.byte $A9
-	.byte $0B
-	.byte $80
-	.byte $09
-	.byte $A9
-	.byte $0C
-	.byte $30
-	.byte $0D
-	.byte $80
-	.byte $0C
-	.byte $80
-	.byte $0D
-	.byte $60
-	.byte $0D
-	.byte $A0
-	.byte $0D
-	.byte $60
-	.byte $0D
-	.byte $E0
-	.byte $0D
-	.byte $60
-	.byte $FF
-	.byte $FF
-	.byte $00
-	.byte $00
+			.byte $01
+tbl_A156:	.byte $00
+tbl_A157:	.byte $07
+tbl_A158:	.byte $A9
+			.byte $01
+			.byte $90
+			.byte $0D
+			.byte $70
+			.byte $02
+			.byte $30
+			.byte $07
+			.byte $A9
+			.byte $02
+			.byte $A0
+			.byte $0D
+			.byte $70
+			.byte $03
+			.byte $30
+			.byte $0D
+			.byte $80
+			.byte $04
+			.byte $00
+			.byte $09
+			.byte $A9
+			.byte $04
+			.byte $B0
+			.byte $09
+			.byte $A9
+			.byte $05
+			.byte $30
+			.byte $0D
+			.byte $50
+			.byte $05
+			.byte $C0
+			.byte $07
+			.byte $A9
+			.byte $06
+			.byte $30
+			.byte $0D
+			.byte $58
+			.byte $06
+			.byte $60
+			.byte $07
+			.byte $A9
+			.byte $08
+			.byte $30
+			.byte $0D
+			.byte $80
+			.byte $08
+			.byte $F0
+			.byte $0D
+			.byte $60
+			.byte $0A
+			.byte $30
+			.byte $0D
+			.byte $60
+			.byte $0A
+			.byte $60
+			.byte $0D
+			.byte $A9
+			.byte $0B
+			.byte $45
+			.byte $09
+			.byte $A9
+			.byte $0B
+			.byte $80
+			.byte $09
+			.byte $A9
+			.byte $0C
+			.byte $30
+			.byte $0D
+			.byte $80
+			.byte $0C
+			.byte $80
+			.byte $0D
+			.byte $60
+			.byte $0D
+			.byte $A0
+			.byte $0D
+			.byte $60
+			.byte $0D
+			.byte $E0
+			.byte $0D
+			.byte $60
+			.byte $FF
+			.byte $FF
+			.byte $00
+			.byte $00
 tbl_A1AD:
 	.byte $00
 tbl_A1AE:
@@ -502,9 +498,9 @@ bra_A2C9:
 	LDA $0366
 	BEQ bra_A313_RTS
 	LDX $0366
-	LDA tbl_A31D,X
-	CMP #$80
-	BEQ bra_A314
+	LDA tbl_A31D,X	;load values from table
+	CMP #$80		;when $80 loaded,
+	BEQ bra_A314	;branch
 	CLC
 	ADC $0357
 	STA $0357
@@ -626,11 +622,11 @@ tbl_A34F:
 	LDA $0357
 	ADC $A154
 	STA $0358
-	LDA $0357
-	CMP #$9E
-	BCC bra_A3B7
-	LDA #$9E
-	STA $0357
+	LDA PlayerTitleYPos	;
+	CMP #$9E			;if the player's y position is below this,
+	BCC bra_A3B7		;branch
+	LDA #$9E			;
+	STA PlayerTitleYPos	;set y position to $9E
 	CLC
 	LDA $42
 	ADC $A153
@@ -1194,7 +1190,7 @@ bra_A760_RTS:
 	RTS
 	JSR sub_AE96
 	LDA #$2A
-	STA $8000
+	STA M90_PRG0
 	LDA #$03
 	STA WorldSelectNum
 	JSR sub_AACB
@@ -1307,13 +1303,13 @@ loc_A828:
 	JSR sub_AAE0
 	JSR sub_AAD4
 	LDA #$00
-	STA $04F6
+	STA WorldNumber
 	STA $0378
 	STA $0379
 	STA $0360
 	STA $0361
 	LDA #$01
-	STA $04F7
+	STA LevelNumber
 	LDA #$38
 	STA $B0
 	LDA #$30
@@ -1374,10 +1370,10 @@ bra_A8A6:
 	STA $3C
 	STA PlayerXSpeed
 	STA PlayerYSpeed
-	STA PlayerAttributes
+	STA PlayerMovement
 	STA PlayerSpriteAttributes
 	LDA #$2A
-	STA $8000
+	STA M90_PRG0
 	JSR $9C43
 	LDA #$00
 	STA $0378
@@ -1414,7 +1410,7 @@ loc_A912:
 	JSR $8823
 	JSR sub_B486
 	LDA #$2A
-	STA $8000
+	STA M90_PRG0
 	JSR $9DF8
 	RTS
 	JSR $9DF8
@@ -1430,7 +1426,7 @@ loc_A912:
 	TAX
 	LDA tbl_A98F,X
 	STA $51
-	STA $64
+	STA PlayerWallColPos
 	STA PlayerXScreen
 	LDA tbl_A990,X
 	STA $52
@@ -1659,7 +1655,7 @@ loc_AAB1:
 	RTS
 sub_AACB:
 	LDA #$2A
-	STA $8000
+	STA M90_PRG0
 	JSR $87AC
 	RTS
 sub_AAD4:
@@ -2076,13 +2072,13 @@ tbl_AD09:
 	LDA tbl_AD09,X
 	STA $25
 	AND #$0F
-	STA $04F7
+	STA LevelNumber
 	LDA $25
 	LSR
 	LSR
 	LSR
 	LSR
-	STA $04F6
+	STA WorldNumber
 	LDA #$01
 	STA a:GameState
 	LDA #$00
@@ -2155,7 +2151,7 @@ bra_ADBF:
 	LDA #musEnding
 	STA MusicRegister
 	LDA #$2A
-	STA $8000
+	STA M90_PRG0
 	LDA #$02
 	STA WorldSelectNum
 	JSR sub_AACB
@@ -2180,7 +2176,7 @@ bra_ADBF:
 	RTS
 	JSR sub_AE96
 	LDA #$2A
-	STA $8000
+	STA M90_PRG0
 	LDA #$01
 	STA WorldSelectNum
 	JSR sub_AACB
@@ -2453,7 +2449,7 @@ loc_B001:
 	JSR $8823
 	JSR sub_B486
 	LDA #$2A
-	STA $8000
+	STA M90_PRG0
 	JSR $9DF8
 	RTS
 	LDA $06
@@ -2473,7 +2469,7 @@ loc_B02C:
 	JSR $8823
 	JSR sub_B486
 	LDA #$2A
-	STA $8000
+	STA M90_PRG0
 	JSR $9DF8
 	RTS
 	LDA #$00
@@ -2481,9 +2477,9 @@ loc_B02C:
 	STA $0398
 	STA $039A
 	STA $0361
-	STA $04F7
+	STA LevelNumber
 	LDA #$07
-	STA $04F6
+	STA WorldNumber
 	LDA #$01
 	STA a:GameState
 	STA UnlockNextLevel
@@ -2637,13 +2633,13 @@ tbl_B0EC:
 	.byte $0E
 	.byte $37
 	.byte $27
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $0E
 	.byte $27
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $37
 	.byte $0E
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $37
 	.byte $27
 	.byte $0E
@@ -2761,7 +2757,7 @@ tbl_B0EC:
 	.byte $0E
 	.byte $37
 	.byte $27
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $0E
 	.byte $21
 	.byte $37
@@ -3414,7 +3410,7 @@ loc_B4BB:
 	RTS
 	RTS
 sub_B4D5:
-	LDA $04F7
+	LDA LevelNumber
 	ASL
 	ASL
 	ASL
@@ -3525,8 +3521,8 @@ bra_B551:
 bra_B55C:
 	STX $2D
 	JSR sub_B670
-	LDA $04F5
-	STA $8000
+	LDA DataBank2
+	STA M90_PRG0
 	LDX #$00
 	STX $28
 loc_B56B:
@@ -3697,8 +3693,8 @@ bra_B684:
 	CLC
 	ADC $64
 	TAY
-	LDA $04F5
-	STA $8000
+	LDA DataBank2
+	STA M90_PRG0
 	LDA ($8C),Y
 	TAY
 	AND #$1F
@@ -3709,12 +3705,12 @@ bra_B684:
 	TYA
 	AND #$20
 	BNE bra_B6A9
-	LDA $04F3
-	STA $8000
+	LDA DataBank1
+	STA M90_PRG0
 	JMP loc_B6AF
 bra_B6A9:
 	LDA $04F4
-	STA $8000
+	STA M90_PRG0
 loc_B6AF:
 	LDA $65
 	LSR
@@ -3816,49 +3812,49 @@ bra_B75C_RTS:
 	RTS
 sub_B75D:
 	JSR sub_B4D5
-	LDA $04F6
+	LDA WorldNumber
 	ASL
 	ASL
 	ASL
 	ASL
 	STA $32
-	LDA $04F7
+	LDA LevelNumber
 	ASL
 	ASL
 	CLC
 	ADC $32
 	TAX
 	LDA tbl_B997,X
-	STA $04F3
+	STA DataBank1
 	LDA tbl_B998,X
 	STA $04F4
 	LDA tbl_B999,X
-	STA $04F5
+	STA DataBank2
 	LDA tbl_B99A,X
 	STA $6D
 	LDY #$00
 	STY $04FA
 	STA $04FB
-	LDY $04F7
+	LDY LevelNumber
 	LDA tbl_BA07,Y
 	STA $8C
 	LDA tbl_BA0B,Y
 	STA $8D
-	LDA $04F6
+	LDA WorldNumber
 	ASL
 	TAY
 	LDA tbl_BA2D,Y
 	STA $32
 	LDA tbl_BA2E,Y
 	STA $33
-	LDA $04F7
+	LDA LevelNumber
 	ASL
 	ASL
 	ASL
 	TAY
 	LDA ($32),Y
 	STA $51
-	STA $64
+	STA PlayerWallColPos
 	LDA #$00
 	STA $52
 	STA $65
@@ -3916,8 +3912,8 @@ sub_B800:
 	STA $26
 loc_B81F:
 	JSR sub_B670
-	LDA $04F5
-	STA $8000
+	LDA DataBank2
+	STA M90_PRG0
 	LDA #$00
 	STA $2A
 loc_B82C:
@@ -4099,7 +4095,7 @@ tbl_B917:
 	.byte $14
 	.byte $15
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -4115,7 +4111,7 @@ tbl_B917:
 	.byte $14
 	.byte $15
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -4268,7 +4264,7 @@ tbl_B99A:
 	.byte $00
 	.byte $21
 	.byte $12
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $00
 	.byte $21
 	.byte $12
@@ -4299,8 +4295,8 @@ tbl_BA0B:
 	.byte $86
 	.byte $86
 sub_BA0F:
-	LDA $04F5
-	STA $8000
+	LDA DataBank2
+	STA M90_PRG0
 	LDY $5F
 	LDA $2A
 	BNE bra_BA24
@@ -4577,7 +4573,7 @@ bra_BB31:
 	STA PlayerXPosDup
 	JMP loc_BB63
 bra_BB40:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$01
 	BEQ bra_BB56
 	LDA PlayerXPos
@@ -4613,7 +4609,7 @@ loc_BB63:
 	STA PlayerYPosDup
 	JMP loc_BBB9
 bra_BB7E:
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BEQ bra_BB9F
 	LDA PlayerYPos
@@ -4993,7 +4989,7 @@ bra_BDEC:
 	AND #$F8
 	BEQ bra_BE22_RTS
 	LDA $51
-	STA $64
+	STA PlayerWallColPos
 	LDA $52
 	STA $65
 	LDA #$00
@@ -5040,7 +5036,7 @@ bra_BE36:
 	RTS
 sub_BE4D:
 	LDA PlayerXScreenDup
-	STA $64
+	STA PlayerWallColPos
 	LDA PlayerXPosDup
 	STA $65
 	LDA PlayerYScreenDup
@@ -5055,8 +5051,8 @@ loc_BE5D:
 	CLC
 	ADC $64
 	TAY
-	LDA $04F5
-	STA $8000
+	LDA DataBank2
+	STA M90_PRG0
 	LDA ($8C),Y
 	TAY
 	AND #$1F
@@ -5067,12 +5063,12 @@ loc_BE5D:
 	TYA
 	AND #$20
 	BNE bra_BE8B
-	LDA $04F3
-	STA $8000
+	LDA DataBank1
+	STA M90_PRG0
 	JMP loc_BE91
 bra_BE8B:
 	LDA $04F4
-	STA $8000
+	STA M90_PRG0
 loc_BE91:
 	LDA $65
 	LSR
@@ -5086,12 +5082,12 @@ loc_BE91:
 	TAY
 	LDA ($32),Y
 	TAY
-	LDA $04F5
-	STA $8000
+	LDA DataBank2
+	STA M90_PRG0
 	LDA ($DA),Y
 	STA $96
 	LDA #$3C
-	STA $8000
+	STA M90_PRG0
 	JSR $8000
 	LDA $26
 	BEQ bra_BEBC
@@ -5100,7 +5096,7 @@ bra_BEBC:
 	JMP loc_BEC1
 	STA $95
 loc_BEC1:
-	LDA $64
+	LDA PlayerWallColPos
 	STA PlayerXScreenDup
 	LDA $65
 	STA PlayerXPosDup
@@ -5111,7 +5107,7 @@ loc_BEC1:
 	RTS
 sub_BED2:
 	LDA PlayerXScreen
-	STA $64
+	STA PlayerWallColPos
 	LDA PlayerXPos
 	SEC
 	SBC #$08
@@ -5124,7 +5120,7 @@ sub_BED2:
 	STA $67
 	JSR sub_BF31
 	LDA PlayerXScreen
-	STA $64
+	STA PlayerWallColPos
 	LDA PlayerXPos
 	CLC
 	ADC #$08
@@ -5137,7 +5133,7 @@ sub_BED2:
 	STA $67
 	JSR sub_BF31
 	LDA PlayerXScreen
-	STA $64
+	STA PlayerWallColPos
 	LDA PlayerXPos
 	SEC
 	SBC #$08
@@ -5148,7 +5144,7 @@ sub_BED2:
 	STA $67
 	JSR sub_BF31
 	LDA PlayerXScreen
-	STA $64
+	STA PlayerWallColPos
 	LDA PlayerXPos
 	SEC
 	SBC #$08
@@ -5165,16 +5161,16 @@ sub_BF31:
 	CLC
 	ADC $64
 	TAY
-	LDA $04F5
-	STA $8000
+	LDA DataBank2
+	STA M90_PRG0
 	LDA ($8C),Y
 	AND #$1F
 	ORA #$80
 	STA $33
 	LDA #$00
 	STA $32
-	LDA $04F3
-	STA $8000
+	LDA DataBank1
+	STA M90_PRG0
 	LDA $65
 	LSR
 	LSR
@@ -5187,14 +5183,14 @@ sub_BF31:
 	TAY
 	LDA ($32),Y
 	TAY
-	LDA $04F5
-	STA $8000
+	LDA DataBank2
+	STA M90_PRG0
 	LDA ($DA),Y
 	CMP #$78
 	BCC bra_BF7A_RTS
 	STA $96
 	LDA #$3C
-	STA $8000
+	STA M90_PRG0
 	JSR $8000
 bra_BF7A_RTS:
 	RTS
@@ -5221,7 +5217,7 @@ bra_BF7A_RTS:
 	.byte $3B
 	.byte $D8
 	.byte $74
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $48
 	.byte $2B
 	.byte $C3
@@ -5273,7 +5269,7 @@ bra_BF7A_RTS:
 	.byte $3B
 	.byte $D8
 	.byte $74
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $48
 	.byte $2B
 	.byte $C3

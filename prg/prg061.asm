@@ -954,14 +954,14 @@ tbl6_A200:
 	.byte $16
 	.byte $16
 	.byte $16
-	.byte $17
-	.byte $17
-	.byte $17
-	.byte $17
-	.byte $17
-	.byte $17
-	.byte $17
-	.byte $17
+	.byte PlayerAnimationFrame
+	.byte PlayerAnimationFrame
+	.byte PlayerAnimationFrame
+	.byte PlayerAnimationFrame
+	.byte PlayerAnimationFrame
+	.byte PlayerAnimationFrame
+	.byte PlayerAnimationFrame
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $18
 	.byte $18
@@ -1591,7 +1591,7 @@ bra6_A664:
 	LDA $65
 	AND #$F0
 	STA ObjectXPos,X
-	LDA $64
+	LDA PlayerWallColPos
 	STA ObjectXScreen,X
 	LDA #$00
 	STA ObjectState,X
@@ -1649,7 +1649,7 @@ bra6_A6E5:
 	LDA $65
 	AND #$F0
 	STA ObjectXPos,X
-	LDA $64
+	LDA PlayerWallColPos
 	STA ObjectXScreen,X
 	LDA #$00
 	STA ObjectState,X
@@ -1934,14 +1934,14 @@ tbl6_A728:
 	.byte $80
 	.byte $80
 sub6_A828:
-	LDA $04F6
+	LDA WorldNumber
 	ASL
 	TAX
 	LDA tbl6_A848,X
 	STA $DC
 	LDA tbl6_A849,X
 	STA $DD
-	LDA $04F7
+	LDA LevelNumber
 	ASL
 	ASL
 	ASL
@@ -1976,7 +1976,7 @@ tbl6_A849:
 	.byte $74
 	.byte $00
 	.byte $12
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $C2
 	.byte $1A
 	.byte $0B
@@ -2951,7 +2951,7 @@ tbl6_AABA:
 	.byte $02
 	.byte $16
 	.byte $84
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -3438,6 +3438,7 @@ bra6_AE7F:
 	STA $0327
 bra6_AE8E_RTS:
 	RTS
+jmp_61_AE8F:
 	JSR sub6_B85C
 	JSR sub6_BA4A
 	JSR sub6_B9CF
@@ -3458,7 +3459,7 @@ bra6_AE8E_RTS:
 	RTS
 	RTS
 sub6_AEB8:
-	LDA $04F7
+	LDA LevelNumber
 	ASL
 	ASL
 	ASL
@@ -3570,8 +3571,8 @@ bra6_AF37:
 bra6_AF42:
 	STX $2D
 	JSR sub6_B056
-	LDA $04F5
-	STA $8000
+	LDA DataBank2
+	STA M90_PRG0
 	LDX #$00
 	STX $28
 loc6_AF51:
@@ -3742,8 +3743,8 @@ bra6_B06A:
 	CLC
 	ADC $64
 	TAY
-	LDA $04F5
-	STA $8000
+	LDA DataBank2
+	STA M90_PRG0
 	LDA ($8C),Y
 	TAY
 	AND #$1F
@@ -3754,12 +3755,12 @@ bra6_B06A:
 	TYA
 	AND #$20
 	BNE bra6_B08F
-	LDA $04F3
-	STA $8000
+	LDA DataBank1
+	STA M90_PRG0
 	JMP loc6_B095
 bra6_B08F:
 	LDA $04F4
-	STA $8000
+	STA M90_PRG0
 loc6_B095:
 	LDA $65
 	LSR
@@ -3788,7 +3789,7 @@ bra6_B0BB:
 	TAY
 	LDA tbl6_BE75,Y
 	STA $28
-	LDA $64
+	LDA PlayerWallColPos
 	ASL
 	CLC
 	ADC tbl6_BE65,Y
@@ -3919,14 +3920,14 @@ bra6_B178:
 bra6_B19D_RTS:
 	RTS
 	JSR sub6_AEB8
-	LDA $04F6
+	LDA WorldNumber
 	ASL
 	ASL
 	STA $34
 	ASL
 	ASL
 	STA PCPointerLowerByte
-	LDA $04F7
+	LDA LevelNumber
 	ASL
 	ASL
 	CLC
@@ -3934,7 +3935,7 @@ bra6_B19D_RTS:
 	TAX
 	LDA $34
 	CLC
-	ADC $04F7
+	ADC LevelNumber
 	TAY
 	LDA CurrentPlayer
 	BEQ bra6_B1C6
@@ -3946,7 +3947,7 @@ bra6_B1C6:
 	LDA $06A2,Y
 	BEQ bra6_B1FD
 	LDA tbl6_B5EA,X
-	STA $04F5
+	STA DataBank2
 	LDA tbl6_B5EB,X
 	STA $0310
 	LDA tbl6_B5E8,X
@@ -3960,12 +3961,12 @@ bra6_B1C6:
 	STA $06E1
 	LDA tbl6_B5E8,X
 	AND #$3F
-	STA $04F3
+	STA DataBank1
 	LDA tbl6_B5E9,X
 	JMP loc6_B22C
 bra6_B1FD:
 	LDA tbl6_B56E,X
-	STA $04F5
+	STA DataBank2
 	LDA tbl6_B56F,X
 	STA $0310
 	LDA tbl6_B56C,X
@@ -3979,7 +3980,7 @@ bra6_B1FD:
 	STA $06E1
 	LDA tbl6_B56C,X
 	AND #$3F
-	STA $04F3
+	STA DataBank1
 	LDA tbl6_B56D,X
 loc6_B22C:
 	JSR sub6_B34A
@@ -3988,17 +3989,17 @@ loc6_B22C:
 	LDY #$00
 	STY $04FA
 	STA $04FB
-	LDY $04F7
+	LDY LevelNumber
 	LDA tbl6_B5E0,Y
 	STA $8C
 	LDA tbl6_B5E4,Y
 	STA $8D
-	LDA $04F6
+	LDA WorldNumber
 	ASL
 	TAY
 	ASL
 	CLC
-	ADC $04F7
+	ADC LevelNumber
 	TAX
 	LDA CurrentPlayer
 	BEQ bra6_B25D
@@ -4019,14 +4020,14 @@ bra6_B26D:
 	LDA tbl6_B677,Y
 loc6_B275:
 	STA PCPointerUpperByte
-	LDA $04F7
+	LDA LevelNumber
 	ASL
 	ASL
 	ASL
 	TAY
 	LDA (PCPointerLowerByte),Y
 	STA $51
-	STA $64
+	STA PlayerWallColPos
 	LDA #$00
 	STA $52
 	STA $65
@@ -4105,7 +4106,7 @@ bra6_B317:
 	LDA CurrentPlayer
 	BNE bra6_B337
 	LDA $06DA
-	STA PlayerState
+	STA PlayerPowerup
 	LDA $0393
 	STA Player1YoshiStatus
 	STA Player2YoshiStatus
@@ -4113,7 +4114,7 @@ bra6_B317:
 	RTS
 bra6_B337:
 	LDA $06DB
-	STA PlayerState
+	STA PlayerPowerup
 	LDA $0394
 	STA Player1YoshiStatus
 	STA Player2YoshiStatus
@@ -4142,7 +4143,7 @@ bra6_B365:
 	STA $03CD
 	TAX
 	LDA #$27
-	STA $8003
+	STA M90_PRG3
 	LDA $EA89,X
 	STA BGBank1
 	LDA $EA8A,X
@@ -4152,7 +4153,7 @@ bra6_B365:
 	LDA $EA8C,X
 	STA $03CC
 	LDA #$3F
-	STA $8003
+	STA M90_PRG3
 	RTS
 	LDA PPUStatus
 	LDA $00
@@ -4161,8 +4162,8 @@ bra6_B365:
 	LDA #$36
 	STA $F9
 	LDA #$00
-	STA $062F
-	STA $0630
+	STA FireballSlot
+	STA FireballSlot2
 	STA ObjectCount
 	STA $02
 	STA $03
@@ -4174,8 +4175,8 @@ bra6_B365:
 	STA $26
 loc6_B3B6:
 	JSR sub6_B056
-	LDA $04F5
-	STA $8000
+	LDA DataBank2
+	STA M90_PRG0
 	LDA #$00
 	STA $2A
 loc6_B3C3:
@@ -4662,10 +4663,10 @@ tbl6_B5EB:
 	.byte $15
 	.byte $21
 	.byte $16
-	.byte $17
-	.byte $17
+	.byte PlayerAnimationFrame
+	.byte PlayerAnimationFrame
 	.byte $21
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $18
 	.byte $22
@@ -4683,8 +4684,8 @@ tbl6_B5EB:
 	.byte $23
 	.byte $1D
 sub6_B658:
-	LDA $04F5
-	STA $8000
+	LDA DataBank2
+	STA M90_PRG0
 	LDY $5F
 	LDA $2A
 	BNE bra6_B66D
@@ -5422,7 +5423,7 @@ bra6_B9EA:
 	AND #$F8
 	BEQ bra6_BA20_RTS
 	LDA $51
-	STA $64
+	STA PlayerWallColPos
 	LDA $52
 	STA $65
 	LDA #$00
@@ -5499,7 +5500,7 @@ bra6_BA81_RTS:
 	RTS
 bra6_BA82:
 	LDA $51
-	STA $64
+	STA PlayerWallColPos
 	LDA $52
 	STA $65
 	LDA $53
@@ -6286,7 +6287,7 @@ tbl6_BE75:
 	JSR sub6_BEBE
 	JSR $F176
 	LDA #$18
-	STA PPUController
+	STA PPUMaskControl
 	LDA #$88
 	STA PPUCtrl
 	STA $00
@@ -6436,13 +6437,13 @@ bra6_BF9B:
 	LDA Player1YoshiStatus
 	BEQ bra6_BFAD
 	LDA #$01
-	STA $05FD
+	STA HurtFlag
 	JMP loc6_BFC0
 bra6_BFAD:
-	LDA PlayerState
+	LDA PlayerPowerup
 	BEQ bra6_BFD2
 	LDA #$00
-	STA PlayerState
+	STA PlayerPowerup
 	LDA #$01
 	STA PlayerPowerupBuffer
 	LDA #$07
@@ -6460,8 +6461,8 @@ bra6_BFD2:
 	LDA #$04
 	STA Event
 	LDA #$00
-	STA $E0
-	STA $E1
+	STA LevelTransitionFlag
+	STA PlayerState
 	STA $06DC
 	STA $06DD
 	RTS

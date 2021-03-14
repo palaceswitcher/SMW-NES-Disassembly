@@ -174,10 +174,10 @@ bra6_8151:
 	JSR $A74D
 	LDA #$10
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
 	EOR #$01
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$10
 	STA PlayerXSpeed
 	LDA #$01
@@ -429,7 +429,7 @@ loc6_8324:
 	LDA ObjectYPos,X
 	AND #$F0
 	STA ObjectYPos,X
-	LDA $04F6
+	LDA WorldNumber
 	CMP #$05
 	BNE bra6_833F
 	LDA ObjectYScreen,X
@@ -1152,7 +1152,7 @@ tbl6_8830:
 	.byte $12
 	.byte $10
 	.byte $13
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $16
 	.byte $19
@@ -1607,7 +1607,7 @@ bra6_8AAF:
 	LDA $0641,X
 	CMP #$18
 	BCS bra6_8ABD
-	LDA #$17
+	LDA #PlayerAnimationFrame
 	BNE bra6_8AC3
 bra6_8ABD:
 	CMP #$20
@@ -1843,7 +1843,7 @@ tbl6_8C49:
 	BNE bra6_8C78
 	LDA #$30
 	STA PlayerXSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$BE
 	ORA #$04
 	BNE bra6_8C9B
@@ -1852,7 +1852,7 @@ bra6_8C78:
 	BNE bra6_8C86
 	LDA #$30
 	STA PlayerXSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$45
 	BNE bra6_8C9B
 bra6_8C86:
@@ -1863,10 +1863,10 @@ bra6_8C86:
 	LDA #$00
 	STA $0641,X
 	INC $0578,X
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
 bra6_8C9B:
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$30
 	STA PlayerYSpeed
 bra6_8CA1_RTS:
@@ -1891,7 +1891,7 @@ bra6_8CC2:
 	LDA EnemyAnimFrame,X
 	AND #$C0
 	STA $05F0
-	LDA $04F6
+	LDA WorldNumber
 	CMP #$04
 	BEQ bra6_8CD7
 	JSR $A118
@@ -1899,7 +1899,7 @@ bra6_8CC2:
 bra6_8CD7:
 	JSR $A2A8
 	RTS
-	LDA $04F6
+	LDA WorldNumber
 	CMP #$02
 	BNE bra6_8D12
 	LDX $A4
@@ -2202,7 +2202,7 @@ tbl6_8DB8:
 	.byte $0A
 	.byte $FF
 	.byte $FF
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $19
 	.byte $FF
@@ -2540,7 +2540,7 @@ tbl6_8DB8:
 	.byte $09
 	.byte $0A
 	.byte $FF
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $19
 	.byte $FF
@@ -3037,7 +3037,7 @@ tbl6_8DB8:
 	.byte $FF
 	.byte $15
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $25
 	.byte $26
 	.byte $27
@@ -3085,7 +3085,7 @@ tbl6_8DB8:
 	.byte $27
 	.byte $15
 	.byte $16
-	.byte $17
+	.byte PlayerAnimationFrame
 	.byte $07
 	.byte $08
 	.byte $FF
@@ -4000,7 +4000,7 @@ loc6_9747:
 	CMP ObjectYPos,X
 	BCC bra6_97A3_RTS
 	JSR $BEBC
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	AND #$04
 	BNE bra6_9763
 	LDA PlayerYSpeed
@@ -4016,9 +4016,9 @@ bra6_9767:
 	BCS bra6_97A3_RTS
 	LDA #$30
 	STA PlayerYSpeed
-	LDA PlayerAttributes
+	LDA PlayerMovement
 	ORA #$04
-	STA PlayerAttributes
+	STA PlayerMovement
 	LDA #$04
 	STA PlayerAction
 	LDA #$0E
@@ -4528,7 +4528,7 @@ bra6_9B31:
 	LDA ObjectXPos,X
 	STA $65
 	LDA ObjectXScreen,X
-	STA $64
+	STA PlayerWallColPos
 	LDA ObjectYPos,X
 	STA $67
 	LDA ObjectYScreen,X
@@ -4550,10 +4550,10 @@ bra6_9B5D:
 	AND #$0F
 	BNE bra6_9B7A_RTS
 	LDY #$05
-	LDA $04F6
+	LDA WorldNumber
 	CMP #$01
 	BNE bra6_9B75
-	LDA $04F7
+	LDA LevelNumber
 	CMP #$02
 	BNE bra6_9B75
 	LDY #$01
@@ -4603,7 +4603,7 @@ bra6_9BB4:
 	STA PlayerYSpeed
 	STA PlayerXSpeed
 	LDA #$03
-	STA $E1
+	STA PlayerState
 	STA $06DC
 	LDA #$0D
 	STA PlayerAction
@@ -4617,7 +4617,7 @@ bra6_9BD7:
 	BNE bra6_9BE9_RTS
 bra6_9BE1:
 	LDA #$00
-	STA $E1
+	STA PlayerState
 	LDA #$0A
 	STA PlayerAction
 bra6_9BE9_RTS:
@@ -4907,14 +4907,14 @@ tbl6_9CAD:
 	.byte $16
 	.byte $16
 	.byte $16
-	.byte $17
-	.byte $17
-	.byte $17
-	.byte $17
-	.byte $17
-	.byte $17
-	.byte $17
-	.byte $17
+	.byte PlayerAnimationFrame
+	.byte PlayerAnimationFrame
+	.byte PlayerAnimationFrame
+	.byte PlayerAnimationFrame
+	.byte PlayerAnimationFrame
+	.byte PlayerAnimationFrame
+	.byte PlayerAnimationFrame
+	.byte PlayerAnimationFrame
 	.byte $18
 	.byte $18
 	.byte $18
