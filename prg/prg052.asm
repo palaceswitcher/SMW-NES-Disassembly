@@ -82,7 +82,7 @@ jmp_52_A080:
 	JSR $827C
 	RTS
 jmp_52_A089:
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BNE bra2_A0A3
 	LDX #$00
@@ -142,6 +142,7 @@ bra2_A0E4:
 	LDA tbl2_AABC,X
 	STA $33
 	JMP ($32)
+jmp_52_A0F3:
 	LDX #$00
 bra2_A0F5:
 	STX $A4
@@ -702,7 +703,7 @@ tbl2_A45B:
 	STA $30
 	LDA $C001,X
 	STA $31
-	LDA $0622
+	LDA YoshiIdleMovement
 	AND #$40
 	BEQ bra2_A4D5
 	LDX #$00
@@ -880,7 +881,7 @@ bra2_A59F:
 	TAY
 	ORA $36
 	STA $0201,X
-	LDA $0622
+	LDA YoshiIdleMovement
 	EOR #$40
 	AND #$C0
 	ORA ($30),Y
@@ -1477,21 +1478,21 @@ tbl2_A83C:
 	.byte $8C
 	.byte $DE
 	.byte $8C
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $8E
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $8E
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $8E
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $8E
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $8E
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $8E
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $8E
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $8E
 	.byte $90
 	.byte $8F
@@ -2092,9 +2093,9 @@ tbl2_AABC:
 	.byte $88
 	.byte $97
 	.byte $88
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $85
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $85
 	.byte $5E
 	.byte $8A

@@ -219,6 +219,7 @@ bra10_85CE:
 	STA SFXRegister
 bra10_85D5_RTS:
 	RTS
+jmp_58_85D6:
 	LDA #$0F
 	STA $4015
 	LDA #$00

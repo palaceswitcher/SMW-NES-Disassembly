@@ -3985,7 +3985,7 @@ tbl2_EF47:
 	.byte $16
 	.byte $16
 	.byte $16
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $C7
 	.byte $F2
 	.byte $27
@@ -4276,7 +4276,7 @@ tbl2_F047:
 	.byte $07
 	.byte $00
 	.byte $01
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $07
 	.byte $00
 	.byte $0B
@@ -4293,7 +4293,7 @@ tbl2_F047:
 	.byte $07
 	.byte $00
 	.byte $01
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $07
 	.byte $00
 	.byte $0B

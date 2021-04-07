@@ -1,12 +1,13 @@
 ;disassembled with BZK 6502 Disassembler
+jmp_41_A000:
 	LDA a:Event
 	ASL
 	TAY
 	LDA tbl_A012,Y			;
-	STA PCPointerLowerByte	;Load the lower byte of the pointer
+	STA PCPointerLoByte	;Load the lower byte of the pointer
 	LDA tbl_A013,Y			;
-	STA PCPointerUpperByte	;Load the upper byte of the pointer
-	JMP (PCPointerLowerByte)	;Jump to the pointer that was just loaded
+	STA PCPointerHiByte	;Load the upper byte of the pointer
+	JMP (PCPointerLoByte)	;Jump to the pointer that was just loaded
 tbl_A012:
 			.byte $74
 tbl_A013:	.byte $A0
@@ -152,19 +153,19 @@ tbl_A013:	.byte $A0
 	LDA #musTitle		;
 	STA MusicRegister	;play title music
 	LDA #$00
-	STA $0311
+	STA BGBlackoutFlag
 	STA $0312
 	STA $0310
 	STA $0607
 	LDA #$0A
 	STA InterruptMode
-	STA $032D
+	STA LogoFlag
 	JSR sub_A107
 	JSR sub_B068
 	LDA #$00
 	STA $52
 	LDA #$EF
-	STA $0331
+	STA LogoYOffset
 	INC a:Event
 	RTS
 sub_A107:
@@ -469,7 +470,7 @@ tbl_A276:
 bra_A2AD_RTS:
 	RTS
 sub_A2AE:
-	LDA $06
+	LDA FrameCount
 	AND #$07
 	BNE bra_A2C8_RTS
 	INC $0367
@@ -492,7 +493,7 @@ bra_A2C9:
 	.byte $12	;
 	.byte $13	;
 	.byte $14	;
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BEQ bra_A313_RTS
 	LDA $0366
@@ -602,7 +603,7 @@ tbl_A34F:
 	.byte $13
 	.byte $13
 	.byte $80
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BEQ bra_A3C4_RTS
 	LDA $0366
@@ -650,7 +651,7 @@ loc_A3C5:
 	STA $0366
 	STA $0365
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BEQ bra_A431_RTS
 	LDA $0366
@@ -701,7 +702,7 @@ loc_A432:
 	STA $0366
 	STA $0365
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BEQ bra_A476_RTS
 	LDA $0366
@@ -733,7 +734,7 @@ bra_A477:
 	STA $0366
 	STA $0365
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BEQ bra_A4C3_RTS
 	LDA $0366
@@ -963,7 +964,7 @@ bra_A5AE:
 	BEQ bra_A5C5
 	CMP #$0E
 	BEQ bra_A5C5
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BNE bra_A5DF
 bra_A5C5:
@@ -991,7 +992,7 @@ bra_A5E1:
 	BEQ bra_A5F5
 	CMP #$0E
 	BEQ bra_A5F5
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BNE bra_A5F8_RTS
 bra_A5F5:
@@ -1019,7 +1020,7 @@ sub_A5F9:
 	INY
 	LDA ($AE),Y
 	STA $27
-	LDA $06
+	LDA FrameCount
 	AND $27
 	BNE bra_A635_RTS
 	LDX $29
@@ -1060,13 +1061,13 @@ sub_A64D:
 	STA $0354
 	LDA #$40
 	STA $48
-	LDA $06
+	LDA FrameCount
 	AND #$03
 	TAX
 	LDA tbl_A691,X
 	STA $035D
 bra_A677:
-	LDA $06
+	LDA FrameCount
 	AND #$07
 	BNE bra_A680
 	INC $0363
@@ -1202,11 +1203,11 @@ bra_A760_RTS:
 	LDA #$03
 	STA $0310
 	LDA #$00
-	STA $0311
+	STA BGBlackoutFlag
 	STA $0312
 	STA $0607
 	STA InterruptMode
-	STA $032D
+	STA LogoFlag
 	STA $02
 	STA $03
 	STA $0368
@@ -1216,7 +1217,7 @@ bra_A760_RTS:
 	RTS
 	LDA ButtonsHeld
 	BNE bra_A7BB
-	LDA $06
+	LDA FrameCount
 	AND #$0F
 	BNE bra_A7B4
 	INC $0368
@@ -1388,10 +1389,10 @@ bra_A8DF:
 bra_A8E1:
 	STA $0310
 	LDA #$00
-	STA $0311
+	STA BGBlackoutFlag
 	STA $0312
 	STA $0607
-	STA $032D
+	STA LogoFlag
 	LDA #$0B
 	STA InterruptMode
 	JSR sub_B068
@@ -1457,7 +1458,7 @@ loc_A912:
 	JSR sub_AAE0
 	JSR sub_AE8A
 	LDA #$00
-	STA $0311
+	STA BGBlackoutFlag
 	STA $0312
 	JSR sub_B068
 	INC a:Event
@@ -1581,14 +1582,14 @@ bra_AA25:
 	STA $07
 	STA $0378
 bra_AA38:
-	LDA $06
+	LDA FrameCount
 	CMP $07
 	BEQ bra_AA38
 	STA $07
 	JSR $9728
 	JSR $8823
 	JSR $9DF8
-	LDA $06
+	LDA FrameCount
 	AND #$1F
 	BNE bra_AA52
 	INC WorldSelectNum
@@ -1916,7 +1917,7 @@ sub_AC1D:
 	LDA $9B85,X
 	STA $0356
 	LDX CurrentPlayer
-	LDA $0393,X
+	LDA P1YoshiBackup,X
 	BEQ bra_AC5C
 	SEC
 	LDA $0356
@@ -2010,10 +2011,10 @@ loc_ACD3:
 	JSR sub_AAD4
 	JSR sub_AAE0
 	LDA #$00
-	STA $0311
+	STA BGBlackoutFlag
 	STA $0312
 	STA $0607
-	STA $032D
+	STA LogoFlag
 	LDA #$05
 	STA $0310
 	JSR $9A44
@@ -2159,10 +2160,10 @@ bra_ADBF:
 	JSR $9A44
 	JSR sub_AE8A
 	LDA #$00
-	STA $0311
+	STA BGBlackoutFlag
 	STA $0312
 	STA $0607
-	STA $032D
+	STA LogoFlag
 	STA $02
 	STA $03
 	LDA #$02
@@ -2192,10 +2193,10 @@ bra_AE26:
 	CPX #$30
 	BCC bra_AE26
 	LDA #$00
-	STA $0311
+	STA BGBlackoutFlag
 	STA $0312
 	STA $0607
-	STA $032D
+	STA LogoFlag
 	LDA #$01
 	STA $0310
 	LDA #$0C
@@ -2371,10 +2372,10 @@ bra_AF46:
 	JSR sub_AAD4
 	JSR sub_AAE0
 	LDA #$00
-	STA $0311
+	STA BGBlackoutFlag
 	STA $0312
 	STA $0607
-	STA $032D
+	STA LogoFlag
 	LDA #$05
 	STA $0310
 	JSR $9A44
@@ -2452,7 +2453,7 @@ loc_B001:
 	STA M90_PRG0
 	JSR $9DF8
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$1F
 	BNE bra_B01C
 	INC WorldSelectNum
@@ -2497,7 +2498,7 @@ sub_B068:
 	STA $32
 	LDA tbl_B0EC,Y
 	STA $33
-	LDA $0311
+	LDA BGBlackoutFlag
 	ASL
 	TAY
 	LDA tbl_B0E7,Y
@@ -2508,7 +2509,7 @@ bra_B086:
 loc_B086:
 	LDA $03A1
 	BNE bra_B086
-	LDA $06
+	LDA FrameCount
 	AND #$03
 	BNE bra_B086
 	LDX $0312
@@ -2633,13 +2634,13 @@ tbl_B0EC:
 	.byte $0E
 	.byte $37
 	.byte $27
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $0E
 	.byte $27
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $37
 	.byte $0E
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $37
 	.byte $27
 	.byte $0E
@@ -2757,7 +2758,7 @@ tbl_B0EC:
 	.byte $0E
 	.byte $37
 	.byte $27
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $0E
 	.byte $21
 	.byte $37
@@ -3314,11 +3315,11 @@ bra_B40E_RTS:
 	LDA ButtonsPressed
 	AND #$80
 	BEQ bra_B424
-	INC ScrollStatus
+	INC ScrollSpeed
 	LDA #$08
-	CMP ScrollStatus
+	CMP ScrollSpeed
 	BCS bra_B423_RTS
-	STA ScrollStatus
+	STA ScrollSpeed
 bra_B423_RTS:
 	RTS
 bra_B424:
@@ -3333,25 +3334,25 @@ bra_B424:
 bra_B438_RTS:
 	RTS
 bra_B439:
-	LDA ScrollStatus
+	LDA ScrollSpeed
 	AND #$07
-	STA ScrollStatus
+	STA ScrollSpeed
 	LDA $0327
 	AND #$07
 	STA $0327
 	LDA ButtonsHeld
 	AND #$01
 	BEQ bra_B458
-	LDA ScrollStatus
+	LDA ScrollSpeed
 	AND #$7F
-	STA ScrollStatus
+	STA ScrollSpeed
 bra_B458:
 	LDA ButtonsHeld
 	AND #$02
 	BEQ bra_B467
-	LDA ScrollStatus
+	LDA ScrollSpeed
 	ORA #$80
-	STA ScrollStatus
+	STA ScrollSpeed
 bra_B467:
 	LDA ButtonsHeld
 	AND #$04
@@ -3573,10 +3574,10 @@ loc_B58C:
 	EOR #$FF
 	STA $25
 	LDY $5C
-	LDA $0400,Y
+	LDA TileAttributes,Y
 	AND $25
 	ORA $37
-	STA $0400,Y
+	STA TileAttributes,Y
 bra_B5CE:
 	INC $9C
 	LDA $9C
@@ -3626,7 +3627,7 @@ bra_B612:
 	LDX #$00
 bra_B61F:
 	LDY $5C
-	LDA $0400,Y
+	LDA TileAttributes,Y
 	STA $04C3,X
 	TYA
 	AND #$3F
@@ -3768,10 +3769,10 @@ sub_B6E5:
 	EOR #$FF
 	STA $25
 	LDY $5C
-	LDA $0400,Y
+	LDA TileAttributes,Y
 	AND $25
 	ORA $37
-	STA $0400,Y
+	STA TileAttributes,Y
 	RTS
 	LDA $59
 	TAY
@@ -3887,7 +3888,7 @@ sub_B75D:
 	STA ScreenCount
 	INY
 	LDA ($32),Y
-	STA $060D
+	STA VertScrollLock
 	INY
 	LDA ($32),Y
 	STA $060E
@@ -4010,7 +4011,7 @@ bra_B8CC:
 	STA PPUAddr
 	LDX #$00
 bra_B8DB:
-	LDA $0400,X
+	LDA TileAttributes,X
 	STA PPUData
 	INX
 	CPX #$40
@@ -4021,7 +4022,7 @@ bra_B8DB:
 	LDA #$C0
 	STA PPUAddr
 bra_B8F3:
-	LDA $0400,X
+	LDA TileAttributes,X
 	STA PPUData
 	INX
 	CPX #$80
@@ -4095,7 +4096,7 @@ tbl_B917:
 	.byte $14
 	.byte $15
 	.byte $16
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -4111,7 +4112,7 @@ tbl_B917:
 	.byte $14
 	.byte $15
 	.byte $16
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -4264,7 +4265,7 @@ tbl_B99A:
 	.byte $00
 	.byte $21
 	.byte $12
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $00
 	.byte $21
 	.byte $12
@@ -4895,7 +4896,7 @@ bra_BD31:
 	ADC #$00
 	STA $58
 bra_BD53:
-	LDA $060D
+	LDA VertScrollLock
 	CMP $57
 	BNE bra_BD6D
 	LDA #$00
@@ -4971,18 +4972,18 @@ sub_BDD1:
 	SEC
 	LDA $56
 	SBC $52
-	STA ScrollStatus
+	STA ScrollSpeed
 	LDA $55
 	SBC $51
 	BPL bra_BDEC
-	LDA ScrollStatus
+	LDA ScrollSpeed
 	EOR #$FF
 	SEC
 	ADC #$00
 	ORA #$80
-	STA ScrollStatus
+	STA ScrollSpeed
 bra_BDEC:
-	LDA ScrollStatus
+	LDA ScrollSpeed
 	BEQ bra_BE22_RTS
 	LDA $52
 	EOR $56
@@ -4996,7 +4997,7 @@ bra_BDEC:
 	STA $66
 	LDA #$00
 	STA $67
-	LDA ScrollStatus
+	LDA ScrollSpeed
 	BMI bra_BE1A
 	INC $64
 	JSR sub_B52B
@@ -5011,7 +5012,7 @@ bra_BE1A:
 bra_BE22_RTS:
 	RTS
 sub_BE23:
-	LDA ScrollStatus
+	LDA ScrollSpeed
 	BMI bra_BE36
 	CLC
 	ADC $02
@@ -5023,10 +5024,10 @@ sub_BE23:
 	RTS
 bra_BE36:
 	AND #$7F
-	STA ScrollStatus
+	STA ScrollSpeed
 	LDA $02
 	SEC
-	SBC ScrollStatus
+	SBC ScrollSpeed
 	STA $02
 	LDA $56
 	STA $52
@@ -5217,7 +5218,7 @@ bra_BF7A_RTS:
 	.byte $3B
 	.byte $D8
 	.byte $74
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $48
 	.byte $2B
 	.byte $C3
@@ -5269,7 +5270,7 @@ bra_BF7A_RTS:
 	.byte $3B
 	.byte $D8
 	.byte $74
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $48
 	.byte $2B
 	.byte $C3

@@ -34,7 +34,7 @@ tbl2_8001:
 	.byte $14
 	.byte $15
 	.byte $16
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -359,7 +359,7 @@ tbl2_8001:
 	.byte $14
 	.byte $15
 	.byte $16
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -1118,9 +1118,9 @@ sub2_8848:
 	ASL
 	TAX
 	LDA tbl2_8900,X
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA tbl2_8901,X
-	STA PCPointerUpperByte
+	STA PCPointerHiByte
 	LDA tbl2_8986,X
 	STA $38
 	LDA tbl2_8987,X
@@ -1134,11 +1134,11 @@ sub2_8848:
 	LDA $0356,Y
 	STA $26
 	LDY #$00
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	STA $28
 	STA $29
 	INY
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	STA $2A
 	INY
 bra2_889C:
@@ -1147,7 +1147,7 @@ loc2_889C:
 	ASL
 	ASL
 	TAX
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	CMP #$FF
 	BEQ bra2_88D5
 	ORA $31
@@ -1293,7 +1293,7 @@ tbl2_8901:
 	.byte $8C
 	.byte $0F
 	.byte $8D
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $8D
 	.byte $1F
 	.byte $8D
@@ -1879,7 +1879,7 @@ tbl2_8A51:
 	.byte $0E
 	.byte $0F
 	.byte $14
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $04
 	.byte $04
@@ -1930,7 +1930,7 @@ tbl2_8A51:
 	.byte $14
 	.byte $15
 	.byte $16
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -2033,7 +2033,7 @@ tbl2_8A51:
 	.byte $14
 	.byte $13
 	.byte $FF
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $16
 	.byte $FF
 	.byte $FF
@@ -2199,7 +2199,7 @@ tbl2_8A51:
 	.byte $02
 	.byte $09
 	.byte $0A
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $02
 	.byte $03
@@ -2343,7 +2343,7 @@ tbl2_8A51:
 	.byte $02
 	.byte $09
 	.byte $0A
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $02
 	.byte $03
@@ -2770,7 +2770,7 @@ tbl2_8E72:
 	.byte $FF
 	.byte $15
 	.byte $16
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -2834,7 +2834,7 @@ tbl2_8E72:
 	.byte $FF
 	.byte $00
 	.byte $16
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -2976,7 +2976,7 @@ tbl2_8E72:
 	LDA ($2E),Y
 	STA $0361
 	LDX $0399
-	LDA $0393,X
+	LDA P1YoshiBackup,X
 	BEQ bra2_903B
 	LDX $0361
 	LDA tbl2_9091,X
@@ -2984,7 +2984,7 @@ tbl2_8E72:
 bra2_903B:
 	LDA $037C
 	BNE bra2_904F
-	LDA $06
+	LDA FrameCount
 	AND #$F8
 	LDA #$00
 	STA $0378
@@ -3080,10 +3080,10 @@ sub2_90B1:
 	ASL
 	TAY
 	LDA tbl2_90C3,Y
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA tbl2_90C4,Y
-	STA PCPointerUpperByte
-	JMP (PCPointerLowerByte)
+	STA PCPointerHiByte
+	JMP (PCPointerLoByte)
 tbl2_90C3:
 	.byte $F3
 tbl2_90C4:
@@ -3096,7 +3096,7 @@ tbl2_90C4:
 	.byte $91
 	.byte $11
 	.byte $91
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $91
 	.byte $20
 	.byte $91
@@ -3182,10 +3182,10 @@ sub2_9151:
 	ASL
 	TAY
 	LDA tbl2_9163,Y
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA tbl2_9164,Y
-	STA PCPointerUpperByte
-	JMP (PCPointerLowerByte)
+	STA PCPointerHiByte
+	JMP (PCPointerLoByte)
 tbl2_9163:
 	.byte $A1
 tbl2_9164:
@@ -4559,7 +4559,7 @@ tbl2_9721:
 	.byte $20
 	.byte $40
 	.byte $40
-	LDA $06
+	LDA FrameCount
 	AND #$07
 	BNE bra2_9752_RTS
 	LDA $0361
@@ -4643,9 +4643,9 @@ tbl2_9754:
 	.byte $D0
 	.byte $97
 	.byte $16
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $FF
 	.byte $19
 	.byte $1A
@@ -4781,7 +4781,7 @@ bra2_97DF:
 	.byte $0E
 	.byte $00
 	.byte $16
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $18
 	.byte $19
@@ -4947,7 +4947,7 @@ tbl2_988A:
 	.byte $00
 	.byte $15
 	.byte $16
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -4955,7 +4955,7 @@ tbl2_988A:
 	.byte $1B
 	.byte $1C
 	.byte $1D
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $1E
 	.byte $1F
 	.byte $00
@@ -5129,7 +5129,7 @@ tbl2_988A:
 	.byte $00
 	.byte $00
 	.byte $00
-	LDA $06
+	LDA FrameCount
 	AND #$07
 	BNE bra2_999F
 	INC $032F
@@ -5151,7 +5151,7 @@ bra2_99A6:
 	CPX #$40
 	BCC bra2_99A6
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$07
 	BNE bra2_99BB
 	INC $032F
@@ -5244,12 +5244,12 @@ tbl2_9A2F:
 	ASL
 	TAY
 	LDA tbl2_9A5D,Y
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA tbl2_9A5E,Y
-	STA PCPointerUpperByte
+	STA PCPointerHiByte
 	LDY #$00
 bra2_9A52:
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	STA $03C5,Y
 	INY
 	CPY #$06
@@ -5724,7 +5724,7 @@ sub2_9C78:
 	STA $38
 bra2_9C82:
 	JSR sub2_9CA9
-	LDA PCPointerLowerByte
+	LDA PCPointerLoByte
 	CLC
 	ADC $26
 	LDY $25
@@ -5746,24 +5746,24 @@ bra2_9CA8_RTS:
 	RTS
 sub2_9CA9:
 	LDA #$00
-	STA PCPointerLowerByte
-	STA PCPointerUpperByte
+	STA PCPointerLoByte
+	STA PCPointerHiByte
 	LDX #$10
 bra2_9CB1:
 	ASL $34
 	ROL $35
-	ROL PCPointerLowerByte
-	ROL PCPointerUpperByte
-	LDA PCPointerLowerByte
+	ROL PCPointerLoByte
+	ROL PCPointerHiByte
+	LDA PCPointerLoByte
 	SEC
 	SBC $38
 	TAY
-	LDA PCPointerUpperByte
+	LDA PCPointerHiByte
 	SBC $39
 	BCC bra2_9CCB
 	INC $34
-	STA PCPointerUpperByte
-	STY PCPointerLowerByte
+	STA PCPointerHiByte
+	STY PCPointerLoByte
 bra2_9CCB:
 	DEX
 	BNE bra2_9CB1
@@ -6075,27 +6075,27 @@ bra2_9E0B:
 	ASL
 	TAY
 	LDA tbl2_9E5C,X
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	SEC
 	LDA tbl2_9E5D,X
 	SBC $52
 	STA $36
 	BCS bra2_9E31
-	DEC PCPointerLowerByte
+	DEC PCPointerLoByte
 bra2_9E31:
-	LDA PCPointerLowerByte
+	LDA PCPointerLoByte
 	CMP $51
 	BNE bra2_9E4C
 	LDA tbl2_9E5E,X
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	SEC
 	LDA tbl2_9E5F,X
 	SBC $03
 	STA $38
 	BCS bra2_9E48
-	DEC PCPointerLowerByte
+	DEC PCPointerLoByte
 bra2_9E48:
-	LDA PCPointerLowerByte
+	LDA PCPointerLoByte
 	BEQ bra2_9E50
 bra2_9E4C:
 	LDA #$F8

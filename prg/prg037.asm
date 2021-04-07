@@ -125,7 +125,7 @@ bra_80C8:
 	INY
 bra_80D0:
 	STY $32
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BNE bra_80DD
 	LDA $32
@@ -191,16 +191,16 @@ bra_8152:
 	INC $A3
 	LDA ObjectXPos,X
 	STA ObjectXPos,Y
-	STA ObjectXPos2,Y
+	STA ObjectXPos+1,Y
 	LDA ObjectXScreen,X
 	STA ObjectXScreen,Y
-	STA ObjectXScreen2,Y
+	STA ObjectXScreen+1,Y
 	LDA ObjectYPos,X
 	STA ObjectYPos,Y
-	STA ObjectYPos2,Y
+	STA ObjectYPos+1,Y
 	LDA ObjectYScreen,X
 	STA ObjectYScreen,Y
-	STA ObjectYScreen2,Y
+	STA ObjectYScreen+1,Y
 	LDA ObjectYPos,Y
 	SEC
 	SBC #$90
@@ -214,28 +214,28 @@ bra_8152:
 	SBC #$01
 	STA ObjectYScreen,Y
 bra_8196:
-	LDA ObjectXPos2,Y
+	LDA ObjectXPos+1,Y
 	CLC
 	ADC #$04
-	STA ObjectXPos2,Y
-	LDA ObjectXScreen2,Y
+	STA ObjectXPos+1,Y
+	LDA ObjectXScreen+1,Y
 	ADC #$00
-	STA ObjectXScreen2,Y
+	STA ObjectXScreen+1,Y
 	LDA #$80
 	STA $0578,Y
 	LDA #$00
 	STA $0578,X
 	STA $0579,Y
 	STA ObjectState,Y
-	STA ObjectState2,Y
-	STA GuidedObjStatus2,Y
+	STA ObjectState+1,Y
+	STA GuidedObjStatus+1,Y
 	LDA ObjectSlot,X
 	AND #$01
 	CLC
 	ADC #$F8
 	STA ObjectSlot,Y
 	LDA #$D6
-	STA ObjectSlot2,Y
+	STA ObjectSlot+1,Y
 	RTS
 	LDX $A4
 	LDA ObjectXPos,X
@@ -347,7 +347,7 @@ bra_82B4:
 	CLC
 	ADC #$46
 	STA $32
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BNE bra_82C8_RTS
 	LDA $32
@@ -464,7 +464,7 @@ tbl_8365:
 	RTS
 bra_8380:
 	INC $0578,X
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BNE bra_838E
 	LDA #$4C
@@ -519,7 +519,7 @@ loc_83EC:
 bra_83F2_RTS:
 	RTS
 bra_83F3:
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra_83FE
 	LDA #$0B
@@ -640,7 +640,7 @@ tbl_84A4:
 	.byte $11
 	.byte $12
 	.byte $FF
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -920,7 +920,7 @@ bra_86C0:
 	DEC GuidedObjStatus,X
 	RTS
 bra_86DD:
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BNE bra_86E8_RTS
 	LDA #$12
@@ -989,7 +989,7 @@ bra_874F:
 	INY
 bra_8759:
 	STY $25
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BNE bra_8766
 	LDA $25
@@ -1415,7 +1415,7 @@ tbl_8939:
 	.byte $FF
 	.byte $15
 	.byte $16
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $12
 	.byte $13
 	.byte $14
@@ -2029,20 +2029,20 @@ bra_8CE6:
 	LDA ObjectXPos,X
 	CLC
 	ADC #$08
-	STA ObjectXPos2,Y
+	STA ObjectXPos+1,Y
 	LDA ObjectXScreen,X
 	ADC #$00
-	STA ObjectXScreen2,Y
+	STA ObjectXScreen+1,Y
 	LDA ObjectYPos,X
 	SEC
 	SBC #$48
-	STA ObjectYPos2,Y
+	STA ObjectYPos+1,Y
 	LDA ObjectYScreen,X
 	SBC #$00
-	STA ObjectYScreen2,Y
+	STA ObjectYScreen+1,Y
 	LDA ObjectState,X
 	STA ObjectState,Y
-	STA ObjectState2,Y
+	STA ObjectState+1,Y
 	LDA #$00
 	STA $0578,Y
 	STA $0579,Y
@@ -2053,7 +2053,7 @@ bra_8CE6:
 	LDA #$E1
 	STA ObjectSlot,Y
 	LDA #$D7
-	STA ObjectSlot2,Y
+	STA ObjectSlot+1,Y
 	LDA #$E0
 	STA $03C9
 	STA $03CA
@@ -2269,7 +2269,7 @@ tbl_8EFC:
 	.byte $00
 tbl_8EFD:
 	.byte $8F
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $8F
 	.byte $04
 	.byte $05
@@ -2509,7 +2509,7 @@ bra_903C:
 	CLC
 	ADC #$50
 	STA $25
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra_904F
 	LDA $25
@@ -2780,7 +2780,7 @@ bra_921D:
 	LDA #$37
 	STA YoshiXPos
 	LDA #$38
-	STA $05F3
+	STA YoshiXScreen
 	RTS
 tbl_9230:
 	.byte $04
@@ -2944,9 +2944,9 @@ bra_935C:
 	STA $05F6
 	LDA #$02
 	STA BowserStatus
-	LDA $05F3
+	LDA YoshiXScreen
 	EOR #$01
-	STA $05F3
+	STA YoshiXScreen
 	STA YoshiXPos
 	RTS
 	INC $05F6
@@ -3146,7 +3146,7 @@ bra_94ED:
 	EOR #$40
 	STA ObjectState,X
 bra_9506:
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BNE bra_9511
 	LDA #$4D
@@ -3202,7 +3202,7 @@ bra_955E_RTS:
 	EOR #$40
 	STA ObjectState,X
 bra_957A:
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BNE bra_9585
 	LDA #$4E
@@ -3310,74 +3310,74 @@ bra_9619:
 	STA GuidedObjStatus,Y
 	STA ObjectState,Y
 	LDA ObjectXPos,X
-	STA ObjectXPos2,Y
+	STA ObjectXPos+1,Y
 	LDA ObjectXScreen,X
-	STA ObjectXScreen2,Y
+	STA ObjectXScreen+1,Y
 	LDA ObjectYPos,X
 	CLC
 	ADC #$48
-	STA ObjectYPos2,Y
+	STA ObjectYPos+1,Y
 	LDA ObjectYScreen,X
 	ADC #$00
-	STA ObjectYScreen2,Y
+	STA ObjectYScreen+1,Y
 	LDA #$00
 	STA $0579,Y
 	LDA #$BC
-	STA ObjectSlot2,Y
+	STA ObjectSlot+1,Y
 	LDA #$40
-	STA EnemyAnimFrame2,Y
+	STA EnemyAnimFrame+1,Y
 	LDA #$01
-	STA GuidedObjStatus2,Y
+	STA GuidedObjStatus+1,Y
 	LDA #$00
-	STA ObjectState2,Y
+	STA ObjectState+1,Y
 	LDA ObjectXPos,X
 	CLC
 	ADC #$20
-	STA ObjectXPos3,Y
+	STA ObjectXPos+2,Y
 	LDA ObjectXScreen,X
 	ADC #$00
-	STA ObjectXScreen3,Y
+	STA ObjectXScreen+2,Y
 	LDA ObjectYPos,X
 	CLC
 	ADC #$30
-	STA ObjectYPos3,Y
+	STA ObjectYPos+2,Y
 	LDA ObjectYScreen,X
 	ADC #$00
-	STA ObjectYScreen3,Y
+	STA ObjectYScreen+2,Y
 	LDA #$00
 	STA $057A,Y
 	LDA #$BC
-	STA ObjectSlot3,Y
+	STA ObjectSlot+2,Y
 	LDA #$84
-	STA EnemyAnimFrame3,Y
+	STA EnemyAnimFrame+2,Y
 	LDA #$02
-	STA GuidedObjStatus3,Y
+	STA GuidedObjStatus+2,Y
 	LDA #$00
-	STA ObjectState3,Y
+	STA ObjectState+2,Y
 	LDA ObjectXPos,X
 	CLC
 	ADC #$20
-	STA ObjectXPos4,Y
+	STA ObjectXPos+3,Y
 	LDA ObjectXScreen,X
 	ADC #$00
-	STA ObjectXScreen4,Y
+	STA ObjectXScreen+3,Y
 	LDA ObjectYPos,X
 	CLC
 	ADC #$48
-	STA ObjectYPos4,Y
+	STA ObjectYPos+3,Y
 	LDA ObjectYScreen,X
 	ADC #$00
-	STA ObjectYScreen4,Y
+	STA ObjectYScreen+3,Y
 	LDA #$00
 	STA $057B,Y
 	LDA #$BC
-	STA ObjectSlot4,Y
+	STA ObjectSlot+3,Y
 	LDA #$00
 	STA $0658,Y
 	LDA #$03
-	STA GuidedObjStatus4,Y
+	STA GuidedObjStatus+3,Y
 	LDA #$00
-	STA ObjectState4,Y
+	STA ObjectState+3,Y
 	RTS
 loc_970B_RTS:
 	RTS
@@ -3970,7 +3970,7 @@ bra_9862:
 	.byte $0E
 	.byte $56
 	.byte $13
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $59
 	.byte $5B
 	.byte $1F

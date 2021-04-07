@@ -268,7 +268,7 @@ tbl5_805F:
 	.byte $02
 	.byte $0A
 	.byte $95
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $15
 	.byte $16
@@ -351,7 +351,7 @@ tbl5_805F:
 	.byte $02
 	.byte $11
 	.byte $95
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $15
 	.byte $16
@@ -673,7 +673,7 @@ tbl5_805F:
 	.byte $A9
 	.byte $AA
 	JSR sub5_82EC
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra5_82DC
 	LDA #$2C
@@ -827,10 +827,10 @@ bra5_83DF:
 	STA $0642,Y
 	LDA ObjectXScreen,X
 	STA ObjectXScreen,Y
-	STA ObjectXScreen2,Y
+	STA ObjectXScreen+1,Y
 	LDA ObjectYScreen,X
 	STA ObjectYScreen,Y
-	STA ObjectYScreen2,Y
+	STA ObjectYScreen+1,Y
 	LDA ObjectXPos,X
 	CLC
 	ADC #$27
@@ -838,20 +838,20 @@ bra5_83DF:
 	LDA ObjectXPos,X
 	SEC
 	SBC #$2A
-	STA ObjectXPos2,Y
+	STA ObjectXPos+1,Y
 	LDA ObjectYPos,X
 	CLC
 	ADC #$45
 	STA ObjectYPos,Y
-	STA ObjectYPos2,Y
+	STA ObjectYPos+1,Y
 	LDA #$77
 	STA ObjectSlot,Y
-	STA ObjectSlot2,Y
+	STA ObjectSlot+1,Y
 	LDA #$00
 	STA ObjectState,Y
-	STA ObjectState2,Y
+	STA ObjectState+1,Y
 	STA GuidedObjStatus,Y
-	STA GuidedObjStatus2,Y
+	STA GuidedObjStatus+1,Y
 	RTS
 bra5_844D:
 	JSR sub5_85C6
@@ -879,7 +879,7 @@ tbl5_8463:
 	.byte $85
 	.byte $64
 	.byte $85
-	LDA $06
+	LDA FrameCount
 	AND #$07
 	BNE bra5_847B
 	LDA #$2B
@@ -896,7 +896,7 @@ bra5_847B:
 	INC GuidedObjStatus,X
 bra5_8493_RTS:
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$07
 	BNE bra5_849F
 	LDA #$2B
@@ -912,7 +912,7 @@ bra5_849F:
 	INC GuidedObjStatus,X
 bra5_84B4_RTS:
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$07
 	BNE bra5_84C0
 	LDA #$2B
@@ -937,7 +937,7 @@ bra5_84DE:
 	STA $0641,X
 	DEC GuidedObjStatus,X
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$07
 	BNE bra5_84F2
 	LDA #$2B
@@ -963,7 +963,7 @@ bra5_8514:
 	LDA #$40
 	STA ObjectState,Y
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$07
 	BNE bra5_8528
 	LDA #$2B
@@ -989,7 +989,7 @@ bra5_854A:
 	LDA #$00
 	STA ObjectState,Y
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$07
 	BNE bra5_855E
 	LDA #$2B
@@ -2679,7 +2679,7 @@ bra5_9231:
 	CLC
 	ADC LevelNumber
 	ASL
-	STA $060B
+	STA WarpLevelNumber
 	LDA #$03
 	STA Event
 	LDA #$7E
@@ -2688,7 +2688,7 @@ bra5_9231:
 	ASL
 	ASL
 	ASL
-	STA $060C
+	STA WarpNumber
 bra5_9262_RTS:
 	RTS
 tbl5_9263:
@@ -2781,8 +2781,8 @@ tbl5_92B7:
 	.byte $0E
 	.byte $0F
 	.byte $10
-	.byte PlayerAnimationFrame
-	.byte PlayerAnimationFrame
+	.byte $17
+	.byte $17
 	.byte $18
 	.byte $18
 	.byte $19
@@ -2813,7 +2813,7 @@ tbl5_92B7:
 sub5_92D7:
 	LDA Player1YoshiStatus
 	BNE bra5_92E1_RTS
-	LDA PlayerCarryFlag
+	LDA PlayerHoldFlag
 	BEQ bra5_92E2
 bra5_92E1_RTS:
 	RTS
@@ -2977,7 +2977,7 @@ bra5_93E3:
 	SBC #$10
 	STA PlayerYPosDup
 	DEC PlayerYScreenDup
-	LDY $060D
+	LDY VertScrollLock
 	CPY PlayerYScreenDup
 	BNE bra5_93FF
 	INY
@@ -3117,7 +3117,7 @@ bra5_94EC:
 	STA PlayerYPosDup
 	LDA ObjectYScreen,X
 	STA PlayerYScreenDup
-	LDY $060D
+	LDY VertScrollLock
 	CPY PlayerYScreenDup
 	BNE bra5_950E
 	INY
@@ -3179,7 +3179,7 @@ bra5_955E:
 	SBC #$10
 	STA PlayerYPosDup
 	DEC PlayerYScreenDup
-	LDY $060D
+	LDY VertScrollLock
 	CPY PlayerYScreenDup
 	BNE bra5_957A
 	INY
@@ -3377,7 +3377,7 @@ tbl5_96A2:
 	.byte $12
 	.byte $10
 	.byte $13
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $16
 	.byte $19
@@ -3754,7 +3754,7 @@ bra5_9940:
 	LDA tbl5_994A,Y
 	STA Event
 	LDA #$00
-	STA LevelTransitionFlag
+	STA EventPart
 	RTS
 tbl5_994A:
 	.byte $13
@@ -3897,7 +3897,7 @@ tbl5_9A2A:
 	.byte $9A
 	.byte $45
 	.byte $9A
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra5_9A38
 	LDA #$49
@@ -4039,7 +4039,7 @@ bra5_9B20:
 	INC GuidedObjStatus,X
 bra5_9B2F_RTS:
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra5_9B3B
 	LDA #$48
@@ -4197,7 +4197,7 @@ loc5_9C70:
 bra5_9C76:
 	LDA GuidedObjStatus,X
 	BNE bra5_9C9B
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra5_9C86
 	LDA #$4A
@@ -4214,7 +4214,7 @@ bra5_9C86:
 bra5_9C9A_RTS:
 	RTS
 bra5_9C9B:
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra5_9CA6
 	LDA #$0B

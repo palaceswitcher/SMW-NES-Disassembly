@@ -301,7 +301,7 @@ tbl_E049:
 	RTS
 bra_E14E:
 	LDA #$00
-	STA PlayerCarryFlag
+	STA PlayerHoldFlag
 	LDA Player1YoshiStatus
 	BEQ bra_E160
 	LDA #$01
@@ -329,7 +329,7 @@ bra_E185:
 	LDA #$04
 	STA Event
 	LDA #$00
-	STA LevelTransitionFlag
+	STA EventPart
 	STA PlayerState
 	STA $06DC
 	STA $06DD
@@ -373,7 +373,7 @@ bra_E1C2:
 	CLC
 	ADC LevelNumber
 	ASL
-	STA $060B
+	STA WarpLevelNumber
 	LDA #$03
 	STA Event
 	LDA $96
@@ -382,7 +382,7 @@ bra_E1C2:
 	ASL
 	ASL
 	ASL
-	STA $060C
+	STA WarpNumber
 bra_E1F2_RTS:
 	RTS
 	RTS

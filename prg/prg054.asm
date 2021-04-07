@@ -1,6 +1,6 @@
 ;disassembled by BZK 6502 Disassembler
 jmp_54_A000:
-	LDA YoshiXScreen
+	LDA YoshiUnmountedState
 	BNE bra3_A006
 	RTS
 bra3_A006:
@@ -22,7 +22,7 @@ bra3_A023:
 	SEC
 	SBC PlayerXPosDup
 	STA $05F9
-	LDA $05F3
+	LDA YoshiXScreen
 	SBC PlayerXScreenDup
 	STA $05FA
 	BEQ bra3_A03B
@@ -30,15 +30,15 @@ bra3_A023:
 	BEQ bra3_A03B
 	RTS
 bra3_A03B:
-	LDA $05F4
+	LDA YoshiYPos
 	SEC
 	SBC PlayerYPosDup
 	STA $05FB
-	LDA $05F5
+	LDA YoshiYScreen
 	SBC PlayerYScreenDup
 	STA $05FC
 	LDA PlayerYScreenDup
-	CMP $05F5
+	CMP YoshiYScreen
 	BEQ bra3_A07D_RTS
 	LDA $05FC
 	BPL bra3_A06C
@@ -61,6 +61,7 @@ bra3_A06C:
 bra3_A07D_RTS:
 loc3_A07D_RTS:
 	RTS
+jmp_54_A07E:
 	LDX #$00
 bra3_A080:
 	STX $A4
@@ -550,21 +551,21 @@ tbl3_A1B6:
 	.byte $8C
 	.byte $DE
 	.byte $8C
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $8E
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $8E
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $8E
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $8E
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $8E
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $8E
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $8E
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $8E
 	.byte $90
 	.byte $8F
@@ -1165,9 +1166,9 @@ tbl3_A436:
 	.byte $88
 	.byte $97
 	.byte $88
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $85
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $85
 	.byte $5E
 	.byte $8A
@@ -2420,7 +2421,7 @@ bra3_AB55:
 	RTS
 	LDA Player1YoshiStatus
 	BNE bra3_AB91_RTS
-	LDA PlayerCarryFlag
+	LDA PlayerHoldFlag
 	BNE bra3_AB91_RTS
 	LDA $1E
 	CMP #$04
@@ -2428,7 +2429,7 @@ bra3_AB55:
 	LDA ButtonsHeld
 	AND #$40
 	BEQ bra3_AB91_RTS
-	STA PlayerCarryFlag
+	STA PlayerHoldFlag
 	LDY $A4
 	LDA ObjectState,Y
 	ORA #$80
@@ -2445,7 +2446,7 @@ bra3_AB91_RTS:
 bra3_AB9C:
 	LDA ButtonsHeld
 	AND #$40
-	STA PlayerCarryFlag
+	STA PlayerHoldFlag
 	BEQ bra3_AC08
 	LDA PlayerMovement
 	AND #$40
@@ -2523,7 +2524,7 @@ bra3_AC17:
 	BEQ bra3_ACA1_RTS
 	LDA ButtonsHeld
 	AND #$40
-	STA PlayerCarryFlag
+	STA PlayerHoldFlag
 	BEQ bra3_ACA2
 	LDA PlayerMovement
 	AND #$40
@@ -2607,7 +2608,7 @@ bra3_ACC2_RTS:
 	BEQ bra3_ACA1_RTS
 	LDA ButtonsHeld
 	AND #$40
-	STA PlayerCarryFlag
+	STA PlayerHoldFlag
 	BEQ bra3_ACA2
 	LDA PlayerMovement
 	AND #$40
@@ -2666,7 +2667,7 @@ sub3_AD3D:
 	ORA #$06
 	STA ObjectState,Y
 	LDA #$00
-	STA PlayerCarryFlag
+	STA PlayerHoldFlag
 	STA $0578,Y
 	PLA
 	JMP loc3_AD5C
@@ -2736,7 +2737,7 @@ bra3_ADC3:
 	STA $32
 	BNE bra3_ADDF
 bra3_ADD6:
-	LDA $06
+	LDA FrameCount
 	AND #$03
 	BNE bra3_ADDF
 	INC $0578,X
@@ -2786,7 +2787,7 @@ bra3_AE23:
 	AND #$BF
 bra3_AE28:
 	STA ObjectState,X
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra3_AE36_RTS
 	LDA #$24
@@ -3858,7 +3859,7 @@ bra3_B4ED:
 bra3_B4F8:
 	INC $0578,X
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BNE bra3_B556
 	LDA $0578,X
@@ -3991,32 +3992,32 @@ bra3_B604:
 	TAY
 	BMI bra3_B620
 	CLC
-	ADC $05F4
-	STA $05F4
+	ADC YoshiYPos
+	STA YoshiYPos
 	BCS bra3_B614
 	CMP #$F0
 	BCC bra3_B632
 bra3_B614:
 	CLC
 	ADC #$10
-	STA $05F4
-	INC $05F5
+	STA YoshiYPos
+	INC YoshiYScreen
 	JMP loc3_B632
 bra3_B620:
 	CLC
-	ADC $05F4
-	STA $05F4
+	ADC YoshiYPos
+	STA YoshiYPos
 	BCS $B632
 	SEC
 	SBC #$10
-	STA $05F4
-	DEC $05F5
+	STA YoshiYPos
+	DEC YoshiYScreen
 bra3_B632:
 loc3_B632:
 	LDY #$00
 	LDA ($32),Y
 	TAY
-	LDA $0622
+	LDA YoshiIdleMovement
 	AND #$40
 	BEQ bra3_B643
 	TYA
@@ -4031,29 +4032,29 @@ bra3_B643:
 	STA YoshiXPos
 	PLA
 	BMI bra3_B656
-	LDA $05F3
+	LDA YoshiXScreen
 	ADC #$00
 	BPL bra3_B65B
 bra3_B656:
-	LDA $05F3
+	LDA YoshiXScreen
 	SBC #$00
 bra3_B65B:
-	STA $05F3
+	STA YoshiXScreen
 	RTS
 bra3_B65F:
 	LDA $AA
 	AND #$0F
 	STA $25
 	LDX $A4
-	LDA $05F4
+	LDA YoshiYPos
 	SEC
 	SBC $25
 	BCS bra3_B675
-	DEC $05F5
+	DEC YoshiYScreen
 	SEC
 	SBC #$10
 bra3_B675:
-	STA $05F4
+	STA YoshiYPos
 	LDA $05F6
 	AND #$C0
 	STA $05F6
@@ -4078,11 +4079,11 @@ bra3_B6A4:
 	DEY
 	JSR sub3_B743
 	BEQ bra3_B6B2
-	LDA $0622
+	LDA YoshiIdleMovement
 	EOR #$40
-	STA $0622
+	STA YoshiIdleMovement
 bra3_B6B2:
-	LDA $0622
+	LDA YoshiIdleMovement
 	AND #$40
 	BEQ bra3_B6C3
 	LDA ($32),Y
@@ -4099,47 +4100,47 @@ loc3_B6C5:
 	STA YoshiXPos
 	PLA
 	BMI bra3_B6D7
-	LDA $05F3
+	LDA YoshiXScreen
 	ADC #$00
 	BPL bra3_B6DC
 bra3_B6D7:
-	LDA $05F3
+	LDA YoshiXScreen
 	SBC #$00
 bra3_B6DC:
-	STA $05F3
+	STA YoshiXScreen
 	INY
 	LDA ($32),Y
 	BMI bra3_B6FD
 	CLC
-	ADC $05F4
-	STA $05F4
+	ADC YoshiYPos
+	STA YoshiYPos
 	BCS bra3_B6F1
 	CMP #$F0
 	BCC bra3_B70F
 bra3_B6F1:
 	CLC
 	ADC #$10
-	STA $05F4
-	INC $05F5
+	STA YoshiYPos
+	INC YoshiYScreen
 	JMP loc3_B70F
 bra3_B6FD:
 	CLC
-	ADC $05F4
-	STA $05F4
+	ADC YoshiYPos
+	STA YoshiYPos
 	BCS bra3_B70F
 	SEC
 	SBC #$10
-	STA $05F4
-	DEC $05F5
+	STA YoshiYPos
+	DEC YoshiYScreen
 bra3_B70F:
 loc3_B70F:
 	INY
 	LDA ($32),Y
 	CMP #$FF
 	BNE bra3_B721
-	LDA $0622
+	LDA YoshiIdleMovement
 	EOR #$40
-	STA $0622
+	STA YoshiIdleMovement
 	JMP $B73F
 bra3_B721:
 	AND #$F0
@@ -4162,7 +4163,7 @@ bra3_B73F:
 	RTS
 sub3_B743:
 	STY $2B
-	LDA $0622
+	LDA YoshiIdleMovement
 	AND #$40
 	BEQ bra3_B750
 	LDA #$00
@@ -4175,7 +4176,7 @@ bra3_B752:
 	BNE bra3_B767
 sub3_B758:
 	STY $2B
-	LDA $0622
+	LDA YoshiIdleMovement
 	AND #$40
 	BEQ bra3_B763
 	LDA #$20
@@ -4188,12 +4189,12 @@ bra3_B767:
 	CLC
 	ADC $36
 	STA $A8
-	LDA $05F3
+	LDA YoshiXScreen
 	ADC #$00
 	STA $A9
-	LDA $05F4
+	LDA YoshiYPos
 	STA $AA
-	LDA $05F5
+	LDA YoshiYScreen
 	STA $AB
 	JMP loc3_B0A8
 	TXA
@@ -4483,7 +4484,7 @@ bra3_B967_RTS:
 	INY
 	LDA ($34),Y
 	STA $26
-	LDA $06
+	LDA FrameCount
 	AND $26
 	BNE bra3_B982_RTS
 	LDA $25
@@ -4722,7 +4723,7 @@ bra3_BADB_RTS:
 	STA ObjectYPos,X
 	DEC ObjectYScreen,X
 	INY
-	LDA $06
+	LDA FrameCount
 	AND $25
 	BNE $BB49
 	LDA ($32),Y
@@ -5346,7 +5347,7 @@ bra3_BF98:
 	STA ObjectState,X
 bra3_BF9B:
 	LDA #$00
-	STA PlayerCarryFlag
+	STA PlayerHoldFlag
 	LDA Player1YoshiStatus
 	BEQ bra3_BFAD
 	LDA #$01
@@ -5374,7 +5375,7 @@ bra3_BFD2:
 	LDA #$04
 	STA Event
 	LDA #$00
-	STA LevelTransitionFlag
+	STA EventPart
 	STA PlayerState
 	STA $06DC
 	STA $06DD

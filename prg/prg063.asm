@@ -1,44 +1,45 @@
 ;disassembled by BZK 6502 Disassembler
+jmp_63_E000:
 	PHP
 	PHA
 	TXA
 	PHA
 	TYA
 	PHA
-	LDA PPUMaskControl
-	STA PPUMask
+	LDA PPUMaskRegister
+	STA PPUMask			;Copy software register to hardware register
 	LDA XScroll
-	STA PPUScroll
+	STA PPUScroll	;Set horizontal scroll in the PPU
 	LDA YScroll
-	STA PPUScroll
-	LDA $00
+	STA PPUScroll	;Set vertical scroll in the PPU
+	LDA PPUControlRegister
 	AND #$FC
-	ORA $5B
-	STA $00
+	ORA VerticalScrollFlag
+	STA PPUControlRegister
 	STA PPUCtrl
 	JSR sub3_F6E0
 	LDA BGBank1
-	STA M90_BG_CHR0
+	STA M90_BG_CHR0	;Update 1st BG bank
 	LDA BGBank2
-	STA M90_BG_CHR1
+	STA M90_BG_CHR1	;Update 2nd BG bank
 	LDA BGBank3
-	STA M90_BG_CHR2
-	LDA BGBank4		;these registers go unused
-	STA M90_BG_CHR3	;
+	STA M90_BG_CHR2	;Update 3rd BG bank
+	LDA BGBank4
+	STA M90_BG_CHR3	;Update 4th BG bank (This goes unused)
 	LDA SpriteBank1
-	STA M90_SP_CHR0
+	STA M90_SP_CHR0	;Update 1st sprite bank
 	LDA SpriteBank2
-	STA M90_SP_CHR1
+	STA M90_SP_CHR1	;Update 2nd sprite bank
 	LDA SpriteBank3
-	STA M90_SP_CHR2
+	STA M90_SP_CHR2	;Update 3rd sprite bank
 	LDA SpriteBank4
-	STA M90_SP_CHR3
+	STA M90_SP_CHR3	;Update 4th sprite bank
 	PLA
-	TAY
+	TAY	;Pull stack into Y register
 	PLA
-	TAX
-	PLA
-	PLP
+	TAX	;Pull stack into X register
+	PLA	;Pull stack into accumulator
+	PLP	;Pull CPU status from stack
 	RTI
 	JMP loc3_EF10
 	JMP loc3_EFE0
@@ -51,7 +52,7 @@
 	LDA ColumnFinishFlag
 	BEQ bra3_E0E8
 	LDA PPUStatus
-	LDA $00
+	LDA PPUControlRegister
 	ORA #$04
 	STA PPUCtrl
 	LDA PPUStatus
@@ -61,7 +62,7 @@
 	STA PPUAddr
 	LDX #$00
 bra3_E088:
-	LDA $0485,X
+	LDA TileRowMem,X
 	STA PPUData
 	INX
 	CPX #$1E
@@ -73,25 +74,25 @@ bra3_E088:
 	LDA NextBGColumn
 	STA PPUAddr
 bra3_E0A4:
-	LDA $0485,X
+	LDA TileRowMem,X
 	STA PPUData
 	INX
 	CPX #$38
 	BCC bra3_E0A4
 	LDA PPUStatus
-	LDA $00
+	LDA PPUControlRegister
 	AND #$FB
 	STA PPUCtrl
-	LDA $04C1
+	LDA PalAssignPtrHi
 	BEQ bra3_E0E1
 	LDX #$00
 bra3_E0C0:
 	LDA PPUStatus
-	LDA $04C1,X
+	LDA PalAssignPtrHi,X
 	STA PPUAddr
-	LDA $04C2,X
+	LDA PalAssignPtrLo,X
 	STA PPUAddr
-	LDA $04C3,X
+	LDA PalAssignData,X
 	STA PPUData
 	INX
 	INX
@@ -99,7 +100,7 @@ bra3_E0C0:
 	CPX #$30
 	BCC bra3_E0C0
 	LDA #$00
-	STA $04C1
+	STA PalAssignPtrHi
 bra3_E0E1:
 	LDA #$00
 	STA ColumnFinishFlag
@@ -117,9 +118,9 @@ bra3_E0F8:
 	STA PPUOAMAddr
 	LDA #$02
 	STA OAMDMA
-	LDA PPUMaskControl
+	LDA PPUMaskRegister
 	STA PPUMask
-	LDA $02
+	LDA ScrollXPos
 	STA PPUScroll
 	LDY $03
 	LDA $0633
@@ -131,7 +132,7 @@ bra3_E0F8:
 	BEQ bra3_E12F
 bra3_E11E:
 	INC $0633
-	LDA $06
+	LDA FrameCount
 	AND #$04
 	BNE bra3_E12F
 	CPY #$EC
@@ -142,10 +143,10 @@ bra3_E11E:
 	INY
 bra3_E12F:
 	STY PPUScroll
-	LDA $00
+	LDA PPUControlRegister
 	AND #$FC
-	ORA $5B
-	STA $00
+	ORA VerticalScrollFlag
+	STA PPUControlRegister
 	STA PPUCtrl
 	JSR sub3_F6E0
 	LDA BGBank1
@@ -174,7 +175,7 @@ bra3_E12F:
 	JSR $862A
 	LDA #$00
 	STA $3C
-	INC $06
+	INC FrameCount
 	PLA
 	TAY
 	PLA
@@ -182,8 +183,9 @@ bra3_E12F:
 	PLA
 	PLP
 	RTI
-	SEI	;
-	CLD	;standard 2a03/6502 init
+Reset:
+	SEI
+	CLD	;Standard 2a03/6502 initialization
 	LDX #$FF
 	TXS
 	LDA #$00
@@ -220,7 +222,7 @@ bra3_E1AA:
 	STA $D002
 	STA $D003
 	LDA #$01
-	STA $D001
+	STA M90_CHR_CTRL2
 	LDA #$0F
 	STA APUStatus
 	LDA #$00
@@ -243,51 +245,51 @@ ClearMemory:
 	STA $00,X
 	STA $0200,X
 	STA $0300,X
-	STA $0400,X
+	STA TileAttributes,X
 	STA $0500,X
 	STA $0600,X
-	STA $0700,X
+	STA $0700,X	;Wipe all pages of memory
 	DEX
-	BNE ClearMemory
-	LDA #$00
-	JSR sub3_FFD0
+	BNE ClearMemory	;Keep looping until 0 is reached
+	LDA #$00	;Clear accumulator
+	JSR MapperProtection	;Check mapper
 	LDA #$3A
-	STA M90_PRG0
+	STA M90_PRG0	;Swap music bank into 1st PRG slot
 	LDA #$3B
-	STA M90_PRG1
-	JSR $85D6
+	STA M90_PRG1	;Swap 2nd music bank into 2nd PRG slot
+	JSR jmp_58_85D6
 	LDA #$20
-	STA MusicRegister
-	JSR $8E24
-	INC $0700
+	STA MusicRegister	;Play title screen music
+	JSR $8E24	;Jump (inbetween opcode?)
+	INC MuteFlag	;Enable audio
 	LDA #$00
 	STA $0607
-	CLI
+	CLI	;Clear interrupt
 	LDA #$80
-	ORA $0312
-	STA $0312
+	ORA PalTransition
+	STA PalTransition	;Disable transition
 	LDA #$03
-	STA PlayerPowerup
+	STA PlayerPowerup	;Set powerup to cape
 	LDA #$4C
 	STA $063A
 	LDX #$04
 	LDA tbl3_EF08,X
 	STA $063B
-	LDA #$00E0
+	LDA #$E0
 	STA $063C
-	LDA #$88
+	LDA #%10001000
 	STA PPUCtrl
-	STA $00
-	LDA #$18
+	STA PPUControlRegister	;Set PPU control
+	LDA #%00011000
 	STA PPUMask
-	STA PPUMaskControl
+	STA PPUMaskRegister	;Set PPU mask
 bra3_E277:
 loc3_E277:
 	INC $00E4
-	LDA $06
-	CMP $07
-	BEQ bra3_E277
-	STA $07
+	LDA FrameCount
+	CMP FrameCount+1
+	BEQ bra3_E277	;Loop if the duplicate frame counter is the same as the main counter
+	STA FrameCount+1	;If they aren't, make them the same
 	LDA #$01
 	STA $062D
 	JSR sub3_E2AB
@@ -300,208 +302,181 @@ loc3_E277:
 bra3_E298:
 	LDA tbl3_EF08,X
 	STA $063B
-	LDA $02
-	STA XScroll
-	LDA $03
-	STA YScroll
-	JMP loc3_E277
+	LDA ScrollXPos
+	STA XScroll	;Copy horizontal scroll
+	LDA ScrollYPos
+	STA YScroll	;Copy vertical scroll
+	JMP loc3_E277	;Jump
 sub3_E2AB:
 	LDA a:GameState
-	BNE bra3_E317
+	BNE bra3_E317	;Branch if in a level
 	LDX #$04
 	LDA tbl3_EF08,X
 	STA $063B
-	JMP loc3_E2BE
-	JMP loc3_E317
+	JMP loc3_E2BE	;Jump
+	JMP loc3_E317	;Jump
 loc3_E2BE:
-	LDX #$29
+	LDX #$29	;Load bank 41
 	STX $09
-	STX $8001
-	JMP $A000
-	RTS 
+	STX M90_PRG1	;Swap bank 41 into 2nd PRG slot
+	JMP jmp_41_A000	;Jmp
+	RTS
 	LDA a:Event
 	ASL
 	TAY 
 	LDA tbl3_E2DB,Y 
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA tbl3_E2DC,Y
-	STA PCPointerUpperByte
-	JMP (PCPointerLowerByte)
-tbl3_E2DB:
-	.byte $E5
-tbl3_E2DC:
-	.byte $E2
-	.byte $16
-	.byte $E3
-	.byte $16
-	.byte $E3
-	.byte $16
-	.byte $E3
-	.byte $16
-	.byte $E3
+	STA PCPointerHiByte
+	JMP (PCPointerLoByte)
+tbl3_E2DB:	.byte $E5
+tbl3_E2DC:	.byte $E2
+			.word pnt2_E316
+			.word pnt2_E316
+			.word pnt2_E316
+			.word pnt2_E316
 	LDA ButtonsPressed
-	AND #$80
-	BEQ bra3_E2FE
-	INC LevelNumber
+	AND #buttonA
+	BEQ bra3_E2FE	;If the A button is pressed,
+	INC LevelNumber	;Increment level number
 	LDA LevelNumber
-	CMP #$04
-	BCC bra3_E2FE
+	CMP #$04	;If level number is below 4,
+	BCC bra3_E2FE	;branch. Continue if its above 4
 	LDA #$00
-	STA LevelNumber
-	INC WorldNumber
+	STA LevelNumber	;Set level number to 1
+	INC WorldNumber	;Add world number by 1
 bra3_E2FE:
 	LDA ButtonsPressed
-	AND #$10
-	BEQ bra3_E315
-	INC a:GameState
+	AND #buttonStart
+	BEQ bra3_E315	;If start is pressed,
+	INC a:GameState	;Set game state to 'in level'
 	LDA #$00
-	STA a:Event
+	STA a:Event	;Clear event triggers
 	LDA #$05
-	STA $0312
-	JSR sub3_F919
+	STA PalTransition
+	JSR sub3_F919	;Jump
 bra3_E315:
 	RTS
+pnt2_E316:
 	RTS
 bra3_E317:
 loc3_E317:
-	LDA a:Event
-	ASL
-	TAY
+	LDA a:Event	;Load event trigger
+	ASL	;Multiply by 2
+	TAY	;Load pointer based on event number
 	LDA tbl3_E329,Y
-	STA PCPointerLowerByte
-	LDA tbl3_E32A,Y
-	STA PCPointerUpperByte
-	JMP (PCPointerLowerByte)
-tbl3_E329:
-	.byte $53
-tbl3_E32A:
-	.byte $E3
-	.byte $72
-	.byte $E3
-	.byte $09
-	.byte $E4
-	.byte $CA
-	.byte $E4
-	.byte $34
-	.byte $E5
-	.byte $10
-	.byte $E6
-	.byte $ED
-	.byte $E6
-	.byte $9E
-	.byte $E7
-	.byte $A2
-	.byte $E7
-	.byte $D0
-	.byte $E7
-	.byte $5F
-	.byte $E8
-	.byte $75
-	.byte $ED
-	.byte $02
-	.byte $EE
-	.byte $23
-	.byte $EE
-	.byte $59
-	.byte $EE
-	.byte $96
-	.byte $EE
-	.byte $C8
-	.byte $EE
-	.byte $96
-	.byte $EE
-	.byte $C8
-	.byte $EE
-	.byte $75
-	.byte $ED
-	.byte $FD
-	.byte $EE
+	STA PCPointerLoByte
+	LDA tbl3_E329+1,Y
+	STA PCPointerHiByte
+	JMP (PCPointerLoByte)
+tbl3_E329:	.word pnt2_E353	;Event 0
+			.word pnt2_E372	;Go out of door
+			.word pnt2_E409	;Normal/Nothing
+			.word pnt2_E4CA	;Door enter
+			.word pnt2_E534	;Death
+			.word pnt2_E610	;Castle intro
+			.word pnt2_E6ED	;Level complete
+			.word pnt2_E79E	;Event 7
+			.word pnt2_E7A2	;Event 8
+			.word pnt2_E7D0	;Event 9
+			.word pnt2_E85F	;JY Easter egg
+			.word pnt2_ED75	;Bonus pipe down
+			.word pnt2_EE02	;Walk out pipe
+			.word pnt2_EE23	;Go out of pipe up
+			.word pnt2_EE59	;Enter 1st cannon pipe
+			.word pnt2_EE96	;Launch out of 1st cannon
+			.word pnt2_EEC8	;Enter 2nd cannon pipe
+			.word pnt2_EE96	;Launch out of 2nd cannon
+			.word pnt2_EEC8	;Enter pipe up
+			.word pnt2_ED75
+			.word pnt2_EEFD
+pnt2_E353:
 	LDA Player2YoshiStatus
-	STA Player1YoshiStatus
+	STA Player1YoshiStatus	;Copy player 2's yoshi to current yoshi
 	LDA #$80
-	ORA $0312
-	STA $0312
+	ORA PalTransition
+	STA PalTransition
 	LDA #$3C
-	STA M90_PRG0
+	STA M90_PRG0	;Swap bank 60 into 1st PRG slot
 	LDA #$3D
-	STA M90_PRG1
-	JSR $B19E
+	STA M90_PRG1	;Swap bank 61 into 2nd PRG slot
+	JSR jmp_61_B19E
 	INC a:Event
 	RTS
-	LDA $00E0
+pnt2_E372:
+	LDA a:EventPart
 	ASL
 	TAY
 	LDA tbl3_E384,Y
-	STA PCPointerLowerByte
-	LDA tbl3_E385,Y
-	STA PCPointerUpperByte
-	JMP (PCPointerLowerByte)
-tbl3_E384:
-	.byte $88
-tbl3_E385:
-	.byte $E3
-	.byte $DD
-	.byte $E3
+	STA PCPointerLoByte	;Load lower byte of pointer
+	LDA tbl3_E384+1,Y
+	STA PCPointerHiByte	;Load upper byte of pointer
+	JMP (PCPointerLoByte)	;Jump to loaded pointer
+tbl3_E384:	.word pnt2_E388
+			.word pnt2_E3DD
+pnt2_E388:
 	LDA #$00
 	STA PPUCtrl
-	STA $00
+	STA PPUControlRegister	;Clear PPU control
 	STA PPUMask
-	STA PPUMaskControl
-	LDX #$00
+	STA PPUMaskRegister	;Clear PPU mask
+	LDX #$00	;Set slot to 0
 	TXA
 bra3_E397:
-	STA ObjectSlot,X
-	INX
+	STA ObjectSlot,X	;Clear object slot
+	INX	;Move to next slot
 	CPX #$14
-	BCC bra3_E397
-	STA YoshiXScreen
-	JSR sub3_E904
+	BCC bra3_E397	;Loop until all 20 have been cleared
+	STA YoshiUnmountedState	;Remove Yoshi
+	JSR sub3_E904	;Jump
 	LDA #$3C
-	STA M90_PRG0
+	STA M90_PRG0	;Swap bank 60 into 1st PRG slot
 	LDA #$3D
-	STA M90_PRG1
-	JSR $B38E
-	LDA $E3DB
-	STA $036E
-	STA $0370
-	LDA $E3DC
-	STA $036F
-	STA $0371
-	LDA #%00011000		;
-	STA PPUMaskControl	;sets ppu mask for levels
-	LDA #$88
+	STA M90_PRG1	;Swap bank 61 into 2nd PRG slot
+	JSR jmp_61_B38E
+	LDA TimerSetting
+	STA LevelTimerLo	;Set lower byte of level timer
+	STA LevelTimerLo+2	;Store backup
+	LDA TimerSetting+1
+	STA LevelTimerHi	;Set upper byte of level timer
+	STA LevelTimerHi+2	;Store backup
+	LDA #%00011000
+	STA PPUMaskRegister	;Set PPU mask
+	LDA #%10001000
 	STA PPUCtrl
-	STA $00
-	LDA #$01
-	STA $D001
-	JSR sub3_F0CB
-	INC $00E0
+	STA PPUControlRegister	;Set PPU control
+	LDA #%01
+	STA M90_CHR_CTRL2	;Set mirroring to horizontal
+	JSR sub3_F0CB	;Jump
+	INC a:EventPart	;Go to next part of event
 	RTS
-	.byte $2C
-	.byte $01
+TimerSetting:	.word $012C	;Timer data for levels (300 in decimal)
+
+pnt2_E3DD:
 	LDA #$00
-	STA $0311
+	STA BGBlackoutFlag
 	JSR sub3_E6E0
 	JSR sub3_F919
 	LDA #$00
 	STA $52
-	STA $00E0
+	STA a:EventPart	;End level transition
 	LDA DataBank2
 	CMP #$23
 	BNE bra3_E405
-	LDA $51
-	BNE bra3_E405
+	LDA CameraXScreen
+	BNE bra3_E405	;If scroll camera is past the 1st screen,
 	LDA LevelNumber
-	BEQ bra3_E405
+	BEQ bra3_E405	;If not in first level of a world,
 	LDA #$05
-	STA a:Event
+	STA a:Event	;Trigger castle/ghost house intro
 	RTS
 bra3_E405:
 	INC a:Event
 	RTS
-	LDA $00E0
-	BEQ bra3_E411
-	JMP loc3_E498
+pnt2_E409:
+	LDA a:EventPart
+	BEQ bra3_E411	;Branch if at 1st event part
+	JMP loc3_E498	;Jump
 bra3_E411:
 	LDX #$02
 	LDA tbl3_EF08,X
@@ -509,205 +484,203 @@ bra3_E411:
 	LDA PauseFlag
 	BNE bra3_E442
 	LDA #$39
-	STA M90_PRG1
+	STA M90_PRG1	;Swap player bank into 2nd PRG slot
 	LDA $06E6
 	BNE bra3_E42B
-	JSR $ACAC
+	JSR jmp_57_ACAC	;Jump
 bra3_E42B:
 	LDA $06EF
 	BEQ bra3_E437
 	LDA #$00
 	STA $06EF
-	STA PlayerXSpeed
+	STA PlayerXSpeed	;Clear player's X speed
 bra3_E437:
 	LDA UnderwaterFlag
-	BEQ bra3_E445
-	LDA $06
+	BEQ bra3_E445	;Branch if not underwater
+	LDA FrameCount
 	AND #$01
 	BEQ bra3_E445
 bra3_E442:
-	JMP loc3_E45F
+	JMP loc3_E45F	;Jump
 bra3_E445:
 	JSR sub3_ED14
 	LDA PSwitchSeconds
-	BEQ bra3_E45F
-	INC PSwitchFrameCount
-	LDA PSwitchFrameCount	;
-	CMP #$3B				;if less than 59 frames pass,
-	BCC bra3_E45F			;branch
-	DEC PSwitchSeconds		;if not, decrement the amount of seconds left
-	LDA #$00				;
-	STA PSwitchFrameCount	;set frame count back to zero
+	BEQ bra3_E45F	;Branch if P-Switch timer is up
+	INC PSwitchFrameCount	;Increment frame count
+	LDA PSwitchFrameCount
+	CMP #$3B
+	BCC bra3_E45F			;After 60 frames pass,
+	DEC PSwitchSeconds		;Decrease timer
+	LDA #$00
+	STA PSwitchFrameCount	;Clear frame count
 bra3_E45F:
 loc3_E45F:
 	LDA $06E6
 	BNE bra3_E47C
 	LDA ButtonsPressed
-	AND #$10
-	BEQ bra3_E47C
+	AND #buttonStart
+	BEQ bra3_E47C	;If start pressed
 	LDA #$00
-	STA JYEasterEggInput
+	STA JYEasterEggInput	;Clear Easter egg input
 	LDA PauseFlag
 	EOR #$01
-	STA PauseFlag
-	LDA #$02
-	STA SFXRegister
+	STA PauseFlag	;Enable/disable pause
+	LDA #sfxPause
+	STA SFXRegister	;Play pause sound
 bra3_E47C:
-	LDA PauseFlag		;load pause status
-	BEQ bra3_E494		;branch
-	JSR sub3_E9DC
-	LDA ButtonsPressed	;
-	AND #$20			;if select pressed
-	BEQ bra3_E494		;exit to map
-	INC $00E0
+	LDA PauseFlag
+	BEQ bra3_E494	;Branch if game not paused
+	JSR sub3_E9DC	;Jump
+	LDA ButtonsPressed
+	AND #buttonSelect
+	BEQ bra3_E494	;If select pressed,
+	INC a:EventPart	;Start level transition
 	LDX CurrentPlayer
-	INC Player1Lives,X
+	INC Player1Lives,X	;Temporarily increment current player's life count
 bra3_E494:
-	JSR sub3_F27F
+	JSR sub3_F27F	;Jump
 	RTS
 loc3_E498:
 	LDA #$00
-	STA $0311
-	JSR sub3_E6D5
-	JSR sub3_F919
-	JSR sub3_E904
+	STA BGBlackoutFlag	;Disable BG 'blackout' effect
+	JSR sub3_E6D5	;Jump
+	JSR sub3_F919	;Jump
+	JSR sub3_E904	;Jump
 	LDA #$00
-	STA PauseFlag
-	STA a:GameState
-	STA $00E0
+	STA PauseFlag	;Unpause the game
+	STA a:GameState	;Set game state to 'in map'
+	STA a:EventPart	;End level transition
 	LDA #$16
 	STA a:Event
-	JSR sub3_E4BA
+	JSR sub3_E4BA	;Jump
 	RTS
 sub3_E4BA:
-	LDX CurrentPlayer
+	LDX CurrentPlayer	;Load current player
 	LDA PlayerPowerup
-	STA $06DA,X
+	STA P1PowerupBackup,X	;Backup player's current powerup
 	LDA Player2YoshiStatus
-	STA $0393,X
+	STA P1YoshiBackup,X	;Backup player's Yoshi
 	RTS
-	LDA $00E0
+pnt2_E4CA:
+	LDA a:EventPart
 	ASL
 	TAY
 	LDA tbl3_E4DC,Y
-	STA PCPointerLowerByte
-	LDA tbl3_E4DD,Y
-	STA PCPointerUpperByte
-	JMP (PCPointerLowerByte)
-tbl3_E4DC:
-	.byte $E4
-tbl3_E4DD:
-	.byte $E4
-	.byte $EC
-	.byte $E4
-	.byte $F7
-	.byte $E4
-	.byte $09
-	.byte $E5
-	LDA #$0A
-	STA SFXRegister
-	INC $00E0
+	STA PCPointerLoByte
+	LDA tbl3_E4DC+1,Y
+	STA PCPointerHiByte
+	JMP (PCPointerLoByte)
+tbl3_E4DC:	.word pnt2_E4E4
+			.word pnt2_E4EC
+			.word pnt2_E4F7
+			.word pnt2_E509
+pnt2_E4E4:
+	LDA #sfxWarp
+	STA SFXRegister	;Play warp sound
+	INC a:EventPart
 	RTS
+pnt2_E4EC:
 	LDX #$00
 	LDY #$3C
-	JSR sub3_E5B6
-	INC $00E0
+	JSR sub3_E5B6	;Jump
+	INC a:EventPart
 	RTS
+pnt2_E4F7:
 	LDA #$00
-	STA $0311
+	STA BGBlackoutFlag	;Disable BG 'blackout' effect
 	JSR sub3_E6D5
 	JSR sub3_F919
 	JSR sub3_E904
-	INC $00E0
+	INC a:EventPart	;Go to next part of event
 	RTS
-	LDY $060B
+pnt2_E509:
+	LDY WarpLevelNumber	;Load pointers based on level number of warp
 	LDA tbl3_EB24,Y
-	STA PCPointerLowerByte
-	LDA tbl3_EB25,Y
-	STA PCPointerUpperByte
+	STA PCPointerLoByte	;Store lower byte of 1st pointer
+	LDA tbl3_EB24+1,Y
+	STA PCPointerHiByte	;Store upper byte of 1st pointer
 	LDA tbl3_EA10,Y
-	STA $34
-	LDA tbl3_EA11,Y
-	STA $35
-	JSR sub3_E870
+	STA PCPointer2LoByte	;Store lower byte of 2nd pointer
+	LDA tbl3_EA10+1,Y
+	STA PCPointer2HiByte	;Store upper byte of 2nd pointer
+	JSR sub3_E870	;Jump
 	LDA #$01
-	STA a:Event
+	STA a:Event	;Trigger door exit
 	LDA #$00
-	STA $00E0
+	STA a:EventPart	;Go to 1st event part
 	STA $06DE
 	STA $06DF
 	RTS
-	LDA $00E0
-	ASL
-	TAY
+pnt2_E534:
+	LDA a:EventPart	;Load part of event
+	ASL	;Multiply by 2
+	TAY	;Load pointer based on event part
 	LDA tbl3_E546,Y
-	STA PCPointerLowerByte
-	LDA tbl3_E547,Y
-	STA PCPointerUpperByte
-	JMP (PCPointerLowerByte)
-tbl3_E546:
-	.byte $4E
-tbl3_E547:
-	.byte $E5
-	.byte $70
-	.byte $E5
-	.byte $85
-	.byte $E5
-	.byte $97
-	.byte $E5
+	STA PCPointerLoByte	;Load lower byte of pointer
+	LDA tbl3_E546+1,Y
+	STA PCPointerHiByte	;Load upper byte of pointer
+	JMP (PCPointerLoByte)	;Jump to loaded pointer
+tbl3_E546:	.word pnt2_E54E
+			.word pnt2_E570
+			.word pnt2_E585
+			.word pnt2_E597
+pnt2_E54E:
 	LDA #$11
 	STA PlayerAction
 	LDA #$00
-	STA $06E0
-	STA PlayerXSpeed
-	STA PlayerYSpeed
-	JSR sub3_E5D4
-	LDA #$22
-	STA MusicRegister
+	STA PlayerAttributes
+	STA PlayerXSpeed	;Clear player's X speed
+	STA PlayerYSpeed	;Clear player's Y speed
+	JSR sub3_E5D4	;Jump
+	LDA #musDeath
+	STA MusicRegister	;Play death music
 	LDX #$00
 	LDY #$28
-	JSR sub3_E5B6
-	JSR sub3_F27F
-	INC $00E0
+	JSR sub3_E5B6	;Jump
+	JSR sub3_F27F	;Jump
+	INC a:EventPart	;Start level transition
 	RTS
+pnt2_E570:
 	LDA #$00
-	STA PlayerXSpeed
+	STA PlayerXSpeed	;Clear X speed
 	LDA #$70
-	STA PlayerYSpeed
+	STA PlayerYSpeed	;Set Y speed to 70h
 	LDA PlayerMovement
 	ORA #$04
 	STA PlayerMovement
 	JSR sub3_E5D4
-	INC $00E0
+	INC a:EventPart
 	RTS
+pnt2_E585:
 	LDA #$00
-	STA PlayerXSpeed
-	JSR sub3_E5D4
+	STA PlayerXSpeed	;Clear X speed
+	JSR sub3_E5D4	;Jump
 	LDX #$04
 	LDY #$3B
-	JSR sub3_E5B6
-	INC $00E0
+	JSR sub3_E5B6	;Jump
+	INC a:EventPart	;Start level transition
 	RTS
+pnt2_E597:
 	LDA #$00
-	STA $0311
+	STA BGBlackoutFlag
 	JSR sub3_E6D5
 	JSR sub3_F919
 	JSR sub3_E904
 	LDA #$00
 	STA a:GameState
-	STA $00E0
+	STA a:EventPart
 	LDA #$16
 	STA a:Event
 	JSR sub3_E4BA
 	RTS
 sub3_E5B6:
-	INC $0611
-	CPY $0611
-	BCS bra3_E5CB
+	INC PlayerFrameCount	;Increment frame count for player action
+	CPY PlayerFrameCount
+	BCS bra3_E5CB	;Branch when loaded action length is reached
 	LDA #$00
-	STA $0611
-	INC $0612
-	CPX $0612
+	STA PlayerFrameCount
+	INC PlayerActionTimer
+	CPX PlayerActionTimer
 	BCC bra3_E5CE
 bra3_E5CB:
 	PLA
@@ -715,288 +688,287 @@ bra3_E5CB:
 	RTS
 bra3_E5CE:
 	LDA #$00
-	STA $0612
+	STA PlayerActionTimer
 	RTS
 sub3_E5D4:
-	LDA #57			;
-	STA M90_PRG1	;loads bank 57 into 2nd prg bank
+	LDA #$39
+	STA M90_PRG1	;Swap player bank into 2nd PRG slot
 	JSR jmp_57_ACA5
 	JSR jmp_57_A000
-	LDA #54			;
-	STA M90_PRG1	;loads bank 54 into 2nd prg bank
+	LDA #$36
+	STA M90_PRG1	;Swap bank 54 into 2nd PRG slot
 	JSR jmp_54_A150
 	JSR jmp_54_A0D9
 	JSR jmp_54_A000
-	LDA #61			;
-	STA M90_PRG1	;loads bank 61 into 2nd prg bank
+	LDA #$3D
+	STA M90_PRG1	;Swap bank 61 into 2nd PRG slot
 	JSR jmp_61_AE8F
 	LDA #$00
 	STA $062B
-	LDA #52		;
-	STA M90_PRG1	;loads bank 52 into 2nd prg bank
+	LDA #$34
+	STA M90_PRG1	;Swap bank 52 into 2nd PRG slot
 	LDA #$80
 	STA $3C
-	JSR jmp_52_A080
-	JSR jmp_52_A089
-	JSR jmp_52_A000
-	JSR sub3_E9C4
+	JSR jmp_52_A080	;Jump
+	JSR jmp_52_A089	;Jump
+	JSR jmp_52_A000	;Jump
+	JSR sub3_E9C4	;Jump
 	RTS
-	JSR sub3_ED14
-	JSR sub3_F27F
+pnt2_E610:
+	JSR sub3_ED14	;Jump
+	JSR sub3_F27F	;Jump
 	LDA ButtonsPressed
 	AND #$C0
-	BEQ bra3_E62F
+	BEQ bra3_E62F	;If A or B are pressed,
 	LDA #$00
-	STA Player1YoshiStatus
+	STA Player1YoshiStatus	;Remove Yoshi
 	LDA #$39
-	STA M90_PRG1
-	JSR $A14A
+	STA M90_PRG1	;Swap player bank into 2nd PRG slot
+	JSR sub4_A14A	;Jump
 	LDA #$03
-	STA $00E0
+	STA a:EventPart	;Skip to 3rd part of event
 bra3_E62F:
-	LDA $00E0
-	ASL
-	TAY
+	LDA a:EventPart	;Load event part
+	ASL	;Multiply by 2
+	TAY	;Load pointer based on event part
 	LDA tbl3_E641,Y
-	STA PCPointerLowerByte
-	LDA tbl3_E642,Y
-	STA PCPointerUpperByte
-	JMP (PCPointerLowerByte)	;jumps to currently loaded PC pointer
-tbl3_E641:
-	.byte $49
-tbl3_E642:
-	.byte $E6
-	.byte $8B
-	.byte $E6
-	.byte $9E
-	.byte $E6
-	.byte $B0
-	.byte $E6
+	STA PCPointerLoByte	;Load lower byte of pointer
+	LDA tbl3_E641+1,Y
+	STA PCPointerHiByte	;Load upper byte of pointer
+	JMP (PCPointerLoByte)	;Jump to loaded pointer
+tbl3_E641:	.word pnt2_E649
+			.word pnt2_E68B
+			.word pnt2_E69E
+			.word pnt2_E6B0
+pnt2_E649:
 	LDA PlayerYSpeed
-	BNE bra3_E68A
+	BNE bra3_E68A	;Branch if moving vertically
 	LDA #$01
-	STA PlayerAction
+	STA PlayerAction	;Set action to walking
 	LDA #$10
-	STA PlayerXSpeed
+	STA PlayerXSpeed	;Set walking speed to 10h
 	LDA PlayerMovement
 	AND #$BE
-	STA PlayerMovement
+	STA PlayerMovement	;Make player face right
 	LDA PlayerSprXPos
-	CMP #$80
-	BCC bra3_E68A
+	CMP #$80	;If player hasn't reached this point,
+	BCC bra3_E68A	;stop
 	LDA Player1YoshiStatus
-	BEQ bra3_E681
-	JSR sub3_E965
+	BEQ bra3_E681	;Branch if player doesn't have Yoshi
+	JSR sub3_E965	;Jump
 	LDA #$01
-	STA Player2YoshiStatus
+	STA Player2YoshiStatus	;Set Yoshi for Player 2
 	LDA #$50
-	STA PlayerYSpeed
+	STA PlayerYSpeed	;Set Y speed to 50h
 	LDA PlayerMovement
 	ORA #$04
-	STA PlayerMovement
+	STA PlayerMovement	;Set movement to 'moving up'
 	LDA #$05
-	STA PlayerAction
+	STA PlayerAction	;Do spin jump
 	LDA #sfxSpinJump
-	STA SFXRegister
+	STA SFXRegister	;Play spin jump sound
 	RTS
 bra3_E681:
 	LDA PlayerSprXPos
-	CMP #$B0
-	BCC bra3_E68A
-	INC $00E0
+	CMP #$B0	;If player hasn't reached this point,
+	BCC bra3_E68A	;stop
+	INC a:EventPart	;Set level transition
 bra3_E68A:
 	RTS
+pnt2_E68B:
 	LDA #$08
-	STA PlayerAction
+	STA PlayerAction	;Make player look up
 	LDA #$00
-	STA PlayerXSpeed
+	STA PlayerXSpeed	;Clear player's X speed
 	LDX #$01
 	LDY #$3B
-	JSR sub3_E5B6
-	INC $00E0
+	JSR sub3_E5B6	;Jump
+	INC a:EventPart	;Increment level transition state
 	RTS
+pnt2_E69E:
 	LDA #$01
-	STA PlayerAction
+	STA PlayerAction	;Set action to walking
 	LDA #$10
-	STA PlayerXSpeed
+	STA PlayerXSpeed	;Set walking speed to 10h
 	LDA PlayerSprXPos
-	CMP #$C8
-	BCC bra3_E6AF
-	INC $00E0
+	CMP #$C8	;If player hasn't reached this point,
+	BCC bra3_E6AF	;stop
+	INC a:EventPart	;Increment transition state
 bra3_E6AF:
 	RTS
-	LDA WorldNumber
+pnt2_E6B0:
+	LDA WorldNumber	;Load world number
 	ASL
-	ASL
+	ASL	;Multiply it by 4
 	CLC
-	ADC LevelNumber
-	ASL
-	STA $060B
+	ADC LevelNumber	;Add it to level number to get total level number
+	ASL	;Multiply result by 2
+	STA WarpLevelNumber	;Store as warp level number
 	LDA #$00
-	STA $060C
+	STA WarpNumber	;Set level warp to 0
 	LDA #$03
-	STA a:Event
+	STA a:Event	;Enter door
 	LDA #$00
-	STA $00E0
-	STA $0611
-	STA $0612
-	STA PlayerAction
+	STA a:EventPart	;Set event part
+	STA PlayerFrameCount	;Disable action frame counter
+	STA PlayerActionTimer	;Disable action timer
+	STA PlayerAction	;Clear player action
 	RTS
 sub3_E6D5:
-	LDA $0312
+	LDA PalTransition
 	AND #$80
-	BEQ bra3_E6EC
-	LDA #$05
+	BEQ bra3_E6EC	;If palette transition not set,
+	LDA #$05	;Set palette transition
 	BNE bra3_E6E9
 sub3_E6E0:
-	LDA $0312
-	AND #$80
-	BEQ bra3_E6EC
+	LDA PalTransition
+	AND #$80	;If palette transition not set,
+	BEQ bra3_E6EC	;
 	LDA #$00
 bra3_E6E9:
-	STA $0312
+	STA PalTransition
 bra3_E6EC:
 	RTS
-	LDA #57
-	STA M90_PRG1
-	JSR jmp_57_A000
-	LDA #54
-	STA M90_PRG1
-	JSR jmp_54_A000
-	LDA #52
-	STA M90_PRG1
-	LDA #61
-	STA M90_PRG1
-	JSR jmp_61_AE8F
+pnt2_E6ED:
+	LDA #$39
+	STA M90_PRG1	;Swap player bank into 2nd PRG slot
+	JSR jmp_57_A000	;Jump
+	LDA #$36
+	STA M90_PRG1	;Swap bank 54 into 2nd PRG slot
+	JSR jmp_54_A000	;Jump
+	LDA #$34
+	STA M90_PRG1	;Swap bank 52 into 2nd PRG slot
+	LDA #$3D
+	STA M90_PRG1	;Swap bank 61 into 2nd PRG slot
+	JSR jmp_61_AE8F	;Jump
 	JSR sub3_E9C4
-	LDA $00E0
+	LDA a:EventPart	;Load event part
 	ASL
-	TAY
+	TAY	;Load pointer based on event part
 	LDA tbl3_E71F,Y
-	STA PCPointerLowerByte
-	LDA tbl3_E720,Y
-	STA PCPointerUpperByte
-	JMP (PCPointerLowerByte)
-tbl3_E71F:
-	.byte $27
-tbl3_E720:
-	.byte $E7
-	.byte $48
-	.byte $E7
-	.byte $69
-	.byte $E7
-	.byte $74
-	.byte $E7
+	STA PCPointerLoByte	;Load lower byte of pointer
+	LDA tbl3_E71F+1,Y
+	STA PCPointerHiByte	;Load upper byte of pointer
+	JMP (PCPointerLoByte)	;Jump to loaded pointer
+tbl3_E71F:	.word pnt2_E727
+			.word pnt2_E748
+			.word pnt2_E769
+			.word pnt2_E774
+pnt2_E727:
 	LDA PlayerYSpeed
-	BNE bra3_E747
+	BNE bra3_E747	;If player not moving vertically,
 	LDA #$01
-	STA $0311
-	JSR sub3_E6D5
-	JSR sub3_F919
+	STA BGBlackoutFlag	;Start BG 'blackout' effect
+	JSR sub3_E6D5	;Jump
+	JSR sub3_F919	;Jump
 	LDA #$01
-	STA PlayerAction
+	STA PlayerAction	;Set action to walking
 	LDA #$20
-	STA PlayerXSpeed
+	STA PlayerXSpeed	;Set walking speed to 20h
 	LDA PlayerMovement
 	AND #$BE
-	STA PlayerMovement
-	INC $00E0
+	STA PlayerMovement	;Make player face right
+	INC a:EventPart	;Go to next part of event
 bra3_E747:
 	RTS
+pnt2_E748:
 	LDA #$10
-	STA PlayerXSpeed
+	STA PlayerXSpeed	;Set walking speed to 10h
 	LDA PlayerSprXPos
 	CMP #$98
-	BCC bra3_E768
+	BCC bra3_E768	;If player's sprite reaches this point,
 	LDA #$10
-	STA PlayerAction
+	STA PlayerAction	;Do victory pose
 	LDA #$00
-	STA PlayerXSpeed
+	STA PlayerXSpeed	;Stop moving horizontally
 	LDA #$01
-	STA $0311
-	JSR sub3_E6E0
-	JSR sub3_F919
-	INC $00E0
+	STA BGBlackoutFlag	;Start BG 'blackout' effect
+	JSR sub3_E6E0	;Jump
+	JSR sub3_F919	;Jump
+	INC a:EventPart	;Go to next part of event
 bra3_E768:
 	RTS
+pnt2_E769:
 	LDX #$02
 	LDY #$3B
 	JSR sub3_E5B6
-	INC $00E0
+	INC a:EventPart	;Go to next part of event
 	RTS
+pnt2_E774:
 	LDA #$01
-	STA UnlockNextLevel
-	STA PlayerAction
+	STA UnlockNextLevel	;Unlock next level
+	STA PlayerAction	;Set action to walking
 	LDA #$20
-	STA PlayerXSpeed
+	STA PlayerXSpeed	;Set walking speed to 20h
 	LDA #$00
-	STA $0311
-	JSR sub3_E6D5
-	JSR sub3_F919
-	JSR sub3_E904
+	STA BGBlackoutFlag	;Stop BG 'blackout' effect
+	JSR sub3_E6D5	;Jump
+	JSR sub3_F919	;Jump
+	JSR sub3_E904	;Jump
 	LDA #$00
-	STA a:GameState
-	STA $00E0
+	STA a:GameState	;Set game state to be outside a level
+	STA a:EventPart	;Clear event part
 	LDA #$16
-	STA a:Event
-	JSR sub3_E4BA
+	STA a:Event	;Set event number to 16h
+	JSR sub3_E4BA	;Jump
 	RTS
-	INC a:Event
+pnt2_E79E:
+	INC a:Event	;Increment event number (go right to next event)
 	RTS
-	LDA #57			;
-	STA M90_PRG1	;loads bank 57 into 2nd prg bank
-	JSR $ACA5
-	JSR $AD04
-	JSR $A000
-	LDA #54			;
-	STA M90_PRG1	;loads bank 54 into 2nd prg bank
+pnt2_E7A2:
+	LDA #$39
+	STA M90_PRG1	;Swap player bank into 2nd PRG slot
+	JSR jmp_57_ACA5	;Jump
+	JSR jmp_57_AD04	;Jump
+	JSR jmp_41_A000	;Jump
+	LDA #$36
+	STA M90_PRG1	;Swap bank 54 into 2nd PRG slot
 	LDA #$00
 	STA $062B
-	LDA #52			;
-	STA M90_PRG1	;loads bank 52 into 2nd prg bank
-	LDA #$80
-	STA $3C
-	JSR $A080
-	JSR $A089
-	JSR $A000
-	JSR sub3_E9C4
-	RTS
-	LDA #57
-	STA M90_PRG1
-	JSR $A000
-	LDA #54
-	STA M90_PRG1
-	JSR $A150
-	JSR $A07E
-	JSR $A000
-	LDA #61
-	STA M90_PRG1
-	JSR $AE8F
 	LDA #$34
-	STA M90_PRG1
+	STA M90_PRG1	;Swap bank 52 into 2nd PRG slot
 	LDA #$80
 	STA $3C
-	JSR $A089
-	JSR sub3_E9C4
-	LDA $00E0
+	JSR jmp_52_A080	;Jump
+	JSR jmp_52_A089	;Jump
+	JSR jmp_52_A000	;Jump
+	JSR sub3_E9C4	;Jump
+	RTS
+pnt2_E7D0:
+	LDA #$39
+	STA M90_PRG1	;Swap player bank into 2nd PRG slot
+	JSR jmp_41_A000	;Jump
+	LDA #$36
+	STA M90_PRG1	;Swap bank 54 into 2nd PRG slot
+	JSR jmp_54_A150	;Jump
+	JSR jmp_54_A07E	;Jump
+	JSR jmp_54_A000	;Jump
+	LDA #$3D
+	STA M90_PRG1	;Swap bank 61 into 2nd PRG slot
+	JSR jmp_61_AE8F	;Jump
+	LDA #$34
+	STA M90_PRG1	;Swap bank 52 into 2nd PRG slot
+	LDA #$80
+	STA $3C
+	JSR jmp_52_A089	;Jump
+	JSR sub3_E9C4	;Jump
+	LDA a:EventPart
 	ASL
-	TAY
+	TAY	;Load pointer based on event part
 	LDA tbl3_E80F,Y
-	STA PCPointerLowerByte
-	LDA tbl3_E810,Y
-	STA PCPointerUpperByte
-	JMP (PCPointerLowerByte)
-tbl3_E80F:
-	.byte $13
-tbl3_E810:
-	.byte $E8
-	.byte $1E
-	.byte $E8
+	STA PCPointerLoByte	;Load lower byte of pointer
+	LDA tbl3_E80F+1,Y
+	STA PCPointerHiByte	;Load upper byte of pointer
+	JMP (PCPointerLoByte)	;Jump to loaded pointer
+tbl3_E80F:	.word pnt2_E813
+			.word pnt2_E81E
+pnt2_E813:
 	LDX #$06
 	LDY #$3B
 	JSR sub3_E5B6
-	INC $00E0
+	INC a:EventPart
 	RTS
+pnt2_E81E:
 	LDY #$03
 	LDA #$01
 	BEQ bra3_E826
@@ -1016,30 +988,31 @@ bra3_E83D:
 	STY UnlockNextLevel
 bra3_E840:
 	LDA #$00
-	STA $0311
+	STA BGBlackoutFlag	;Disable BG 'blackout' effect
 	JSR sub3_E6D5
 	JSR sub3_F919
 	JSR sub3_E904
 	LDA #$00
-	STA a:GameState
-	STA $00E0
+	STA a:GameState	;Set game state to 'not in level'
+	STA a:EventPart	;Set event part
 	LDA #$16
 	STA a:Event
 	JSR sub3_E4BA
 	RTS
-	LDA $00E0
-	BNE bra3_E86F
+pnt2_E85F:
+	LDA a:EventPart
+	BNE bra3_E86F	;Branch if not on 1st event part
 	LDA #$3D
-	STA M90_PRG1
-	JSR $BE85
-	INC $00E0
+	STA M90_PRG1	;Swap level handling bank into 2nd PRG slot
+	JSR jmp_61_BE85	;Jump
+	INC a:EventPart	;Go to next event part
 bra3_E86F:
 	RTS
 sub3_E870:
-	LDY $060C
+	LDY WarpNumber
 	LDX #$01
-	STX InterruptMode
-	LDA (PCPointerLowerByte),Y
+	STX InterruptMode	;Set horizontal interrupt for levels
+	LDA (PCPointerLoByte),Y
 	AND #$7F
 	STA $51
 	STA PlayerWallColPos
@@ -1047,108 +1020,108 @@ sub3_E870:
 	STA $52
 	STA $65
 	INY
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	STA $53
 	ASL
-	STA $5B
+	STA VerticalScrollFlag
 	LDA #$00
 	STA $66
 	STA $54
 	STA $67
-	LDA $51
+	LDA CameraXScreen
 	STA PlayerXScreen
 	INY
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	STA PlayerXPos
 	STA PlayerSprXPos
 	LDA $53
 	STA PlayerYScreen
 	INY
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	STA PlayerYPos
 	STA PlayerSprYPos
 	INY
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	STA $060F
 	INY
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	STA ScreenCount
 	INY
-	LDA (PCPointerLowerByte),Y
-	STA $060D
+	LDA (PCPointerLoByte),Y
+	STA VertScrollLock
 	INY
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	STA $060E
-	LDA $060C
-	LSR
-	TAY
-	LDA ($34),Y
-	AND #$20
-	STA $06E0
+	LDA WarpNumber	;Load warp number
+	LSR	;Divide it by 2
+	TAY	;Load pointer based on the result
+	LDA (PCPointer2LoByte),Y		;Load byte from 2nd pointer location
+	AND #%00100000
+	STA PlayerAttributes	;Mask out and store BG priority bit
 	STA $06E1
-	LDA ($34),Y
-	AND #$C0
-	STA UnderwaterFlag
-	LDA ($34),Y
-	AND #$DF
-	STA DataBank1
+	LDA (PCPointer2LoByte),Y
+	AND #%11000000
+	STA UnderwaterFlag	;Mask out and store underwater flag
+	LDA (PCPointer2LoByte),Y
+	AND #%11011111	;Clear BG priority bit
+	STA DataBank1	;Store as level bank/number
 	INY
-	LDA ($34),Y
-	CMP #$32
-	BNE bra3_E8ED
-	LDA #$04
+	LDA (PCPointer2LoByte),Y	;Load next byte from 2nd pointer location
+	CMP #$32	;If next level byte isn't for the final boss level,
+	BNE bra3_E8ED	;branch
+	LDA #$04	;Otherwise, set interrupt for final boss fight
 	STA InterruptMode
 bra3_E8ED:
 	LDA #$3D
 	STA M90_PRG1
-	LDA ($34),Y
+	LDA (PCPointer2LoByte),Y
 	JSR $B34A
 	INY
-	LDA ($34),Y
+	LDA (PCPointer2LoByte),Y
 	STA DataBank2
 	INY
-	LDA ($34),Y
+	LDA (PCPointer2LoByte),Y
 	STA $0310
 	RTS
 sub3_E904:
-	JSR sub3_F176
-	JSR sub3_E959
+	JSR sub3_F176	;Jump
+	JSR sub3_E959	;Jump
 	LDA #$01
-	STA $0621
+	STA YoshiIdleStorage
 	STA YoshiTongueState
 	LDA #$90
-	STA SpriteBank2
+	STA SpriteBank2	;Load bank 90h into 2nd sprite bank
 	LDA #$00
 	STA PlayerXSpeed
 	STA PlayerYSpeed
 	STA PlayerMovement
 	STA $1A
 	STA PlayerAction
-	STA $00E1
-	STA $0611
-	STA $0612
+	STA a:PlayerState
+	STA PlayerFrameCount
+	STA PlayerActionTimer
 	STA $0613
 	STA $0614
 	STA $0629
 	STA $0627
-	STA PlayerCarryFlag
-	STA InvincibilityTimer
+	STA PlayerHoldFlag
+	STA InvincibilityTimer	;Clear ALL player variables
 	LDA #$39
-	STA M90_PRG1
-	JSR $A14A
-	JSR $A000
-	JSR sub3_E9C4
+	STA M90_PRG1	;Swap player bank into 2nd PRG slot
+	JSR sub4_A14A	;Jump
+	JSR jmp_57_A000	;Jump
+	JSR sub3_E9C4	;Jump
 	LDX #$70
 	LDA #$00
 bra3_E950:
-	STA $0400,X
+	STA TileAttributes,X	;Clear tile attribute
 	INX
-	CPX #$80
+	CPX #$80	;Keep going until all attributes are cleared
 	BCC bra3_E950
 	RTS
 sub3_E959:
 	LDA #$00
-	TAX
+	TAX	;Clear X register
 bra3_E95C:
 	STA $03CE,X
 	INX
@@ -1157,154 +1130,115 @@ bra3_E95C:
 	RTS
 sub3_E965:
 	LDA Player1YoshiStatus
-	BEQ bra3_E9C3
+	BEQ bra3_E9C3	;If player has Yoshi,
 	LDA PlayerMovement
-	STA $0622
+	STA YoshiIdleMovement	;Set Yoshi's idle movement
 	LDA #$00
-	STA Player1YoshiStatus
+	STA Player1YoshiStatus	;Stop riding Yoshi
 	LDA #$39
-	STA M90_PRG1
-	JSR $A14A
+	STA M90_PRG1	;Swap player bank into 2nd PRG slot
+	JSR sub4_A14A	;Jump
 	LDA #$02
-	STA YoshiXScreen
-	LDA $11
+	STA YoshiUnmountedState	;Set Yoshi to be ducking down
+	LDA PlayerYPosDup
 	SEC
-	SBC #$20
-	STA $05F4
+	SBC #$20		;Subtract player's Y position by 20h
+	STA YoshiYPos	;Set as Yoshi's Y position
 	LDA PlayerYScreenDup
 	SBC #$00
-	STA $05F5
+	STA YoshiYScreen	;Set Yoshi's Y screen
 	LDA PlayerMovement
 	ORA #$01
-	STA PlayerMovement
-	LDY #$08
-	LDA $0622
+	STA PlayerMovement	;Set movement to dismounting Yoshi (right)
+	LDY #$08	;Set Yoshi X displacement for facing right
+	LDA YoshiIdleMovement
 	AND #$40
-	BEQ bra3_E9A7
-	.byte $A5
-	.byte $19
-	.byte $29
-	.byte $FE
-	.byte $85
-	.byte $19
-	.byte $A0
-	.byte $18
+	BEQ bra3_E9A7	;Branch if Yoshi is facing right
+	LDA PlayerMovement
+	AND #$FE
+	STA PlayerMovement	;Set movement to dismounting Yoshi (left)
+	LDY #$18	;Load Yoshi X displacement for facing left
 bra3_E9A7:
-	STY $32
+	STY $32	;Store loaded X displacement temporarily 
 	SEC
 	LDA PlayerXPosDup
-	SBC $32
-	STA YoshiXPos
+	SBC $32	;Subtract player's X position by loaded displacement
+	STA YoshiXPos	;Store result as Yoshi's X position
 	LDA PlayerXScreenDup
-	SBC #$00
-	STA $05F3
+	SBC #$00	;Subtract player's X screen by nothing
+	STA YoshiXScreen	;Store result as Yoshi's X screen
 	LDA #$00
 	STA $05F6
 	LDA #$30
-	STA PlayerXSpeed
-	INC ObjectCount
+	STA PlayerXSpeed	;Set player's X speed to 30h
+	INC ObjectCount	;Add Yoshi to total object count
 bra3_E9C3:
 	RTS
 sub3_E9C4:
 	LDA #$14
 	STA $3C
 	LDA #$39
-	STA M90_PRG1
-	JSR $A23B
-	JSR $A8DE
+	STA M90_PRG1	;Swap player bank into 2nd PRG slot
+	JSR jmp_57_A23B
+	JSR jmp_57_A8DE
 	LDA #$34
-	STA M90_PRG1
-	JSR $A0F3
+	STA M90_PRG1	;Swap bank 52 into 2nd PRG slot
+	JSR jmp_52_A0F3
 	RTS
 sub3_E9DC:
 	LDA ButtonsPressed
-	CMP #$10
-	BEQ bra3_EA01
+	CMP #buttonStart	;If start is pressed,
+	BEQ bra3_EA01	;stop
 	LDA ButtonsPressed
-	BEQ bra3_EA01
-	LDX JYEasterEggInput
+	BEQ bra3_EA01	;If any button is being pressed,
+	LDX JYEasterEggInput	;Load correct input count
 	BMI bra3_EA01
-	CMP tbl3_EA08,X
-	BNE bra3_EA02
-	INC JYEasterEggInput
+	CMP JYScreenInputs,X	;If the next input isn't correct,
+	BNE bra3_EA02	;clear the input counter
+	INC JYEasterEggInput	;If it is, go to next input
 	LDA JYEasterEggInput
 	CMP #$08
-	BCC bra3_EA01
+	BCC bra3_EA01 ;If all 8 inputs have been entered correctly,
 	LDA #$0A
-	STA a:Event
+	STA a:Event	;Display JY Easter egg screen
 bra3_EA01:
 	RTS
 bra3_EA02:
 	LDA #$00
-	STA JYEasterEggInput
+	STA JYEasterEggInput	;Clear correct input count
 	RTS
-tbl3_EA08:
-	.byte $08	;JY logo inputs
-	.byte $01	;
-	.byte $80	;
-	.byte $04	;
-	.byte $01	;
-	.byte $40	;
-	.byte $08	;
-	.byte $02	;
+JYScreenInputs:
+	.byte dirUp, dirRight, buttonA, dirDown, dirRight, buttonB, dirUp, dirLeft
 tbl3_EA10:
-	.byte $48
-tbl3_EA11:
-	.byte $EA
-	.byte $48
-	.byte $EA
-	.byte $48
-	.byte $EA
-	.byte $48
-	.byte $EA
-	.byte $48
-	.byte $EA
-	.byte $48
-	.byte $EA
-	.byte $54
-	.byte $EA
-	.byte $70
-	.byte $EA
-	.byte $48
-	.byte $EA
-	.byte $48
-	.byte $EA
-	.byte $80
-	.byte $EA
-	.byte $9C
-	.byte $EA
-	.byte $48
-	.byte $EA
-	.byte $48
-	.byte $EA
-	.byte $48
-	.byte $EA
-	.byte $A8
-	.byte $EA
-	.byte $48
-	.byte $EA
-	.byte $B4
-	.byte $EA
-	.byte $48
-	.byte $EA
-	.byte $D0
-	.byte $EA
-	.byte $48
-	.byte $EA
-	.byte $DC
-	.byte $EA
-	.byte $48
-	.byte $EA
-	.byte $E8
-	.byte $EA
-	.byte $48
-	.byte $EA
-	.byte $48
-	.byte $EA
-	.byte $F4
-	.byte $EA
-	.byte $10
-	.byte $EB
+	.word pnt2_EA48
+	.word pnt2_EA48
+	.word pnt2_EA48
+	.word pnt2_EA48
+	.word pnt2_EA48
+	.word pnt2_EA48
+	.word pnt2_EA54
+	.word pnt2_EA70
+	.word pnt2_EA48
+	.word pnt2_EA48
+	.word pnt2_EA80
+	.word pnt2_EA9C
+	.word pnt2_EA48
+	.word pnt2_EA48
+	.word pnt2_EA48
+	.word pnt2_EAA8
+	.word pnt2_EA48
+	.word pnt2_EAB4
+	.word pnt2_EA48
+	.word pnt2_EAD0
+	.word pnt2_EA48
+	.word pnt2_EADC
+	.word pnt2_EA48
+	.word pnt2_EAE8
+	.word pnt2_EA48
+	.word pnt2_EA48
+	.word pnt2_EAF4
+	.word pnt2_EB10
+pnt2_EA48:
 	.byte $03
 	.byte $03
 	.byte $1C
@@ -1317,6 +1251,7 @@ tbl3_EA11:
 	.byte $0F
 	.byte $1F
 	.byte $20
+pnt2_EA54:
 	.byte $06
 	.byte $06
 	.byte $1D
@@ -1345,6 +1280,7 @@ tbl3_EA11:
 	.byte $06
 	.byte $1D
 	.byte $06
+pnt2_EA70:
 	.byte $07
 	.byte $07
 	.byte $1D
@@ -1361,6 +1297,7 @@ tbl3_EA11:
 	.byte $07
 	.byte $1D
 	.byte $1E
+pnt2_EA80:
 	.byte $0A
 	.byte $0A
 	.byte $1E
@@ -1389,6 +1326,7 @@ tbl3_EA11:
 	.byte $27
 	.byte $23
 	.byte $1C
+pnt2_EA9C:
 	.byte $0B
 	.byte $0B
 	.byte $1E
@@ -1401,6 +1339,7 @@ tbl3_EA11:
 	.byte $0B
 	.byte $1E
 	.byte $1F
+pnt2_EAA8:
 	.byte $0F
 	.byte $0F
 	.byte $1F
@@ -1413,6 +1352,7 @@ tbl3_EA11:
 	.byte $0F
 	.byte $1F
 	.byte $20
+pnt2_EAB4:
 	.byte $11
 	.byte $11
 	.byte $20
@@ -1441,6 +1381,7 @@ tbl3_EA11:
 	.byte $11
 	.byte $20
 	.byte $11
+pnt2_EAD0:
 	.byte $13
 	.byte $13
 	.byte $20
@@ -1453,6 +1394,7 @@ tbl3_EA11:
 	.byte $07
 	.byte $1D
 	.byte $23
+pnt2_EADC:
 	.byte $15
 	.byte $16
 	.byte $21
@@ -1465,18 +1407,20 @@ tbl3_EA11:
 	.byte $27
 	.byte $23
 	.byte $1C
-	.byte PlayerAnimationFrame
-	.byte PlayerAnimationFrame
+pnt2_EAE8:
+	.byte $17
+	.byte $17
 	.byte $21
-	.byte PlayerAnimationFrame
-	.byte PlayerAnimationFrame
-	.byte PlayerAnimationFrame
+	.byte $17
+	.byte $17
+	.byte $17
 	.byte $21
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $0B
 	.byte $0B
 	.byte $1E
 	.byte $1F
+pnt2_EAF4:
 	.byte $1A
 	.byte $1A
 	.byte $22
@@ -1505,6 +1449,7 @@ tbl3_EA11:
 	.byte $1A
 	.byte $22
 	.byte $1A
+pnt2_EB10:
 	.byte $1B
 	.byte $1B
 	.byte $22
@@ -1526,63 +1471,35 @@ tbl3_EA11:
 	.byte $26
 	.byte $24
 tbl3_EB24:
-	.byte $5C
-tbl3_EB25:
-	.byte $EB
-	.byte $5C
-	.byte $EB
-	.byte $5C
-	.byte $EB
-	.byte $5C
-	.byte $EB
-	.byte $5C
-	.byte $EB
-	.byte $5C
-	.byte $EB
-	.byte $74
-	.byte $EB
-	.byte $AC
-	.byte $EB
-	.byte $5C
-	.byte $EB
-	.byte $5C
-	.byte $EB
-	.byte $CC
-	.byte $EB
-	.byte $04
-	.byte $EC
-	.byte $5C
-	.byte $EB
-	.byte $5C
-	.byte $EB
-	.byte $5C
-	.byte $EB
-	.byte $1C
-	.byte $EC
-	.byte $5C
-	.byte $EB
-	.byte $34
-	.byte $EC
-	.byte $5C
-	.byte $EB
-	.byte $6C
-	.byte $EC
-	.byte $5C
-	.byte $EB
-	.byte $84
-	.byte $EC
-	.byte $5C
-	.byte $EB
-	.byte $9C
-	.byte $EC
-	.byte $5C
-	.byte $EB
-	.byte $5C
-	.byte $EB
-	.byte $B4
-	.byte $EC
-	.byte $EC
-	.byte $EC
+	.word pnt2_EB5C
+	.word pnt2_EB5C
+	.word pnt2_EB5C
+	.word pnt2_EB5C
+	.word pnt2_EB5C
+	.word pnt2_EB5C
+	.word pnt2_EB74
+	.word pnt2_EBAC
+	.word pnt2_EB5C
+	.word pnt2_EB5C
+	.word pnt2_EBCC
+	.word pnt2_EC04
+	.word pnt2_EB5C
+	.word pnt2_EB5C
+	.word pnt2_EB5C
+	.word pnt2_EC1C
+	.word pnt2_EB5C
+	.word pnt2_EC34
+	.word pnt2_EB5C
+	.word pnt2_EC6C
+	.word pnt2_EB5C
+	.word pnt2_EC84
+	.word pnt2_EB5C
+	.word pnt2_EC9C
+	.word pnt2_EB5C
+	.word pnt2_EB5C
+	.word pnt2_ECB4
+	.word pnt2_ECEC
+pnt2_EB5C:
 	.byte $00
 	.byte $00
 	.byte $40
@@ -1607,6 +1524,7 @@ tbl3_EB25:
 	.byte $10
 	.byte $00
 	.byte $01
+pnt2_EB74:
 	.byte $00
 	.byte $01
 	.byte $40
@@ -1663,6 +1581,7 @@ tbl3_EB25:
 	.byte $0E
 	.byte $FF
 	.byte $01
+pnt2_EBAC:
 	.byte $00
 	.byte $01
 	.byte $40
@@ -1695,6 +1614,7 @@ tbl3_EB25:
 	.byte $10
 	.byte $00
 	.byte $01
+pnt2_EBCC:
 	.byte $00
 	.byte $01
 	.byte $40
@@ -1751,6 +1671,7 @@ tbl3_EB25:
 	.byte $02
 	.byte $FF
 	.byte $00
+pnt2_EC04:
 	.byte $00
 	.byte $00
 	.byte $40
@@ -1775,6 +1696,7 @@ tbl3_EB25:
 	.byte $0D
 	.byte $00
 	.byte $01
+pnt2_EC1C:
 	.byte $00
 	.byte $01
 	.byte $40
@@ -1799,6 +1721,7 @@ tbl3_EB25:
 	.byte $10
 	.byte $00
 	.byte $01
+pnt2_EC34:
 	.byte $00
 	.byte $01
 	.byte $40
@@ -1855,6 +1778,7 @@ tbl3_EB25:
 	.byte $0A
 	.byte $00
 	.byte $01
+pnt2_EC6C:
 	.byte $00
 	.byte $01
 	.byte $40
@@ -1879,6 +1803,7 @@ tbl3_EB25:
 	.byte $10
 	.byte $00
 	.byte $01
+pnt2_EC84:
 	.byte $00
 	.byte $01
 	.byte $40
@@ -1903,6 +1828,7 @@ tbl3_EB25:
 	.byte $02
 	.byte $FF
 	.byte $00
+pnt2_EC9C:
 	.byte $00
 	.byte $01
 	.byte $40
@@ -1927,6 +1853,7 @@ tbl3_EB25:
 	.byte $0D
 	.byte $00
 	.byte $01
+pnt2_ECB4:
 	.byte $00
 	.byte $01
 	.byte $20
@@ -1983,6 +1910,7 @@ tbl3_EB25:
 	.byte $04
 	.byte $00
 	.byte $01
+pnt2_ECEC:
 	.byte $00
 	.byte $01
 	.byte $40
@@ -2025,101 +1953,99 @@ tbl3_EB25:
 	.byte $00
 sub3_ED14:
 	LDA #$39
-	STA M90_PRG1
-	JSR $A000
+	STA M90_PRG1	;Swap player bank into 2nd PRG slot
+	JSR jmp_57_A000
 	LDA #$36
-	STA M90_PRG1
-	JSR $A150
-	JSR $A07E
-	JSR $A000
+	STA M90_PRG1	;Swap bank 54 into 2nd PRG slot
+	JSR jmp_54_A150
+	JSR jmp_54_A07E
+	JSR jmp_54_A000
 	LDA #$3D
-	STA M90_PRG1
-	JSR $AE8F
+	STA M90_PRG1	;Swap bank 61 into 2nd PRG slot
+	JSR jmp_61_AE8F
 	LDA #$34
-	STA M90_PRG1
+	STA M90_PRG1	;Swap bank 52 into 2nd PRG slot
 	LDA #$80
 	STA $3C
-	JSR $A080
-	JSR $A089
-	JSR $A000
-	JSR sub3_E9C4
+	JSR jmp_52_A080
+	JSR jmp_52_A089
+	JSR jmp_52_A000
+	JSR sub3_E9C4	;Jump
 	RTS
 sub3_ED48:
 	LDA #$24
-	STA M90_PRG2
-	LDA $D03E,Y
-	STA PCPointerLowerByte
-	LDA $D03F,Y
-	STA PCPointerUpperByte
-	LDA $D000,Y
-	STA $34
-	LDA $D001,Y
-	STA $35
+	STA M90_PRG2	;Swap bank 36 into 3rd PRG slot
+	LDA lda_36_D03E,Y
+	STA PCPointerLoByte	;Load lower byte of warp coord pointer
+	LDA lda_36_D03E+1,Y
+	STA PCPointerHiByte	;Load upper byte of warp coord pointer
+	LDA lda_36_D000,Y
+	STA PCPointer2LoByte	;Load lower byte of warp level pointer
+	LDA lda_36_D000+1,Y
+	STA PCPointer2HiByte	;Load upper byte of warp level pointer
 	LDA #$00
-	STA $060C
+	STA WarpNumber	;Set warp number to 0
 	JSR sub3_E870
-	INC $00E0
+	INC a:EventPart	;Go to next part of event
 	LDA #$00
 	STA $06DE
 	STA $06DF
 	RTS
-	LDA $00E0
+pnt2_ED75:
+	LDA a:EventPart	;Load event part
 	ASL
-	TAY
+	TAY	;Load pointer based on event part
 	LDA tbl3_ED87,Y
-	STA PCPointerLowerByte
-	LDA tbl3_ED88,Y
-	STA PCPointerUpperByte
-	JMP (PCPointerLowerByte)
+	STA PCPointerLoByte	;Load lower byte of pointer
+	LDA tbl3_ED87+1,Y
+	STA PCPointerHiByte	;Load upper byte of pointer
+	JMP (PCPointerLoByte)	;Jump to loaded pointer location
 tbl3_ED87:
-	.byte $93
-tbl3_ED88:
-	.byte $ED
-	.byte $AA
-	.byte $ED
-	.byte $CF
-	.byte $ED
-	.byte $E1
-	.byte $ED
-	.byte $88
-	.byte $E3
-	.byte $DD
-	.byte $E3
-	LDA #$20
-	STA $06E0
+	.word pnt2_ED93
+	.word pnt2_EDAA
+	.word pnt2_EDCF
+	.word pnt2_EDE1
+	.word pnt2_E388
+	.word pnt2_E3DD
+pnt2_ED93:
+	LDA #%00100000
+	STA PlayerAttributes	;Set player to be behind BG
 	LDA #$00
-	STA PlayerAction
-	JSR sub3_E5D4
-	LDA #$0A
-	STA SFXRegister
-	JSR sub3_F27F
-	INC $00E0
+	STA PlayerAction	;Make player stand still
+	JSR sub3_E5D4	;Jump
+	LDA #sfxWarp
+	STA SFXRegister	;Play warp sound
+	JSR sub3_F27F	;Jump
+	INC a:EventPart	;Go to next part of event
 	RTS
+pnt2_EDAA:
 	LDA #$00
-	STA PlayerXSpeed
+	STA PlayerXSpeed	;Stop player from moving vertically
 	LDA #$10
-	STA PlayerYSpeed
+	STA PlayerYSpeed	;Set pipe speed to 10h
 	LDA PlayerMovement
-	AND #$FB
+	AND #$FB	;Stop player from moving up
 	LDY a:Event
-	CPY #$13
-	BNE bra3_EDBF
-	ORA #$04
+	CPY #$13	;If player isn't going up a pipe,
+	BNE bra3_EDBF	;branch
+	ORA #$04	;Otherwise, make the player move up
 bra3_EDBF:
-	STA PlayerMovement
-	JSR sub3_E5D4
+	STA PlayerMovement	;Store movement type
+	JSR sub3_E5D4	;Jump
 	LDX #$01
-	LDY #$16
-	JSR sub3_E5B6
-	INC $00E0
+	LDY #$16	;Set action length to 22 frames
+	JSR sub3_E5B6	;Jump
+	INC a:EventPart	;Go to next part of event
 	RTS
+pnt2_EDCF:
 	LDA #$00
-	STA $0311
+	STA BGBlackoutFlag	;Disable BG 'blackout' effect
 	JSR sub3_E6D5
 	JSR sub3_F919
 	JSR sub3_E904
-	INC $00E0
+	INC a:EventPart	;Go to next part of event
 	RTS
+pnt2_EDE1:
 	LDY #$38
 	JSR sub3_ED48
 	LDA #$00
@@ -2133,6 +2059,7 @@ bra3_EDBF:
 	LDA #$00
 	STA $06E1
 	RTS
+pnt2_EE02:
 	JSR sub3_ED14
 	JSR sub3_F27F
 	LDA #$01
@@ -2148,24 +2075,21 @@ bra3_EDBF:
 	LDA #$02
 	STA a:Event
 	RTS
-	LDA $00E0
+pnt2_EE23:
+	LDA a:EventPart
 	ASL
 	TAY
 	LDA tbl3_EE35,Y
-	STA PCPointerLowerByte
-	LDA tbl3_EE36,Y
-	STA PCPointerUpperByte
-	JMP (PCPointerLowerByte)
+	STA PCPointerLoByte
+	LDA tbl3_EE35+1,Y
+	STA PCPointerHiByte
+	JMP (PCPointerLoByte)
 tbl3_EE35:
-	.byte $CF
-tbl3_EE36:
-	.byte $ED
-	.byte $3D
-	.byte $EE
-	.byte $88
-	.byte $E3
-	.byte $DD
-	.byte $E3
+	.word pnt2_EDCF
+	.word pnt2_EE3D
+	.word pnt2_E388
+	.word pnt2_E3DD
+pnt2_EE3D:
 	LDA WorldNumber
 	ASL
 	ASL
@@ -2178,8 +2102,9 @@ tbl3_EE36:
 	STA M90_PRG1
 	JSR $A828
 	LDA #$20
-	STA $06E0
+	STA PlayerAttributes
 	RTS
+pnt2_EE59:
 	JSR sub3_ED14
 	JSR sub3_F27F
 	LDA #$00
@@ -2195,7 +2120,7 @@ bra3_EE72:
 	STA PlayerMovement
 	LDA #$FF
 	STA $06EA
-	LDA $0611
+	LDA PlayerFrameCount
 	CMP #$02
 	BNE bra3_EE84
 	LDA #$0A
@@ -2205,18 +2130,19 @@ bra3_EE84:
 	LDY #$19
 	JSR sub3_E5B6
 	LDA #$00
-	STA $06E0
+	STA PlayerAttributes
 	LDA #$02
 	STA a:Event
 	RTS
-	LDA $00E0
+pnt2_EE96:
+	LDA a:EventPart
 	ASL
 	TAY
 	LDA tbl3_EEA8,Y
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA tbl3_EEA9,Y
-	STA PCPointerUpperByte
-	JMP (PCPointerLowerByte)
+	STA PCPointerHiByte
+	JMP (PCPointerLoByte)
 tbl3_EEA8:
 	.byte $93
 tbl3_EEA9:
@@ -2239,8 +2165,9 @@ tbl3_EEA9:
 bra3_EEBF:
 	JSR sub3_ED48
 	LDA #$20
-	STA $06E0
+	STA PlayerAttributes
 	RTS
+pnt2_EEC8:
 	JSR sub3_ED14
 	JSR sub3_F27F
 	LDA #$0F
@@ -2252,7 +2179,7 @@ bra3_EEBF:
 	ORA #$04
 	AND #$BE
 	STA PlayerMovement
-	LDA $0611
+	LDA PlayerFrameCount
 	CMP #$02
 	BNE bra3_EEEB
 	LDA #$10
@@ -2262,12 +2189,13 @@ bra3_EEEB:
 	LDY #$19
 	JSR sub3_E5B6
 	LDA #$00
-	STA $06E0
+	STA PlayerAttributes
 	LDA #$02
 	STA a:Event
 	RTS
+pnt2_EEFD:
 	LDA #$00
-	STA $00E0
+	STA a:EventPart
 	LDA #$0C
 	STA a:Event
 	RTS
@@ -2304,63 +2232,63 @@ bra3_EF33:
 	STA PPUOAMAddr
 	LDA #$02
 	STA OAMDMA
-	LDA PPUMaskControl
+	LDA PPUMaskRegister
 	STA PPUMask
 	LDA #$00
 	STA PPUAddr
 	STA PPUAddr
-	LDA $00
+	LDA PPUControlRegister
 	AND #$FC
-	ORA $5B
-	STA $00
+	ORA VerticalScrollFlag
+	STA PPUControlRegister
 	STA PPUCtrl
-	LDA $032D
+	LDA LogoFlag
 	BNE bra3_EF67
-	LDA $02
+	LDA ScrollXPos
 	STA PPUScroll
-	LDA $03
+	LDA ScrollYPos
 	STA PPUScroll
 	JMP loc3_EF73
 bra3_EF67:
-	LDA $0330
+	LDA LogoXOffset
 	STA PPUScroll
-	LDA $0331
+	LDA LogoYOffset
 	STA PPUScroll
 loc3_EF73:
 	JSR sub3_F6E0
 	LDX BGBank1
-	STX M90_BG_CHR0
-	INX
-	STX M90_BG_CHR1
+	STX M90_BG_CHR0	;Update 1st BG bank
+	INX	;Load next CHR bank
+	STX M90_BG_CHR1	;Set as 2nd BG bank
 	LDX BGBank3
-	STX M90_BG_CHR2
-	INX
-	STX M90_BG_CHR3
+	STX M90_BG_CHR2	;Update 3rd BG bank
+	INX	;Load next CHR bank
+	STX M90_BG_CHR3	;Set as 4th BG bank
 	LDA SpriteBank1
-	STA M90_SP_CHR0
+	STA M90_SP_CHR0	;Update 1st sprite bank
 	LDA SpriteBank2
-	STA M90_SP_CHR1
+	STA M90_SP_CHR1	;Update 2nd sprite bank
 	LDA SpriteBank3
-	STA M90_SP_CHR2
+	STA M90_SP_CHR2	;Update 3rd sprite bank
 	LDA SpriteBank4
-	STA M90_SP_CHR3
-	JSR sub3_F19F
-	INC $0313
-	LDA $0313
-	CMP #$3C
-	BCC bra3_EFB4
+	STA M90_SP_CHR3	;Update 4th sprite bank
+	JSR sub3_F19F	;Jump
+	INC SecFrameCount	;Increment second frame counter
+	LDA SecFrameCount
+	CMP #$3C	;If its below 60 frames,
+	BCC bra3_EFB4	;branch
 	AND #$00
-	STA $0313
+	STA SecFrameCount	;Clear second frame count
 bra3_EFB4:
 	LDA #$00
 	STA $3C
-	INC $06
+	INC FrameCount	;Increment global frame counter
 	LDA #$3A
 	STA M90_PRG0
 	LDA #$3B
 	STA M90_PRG1
-	LDA a:GameState
-	BNE bra3_EFD9
+	LDA a:GameState	;If in a level,
+	BNE bra3_EFD9	;branch
 	JSR $85BE
 	JSR $862A
 	LDA $08
@@ -2369,62 +2297,62 @@ bra3_EFB4:
 	STA M90_PRG1
 bra3_EFD9:
 	PLA
-	TAY
+	TAY	;Pull stack to Y register
 	PLA
-	TAX
-	PLA
-	PLP
+	TAX	;Pull stack to X register
+	PLA	;Pull stack to accumulator
+	PLP	;Pull CPU status from stack
 	RTI
 loc3_EFE0:
-	PHP
-	PHA
+	PHP	;Push CPU status to stack
+	PHA	;Push accumulator to stack
 	TXA
-	PHA
+	PHA	;Push X register to stack
 	TYA
-	PHA
-	LDA PPUMaskControl
-	STA PPUMask
-	LDA $00
-	AND #$FC
-	ORA $5B
-	STA $00
-	STA PPUCtrl
-	LDA $032D
-	BNE bra3_F008
-	LDA $02
-	STA PPUScroll
-	LDA $03
-	STA PPUScroll
+	PHA	;Push Y register to stack
+	LDA PPUMaskRegister
+	STA PPUMask	;Copy software mask register to hardware register
+	LDA PPUControlRegister
+	AND #%11111100	;Mask out bits
+	ORA VerticalScrollFlag	;Add vertical scroll flag (changes nametable address if set)
+	STA PPUControlRegister
+	STA PPUCtrl	;Store in both software and hardware registers
+	LDA LogoFlag	;If logo flag set,
+	BNE bra3_F008	;branch
+	LDA ScrollXPos
+	STA PPUScroll	;Load horizontal scroll position into PPU
+	LDA ScrollYPos
+	STA PPUScroll	;Load vertical scroll position into PPU
 	JMP loc3_F014
 bra3_F008:
-	LDA $0330
-	STA PPUScroll
-	LDA $0331
-	STA PPUScroll
+	LDA LogoXOffset
+	STA PPUScroll	;Load logo horizontal offset into PPU
+	LDA LogoYOffset
+	STA PPUScroll	;Load logo vertical offset into PPU
 loc3_F014:
 	JSR sub3_F6E0
-	LDX $03C5
-	STX M90_BG_CHR0
-	INX
-	STX M90_BG_CHR1
-	LDX $03C6
-	STX M90_BG_CHR2
-	INX
-	STX M90_BG_CHR3
+	LDX BGBank1
+	STX M90_BG_CHR0	;Update 1st BG bank
+	INX	;Load next CHR bank
+	STX M90_BG_CHR1	;Set it as 2nd BG bank
+	LDX BGBank3
+	STX M90_BG_CHR2	;Update 3rd BG bank
+	INX	;Load next CHR bank
+	STX M90_BG_CHR3	;Set it as 4th BG bank
 	LDA SpriteBank1
-	STA M90_SP_CHR0
+	STA M90_SP_CHR0	;Update 1st sprite bank
 	LDA SpriteBank2
-	STA M90_SP_CHR1
+	STA M90_SP_CHR1	;Update 2nd sprite bank
 	LDA SpriteBank3
-	STA M90_SP_CHR2
+	STA M90_SP_CHR2	;Update 3rd sprite bank
 	LDA SpriteBank4
-	STA M90_SP_CHR3
+	STA M90_SP_CHR3	;Update 4th sprite bank
 	PLA
-	TAY
+	TAY	;Pull stack into Y register
 	PLA
-	TAX
-	PLA
-	PLP
+	TAX	;Pull stack into X register
+	PLA	;Pull stack into accumulator
+	PLP	;Pull CPU status from stack
 	RTI
 	LDX #$3C
 bra3_F04C:
@@ -2436,71 +2364,72 @@ bra3_F04E:
 	BNE bra3_F04C
 	RTS
 sub3_F055:
-	LDA PPUStatus
-	LDA $00
-	ORA #$04
-	STA PPUCtrl
+	LDA PPUStatus	;Clear address latch
+	LDA PPUControlRegister	;Load PPU control software reg
+	ORA #$04	;Do OR operation, effectively adding 4
+	STA PPUCtrl	;Store in PPU control hardware reg
 	LDA PPUStatus
 	LDA ColumnFinishFlag
-	STA PPUAddr
+	STA PPUAddr	;Load upper byte of PPU address (20 when scrolling)
 	LDA NextBGColumn
-	STA PPUAddr
-	LDX #$00
+	STA PPUAddr	;Load current column into low byte of PPU address
+	LDX #$00	;Set row to 0
 bra3_F070:
-	LDA $0485,X
-	STA PPUData
-	INX
-	CPX #$1E
+	LDA TileRowMem,X	;Load 8x8 tile row data
+	STA PPUData	;Store it in the PPU
+	INX	;Move to next row
+	CPX #$1E	;Keep looping until row 30 is reached
 	BCC bra3_F070
-	LDA PPUStatus
-	LDA ColumnFinishFlag
-	ORA #$08
-	STA PPUAddr
+	LDA PPUStatus	;Clear address latch
+	LDA ColumnFinishFlag	;Load upper byte (20 when scrolling)
+	ORA #$08	;Do OR operation, effectively adding 8
+	STA PPUAddr	;Store as upper byte of PPU address
 	LDA NextBGColumn
-	STA PPUAddr
+	STA PPUAddr	;Load current column into lower byte of PPU address
 bra3_F08C:
-	LDA $0485,X
-	STA PPUData
-	INX
-	CPX $B0
+	LDA TileRowMem,X	;Load 8x8 tile row data
+	STA PPUData	;Store it in the PPU
+	INX	;Move to next row
+	CPX TileRowCount	;Keep looping until current row count is reached
 	BCC bra3_F08C
-	LDA PPUStatus
-	LDA $00
-	AND #$FB
-	STA PPUCtrl
+	LDA PPUStatus	;Clear address latch
+	LDA PPUControlRegister	;Load PPU control software reg
+	AND #%11111011	;Mask bits
+	STA PPUCtrl	;Store in PPU control hardware register
 	RTS
+
 sub3_F0A2:
-	LDA $04C1
-	BEQ bra3_F0CA
+	LDA PalAssignPtrHi	;If upper byte of mapping pointer is empty,
+	BEQ bra3_F0CA	;stop
 	LDX #$00
 bra3_F0A9:
-	LDA PPUStatus
-	LDA $04C1,X
-	STA PPUAddr
-	LDA $04C2,X
-	STA PPUAddr
-	LDA $04C3,X
-	STA PPUData
+	LDA PPUStatus	;Clear address latch
+	LDA PalAssignPtrHi,X
+	STA PPUAddr	;Load upper byte of PPU palette mapping memory 
+	LDA PalAssignPtrLo,X
+	STA PPUAddr	;Load lower byte of PPU palette mapping memory
+	LDA PalAssignData,X
+	STA PPUData	;Store palette mapping data into PPU memory
 	INX
 	INX
-	INX
-	CPX $B1
+	INX	;Load next pointer/data set
+	CPX BGPalDataSize	;Keep going until pointer count is reached
 	BCC bra3_F0A9
 	LDA #$00
-	STA $04C1
+	STA PalAssignPtrHi	;Clear upper byte of pointer
 bra3_F0CA:
 	RTS
 sub3_F0CB:
-	LDA WorldNumber
+	LDA WorldNumber	;Load world number
 	ASL
-	ASL
+	ASL	;multiply it by 4
 	CLC
-	ADC LevelNumber
-	TAX
-	LDA tbl3_F0DB,X
-	STA MusicRegister
+	ADC LevelNumber ;Add it to level count
+	TAX	;Copy to X reg
+	LDA LevelMusic,X
+	STA MusicRegister	;Load/play music for level
 	RTS
-tbl3_F0DB:
+LevelMusic:
 	.byte $29	;1-1 Music
 	.byte $28	;1-2 Music
 	.byte $20	;1-3 Music
@@ -2530,55 +2459,58 @@ tbl3_F0DB:
 	.byte $2B	;7-3 Music
 	.byte $2C	;7-4 Music
 	.byte $29	;Yoshi's House Music
+pnt2_F0F8:
 	LDX #$F0
-	STX M90_BG_CHR0
-	INX
-	STX M90_BG_CHR1
+	STX M90_BG_CHR0	;Set bank F0 to 1st BG bank
+	INX	;Load next CHR bank
+	STX M90_BG_CHR1	;Set it as 2nd BG bank
 	LDX $0362
-	STX M90_BG_CHR2
-	INX
-	STX M90_BG_CHR3
-	LDY #$21
-	LDA $02
+	STX M90_BG_CHR2	;Update 3rd BG bank
+	INX	;Load next CHR bank
+	STX M90_BG_CHR3	;Set it as 4th BG bank
+	LDY #$21	;Load upper byte of PPU address
+	LDA ScrollXPos	;Load horizontal scroll position
 	LSR
 	LSR
-	LSR
-	ORA #$B0
-	TAX
-	STY PPUAddr
-	STX PPUAddr
-	LDA $02
+	LSR	;Divide it by 8
+	ORA #$B0	;Do OR operation
+	TAX	;Set it as lower byte of PPU address
+	STY PPUAddr	;Store upper byte
+	STX PPUAddr	;Store lower byte
+	LDA ScrollXPos
 	STA PPUScroll
-	STA PPUScroll
-	STA M90_IRQ_DISABLE
-	RTS
+	STA PPUScroll	;Set the horizontal scroll to both axes
+	STA M90_IRQ_DISABLE	;Disable mapper IRQ
+	RTS	;Done
+pnt2_F127:
 	LDA PPUStatus
-	LDA #$2B
+	LDA #$2B	;Load upper byte of PPU address
 	STA PPUAddr
-	LDA #$40
+	LDA #$40	;Load lower byte of PPU address
 	STA PPUAddr
 	LDA #$00
 	STA PPUScroll
-	STA PPUScroll
-	LDA #$0E
-	STA PPUMask
+	STA PPUScroll	;Set scroll to default position
+	LDA #%00001110
+	STA PPUMask	;Disable sprite rendering
 	LDX #$EC
-	STX M90_BG_CHR0
-	INX
-	STX M90_BG_CHR1
-	INX
-	STX M90_BG_CHR2
-	INX
-	STX M90_BG_CHR3
-	STA M90_IRQ_DISABLE
+	STX M90_BG_CHR0	;Set bank EC to 1st BG bank
+	INX	;Load next CHR bank
+	STX M90_BG_CHR1	;Set it as 2nd BG bank
+	INX	;Load next CHR bank
+	STX M90_BG_CHR2	;Set it as 3rd BG bank
+	INX	;Load next CHR bank
+	STX M90_BG_CHR3	;Set it as 4th BG bank
+pnt2_F152:
+	STA M90_IRQ_DISABLE	;Disable mapper IRQ
 	RTS
 bra3_F156:
 	LDA PPUStatus
-	BPL bra3_F156
+	BPL bra3_F156	;Keep looping if VBlank isn't set
 bra3_F15B:
 	LDA PPUStatus
-	BPL bra3_F15B
-	RTS
+	BPL bra3_F15B	;Keep looping if VBlank isn't set
+	RTS	;Return
 	ASL
 	TAY
 	PLA
@@ -2586,12 +2518,12 @@ bra3_F15B:
 	PLA
 	STA $35
 	INY
-	LDA ($34),Y
-	STA PCPointerLowerByte
+	LDA (PCPointer2LoByte),Y
+	STA PCPointerLoByte
 	INY
-	LDA ($34),Y
-	STA PCPointerUpperByte
-	JMP (PCPointerLowerByte)
+	LDA (PCPointer2LoByte),Y
+	STA PCPointerHiByte
+	JMP (PCPointerLoByte)
 sub3_F176:
 	LDA #$F8
 	LDX #$00
@@ -2642,19 +2574,19 @@ bra3_F1C8:
 	RTS
 sub3_F1C9:
 	LDA #$01
-	STA Joy1
+	STA Joy1	;Strobe controller input
 	LDA #$00
-	STA Joy1
+	STA Joy1	;Read controller input
 	LDA #$01
-	STA Joy1
+	STA Joy1	;Strobe controller again
 	NOP
-	NOP
+	NOP	;Wait 2 cycles
 	LDA #$00
-	STA Joy1
+	STA Joy1	;Read controller input
 	NOP
-	NOP
+	NOP	;Wait 2 cycles
 	LDA #$01
-	LSR
+	LSR	;Shift bit 0 and set carry
 	TAX
 	STA Joy1
 	JSR sub3_F1EC
@@ -2682,7 +2614,7 @@ sub3_F20F:
 	LDA $03A1
 	BEQ bra3_F258
 	LDA $03A0
-	ORA $00
+	ORA PPUControlRegister
 	AND #$7F
 	STA PPUCtrl
 	LDY #$00
@@ -2739,37 +2671,32 @@ sub3_F27F:
 	BEQ bra3_F29D		;branch
 	LDA $03A1
 	BNE bra3_F29D
-	LDA $037D
+	LDA HUDUpdate
 	ASL
 	TAY
 	LDA tbl3_F29E,Y
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA tbl3_F29F,Y
-	STA PCPointerUpperByte
-	JMP (PCPointerLowerByte)
+	STA PCPointerHiByte
+	JMP (PCPointerLoByte)
 bra3_F29D:
 	RTS
 tbl3_F29E:
-	.byte $A8
-tbl3_F29F:
-	.byte $F2
-	.byte $D6
-	.byte $F2
-	.byte $03
-	.byte $F3
-	.byte $29
-	.byte $F3
-	.byte $58
-	.byte $F3
+			.byte $A8
+tbl3_F29F:	.byte $F2
+			.word pnt2_F2D6
+			.word pnt2_F303
+			.word pnt2_F329
+			.word pnt2_F358
 	JSR sub3_F388
-	INC $037D
+	INC HUDUpdate
 	LDX #$00
 	LDA CurrentPlayer
 	BEQ bra3_F2B7
 	LDX #$01
 bra3_F2B7:
 	LDA Player1Lives,X
-	STA $34
+	STA $34	;Store current player's life count in temporary register
 	LDA #$00
 	STA $35
 	LDA #$0B
@@ -2784,8 +2711,9 @@ bra3_F2CB:
 	DEX
 	BPL bra3_F2CB
 	RTS
+pnt2_F2D6:
 	JSR sub3_F388
-	INC $037D
+	INC HUDUpdate
 	LDX #$04
 	LDA #$00
 bra3_F2E0:
@@ -2809,11 +2737,12 @@ bra3_F2FA:
 	BCC bra3_F2FA
 bra3_F302:
 	RTS
+pnt2_F303:
 	JSR sub3_F388
-	INC $037D
-	LDA $036E
+	INC HUDUpdate
+	LDA LevelTimerLo
 	STA $34
-	LDA $036F
+	LDA LevelTimerHi
 	STA $35
 	LDA #$0B
 	STA $26
@@ -2827,8 +2756,9 @@ bra3_F31E:
 	DEX
 	BPL bra3_F31E
 	RTS
+pnt2_F329:
 	JSR sub3_F388
-	INC $037D
+	INC HUDUpdate	;Update HUD
 	LDX #$00
 	LDA CurrentPlayer
 	BEQ bra3_F338
@@ -2850,15 +2780,16 @@ bra3_F34D:
 	DEX
 	BPL bra3_F34D
 	RTS
+pnt2_F358:
 	JSR sub3_F388
 	LDA #$00
-	STA $037D
-	LDX #$00
-	LDA CurrentPlayer
-	BEQ bra3_F369
-	LDX #$01
+	STA HUDUpdate
+	LDX #$00			;Set to Player 1
+	LDA CurrentPlayer	;If it's Player 1's turn,
+	BEQ bra3_F369		;branch
+	LDX #$01			;Set to Player 2
 bra3_F369:
-	LDA Player1Coins,X
+	LDA Player1Coins,X	;Load current player's coin count
 	STA $34
 	LDA #$00
 	STA $35
@@ -2875,7 +2806,7 @@ bra3_F37D:
 	BPL bra3_F37D
 	RTS
 sub3_F388:
-	LDA $037D
+	LDA HUDUpdate
 	ASL
 	ASL
 	TAX
@@ -2920,7 +2851,7 @@ sub3_F3BB:
 	STA $38
 bra3_F3C5:
 	JSR sub3_F3EC
-	LDA PCPointerLowerByte
+	LDA PCPointerLoByte
 	CLC
 	ADC $26
 	LDY $25
@@ -2942,23 +2873,23 @@ bra3_F3EB:
 	RTS
 sub3_F3EC:
 	LDA #$00
-	STA PCPointerLowerByte
-	STA PCPointerUpperByte
+	STA PCPointerLoByte
+	STA PCPointerHiByte
 	LDX #$10
 bra3_F3F4:
 	ASL $34
 	ROL $35
 	ROL $32
 	ROL $33
-	LDA PCPointerLowerByte
+	LDA PCPointerLoByte
 	SEC
 	SBC $38
 	TAY
-	LDA PCPointerUpperByte
+	LDA PCPointerHiByte
 	SBC $39
 	BCC bra3_F40E
 	INC $34
-	STA PCPointerUpperByte
+	STA PCPointerHiByte
 	STY $32
 bra3_F40E:
 	DEX
@@ -3499,13 +3430,14 @@ tbl3_F6AE:
 	.byte $00
 	.byte $00
 	.byte $00
+IRQ:
 	PHP
 	PHA
 	TXA
 	PHA
 	TYA
 	PHA
-	JSR $0600
+	JSR FakeJMPOpcode	;Execute 'fake' JMP opcode
 	PLA
 	TAY
 	PLA
@@ -3514,85 +3446,79 @@ tbl3_F6AE:
 	PLP
 	RTI
 	LDA #$4C
-	STA $0600
-	LDA $F720
-	STA $0601
-	LDA $F721
-	STA $0602
+	STA FakeJMPOpcode	;Load fake JMP opcode into memory
+	LDA tbl3_F720
+	STA FakeJMPLoByte	;Load lower byte of fake JMP
+	LDA tbl3_F721
+	STA FakeJMPHiByte	;Load upper byte of fake JMP
 	JMP loc3_F6F3
 sub3_F6E0:
 	LDA #$4C
-	STA $0600
+	STA FakeJMPOpcode	;Load fake JMP opcode into memory
 	LDA InterruptMode
 	ASL
 	TAX
 	LDA tbl3_F71A,X
-	STA $0601
+	STA FakeJMPLoByte
 	LDA tbl3_F71B,X
 loc3_F6F3:
-	STA $0602
+	STA FakeJMPHiByte
 	LDX InterruptMode
 	LDA PPUStatus
-	LDA tbl3_F70E,X
+	LDA InterruptLineTable,X
 	STA M90_IRQ_DISABLE
 	STA M90_IRQ_COUNTER
 	LDA #$FB
-	STA $C004
+	STA M90_IRQ_PRESCALER
 	STA M90_IRQ_ENABLE
 	RTS
-tbl3_F70E:
+InterruptLineTable:
 	.byte $08
-	.byte $CC	;Status bar height
+	.byte $CC	;Level
 	.byte $80
 	.byte $08
-	.byte $B0
+	.byte $B0	;Bowser Fight
 	.byte $08
 	.byte $08
 	.byte $08
 	.byte $08
 	.byte $08
-	.byte $64
-	.byte $D0	;Status bar height (level)
-tbl3_F71A:
-	.byte $52
-tbl3_F71B:
-	.byte $F1
-	.byte $51
-	.byte $F7
-	.byte $6E
-	.byte $F7
-	.byte $8B
-	.byte $F7
-	.byte $A8
-	.byte $F7
-	.byte $34
-	.byte $F7
-	.byte $34
-	.byte $F7
-	.byte $34
-	.byte $F7
-	.byte $34
-	.byte $F7
-	.byte $34
-	.byte $F7
-	.byte $F8
-	.byte $F0
-	.byte $27
-	.byte $F1
-	.byte $52
-	.byte $F1
+	.byte $64	;Title Screen
+	.byte $D0	;Overworld Map
+
+tbl3_F71A:	.byte $52
+tbl3_F71B:	.byte $F1
+			.word bra3_F751
+			.word bra3_F76E
+
+tbl3_F720:	.byte $8B
+tbl3_F721:	.byte $F7
+			.word bra3_F7A8
+			.word pnt2_F734
+			.word pnt2_F734
+			.word pnt2_F734
+			.word pnt2_F734
+			.word pnt2_F734
+			.word pnt2_F0F8
+			.word pnt2_F127
+			.word pnt2_F152
+pnt2_F734:
 	LDA $0607
-	BNE $F73C
-	JMP $F7C5
+	BNE bra3_F73C
+	JMP loc3_F7C5
+bra3_F73C:
 	CMP #$01
-	BNE $F743
-	JMP $F7C5
+	BNE bra3_F743
+	JMP loc3_F7C5
+bra3_F743:
 	CMP #$02
-	BNE $F74A
-	JMP $F7C5
+	BNE bra3_F74A
+	JMP loc3_F7C5
+bra3_F74A:
 	CMP #$03
-	BNE $F751
-	JMP $F7C5
+	BNE bra3_F751
+	JMP loc3_F7C5
+bra3_F751:
 	LDA $0607
 	BNE bra3_F759
 	JMP loc3_F7CE
@@ -3669,12 +3595,12 @@ loc3_F7CE:
 	STA M90_IRQ_ENABLE
 	RTS
 sub3_F7DA:
-	LDA PauseFlag
-	BNE bra3_F811
+	LDA PauseFlag	;If the game is paused,
+	BNE bra3_F811	;branch
 	LDA DataBank2
-	CMP #$26
-	BNE bra3_F7EA
-	JSR sub3_F90B
+	CMP #$26		;If the final boss area isn't loaded,
+	BNE bra3_F7EA	;branch
+	JSR sub3_F90B	;If it is, continue and jump
 	RTS
 bra3_F7EA:
 	LDA DataBank2
@@ -3686,93 +3612,69 @@ bra3_F7EA:
 	LSR
 	TAY
 	LDA tbl3_F812,Y
-	STA $A6
+	STA $A6			;Load lower byte of pointer
 	LDA tbl3_F813,Y
-	STA $A7
-	LDA $06
-	AND #$18
+	STA $A7			;Load upper byte of pointer
+	LDA FrameCount
+	AND #%00011000	;Mask 2 middle bits of frame counter
 	LSR
 	LSR
-	LSR
-	TAY
-	LDA ($A6),Y
+	LSR				;Divide result by 8
+	TAY				;Copy it to the Y reg
+	LDA ($A6),Y		;Load data from pointer
 	STA M90_BG_CHR3
 bra3_F811:
 	RTS
 tbl3_F812:
-	.byte $4E
-tbl3_F813:
-	.byte $F8
-	.byte $4E
-	.byte $F8
-	.byte $52
-	.byte $F8
-	.byte $4E
-	.byte $F8
-	.byte $4E
-	.byte $F8
-	.byte $4E
-	.byte $F8
-	.byte $4A
-	.byte $F8
-	.byte $4A
-	.byte $F8
-	.byte $4E
-	.byte $F8
-	.byte $4E
-	.byte $F8
-	.byte $4A
-	.byte $F8
-	.byte $4A
-	.byte $F8
-	.byte $52
-	.byte $F8
-	.byte $52
-	.byte $F8
-	.byte $52
-	.byte $F8
-	.byte $4A
-	.byte $F8
-	.byte $4E
-	.byte $F8
-	.byte $4A
-	.byte $F8
-	.byte $4E
-	.byte $F8
-	.byte $4A
-	.byte $F8
-	.byte $52
-	.byte $F8
-	.byte $4E
-	.byte $F8
-	.byte $4A
-	.byte $F8
-	.byte $4A
-	.byte $F8
-	.byte $4A
-	.byte $F8
-	.byte $56
-	.byte $F8
-	.byte $4A
-	.byte $F8
-	.byte $4E
-	.byte $F8
-	.byte $01
-	.byte $45
-	.byte $41
-	.byte $0A
-	.byte $5B
-	.byte $56
-	.byte $16
-	.byte $36
-	.byte $0D
-	.byte $33
-	.byte $63
-	.byte $79
-	.byte $C4
-	.byte $C5
-	.byte $C6
-	.byte $C7
+			.byte $4E
+tbl3_F813:	.byte $F8
+			.word pnt2_F84E
+			.word pnt2_F852
+			.word pnt2_F84E
+			.word pnt2_F84E
+			.word pnt2_F84E
+			.word pnt2_F84A
+			.word pnt2_F84A
+			.word pnt2_F84E
+			.word pnt2_F84E
+			.word pnt2_F84A
+			.word pnt2_F84A
+			.word pnt2_F852
+			.word pnt2_F852
+			.word pnt2_F852
+			.word pnt2_F84A
+			.word pnt2_F84E
+			.word pnt2_F84A
+			.word pnt2_F84E
+			.word pnt2_F84A
+			.word pnt2_F852
+			.word pnt2_F84E
+			.word pnt2_F84A
+			.word pnt2_F84A
+			.word pnt2_F84A
+			.word pnt2_F856
+			.word pnt2_F84A
+			.word pnt2_F84E
+pnt2_F84A:
+			.byte $01
+			.byte $45
+			.byte $41
+			.byte $0A
+pnt2_F84E:
+			.byte $5B
+			.byte $56
+			.byte $16
+			.byte $36
+pnt2_F852:
+			.byte $0D
+			.byte $33
+			.byte $63
+			.byte $79
+pnt2_F856:
+			.byte $C4
+			.byte $C5
+			.byte $C6
+			.byte $C7
 loc3_F85A:
 	LDA #$1D
 	STA M90_IRQ_DISABLE
@@ -3793,13 +3695,13 @@ bra3_F867:
 	STA PPUScroll
 	INC $0607
 	LDA #$EC
-	STA M90_BG_CHR0
+	STA M90_BG_CHR0		;Swap in 1st HUD bank
 	LDA #$ED
-	STA M90_BG_CHR1
+	STA M90_BG_CHR1		;Swap in 2nd HUD bank
 	LDA #$EE
-	STA M90_BG_CHR2
+	STA M90_BG_CHR2		;Swap in 3rd HUD bank
 	LDA #$EF
-	STA M90_BG_CHR3
+	STA M90_BG_CHR3		;Swap in 4th HUD bank
 	RTS
 loc3_F899:
 	STA M90_IRQ_DISABLE
@@ -3836,9 +3738,9 @@ bra3_F8B7:
 	RTS
 loc3_F8D7:
 	LDX #$22
-	LDY #$D8
+	LDY #$D8			;Set interrupt line
 	STX PPUAddr
-	STY PPUAddr
+	STY PPUAddr			;Store interrupt line
 	LDA PPUStatus
 	LDA #$00
 	STA PPUScroll
@@ -3847,25 +3749,25 @@ loc3_F8D7:
 	LDA #$00
 	STA $0607
 	LDA #$C8
-	STA M90_BG_CHR0
+	STA M90_BG_CHR0		;Load 1st Clown Car bank into PPU
 	LDA #$C9
-	STA M90_BG_CHR1
+	STA M90_BG_CHR1		;Load 2nd Clown Car bank into PPU
 	LDA #$CA
-	STA M90_BG_CHR2
+	STA M90_BG_CHR2		;Load 3rd Clown Car bank into PPU
 	LDA #$CB
-	STA M90_BG_CHR3
+	STA M90_BG_CHR3		;Load 4th Clown Car bank into PPU
 	STA M90_IRQ_DISABLE
 	RTS
 sub3_F90B:
 	LDY ClownCarFace
-	LDA tbl3_F915,Y
+	LDA ClownCarBanks,Y
 	STA M90_BG_CHR0
 	RTS
-tbl3_F915:
-	.byte $C8
-	.byte $C9
-	.byte $CA
-	.byte $CB
+ClownCarBanks:
+	.byte $C8	;Default
+	.byte $C9	;Blinking
+	.byte $CA	;Hurt
+	.byte $CB	;Angry
 sub3_F919:
 	LDA $0310
 	ASL
@@ -3878,7 +3780,7 @@ sub3_F919:
 	LDA tbl3_FA97,Y
 	STA $31
 	LDA tbl3_FA94,Y
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA tbl3_FA95,Y
 	JMP loc3_F94B
 bra3_F939:
@@ -3887,11 +3789,11 @@ bra3_F939:
 	LDA tbl3_F9FF,Y
 	STA $31
 	LDA tbl3_F9FC,Y
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA tbl3_F9FD,Y
 loc3_F94B:
-	STA PCPointerUpperByte
-	LDA $0311
+	STA PCPointerHiByte
+	LDA BGBlackoutFlag
 	ASL
 	ASL
 	TAY
@@ -3905,21 +3807,21 @@ loc3_F94B:
 	STA $2F
 	LDA $03A1
 	BNE bra3_F9E7
-	LDA $06
+	LDA FrameCount
 	AND #$03
 	BNE bra3_F9E7
-	LDX $0312
+	LDX PalTransition
 	LDA tbl3_F9F3,X
 	STA $25
 	LDY #$00
 	LDX #$00
 bra3_F97E:
-	LDA ($34),Y
+	LDA (PCPointer2LoByte),Y
 	BPL bra3_F987
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	JMP loc3_F990
 bra3_F987:
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	SEC
 	SBC $25
 	BPL bra3_F990
@@ -3966,8 +3868,8 @@ loc3_F9B9:
 	STA $03A4
 	LDA #$01
 	STA $03A3
-	INC $0312
-	LDA $0312
+	INC PalTransition
+	LDA PalTransition
 	CMP #$05
 	BEQ bra3_F9EA
 	CMP #$09
@@ -3978,8 +3880,8 @@ bra3_F9E7:
 	RTS
 bra3_F9EA:
 	LDA #$80
-	ORA $0312
-	STA $0312
+	ORA PalTransition
+	STA PalTransition
 	RTS
 tbl3_F9F3:
 	.byte $40
@@ -4303,54 +4205,94 @@ tbl3_FA97:
 	.byte $FD
 	.byte $7C
 	.byte $FE
+	.byte $11, $30, $38, $3D	;Level 1-1 BG Palette
+	.byte $11, $30, $2A, $1A
+	.byte $11, $37, $2A, $1A
+	.byte $11, $2C, $3C, $30
+	.byte $0A, $2C, $1C, $30	;Level 1-2 BG Palette
+	.byte $0A, $30, $38, $28
+	.byte $0A, $37, $2A, $1A
+	.byte $0A, $29, $19, $39
+	.byte $0E, $11, $3C, $30	;Level 1-3 BG Palette
+	.byte $0E, $30, $37, $27
+	.byte $0E, $29, $38, $18
+	.byte $0E, $00, $10, $30
+	.byte $0E, $11, $3C, $30	;Castle BG Palette
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $20
+	.byte $0E, $27, $17, $37
+	.byte $11, $11, $3C, $30	;Level 2-1 BG Palette
+	.byte $11, $30, $38, $28
+	.byte $11, $37, $2A, $1A
+	.byte $11, $39, $29, $1A
+	.byte $0A, $31, $11, $30	;Level 2-2 BG Palette
+	.byte $0A, $30, $38, $28
+	.byte $0A, $0E, $2A, $30
+	.byte $0A, $2A, $19, $39
+	.byte $0E, $11, $3C, $30	;Ghost House BG Palette
+	.byte $0E, $30, $28, $18
+	.byte $0E, $1C, $2C, $38
+	.byte $0E, $37, $27, $18
+	.byte $0E, $21, $11, $30	;Level 3-1 BG Palette
+	.byte $0E, $30, $28, $18
+	.byte $0E, $37, $0C, $1C
+	.byte $0E, $38, $27, $17
+	.byte $01, $2C, $1C, $3C	;Level 3-2 BG Palette
+	.byte $01, $30, $38, $28
+	.byte $01, $00, $10, $30
+	.byte $01, $38, $27, $17
+	.byte $0E, $11, $21, $30	;Unused
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $30
+	.byte $0E, $27, $17, $37
+	.byte $30, $11, $2C, $0E	;Bridge Level BG Palette
+	.byte $30, $28, $18, $0E
+	.byte $30, $37, $31, $0E
+	.byte $30, $30, $2A, $0A
+	.byte $30, $11, $21, $0E	;Level 4-3 BG Palette
+	.byte $30, $28, $18, $0E
+	.byte $30, $37, $2A, $0A
+	.byte $30, $0E, $2A, $1A
+	.byte $0E, $11, $3C, $30	;Unknown
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $30
+	.byte $0E, $27, $17, $37
+	.byte $0E, $2C, $1C, $30	;Level 5-1 BG Palette
+	.byte $0E, $30, $28, $18
+	.byte $0E, $1A, $28, $18
+	.byte $0E, $1A, $0A, $2A
+	.byte $0E
 	.byte $11
-	.byte $30
-	.byte $38
-	.byte $3D
-	.byte $11
-	.byte $30
-	.byte $2A
-	.byte $1A
-	.byte $11
-	.byte $37
-	.byte $2A
-	.byte $1A
-	.byte $11
-	.byte $2C
 	.byte $3C
 	.byte $30
-	.byte $0A
+	.byte $0E
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $0C
+	.byte $1C
+	.byte $2C
+	.byte $0E
+	.byte $37
+	.byte $27
+	.byte $18
+	.byte $01
 	.byte $2C
 	.byte $1C
-	.byte $30
-	.byte $0A
+	.byte $3C
+	.byte $01
 	.byte $30
 	.byte $38
 	.byte $28
-	.byte $0A
-	.byte $37
-	.byte $2A
-	.byte $1A
-	.byte $0A
-	.byte $29
-	.byte $19
-	.byte $39
-	.byte $0E
-	.byte $11
-	.byte $3C
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $37
-	.byte $27
-	.byte $0E
-	.byte $29
-	.byte $38
-	.byte $18
-	.byte $0E
+	.byte $01
 	.byte $00
 	.byte $10
-	.byte $30
+	.byte $38
+	.byte $01
+	.byte $38
+	.byte $27
+	.byte $17
 	.byte $0E
 	.byte $11
 	.byte $3C
@@ -4365,215 +4307,7 @@ tbl3_FA97:
 	.byte $20
 	.byte $0E
 	.byte $27
-	.byte PlayerAnimationFrame
-	.byte $37
-	.byte $11
-	.byte $11
-	.byte $3C
-	.byte $30
-	.byte $11
-	.byte $30
-	.byte $38
-	.byte $28
-	.byte $11
-	.byte $37
-	.byte $2A
-	.byte $1A
-	.byte $11
-	.byte $39
-	.byte $29
-	.byte $1A
-	.byte $0A
-	.byte $31
-	.byte $11
-	.byte $30
-	.byte $0A
-	.byte $30
-	.byte $38
-	.byte $28
-	.byte $0A
-	.byte $0E
-	.byte $2A
-	.byte $30
-	.byte $0A
-	.byte $2A
-	.byte $19
-	.byte $39
-	.byte $0E
-	.byte $11
-	.byte $3C
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $1C
-	.byte $2C
-	.byte $38
-	.byte $0E
-	.byte $37
-	.byte $27
-	.byte $18
-	.byte $0E
-	.byte $21
-	.byte $11
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $37
-	.byte $0C
-	.byte $1C
-	.byte $0E
-	.byte $38
-	.byte $27
-	.byte PlayerAnimationFrame
-	.byte $01
-	.byte $2C
-	.byte $1C
-	.byte $3C
-	.byte $01
-	.byte $30
-	.byte $38
-	.byte $28
-	.byte $01
-	.byte $00
-	.byte $10
-	.byte $30
-	.byte $01
-	.byte $38
-	.byte $27
-	.byte PlayerAnimationFrame
-	.byte $0E
-	.byte $11
-	.byte $21
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $00
-	.byte $10
-	.byte $30
-	.byte $0E
-	.byte $27
-	.byte PlayerAnimationFrame
-	.byte $37
-	.byte $30
-	.byte $11
-	.byte $2C
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $30
-	.byte $37
-	.byte $31
-	.byte $0E
-	.byte $30
-	.byte $30
-	.byte $2A
-	.byte $0A
-	.byte $30
-	.byte $11
-	.byte $21
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $30
-	.byte $37
-	.byte $2A
-	.byte $0A
-	.byte $30
-	.byte $0E
-	.byte $2A
-	.byte $1A
-	.byte $0E
-	.byte $11
-	.byte $3C
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $00
-	.byte $10
-	.byte $30
-	.byte $0E
-	.byte $27
-	.byte PlayerAnimationFrame
-	.byte $37
-	.byte $0E
-	.byte $2C
-	.byte $1C
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $1A
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $1A
-	.byte $0A
-	.byte $2A
-	.byte $0E
-	.byte $11
-	.byte $3C
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $0C
-	.byte $1C
-	.byte $2C
-	.byte $0E
-	.byte $37
-	.byte $27
-	.byte $18
-	.byte $01
-	.byte $2C
-	.byte $1C
-	.byte $3C
-	.byte $01
-	.byte $30
-	.byte $38
-	.byte $28
-	.byte $01
-	.byte $00
-	.byte $10
-	.byte $38
-	.byte $01
-	.byte $38
-	.byte $27
-	.byte PlayerAnimationFrame
-	.byte $0E
-	.byte $11
-	.byte $3C
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $00
-	.byte $10
-	.byte $20
-	.byte $0E
-	.byte $27
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $37
 	.byte $0E
 	.byte $01
@@ -4637,7 +4371,7 @@ tbl3_FA97:
 	.byte $30
 	.byte $0E
 	.byte $27
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $37
 	.byte $0E
 	.byte $21
@@ -4749,7 +4483,7 @@ tbl3_FA97:
 	.byte $20
 	.byte $0E
 	.byte $27
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $37
 	.byte $0E
 	.byte $11
@@ -4765,7 +4499,7 @@ tbl3_FA97:
 	.byte $30
 	.byte $0E
 	.byte $27
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $37
 	.byte $0E
 	.byte $11
@@ -4781,7 +4515,7 @@ tbl3_FA97:
 	.byte $30
 	.byte $0E
 	.byte $27
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $37
 	.byte $0E
 	.byte $11
@@ -4797,7 +4531,7 @@ tbl3_FA97:
 	.byte $30
 	.byte $0E
 	.byte $27
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $37
 	.byte $0E
 	.byte $2A
@@ -5495,16 +5229,16 @@ tbl3_FE8F:
 	.byte $01
 	.byte $01
 	.byte $01
-sub3_FFD0:
-	LDA #$05
-	STA $5800
-	STA $5801
+MapperProtection:
+	LDA #$05				;Use 5 for both values to multiply
+	STA M90_MULTIPLICAND	;First value to multiply (5)
+	STA M90_MULTIPLIER		;Multiplier (5)
 	LDA #$00
 	JSR sub3_F184
-bra3_FFDD:
-	LDA $5800
+MapperProtectLoop:
+	LDA M90_MULTIPLICAND	;Get product
 	CMP #$19
-	BNE bra3_FFDD
+	BNE MapperProtectLoop	;If the product isn't 25, send the game into a loop and prevent it from starting
 	RTS
 	.byte $01
 	.byte $01
@@ -5527,9 +5261,7 @@ bra3_FFDD:
 	.byte $01
 	.byte $02
 	.byte $01
-	.byte $3A
-	.byte $06
-	.byte $93
-	.byte $E1
-	.byte $BC
-	.byte $F6
+;Interrupt vectors
+	.dw $063A	;Unused?
+	.dw Reset
+	.dw IRQ

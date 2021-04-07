@@ -155,7 +155,7 @@ tbl6_811B:
 	STA $0578,X
 	BNE bra6_8151
 bra6_8139:
-	LDA $06
+	LDA FrameCount
 	AND #$04
 	BEQ bra6_8140
 	RTS
@@ -1152,7 +1152,7 @@ tbl6_8830:
 	.byte $12
 	.byte $10
 	.byte $13
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $16
 	.byte $19
@@ -2202,7 +2202,7 @@ tbl6_8DB8:
 	.byte $0A
 	.byte $FF
 	.byte $FF
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $19
 	.byte $FF
@@ -2540,7 +2540,7 @@ tbl6_8DB8:
 	.byte $09
 	.byte $0A
 	.byte $FF
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $19
 	.byte $FF
@@ -3037,7 +3037,7 @@ tbl6_8DB8:
 	.byte $FF
 	.byte $15
 	.byte $16
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $25
 	.byte $26
 	.byte $27
@@ -3085,7 +3085,7 @@ tbl6_8DB8:
 	.byte $27
 	.byte $15
 	.byte $16
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $07
 	.byte $08
 	.byte $FF
@@ -3536,42 +3536,42 @@ bra6_93E8:
 	LDX tbl6_95DE,Y
 	LDA tbl6_95F5,X
 	LDX $A4
-	STA ObjectXPos2,X
+	STA ObjectXPos+1,X
 	LDA #$0D
-	STA ObjectXScreen2,X
+	STA ObjectXScreen+1,X
 	LDX tbl6_95DE,Y
 	LDA tbl6_95FC,X
 	LDX $A4
-	STA ObjectYPos2,X
+	STA ObjectYPos+1,X
 	LDA #$01
-	STA ObjectYScreen2,X
+	STA ObjectYScreen+1,X
 	LDA #$73
-	STA ObjectSlot2,X
+	STA ObjectSlot+1,X
 	LDA #$2C
-	STA EnemyAnimFrame2,X
+	STA EnemyAnimFrame+1,X
 	LDX tbl6_95DF,Y
 	LDA tbl6_95F5,X
 	LDX $A4
-	STA ObjectXPos3,X
+	STA ObjectXPos+2,X
 	LDA #$0D
-	STA ObjectXScreen3,X
+	STA ObjectXScreen+2,X
 	LDX tbl6_95DF,Y
 	LDA tbl6_95FC,X
 	LDX $A4
-	STA ObjectYPos3,X
+	STA ObjectYPos+2,X
 	LDA #$01
-	STA ObjectYScreen3,X
+	STA ObjectYScreen+2,X
 	LDA #$75
-	STA ObjectSlot3,X
+	STA ObjectSlot+2,X
 	LDA #$2C
-	STA EnemyAnimFrame3,X
+	STA EnemyAnimFrame+2,X
 	LDA #$00
 	STA ObjectState,X
-	STA ObjectState2,X
-	STA ObjectState3,X
+	STA ObjectState+1,X
+	STA ObjectState+2,X
 	STA GuidedObjStatus,X
-	STA GuidedObjStatus2,X
-	STA GuidedObjStatus3,X
+	STA GuidedObjStatus+1,X
+	STA GuidedObjStatus+2,X
 	STA $0641,X
 	STA $0642,X
 	STA $0643,X
@@ -4463,7 +4463,7 @@ bra6_9AB6:
 	LDA #$01
 	STA FreezeFlag
 	LDY #$00
-	LDA $06
+	LDA FrameCount
 	AND #$08
 	BNE bra6_9AC4
 	INY
@@ -4518,7 +4518,7 @@ bra6_9B0E:
 	RTS
 bra6_9B28:
 	LDY #$00
-	LDA $06
+	LDA FrameCount
 	AND #$08
 	BNE bra6_9B31
 	INY
@@ -4566,7 +4566,7 @@ bra6_9B7A_RTS:
 	STA EnemyAnimFrame,X
 	LDA Player1YoshiStatus
 	BNE bra6_9BD6_RTS
-	LDA PlayerCarryFlag
+	LDA PlayerHoldFlag
 	BNE bra6_9BD6_RTS
 	LDA $05B4,X
 	BPL bra6_9B99
@@ -4907,14 +4907,14 @@ tbl6_9CAD:
 	.byte $16
 	.byte $16
 	.byte $16
-	.byte PlayerAnimationFrame
-	.byte PlayerAnimationFrame
-	.byte PlayerAnimationFrame
-	.byte PlayerAnimationFrame
-	.byte PlayerAnimationFrame
-	.byte PlayerAnimationFrame
-	.byte PlayerAnimationFrame
-	.byte PlayerAnimationFrame
+	.byte $17
+	.byte $17
+	.byte $17
+	.byte $17
+	.byte $17
+	.byte $17
+	.byte $17
+	.byte $17
 	.byte $18
 	.byte $18
 	.byte $18

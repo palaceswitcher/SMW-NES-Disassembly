@@ -1,7 +1,7 @@
 ;disassembled by BZK 6502 Disassembler
 	.incbin tilesets/ts_unused3.bin
 	
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $00
 	.byte $00
 	.byte $00
@@ -97,7 +97,7 @@
 	LDA $05DC,X
 	ADC #$00
 	STA $05DC,X
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $00
 	.byte $00
 bra14_8683:
@@ -136,10 +136,10 @@ bra14_8694:
 	.byte $00
 	.byte $00
 	LDA tbl14_86B1,Y
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA $86B2,Y
-	STA PCPointerUpperByte
-	JMP (PCPointerLowerByte)
+	STA PCPointerHiByte
+	JMP (PCPointerLoByte)
 tbl14_86B1:
 	SBC #$86
 	LDA $86,X
@@ -149,7 +149,7 @@ tbl14_86B1:
 	BCC bra14_86C0
 	LDY #$02
 bra14_86C0:
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $00
 	.byte $00
 	.byte $00
@@ -249,7 +249,7 @@ bra14_874F:
 	INY
 bra14_8759:
 	STY $25
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BNE bra14_8766
 	LDA $25
@@ -455,9 +455,9 @@ bra14_8EC2:
 	ASL
 	TAX
 	LDA tbl14_8EFC,X
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA tbl14_8EFD,X
-	STA PCPointerUpperByte
+	STA PCPointerHiByte
 	LDY #$80
 	LDX $A4
 	LDA ObjectSlot,X
@@ -475,7 +475,7 @@ tbl14_8EFC:
 	.byte $00
 tbl14_8EFD:
 	.byte $8F
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $8F
 	.byte $04
 	.byte $05
@@ -529,9 +529,9 @@ tbl14_8EFD:
 	ASL
 	TAX
 	LDA tbl14_8F66,X
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA tbl14_8F67,X
-	STA PCPointerUpperByte
+	STA PCPointerHiByte
 	LDY #$80
 	LDX $A4
 	LDA ObjectSlot,X
@@ -728,74 +728,74 @@ bra14_9619:
 	STA GuidedObjStatus,Y
 	STA ObjectState,Y
 	LDA ObjectXPos,X
-	STA ObjectXPos2,Y
+	STA ObjectXPos+1,Y
 	LDA ObjectXScreen,X
-	STA ObjectXScreen2,Y
+	STA ObjectXScreen+1,Y
 	LDA ObjectYPos,X
 	CLC
 	ADC #$48
-	STA ObjectYPos2,Y
+	STA ObjectYPos+1,Y
 	LDA ObjectYScreen,X
 	ADC #$00
-	STA ObjectYScreen2,Y
+	STA ObjectYScreen+1,Y
 	LDA #$00
 	STA $0579,Y
 	LDA #$BC
-	STA ObjectSlot2,Y
+	STA ObjectSlot+1,Y
 	LDA #$40
-	STA EnemyAnimFrame2,Y
+	STA EnemyAnimFrame+1,Y
 	LDA #$01
-	STA GuidedObjStatus2,Y
+	STA GuidedObjStatus+1,Y
 	LDA #$00
-	STA ObjectState2,Y
+	STA ObjectState+1,Y
 	LDA ObjectXPos,X
 	CLC
 	ADC #$20
-	STA ObjectXPos3,Y
+	STA ObjectXPos+2,Y
 	LDA ObjectXScreen,X
 	ADC #$00
-	STA ObjectXScreen3,Y
+	STA ObjectXScreen+2,Y
 	LDA ObjectYPos,X
 	CLC
 	ADC #$30
-	STA ObjectYPos3,Y
+	STA ObjectYPos+2,Y
 	LDA ObjectYScreen,X
 	ADC #$00
-	STA ObjectYScreen3,Y
+	STA ObjectYScreen+2,Y
 	LDA #$00
 	STA $057A,Y
 	LDA #$BC
-	STA ObjectSlot3,Y
+	STA ObjectSlot+2,Y
 	LDA #$84
-	STA EnemyAnimFrame3,Y
+	STA EnemyAnimFrame+2,Y
 	LDA #$02
-	STA GuidedObjStatus3,Y
+	STA GuidedObjStatus+2,Y
 	LDA #$00
-	STA ObjectState3,Y
+	STA ObjectState+2,Y
 	LDA ObjectXPos,X
 	CLC
 	ADC #$20
-	STA ObjectXPos4,Y
+	STA ObjectXPos+3,Y
 	LDA ObjectXScreen,X
 	ADC #$00
-	STA ObjectXScreen4,Y
+	STA ObjectXScreen+3,Y
 	LDA ObjectYPos,X
 	CLC
 	ADC #$48
-	STA ObjectYPos4,Y
+	STA ObjectYPos+3,Y
 	LDA ObjectYScreen,X
 	ADC #$00
-	STA ObjectYScreen4,Y
+	STA ObjectYScreen+3,Y
 	LDA #$00
 	STA $057B,Y
 	LDA #$BC
-	STA ObjectSlot4,Y
+	STA ObjectSlot+3,Y
 	LDA #$00
-	STA EnemyAnimFrame4,Y
+	STA EnemyAnimFrame+3,Y
 	LDA #$03
-	STA GuidedObjStatus4,Y
+	STA GuidedObjStatus+3,Y
 	LDA #$00
-	STA ObjectState4,Y
+	STA ObjectState+3,Y
 	RTS
 loc14_970B_RTS:
 	RTS
@@ -891,10 +891,10 @@ bra14_97CA:
 	ASL
 	TAY
 	LDA tbl14_97DC,Y
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA tbl14_97DD,Y
-	STA PCPointerUpperByte
-	JMP (PCPointerLowerByte)
+	STA PCPointerHiByte
+	JMP (PCPointerLoByte)
 tbl14_97DC:
 	.byte $E2
 tbl14_97DD:

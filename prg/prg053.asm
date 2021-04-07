@@ -3,7 +3,7 @@
 	SEC
 	SBC PlayerXPosDup
 	STA $05F9
-	LDA $05F3
+	LDA YoshiXScreen
 	SBC PlayerXScreenDup
 	STA $05FA
 	BEQ bra7_8018
@@ -11,15 +11,15 @@
 	BEQ bra7_8018
 	RTS
 bra7_8018:
-	LDA $05F4
+	LDA YoshiYPos
 	SEC
 	SBC PlayerYPosDup
 	STA $05FB
-	LDA $05F5
+	LDA YoshiYScreen
 	SBC PlayerYScreenDup
 	STA $05FC
 	LDA PlayerYScreenDup
-	CMP $05F5
+	CMP YoshiYScreen
 	BEQ bra7_805A
 	LDA $05FC
 	BPL bra7_8049
@@ -41,7 +41,7 @@ bra7_8049:
 	STA $05FC
 bra7_805A:
 loc7_805A:
-	LDA YoshiXScreen
+	LDA YoshiUnmountedState
 	AND #$7F
 	ASL
 	TAY
@@ -63,7 +63,7 @@ tbl7_806F:
 	.byte $97
 	.byte $81
 	.byte $60
-	LDA $06
+	LDA FrameCount
 	AND #$07
 	BNE bra7_80905_RTS
 	LDA $05F6
@@ -76,7 +76,7 @@ tbl7_806F:
 bra7_80905_RTS:
 	RTS
 bra7_8091:
-	INC YoshiXScreen
+	INC YoshiUnmountedState
 	LDA $05F6
 	AND #$F0
 	STA $05F6
@@ -100,13 +100,13 @@ tbl7_80A2:
 	JSR $B758
 	BNE bra7_80C5
 	LDA #$04
-	STA YoshiXScreen
+	STA YoshiUnmountedState
 	LDA #$00
 	STA $05F7
 	RTS
 bra7_80C5:
 	JSR sub7_820C
-	LDA $06
+	LDA FrameCount
 	AND #$03
 	BEQ bra7_80CF
 	RTS
@@ -122,7 +122,7 @@ bra7_80CF:
 	LDY #$00
 	LDA $8127
 bra7_80E7:
-	LDX $0621
+	LDX YoshiIdleStorage
 	CPX #$01
 	BEQ bra7_80F0
 	LDA #$09
@@ -131,26 +131,26 @@ bra7_80F0:
 	LDA tbl7_813C,Y
 	BMI bra7_8111
 	CLC
-	ADC $05F4
-	STA $05F4
+	ADC YoshiYPos
+	STA YoshiYPos
 	BCS bra7_8105
 	CMP #$F0
 	BCC bra7_8123
 bra7_8105:
 	CLC
 	ADC #$10
-	STA $05F4
-	INC $05F5
+	STA YoshiYPos
+	INC YoshiYScreen
 	JMP loc7_8123
 bra7_8111:
 	CLC
-	ADC $05F4
-	STA $05F4
+	ADC YoshiYPos
+	STA YoshiYPos
 	BCS bra7_8123
 	SEC
 	SBC #$10
-	STA $05F4
-	DEC $05F5
+	STA YoshiYPos
+	DEC YoshiYScreen
 bra7_8123:
 loc7_8123:
 	INC $05F6
@@ -201,7 +201,7 @@ tbl7_813C:
 	LDA #$22
 	JSR $B5CD
 	JSR sub7_820C
-	LDA $06
+	LDA FrameCount
 	AND #$03
 	BNE bra7_81895_RTS
 	LDA $05F6
@@ -215,7 +215,7 @@ tbl7_813C:
 	LDY #$00
 	LDA $818A
 bra7_8176:
-	LDX $0621
+	LDX YoshiIdleStorage
 	CPX #$01
 	BEQ bra7_8183
 	TYA
@@ -254,16 +254,16 @@ bra7_81AD:
 	LDA $05F7
 	BMI bra7_81CB
 	CLC
-	ADC $05F4
-	STA $05F4
+	ADC YoshiYPos
+	STA YoshiYPos
 	BCS bra7_81BF
 	CMP #$F0
 	BCC bra7_81DD5_RTS
 bra7_81BF:
 	CLC
 	ADC #$10
-	STA $05F4
-	INC $05F5
+	STA YoshiYPos
+	INC YoshiYScreen
 	JMP loc7_81DD5_RTS
 bra7_81CB:
 	.byte $18
@@ -292,15 +292,15 @@ bra7_81DE:
 	AND #$0F
 	STA $25
 	LDX $A4
-	LDA $05F4
+	LDA YoshiYPos
 	SEC
 	SBC $25
 	BCS bra7_81F4
-	DEC $05F5
+	DEC YoshiYScreen
 	SEC
 	SBC #$10
 bra7_81F4:
-	STA $05F4
+	STA YoshiYPos
 	LDA #$00
 	STA $05F7
 	LDY #$02
@@ -310,12 +310,12 @@ bra7_81F4:
 	STA $50
 	LDY #$03
 bra7_8208:
-	STY YoshiXScreen
+	STY YoshiUnmountedState
 	RTS
 sub7_820C:
-	LDA PlayerCarryFlag
+	LDA PlayerHoldFlag
 	BNE bra7_827B5_RTS
-	LDA $0622
+	LDA YoshiIdleMovement
 	AND #$40
 	BNE bra7_8222
 	LDA YoshiXPos
@@ -329,7 +329,7 @@ bra7_8222:
 	ADC #$24
 	PHA
 loc7_8229:
-	LDA $05F3
+	LDA YoshiXScreen
 	ADC #$00
 	STA $34
 	PLA
@@ -342,11 +342,11 @@ loc7_8229:
 	LDA $32
 	CMP #$14
 	BCS bra7_826C
-	LDA $05F4
+	LDA YoshiYPos
 	CLC
 	ADC #$10
 	PHA
-	LDA $05F5
+	LDA YoshiYScreen
 	ADC #$00
 	STA $34
 	PLA
@@ -369,7 +369,7 @@ bra7_826C:
 	CMP #$07
 	BNE bra7_827B5_RTS
 	LDA #$00
-	STA YoshiXScreen
+	STA YoshiUnmountedState
 	LDA #$0D
 	STA SFXRegister
 bra7_827B5_RTS:
@@ -380,7 +380,7 @@ bra7_827B5_RTS:
 	BEQ bra7_8286
 	RTS
 bra7_8286:
-	LDA YoshiXScreen
+	LDA YoshiUnmountedState
 	BNE bra7_828C
 	RTS
 bra7_828C:
@@ -679,7 +679,7 @@ loc7_83EE:
 	JSR $BD3D
 	LDA Player1YoshiStatus
 	BNE bra7_83FB
-	LDA YoshiXScreen
+	LDA YoshiUnmountedState
 	BEQ bra7_840B
 bra7_83FB:
 	LDA #$05
@@ -690,7 +690,7 @@ bra7_83FB:
 	STA ObjectState,X
 	RTS
 bra7_840B:
-	LDA $06
+	LDA FrameCount
 	AND #$03
 	BNE bra7_8416
 	LDA #$01
@@ -749,14 +749,14 @@ loc7_8474:
 	STA ObjectSlot,X
 	STA $05F7
 	STA $05F6
-	STA $0622
+	STA YoshiIdleMovement
 	STA YoshiAnimation
 	LDA #$01
-	STA YoshiXScreen
+	STA YoshiUnmountedState
 	LDA ObjectXPos,X
 	STA YoshiXPos
 	LDA ObjectXScreen,X
-	STA $05F3
+	STA YoshiXScreen
 	SEC
 	LDA ObjectYPos,X
 	CMP #$10
@@ -766,10 +766,10 @@ loc7_8474:
 bra7_84B1:
 	SBC #$10
 loc7_84B3:
-	STA $05F4
+	STA YoshiYPos
 	LDA ObjectYScreen,X
 	SBC #$00
-	STA $05F5
+	STA YoshiYScreen
 	LDA #$0D
 	STA SFXRegister
 bra7_84C25_RTS:
@@ -892,14 +892,14 @@ tbl7_85AB:
 	.byte $AB
 	.byte $B8
 	.byte $85
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $AE
 	.byte $89
 	.byte $86
 	.byte $95
 	.byte $86
 	JSR $AB92
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra7_85C6
 	LDA #$27
@@ -1001,14 +1001,14 @@ bra7_867E:
 bra7_86885_RTS:
 loc7_86885_RTS:
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra7_86945_RTS
 	LDA #$26
 	JSR $B1DA
 bra7_86945_RTS:
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra7_86A0
 	LDA #$04
@@ -1130,7 +1130,7 @@ tbl7_8772:
 	.byte $AB
 	.byte $89
 	.byte $87
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $AE
 	.byte $4C
 	.byte $88
@@ -1147,7 +1147,7 @@ tbl7_8772:
 	.byte $C1
 	.byte $89
 	JSR $AB92
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra7_8797
 	LDA #$27
@@ -1243,7 +1243,7 @@ bra7_8841:
 bra7_884B5_RTS:
 loc7_884B5_RTS:
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra7_8857
 	LDA #$26
@@ -1297,7 +1297,7 @@ loc7_88B5:
 	RTS
 bra7_88BB5_RTS:
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra7_88C7
 	LDA #$27
@@ -1353,7 +1353,7 @@ bra7_892B:
 	LDX $A4
 	INC ObjectState,X
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra7_893C
 	LDA #$27
@@ -1423,7 +1423,7 @@ bra7_89B1:
 	LDA #$04
 	STA SFXRegister
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra7_89CC
 	LDA #$27
@@ -1494,7 +1494,7 @@ bra7_8A30:
 	LDA #$00
 	STA ObjectState,X
 	STA $0578,X
-	STA PlayerCarryFlag
+	STA PlayerHoldFlag
 	STA $0641,X
 	RTS
 bra7_8A60:
@@ -1623,7 +1623,7 @@ bra7_8B3F:
 	BEQ bra7_8B15
 	INC ObjectState,X
 	INC ObjectState,X
-	LDA PlayerCarryFlag
+	LDA PlayerHoldFlag
 	BNE bra7_8B335_RTS
 	LDA #$15
 	STA SFXRegister
@@ -1648,7 +1648,7 @@ bra7_8B74:
 	LDA #$80
 	STA $0578,X
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra7_8B88
 	LDA #$04
@@ -1658,7 +1658,7 @@ bra7_8B88:
 	JSR $AEA8
 	JSR $AD54
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra7_8B9C5_RTS
 	LDA #$27
@@ -1672,7 +1672,7 @@ bra7_8B9C5_RTS:
 	BNE bra7_8BAB
 	JMP loc7_8C42
 bra7_8BAB:
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra7_8BB6
 	LDA #$25
@@ -1949,7 +1949,7 @@ loc7_8DD0:
 	AND #$0F
 	CMP #$04
 	BCS bra7_8DE95_RTS
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BNE bra7_8DE95_RTS
 	LDA #$0B
@@ -1992,7 +1992,7 @@ tbl7_8E03:
 	LDA $0578,X
 	CMP #$0E
 	BCS bra7_8E34
-	LDA $06
+	LDA FrameCount
 	AND #$03
 	BNE bra7_8E335_RTS
 	LDA #$05
@@ -2018,7 +2018,7 @@ bra7_8E34:
 	CMP #$02
 	BNE bra7_8E7F
 bra7_8E5B:
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra7_8E66
 	LDA #$06
@@ -2057,7 +2057,7 @@ bra7_8E8B:
 	CMP #$02
 	BNE bra7_8ECC
 bra7_8EA8:
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra7_8EB3
 	LDA #$06
@@ -2367,7 +2367,7 @@ bra7_912E:
 	AND #$0F
 	CMP #$04
 	BCS bra7_91485_RTS
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BNE bra7_91485_RTS
 	LDA #$0B
@@ -2411,7 +2411,7 @@ tbl7_9162:
 	LDA ObjectSlot,X
 	CMP #$39
 	BNE bra7_9196
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra7_91955_RTS
 	LDA #$2A
@@ -2419,7 +2419,7 @@ tbl7_9162:
 bra7_91955_RTS:
 	RTS
 bra7_9196:
-	LDA $06
+	LDA FrameCount
 	AND #$03
 	BNE bra7_91A15_RTS
 	LDA #$05
@@ -2482,7 +2482,7 @@ loc7_9210:
 	RTS
 bra7_9216:
 	JSR $BD3D
-	LDA $06
+	LDA FrameCount
 	AND #$03
 	BNE bra7_9224
 	LDA #$0C
@@ -2626,7 +2626,7 @@ loc7_932E:
 	RTS
 bra7_9334:
 	JSR $BD3D
-	LDA $06
+	LDA FrameCount
 	AND #$03
 	BNE bra7_9342
 	LDA #$0D
@@ -2768,7 +2768,7 @@ bra7_9447:
 	AND #$0F
 	CMP #$04
 	BCS bra7_94615_RTS
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BNE bra7_94615_RTS
 	LDA #$0E
@@ -2810,7 +2810,7 @@ tbl7_947B:
 	LDA $0578,X
 	CMP #$0E
 	BCS bra7_94AA
-	LDA $06
+	LDA FrameCount
 	AND #$03
 	BNE bra7_94A95_RTS
 	LDA #$05
@@ -3024,7 +3024,7 @@ tbl7_95AC:
 	.byte $02
 	.byte $02
 	.byte $90
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $1F
 	.byte $20
@@ -3063,7 +3063,7 @@ tbl7_95AC:
 	.byte $01
 	.byte $01
 	.byte $84
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $02
 	.byte $02
 	.byte $90
@@ -3275,7 +3275,7 @@ bra7_979B5_RTS:
 	RTS
 	JSR sub7_9792
 	LDY #$07
-	LDA $06
+	LDA FrameCount
 	AND #$08
 	BEQ bra7_97A9
 	LDY #$0A
@@ -3553,7 +3553,7 @@ tbl7_9987:
 	.byte $99
 	.byte $BF
 	.byte $99
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra7_999B
 	LDA #$29
@@ -4110,7 +4110,7 @@ tbl7_9D8A:
 	.byte $9D
 	.byte $88
 	.byte $AD
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BNE bra7_9D9E
 	LDA #$25

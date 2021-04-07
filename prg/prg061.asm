@@ -954,14 +954,14 @@ tbl6_A200:
 	.byte $16
 	.byte $16
 	.byte $16
-	.byte PlayerAnimationFrame
-	.byte PlayerAnimationFrame
-	.byte PlayerAnimationFrame
-	.byte PlayerAnimationFrame
-	.byte PlayerAnimationFrame
-	.byte PlayerAnimationFrame
-	.byte PlayerAnimationFrame
-	.byte PlayerAnimationFrame
+	.byte $17
+	.byte $17
+	.byte $17
+	.byte $17
+	.byte $17
+	.byte $17
+	.byte $17
+	.byte $17
 	.byte $18
 	.byte $18
 	.byte $18
@@ -1540,7 +1540,7 @@ tbl6_A200:
 	.byte $23
 sub6_A600:
 	LDY $2B
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	BNE bra6_A607
 	RTS
 bra6_A607:
@@ -1550,7 +1550,7 @@ bra6_A607:
 	ADC #$10
 	STA $2C
 	TAY
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	CMP #$FF
 	BEQ bra6_A683
 	STA $3F
@@ -1582,7 +1582,7 @@ bra6_A607:
 	LDA #$00
 	STA ObjectYScreen,X
 	LDY $2C
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	AND #$F0
 	STA ObjectYPos,X
 	BEQ bra6_A664
@@ -1606,7 +1606,7 @@ bra6_A683:
 	ADC #$20
 	TAY
 	STY $2C
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	CMP #$FF
 	BEQ bra6_A704_RTS
 	STA $3F
@@ -1640,7 +1640,7 @@ bra6_A683:
 	LDA #$01
 	STA ObjectYScreen,X
 	LDY $2C
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	AND #$F0
 	STA ObjectYPos,X
 	BEQ bra6_A6E5
@@ -1976,7 +1976,7 @@ tbl6_A849:
 	.byte $74
 	.byte $00
 	.byte $12
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $C2
 	.byte $1A
 	.byte $0B
@@ -2951,7 +2951,7 @@ tbl6_AABA:
 	.byte $02
 	.byte $16
 	.byte $84
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -3384,11 +3384,11 @@ bra6_AE17_RTS:
 	LDA ButtonsPressed
 	AND #$80
 	BEQ bra6_AE2D
-	INC ScrollStatus
+	INC ScrollSpeed
 	LDA #$08
-	CMP ScrollStatus
+	CMP ScrollSpeed
 	BCS bra6_AE2C_RTS
-	STA ScrollStatus
+	STA ScrollSpeed
 bra6_AE2C_RTS:
 	RTS
 bra6_AE2D:
@@ -3403,25 +3403,25 @@ bra6_AE2D:
 bra6_AE41_RTS:
 	RTS
 bra6_AE42:
-	LDA ScrollStatus
+	LDA ScrollSpeed
 	AND #$07
-	STA ScrollStatus
+	STA ScrollSpeed
 	LDA $0327
 	AND #$07
 	STA $0327
 	LDA ButtonsHeld
 	AND #$01
 	BEQ bra6_AE61
-	LDA ScrollStatus
+	LDA ScrollSpeed
 	AND #$7F
-	STA ScrollStatus
+	STA ScrollSpeed
 bra6_AE61:
 	LDA ButtonsHeld
 	AND #$02
 	BEQ bra6_AE70
-	LDA ScrollStatus
+	LDA ScrollSpeed
 	ORA #$80
-	STA ScrollStatus
+	STA ScrollSpeed
 bra6_AE70:
 	LDA ButtonsHeld
 	AND #$04
@@ -3623,10 +3623,10 @@ loc6_AF72:
 	EOR #$FF
 	STA $25
 	LDY $5C
-	LDA $0400,Y
+	LDA TileAttributes,Y
 	AND $25
 	ORA $37
-	STA $0400,Y
+	STA TileAttributes,Y
 bra6_AFB4:
 	INC $9C
 	LDA $9C
@@ -3676,7 +3676,7 @@ bra6_AFF8:
 	LDX #$00
 bra6_B005:
 	LDY $5C
-	LDA $0400,Y
+	LDA TileAttributes,Y
 	STA $04C3,X
 	TYA
 	AND #$3F
@@ -3749,9 +3749,9 @@ bra6_B06A:
 	TAY
 	AND #$1F
 	ORA #$80
-	STA PCPointerUpperByte
+	STA PCPointerHiByte
 	LDA #$00
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	TYA
 	AND #$20
 	BNE bra6_B08F
@@ -3774,7 +3774,7 @@ loc6_B095:
 	TAY
 	STA $2B
 bra6_B0A6:
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	BPL bra6_B0DF
 	STY $2B
 	STA $25
@@ -3877,10 +3877,10 @@ sub6_B126:
 	EOR #$FF
 	STA $25
 	LDY $5C
-	LDA $0400,Y
+	LDA TileAttributes,Y
 	AND $25
 	ORA $37
-	STA $0400,Y
+	STA TileAttributes,Y
 	RTS
 	LDA $59
 	TAY
@@ -3919,6 +3919,7 @@ bra6_B178:
 	STA $0482
 bra6_B19D_RTS:
 	RTS
+jmp_61_B19E:
 	JSR sub6_AEB8
 	LDA WorldNumber
 	ASL
@@ -3926,12 +3927,12 @@ bra6_B19D_RTS:
 	STA $34
 	ASL
 	ASL
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA LevelNumber
 	ASL
 	ASL
 	CLC
-	ADC PCPointerLowerByte
+	ADC PCPointerLoByte
 	TAX
 	LDA $34
 	CLC
@@ -3954,7 +3955,7 @@ bra6_B1C6:
 	AND #$C0
 	STA $061D
 	LDA #$E8
-	STA $061A
+	STA BubbleYPos
 	LDA tbl6_B5E8,X
 	AND #$20
 	STA $06E0
@@ -3973,7 +3974,7 @@ bra6_B1FD:
 	AND #$C0
 	STA $061D
 	LDA #$E8
-	STA $061A
+	STA BubbleYPos
 	LDA tbl6_B56C,X
 	AND #$20
 	STA $06E0
@@ -4011,28 +4012,28 @@ bra6_B25D:
 	LDA $06A2,X
 	BEQ bra6_B26D
 	LDA tbl6_B76E,Y
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA tbl6_B76F,Y
 	JMP loc6_B275
 bra6_B26D:
 	LDA tbl6_B676,Y
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA tbl6_B677,Y
 loc6_B275:
-	STA PCPointerUpperByte
+	STA PCPointerHiByte
 	LDA LevelNumber
 	ASL
 	ASL
 	ASL
 	TAY
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	STA $51
 	STA PlayerWallColPos
 	LDA #$00
 	STA $52
 	STA $65
 	INY
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	STA $53
 	ASL
 	STA $5B
@@ -4043,26 +4044,26 @@ loc6_B275:
 	LDA $51
 	STA PlayerXScreen
 	INY
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	STA PlayerXPos
 	STA PlayerSprXPos
 	LDA $53
 	STA PlayerYScreen
 	INY
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	STA PlayerYPos
 	STA PlayerSprYPos
 	INY
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	STA $060F
 	INY
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	STA $0610
 	INY
-	LDA (PCPointerLowerByte),Y
-	STA $060D
+	LDA (PCPointerLoByte),Y
+	STA VertScrollLock
 	INY
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	STA $060E
 	LDA #$01
 	STA InterruptMode
@@ -4105,12 +4106,12 @@ bra6_B317:
 	BCC bra6_B317
 	LDA CurrentPlayer
 	BNE bra6_B337
-	LDA $06DA
+	LDA P1PowerupBackup
 	STA PlayerPowerup
-	LDA $0393
+	LDA P1YoshiBackup
 	STA Player1YoshiStatus
 	STA Player2YoshiStatus
-	STA $0621
+	STA YoshiIdleStorage
 	RTS
 bra6_B337:
 	LDA $06DB
@@ -4118,7 +4119,7 @@ bra6_B337:
 	LDA $0394
 	STA Player1YoshiStatus
 	STA Player2YoshiStatus
-	STA $0621
+	STA YoshiIdleStorage
 	RTS
 sub6_B34A:
 	CMP #$32
@@ -4155,6 +4156,7 @@ bra6_B365:
 	LDA #$3F
 	STA M90_PRG3
 	RTS
+jmp_61_B38E:
 	LDA PPUStatus
 	LDA $00
 	AND #$7F
@@ -4272,7 +4274,7 @@ bra6_B461:
 	STA PPUAddr
 	LDX #$00
 bra6_B470:
-	LDA $0400,X
+	LDA TileAttributes,X
 	STA PPUData
 	INX
 	CPX #$40
@@ -4284,7 +4286,7 @@ bra6_B470:
 	STA PPUAddr
 bra6_B488:
 	JSR sub6_B4B1
-	LDA $0400,X
+	LDA TileAttributes,X
 	STA PPUData
 	INX
 	CPX #$80
@@ -4663,10 +4665,10 @@ tbl6_B5EB:
 	.byte $15
 	.byte $21
 	.byte $16
-	.byte PlayerAnimationFrame
-	.byte PlayerAnimationFrame
+	.byte $17
+	.byte $17
 	.byte $21
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $18
 	.byte $22
@@ -5329,7 +5331,7 @@ bra6_B92F:
 	ADC #$00
 	STA $58
 bra6_B951:
-	LDA $060D
+	LDA VertScrollLock
 	CMP $57
 	BNE bra6_B96B
 	LDA #$00
@@ -5405,18 +5407,18 @@ sub6_B9CF:
 	SEC
 	LDA $56
 	SBC $52
-	STA ScrollStatus
+	STA ScrollSpeed
 	LDA $55
 	SBC $51
 	BPL bra6_B9EA
-	LDA ScrollStatus
+	LDA ScrollSpeed
 	EOR #$FF
 	SEC
 	ADC #$00
 	ORA #$80
-	STA ScrollStatus
+	STA ScrollSpeed
 bra6_B9EA:
-	LDA ScrollStatus
+	LDA ScrollSpeed
 	BEQ bra6_BA20_RTS
 	LDA $52
 	EOR $56
@@ -5430,7 +5432,7 @@ bra6_B9EA:
 	STA $66
 	LDA #$00
 	STA $67
-	LDA ScrollStatus
+	LDA ScrollSpeed
 	BMI bra6_BA18
 	INC $64
 	JSR sub6_AF11
@@ -5445,7 +5447,7 @@ bra6_BA18:
 bra6_BA20_RTS:
 	RTS
 sub6_BA21:
-	LDA ScrollStatus
+	LDA ScrollSpeed
 	BMI bra6_BA34
 	CLC
 	ADC $02
@@ -5457,10 +5459,10 @@ sub6_BA21:
 	RTS
 bra6_BA34:
 	AND #$7F
-	STA ScrollStatus
+	STA ScrollSpeed
 	LDA $02
 	SEC
-	SBC ScrollStatus
+	SBC ScrollSpeed
 	STA $02
 	LDA $56
 	STA $52
@@ -5590,14 +5592,14 @@ bra6_BB0D:
 	BEQ bra6_BB34_RTS
 	LDA $03A1
 	BNE bra6_BB34_RTS
-	LDA $037D
+	LDA HUDUpdate
 	ASL
 	TAY
 	LDA tbl6_BB35,Y
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA tbl6_BB36,Y
-	STA PCPointerUpperByte
-	JMP (PCPointerLowerByte)
+	STA PCPointerHiByte
+	JMP (PCPointerLoByte)
 bra6_BB34_RTS:
 	RTS
 tbl6_BB35:
@@ -5613,7 +5615,7 @@ tbl6_BB36:
 	.byte $EF
 	.byte $BB
 	JSR sub6_BC1F
-	INC $037D
+	INC HUDUpdate
 	LDX #$00
 	LDA CurrentPlayer
 	BEQ bra6_BB4E
@@ -5636,7 +5638,7 @@ bra6_BB62:
 	BPL bra6_BB62
 	RTS
 	JSR sub6_BC1F
-	INC $037D
+	INC HUDUpdate
 	LDX #$04
 	LDA #$00
 bra6_BB77:
@@ -5661,10 +5663,10 @@ bra6_BB91:
 bra6_BB99_RTS:
 	RTS
 	JSR sub6_BC1F
-	INC $037D
-	LDA $036E
+	INC HUDUpdate
+	LDA LevelTimerLo
 	STA $34
-	LDA $036F
+	LDA LevelTimerHi
 	STA $35
 	LDA #$0B
 	STA $26
@@ -5679,7 +5681,7 @@ bra6_BBB5:
 	BPL bra6_BBB5
 	RTS
 	JSR sub6_BC1F
-	INC $037D
+	INC HUDUpdate
 	LDX #$00
 	LDA CurrentPlayer
 	BEQ bra6_BBCF
@@ -5703,7 +5705,7 @@ bra6_BBE4:
 	RTS
 	JSR sub6_BC1F
 	LDA #$00
-	STA $037D
+	STA HUDUpdate
 	LDX #$00
 	LDA CurrentPlayer
 	BEQ bra6_BC00
@@ -5726,7 +5728,7 @@ bra6_BC14:
 	BPL bra6_BC14
 	RTS
 sub6_BC1F:
-	LDA $037D
+	LDA HUDUpdate
 	ASL
 	ASL
 	TAX
@@ -5771,7 +5773,7 @@ sub6_BC52:
 	STA $38
 bra6_BC5C:
 	JSR sub6_BC83
-	LDA PCPointerLowerByte
+	LDA PCPointerLoByte
 	CLC
 	ADC $26
 	LDY $25
@@ -5793,24 +5795,24 @@ bra6_BC82_RTS:
 	RTS
 sub6_BC83:
 	LDA #$00
-	STA PCPointerLowerByte
-	STA PCPointerUpperByte
+	STA PCPointerLoByte
+	STA PCPointerHiByte
 	LDX #$10
 bra6_BC8B:
 	ASL $34
 	ROL $35
-	ROL PCPointerLowerByte
-	ROL PCPointerUpperByte
-	LDA PCPointerLowerByte
+	ROL PCPointerLoByte
+	ROL PCPointerHiByte
+	LDA PCPointerLoByte
 	SEC
 	SBC $38
 	TAY
-	LDA PCPointerUpperByte
+	LDA PCPointerHiByte
 	SBC $39
 	BCC bra6_BCA5
 	INC $34
-	STA PCPointerUpperByte
-	STY PCPointerLowerByte
+	STA PCPointerHiByte
+	STY PCPointerLoByte
 bra6_BCA5:
 	DEX
 	BNE bra6_BC8B
@@ -6268,6 +6270,7 @@ tbl6_BE75:
 	.byte $20
 	.byte $40
 	.byte $80
+jmp_61_BE85:
 	LDA #$00
 	STA MusicRegister
 	STA $02
@@ -6287,7 +6290,7 @@ tbl6_BE75:
 	JSR sub6_BEBE
 	JSR $F176
 	LDA #$18
-	STA PPUMaskControl
+	STA PPUMaskRegister
 	LDA #$88
 	STA PPUCtrl
 	STA $00
@@ -6327,16 +6330,16 @@ tbl6_BED6:
 sub6_BEE7:
 	LDX #$00
 	LDA tbl6_BF60,X
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA tbl6_BF61,X
-	STA PCPointerUpperByte
-	LDA PCPointerLowerByte
+	STA PCPointerHiByte
+	LDA PCPointerLoByte
 	CLC
 	ADC #$02
-	STA PCPointerLowerByte
-	LDA PCPointerUpperByte
+	STA PCPointerLoByte
+	LDA PCPointerHiByte
 	ADC #$00
-	STA PCPointerUpperByte
+	STA PCPointerHiByte
 	RTS
 tbl6_BF01:
 	.byte $00
@@ -6362,7 +6365,7 @@ sub6_BF09:
 	LDA tbl6_BF01,X
 	STA PPUAddr
 loc6_BF26:
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	BPL bra6_BF44
 	CMP #$FF
 	BEQ bra6_BF58_RTS
@@ -6370,7 +6373,7 @@ loc6_BF26:
 	STA $2B
 bra6_BF32:
 	JSR sub6_BF59
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	STA PPUData
 	DEC $2B
 	BNE bra6_BF32
@@ -6379,7 +6382,7 @@ bra6_BF32:
 bra6_BF44:
 	STA $2B
 	JSR sub6_BF59
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 bra6_BF4B:
 	STA PPUData
 	DEC $2B
@@ -6389,9 +6392,9 @@ bra6_BF4B:
 bra6_BF58_RTS:
 	RTS
 sub6_BF59:
-	INC PCPointerLowerByte
+	INC PCPointerLoByte
 	BNE bra6_BF5F_RTS
-	INC PCPointerUpperByte
+	INC PCPointerHiByte
 bra6_BF5F_RTS:
 	RTS
 tbl6_BF60:
@@ -6433,7 +6436,7 @@ bra6_BF98:
 	STA ObjectState,X
 bra6_BF9B:
 	LDA #$00
-	STA PlayerCarryFlag
+	STA PlayerHoldFlag
 	LDA Player1YoshiStatus
 	BEQ bra6_BFAD
 	LDA #$01
@@ -6461,7 +6464,7 @@ bra6_BFD2:
 	LDA #$04
 	STA Event
 	LDA #$00
-	STA LevelTransitionFlag
+	STA EventPart
 	STA PlayerState
 	STA $06DC
 	STA $06DD

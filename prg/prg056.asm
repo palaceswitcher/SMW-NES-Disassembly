@@ -434,7 +434,7 @@ tbl9_830A:
 	.byte $14
 	.byte $15
 	.byte $16
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $19
 	.byte $1A
@@ -1436,7 +1436,7 @@ tbl9_8A8B:
 	.byte $14
 	.byte $15
 	.byte $16
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $02
 	.byte $02
 	.byte $A6
@@ -1590,7 +1590,7 @@ tbl9_8BA6:
 	.byte $8B
 	.byte $88
 	.byte $AD
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BEQ bra9_8BB6
 	RTS
@@ -1780,7 +1780,7 @@ tbl9_8CF5:
 	LDA $0578,X
 	CMP #$06
 	BCS bra9_8D73
-	LDA $06
+	LDA FrameCount
 	AND #$1E
 	BNE bra9_8D0E
 	INC $0578,X
@@ -1838,7 +1838,7 @@ bra9_8D73:
 	JSR $BC3E
 	JMP $BF74
 sub9_8D7C:
-	LDA $06
+	LDA FrameCount
 	AND #$02
 	BEQ bra9_8D83
 	RTS
@@ -1866,7 +1866,7 @@ bra9_8DA4:
 	LDA #$80
 	STA $05F0
 bra9_8DAF:
-	LDA $06
+	LDA FrameCount
 	AND #$08
 	BEQ bra9_8DB6
 	INY
@@ -2060,7 +2060,7 @@ tbl9_8EEA:
 	.byte $4C
 	.byte $74
 	.byte $BF
-	LDA $06
+	LDA FrameCount
 	AND #$04
 	BEQ bra9_8F03
 	RTS
@@ -2087,7 +2087,7 @@ bra9_8F03:
 	ORA #$80
 	STA $05F0
 bra9_8F32:
-	LDA $06
+	LDA FrameCount
 	AND #$08
 	BEQ bra9_8F39
 	INY
@@ -2271,7 +2271,7 @@ tbl9_906E:
 	.byte $AB
 	.byte $75
 	.byte $90
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BEQ bra9_907C
 	RTS
@@ -2499,7 +2499,7 @@ loc9_91E7:
 bra9_9221:
 	JMP $BF74
 sub9_9224:
-	LDA $06
+	LDA FrameCount
 	AND #$02
 	BEQ bra9_922B
 	RTS
@@ -2532,7 +2532,7 @@ bra9_9250:
 bra9_925F_RTS:
 	RTS
 sub9_9260:
-	LDA $06
+	LDA FrameCount
 	AND #$1E
 	BEQ bra9_9267
 	RTS
@@ -2554,7 +2554,7 @@ bra9_9281:
 	CMP #$40
 	BCS bra9_9291
 	LDY #$00
-	LDA $06
+	LDA FrameCount
 	AND #$10
 	BEQ bra9_929B
 	LDY #$01
@@ -2709,7 +2709,7 @@ bra9_936A:
 bra9_9384_RTS:
 	RTS
 sub9_9385:
-	LDA $06
+	LDA FrameCount
 	AND #$3F
 	BEQ bra9_938C
 	RTS
@@ -2724,7 +2724,7 @@ bra9_938C:
 	JSR $B132
 	RTS
 sub9_939E:
-	LDA $06
+	LDA FrameCount
 	AND #$02
 	BEQ bra9_93A5
 	RTS
@@ -2779,7 +2779,7 @@ tbl9_93ED:
 	.byte $11
 	.byte $15
 	.byte $16
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $03
 	.byte $02
 	.byte $AD
@@ -2917,7 +2917,7 @@ tbl9_94EF:
 	JSR $BF74
 	RTS
 sub9_9500:
-	LDA $06
+	LDA FrameCount
 	AND #$06
 	BEQ bra9_9507
 	RTS
@@ -3270,7 +3270,7 @@ tbl9_975C:
 	STA SFXRegister
 	JMP loc9_98D1
 sub9_978D:
-	LDA $06
+	LDA FrameCount
 	AND #$02
 	BEQ bra9_9794
 	RTS
@@ -3442,7 +3442,7 @@ loc9_98D1:
 	STA $0578,X
 	RTS
 sub9_98E2:
-	LDA $06
+	LDA FrameCount
 	AND #$02
 	BEQ bra9_98E9
 	RTS
@@ -3475,7 +3475,7 @@ bra9_990E:
 bra9_991D_RTS:
 	RTS
 sub9_991E:
-	LDA $06
+	LDA FrameCount
 	AND #$1E
 	BEQ bra9_9925
 	RTS
@@ -3525,7 +3525,7 @@ bra9_997F_RTS:
 	CMP #$40
 	BCS bra9_9995
 	LDY #$00
-	LDA $06
+	LDA FrameCount
 	AND #$10
 	BEQ bra9_99A2
 	LDY #$01
@@ -3574,7 +3574,7 @@ tbl9_99CB:
 	.byte $12
 	.byte $FF
 	.byte $15
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $FF
 	.byte $1F
 	.byte $20
@@ -3660,7 +3660,7 @@ loc9_9A5D:
 	BEQ bra9_9A63
 	RTS
 bra9_9A63:
-	LDA $06
+	LDA FrameCount
 	AND #$07
 	BNE bra9_9A86_RTS
 	INC $0578,X
@@ -3808,7 +3808,7 @@ loc9_9B55:
 	BEQ bra9_9B5B
 	RTS
 bra9_9B5B:
-	LDA $06
+	LDA FrameCount
 	AND #$00
 	BEQ bra9_9B62
 	RTS
@@ -3825,7 +3825,7 @@ bra9_9B62:
 	JMP $BF74
 	LDY #$00
 	LDX $A4
-	LDA $06
+	LDA FrameCount
 	AND #$0E
 	TAY
 	LDA tbl9_9BAB,Y

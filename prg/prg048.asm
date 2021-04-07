@@ -2380,7 +2380,7 @@ tbl4_9123:
 	.byte $0B
 	.byte $0C
 	.byte $0D
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $19
 	.byte $25
@@ -2429,7 +2429,7 @@ tbl4_9123:
 	.byte $0D
 	.byte $FF
 	.byte $16
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $23
 	.byte $24
@@ -2564,7 +2564,7 @@ tbl4_9123:
 	.byte $0C
 	.byte $FF
 	.byte $16
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $FF
 	.byte $25
 	.byte $26
@@ -2750,7 +2750,7 @@ bra4_93AA:
 	JSR $BC3E
 	JMP $BF74
 sub4_93B0:
-	LDA $06
+	LDA FrameCount
 	AND #$07
 	BEQ bra4_93B7
 	RTS
@@ -3036,7 +3036,7 @@ bra4_95D0:
 	AND #$40
 	CMP $25
 	BNE bra4_95F2
-	LDA $06
+	LDA FrameCount
 	AND #$3E
 	BNE bra4_95F1_RTS
 	LDA #$20
@@ -3053,7 +3053,7 @@ bra4_95F2:
 	LDA $05C8,X
 	CMP #$C8
 	BCS bra4_961A
-	LDA $06
+	LDA FrameCount
 	AND #$06
 	BNE bra4_961A
 	LDA #$10
@@ -3079,7 +3079,7 @@ bra4_962E:
 	AND #$40
 	CMP $25
 	BNE bra4_9649
-	LDA $06
+	LDA FrameCount
 	AND #$3E
 	BNE bra4_9648_RTS
 	LDA #$20
@@ -3097,7 +3097,7 @@ bra4_9649:
 	CMP #$E0
 	BCC bra4_9671
 bra4_965E:
-	LDA $06
+	LDA FrameCount
 	AND #$06
 	BNE bra4_9671
 	LDA #$00
@@ -3245,7 +3245,7 @@ bra4_9783:
 	LDA $05A0,X
 	CMP #$43
 	BCC bra4_97A4
-	LDA $06
+	LDA FrameCount
 	AND #$1F
 	BNE bra4_97A4
 	LDA ObjectState,X
@@ -3259,7 +3259,7 @@ bra4_97A7:
 	LDA $05A0,X
 	CMP #$C6
 	BCS bra4_97C1
-	LDA $06
+	LDA FrameCount
 	AND #$7E
 	BNE bra4_97C1
 	LDA ObjectState,X
@@ -3267,7 +3267,7 @@ bra4_97A7:
 	STA ObjectState,X
 bra4_97C1:
 loc4_97C1:
-	LDA $06
+	LDA FrameCount
 	AND #$7F
 	BNE bra4_97E7_RTS
 	LDA $05B4,X
@@ -3352,7 +3352,7 @@ bra4_986F:
 	LDA ObjectState,X
 	AND #$20
 	BNE bra4_9896
-	LDA $06
+	LDA FrameCount
 	AND #$1F
 	BNE bra4_9895_RTS
 	LDA $05DC,X
@@ -3369,7 +3369,7 @@ bra4_9888:
 bra4_9895_RTS:
 	RTS
 bra4_9896:
-	LDA $06
+	LDA FrameCount
 	AND #$0F
 	BNE bra4_98B6_RTS
 	LDA $05DC,X
@@ -3385,7 +3385,7 @@ bra4_9896:
 	STA $0578,X
 bra4_98B6_RTS:
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$01
 	BEQ bra4_98BE
 	RTS
@@ -3399,7 +3399,7 @@ bra4_98BE:
 	TAY
 	LDA tbl4_98DD,Y
 	TAY
-	LDA $06
+	LDA FrameCount
 	AND #$10
 	BEQ bra4_98D9
 	INY
@@ -3441,7 +3441,7 @@ bra4_990A:
 	ROL
 	AND #$06
 	TAY
-	LDA $06
+	LDA FrameCount
 	AND #$10
 	BEQ bra4_9923
 	INY
@@ -3501,14 +3501,14 @@ tbl4_994A:
 	.byte $02
 	.byte $02
 	.byte $AB
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $18
 	.byte $1D
 	.byte $1E
 	.byte $02
 	.byte $02
 	.byte $AB
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $19
 	.byte $1F
 	.byte $20
@@ -3552,7 +3552,7 @@ tbl4_9983:
 	.byte $22
 	.byte $1E
 	.byte $1A
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $13
 	.byte $0F
 	.byte $0B
@@ -3628,7 +3628,7 @@ tbl4_9983:
 	.byte $0B
 	.byte $0F
 	.byte $13
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $1A
 	.byte $1E
 	.byte $22

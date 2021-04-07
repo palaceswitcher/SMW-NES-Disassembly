@@ -139,7 +139,7 @@
 	.byte $00
 	.byte $00
 	.byte $00
-	LDA $06	;not sure if any of this code is used, it could be padding
+	LDA FrameCount	;not sure if any of this code is used, it could be padding
 	AND #$07
 	BNE bra13_999F
 	INC $032F
@@ -161,7 +161,7 @@ bra13_99A6:
 	CPX #$40
 	BCC bra13_99A6
 	RTS
-	LDA $06
+	LDA FrameCount
 	AND #$07
 	BNE bra13_99BB
 	INC $032F
@@ -254,12 +254,12 @@ tbl13_9A2F:
 	.byte $0A
 	.byte $A8
 	LDA tbl13_9A5D,Y
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA tbl13_9A5E,Y
-	STA PCPointerUpperByte
+	STA PCPointerHiByte
 	LDY #$00
 bra13_9A52:
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	STA $03C5,Y
 	INY
 	CPY #$06
@@ -734,7 +734,7 @@ sub13_9C78:
 	STA $38
 bra13_9C82:
 	JSR sub13_9CA9
-	LDA PCPointerLowerByte
+	LDA PCPointerLoByte
 	CLC
 	ADC $26
 	LDY $25
@@ -756,24 +756,24 @@ bra13_9CA8_RTS:
 	RTS
 sub13_9CA9:
 	LDA #$00
-	STA PCPointerLowerByte
-	STA PCPointerUpperByte
+	STA PCPointerLoByte
+	STA PCPointerHiByte
 	LDX #$10
 bra13_9CB1:
 	ASL $34
 	ROL $35
-	ROL PCPointerLowerByte
-	ROL PCPointerUpperByte
-	LDA PCPointerLowerByte
+	ROL PCPointerLoByte
+	ROL PCPointerHiByte
+	LDA PCPointerLoByte
 	SEC
 	SBC $38
 	TAY
-	LDA PCPointerUpperByte
+	LDA PCPointerHiByte
 	SBC $39
 	BCC bra13_9CCB
 	INC $34
-	STA PCPointerUpperByte
-	STY PCPointerLowerByte
+	STA PCPointerHiByte
+	STY PCPointerLoByte
 bra13_9CCB:
 	DEX
 	BNE bra13_9CB1
@@ -1085,27 +1085,27 @@ bra13_9E0B:
 	ASL
 	TAY
 	LDA tbl13_9E5C,X
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	SEC
 	LDA tbl13_9E5D,X
 	SBC $52
 	STA $36
 	BCS bra13_9E31
-	DEC PCPointerLowerByte
+	DEC PCPointerLoByte
 bra13_9E31:
-	LDA PCPointerLowerByte
+	LDA PCPointerLoByte
 	CMP $51
 	BNE bra13_9E4C
 	LDA tbl13_9E5E,X
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	SEC
 	LDA tbl13_9E5F,X
 	SBC $03
 	STA $38
 	BCS bra13_9E48
-	DEC PCPointerLowerByte
+	DEC PCPointerLoByte
 bra13_9E48:
-	LDA PCPointerLowerByte
+	LDA PCPointerLoByte
 	BEQ bra13_9E50
 bra13_9E4C:
 	LDA #$F8

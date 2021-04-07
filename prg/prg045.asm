@@ -4,9 +4,9 @@
 
 	AND #$1F	;not sure where all of this code is used, it could just be padding
 	ORA #$80
-	STA PCPointerUpperByte
+	STA PCPointerHiByte
 	LDA #$00
-	STA PCPointerLowerByte
+	STA PCPointerLoByte
 	LDA DataBank1
 	STA M90_PRG0
 	LDA $65
@@ -19,7 +19,7 @@
 	AND #$F0
 	ORA $25
 	TAY
-	LDA (PCPointerLowerByte),Y
+	LDA (PCPointerLoByte),Y
 	TAY
 	LDA DataBank2
 	STA M90_PRG0
@@ -55,7 +55,7 @@ bra12_9F7A_RTS:
 	.byte $3B
 	.byte $D8
 	.byte $74
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $48
 	.byte $2B
 	.byte $C3
@@ -107,7 +107,7 @@ bra12_9F7A_RTS:
 	.byte $3B
 	.byte $D8
 	.byte $74
-	.byte PlayerAnimationFrame
+	.byte $17
 	.byte $48
 	.byte $2B
 	.byte $C3
