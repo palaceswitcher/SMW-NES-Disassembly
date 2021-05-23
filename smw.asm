@@ -1,13 +1,30 @@
-;--------------------------------------
-.db "NES", $1A	   ; Header
-.db 32			   ; 32 x 16k PRG banks
-.db 32			   ; 32 x 8k CHR banks
-.db $A1, $50	   ; Mapper: 90
-.dsb 8, $00
-;--------------------------------------
-;defines
+;Disassembly of Super Mario World (Unl)
 
-;sound effect IDs
+;This is still a work in progress and is not recommended for use in hacks.
+
+;Assembles with parasyte's fork of ASM6.
+
+;--------------------------------------
+.db "NES", $1A	;NES Header
+.db 32			;32 x 16k PRG banks
+.db 32			;32 x 8k CHR banks
+.db $A1, $50	;Mapper: 90
+.dsb 8, $00		;Header Tail
+;--------------------------------------
+
+; constants
+
+;buttons
+buttonA = %10000000
+buttonB = %01000000
+buttonSelect = %00100000
+buttonStart= %00010000
+dirUp = %00001000
+dirDown = %00000100
+dirLeft = %00000010
+dirRight = %00000001
+
+;sound effects
 sfxSpinJump = $01
 sfxPause = $02
 sfxJump = $03
@@ -38,7 +55,7 @@ sfxYoshiFireSpit = $1B
 sfxCheckpoint = $1C
 sfxCutter = $1D
 
-;music IDs
+;music
 musTitle = $20
 musGameOver = $21
 musDeath = $22
@@ -55,8 +72,80 @@ musCastle = $2C
 musUnderwater = $2D
 musEnding = $2F
 
-;general ram defines
-PPUController = $01
+; General RAM defines
+
+;game engine
+PPUControlRegister = $00
+PPUMaskRegister = $01
+ScrollXPos = $02
+ScrollYPos = $03
+FrameCount = $06
+Bank42Backup = $08
+Bank41Backup = $09
+ButtonsHeld = $030A
+ButtonsPressed = $030C
+Controller2Input = $063E
+SecFrameCount = $0313
+Data0 = $32
+Data1 = $34
+Pointer3 = $38
+Pointer4 = $E5
+CameraXScreen = $51
+VerticalScrollFlag = $5B
+PlayerBehindColl = $96
+TileRowCount = $B0
+BGPalDataSize = $B1
+MetaspriteRowAlignment = $B2
+GameState = $DE
+Event = $DF
+EventPart = $E0
+PlayerState = $E1
+
+BGPalette = $0310
+FadeoutMode = $0311
+PalTransition = $0312
+TileAttributes = $0400
+TileRowMem = $0485
+PalAssignPtrHi = $04C1
+PalAssignPtrLo = $04C2
+PalAssignData = $04C3
+PPUUpdatePtr = $03A1
+
+WarpLevelNumber = $060B
+WarpNumber = $060C
+VertScrollLock = $060D
+
+GS0SpriteAnimPtr = $AE
+GS0SpriteCount = $30
+GS0SpriteBankNum = $31
+GS0SpriteXPos = $41
+GS0SpriteFrame = $B2
+GS0SpriteSlot = $033B
+GS0SpriteFlags = $034D
+GS0SpriteYPos = $0356
+Current8x8Tilemap = $032F
+TileRepeatCount = $3E
+TileRepeatBytesLeft = $3E
+GameType = $035F
+HUDUpdateTiles = $0378
+HUDUpdate = $037D
+HUDDisplay = $0607
+BGBank1 = $03C5
+BGBank2 = $03CB
+BGBank3 = $03C6
+BGBank4 = $03CC	;unused
+SpriteBank1 = $03C7
+SpriteBank2 = $03C8
+SpriteBank3 = $03C9
+SpriteBank4 = $03CA
+DataBank1 = $04F3
+DataBank2 = $04F5
+WorldNumber = $04F6
+DataBank3 = $04F7
+LevelNumber = $04F7
+XScroll = $063F
+YScroll = $0640
+
 PlayerXScreen = $0A
 PlayerXPos = $0B
 PlayerYScreen = $0C
@@ -69,99 +158,129 @@ PlayerSprXPos = $12
 PlayerSprYPos = $13
 PlayerXSpeed = $14
 PlayerYSpeed = $15
-PlayerAttributes = $19
+
+PlayerAnimation = $16
+PlayerAnimationFrame = $17
+PlayerMovement = $19
 PlayerSpriteAttributes = $1A	;not sure what else to call this
-PlayerAnimation = $1B
+PlayerFramePCLow = $1B
+PlayerFramePCHigh = $1C
 PlayerAction = $1D
-PCPointerLowerByte = $32
-PCPointerUpperByte = $33
+PlayerActionDup = $1E	;not entirely sure what this is for
+PlayerSprXPosOfs = $1F
+PlayerSprYPosOfs = $21
+PlayerSpriteMirror = $23
+PlayerMetaspriteHAlign = $28
+PlayerMetaspriteVAlign = $2B
 PlayerWidth = $3A
 PlayerHeight = $3B
+PlayerPalMappingLo = $C9
+PlayerPalMappingHi = $CA
+FakeJMPOpcode = $0600
+FakeJMPLoByte = $0601
+FakeJMPHiByte = $0602
+CapeAction = $062C
+PlayerAttributes = $06E0
+
+PlayerWallColPos = $64
+
+YoshiUnmountedState = $05F1
+YoshiXPos = $05F2
+YoshiXScreen = $05F3
+YoshiYPos = $05F4
+YoshiYScreen = $05F5
+YoshiAnimation = $05F8
+FireballSlot = $062F
+FireballSlot2 = $0630
+UsedFireballSlots = $0631
+
+Player1Lives = $036A
+Player2Lives = $036B
+Player1YoshiCoins = $036C
+Player2YoshiCoins = $036D
+LevelTimerLo = $036E
+LevelTimerHi = $036F
+P1Score = $0372
+P2ScoreLoByte = $0374
+P2ScoreHiByte = $0375
+Player1Coins = $0376
+Player2Coins = $0377
+P1YoshiBackup = $0393
+P2YoshiBackup = $0394
+CurrentPlayer = $0399
+HurtFlag = $05FD
+ActionFrameCount = $0611
+PlayerActionTicks = $0612
+FlightTakeoffTimer = $061C
+Player1YoshiStatus = $061F
+Player2YoshiStatus = $0620
+YoshiIdleStorage = $0621
+YoshiIdleMovement = $0622
+YoshiTongueState = $0623
+PlayerPowerup = $0624
+ItemBox = $0625
+P1PowerupBackup = $06DA
+P2PowerupBackup = $06DB
+
+SpriteMem = $0200
+ScrollSpeed = $0326
+LogoFlag = $032D
+LogoXOffset = $0330
+LogoYOffset = $0331
+
+WorldSelectNum = $032F	;(this address has multiple different uses)
+TitleCursorYPos = $0357
+PlayerTitleYPos = $0357
+MapLevelID = $037F
+UnlockNextLevel = $0397
+LevelID = $039C
+P1LevelsUnlocked = $039E
+P2LevelsUnlocked = $039F
+ColumnFinishFlag = $0480
+NextBGColumn = $0481
+
+; Object RAM
+
+;object handler
 ObjectCount = $A3
+ObjectSlot = $0500
+ObjectXPos = $0514
+ObjectXScreen = $0528
+ObjectYPos = $053C
+ObjectYScreen = $0550
+ObjectState = $0564
+ObjectVariables = $0578
+GuidedObjStatus = $0669
+EnemyAnimFrame = $0655
+
+;special objects
+BubbleXPos = $0619
+BubbleYPos = $061A
+BubbleSpawnPoint = $061B
+
 BooBuddiesFlag = $C3
 BooBuddiesXPos = $C4
 BooBuddiesXScreen = $C5
 BooBuddiesYPos = $C6
 BooBuddiesYScreen = $C7
-GameState = $DE
-Event = $DF
-SpriteMem = $0200
-ButtonsHeld = $030A
-ButtonsPressed = $030C
-ScrollStatus = $0326
-WorldSelectNum = $032F	;(this address has multiple different uses)
-GameType = $035F
-Player1Lives = $036A
-Player2Lives = $036B
-Player1YoshiCoins = $036C
-Player2YoshiCoins = $036D
-Player1Coins = $0376
-Player2Coins = $0377
-MapLevelID = $037F
-UnlockNextLevel = $0397
-CurrentPlayer = $0399
-LevelID = $039C
-LevelsCompleted = $039E
-BGBank1 = $03C5
-BGBank2 = $03CB
-BGBank3 = $03C6
-SpriteBank1 = $03C7
-SpriteBank2 = $03C8
-SpriteBank3 = $03C9
-SpriteBank4 = $03CA
-NextBGColumn = $0481
-ObjectSlot = $0500
-ObjectSlot2 = $0501
-ObjectSlot3 = $0502
-ObjectSlot4 = $0503
-ObjectXPos = $0514
-ObjectXPos2 = $0515
-ObjectXPos3 = $0516
-ObjectXPos4  = $0517
-ObjectXScreen = $0528
-ObjectXScreen2 = $0529
-ObjectXScreen3 = $052A
-ObjectXScreen4 = $052B
-ObjectYPos = $053C
-ObjectYPos2 = $053D
-ObjectYPos3 = $053E
-ObjectYPos4 = $053F
-ObjectYScreen = $0550
-ObjectYScreen2 = $0551
-ObjectYScreen3 = $0552
-ObjectYScreen4 = $0553
-ObjectState = $0564
-ObjectState2 = $0565
-ObjectState3 = $0566
-ObjectState4 = $0567
+
+GoalTapeDistance = $05A1
+GoalTapeYPos = $05C9
+
 JYEasterEggInput = $05EF
 BowserStatus = $05F7
 InterruptMode = $0606
 ScreenCount = $0610
-BubbleFrequency = $061D
-Player1YoshiStatus = $061F
-Player2YoshiStatus = $0620
-PlayerState = $0624
-ItemBox = $0625
+UnderwaterFlag = $061D
 PlayerPowerupBuffer = $0626
 ScreenShake = $0633
 PSwitchFrameCount = $0634
 PSwitchSeconds = $0635
-PlayerCarryFlag = $0636
-PlayerCarryFlag2 = $0637
+PlayerHoldFlag = $0636
+PlayerHoldFlag2 = $0637
 InvincibilityTimer = $0638
-XScroll = $063F
-YScroll = $0640
-EnemyAnimFrame = $0655
-EnemyAnimFrame2 = $0656
-EnemyAnimFrame3 = $0657
-EnemyAnimFrame4 = $0658
 ReznorsDefeated = $0666
 ONOFFBlockFlag = $0668
-GuidedObjStatus = $0669
-GuidedObjStatus2 = $066A
-GuidedObjStatus3 = $066B
-GuidedObjStatus4 = $066C
 FreezeFlag = $067D
 CheckpointFlag = $06A2
 BowserHits = $06E5
@@ -171,8 +290,10 @@ PauseFlag = $0709
 ;music ram defines
 MusicRegister = $8E
 SFXRegister = $8F
+MuteFlag = $0700
 
 Pulse1Transpose = $070D
+Pulse1Note = $0739
 Pulse1VolumeEnv = $0749
 Pulse1Duty = $0759
 Pulse1PitchSetting = $0761
@@ -192,7 +313,7 @@ NoisePitchSetting = $0764
 MusicSpeed = $072C
 TrianglePitchSetting = $0763
 
-;hardware registers
+;Hardware registers
 PPUCtrl = $2000
 PPUMask = $2001
 PPUStatus = $2002
@@ -224,6 +345,41 @@ APUStatus = $4015
 Joy1 = $4016
 Joy2Frame = $4017
 
+;Mapper-specific registers
+
+;PRG banks
+M90_PRG0 = $8000
+M90_PRG1 = $8001
+M90_PRG2 = $8002
+M90_PRG3 = $8003
+
+;CHR banks
+M90_BG_CHR0 = $9000
+M90_BG_CHR1 = $9001
+M90_BG_CHR2 = $9002
+M90_BG_CHR3 = $9003
+M90_SP_CHR0 = $9004
+M90_SP_CHR1 = $9005
+M90_SP_CHR2 = $9006
+M90_SP_CHR3 = $9007
+
+;Multiplier
+M90_MULTIPLICAND = $5800
+M90_MULTIPLIER = $5801
+
+;IRQ registers
+M90_IRQ_MODE = $C001
+M90_IRQ_DISABLE = $C002
+M90_IRQ_ENABLE = $C003
+M90_IRQ_PRESCALER = $C004
+M90_IRQ_COUNTER = $C005
+M90_IRQ_XOR = $C006
+
+;Misc
+M90_BANK_SIZE = $D000
+M90_CHR_CTRL2 = $D001
+M90_CHR_CTRL1 = $D003
+
 ;--------------------------------------
 ;data chunks---
 ;use a hex editor if you want to edit
@@ -245,80 +401,99 @@ Joy2Frame = $4017
 ;4a010 - 4c00f
 ;code for various objects
 
-.incbin prg/prg038.bin
+.base $8000
+.include prg/prg038.asm
+.pad $A000
 ;4c010 - 4e00f
-;completely unused/padding data
+;unknown/unused tileset data
 
 .base $E000
 .include prg/prg039.asm
 ;4e010 - 5000f
 ;collision code and tile behavior
 
-.incbin prg/prg040.bin
+.include prg/prg040.asm
 ;50010 - 5200f
 ;completely empty/unused
 
 .base $A000
 .include prg/prg041.asm
+.pad $C000
 ;52010 - 5400f
-;title screen data and code
+;Various GS0 stuff (Title, map, etc)
 
 .base $8000
 .include prg/prg042.asm
 ;54010 - 5600f
-;data for various tilemaps
+;8x8 Tilemap and Overworld Data
 
 .base $8000
 .include prg/prg043.asm
+.pad $A000
 ;56010 - 5800f
-;bonus level tileset
+;Bonus level tileset
 
-.incbin prg/prg044.bin
+.base $8000
+.include prg/prg044.asm
+.pad $A000
 ;58010 - 5a00f
-;title screen tileset data
+;Title Screen/Map Tileset Data
 
-.incbin prg/prg045.bin
+.base $8000
+.include prg/prg045.asm
+.pad $A000
 ;5a010 - 5c00f
 ;title screen level data
 
-.incbin prg/prg046.bin
+.base $8000
+.include prg/prg046.asm
+.pad $A000
 ;5c010 - 5e00f
-;overworld map tile data
+;Overworld Map Tile Data
 
-.incbin prg/prg047.bin
+.base $C000
+.include prg/prg047.asm
+.pad $E000
 ;5e010 - 6000f
 ;sprite palette mappings
 
 .base $8000
 .include prg/prg048.asm
+.pad $A000
 ;60010 - 6200f
 ;more object code
 
 .base $8000
 .include prg/prg049.asm
+.pad $A000
 ;62010 - 6400f
 ;code for platforms and other objects
 
 .base $8000
 .include prg/prg050.asm
+.pad $A000
 ;64010 - 6600f
 ;object stuff
 
-.incbin prg/prg051.bin
+.base $E000
+.include prg/prg051.asm
 ;66010 - 6800f
 ;movement data for various objects
 
 .base $A000
 .include prg/prg052.asm
+.pad $C000
 ;68010 - 6a00f
 ;sprite manager?
 
 .base $8000
 .include prg/prg053.asm
+.pad $A000
 ;6a010 - 6c00f
 
 .base $A000
 .include prg/prg054.asm
+.pad $C000
 ;6c010 - 6e00f
 
 .base $8000
@@ -329,36 +504,42 @@ Joy2Frame = $4017
 
 .base $8000
 .include prg/prg056.asm
+.pad $A000
 ;70010 - 7200f
 ;even more object code
 
 .base $A000
 .include prg/prg057.asm
+.pad $C000
 ;72010 - 7400f
+;Player control code
 
 .base $8000
-.include prg/prg058.asm
+.include prg/prg058_59.asm
+.pad $C000
 ;74010 - 7600f
-;music data and sound driver
+;Music data and sound driver
 
-.incbin prg/prg059.bin
-;76010 - 7800f
-;more music data
-
-.incbin prg/prg060.bin
+.base $8000
+.include prg/prg060.asm
 ;78010 - 7a00f
+;Duplicate of bank 58 (useless)
 
 .base $A000
 .include prg/prg061.asm
+.pad $C000
 ;7a010 - 7c00f
-;level handling
+;Level handling
 
-.incbin prg/prg062.bin
+.base $C000
+.include prg/prg062.asm
+.pad $E000
 ;7c010 - 7e00f
 ;unknown/unlogged data
 
 .base $E000
 .include prg/prg063.asm
+.pad $E000+8192
 ;7e010 - 8000f
 ;IRQ, game engine, etc.
 
