@@ -1,30 +1,30 @@
 ;disassembled with BZK 6502 Disassembler
 jmp_39_E000:
 	LDA PlayerState
-	CMP #$03
-	BNE bra_E02C
+	CMP #$03	;If the player isn't climbing,
+	BNE bra_E02C	;branch
 	LDA $06DC
 	BEQ bra_E01D
 	LDA $06DE
 	BEQ bra_E02C
 	LDA ButtonsHeld
-	AND #$04
-	BEQ bra_E02C
-	LDA $96
-	BNE bra_E023
-	BEQ bra_E02C
+	AND #dirDown	;If down isn't held,
+	BEQ bra_E02C	;branch
+	LDA PlayerBehindColl	;Though the name says behind, its actually for tiles that the player is standing over like coins. Sorry for any confusion
+	BNE bra_E023	;Branch if player is behind a tile
+	BEQ bra_E02C	;Branch if player is behind air
 bra_E01D:
-	LDA $96
+	LDA PlayerBehindColl
 	CMP #$F8
 	BEQ bra_E02C
 bra_E023:
 	LDA #$00
-	STA PlayerState
+	STA PlayerState	;Stop climbing
 	LDA #$0A
-	STA PlayerAction
+	STA PlayerAction	;Not sure what action 0A is for
 	RTS
 bra_E02C:
-	LDA $96
+	LDA PlayerBehindColl
 	TAX
 	AND #$0F
 	TAY
@@ -334,7 +334,7 @@ bra_E185:
 	STA $06DC
 	STA $06DD
 	RTS
-	LDA $96
+	LDA PlayerBehindColl
 	AND #$01
 	BNE bra_E1C2
 	LDA $49
@@ -376,7 +376,7 @@ bra_E1C2:
 	STA WarpLevelNumber
 	LDA #$03
 	STA Event
-	LDA $96
+	LDA PlayerBehindColl
 	SEC
 	SBC #$78
 	ASL
@@ -1306,7 +1306,7 @@ bra_E693:
 bra_E697_RTS:
 	RTS
 sub_E698:
-	LDA $96
+	LDA PlayerBehindColl
 	AND #$07
 	BNE bra_E6B7
 	LDA PlayerMovement
@@ -1430,7 +1430,7 @@ bra_E759:
 	STA PlayerXSpeed
 	RTS
 sub_E75C:
-	LDA $96
+	LDA PlayerBehindColl
 	AND #$07
 	TAX
 	LDA tbl_EE19,X
@@ -1508,7 +1508,7 @@ bra_E7CD:
 	RTS
 	LDA #$01
 	STA $95
-	LDA $96
+	LDA PlayerBehindColl
 	AND #$07
 	LDY $98
 	BEQ bra_E7EC
@@ -1562,7 +1562,7 @@ bra_E827:
 	RTS
 	LDA #$01
 	STA $95
-	LDA $96
+	LDA PlayerBehindColl
 	AND #$07
 	LDY $98
 	BEQ bra_E848
@@ -1588,7 +1588,7 @@ bra_E848:
 	AND #$F0
 	ORA $25
 	STA $67
-	LDA $96
+	LDA PlayerBehindColl
 	AND #$07
 	CMP #$03
 	BCC bra_E879
@@ -1628,7 +1628,7 @@ tbl_E897:
 	.db $50
 	LDA #$01
 	STA $95
-	LDA $96
+	LDA PlayerBehindColl
 	AND #$07
 	LDY $98
 	BEQ bra_E8B2
@@ -1686,7 +1686,7 @@ tbl_E8F4:
 	.db $40
 	.db $50
 loc_E900:
-	LDA $96
+	LDA PlayerBehindColl
 	AND #$07
 	BNE bra_E909
 	JMP loc_E714
@@ -1749,7 +1749,7 @@ bra_E95E:
 bra_E963:
 	JMP loc_E738
 	LDY #$00
-	LDA $96
+	LDA PlayerBehindColl
 	AND #$01
 	BEQ bra_E970
 	LDY #$01
@@ -1772,7 +1772,7 @@ bra_E987:
 bra_E98B_RTS:
 	RTS
 sub_E98C:
-	LDA $96
+	LDA PlayerBehindColl
 	AND #$07
 	BNE bra_E9AB
 	LDA PlayerMovement
@@ -1850,7 +1850,7 @@ loc_E9FA:
 bra_EA05:
 	JMP loc_E738
 sub_EA08:
-	LDA $96
+	LDA PlayerBehindColl
 	AND #$07
 	TAX
 	LDA tbl_EE19,X
@@ -2860,7 +2860,7 @@ tbl_EE19:
 	.db $D0
 	.db $E0
 	.db $F0
-	LDA $96
+	LDA PlayerBehindColl
 	AND #$0F
 	TAX
 	LDA PlayerWallColPos
@@ -2880,7 +2880,7 @@ bra_EE3F:
 	TXA
 	ASL
 	TAY
-	LDA $96
+	LDA PlayerBehindColl
 	CMP #$8E
 	BCC bra_EE78
 	LDA Player1YoshiCoins,X
@@ -2892,11 +2892,11 @@ bra_EE3F:
 bra_EE62:
 	LDA #$01
 	STA Player1YoshiCoins,X
-	LDA $0372,Y
+	LDA P1Score,Y
 	CLC
 	ADC #$E8
-	STA $0372,Y
-	LDA $0373,Y
+	STA P1Score,Y
+	LDA P1Score+1,Y
 	ADC #$03
 	JMP loc_EE99
 bra_EE78:
@@ -2909,14 +2909,14 @@ bra_EE78:
 bra_EE86:
 	LDA #$01
 	STA Player1Coins,X
-	LDA $0372,Y
+	LDA P1Score,Y
 	CLC
 	ADC #$64
-	STA $0372,Y
-	LDA $0373,Y
+	STA P1Score,Y
+	LDA P1Score+1,Y
 	ADC #$00
 loc_EE99:
-	STA $0373,Y
+	STA P1Score+1,Y
 	INC Player1Lives,X
 	LDA #$07
 bra_EEA1:
@@ -2975,7 +2975,7 @@ bra_EEE8:
 	ORA #$08
 bra_EF01:
 	STA $03E5,X
-	LDA $96
+	LDA PlayerBehindColl
 	STA $03E4,X
 	INX
 	INX
@@ -3807,7 +3807,7 @@ tbl_F147:
 	.db $23
 	.db $23
 	.db $23
-	LDA $96
+	LDA PlayerBehindColl
 	CMP #$60
 	BEQ bra_F250
 	JMP loc_F27F
@@ -3892,7 +3892,7 @@ bra_F2C8:
 	LDA #$00
 	STA PlayerYSpeed
 	JMP loc_F2A9
-	LDA $96
+	LDA PlayerBehindColl
 	CMP #$6E
 	BEQ bra_F2E7
 	LDA PlayerXPosDup
@@ -3922,7 +3922,7 @@ bra_F2F3:
 bra_F304_RTS:
 	RTS
 loc_F305:
-	LDA $96
+	LDA PlayerBehindColl
 	CMP #$63
 	BNE bra_F30E
 	JMP loc_F3BB
@@ -4079,7 +4079,7 @@ sub_F3EA:
 	LDA PlayerXSpeed
 	BEQ bra_F406
 	LDA $67
-	STA $32
+	STA Data0
 	CLC
 	ADC #$02
 	CMP #$F0
@@ -4094,14 +4094,14 @@ bra_F406:
 	AND #$03
 	BNE bra_F428_RTS
 	LDA $65
-	STA $32
+	STA Data0
 	CLC
 	ADC #$01
 	STA $65
 	LDA PlayerWallColPos
 	ADC #$00
 	STA PlayerWallColPos
-	LDA $32
+	LDA Data0
 	EOR $65
 	AND #$F0
 	BEQ bra_F428_RTS
@@ -4115,7 +4115,7 @@ bra_F428_RTS:
 	LDA #$00
 	STA PlayerYSpeed
 bra_F433:
-	LDA $96
+	LDA PlayerBehindColl
 	CMP #$66
 	BNE bra_F43C
 	JMP loc_F305

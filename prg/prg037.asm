@@ -9,9 +9,9 @@ bra_8005:
 	ASL
 	TAX
 	LDA tbl_8038,X
-	STA $32
+	STA Data0
 	LDA tbl_8039,X
-	STA $33
+	STA Data0+1
 	LDY #$80
 	LDX $A4
 	LDA ObjectSlot,X
@@ -128,7 +128,7 @@ bra_80D0:
 	LDA FrameCount
 	AND #$01
 	BNE bra_80DD
-	LDA $32
+	LDA Data0
 	JSR $B470
 bra_80DD:
 	JSR sub_82EA
@@ -182,7 +182,7 @@ loc_8144:
 	BEQ bra_814A
 	RTS
 bra_814A:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BMI bra_8152
 	JMP loc_82A7
 bra_8152:
@@ -222,9 +222,9 @@ bra_8196:
 	ADC #$00
 	STA ObjectXScreen+1,Y
 	LDA #$80
-	STA $0578,Y
+	STA ObjectVariables,Y
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	STA $0579,Y
 	STA ObjectState,Y
 	STA ObjectState+1,Y
@@ -285,10 +285,10 @@ loc_822E:
 	BEQ bra_8234
 	RTS
 bra_8234:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BPL bra_82A7
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	LDY $A3
 	INC $A3
 	LDA ObjectXPos,X
@@ -302,7 +302,7 @@ bra_8234:
 	LDA #$00
 	STA GuidedObjStatus,Y
 	STA ObjectState,Y
-	STA $0578,Y
+	STA ObjectVariables,Y
 	LDA #$D6
 	STA ObjectSlot,Y
 	LDA ObjectXPos,Y
@@ -346,11 +346,11 @@ bra_82B4:
 	STA EnemyAnimFrame,X
 	CLC
 	ADC #$46
-	STA $32
+	STA Data0
 	LDA FrameCount
 	AND #$01
 	BNE bra_82C8_RTS
-	LDA $32
+	LDA Data0
 	JSR $B470
 bra_82C8_RTS:
 	RTS
@@ -377,7 +377,7 @@ sub_82EA:
 	LDA $A87B,Y
 	STA $36
 	LDA $A97B,Y
-	STA $38
+	STA Pointer3
 	LDY #$10
 	LDA PlayerPowerup
 	BEQ bra_8300
@@ -407,7 +407,7 @@ bra_8323:
 	BEQ bra_8339
 	CMP #$FF
 	BNE bra_8343
-	LDA $32
+	LDA Data0
 	CLC
 	ADC $38
 	CLC
@@ -433,9 +433,9 @@ bra_8348_RTS:
 	ASL
 	TAX
 	LDA tbl_8364,X
-	STA $32
+	STA Data0
 	LDA tbl_8365,X
-	STA $33
+	STA Data0+1
 	LDA #$40
 	STA $36
 	LDA #$00
@@ -454,16 +454,16 @@ tbl_8365:
 	.byte $0B
 	.byte $0C
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BPL bra_83F3
 	AND #$7F
 	CMP #$10
 	BCC bra_8380
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 bra_8380:
-	INC $0578,X
+	INC ObjectVariables,X
 	LDA FrameCount
 	AND #$01
 	BNE bra_838E
@@ -586,9 +586,9 @@ bra_8462:
 	ASL
 	TAX
 	LDA tbl_84A3,X
-	STA $32
+	STA Data0
 	LDA tbl_84A4,X
-	STA $33
+	STA Data0+1
 	LDY #$80
 	LDX $A4
 	LDA ObjectSlot,X
@@ -731,10 +731,10 @@ bra_8558:
 	ASL
 	TAY
 	LDA tbl_856C,Y
-	STA $32
+	STA Data0
 	LDA tbl_856D,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl_856C:
 	.byte $72
 tbl_856D:
@@ -814,10 +814,10 @@ bra_85FC:
 	ASL
 	TAY
 	LDA tbl_8610,Y
-	STA $32
+	STA Data0
 	LDA tbl_8611,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl_8610:
 	.byte $BB
 tbl_8611:
@@ -836,7 +836,7 @@ tbl_8611:
 	JSR $BCBE
 	LDA #$00
 	STA ObjectState,X
-	STA $0578,X
+	STA ObjectVariables,X
 	LDA #$02
 	STA GuidedObjStatus,X
 	RTS
@@ -894,10 +894,10 @@ bra_869A:
 	ASL
 	TAY
 	LDA tbl_86B1,Y
-	STA $32
+	STA Data0
 	LDA $86B2,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl_86B1:
 	SBC #$86
 	LDA $86,X
@@ -914,9 +914,9 @@ bra_86C0:
 	STA EnemyAnimFrame,X
 	JSR $B077
 	BEQ bra_86DD
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$80
-	STA $0578,X
+	STA ObjectVariables,X
 	DEC GuidedObjStatus,X
 	RTS
 bra_86DD:
@@ -930,9 +930,9 @@ bra_86E8_RTS:
 sub_86E9:
 	JSR $B057
 	BEQ bra_874F
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$80
-	STA $0578,X
+	STA ObjectVariables,X
 	INC GuidedObjStatus,X
 	LDA #$E0
 	BMI bra_8716
@@ -1076,10 +1076,10 @@ bra_8805:
 	ASL
 	TAY
 	LDA tbl_8819,Y
-	STA $32
+	STA Data0
 	LDA tbl_881A,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl_8819:
 	.byte $BB
 tbl_881A:
@@ -1170,7 +1170,7 @@ bra_88BC:
 	INC ObjectSlot,X
 	LDA #$00
 	STA ObjectState,X
-	STA $0578,X
+	STA ObjectVariables,X
 	STA GuidedObjStatus,X
 	JSR $BCBE
 	RTS
@@ -1180,9 +1180,9 @@ bra_88BC:
 	ASL
 	TAX
 	LDA tbl_8938,X
-	STA $32
+	STA Data0
 	LDA tbl_8939,X
-	STA $33
+	STA Data0+1
 	LDA #$C0
 	STA $36
 	LDA #$00
@@ -1198,9 +1198,9 @@ bra_88BC:
 	ASL
 	TAX
 	LDA tbl_8938,X
-	STA $32
+	STA Data0
 	LDA tbl_8939,X
-	STA $33
+	STA Data0+1
 	LDY #$80
 	LDX $A4
 	LDA ObjectSlot,X
@@ -2003,7 +2003,7 @@ loc_8CD8:
 	BEQ bra_8CDE
 	RTS
 bra_8CDE:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BMI bra_8CE6
 	JMP loc_8D69
 bra_8CE6:
@@ -2011,7 +2011,7 @@ bra_8CE6:
 	STA BowserHits
 	STA $06E2
 	STA $06E3
-	STA $0578,X
+	STA ObjectVariables,X
 	LDY $A3
 	INC $A3
 	INC $A3
@@ -2044,7 +2044,7 @@ bra_8CE6:
 	STA ObjectState,Y
 	STA ObjectState+1,Y
 	LDA #$00
-	STA $0578,Y
+	STA ObjectVariables,Y
 	STA $0579,Y
 	STA GuidedObjStatus,Y
 	STA $0641,Y
@@ -2249,9 +2249,9 @@ bra_8EC2:
 	ASL
 	TAX
 	LDA tbl_8EFC,X
-	STA $32
+	STA Data0
 	LDA tbl_8EFD,X
-	STA $33
+	STA Data0+1
 	LDY #$80
 	LDX $A4
 	LDA ObjectSlot,X
@@ -2323,9 +2323,9 @@ tbl_8EFD:
 	ASL
 	TAX
 	LDA tbl_8F66,X
-	STA $32
+	STA Data0
 	LDA tbl_8F67,X
-	STA $33
+	STA Data0+1
 	LDY #$80
 	LDX $A4
 	LDA ObjectSlot,X
@@ -2516,7 +2516,7 @@ bra_903C:
 	JSR $B470
 bra_904F:
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$0C
 	BCC bra_907C_RTS
 	LDA $062B
@@ -2647,10 +2647,10 @@ sub_9159:
 	ASL
 	TAY
 	LDA tbl_916D,Y
-	STA $32
+	STA Data0
 	LDA tbl_916E,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl_916D:
 	.byte $DA
 tbl_916E:
@@ -2889,7 +2889,7 @@ bra_92C8:
 	STA ObjectYScreen,Y
 	LDA #$00
 	STA ObjectState,Y
-	STA $0578,Y
+	STA ObjectVariables,Y
 	LDA #$01
 	STA GuidedObjStatus,Y
 	LDA #$3A
@@ -2908,7 +2908,7 @@ bra_92F8:
 	LDA #$40
 	STA ObjectState,Y
 	LDA #$00
-	STA $0578,Y
+	STA ObjectVariables,Y
 	LDA #$01
 	STA GuidedObjStatus,Y
 	LDA #$3A
@@ -3011,7 +3011,7 @@ bra_93D8_RTS:
 	STA $05F6
 	STA GuidedObjStatus,X
 	STA $0641,X
-	STA $0578,X
+	STA ObjectVariables,X
 	STA ObjectState,X
 	STA $06E2
 	STA $06E3
@@ -3063,7 +3063,7 @@ bra_942A:
 	LDA #$00
 	STA GuidedObjStatus,Y
 	LDA #$80
-	STA $0578,Y
+	STA ObjectVariables,Y
 	LDA #$40
 	STA ObjectState,Y
 	RTS
@@ -3108,7 +3108,7 @@ bra_949E:
 	STA $05F6
 	STA GuidedObjStatus,X
 	STA $0641,X
-	STA $0578,X
+	STA ObjectVariables,X
 	STA ObjectState,X
 	STA $06E2
 	STA $06E3
@@ -3301,7 +3301,7 @@ bra_9619:
 	ADC #$00
 	STA ObjectYScreen,Y
 	LDA #$00
-	STA $0578,Y
+	STA ObjectVariables,Y
 	LDA #$BC
 	STA ObjectSlot,Y
 	LDA #$C4
@@ -3404,7 +3404,7 @@ loc_970B_RTS:
 	STA ObjectSlot,Y
 	LDA #$00
 	STA ObjectState,Y
-	STA $0578,Y
+	STA ObjectVariables,Y
 	STA GuidedObjStatus,Y
 	STA EnemyAnimFrame,Y
 	LDA #$01
@@ -3473,10 +3473,10 @@ bra_97CA:
 	ASL
 	TAY
 	LDA tbl_97DC,Y
-	STA $32
+	STA Data0
 	LDA tbl_97DD,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl_97DC:
 	.byte $E2
 tbl_97DD:
@@ -3488,7 +3488,7 @@ tbl_97DD:
 	LDA $062B
 	AND #$03
 	BNE bra_97F6_RTS
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$28
 	BCC bra_97F7
 	INC GuidedObjStatus,X
@@ -3496,7 +3496,7 @@ tbl_97DD:
 bra_97F6_RTS:
 	RTS
 bra_97F7:
-	INC $0578,X
+	INC ObjectVariables,X
 	LDA #$20
 	STA $06E1
 	LDA ObjectYPos,X

@@ -4,9 +4,9 @@
 
 	AND #$1F	;not sure where all of this code is used, it could just be padding
 	ORA #$80
-	STA PCPointerHiByte
+	STA Data0+1
 	LDA #$00
-	STA PCPointerLoByte
+	STA Data0
 	LDA DataBank1
 	STA M90_PRG0
 	LDA $65
@@ -19,14 +19,14 @@
 	AND #$F0
 	ORA $25
 	TAY
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	TAY
 	LDA DataBank2
 	STA M90_PRG0
 	LDA ($DA),Y
 	CMP #$78
 	BCC bra12_9F7A_RTS
-	STA $96
+	STA PlayerBehindColl
 	LDA #$3C
 	STA M90_PRG0
 	JSR $8000

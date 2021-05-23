@@ -152,7 +152,7 @@ bra4_A0E0:
 	BEQ bra4_A0EF
 	LDA #$01
 bra4_A0EF:
-	STA PCPointerLoByte
+	STA Data0
 	LDA PlayerMovement	;
 	AND #$04			;if player isn't jumping/swimming,
 	BEQ bra4_A119		;branch
@@ -227,9 +227,9 @@ sub4_A14A:
 			LDA #36					;
 			STA M90_PRG2			;load animation bank into 3rd slot
 			LDA lda_36_C000,X		;
-			STA PCPointerLoByte	;get lower pointer bytes
+			STA Data0	;get lower Data0 bytes
 			LDA lda_36_C000+1,X		;
-			STA PCPointerHiByte	;get upper pointer bytes
+			STA Data0+1	;get upper Data0 bytes
 			LDA PlayerPowerup		;
 			LDY Player1YoshiStatus	;if the player has a powerup and yoshi,
 			BNE bra4_A16E			;branch
@@ -240,11 +240,11 @@ sub4_A14A:
 bra4_A16E:	AND #$0F				;do AND operation of player powerup + 5
 			ASL						;multiply it by 2
 			TAY						;move it to y offset
-			LDA (PCPointerLoByte),Y	;load lower byte of 2nd pointer
-			STA PCPointer3LoByte	;
+			LDA (Data0),Y	;load lower byte of 2nd Data0
+			STA Pointer4	;
 			INY
-			LDA (PCPointerLoByte),Y	;load upper byte of 2nd pointer
-			STA PCPointer3HiByte	;
+			LDA (Data0),Y	;load upper byte of 2nd Data0
+			STA Pointer4+1	;
 			RTS
 
 sub4_A17C:
@@ -261,22 +261,22 @@ loc4_A185:
 	TAY						;copy to y index
 	LDA #36					;
 	STA M90_PRG2			;load animation bank into 3rd PRG slot
-	LDA (PCPointer3LoByte),Y;
-	STA PCPointerLoByte		;load 3rd pointer into low byte of main pointer regs
+	LDA (Pointer4),Y;
+	STA Data0		;load 3rd Data0 into low byte of main Data0 regs
 	INY						;
-	LDA (PCPointer3LoByte),Y;load 3rd pointer into high byte of main pointer regs
-	STA PCPointerHiByte		;
+	LDA (Pointer4),Y;load 3rd Data0 into high byte of main Data0 regs
+	STA Data0+1		;
 	LDA PlayerAnimationFrame;load player's current frame/sprite,
 	ASL						;
 	ASL						;multiply it by 4
 	TAY						;move it to y reg
-	LDA (PCPointerLoByte),Y	;
+	LDA (Data0),Y	;
 	STA PlayerFramePCLow	;load 1st byte of mapping data
 	INY						;
-	LDA (PCPointerLoByte),Y	;load 2nd byte of mapping data
+	LDA (Data0),Y	;load 2nd byte of mapping data
 	STA PlayerFramePCHigh	;
 	INY						;
-	LDA (PCPointerLoByte),Y	;if low byte is positive (below 7F),
+	LDA (Data0),Y	;if low byte is positive (below 7F),
 	BPL bra4_A1B1			;branch
 	AND #$7F				;make number negative,
 	STA PlayerAnimationFrame;store it as player's animation frame
@@ -304,9 +304,9 @@ sub4_A1B4:
 	LDA #47						;
 	STA M90_PRG2				;load palette mapping bank into 2nd PRG slot
 	LDA lda_47_C000,X			;
-	STA PlayerPalMappingLo		;load low byte of palette mapping pointer
+	STA PlayerPalMappingLo		;load low byte of palette mapping Data0
 	LDA lda_47_C001,X			;
-	STA PlayerPalMappingHi		;load high byte of palette mapping pointer
+	STA PlayerPalMappingHi		;load high byte of palette mapping Data0
 	LDA #36						;
 	STA M90_PRG2				;load player animation bank into 2nd PRG slot
 	LDA PlayerMovement			;
@@ -450,9 +450,9 @@ bra4_A2D0:
 	ASL
 	TAX
 	LDA tbl4_A5E7,X
-	STA $38
+	STA Pointer3
 	LDA tbl4_A5E8,X
-	STA $39
+	STA Pointer3+1
 	LDX PlayerActionDup
 	LDA PlayerRidingActionTable,X
 	BNE bra4_A2E9
@@ -469,7 +469,7 @@ bra4_A2F7:
 	LDY #$08
 loc4_A2F9:
 	LDA ($38),Y
-	STA $03C7
+	STA SpriteBank1
 	TYA
 	PHA
 	LDA PlayerPowerup
@@ -484,10 +484,10 @@ loc4_A2F9:
 	ASL
 	TAY
 	LDA ($34),Y
-	STA PCPointerLoByte
+	STA Data0
 	INY
 	LDA ($34),Y
-	STA PCPointerHiByte
+	STA Data0+1
 	LDA #$00
 	STA $2E
 	PLA
@@ -518,7 +518,7 @@ loc4_A348:
 	ADC #$10
 	TAY
 	LDX $3C
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BEQ bra4_A3BC
 	AND #$3F
@@ -534,7 +534,7 @@ bra4_A361:
 bra4_A369:
 	LDY $2E
 	LDX $3C
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BEQ bra4_A3BC
 	AND #$3F
@@ -542,8 +542,8 @@ bra4_A369:
 	PHA
 	LDA #$00
 loc4_A37B:
-	STA $38
-	LDA $03C7
+	STA Pointer3
+	LDA SpriteBank1
 	ASL
 	TAY
 	LDA #$2F
@@ -555,7 +555,7 @@ loc4_A37B:
 	PLA
 	TAY
 	LDA ($34),Y
-	ORA $38
+	ORA Pointer3
 	ORA $06E0
 	STA $0202,X
 	LDA #$24
@@ -733,7 +733,7 @@ loc4_A4B2:
 	BEQ bra4_A4CA
 	LDY #$01
 bra4_A4CA:
-	STA $03C7,Y
+	STA SpriteBank1,Y
 	RTS
 sub4_A4CE:
 	LDA WorldNumber
@@ -1790,10 +1790,10 @@ bra4_A974:
 	ASL
 	TAY
 	LDA ($34),Y
-	STA PCPointerLoByte
+	STA Data0
 	INY
 	LDA ($34),Y
-	STA PCPointerHiByte
+	STA Data0+1
 	LDA #$00
 	STA $2E
 	PLA
@@ -1824,7 +1824,7 @@ loc4_A9BD:
 	ADC #$04
 	TAY
 	LDX $3C
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BEQ bra4_AA31
 	AND #$3F
@@ -1840,7 +1840,7 @@ bra4_A9D6:
 bra4_A9DE:
 	LDY $2E
 	LDX $3C
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BEQ bra4_AA31
 	AND #$3F
@@ -1848,8 +1848,8 @@ bra4_A9DE:
 	PHA
 	LDA #$00
 loc4_A9F0:
-	STA $38
-	LDA $03C7
+	STA Pointer3
+	LDA SpriteBank1
 	ASL
 	TAY
 	LDA #$2F
@@ -1861,7 +1861,7 @@ loc4_A9F0:
 	PLA
 	TAY
 	LDA ($34),Y
-	ORA $38
+	ORA Pointer3
 	ORA $06E0
 	STA $0202,X
 	LDA #$24
@@ -1905,10 +1905,10 @@ loc4_AA45:
 	ASL
 	TAY
 	LDA ($34),Y
-	STA PCPointerLoByte
+	STA Data0
 	INY
 	LDA ($34),Y
-	STA PCPointerHiByte
+	STA Data0+1
 	LDA #$00
 	STA $2E
 	PLA
@@ -1939,7 +1939,7 @@ loc4_AA8E:
 	ADC #$04
 	TAY
 	LDX $3C
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BEQ bra4_AB02
 	AND #$3F
@@ -1955,7 +1955,7 @@ bra4_AAA7:
 bra4_AAAF:
 	LDY $2E
 	LDX $3C
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BEQ bra4_AB02
 	AND #$3F
@@ -1963,8 +1963,8 @@ bra4_AAAF:
 	PHA
 	LDA #$00
 loc4_AAC1:
-	STA $38
-	LDA $03C7
+	STA Pointer3
+	LDA SpriteBank1
 	ASL
 	TAY
 	LDA #$2F
@@ -1976,7 +1976,7 @@ loc4_AAC1:
 	PLA
 	TAY
 	LDA ($34),Y
-	ORA $38
+	ORA Pointer3
 	ORA $06E0
 	STA $0202,X
 	LDA #$24
@@ -2383,13 +2383,12 @@ bra4_ACCF:
 	ASL
 	TAY
 	LDA tbl4_ACDE,Y
-	STA PCPointerLoByte
-	LDA tbl4_ACDF,Y
-	STA PCPointerHiByte
-	JMP ($32)
+	STA Data0
+	LDA tbl4_ACDE+1,Y
+	STA Data0+1
+	JMP (Data0)
 tbl4_ACDE:
 	.db $4F
-tbl4_ACDF:
 	.db $AE
 	.db $4F
 	.db $AE
@@ -2606,12 +2605,11 @@ bra4_AE59:
 	ASL
 	TAY
 	LDA tbl4_AE6A,Y			;
-	STA PCPointerLoByte		;load low byte of pointer
-	LDA tbl4_AE6B,Y			;
-	STA PCPointerHiByte		;load high byte of pointer
-	JMP (PCPointerLoByte)	;jump to loaded pointer location
-tbl4_AE6A:	.db $92
-tbl4_AE6B:	.db $AE
+	STA Data0		;load low byte of pointer
+	LDA tbl4_AE6A+1,Y			;
+	STA Data0+1		;load high byte of pointer
+	JMP (Data0)	;jump to loaded Data0 location
+tbl4_AE6A:	.word pnt_AE92
 			.word pnt_AEE5
 			.word pnt_AF06
 			.word pnt_AEE5
@@ -2838,12 +2836,12 @@ bra4_AFF9:
 	BNE bra4_B008
 	TXA
 bra4_B008:
-	STA PCPointerLoByte
+	STA Data0
 	JMP SpawnFireball
 sub4_B00D:
 	LDA PlayerMovement
 	AND #$C0				;get player direction
-	STA PCPointerLoByte		;set as direction of fireball
+	STA Data0		;set as direction of fireball
 	LDX UsedFireballSlots
 	LDA FireballSlot,X
 	BEQ SpawnFireball
@@ -2851,13 +2849,13 @@ sub4_B00D:
 SpawnFireball:
 	INC FireballSlot,X	;set slot to occupied
 	LDY ObjectCount		;load next open object slot
-	LDA PCPointerLoByte
+	LDA Data0
 	STA ObjectState,Y	;store direction in object memory
 	TXA
 	CLC
 	ADC #$06
 	STA ObjectSlot,Y	;spawn object 06
-	LDA PCPointerLoByte
+	LDA Data0
 	AND #$40			;get player's direction
 	BNE bra4_B042		;branch if facing left
 	LDA PlayerXPosDup
@@ -2911,7 +2909,7 @@ loc4_B089:
 bra4_B08C:
 	LDA #$00
 	STA $058C,Y
-	STA $0578,Y
+	STA ObjectVariables,Y
 	STA GuidedObjStatus,Y
 	INC ObjectCount			;add to total object count
 	LDA UsedFireballSlots
@@ -3042,7 +3040,7 @@ loc4_B17F:
 bra4_B182:
 	LDA #$00
 	STA ObjectState,Y
-	STA $0578,Y
+	STA ObjectVariables,Y
 	LDA $0632
 	STA $058C,Y
 	INC ObjectCount
@@ -3586,43 +3584,28 @@ LookupDuckDone:	RTS
 	ASL					;multiply it by 2
 	TAY					;move it to y register
 	LDA tbl4_B590,Y
-	STA PCPointerLoByte
-	LDA tbl4_B591,Y
-	STA PCPointerHiByte
-	JMP ($32)
+	STA Data0
+	LDA tbl4_B590+1,Y
+	STA Data0+1
+	JMP (Data0)
 tbl4_B590:
-			.db $92
-tbl4_B591:	.db $AE
-			.db $E5
-			.db $AE
-			.db $06
-			.db $AF
-			.db $E5
-			.db $AE
-			.db $33
-			.db $AF
-			.db $33
-			.db $AF
-			.db $92
-			.db $AE
-			.db $92
-			.db $AE
-			.db $92
-			.db $AE
-			.db $B0
-			.db $B5
-			.db $33
-			.db $AF
-			.db $A2
-			.db $B0
-			.db $A2
-			.db $B0
-			.db $06
-			.db $AF
-			.db $33
-			.db $AF
-			.db $DC
-			.db $B5
+	.word pnt_AE92
+	.word pnt_AEE5
+	.word pnt_AF06
+	.word pnt_AEE5
+	.word pnt_AF33
+	.word pnt_AF33
+	.word pnt_AE92
+	.word pnt_AE92
+	.word pnt_AE92
+	.word pnt_B5B0
+	.word pnt_AF33
+	.word pnt_B0A2
+	.word pnt_B0A2
+	.word pnt_AF06
+	.word pnt_AF33
+	.word pnt_B5DC
+pnt_B5B0:
 	INC FlightTakeoffTimer		;increment takeoff timer
 	LDA FlightTakeoffTimer		;
 	CMP #$50					;if less than 80 frames have passed,
@@ -3645,6 +3628,7 @@ bra4_B5D2:
 	JSR sub4_B616
 	JSR sub4_B669
 	RTS
+pnt_B5DC:
 	LDA Player1YoshiStatus
 	BEQ bra4_B5E7
 	JSR SwimMove
@@ -3694,7 +3678,7 @@ bra4_B627:
 	INX
 bra4_B630:
 	TXA
-	STA PCPointerLoByte
+	STA Data0
 	EOR #$01
 	STA $34
 	INC $32
@@ -3841,7 +3825,7 @@ bra4_B734:
 	LDY #$07
 bra4_B73D:
 	LDA #$0D
-	STA PCPointerLoByte
+	STA Data0
 sub4_B741:
 	STX PlayerAction
 	LDA PlayerAnimationFrame
@@ -3872,7 +3856,7 @@ bra4_B769_RTS:
 	LDY #$0A
 bra4_B77A:
 	LDA #$0D
-	STA PCPointerLoByte
+	STA Data0
 	JSR sub4_B741
 	RTS
 	JSR TongueSpeedBoost
@@ -3880,7 +3864,7 @@ bra4_B77A:
 	LDX #$06
 	LDY #$07
 	LDA #$0D
-	STA PCPointerLoByte
+	STA Data0
 	JSR sub4_B741
 	RTS
 	JSR TongueSpeedBoost
@@ -3897,7 +3881,7 @@ bra4_B7A7:
 	LDY #$0A
 bra4_B7AD:
 	LDA #$03
-	STA PCPointerLoByte
+	STA Data0
 	JSR sub4_B741
 	RTS
 	JSR TongueSpeedBoost
@@ -3909,7 +3893,7 @@ bra4_B7AD:
 	LDY #$0A
 bra4_B7C5:
 	LDA #$04
-	STA PCPointerLoByte
+	STA Data0
 	JSR sub4_B741
 	RTS
 	JSR TongueSpeedBoost
@@ -3917,7 +3901,7 @@ bra4_B7C5:
 	LDX #$06
 	LDY #$07
 	LDA #$01
-	STA PCPointerLoByte
+	STA Data0
 	JSR sub4_B741
 	RTS
 	JSR SwimMove
@@ -3929,7 +3913,7 @@ bra4_B7C5:
 	LDY #$0A
 bra4_B7EF:
 	LDA #$03
-	STA PCPointerLoByte
+	STA Data0
 	JSR sub4_B741
 	RTS
 	JSR SwimMove
@@ -3941,7 +3925,7 @@ bra4_B7EF:
 	LDY #$0A
 bra4_B807:
 	LDA #$07
-	STA PCPointerLoByte
+	STA Data0
 	JSR sub4_B741
 	RTS
 	JSR SwimMove
@@ -3949,7 +3933,7 @@ bra4_B807:
 	LDX #$06
 	LDY #$07
 	LDA #$03
-	STA PCPointerLoByte
+	STA Data0
 	JSR sub4_B741
 	RTS
 	JSR SwimMove
@@ -4019,13 +4003,13 @@ bra4_B897:			STY PlayerYSpeed
 TongueSwimChkDone:	RTS
 
 sub4_B8A2:
-	INC PlayerFrameCount	;increase cape spin timer
-	CPY PlayerFrameCount	;when it exceeds what was loaded in the y reg,
+	INC ActionFrameCount	;increase cape spin timer
+	CPY ActionFrameCount	;when it exceeds what was loaded in the y reg,
 	BCS bra4_B8B7		;branch
 	LDA #$00			;
-	STA PlayerFrameCount	;clear cape spin timer
-	INC PlayerActionTimer
-	CPX PlayerActionTimer
+	STA ActionFrameCount	;clear cape spin timer
+	INC PlayerActionTicks
+	CPX PlayerActionTicks
 	BCC bra4_B8BA
 bra4_B8B7:
 	PLA
@@ -4033,7 +4017,7 @@ bra4_B8B7:
 	RTS
 bra4_B8BA:
 	LDA #$00
-	STA PlayerActionTimer
+	STA PlayerActionTicks
 	RTS
 sub4_B8C0:
 	INC $0613
@@ -4398,9 +4382,9 @@ loc4_BB09:
 	TAY
 	AND #$1F
 	ORA #$80
-	STA PCPointerHiByte
+	STA Data0+1
 	LDA #$00
-	STA PCPointerLoByte
+	STA Data0
 	TYA
 	AND #$20
 	BNE bra4_BB3D
@@ -4416,18 +4400,18 @@ loc4_BB43:
 	AND #$F0
 	ORA tbl4_BD6D,Y
 	TAY
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	TAY
 	LDA DataBank2
 	STA M90_PRG0
 	LDA ($DA),Y
-	STA $96
+	STA PlayerBehindColl
 	LDA #39			;
 	STA M90_PRG3	;load bank 39 into PC $E000
 	JSR jmp_39_E000
 	LDA #$3F		;
 	STA M90_PRG3	;load bank 63 (irq) into PC $E000
-	LDA $96
+	LDA PlayerBehindColl
 	CMP #$F8
 	BNE bra4_BB73
 	LDA $49
@@ -4470,9 +4454,9 @@ loc4_BB95:
 	TAY
 	AND #$1F
 	ORA #$80
-	STA PCPointerHiByte
+	STA Data0+1
 	LDA #$00
-	STA PCPointerLoByte
+	STA Data0
 	TYA
 	AND #$20
 	BNE bra4_BBC9
@@ -4488,24 +4472,24 @@ loc4_BBCF:
 	AND #$F0
 	ORA tbl4_BD6D,Y
 	TAY
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	TAY
 	LDA DataBank2
 	STA M90_PRG0
 	LDA ($DA),Y
-	STA $96
+	STA PlayerBehindColl
 	LDA PlayerSprYPos
 	CMP #$C8
 	BCC bra4_BBF0
 	LDA #$00
-	STA $96
+	STA PlayerBehindColl
 bra4_BBF0:
 	LDA #$27
 	STA M90_PRG3
 	JSR $E000
 	LDA #$3F
 	STA M90_PRG3
-	LDA $96
+	LDA PlayerBehindColl
 	CMP #$F8
 	BNE bra4_BC09
 	LDA $49
@@ -4610,9 +4594,9 @@ bra4_BC7E:
 	TAY
 	AND #$1F
 	ORA #$80
-	STA PCPointerHiByte
+	STA Data0+1
 	LDA #$00
-	STA PCPointerLoByte
+	STA Data0
 	TYA
 	AND #$20
 	BNE bra4_BCB2
@@ -4628,12 +4612,12 @@ loc4_BCB8:
 	AND #$F0
 	ORA tbl4_BD6D,Y
 	TAY
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	TAY
 	LDA DataBank2
 	STA M90_PRG0
 	LDA ($DA),Y
-	STA $96
+	STA PlayerBehindColl
 	JSR sub4_BE6D
 	LDX PlayerAction
 	LDA tbl4_BC2F,X
@@ -4660,9 +4644,9 @@ loc4_BCB8:
 	TAY
 	AND #$1F
 	ORA #$80
-	STA PCPointerHiByte
+	STA Data0+1
 	LDA #$00
-	STA PCPointerLoByte
+	STA Data0
 	TYA
 	AND #$20
 	BNE bra4_BD17
@@ -4678,12 +4662,12 @@ loc4_BD1D:
 	AND #$F0
 	ORA tbl4_BD6D,Y
 	TAY
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	TAY
 	LDA DataBank2	;get 2nd data bank
 	STA M90_PRG0	;swap into to first prg bank ($8000)
 	LDA ($DA),Y
-	STA $96
+	STA PlayerBehindColl
 	JSR sub4_BE6D
 	JSR sub4_BE91
 	LDX PlayerAction
@@ -4974,7 +4958,7 @@ tbl4_BD6D:
 	.db $0F
 	.db $0F
 sub4_BE6D:
-	LDA $96
+	LDA PlayerBehindColl
 	CMP #$70
 	BCS bra4_BE83
 	CMP #$60
@@ -5002,7 +4986,7 @@ sub4_BE91:
 	CMP #$03
 	BNE bra4_BEAE
 	LDY #$00
-	LDA $96
+	LDA PlayerBehindColl
 	CMP #$F8
 	BEQ bra4_BEAA
 	INY
@@ -5014,7 +4998,7 @@ bra4_BEAE:
 	LDA PlayerActionDup
 	CMP #$08			;if player not spinning cape,
 	BNE bra4_BEAD_RTS	;stop
-	LDA $96
+	LDA PlayerBehindColl
 	CMP #$F8
 	BNE bra4_BEAD_RTS
 	LDA #$00
@@ -5098,7 +5082,7 @@ bra4_BF25:
 bra4_BF32:
 	STA PlayerWallColPos
 	RTS
-	LDA (PCPointerLoByte),Y	;everything below here is useless/leftover
+	LDA (Data0),Y	;everything below here is useless/leftover
 	STA PPUData
 	DEC PlayerMetaspriteVAlign
 	BNE bra4_BF32
@@ -5106,7 +5090,7 @@ bra4_BF32:
 	JMP $BF26
 	STA PlayerMetaspriteVAlign
 	JSR sub4_BF59
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 bra4_BF4B:
 	STA PPUData
 	DEC PlayerMetaspriteVAlign
@@ -5125,7 +5109,7 @@ bra4_BF5F_RTS:
 	.db $04
 	STA ObjectState,X
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	PLA
 	PLA
 	RTS

@@ -1,885 +1,20 @@
 ;disassembled with BZK 6502 Disassembler
-tbl2_8000:
-	.byte $0A
-tbl2_8001:
-	.byte $80
-	.byte $13
-	.byte $81
-	.byte $E2
-	.byte $81
-	.byte $7C
-	.byte $84
-	.byte $D2
-	.byte $84
-	.byte $28
-	.byte $00
-	.byte $68
-	.byte $00
-	.byte $8C
-	.byte $05
-	.byte $06
-	.byte $07
-	.byte $08
-	.byte $09
-	.byte $0A
-	.byte $0B
-	.byte $0C
-	.byte $0D
-	.byte $0E
-	.byte $0F
-	.byte $10
-	.byte $14
-	.byte $00
-	.byte $8D
-	.byte $14
-	.byte $15
-	.byte $16
-	.byte $17
-	.byte $18
-	.byte $19
-	.byte $1A
-	.byte $1B
-	.byte $1C
-	.byte $1D
-	.byte $1E
-	.byte $1F
-	.byte $20
-	.byte $13
-	.byte $00
-	.byte $8D
-	.byte $21
-	.byte $22
-	.byte $23
-	.byte $24
-	.byte $25
-	.byte $26
-	.byte $27
-	.byte $28
-	.byte $29
-	.byte $2A
-	.byte $2B
-	.byte $2C
-	.byte $2D
-	.byte $14
-	.byte $00
-	.byte $8C
-	.byte $2E
-	.byte $2F
-	.byte $30
-	.byte $31
-	.byte $32
-	.byte $33
-	.byte $34
-	.byte $35
-	.byte $36
-	.byte $37
-	.byte $38
-	.byte $39
-	.byte $08
-	.byte $00
-	.byte $81
-	.byte $3A
-	.byte $03
-	.byte $00
-	.byte $8B
-	.byte $3B
-	.byte $3C
-	.byte $3D
-	.byte $3E
-	.byte $3F
-	.byte $40
-	.byte $41
-	.byte $0A
-	.byte $42
-	.byte $43
-	.byte $44
-	.byte $02
-	.byte $00
-	.byte $8F
-	.byte $45
-	.byte $0A
-	.byte $46
-	.byte $47
-	.byte $48
-	.byte $49
-	.byte $00
-	.byte $4A
-	.byte $BE
-	.byte $4C
-	.byte $4D
-	.byte $4E
-	.byte $4B
-	.byte $4F
-	.byte $50
-	.byte $04
-	.byte $00
-	.byte $9D
-	.byte $51
-	.byte $BD
-	.byte $53
-	.byte $54
-	.byte $55
-	.byte $56
-	.byte $57
-	.byte $58
-	.byte $59
-	.byte $5A
-	.byte $5B
-	.byte $5C
-	.byte $5D
-	.byte $5E
-	.byte $5F
-	.byte $60
-	.byte $61
-	.byte $62
-	.byte $63
-	.byte $5D
-	.byte $64
-	.byte $65
-	.byte $66
-	.byte $67
-	.byte $68
-	.byte $52
-	.byte $69
-	.byte $6A
-	.byte $6B
-	.byte $03
-	.byte $00
-	.byte $9D
-	.byte $6C
-	.byte $6D
-	.byte $6E
-	.byte $6F
-	.byte $70
-	.byte $71
-	.byte $72
-	.byte $73
-	.byte $74
-	.byte $75
-	.byte $76
-	.byte $77
-	.byte $78
-	.byte $79
-	.byte $7A
-	.byte $7B
-	.byte $7C
-	.byte $7D
-	.byte $7E
-	.byte $7F
-	.byte $80
-	.byte $81
-	.byte $82
-	.byte $67
-	.byte $83
-	.byte $84
-	.byte $85
-	.byte $86
-	.byte $87
-	.byte $03
-	.byte $00
-	.byte $9D
-	.byte $88
-	.byte $89
-	.byte $8A
-	.byte $8B
-	.byte $8C
-	.byte $8D
-	.byte $8E
-	.byte $8F
-	.byte $90
-	.byte $91
-	.byte $92
-	.byte $93
-	.byte $94
-	.byte $95
-	.byte $96
-	.byte $97
-	.byte $98
-	.byte $99
-	.byte $9A
-	.byte $9B
-	.byte $9C
-	.byte $9D
-	.byte $9E
-	.byte $9F
-	.byte $A0
-	.byte $A1
-	.byte $A2
-	.byte $A3
-	.byte $87
-	.byte $04
-	.byte $00
-	.byte $9C
-	.byte $A4
-	.byte $A5
-	.byte $00
-	.byte $A6
-	.byte $A7
-	.byte $A8
-	.byte $33
-	.byte $A9
-	.byte $AA
-	.byte $AB
-	.byte $AC
-	.byte $AD
-	.byte $AE
-	.byte $AF
-	.byte $B0
-	.byte $B1
-	.byte $B2
-	.byte $B3
-	.byte $B4
-	.byte $B5
-	.byte $B6
-	.byte $B7
-	.byte $B8
-	.byte $B9
-	.byte $AC
-	.byte $BA
-	.byte $BB
-	.byte $BC
-	.byte $77
-	.byte $00
-	.byte $77
-	.byte $00
-	.byte $77
-	.byte $00
-	.byte $77
-	.byte $00
-	.byte $66
-	.byte $00
-	.byte $02
-	.byte $FF
-	.byte $03
-	.byte $5F
-	.byte $85
-	.byte $FF
-	.byte $03
-	.byte $FF
-	.byte $03
-	.byte $0C
-	.byte $03
-	.byte $55
-	.byte $83
-	.byte $5D
-	.byte $0F
-	.byte $CF
-	.byte $02
-	.byte $00
-	.byte $04
-	.byte $55
-	.byte $82
-	.byte $00
-	.byte $CC
-	.byte $28
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
+TilemapPointers:
+	.word TitleLogo
+	.word EndingScreen
+	.word ThankYouScreen
+	.word CopyrightScreen
+	.word YoshiHouse	;Unused
+TitleLogo:
+	.incbin screens/TitleLogo.bin
+EndingScreen:
 	.incbin screens/EndingScreen.bin
+ThankYouScreen:
 	.incbin screens/ThankYouScreen.bin
+CopyrightScreen:
 	.incbin screens/CopyrightScreen.bin
-	.byte $20
-	.byte $00
-	.byte $10
-	.byte $00
-	.byte $81
-	.byte $01
-	.byte $04
-	.byte $02
-	.byte $83
-	.byte $03
-	.byte $04
-	.byte $05
-	.byte $18
-	.byte $00
-	.byte $81
-	.byte $01
-	.byte $04
-	.byte $02
-	.byte $83
-	.byte $03
-	.byte $04
-	.byte $05
-	.byte $18
-	.byte $00
-	.byte $81
-	.byte $01
-	.byte $04
-	.byte $02
-	.byte $83
-	.byte $03
-	.byte $04
-	.byte $05
-	.byte $18
-	.byte $00
-	.byte $81
-	.byte $01
-	.byte $04
-	.byte $02
-	.byte $83
-	.byte $03
-	.byte $04
-	.byte $05
-	.byte $18
-	.byte $00
-	.byte $81
-	.byte $01
-	.byte $02
-	.byte $02
-	.byte $87
-	.byte $06
-	.byte $02
-	.byte $03
-	.byte $07
-	.byte $08
-	.byte $09
-	.byte $0A
-	.byte $16
-	.byte $00
-	.byte $81
-	.byte $01
-	.byte $02
-	.byte $02
-	.byte $87
-	.byte $0B
-	.byte $02
-	.byte $03
-	.byte $0C
-	.byte $0D
-	.byte $0E
-	.byte $0F
-	.byte $0A
-	.byte $00
-	.byte $98
-	.byte $10
-	.byte $11
-	.byte $12
-	.byte $13
-	.byte $14
-	.byte $15
-	.byte $16
-	.byte $17
-	.byte $18
-	.byte $19
-	.byte $1A
-	.byte $1B
-	.byte $1C
-	.byte $1D
-	.byte $1E
-	.byte $1F
-	.byte $20
-	.byte $21
-	.byte $22
-	.byte $23
-	.byte $24
-	.byte $25
-	.byte $26
-	.byte $27
-	.byte $07
-	.byte $00
-	.byte $9A
-	.byte $28
-	.byte $29
-	.byte $2A
-	.byte $2B
-	.byte $2C
-	.byte $2D
-	.byte $2E
-	.byte $2F
-	.byte $30
-	.byte $31
-	.byte $32
-	.byte $33
-	.byte $34
-	.byte $35
-	.byte $36
-	.byte $37
-	.byte $38
-	.byte $39
-	.byte $3A
-	.byte $3B
-	.byte $3C
-	.byte $3D
-	.byte $3E
-	.byte $2A
-	.byte $3F
-	.byte $40
-	.byte $06
-	.byte $00
-	.byte $86
-	.byte $41
-	.byte $2A
-	.byte $42
-	.byte $43
-	.byte $44
-	.byte $F0
-	.byte $0F
-	.byte $2A
-	.byte $86
-	.byte $55
-	.byte $56
-	.byte $57
-	.byte $2A
-	.byte $58
-	.byte $59
-	.byte $05
-	.byte $00
-	.byte $85
-	.byte $5A
-	.byte $5B
-	.byte $5C
-	.byte $5D
-	.byte $5E
-	.byte $10
-	.byte $2A
-	.byte $86
-	.byte $6F
-	.byte $70
-	.byte $71
-	.byte $72
-	.byte $73
-	.byte $74
-	.byte $05
-	.byte $00
-	.byte $85
-	.byte $75
-	.byte $76
-	.byte $77
-	.byte $78
-	.byte $79
-	.byte $11
-	.byte $2A
-	.byte $87
-	.byte $8A
-	.byte $8B
-	.byte $8C
-	.byte $8D
-	.byte $8E
-	.byte $8F
-	.byte $90
-	.byte $03
-	.byte $00
-	.byte $85
-	.byte $91
-	.byte $92
-	.byte $93
-	.byte $94
-	.byte $95
-	.byte $12
-	.byte $2A
-	.byte $86
-	.byte $A6
-	.byte $A7
-	.byte $A8
-	.byte $A9
-	.byte $AA
-	.byte $02
-	.byte $03
-	.byte $00
-	.byte $81
-	.byte $AB
-	.byte $19
-	.byte $2A
-	.byte $81
-	.byte $AC
-	.byte $02
-	.byte $02
-	.byte $03
-	.byte $00
-	.byte $81
-	.byte $AB
-	.byte $15
-	.byte $2A
-	.byte $82
-	.byte $79
-	.byte $7A
-	.byte $02
-	.byte $2A
-	.byte $81
-	.byte $AC
-	.byte $02
-	.byte $02
-	.byte $84
-	.byte $00
-	.byte $AD
-	.byte $AE
-	.byte $AF
-	.byte $15
-	.byte $2A
-	.byte $82
-	.byte $95
-	.byte $96
-	.byte $02
-	.byte $2A
-	.byte $A4
-	.byte $AC
-	.byte $06
-	.byte $02
-	.byte $B0
-	.byte $AA
-	.byte $02
-	.byte $B1
-	.byte $B2
-	.byte $B3
-	.byte $B4
-	.byte $B5
-	.byte $B6
-	.byte $B7
-	.byte $B8
-	.byte $B9
-	.byte $BA
-	.byte $BB
-	.byte $BC
-	.byte $BD
-	.byte $BE
-	.byte $BF
-	.byte $C0
-	.byte $C1
-	.byte $C2
-	.byte $C3
-	.byte $C4
-	.byte $C5
-	.byte $C6
-	.byte $C7
-	.byte $C8
-	.byte $C9
-	.byte $CA
-	.byte $CB
-	.byte $0B
-	.byte $02
-	.byte $AA
-	.byte $03
-	.byte $02
-	.byte $8B
-	.byte $CC
-	.byte $CD
-	.byte $CE
-	.byte $CF
-	.byte $D0
-	.byte $00
-	.byte $8F
-	.byte $90
-	.byte $D1
-	.byte $D2
-	.byte $AC
-	.byte $03
-	.byte $02
-	.byte $8B
-	.byte $D3
-	.byte $D4
-	.byte $D5
-	.byte $02
-	.byte $D6
-	.byte $D7
-	.byte $D8
-	.byte $D9
-	.byte $DA
-	.byte $DB
-	.byte $DC
-	.byte $08
-	.byte $02
-	.byte $8A
-	.byte $DD
-	.byte $DE
-	.byte $DF
-	.byte $E0
-	.byte $E1
-	.byte $AA
-	.byte $02
-	.byte $E2
-	.byte $D2
-	.byte $AC
-	.byte $03
-	.byte $02
-	.byte $8B
-	.byte $D3
-	.byte $D4
-	.byte $D5
-	.byte $02
-	.byte $D6
-	.byte $D7
-	.byte $D8
-	.byte $D9
-	.byte $DA
-	.byte $DB
-	.byte $DC
-	.byte $04
-	.byte $02
-	.byte $81
-	.byte $06
-	.byte $03
-	.byte $02
-	.byte $85
-	.byte $E3
-	.byte $E4
-	.byte $E5
-	.byte $E6
-	.byte $E7
-	.byte $02
-	.byte $02
-	.byte $84
-	.byte $E2
-	.byte $D2
-	.byte $AC
-	.byte $06
-	.byte $02
-	.byte $02
-	.byte $8B
-	.byte $D3
-	.byte $D4
-	.byte $D5
-	.byte $02
-	.byte $D6
-	.byte $D7
-	.byte $D8
-	.byte $D9
-	.byte $DA
-	.byte $DB
-	.byte $DC
-	.byte $04
-	.byte $02
-	.byte $81
-	.byte $0B
-	.byte $03
-	.byte $02
-	.byte $84
-	.byte $E8
-	.byte $E9
-	.byte $EA
-	.byte $EB
-	.byte $03
-	.byte $02
-	.byte $84
-	.byte $E2
-	.byte $D2
-	.byte $AC
-	.byte $0B
-	.byte $02
-	.byte $02
-	.byte $8B
-	.byte $D3
-	.byte $D4
-	.byte $D5
-	.byte $02
-	.byte $D6
-	.byte $D7
-	.byte $D8
-	.byte $D9
-	.byte $DA
-	.byte $DB
-	.byte $DC
-	.byte $08
-	.byte $02
-	.byte $8A
-	.byte $E8
-	.byte $E9
-	.byte $EA
-	.byte $EB
-	.byte $02
-	.byte $06
-	.byte $02
-	.byte $E2
-	.byte $D2
-	.byte $AC
-	.byte $03
-	.byte $02
-	.byte $8B
-	.byte $D3
-	.byte $D4
-	.byte $D5
-	.byte $06
-	.byte $D6
-	.byte $D7
-	.byte $D8
-	.byte $D9
-	.byte $DA
-	.byte $DB
-	.byte $DC
-	.byte $08
-	.byte $02
-	.byte $8A
-	.byte $E8
-	.byte $E9
-	.byte $EA
-	.byte $EB
-	.byte $02
-	.byte $0B
-	.byte $02
-	.byte $E2
-	.byte $D2
-	.byte $AC
-	.byte $03
-	.byte $02
-	.byte $8B
-	.byte $D3
-	.byte $D4
-	.byte $D5
-	.byte $0B
-	.byte $D6
-	.byte $D7
-	.byte $D8
-	.byte $D9
-	.byte $DA
-	.byte $DB
-	.byte $DC
-	.byte $06
-	.byte $02
-	.byte $86
-	.byte $06
-	.byte $02
-	.byte $E8
-	.byte $E9
-	.byte $EA
-	.byte $EB
-	.byte $03
-	.byte $02
-	.byte $83
-	.byte $E2
-	.byte $D2
-	.byte $AC
-	.byte $03
-	.byte $02
-	.byte $8B
-	.byte $D3
-	.byte $D4
-	.byte $D5
-	.byte $02
-	.byte $D6
-	.byte $D7
-	.byte $D8
-	.byte $D9
-	.byte $DA
-	.byte $DB
-	.byte $DC
-	.byte $06
-	.byte $02
-	.byte $86
-	.byte $0B
-	.byte $02
-	.byte $E8
-	.byte $E9
-	.byte $EA
-	.byte $EB
-	.byte $03
-	.byte $02
-	.byte $83
-	.byte $E2
-	.byte $D2
-	.byte $AC
-	.byte $03
-	.byte $02
-	.byte $8B
-	.byte $D3
-	.byte $D4
-	.byte $D5
-	.byte $02
-	.byte $D6
-	.byte $D7
-	.byte $D8
-	.byte $D9
-	.byte $DA
-	.byte $DB
-	.byte $DC
-	.byte $03
-	.byte $02
-	.byte $9D
-	.byte $EC
-	.byte $ED
-	.byte $EC
-	.byte $ED
-	.byte $EC
-	.byte $ED
-	.byte $EC
-	.byte $ED
-	.byte $EC
-	.byte $ED
-	.byte $EC
-	.byte $ED
-	.byte $EC
-	.byte $ED
-	.byte $EC
-	.byte $ED
-	.byte $EC
-	.byte $ED
-	.byte $EC
-	.byte $ED
-	.byte $EC
-	.byte $ED
-	.byte $EC
-	.byte $ED
-	.byte $EC
-	.byte $ED
-	.byte $EC
-	.byte $ED
-	.byte $EC
-	.byte $02
-	.byte $ED
-	.byte $81
-	.byte $EC
-	.byte $77
-	.byte $EE
-	.byte $29
-	.byte $EE
-	.byte $04
-	.byte $00
-	.byte $02
-	.byte $FF
-	.byte $06
-	.byte $00
-	.byte $83
-	.byte $0F
-	.byte $07
-	.byte $01
-	.byte $03
-	.byte $00
-	.byte $04
-	.byte $AA
-	.byte $03
-	.byte $00
-	.byte $83
-	.byte $8A
-	.byte $0A
-	.byte $2A
-	.byte $02
-	.byte $8A
-	.byte $86
-	.byte $22
-	.byte $CC
-	.byte $FF
-	.byte $77
-	.byte $C0
-	.byte $DD
-	.byte $02
-	.byte $77
-	.byte $81
-	.byte $DD
-	.byte $02
-	.byte $FF
-	.byte $83
-	.byte $77
-	.byte $FF
-	.byte $DD
-	.byte $02
-	.byte $77
-	.byte $82
-	.byte $DD
-	.byte $FF
-	.byte $08
-	.byte $AA
-	.byte $08
-	.byte $FA
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $2B
-	.byte $87
-	.byte $4B
-	.byte $87
-	.byte $6B
-	.byte $87
-	.byte $8B
-	.byte $87
+YoshiHouse:
+	.incbin screens/YoshiHouse.bin	;Unused
 	.byte $11
 	.byte $30
 	.byte $2A
@@ -1010,73 +145,73 @@ tbl2_8001:
 	.byte $30
 	.byte $60
 	LDA #$00
-	STA $2001
-	STA $2000
-	TAY
-	LDA PPUStatus
-	LDA $032F
+	STA PPUMask	;Clear PPU mask
+	STA PPUCtrl	;Clear PPU control
+	TAY	;Clear Y register
+	LDA PPUStatus	;Clear PPU address latch
+	LDA Current8x8Tilemap	;Get current tilemap
 	ASL
-	TAX
-	LDA tbl2_8000,X
-	STA $38
-	LDA tbl2_8001,X
-	STA $39
-	LDA ($38),Y
-	STA PPUAddr
-	JSR sub2_8802
-	LDA ($38),Y
-	STA PPUAddr
-bra2_87D4:
-	JSR sub2_8802
-	LDA ($38),Y
-	BPL bra2_87F1
+	TAX	;Get the pointer for it
+	LDA TilemapPointers,X
+	STA Pointer3	;Load lower byte of pointer
+	LDA TilemapPointers+1,X
+	STA Pointer3+1	;Load upper byte of pointer
+	LDA (Pointer3),Y
+	STA PPUAddr	;Get upper byte of PPU address from tilemap header
+	JSR GoToNextByte
+	LDA (Pointer3),Y
+	STA PPUAddr	;Get lower byte of PPU address from tilemap header
+ByteTypeCheck:
+	JSR GoToNextByte
+	LDA (Pointer3),Y	;Read next byte
+	BPL bra2_87F1	;Branch if it isn't a byte count (aka bit 7 cleared)
 	CMP #$FF
-	BEQ bra2_8801_RTS
-	AND #$7F
-	STA $3E
+	BEQ bra2_8801_RTS	;Stop if a null byte is reached
+	AND #%01111111
+	STA TileRepeatBytesLeft	;Mask out bit 7 and get the amount of bytes until the next repeat
 bra2_87E3:
-	JSR sub2_8802
-	LDA ($38),Y
-	STA PPUData
-	DEC $3E
-	BNE bra2_87E3
-	BEQ bra2_87D4
+	JSR GoToNextByte
+	LDA (Pointer3),Y	;Read next byte
+	STA PPUData	;Store tile data
+	DEC TileRepeatBytesLeft	;Decrement byte count
+	BNE bra2_87E3	;Keep looping until byte count reached
+	BEQ ByteTypeCheck	;Branch once it is reached
 bra2_87F1:
-	STA $3E
-	JSR sub2_8802
-	LDA ($38),Y
-bra2_87F8:
-	STA PPUData
-	DEC $3E
-	BNE bra2_87F8
-	BEQ bra2_87D4
+	STA TileRepeatCount	;Store repeat count
+	JSR GoToNextByte
+	LDA ($38),Y	;Read next byte
+RepeatTileRender:
+	STA PPUData	;Store tile data
+	DEC TileRepeatCount
+	BNE RepeatTileRender	;Repeatedly render that tile until the repeat count is reached
+	BEQ ByteTypeCheck	;Branch once the repeat count is reached
 bra2_8801_RTS:
 	RTS
-sub2_8802:
-	INC $38
-	BNE bra2_8808_RTS
-	INC $39
-bra2_8808_RTS:
+GoToNextByte:
+	INC Pointer3	;Go to next byte of data
+	BNE NextByteDone
+	INC Pointer3+1	;Go to next memory page if needed
+NextByteDone:
 	RTS
-	LDX #$00
+	LDX #$00	;Clear X offset
 	LDA #$00
 bra2_880D:
-	STA $B2,X
+	STA MetaspriteRowAlignment,X	;Clear metasprite row position
 	INX
-	CPX #$09
+	CPX #$09	;Keep clearing all 9 of them
 	BCC bra2_880D
 	RTS
-	LDX #$00
-	LDA #$F8
+	LDX #$00	;Clear X offset
+	LDA #$F8	;Set off-screen Y position
 bra2_8819:
-	STA SpriteMem,X
+	STA SpriteMem,X	;Put sprite at off-screen Y position
 	INX
 	INX
 	INX
-	INX
-	BNE bra2_8819
+	INX	;Go to next sprite
+	BNE bra2_8819	;Keep going until all sprites are off-screen
 	RTS
-	LDX #$10
+	LDX #$10	;Set X offset to 10h
 	LDA #$F8
 bra2_8827:
 	STA SpriteMem,X
@@ -1105,11 +240,11 @@ sub2_8848:
 	LDA $033B,X
 	ASL
 	TAX
-	LDA tbl2_8A50,X
+	LDA TitleSpriteAnimations,X
 	STA $AE
-	LDA tbl2_8A51,X
+	LDA TitleSpriteAnimations+1,X
 	STA $AF
-	LDA ($AE),Y
+	LDA (GS0SpriteAnimPtr),Y
 	STA $31
 	LDA $2C
 	TAY
@@ -1118,13 +253,13 @@ sub2_8848:
 	ASL
 	TAX
 	LDA tbl2_8900,X
-	STA PCPointerLoByte
-	LDA tbl2_8901,X
-	STA PCPointerHiByte
+	STA Data0
+	LDA tbl2_8900+1,X
+	STA Data0+1
 	LDA tbl2_8986,X
-	STA $38
+	STA Pointer3
 	LDA tbl2_8987,X
-	STA $39
+	STA Pointer3+1
 	LDA a:$41,Y
 	STA $25
 	STA $27
@@ -1134,11 +269,11 @@ sub2_8848:
 	LDA $0356,Y
 	STA $26
 	LDY #$00
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	STA $28
 	STA $29
 	INY
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	STA $2A
 	INY
 bra2_889C:
@@ -1147,7 +282,7 @@ loc2_889C:
 	ASL
 	ASL
 	TAX
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BEQ bra2_88D5
 	ORA $31
@@ -1203,7 +338,6 @@ bra2_88FF_RTS:
 	RTS
 tbl2_8900:
 	.byte $B2
-tbl2_8901:
 	.byte $8A
 	.byte $B2
 	.byte $8A
@@ -1475,14 +609,13 @@ tbl2_8987:
 	.byte $8D
 tbl2_8A0C:
 	.byte $00
-tbl2_8A0D:
 	.byte $00
-	.byte $A0
-	.byte $80
-	.byte $90
-	.byte $80
-	.byte $40
-	.byte $20
+	.byte $A0	;1/2 Player Text X Position
+	.byte $80	;1/2 Player Text Y Position
+	.byte $90	;Cursor X Position
+	.byte $80	;Cursor Y Position
+	.byte $40	;Unknown
+	.byte $20	;Unknown
 	.byte $50
 	.byte $AA
 	.byte $50
@@ -1493,9 +626,8 @@ tbl2_8A0D:
 	.byte $AA
 	.byte $50
 	.byte $AA
-tbl2_8A1E:
+TitleSpriteFrameTypes:
 	.byte $00
-tbl2_8A1F:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -1508,35 +640,33 @@ tbl2_8A1F:
 	.byte $01
 	.byte $03
 	.byte $01
-	.byte $03
+	.byte $03	;Koopa Walk 1
 	.byte $01
+	.byte $01	;Koopa Walk 2
 	.byte $01
+	.byte $01	;Rex Walk 1
 	.byte $01
-	.byte $01
-	.byte $01
-	.byte $05
+	.byte $05	;Rex Walk 2
 	.byte $01
 	.byte $05
 	.byte $01
 	.byte $07
 	.byte $01
-	.byte $07
+	.byte $07	;Super Koopa Fly 1
 	.byte $01
-	.byte $02
+	.byte $02	;Super Koopa Fly 2
 	.byte $01
 	.byte $02
 	.byte $01
 	.byte $06
 	.byte $01
-	.byte $06
+	.byte $06	;Mario Walk 1
 	.byte $01
-	.byte $08
+	.byte $08	;Mario Walk 2
 	.byte $01
-	.byte $08
+	.byte $08	;Yoshi Walk 1
 	.byte $01
-	.byte $09
-	.byte $01
-	.byte $0A
+	.byte $09	;Yoshi Walk 2
 	.byte $01
 	.byte $0A
 	.byte $01
@@ -1545,101 +675,102 @@ tbl2_8A1F:
 	.byte $0A
 	.byte $01
 	.byte $0A
-tbl2_8A50:
-	.byte $6C
-tbl2_8A51:
-	.byte $8A
-	.byte $71
-	.byte $8A
-	.byte $76
-	.byte $8A
-	.byte $7B
-	.byte $8A
-	.byte $80
-	.byte $8A
-	.byte $85
-	.byte $8A
-	.byte $8A
-	.byte $8A
-	.byte $8F
-	.byte $8A
-	.byte $94
-	.byte $8A
-	.byte $99
-	.byte $8A
-	.byte $9E
-	.byte $8A
-	.byte $A3
-	.byte $8A
-	.byte $A8
-	.byte $8A
-	.byte $AD
-	.byte $8A
+	.byte $01
+	.byte $0A
+TitleSpriteAnimations:
+	.word pnt3_8A6C
+	.word TitleKoopaAnim
+	.word TitleSuperKoopaAnim
+	.word TitlePopEffectAnim
+	.word pnt3_8A80	;Unknown
+	.word TitleRexAnim
+	.word pnt3_8A8A	;Unknown
+	.word pnt3_8A8F
+	.word pnt3_8A94
+	.word pnt3_8A99
+	.word pnt3_8A9E
+	.word pnt3_8AA3
+	.word pnt3_8AA8
+	.word pnt3_8AAD
+pnt3_8A6C:
 	.byte $00
 	.byte $00
 	.byte $00
 	.byte $00
 	.byte $00
-	.byte $07
-	.byte $08
-	.byte $94
-	.byte $0F
-	.byte $80
-	.byte $0D
-	.byte $0E
-	.byte $96
-	.byte $07
-	.byte $C0
-	.byte $04
-	.byte $04
-	.byte $FF
-	.byte $0F
-	.byte $00
+TitleKoopaAnim:
+	.byte $07	;1st Frame
+	.byte $08	;2nd Frame
+	.byte $94	;1K CHR Bank
+	.byte $0F	;Animation Speed
+	.byte $80	;Bank Start Tile
+TitleSuperKoopaAnim:
+	.byte $0D	;1st Frame
+	.byte $0E	;2nd Frame
+	.byte $96	;1K CHR Bank
+	.byte $07	;Animation Speed
+	.byte $C0	;Bank Start Tile
+TitlePopEffectAnim:
+	.byte $04	;1st Frame
+	.byte $04	;2nd Frame
+	.byte $FF	;1K CHR Bank
+	.byte $0F	;Animation Speed
+	.byte $00	;Bank Start Tile
+pnt3_8A80:
 	.byte $01
 	.byte $01
 	.byte $FA
 	.byte $0F
 	.byte $80
-	.byte $09
-	.byte $0A
-	.byte $95
-	.byte $0F
-	.byte $80
+TitleRexAnim:
+	.byte $09	;1st Frame
+	.byte $0A	;2nd Frame
+	.byte $95	;1K CHR Bank
+	.byte $0F	;Animation Speed
+	.byte $80	;Bank Start Tile
+pnt3_8A8A:
 	.byte $0F
 	.byte $10
 	.byte $95
 	.byte $0F
 	.byte $C0
+pnt3_8A8F:
 	.byte $0B
 	.byte $0C
 	.byte $94
 	.byte $0F
 	.byte $C0
+pnt3_8A94:
 	.byte $11
 	.byte $12
 	.byte $FF
 	.byte $0F
 	.byte $00
+pnt3_8A99:
 	.byte $13
 	.byte $14
 	.byte $FF
 	.byte $0F
 	.byte $00
+pnt3_8A9E:
 	.byte $13
 	.byte $14
 	.byte $FF
 	.byte $0F
 	.byte $00
+pnt3_8AA3:
 	.byte $03
 	.byte $03
 	.byte $FF
 	.byte $0F
 	.byte $00
+pnt3_8AA8:
 	.byte $0B
 	.byte $0C
 	.byte $94
 	.byte $0F
 	.byte $C0
+pnt3_8AAD:
 	.byte $0B
 	.byte $0C
 	.byte $94
@@ -2483,41 +1614,42 @@ tbl2_8A51:
 	.byte $6D
 	.byte $6C
 	.byte $6B
-	STA $B2,X
+jmp_42_8DF8:
+	STA GS0SpriteFrame,X	;Load sprite frame
 	ASL
-	TAY
+	TAY	;Get pointer for it
 	LDA tbl2_8A0C,Y
-	STA $41,X
-	LDA tbl2_8A0D,Y
-	STA $0356,X
-	LDA tbl2_8A1E,Y
-	STA $034D,X
-	LDA tbl2_8A1F,Y
-	STA $033B,X
+	STA GS0SpriteXPos,X	;Set X position for sprite (only works for menu?)
+	LDA tbl2_8A0C+1,Y
+	STA GS0SpriteYPos,X	;Set Y position for sprite (only works for menu?)
+	LDA TitleSpriteFrameTypes,Y
+	STA GS0SpriteFlags,X	;Store flags for animation frame (useless/unknown?)
+	LDA TitleSpriteFrameTypes+1,Y
+	STA GS0SpriteSlot,X	;Store sprite type for corresponding animation frame
 	ASL
-	TAX
-	LDA tbl2_8A50,X
-	STA $AE
-	LDA tbl2_8A51,X
-	STA $AF
+	TAX	;Get pointer for corresponding slot ID
+	LDA TitleSpriteAnimations,X
+	STA GS0SpriteAnimPtr	;Load lower byte of pointer
+	LDA TitleSpriteAnimations+1,X
+	STA GS0SpriteAnimPtr+1	;Load upper byte of pointer
 	LDY #$02
-	LDA ($AE),Y
-	STA $31
+	LDA (GS0SpriteAnimPtr),Y	;Load 3rd byte of animation data
+	STA GS0SpriteBankNum	;Set it as the bank number
 	LDY #$04
-	LDA ($AE),Y
+	LDA (GS0SpriteAnimPtr),Y	;Load 5th byte of animation data
 	LSR
 	LSR
 	LSR
 	LSR
 	LSR
-	LSR
-	TAX
-	LDA $31
-	STA $03C7,X
+	LSR	;Shift out bits 0 - 5
+	TAX	;Set 1K bank to swap
+	LDA GS0SpriteBankNum
+	STA SpriteBank1,X	;Swap the bank out in the set bank
 	RTS
 	TAX
 	LDA tbl2_8E62,X
-	STA $32
+	STA Data0
 	TXA
 	ASL
 	TAX
@@ -3080,10 +2212,10 @@ sub2_90B1:
 	ASL
 	TAY
 	LDA tbl2_90C3,Y
-	STA PCPointerLoByte
+	STA Data0
 	LDA tbl2_90C4,Y
-	STA PCPointerHiByte
-	JMP (PCPointerLoByte)
+	STA Data0+1
+	JMP (Data0)
 tbl2_90C3:
 	.byte $F3
 tbl2_90C4:
@@ -3182,10 +2314,10 @@ sub2_9151:
 	ASL
 	TAY
 	LDA tbl2_9163,Y
-	STA PCPointerLoByte
+	STA Data0
 	LDA tbl2_9164,Y
-	STA PCPointerHiByte
-	JMP (PCPointerLoByte)
+	STA Data0+1
+	JMP (Data0)
 tbl2_9163:
 	.byte $A1
 tbl2_9164:
@@ -5129,6 +4261,7 @@ tbl2_988A:
 	.byte $00
 	.byte $00
 	.byte $00
+pnt5_998A:
 	LDA FrameCount
 	AND #$07
 	BNE bra2_999F
@@ -5175,7 +4308,7 @@ bra2_99CC:
 	ASL
 	TAX
 	LDA tbl2_9A8D,X
-	STA $51
+	STA CameraXScreen
 	STA PlayerWallColPos
 	STA PlayerXScreen
 	LDA tbl2_9A8E,X
@@ -5197,10 +4330,10 @@ bra2_99CC:
 	STA $26
 	LDY #$00
 	LDA ($25),Y
-	STA $03A1
+	STA PPUUpdatePtr
 	INY
 	LDA ($25),Y
-	STA $03A2
+	STA PPUUpdatePtr+1
 	INY
 	LDA ($25),Y
 	STA $03A3
@@ -5241,15 +4374,16 @@ tbl2_9A2F:
 	.byte $0E
 	.byte $26
 	.byte $30
+jmp_42_9A44:
 	ASL
 	TAY
 	LDA tbl2_9A5D,Y
-	STA PCPointerLoByte
+	STA Data0
 	LDA tbl2_9A5E,Y
-	STA PCPointerHiByte
+	STA Data0+1
 	LDY #$00
 bra2_9A52:
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	STA $03C5,Y
 	INY
 	CPY #$06
@@ -5451,6 +4585,7 @@ bra2_9B1E:
 	DEY
 	BPL bra2_9B1E
 	RTS
+pnt5_9B28:
 	LDA #$00
 	STA $032F
 	INC a:Event
@@ -5718,13 +4853,13 @@ bra2_9C6D:
 	RTS
 sub2_9C78:
 	LDA #$00
-	STA $39
+	STA Pointer3+1
 	STA $25
 	LDA #$0A
-	STA $38
+	STA Pointer3
 bra2_9C82:
 	JSR sub2_9CA9
-	LDA PCPointerLoByte
+	LDA Data0
 	CLC
 	ADC $26
 	LDY $25
@@ -5746,24 +4881,24 @@ bra2_9CA8_RTS:
 	RTS
 sub2_9CA9:
 	LDA #$00
-	STA PCPointerLoByte
-	STA PCPointerHiByte
+	STA Data0
+	STA Data0+1
 	LDX #$10
 bra2_9CB1:
 	ASL $34
 	ROL $35
-	ROL PCPointerLoByte
-	ROL PCPointerHiByte
-	LDA PCPointerLoByte
+	ROL Data0
+	ROL Data0+1
+	LDA Data0
 	SEC
 	SBC $38
 	TAY
-	LDA PCPointerHiByte
+	LDA Data0+1
 	SBC $39
 	BCC bra2_9CCB
 	INC $34
-	STA PCPointerHiByte
-	STY PCPointerLoByte
+	STA Data0+1
+	STY Data0
 bra2_9CCB:
 	DEX
 	BNE bra2_9CB1
@@ -6075,31 +5210,31 @@ bra2_9E0B:
 	ASL
 	TAY
 	LDA tbl2_9E5C,X
-	STA PCPointerLoByte
+	STA Data0
 	SEC
 	LDA tbl2_9E5D,X
 	SBC $52
 	STA $36
 	BCS bra2_9E31
-	DEC PCPointerLoByte
+	DEC Data0
 bra2_9E31:
-	LDA PCPointerLoByte
+	LDA Data0
 	CMP $51
 	BNE bra2_9E4C
 	LDA tbl2_9E5E,X
-	STA PCPointerLoByte
+	STA Data0
 	SEC
 	LDA tbl2_9E5F,X
 	SBC $03
-	STA $38
+	STA Pointer3
 	BCS bra2_9E48
-	DEC PCPointerLoByte
+	DEC Data0
 bra2_9E48:
-	LDA PCPointerLoByte
+	LDA Data0
 	BEQ bra2_9E50
 bra2_9E4C:
 	LDA #$F8
-	STA $38
+	STA Pointer3
 bra2_9E50:
 	JSR sub2_9E7A
 bra2_9E53:
@@ -6150,7 +5285,7 @@ sub2_9E7A:
 	ORA #$80
 	STA $28
 	CLC
-	LDA $38
+	LDA Pointer3
 	STA $0280,Y
 	LDA $28
 	STA $0281,Y
@@ -6158,7 +5293,7 @@ sub2_9E7A:
 	STA $0282,Y
 	LDA $36
 	STA $0283,Y
-	LDA $38
+	LDA Pointer3
 	STA $0284,Y
 	INC $28
 	LDA $28
@@ -6168,7 +5303,7 @@ sub2_9E7A:
 	LDA $36
 	ADC #$08
 	STA $0287,Y
-	LDA $38
+	LDA Pointer3
 	ADC #$08
 	STA $0288,Y
 	INC $28
@@ -6178,7 +5313,7 @@ sub2_9E7A:
 	STA $028A,Y
 	LDA $36
 	STA $028B,Y
-	LDA $38
+	LDA Pointer3
 	ADC #$08
 	STA $028C,Y
 	INC $28

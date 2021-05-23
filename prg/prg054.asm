@@ -98,18 +98,18 @@ bra3_A0AE:
 	ASL
 	TAX
 	LDA tbl3_A1B5,X
-	STA $32
+	STA Data0
 	LDA tbl3_A1B6,X
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 bra3_A0C9:
 	ASL
 	TAX
 	LDA tbl3_A435,X
-	STA $32
+	STA Data0
 	LDA tbl3_A436,X
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 	RTS
 jmp_54_A0D9:
 	LDX #$00
@@ -198,8 +198,8 @@ bra3_A160:
 	STA ObjectSlot,X
 	LDA ObjectState,Y
 	STA ObjectState,X
-	LDA $0578,Y
-	STA $0578,X
+	LDA ObjectVariables,Y
+	STA ObjectVariables,X
 	LDA $058C,Y
 	STA $058C,X
 	LDA $0641,Y
@@ -1508,7 +1508,7 @@ loc3_A6B5:
 	STA GuidedObjStatus,X
 	STA ObjectSlot,X
 	STA ObjectState,X
-	STA $0578,X
+	STA ObjectVariables,X
 	LDA $058C,X
 	TAY
 	LDX $FC80,Y
@@ -1532,7 +1532,7 @@ bra3_A6E1:
 	LDA tbl3_A87B,Y
 	STA $36
 	LDA tbl3_A97B,Y
-	STA $38
+	STA Pointer3
 	LDA $05B4,X
 	BPL bra3_A708
 	LDA #$10
@@ -1574,7 +1574,7 @@ bra3_A730:
 	ORA #$04
 	STA ObjectState,X
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	LDA #$01
 	JSR sub3_BCD4
 	LDA #$12
@@ -1677,17 +1677,17 @@ bra3_A7E8:
 	CPX #$06
 	BCC bra3_A852
 	LDA tbl3_A85F,X
-	STA $32
+	STA Data0
 	LDY $A4
 	LDX ObjectSlot,Y
 	LDA tbl3_A87B,X
 	STA $36
 	LDA tbl3_A97B,X
-	STA $38
+	STA Pointer3
 	LDX $A4
 	LDA $05B4,X
 	BPL bra3_A816
-	LDA $32
+	LDA Data0
 	CLC
 	ADC $36
 	CLC
@@ -2300,7 +2300,7 @@ bra3_AA8D:
 	LSR
 	CLC
 	ADC $37
-	STA $32
+	STA Data0
 	LDA tbl3_A97B,X
 	CLC
 	ADC #$04
@@ -2595,7 +2595,7 @@ bra3_ACA2:
 	ORA #$07
 	STA ObjectState,Y
 	LDA #$00
-	STA $0578,Y
+	STA ObjectVariables,Y
 	PLA
 	PLA
 bra3_ACC2_RTS:
@@ -2668,7 +2668,7 @@ sub3_AD3D:
 	STA ObjectState,Y
 	LDA #$00
 	STA PlayerHoldFlag
-	STA $0578,Y
+	STA ObjectVariables,Y
 	PLA
 	JMP loc3_AD5C
 	JSR sub3_BD03
@@ -2686,7 +2686,7 @@ loc3_AD5C:
 	CMP #$E1
 	BEQ bra3_AD78_RTS
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 bra3_AD78_RTS:
 	RTS
 	LDY #$FE
@@ -2724,25 +2724,25 @@ bra3_ADAD:
 	LDA #$00
 	STA ObjectSlot,X
 	STA ObjectState,X
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 bra3_ADC3:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	TAY
 	LDA tbl3_AE0F,Y
-	STA $32
+	STA Data0
 	CMP #$FF
 	BNE bra3_ADD6
 	LDA #$07
-	STA $32
+	STA Data0
 	BNE bra3_ADDF
 bra3_ADD6:
 	LDA FrameCount
 	AND #$03
 	BNE bra3_ADDF
-	INC $0578,X
+	INC ObjectVariables,X
 bra3_ADDF:
-	LDA $32
+	LDA Data0
 	BMI bra3_ADFC
 	CLC
 	ADC ObjectYPos,X
@@ -2804,7 +2804,7 @@ sub3_AE37:
 	BNE bra3_AE48
 	LDA #$03
 bra3_AE48:
-	STA $32
+	STA Data0
 	LDX ObjectSlot,Y
 	CPX #$10
 	BCC bra3_AE5F
@@ -2828,7 +2828,7 @@ bra3_AE5F:
 	BNE bra3_AE7E
 bra3_AE74:
 	STA PlayerPowerup
-	LDA $32
+	LDA Data0
 	BEQ bra3_AE7E
 bra3_AE7B:
 	STA ItemBox
@@ -2866,7 +2866,7 @@ tbl3_AE98:
 	.byte $00
 	.byte $00
 sub3_AEA8:
-	STA $38
+	STA Pointer3
 	LDX #$FF
 bra3_AEAC:
 loc3_AEAC:
@@ -2904,10 +2904,10 @@ bra3_AECF:
 	LDA ObjectXPos,X
 	SEC
 	SBC ObjectXPos,Y
-	STA $32
+	STA Data0
 	LDA ObjectXScreen,X
 	SBC ObjectXScreen,Y
-	STA $33
+	STA Data0+1
 	LDA ObjectYPos,X
 	SEC
 	SBC ObjectYPos,Y
@@ -2915,7 +2915,7 @@ bra3_AECF:
 	LDA ObjectYScreen,X
 	SBC ObjectYScreen,Y
 	STA $35
-	LDA $33
+	LDA Data0+1
 	BPL bra3_AF17
 	CMP #$FF
 	BNE bra3_AEAC
@@ -2928,7 +2928,7 @@ bra3_AECF:
 	BCC bra3_AEAC
 bra3_AF17:
 	BNE bra3_AEAC
-	LDA $32
+	LDA Data0
 	CMP $38
 	BCS bra3_AEAC
 bra3_AF1F:
@@ -3250,7 +3250,7 @@ bra3_B088:
 	STA $36
 	LDA tbl3_A97B,Y
 loc3_B08D:
-	STA $38
+	STA Pointer3
 	LDA ObjectXPos,X
 	CLC
 	ADC $36
@@ -3263,7 +3263,7 @@ loc3_B08D:
 	LDA ObjectYScreen,X
 	STA $AB
 loc3_B0A8:
-	LDA $38
+	LDA Pointer3
 	BMI bra3_B0C1
 	CLC
 	ADC $AA
@@ -3331,33 +3331,33 @@ bra3_B0D8:
 	ASL
 	TAY
 	LDA $E000,Y
-	STA $32
+	STA Data0
 	LDA $E001,Y
-	STA $33
+	STA Data0+1
 	JSR sub3_B132
 	LDA $AC
 	STA M90_PRG0
 	RTS
 sub3_B132:
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$7F
 	ASL
 	TAY
 	LDA ObjectState,X
 	AND #$40
 	BEQ bra3_B14C
-	LDA ($32),Y
+	LDA (Data0),Y
 	EOR #$FF
 	CLC
 	ADC #$01
 	JMP loc3_B14E
 bra3_B14C:
-	LDA ($32),Y
+	LDA (Data0),Y
 loc3_B14E:
 	STA $06E2
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $06E3
 	LDA InterruptMode
 	CMP #$04
@@ -3403,7 +3403,7 @@ bra3_B199:
 bra3_B1AB:
 loc3_B1AB:
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BNE bra3_B1BD
 	LDA ObjectState,X
@@ -3413,35 +3413,35 @@ loc3_B1AB:
 bra3_B1BD:
 	AND #$F0
 	BEQ bra3_B1D6
-	LDA ($32),Y
+	LDA (Data0),Y
 	AND #$3F
 	BNE bra3_B1CB
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 bra3_B1CB:
-	STA $32
-	LDA $0578,X
+	STA Data0
+	LDA ObjectVariables,X
 	SEC
 	SBC $32
-	STA $0578,X
+	STA ObjectVariables,X
 bra3_B1D6:
 loc3_B1D6:
-	INC $0578,X
+	INC ObjectVariables,X
 	RTS
 sub3_B1DA:
 	ASL
 	TAY
 	LDA $E000,Y
-	STA $32
+	STA Data0
 	LDA $E001,Y
-	STA $33
+	STA Data0+1
 	JSR sub3_B1EF
 	LDA $AC
 	STA M90_PRG0
 	RTS
 sub3_B1EF:
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$7F
 	ASL
 	TAY
@@ -3458,11 +3458,11 @@ bra3_B202:
 	BEQ bra3_B212
 	JMP loc3_B28A
 bra3_B212:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$7F
 	CMP #$07
 	BCS bra3_B21E
-	INC $0578,X
+	INC ObjectVariables,X
 bra3_B21E:
 	TAY
 	BMI bra3_B23A
@@ -3498,7 +3498,7 @@ loc3_B24C:
 	STA ObjectState,X
 bra3_B25D:
 	LDY #$00
-	LDA ($32),Y
+	LDA (Data0),Y
 	TAY
 	LDA ObjectState,X
 	AND #$40
@@ -3541,13 +3541,13 @@ bra3_B2A0:
 	LDA ObjectState,X
 	AND #$C0
 	STA ObjectState,X
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$80
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 loc3_B2B4:
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	BMI bra3_B2D3
 	JSR sub3_B077
 	BEQ bra3_B2C2
@@ -3557,9 +3557,9 @@ bra3_B2C2:
 	LDA ObjectState,X
 	ORA #$20
 	STA ObjectState,X
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$80
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 bra3_B2D3:
 	LDA ObjectSlot,X
@@ -3592,13 +3592,13 @@ bra3_B30A:
 	LDA ObjectState,X
 	AND #$40
 	BEQ bra3_B31B
-	LDA ($32),Y
+	LDA (Data0),Y
 	EOR #$FF
 	CLC
 	ADC #$01
 	JMP loc3_B31D
 bra3_B31B:
-	LDA ($32),Y
+	LDA (Data0),Y
 loc3_B31D:
 	PHA
 	CLC
@@ -3615,7 +3615,7 @@ bra3_B32F:
 bra3_B334:
 	STA ObjectXScreen,X
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	BMI bra3_B355
 	CLC
 	ADC ObjectYPos,X
@@ -3641,7 +3641,7 @@ bra3_B355:
 bra3_B367:
 loc3_B367:
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BNE bra3_B379
 	LDA ObjectState,X
@@ -3651,25 +3651,25 @@ loc3_B367:
 bra3_B379:
 	AND #$F0
 	BEQ bra3_B397
-	LDA ($32),Y
+	LDA (Data0),Y
 	AND #$3F
 	BNE bra3_B38C
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$80
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 bra3_B38C:
-	STA $32
-	LDA $0578,X
+	STA Data0
+	LDA ObjectVariables,X
 	SEC
 	SBC $32
-	STA $0578,X
+	STA ObjectVariables,X
 bra3_B397:
 loc3_B397:
-	INC $0578,X
+	INC ObjectVariables,X
 	RTS
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$7F
 	ASL
 	TAY
@@ -3684,16 +3684,16 @@ bra3_B3B1:
 	ASL
 	TAY
 	LDA $E000,Y
-	STA $32
+	STA Data0
 	LDA $E001,Y
-	STA $33
+	STA Data0+1
 	JSR sub3_B3C9
 	LDA $AC
 	STA M90_PRG0
 	RTS
 sub3_B3C9:
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$7F
 	ASL
 	TAY
@@ -3711,13 +3711,13 @@ loc3_B3E4:
 	LDA ObjectState,X
 	AND #$40
 	BEQ bra3_B3F5
-	LDA ($32),Y
+	LDA (Data0),Y
 	EOR #$FF
 	CLC
 	ADC #$01
 	JMP loc3_B3F7
 bra3_B3F5:
-	LDA ($32),Y
+	LDA (Data0),Y
 loc3_B3F7:
 	PHA
 	CLC
@@ -3734,7 +3734,7 @@ bra3_B409:
 bra3_B40E:
 	STA ObjectXScreen,X
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	BMI bra3_B42F
 	CLC
 	ADC ObjectYPos,X
@@ -3759,7 +3759,7 @@ bra3_B42F:
 	DEC ObjectYScreen,X
 bra3_B441:
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BNE bra3_B453
 	LDA ObjectState,X
@@ -3769,36 +3769,36 @@ bra3_B441:
 bra3_B453:
 	AND #$F0
 	BEQ bra3_B46C
-	LDA ($32),Y
+	LDA (Data0),Y
 	AND #$3F
 	BNE bra3_B461
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 bra3_B461:
-	STA $32
-	LDA $0578,X
+	STA Data0
+	LDA ObjectVariables,X
 	SEC
 	SBC $32
-	STA $0578,X
+	STA ObjectVariables,X
 bra3_B46C:
-	INC $0578,X
+	INC ObjectVariables,X
 	RTS
 	ASL
 	TAY
 	LDA $E000,Y
-	STA $32
+	STA Data0
 	LDA $E001,Y
-	STA $33
+	STA Data0+1
 	JSR sub3_B485
 	LDA $AC
 	STA M90_PRG0
 	RTS
 sub3_B485:
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	ASL
 	TAY
-	LDA ($32),Y
+	LDA (Data0),Y
 	PHA
 	CLC
 	ADC ObjectXPos,X
@@ -3814,7 +3814,7 @@ bra3_B4A0:
 bra3_B4A5:
 	STA ObjectXScreen,X
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	BMI bra3_B4C6
 	CLC
 	ADC ObjectYPos,X
@@ -3840,33 +3840,33 @@ bra3_B4C6:
 bra3_B4D8:
 loc3_B4D8:
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	AND #$F0
 	BEQ bra3_B4F8
 	CMP #$F0
 	BEQ bra3_B4F8
-	LDA ($32),Y
+	LDA (Data0),Y
 	AND #$3F
 	BNE bra3_B4ED
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 bra3_B4ED:
-	STA $32
-	LDA $0578,X
+	STA Data0
+	LDA ObjectVariables,X
 	SEC
 	SBC $32
-	STA $0578,X
+	STA ObjectVariables,X
 bra3_B4F8:
-	INC $0578,X
+	INC ObjectVariables,X
 	RTS
 	LDA FrameCount
 	AND #$01
 	BNE bra3_B556
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$7F
 	CMP #$07
 	BCS bra3_B50E
-	INC $0578,X
+	INC ObjectVariables,X
 bra3_B50E:
 	TAY
 	BMI bra3_B52A
@@ -3902,7 +3902,7 @@ loc3_B53C:
 	LDA #$00
 	STA ObjectSlot,X
 	STA ObjectState,X
-	STA $0578,X
+	STA ObjectVariables,X
 bra3_B556:
 	LDA ObjectXPos,X
 	SEC
@@ -3952,7 +3952,7 @@ bra3_B5B4:
 bra3_B5BA_RTS:
 	RTS
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	TAY
 	LDA $05B4,X
 	BMI bra3_B5C8
@@ -3964,9 +3964,9 @@ bra3_B5C8:
 	ASL
 	TAY
 	LDA $E000,Y
-	STA $32
+	STA Data0
 	LDA $E001,Y
-	STA $33
+	STA Data0+1
 	JSR sub3_B5E2
 	LDA $AC
 	STA M90_PRG0
@@ -4015,7 +4015,7 @@ bra3_B620:
 bra3_B632:
 loc3_B632:
 	LDY #$00
-	LDA ($32),Y
+	LDA (Data0),Y
 	TAY
 	LDA YoshiIdleMovement
 	AND #$40
@@ -4064,7 +4064,7 @@ bra3_B675:
 	RTS
 loc3_B689:
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	BMI bra3_B6A4
 	JSR sub3_B758
 	BNE bra3_B6A4
@@ -4086,13 +4086,13 @@ bra3_B6B2:
 	LDA YoshiIdleMovement
 	AND #$40
 	BEQ bra3_B6C3
-	LDA ($32),Y
+	LDA (Data0),Y
 	EOR #$FF
 	CLC
 	ADC #$01
 	JMP loc3_B6C5
 bra3_B6C3:
-	LDA ($32),Y
+	LDA (Data0),Y
 loc3_B6C5:
 	PHA
 	CLC
@@ -4109,7 +4109,7 @@ bra3_B6D7:
 bra3_B6DC:
 	STA YoshiXScreen
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	BMI bra3_B6FD
 	CLC
 	ADC YoshiYPos
@@ -4135,7 +4135,7 @@ bra3_B6FD:
 bra3_B70F:
 loc3_B70F:
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BNE bra3_B721
 	LDA YoshiIdleMovement
@@ -4145,7 +4145,7 @@ loc3_B70F:
 bra3_B721:
 	AND #$F0
 	BEQ bra3_B73F
-	LDA ($32),Y
+	LDA (Data0),Y
 	AND #$3F
 	BNE bra3_B734
 	LDA $05F7
@@ -4153,7 +4153,7 @@ bra3_B721:
 	STA $05F7
 	RTS
 bra3_B734:
-	STA $32
+	STA Data0
 	LDA $05F7
 	SEC
 	SBC $32
@@ -4184,7 +4184,7 @@ bra3_B763:
 	STA $36
 	LDA #$22
 bra3_B767:
-	STA $38
+	STA Pointer3
 	LDA YoshiXPos
 	CLC
 	ADC $36
@@ -4268,9 +4268,9 @@ sub3_B7F2:
 	ASL
 	TAY
 	LDA $E000,Y
-	STA $32
+	STA Data0
 	LDA $E001,Y
-	STA $33
+	STA Data0+1
 	JSR sub3_B807
 	LDA $AC
 	STA M90_PRG0
@@ -4283,13 +4283,13 @@ sub3_B807:
 	LDA InterruptMode
 	CMP #$04
 	BNE bra3_B833
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $06E2
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $06E3
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	CMP #$80
 	BNE bra3_B82F
 	INC GuidedObjStatus,X
@@ -4299,7 +4299,7 @@ bra3_B82F:
 	INC $0641,X
 	RTS
 bra3_B833:
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $28
 	PHA
 	CLC
@@ -4316,7 +4316,7 @@ bra3_B849:
 bra3_B84E:
 	STA ObjectXScreen,X
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $2B
 	BMI bra3_B871
 	CLC
@@ -4343,7 +4343,7 @@ bra3_B871:
 bra3_B883:
 loc3_B883:
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	CMP #$80
 	BNE bra3_B892
 	INC GuidedObjStatus,X
@@ -4365,13 +4365,13 @@ bra3_B892:
 	ASL
 	TAY
 	LDA tbl3_B8BF,Y
-	STA $32
+	STA Data0
 	LDA tbl3_B8C0,Y
-	STA $33
+	STA Data0+1
 	LDA #$00
 	STA $28
 	STA $2B
-	JMP ($32)
+	JMP (Data0)
 tbl3_B8BF:
 	.byte $DB
 tbl3_B8C0:
@@ -4505,11 +4505,11 @@ bra3_B992:
 	STA GuidedObjStatus,X
 	RTS
 	RTS
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$7F
 	CMP #$07
 	BCS bra3_B9A8
-	INC $0578,X
+	INC ObjectVariables,X
 bra3_B9A8:
 	BMI bra3_B9C3
 	CLC
@@ -4672,22 +4672,22 @@ bra3_BABD:
 	STA ObjectXScreen,X
 	LDA #$00
 	STA $2B
-	INC $0578,X
-	LDA $0578,X
+	INC ObjectVariables,X
+	LDA ObjectVariables,X
 	CMP #$50
 	BCC bra3_BADB_RTS
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	DEC EnemyAnimFrame,X
 	BNE bra3_BADB_RTS
 	INC GuidedObjStatus,X
 bra3_BADB_RTS:
 	RTS
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	ASL
 	TAY
-	LDA ($32),Y
+	LDA (Data0),Y
 	PHA
 	CLC
 	ADC ObjectXPos,X
@@ -4701,7 +4701,7 @@ bra3_BADB_RTS:
 	SBC #$00
 	STA ObjectXScreen,X
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	BMI $BB1D
 	CLC
 	ADC ObjectYPos,X
@@ -4726,22 +4726,22 @@ bra3_BADB_RTS:
 	LDA FrameCount
 	AND $25
 	BNE $BB49
-	LDA ($32),Y
+	LDA (Data0),Y
 	AND #$F0
 	BEQ $BB55
 	CMP #$F0
 	BEQ $BB55
-	LDA ($32),Y
+	LDA (Data0),Y
 	AND #$3F
 	BNE $BB4A
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
-	STA $32
-	LDA $0578,X
+	STA Data0
+	LDA ObjectVariables,X
 	SEC
 	SBC $32
-	STA $0578,X
-	INC $0578,X
+	STA ObjectVariables,X
+	INC ObjectVariables,X
 	RTS
 	STY $2B
 	LDX $A4
@@ -4789,7 +4789,7 @@ loc3_BBB6:
 	LDA ObjectYScreen,X
 	STA $AB
 	JMP loc3_B0CF
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$1F
 	TAY
 	LDA tbl3_BC1E,Y
@@ -4876,7 +4876,7 @@ tbl3_BC1E:
 	LDA tbl3_A87B,Y
 	STA $36
 	LDA tbl3_A97B,Y
-	STA $38
+	STA Pointer3
 	LDY #$10
 	LDA PlayerPowerup
 	BEQ bra3_BC56
@@ -4906,7 +4906,7 @@ bra3_BC79:
 	BEQ bra3_BC8F
 	CMP #$FF
 	BNE bra3_BC99
-	LDA $32
+	LDA Data0
 	CLC
 	ADC $38
 	CLC
@@ -4962,21 +4962,20 @@ loc3_BCD4:
 	LDA CurrentPlayer
 	ASL
 	TAX
-	LDA tbl3_BCFC,Y
-	STA $32
-	LDA tbl3_BCFB,Y
+	LDA ScoreTbl+1,Y
+	STA Data0
+	LDA ScoreTbl,Y
 	CLC
-	ADC $0372,X
-	STA $0372,X
-	LDA $0373,X
+	ADC P1Score,X
+	STA P1Score,X
+	LDA P1Score+1,X
 	ADC $32
-	STA $0373,X
+	STA P1Score+1,X
 	LDY $2B
 	LDX $28
 	RTS
-tbl3_BCFB:
+ScoreTbl:
 	.byte $0A
-tbl3_BCFC:
 	.byte $00
 	.byte $14
 	.byte $00
@@ -5017,7 +5016,7 @@ bra3_BD31:
 	LDA #$01
 	JSR sub3_BCD4
 	RTS
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BPL bra3_BD6B_RTS
 	AND #$7F
 	BEQ bra3_BD6C
@@ -5036,9 +5035,9 @@ bra3_BD56:
 	STA ObjectState,X
 	STA GuidedObjStatus,X
 	LDA #$FF
-	STA $0578,X
+	STA ObjectVariables,X
 bra3_BD66:
-	INC $0578,X
+	INC ObjectVariables,X
 	PLA
 	PLA
 bra3_BD6B_RTS:
@@ -5100,7 +5099,7 @@ bra3_BDBB:
 	BEQ bra3_BE27
 bra3_BDCE:
 loc3_BDCE:
-	INC $0578,X
+	INC ObjectVariables,X
 	LDA PlayerPowerup
 	BNE bra3_BDE6
 	LDA ObjectSlot,X
@@ -5127,7 +5126,7 @@ bra3_BDE6:
 	LDA ObjectSlot,X
 	STA ObjectSlot,Y
 	LDA #$00
-	STA $0578,Y
+	STA ObjectVariables,Y
 	STA GuidedObjStatus,Y
 	STA $0641,Y
 	STA EnemyAnimFrame,Y
@@ -5174,10 +5173,10 @@ bra3_BE54:
 	LDA ObjectXPos,X
 	SEC
 	SBC ObjectXPos,Y
-	STA $32
+	STA Data0
 	LDA ObjectXScreen,X
 	SBC ObjectXScreen,Y
-	STA $33
+	STA Data0+1
 	LDA ObjectYPos,X
 	SEC
 	SBC ObjectYPos,Y
@@ -5185,7 +5184,7 @@ bra3_BE54:
 	LDA ObjectYScreen,X
 	SBC ObjectYScreen,Y
 	STA $35
-	LDA $33
+	LDA Data0+1
 	BPL bra3_BE8F
 	CMP #$FF
 	BNE bra3_BE29
@@ -5196,7 +5195,7 @@ bra3_BE54:
 	BCC bra3_BE29
 bra3_BE8F:
 	BNE bra3_BE29
-	LDA $32
+	LDA Data0
 	CMP #$10
 	BCS bra3_BE29
 bra3_BE97:
@@ -5225,7 +5224,7 @@ bra3_BEB7:
 	LDA tbl3_A87B,Y
 	STA $36
 	LDA tbl3_A97B,Y
-	STA $38
+	STA Pointer3
 	LDY #$10
 	LDA PlayerPowerup
 	BEQ bra3_BED4
@@ -5255,7 +5254,7 @@ bra3_BEF7:
 	BEQ bra3_BF0D
 	CMP #$FF
 	BNE bra3_BF17
-	LDA $32
+	LDA Data0
 	CLC
 	ADC $38
 	CLC
@@ -5314,7 +5313,7 @@ bra3_BF51:
 	ORA #$04
 	STA ObjectState,X
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	PLA
 	PLA
 	RTS

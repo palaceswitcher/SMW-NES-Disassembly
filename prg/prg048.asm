@@ -1,7 +1,7 @@
 ;disassembled by BZK 6502 Disassembler
 sub4_8000:
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$7F
 	ASL
 	TAY
@@ -12,11 +12,11 @@ sub4_8000:
 bra4_8013:
 	JSR $B077
 	BNE bra4_8070
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$7F
 	CMP #$07
 	BCS bra4_8024
-	INC $0578,X
+	INC ObjectVariables,X
 bra4_8024:
 	PHA
 	CLC
@@ -35,7 +35,7 @@ bra4_803B:
 	JSR $B057
 	BNE bra4_806F_RTS
 	LDY #$00
-	LDA ($32),Y
+	LDA (Data0),Y
 	TAY
 	LDA ObjectState,X
 	AND #$40
@@ -79,13 +79,13 @@ bra4_8086:
 	LDA ObjectState,X
 	AND #$C0
 	STA ObjectState,X
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$80
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 loc4_809A:
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	BMI bra4_80B8
 	JSR $B077
 	BNE bra4_80B8
@@ -93,9 +93,9 @@ loc4_809A:
 	ORA #$20
 	STA ObjectState,X
 	STA ObjectState,X
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$80
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 bra4_80B8:
 	DEY
@@ -107,13 +107,13 @@ bra4_80C2:
 	LDA ObjectState,X
 	AND #$40
 	BEQ bra4_80D3
-	LDA ($32),Y
+	LDA (Data0),Y
 	EOR #$FF
 	CLC
 	ADC #$01
 	JMP loc4_80D5
 bra4_80D3:
-	LDA ($32),Y
+	LDA (Data0),Y
 loc4_80D5:
 	PHA
 	CLC
@@ -131,7 +131,7 @@ bra4_80EC:
 	STA ObjectXScreen,X
 	INY
 loc4_80F0:
-	LDA ($32),Y
+	LDA (Data0),Y
 	PHA
 	CLC
 	ADC ObjectYPos,X
@@ -147,7 +147,7 @@ bra4_8104:
 bra4_8109:
 	STA ObjectYScreen,X
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BNE bra4_811E
 	LDA ObjectState,X	;unlogged
@@ -157,26 +157,26 @@ bra4_8109:
 bra4_811E:
 	AND #$F0
 	BEQ bra4_813C
-	LDA ($32),Y
+	LDA (Data0),Y
 	AND #$3F
 	BNE bra4_8131
-	LDA $0578,X	;unlogged
+	LDA ObjectVariables,X	;unlogged
 	AND #$80	;unlogged
-	STA $0578,X	;unlogged
+	STA ObjectVariables,X	;unlogged
 	RTS	;unlogged
 bra4_8131:
-	STA $32
-	LDA $0578,X
+	STA Data0
+	LDA ObjectVariables,X
 	SEC
 	SBC $32
-	STA $0578,X
+	STA ObjectVariables,X
 bra4_813C:
 loc4_813C:
-	INC $0578,X
+	INC ObjectVariables,X
 	RTS
 sub4_8140:
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$7F
 	ASL
 	TAY
@@ -187,11 +187,11 @@ sub4_8140:
 bra4_8153:
 	JSR $B077
 	BNE bra4_81B8
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$7F
 	CMP #$07
 	BCS bra4_8164
-	INC $0578,X
+	INC ObjectVariables,X
 bra4_8164:
 	PHA
 	CLC
@@ -214,7 +214,7 @@ bra4_817B:
 	STA ObjectState,X
 bra4_818B:
 	LDY #$00
-	LDA ($32),Y
+	LDA (Data0),Y
 	TAY
 	LDA ObjectState,X
 	AND #$40
@@ -247,22 +247,22 @@ bra4_81B8:
 	LDA ObjectState,X
 	AND #$C0
 	STA ObjectState,X
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$80
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 loc4_81D1:
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	BMI bra4_81EC
 	JSR $B077
 	BNE bra4_81EC
 	LDA ObjectState,X
 	ORA #$20
 	STA ObjectState,X
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$80
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 bra4_81EC:
 	DEY
@@ -275,13 +275,13 @@ bra4_81FA:
 	LDA ObjectState,X
 	AND #$40
 	BEQ bra4_820B
-	LDA ($32),Y
+	LDA (Data0),Y
 	EOR #$FF
 	CLC
 	ADC #$01
 	JMP loc4_820D
 bra4_820B:
-	LDA ($32),Y
+	LDA (Data0),Y
 loc4_820D:
 	PHA
 	CLC
@@ -298,7 +298,7 @@ bra4_821F:
 bra4_8224:
 	STA ObjectXScreen,X
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	PHA
 	CLC
 	ADC ObjectYPos,X
@@ -314,7 +314,7 @@ bra4_823C:
 bra4_8241:
 	STA ObjectYScreen,X
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BNE bra4_8256
 	LDA ObjectState,X
@@ -324,25 +324,25 @@ bra4_8241:
 bra4_8256:
 	AND #$F0
 	BEQ bra4_8274
-	LDA ($32),Y
+	LDA (Data0),Y
 	AND #$3F
 	BNE bra4_8269
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$80
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 bra4_8269:
-	STA $32
-	LDA $0578,X
+	STA Data0
+	LDA ObjectVariables,X
 	SEC
 	SBC $32
-	STA $0578,X
+	STA ObjectVariables,X
 bra4_8274:
 loc4_8274:
-	INC $0578,X
+	INC ObjectVariables,X
 	RTS
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BMI bra4_8282
 	JMP loc4_82F0
 bra4_8282:
@@ -454,10 +454,10 @@ bra4_835A:
 	ASL
 	TAY
 	LDA tbl4_836E,Y
-	STA $32
+	STA Data0
 	LDA tbl4_836F,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl4_836E:
 	.byte $BB
 tbl4_836F:
@@ -491,15 +491,15 @@ tbl4_836F:
 	CMP #$D0
 	BCC bra4_83AA
 	LDA #$81
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 bra4_83AA:
 	STA ObjectSlot,X
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 sub4_83B3:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$08
 	BCS bra4_8422
 	LDA ObjectState,X
@@ -512,9 +512,9 @@ sub4_83B3:
 	ASL	;unlogged
 	TAY	;unlogged
 	LDA tbl4_9A83,Y	;unlogged
-	STA $32	;unlogged
+	STA Data0	;unlogged
 	LDA tbl4_9A84,Y	;unlogged
-	STA $33	;unlogged
+	STA Data0+1	;unlogged
 	JSR sub4_8140	;unlogged
 bra4_83D9:
 	JMP loc4_83F4	;unlogged
@@ -526,13 +526,13 @@ bra4_83DC:
 	ASL
 	TAY
 	LDA tbl4_9A83,Y
-	STA $32
+	STA Data0
 	LDA tbl4_9A84,Y
-	STA $33
+	STA Data0+1
 	JSR sub4_8140
 bra4_83F4:
 loc4_83F4:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$04
 	BCC bra4_8421_RTS
 	LDA $05DC,X
@@ -542,7 +542,7 @@ loc4_83F4:
 	ADC #$02
 	STA ObjectSlot,X
 	LDA #$11
-	STA $0578,X
+	STA ObjectVariables,X
 	LDA $05B4,X
 	AND #$40
 	EOR #$40
@@ -561,14 +561,14 @@ bra4_8422:
 	ASL
 	TAY
 	LDA tbl4_9A83,Y
-	STA $32
+	STA Data0
 	LDA tbl4_9A84,Y
-	STA $33
+	STA Data0+1
 	JSR sub4_8140
 bra4_843A_RTS:
 	RTS
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BPL bra4_8446
 	LDY #$03
 	BNE bra4_8468
@@ -605,7 +605,7 @@ bra4_8468:
 	.byte $01
 	.byte $00
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$80
 	BEQ bra4_8488
 	JMP loc4_84F6
@@ -718,10 +718,10 @@ bra4_8560:
 	ASL
 	TAY
 	LDA tbl4_8574,Y
-	STA $32
+	STA Data0
 	LDA tbl4_8575,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl4_8574:
 	.byte $BB
 tbl4_8575:
@@ -755,21 +755,21 @@ tbl4_8575:
 	CMP #$D0
 	BCC bra4_85B0
 	LDA #$81
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 bra4_85B0:
 	STA ObjectSlot,X
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 sub4_85B9:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$11
 	BCC bra4_85CA
 	JSR $B057
 	BEQ bra4_85CA
 	LDA #$01
-	STA $0578,X
+	STA ObjectVariables,X
 bra4_85CA:
 	LDA $062B
 	AND #$00
@@ -778,18 +778,18 @@ bra4_85CA:
 	ASL
 	TAY
 	LDA tbl4_9A83,Y
-	STA $32
+	STA Data0
 	LDA tbl4_9A84,Y
-	STA $33
+	STA Data0+1
 	JSR sub4_8000
 bra4_85E2:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$11
 	BCS bra4_8611
 	LDA ObjectState,X
 	AND #$20
 	BNE bra4_8610_RTS
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BNE bra4_8610_RTS
 	LDA $05DC,X
 	BPL bra4_85FD
@@ -827,11 +827,11 @@ loc4_8631:
 	SBC #$02
 	STA ObjectSlot,X
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 bra4_863F_RTS:
 	RTS
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BPL bra4_864B
 	LDY #$03
 	BNE bra4_8669
@@ -839,7 +839,7 @@ bra4_864B:
 	LDA ObjectState,X
 	AND #$20
 	BNE bra4_865E
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$11
 	BCS bra4_865E
 	LDY #$03
@@ -858,7 +858,7 @@ loc4_8669:
 	TYA
 	JMP loc4_9104
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BMI bra4_867F
 	JMP loc4_86E6
 bra4_867F:
@@ -966,10 +966,10 @@ bra4_8750:
 	ASL
 	TAY
 	LDA tbl4_8764,Y
-	STA $32
+	STA Data0
 	LDA tbl4_8765,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl4_8764:
 	.byte $BB
 tbl4_8765:
@@ -997,9 +997,9 @@ sub4_8778:
 	ASL
 	TAY
 	LDA tbl4_9A83,Y
-	STA $32
+	STA Data0
 	LDA tbl4_9A84,Y
-	STA $33
+	STA Data0+1
 	JSR sub4_8140
 bra4_8797:
 	JMP loc4_87C7_RTS
@@ -1011,12 +1011,12 @@ bra4_879A:
 	ASL
 	TAY
 	LDA tbl4_9A83,Y
-	STA $32
+	STA Data0
 	LDA tbl4_9A84,Y
-	STA $33
+	STA Data0+1
 	JSR sub4_8140
 bra4_87B2:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$0E
 	BCC bra4_87C7_RTS
 	LDA ObjectSlot,X
@@ -1024,12 +1024,12 @@ bra4_87B2:
 	ADC #$02
 	STA ObjectSlot,X
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 bra4_87C7_RTS:
 loc4_87C7_RTS:
 	RTS
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BPL bra4_87DC
 	LDA ObjectState,X	;unlogged
 	AND #$40	;unlogged
@@ -1074,7 +1074,7 @@ tbl4_8804:
 	.byte $07
 	.byte $07
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BMI bra4_881E
 	JMP loc4_8920
 bra4_881E:
@@ -1256,10 +1256,10 @@ bra4_898A:
 	ASL
 	TAY
 	LDA tbl4_899E,Y
-	STA $32
+	STA Data0
 	LDA tbl4_899F,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl4_899E:
 	.byte $BB
 tbl4_899F:
@@ -1292,13 +1292,13 @@ tbl4_899F:
 	ORA #$C4
 	STA ObjectSlot,X
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 sub4_89DA:
 	LDA ObjectState,X
 	AND #$20
 	BNE bra4_8A06
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BNE bra4_8A06
 	LDY #$01
 	LDA $05DC,X
@@ -1306,7 +1306,7 @@ sub4_89DA:
 	LDY #$11
 bra4_89EF:
 	TYA
-	STA $0578,X
+	STA ObjectVariables,X
 	LDA $05B4,X
 	AND #$40
 	EOR #$40
@@ -1323,17 +1323,17 @@ bra4_8A06:
 	ASL
 	TAY
 	LDA tbl4_9A83,Y
-	STA $32
+	STA Data0
 	LDA tbl4_9A84,Y
-	STA $33
+	STA Data0+1
 	JSR sub4_8140
 bra4_8A1E:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$0F
 	CMP #$0D
 	BNE bra4_8A80_RTS
 loc4_8A27:
-	INC $0578,X
+	INC ObjectVariables,X
 	LDY ObjectCount
 	INC ObjectCount
 	LDA ObjectState,X
@@ -1364,7 +1364,7 @@ loc4_8A55:
 	AND #$40
 	STA ObjectState,Y
 	LDA #$00
-	STA $0578,Y
+	STA ObjectVariables,Y
 	STA GuidedObjStatus,Y
 	LDA ObjectSlot,X
 	AND #$01
@@ -1373,7 +1373,7 @@ loc4_8A55:
 bra4_8A80_RTS:
 	RTS
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BPL bra4_8A8C
 	LDY #$03
 	BNE bra4_8A9F
@@ -1382,7 +1382,7 @@ bra4_8A8C:
 	LDA ObjectState,X
 	AND #$20
 	BNE bra4_8A9F
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$1F
 	TAY
 	LDA tbl4_8AAB,Y
@@ -1497,9 +1497,9 @@ bra4_8B45:
 	ASL
 	TAY
 	LDA tbl4_9A83,Y
-	STA $32
+	STA Data0
 	LDA tbl4_9A84,Y
-	STA $33
+	STA Data0+1
 	JSR $B132
 bra4_8B68:
 	JSR $A6D4
@@ -1516,7 +1516,7 @@ bra4_8B7E:
 	LDA #$00
 	JMP loc4_90CE
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BMI bra4_8B90
 	JMP loc4_8BF7
 bra4_8B90:
@@ -1624,10 +1624,10 @@ bra4_8C61:
 	ASL
 	TAY
 	LDA tbl4_8C75,Y
-	STA $32
+	STA Data0
 	LDA tbl4_8C76,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl4_8C75:
 	.byte $BB
 tbl4_8C76:
@@ -1660,12 +1660,12 @@ tbl4_8C76:
 	ORA #$C4
 	STA ObjectSlot,X
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 sub4_8CB1:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BNE bra4_8CCC
-	INC $0578,X
+	INC ObjectVariables,X
 	LDA $05B4,X
 	AND #$40
 	EOR #$40
@@ -1689,18 +1689,18 @@ bra4_8CD7:
 	ASL
 	TAY
 	LDA tbl4_9A83,Y
-	STA $32
+	STA Data0
 	LDA tbl4_9A84,Y
-	STA $33
+	STA Data0+1
 	JSR sub4_8140
 bra4_8CF1:
 	LDA ObjectState,X
 	AND #$20
 	BNE bra4_8D58_RTS
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$02
 	BNE bra4_8D58_RTS
-	INC $0578,X
+	INC ObjectVariables,X
 	LDY ObjectCount
 	INC ObjectCount
 	LDA ObjectState,X
@@ -1731,7 +1731,7 @@ loc4_8D2D:
 	AND #$40
 	STA ObjectState,Y
 	LDA #$06
-	STA $0578,Y
+	STA ObjectVariables,Y
 	STA GuidedObjStatus,Y
 	LDA ObjectSlot,X
 	AND #$01
@@ -1745,7 +1745,7 @@ bra4_8D58_RTS:
 	AND #$20
 	BNE bra4_8D71
 	LDY #$0E
-	LDA $0578,X
+	LDA ObjectVariables,X
 	SEC
 	SBC #$02
 	CMP #$02
@@ -1812,7 +1812,7 @@ sub4_8DEC:
 	LDA ObjectState,X
 	AND #$20
 	BNE bra4_8E0B
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BNE bra4_8E0B
 	LDA $062B
 	ADC GoalTapeDistance,X
@@ -1821,7 +1821,7 @@ sub4_8DEC:
 	AND #$03
 	TAY
 	LDA tbl4_8E24,Y
-	STA $0578,X
+	STA ObjectVariables,X
 bra4_8E0B:
 	LDA $062B
 	AND #$02
@@ -1830,9 +1830,9 @@ bra4_8E0B:
 	ASL
 	TAY
 	LDA tbl4_9A83,Y
-	STA $32
+	STA Data0
 	LDA tbl4_9A84,Y
-	STA $33
+	STA Data0+1
 	JSR sub4_8140
 bra4_8E23_RTS:
 	RTS
@@ -1852,7 +1852,7 @@ bra4_8E35:
 	LDA #$01
 	JMP loc4_90CE
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BMI bra4_8E47
 	JMP loc4_8EE3
 bra4_8E47:
@@ -1918,16 +1918,16 @@ bra4_8EAB:
 	ASL
 	TAY
 	LDA tbl4_9A83,Y
-	STA $32
+	STA Data0
 	LDA tbl4_9A84,Y
-	STA $33
+	STA Data0+1
 	JSR sub4_8140
 bra4_8ED6:
 	LDA ObjectState,X
 	AND #$20
 	BNE bra4_8EE2_RTS
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 bra4_8EE2_RTS:
 	RTS
 loc4_8EE3:
@@ -1986,10 +1986,10 @@ bra4_8F4D:
 	ASL
 	TAY
 	LDA tbl4_8F61,Y
-	STA $32
+	STA Data0
 	LDA tbl4_8F62,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl4_8F61:
 	.byte $BB
 tbl4_8F62:
@@ -2022,26 +2022,26 @@ tbl4_8F62:
 	ORA #$C4
 	STA ObjectSlot,X
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 sub4_8F9D:
 	LDA $062B
 	AND #$0E
 	BNE bra4_9019_RTS
-	INC $0578,X
-	LDA $0578,X
+	INC ObjectVariables,X
+	LDA ObjectVariables,X
 	CMP #$18
 	BCC bra4_8FBA
 	CMP #$1F
 	BCC bra4_9019_RTS
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	JMP loc4_9019_RTS
 bra4_8FBA:
 	AND #$07
 	CMP #$03
 	BNE bra4_9019_RTS
-	INC $0578,X
+	INC ObjectVariables,X
 	LDY ObjectCount
 	INC ObjectCount
 	LDA ObjectState,X
@@ -2072,7 +2072,7 @@ loc4_8FEE:
 	AND #$40
 	STA ObjectState,Y
 	LDA #$06
-	STA $0578,Y
+	STA ObjectVariables,Y
 	STA GuidedObjStatus,Y
 	LDA ObjectSlot,X
 	AND #$01
@@ -2083,7 +2083,7 @@ loc4_9019_RTS:
 	RTS
 	LDX $A4
 	LDY #$0F
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$18
 	BCS bra4_9034
 	AND #$07
@@ -2113,9 +2113,9 @@ tbl4_9038:
 	ASL
 	TAY
 	LDA tbl4_9A83,Y
-	STA $32
+	STA Data0
 	LDA tbl4_9A84,Y
-	STA $33
+	STA Data0+1
 	JSR sub4_8140
 bra4_905A:
 	LDA ObjectXPos,X
@@ -2175,9 +2175,9 @@ loc4_90CE:
 	ASL
 	TAX
 	LDA tbl4_90EC,X
-	STA $32
+	STA Data0
 	LDA tbl4_90ED,X
-	STA $33
+	STA Data0+1
 	LDY #$80
 	LDX $A4
 	LDA ObjectSlot,X
@@ -2217,9 +2217,9 @@ loc4_9104:
 	ASL
 	TAX
 	LDA tbl4_9122,X
-	STA $32
+	STA Data0
 	LDA tbl4_9123,X
-	STA $33
+	STA Data0+1
 	LDY #$80
 	LDX $A4
 	LDA ObjectSlot,X
@@ -2589,7 +2589,7 @@ tbl4_9123:
 	.byte $34
 	RTS
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BMI bra4_92C1
 	LDA ObjectXPos,X
 	SEC
@@ -2631,7 +2631,7 @@ bra4_92CA:
 	LDA ObjectYScreen,X
 	STA BooBuddiesYScreen
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	LDA #$09
 	STA $25
 	LDA ObjectSlot,X
@@ -2643,7 +2643,7 @@ bra4_92F4:
 	INC ObjectCount
 	LDY $25
 	LDA tbl4_934B,Y
-	STA $0578,X
+	STA ObjectVariables,X
 	TAY
 	LDA tbl4_9983,Y
 	PHA
@@ -2723,7 +2723,7 @@ tbl4_935F:
 	LDA #$00
 	STA ObjectSlot,X
 	STA ObjectState,X
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 bra4_937B:
 	JSR sub4_93B0
@@ -2755,12 +2755,12 @@ sub4_93B0:
 	BEQ bra4_93B7
 	RTS
 bra4_93B7:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CLC
 	ADC #$01
 	AND #$7F
-	STA $0578,X
-	LDA $0578,X
+	STA ObjectVariables,X
+	LDA ObjectVariables,X
 	TAY
 	LDA tbl4_9983,Y
 	PHA
@@ -2799,7 +2799,7 @@ bra4_93FE:
 	STA ObjectYScreen,X
 	RTS
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$80
 	BEQ bra4_940E
 	JMP loc4_9475
@@ -2908,10 +2908,10 @@ bra4_94DF:
 	ASL
 	TAY
 	LDA tbl4_94F3,Y
-	STA $32
+	STA Data0
 	LDA tbl4_94F4,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl4_94F3:
 	.byte $BB
 tbl4_94F4:
@@ -2935,9 +2935,9 @@ sub4_9506:
 	ASL
 	TAY
 	LDA tbl4_9A83,Y
-	STA $32
+	STA Data0
 	LDA tbl4_9A84,Y
-	STA $33
+	STA Data0+1
 	JSR $B132
 bra4_951E:
 	LDA ObjectXPos,X
@@ -2987,7 +2987,7 @@ loc4_957C:
 	BEQ bra4_9582
 	RTS	;unlogged
 bra4_9582:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$20
 	BCC bra4_95D0
 	LDA PlayerMovement
@@ -3000,7 +3000,7 @@ bra4_9582:
 	LDA $05DC,X
 	BMI bra4_95AD
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	LDA ObjectState,X
 	AND #$DF
 	STA ObjectState,X
@@ -3013,7 +3013,7 @@ bra4_95AD:
 	LDY #$10
 bra4_95B8:
 	TYA
-	STA $0578,X
+	STA ObjectVariables,X
 bra4_95BC:
 loc4_95BC:
 	LDA $05B4,X
@@ -3040,11 +3040,11 @@ bra4_95D0:
 	AND #$3E
 	BNE bra4_95F1_RTS
 	LDA #$20
-	STA $0578,X
+	STA ObjectVariables,X
 bra4_95F1_RTS:
 	RTS
 bra4_95F2:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$0F
 	CMP #$0E
 	BCC bra4_961A
@@ -3057,7 +3057,7 @@ bra4_95F2:
 	AND #$06
 	BNE bra4_961A
 	LDA #$10
-	STA $0578,X
+	STA ObjectVariables,X
 	LDA ObjectState,X
 	ORA #$20
 	STA ObjectState,X
@@ -3083,11 +3083,11 @@ bra4_962E:
 	AND #$3E
 	BNE bra4_9648_RTS
 	LDA #$20
-	STA $0578,X
+	STA ObjectVariables,X
 bra4_9648_RTS:
 	RTS
 bra4_9649:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$0F
 	CMP #$0E
 	BCC bra4_9671
@@ -3101,7 +3101,7 @@ bra4_965E:
 	AND #$06
 	BNE bra4_9671
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	LDA ObjectState,X
 	AND #$DF
 	STA ObjectState,X
@@ -3116,7 +3116,7 @@ bra4_9671:
 	STA ObjectState,X
 	RTS
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$80
 	BEQ bra4_9691
 	JMP loc4_9703
@@ -3232,9 +3232,9 @@ sub4_976B:
 	ASL
 	TAY
 	LDA tbl4_9A83,Y
-	STA $32
+	STA Data0
 	LDA tbl4_9A84,Y
-	STA $33
+	STA Data0+1
 	JSR $B132
 bra4_9783:
 	LDA ObjectState,X
@@ -3279,7 +3279,7 @@ loc4_97C1:
 	ADC #$02
 	STA ObjectSlot,X
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	LDA ObjectState,X
 	AND #$DF
 	STA ObjectState,X
@@ -3344,9 +3344,9 @@ sub4_9857:
 	ASL
 	TAY
 	LDA tbl4_9A83,Y
-	STA $32
+	STA Data0
 	LDA tbl4_9A84,Y
-	STA $33
+	STA Data0+1
 	JSR $B132
 bra4_986F:
 	LDA ObjectState,X
@@ -3365,7 +3365,7 @@ bra4_9888:
 	ORA #$20
 	STA ObjectState,X
 	LDA #$10
-	STA $0578,X
+	STA ObjectVariables,X
 bra4_9895_RTS:
 	RTS
 bra4_9896:
@@ -3382,7 +3382,7 @@ bra4_9896:
 	SBC #$02
 	STA ObjectSlot,X
 	LDA #$80
-	STA $0578,X
+	STA ObjectVariables,X
 bra4_98B6_RTS:
 	RTS
 	LDA FrameCount
@@ -3416,7 +3416,7 @@ tbl4_98DD:
 	AND #$40
 	STA $05F0
 	LDY #$03
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$20
 	BCC bra4_990A
 	LDY #$05
@@ -3454,9 +3454,9 @@ loc4_992B:
 	ASL
 	TAX
 	LDA tbl4_9949,X
-	STA $32
+	STA Data0
 	LDA tbl4_994A,X
-	STA $33
+	STA Data0+1
 	LDY #$80
 	LDX $A4
 	LDA ObjectSlot,X

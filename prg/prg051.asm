@@ -3624,7 +3624,7 @@
 	.byte $D0
 	.byte $E0
 	.byte $F0
-	LDA $96	;useless duplicate code to pad out the bank
+	LDA PlayerBehindColl	;useless duplicate code to pad out the bank
 	AND #$0F
 	TAX
 	LDA PlayerWallColPos
@@ -3644,7 +3644,7 @@ bra2_EE3F:
 	TXA
 	ASL
 	TAY
-	LDA $96
+	LDA PlayerBehindColl
 	CMP #$8E
 	BCC bra2_EE78
 	LDA Player1YoshiCoins,X
@@ -3656,11 +3656,11 @@ bra2_EE3F:
 bra2_EE62:
 	LDA #$01
 	STA Player1YoshiCoins,X
-	LDA $0372,Y
+	LDA P1Score,Y
 	CLC
 	ADC #$E8
-	STA $0372,Y
-	LDA $0373,Y
+	STA P1Score,Y
+	LDA P1Score+1,Y
 	ADC #$03
 	JMP loc2_EE99
 bra2_EE78:
@@ -3673,14 +3673,14 @@ bra2_EE78:
 bra2_EE86:
 	LDA #$01
 	STA Player1Coins,X
-	LDA $0372,Y
+	LDA P1Score,Y
 	CLC
 	ADC #$64
-	STA $0372,Y
-	LDA $0373,Y
+	STA P1Score,Y
+	LDA P1Score+1,Y
 	ADC #$00
 loc2_EE99:
-	STA $0373,Y
+	STA P1Score+1,Y
 	INC $036A,X
 	LDA #$07
 bra2_EEA1:
@@ -3739,7 +3739,7 @@ bra2_EEE8:
 	ORA #$08
 bra2_EF01:
 	STA $03E5,X
-	LDA $96
+	LDA PlayerBehindColl
 	STA $03E4,X
 	INX
 	INX

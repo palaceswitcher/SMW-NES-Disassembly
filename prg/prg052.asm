@@ -130,18 +130,18 @@ bra2_A0C7:
 	ASL
 	TAX
 	LDA tbl2_A83B,X
-	STA $32
+	STA Data0
 	LDA tbl2_A83C,X
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 bra2_A0E4:
 	ASL
 	TAX
 	LDA tbl2_AABB,X
-	STA $32
+	STA Data0
 	LDA tbl2_AABC,X
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 jmp_52_A0F3:
 	LDX #$00
 bra2_A0F5:
@@ -166,16 +166,16 @@ sub2_A10D:
 	JSR sub2_A5D0
 	RTS
 	LDY #$00
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $2A
 	TAX
 	LDA tbl2_A45B,X
 	STA $25
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $2D
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $2E
 	AND #$7F
 	ASL
@@ -360,7 +360,7 @@ bra2_A23F:
 	INY
 	INY
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BNE bra2_A260
 	LDA #$F8
@@ -368,7 +368,7 @@ bra2_A23F:
 	BMI bra2_A281
 bra2_A260:
 	AND #$3F
-	STA $38
+	STA Pointer3
 	ORA $36
 	STA $0201,X
 	LDY $A4
@@ -409,16 +409,16 @@ bra2_A2A2:
 bra2_A2A72_RTS:
 	RTS
 	LDY #$00
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $2A
 	TAX
 	LDA tbl2_A45B,X
 	STA $25
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $2D
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	CLC
 	ADC #$0C
 	JSR sub2_A2DE
@@ -428,16 +428,16 @@ bra2_A2A72_RTS:
 	RTS	;unlogged
 sub2_A2CA:
 	LDY #$00
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $2A
 	TAX
 	LDA tbl2_A45B,X
 	STA $25
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $2D
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 sub2_A2DE:
 	STA $2E
 	AND #$7F
@@ -623,7 +623,7 @@ bra2_A3F1:
 	INY
 	INY
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BNE bra2_A412
 	LDA #$F8
@@ -631,7 +631,7 @@ bra2_A3F1:
 	BMI bra2_A433
 bra2_A412:
 	AND #$3F
-	STA $38
+	STA Pointer3
 	ORA $36
 	STA $0201,X
 	LDY $A4
@@ -683,16 +683,16 @@ tbl2_A45B:
 	.byte $28
 	.byte $30
 	LDY #$00
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $2A
 	TAX
 	LDA tbl2_A45B,X
 	STA $25
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $2D
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $2E
 	AND #$7F
 	ASL
@@ -870,7 +870,7 @@ bra2_A57E:
 	INY
 	INY
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BNE bra2_A59F
 	LDA #$F8
@@ -2431,16 +2431,16 @@ tbl2_ABBB:
 	.byte $31
 	.byte $31
 	LDY #$00
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $2A
 	TAX
 	LDA tbl2_A45B,X
 	STA $25
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $2D
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $2E
 	AND #$7F
 	ASL
@@ -2623,7 +2623,7 @@ bra2_AD5D:
 	INY
 	INY
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BNE bra2_AD7E
 	LDA #$F8	;unlogged
@@ -2631,7 +2631,7 @@ bra2_AD5D:
 	BMI bra2_AD9C	;unlogged
 bra2_AD7E:
 	AND #$3F
-	STA $38
+	STA Pointer3
 	ORA $36
 	STA $0201,X
 	LDY $A4
@@ -2659,7 +2659,7 @@ loc2_ADA5:
 	STX $3C
 	RTS
 	LDY #$02
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $2E
 	AND #$7F
 	ASL
@@ -2840,7 +2840,7 @@ bra2_AEC0:
 	INY
 	INY
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BNE bra2_AEE1
 	LDA #$F8	;unlogged
@@ -2848,7 +2848,7 @@ bra2_AEC0:
 	BMI bra2_AF02	;unlogged
 bra2_AEE1:
 	AND #$3F
-	STA $38
+	STA Pointer3
 	ORA $36
 	STA $0201,X
 	LDY $A4

@@ -185,7 +185,7 @@ bra13_99CC:
 	ASL
 	TAX
 	LDA tbl13_9A8D,X
-	STA $51
+	STA CameraXScreen
 	STA PlayerWallColPos
 	STA PlayerXScreen
 	LDA tbl13_9A8E,X
@@ -207,10 +207,10 @@ bra13_99CC:
 	STA $26
 	LDY #$00
 	LDA ($25),Y
-	STA $03A1
+	STA PPUUpdatePtr
 	INY
 	LDA ($25),Y
-	STA $03A2
+	STA PPUUpdatePtr+1
 	INY
 	LDA ($25),Y
 	STA $03A3
@@ -254,12 +254,12 @@ tbl13_9A2F:
 	.byte $0A
 	.byte $A8
 	LDA tbl13_9A5D,Y
-	STA PCPointerLoByte
+	STA Data0
 	LDA tbl13_9A5E,Y
-	STA PCPointerHiByte
+	STA Data0+1
 	LDY #$00
 bra13_9A52:
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	STA $03C5,Y
 	INY
 	CPY #$06
@@ -728,13 +728,13 @@ bra13_9C6D:
 	RTS
 sub13_9C78:
 	LDA #$00
-	STA $39
+	STA Pointer3+1
 	STA $25
 	LDA #$0A
-	STA $38
+	STA Pointer3
 bra13_9C82:
 	JSR sub13_9CA9
-	LDA PCPointerLoByte
+	LDA Data0
 	CLC
 	ADC $26
 	LDY $25
@@ -756,24 +756,24 @@ bra13_9CA8_RTS:
 	RTS
 sub13_9CA9:
 	LDA #$00
-	STA PCPointerLoByte
-	STA PCPointerHiByte
+	STA Data0
+	STA Data0+1
 	LDX #$10
 bra13_9CB1:
 	ASL $34
 	ROL $35
-	ROL PCPointerLoByte
-	ROL PCPointerHiByte
-	LDA PCPointerLoByte
+	ROL Data0
+	ROL Data0+1
+	LDA Data0
 	SEC
 	SBC $38
 	TAY
-	LDA PCPointerHiByte
+	LDA Data0+1
 	SBC $39
 	BCC bra13_9CCB
 	INC $34
-	STA PCPointerHiByte
-	STY PCPointerLoByte
+	STA Data0+1
+	STY Data0
 bra13_9CCB:
 	DEX
 	BNE bra13_9CB1
@@ -1085,31 +1085,31 @@ bra13_9E0B:
 	ASL
 	TAY
 	LDA tbl13_9E5C,X
-	STA PCPointerLoByte
+	STA Data0
 	SEC
 	LDA tbl13_9E5D,X
 	SBC $52
 	STA $36
 	BCS bra13_9E31
-	DEC PCPointerLoByte
+	DEC Data0
 bra13_9E31:
-	LDA PCPointerLoByte
+	LDA Data0
 	CMP $51
 	BNE bra13_9E4C
 	LDA tbl13_9E5E,X
-	STA PCPointerLoByte
+	STA Data0
 	SEC
 	LDA tbl13_9E5F,X
 	SBC $03
-	STA $38
+	STA Pointer3
 	BCS bra13_9E48
-	DEC PCPointerLoByte
+	DEC Data0
 bra13_9E48:
-	LDA PCPointerLoByte
+	LDA Data0
 	BEQ bra13_9E50
 bra13_9E4C:
 	LDA #$F8
-	STA $38
+	STA Pointer3
 bra13_9E50:
 	JSR sub13_9E7A
 bra13_9E53:
@@ -1160,7 +1160,7 @@ sub13_9E7A:
 	ORA #$80
 	STA $28
 	CLC
-	LDA $38
+	LDA Pointer3
 	STA $0280,Y
 	LDA $28
 	STA $0281,Y
@@ -1168,7 +1168,7 @@ sub13_9E7A:
 	STA $0282,Y
 	LDA $36
 	STA $0283,Y
-	LDA $38
+	LDA Pointer3
 	STA $0284,Y
 	INC $28
 	LDA $28
@@ -1178,7 +1178,7 @@ sub13_9E7A:
 	LDA $36
 	ADC #$08
 	STA $0287,Y
-	LDA $38
+	LDA Pointer3
 	ADC #$08
 	STA $0288,Y
 	INC $28
@@ -1188,7 +1188,7 @@ sub13_9E7A:
 	STA $028A,Y
 	LDA $36
 	STA $028B,Y
-	LDA $38
+	LDA Pointer3
 	ADC #$08
 	STA $028C,Y
 	INC $28

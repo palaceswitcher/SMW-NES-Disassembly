@@ -1,172 +1,126 @@
-;disassembled with BZK 6502 Disassembler
+;Disassembled with BZK 6502 Disassembler
 jmp_41_A000:
-	LDA a:Event
+	LDA a:Event	;Load event number
 	ASL
-	TAY
-	LDA tbl_A012,Y			;
-	STA PCPointerLoByte	;Load the lower byte of the pointer
-	LDA tbl_A013,Y			;
-	STA PCPointerHiByte	;Load the upper byte of the pointer
-	JMP (PCPointerLoByte)	;Jump to the pointer that was just loaded
+	TAY	;Get pointer for it
+	LDA tbl_A012,Y	
+	STA Data0	;Load lower byte of pointer
+	LDA tbl_A012+1,Y	
+	STA Data0+1	;Load upper byte of pointer
+	JMP (Data0)	;Jump to loaded pointer
 tbl_A012:
-			.byte $74
-tbl_A013:	.byte $A0
-			.byte $A2
-			.byte $A0
-			.byte $95
-			.byte $A6
-			.byte $06
-			.byte $A7
-			.byte $61
-			.byte $A7
-			.byte $A6
-			.byte $A7
-			.byte $9E
-			.byte $A0
-			.byte $D3
-			.byte $A7
-			.byte $FF
-			.byte $A7
-			.byte $6F
-			.byte $A8
-			.byte $92
-			.byte $A8
-			.byte $FE
-			.byte $A8
-			.byte $24
-			.byte $A9
-			.byte $33
-			.byte $A9
-			.byte $A7
-			.byte $A9
-			.byte $27
-			.byte $A9
-			.byte $33
-			.byte $A9
-			.byte $1D
-			.byte $AB
-			.byte $27
-			.byte $A9
-			.byte $8D
-			.byte $AC
-			.byte $27
-			.byte $A9
-			.byte $29
-			.byte $AD
-			.byte $5C
-			.byte $AD
-			.byte $7E
-			.byte $AD
-			.byte $C5
-			.byte $AD
-			.byte $27
-			.byte $A9
-			.byte $09
-			.byte $AE
-			.byte $8A
-			.byte $99
-			.byte $B9
-			.byte $AE
-			.byte $13
-			.byte $AF
-			.byte $13
-			.byte $AF
-			.byte $14
-			.byte $AF
-			.byte $27
-			.byte $A9
-			.byte $1F
-			.byte $AF
-			.byte $4C
-			.byte $AF
-			.byte $27
-			.byte $A9
-			.byte $93
-			.byte $AF
-			.byte $FF
-			.byte $A7
-			.byte $6F
-			.byte $A8
-			.byte $92
-			.byte $A8
-			.byte $28
-			.byte $9B
-			.byte $F3
-			.byte $AF
-			.byte $13
-			.byte $B0
-			.byte $27
-			.byte $A9
-			.byte $AF
-			.byte $AF
-			.byte $27
-			.byte $A9
-			.byte $3E
-			.byte $B0
-			.byte $27
-			.byte $A9
-			.byte $62
-			.byte $B0
-	LDA #42
-	STA $08			;
-	STA M90_PRG0	;swap first bank to bank 42
+	.word pnt5_A074	;Event 0
+	.word pnt5_A0A2	;Event 1
+	.word pnt5_A695	;Event 2
+	.word pnt5_A706
+	.word pnt5_A761
+	.word pnt5_A7A6
+	.word pnt5_A09E
+	.word pnt5_A7D3
+	.word pnt5_A7FF
+	.word pnt5_A86F
+	.word pnt5_A892
+	.word pnt5_A8FE
+	.word pnt5_A924
+	.word pnt5_A933
+	.word pnt5_A9A7
+	.word pnt5_A927
+	.word pnt5_A933
+	.word pnt5_AB1D
+	.word pnt5_A927
+	.word pnt5_AC8D
+	.word pnt5_A927
+	.word pnt5_AD29
+	.word pnt5_AD5C
+	.word pnt5_AD7E
+	.word pnt5_ADC5
+	.word pnt5_A927
+	.word pnt5_AE09
+	.word pnt5_998A
+	.word pnt5_AEB9
+	.word pnt5_AF13
+	.word pnt5_AF13
+	.word pnt5_AF14
+	.word pnt5_A927
+	.word pnt5_AF1F
+	.word pnt5_AF4C
+	.word pnt5_A927
+	.word pnt5_AF93
+	.word pnt5_A7FF
+	.word pnt5_A86F
+	.word pnt5_A892
+	.word pnt5_9B28
+	.word pnt5_AFF3
+	.word pnt5_B013
+	.word pnt5_A927
+	.word pnt5_AFAF
+	.word pnt5_A927
+	.word pnt5_B03E
+	.word pnt5_A927
+	.word pnt5_B062
+pnt5_A074:
+	LDA #$2A
+	STA Bank42Backup	;Backup bank value
+	STA M90_PRG0	;Swap bank 42 into 1st PRG slot
 	LDA #$00
-	STA WorldNumber	;clear world and level numbers
-	STA LevelNumber	
-	LDA #$0F		;
-	STA Player1Lives;set life count to 15 for both players
-	STA Player2Lives
+	STA WorldNumber
+	STA LevelNumber	;Clear world and level numbers	
+	LDA #$0F
+	STA Player1Lives
+	STA Player2Lives	;Set life count to 15 for both players
 	LDA #$01
-	STA LevelsCompleted
-	STA $039F
+	STA P1LevelsUnlocked
+	STA P2LevelsUnlocked	;Only set the first level to be unlocked for both players
 	LDA #$1E
-	STA $B0
+	STA TileRowCount	;Set the 8x8 row count so that only the first nametable is updated
 	LDA #$18
-	STA $B1
+	STA BGPalDataSize	;Only update the palette of the first nametable
 	JSR sub_B75D
-	INC a:Event
+pnt5_A09E:
+	INC a:Event	;Go to next event number
 	RTS
+pnt5_A0A2:
 	JSR sub_AE96
 	LDA #$55
 	STA $0100
 	JSR sub_B800
 	LDA #$00
-	STA $3C						;
-	STA PlayerXSpeed			;clears player speed and other variables
-	STA PlayerYSpeed			;
-	STA PlayerMovement			;
-	STA PlayerSpriteAttributes	;
-	LDA #42			;
-	STA M90_PRG0	;swap 1st bank to bank 42
+	STA $3C	;(unknown variable)
+	STA PlayerXSpeed
+	STA PlayerYSpeed
+	STA PlayerMovement
+	STA PlayerSpriteAttributes	;Clear various player variables
+	LDA #$2A
+	STA M90_PRG0	;Swap bank 42 into 1st PRG slot
 	LDA #$00
 	STA WorldSelectNum
 	JSR sub_AACB
 	LDA #$00
-	JSR $9A44
+	JSR jmp_42_9A44
 	JSR sub_AE8A
 	LDA WorldNumber
 	ASL
-	ASL
+	ASL	;Multiply world number by 4
 	CLC
-	ADC LevelNumber
-	STA $0310
-	LDA #musTitle		;
-	STA MusicRegister	;play title music
+	ADC LevelNumber	;Then add it to the level number to get the level ID
+	STA BGPalette	;Use palette for corresponding level ID
+	LDA #musTitle
+	STA MusicRegister	;Play title screen music
 	LDA #$00
-	STA BGBlackoutFlag
+	STA FadeoutMode	;Set fadeout mode
 	STA $0312
-	STA $0310
-	STA $0607
+	STA BGPalette
+	STA HUDDisplay
 	LDA #$0A
-	STA InterruptMode
-	STA LogoFlag
+	STA InterruptMode	;Set interrupt mode for the title screen
+	STA LogoFlag	;Enable the logo
 	JSR sub_A107
 	JSR sub_B068
 	LDA #$00
 	STA $52
 	LDA #$EF
-	STA LogoYOffset
-	INC a:Event
+	STA LogoYOffset	;Set Y offset for the logo
+	INC a:Event	;Go to next event number
 	RTS
 sub_A107:
 	LDX #$07
@@ -181,119 +135,121 @@ sub_A107:
 	LDA #$9E
 	STA $0357
 	LDA #$60
-	STA $42
+	STA GS0SpriteXPos+1	;Set player's starting position
 	LDA #$00
-	STA $034E
-	STA $034F
+	STA GS0SpriteFlags+1
+	STA GS0SpriteFlags+2	;Make the player and Yoshi's sprites visible
 	CLC
-	LDA $42
-	ADC $A153
-	STA $43
+	LDA GS0SpriteXPos+1
+	ADC TitleYoshiXOfs
+	STA GS0SpriteXPos+2	;Set X offset for Yoshi's sprite
 	CLC
-	LDA $0357
-	ADC $A154
-	STA $0358
+	LDA GS0SpriteYPos+1
+	ADC TitleYoshiYOfs
+	STA GS0SpriteYPos+2	;Set Y offset for Yoshi's sprite
 	RTS
+	CLC	;Unused duplicate code
+	LDA GS0SpriteXPos+1
+	ADC TitleYoshiXOfs
+	STA GS0SpriteXPos+2
 	CLC
-	LDA $42
-	ADC $A153
-	STA $43
-	CLC
-	LDA $0357
-	ADC $A154
-	STA $0358
+	LDA GS0SpriteYPos+1
+	ADC TitleYoshiYOfs
+	STA GS0SpriteYPos+2
 	RTS
+TitleYoshiXOfs:
 	.byte $02
+TitleYoshiYOfs:
 	.byte $0B
 tbl_A155:
-			.byte $01
-tbl_A156:	.byte $00
-tbl_A157:	.byte $07
-tbl_A158:	.byte $A9
-			.byte $01
-			.byte $90
-			.byte $0D
-			.byte $70
-			.byte $02
-			.byte $30
-			.byte $07
-			.byte $A9
-			.byte $02
-			.byte $A0
-			.byte $0D
-			.byte $70
-			.byte $03
-			.byte $30
-			.byte $0D
-			.byte $80
-			.byte $04
-			.byte $00
-			.byte $09
-			.byte $A9
-			.byte $04
-			.byte $B0
-			.byte $09
-			.byte $A9
-			.byte $05
-			.byte $30
-			.byte $0D
-			.byte $50
-			.byte $05
-			.byte $C0
-			.byte $07
-			.byte $A9
-			.byte $06
-			.byte $30
-			.byte $0D
-			.byte $58
-			.byte $06
-			.byte $60
-			.byte $07
-			.byte $A9
-			.byte $08
-			.byte $30
-			.byte $0D
-			.byte $80
-			.byte $08
-			.byte $F0
-			.byte $0D
-			.byte $60
-			.byte $0A
-			.byte $30
-			.byte $0D
-			.byte $60
-			.byte $0A
-			.byte $60
-			.byte $0D
-			.byte $A9
-			.byte $0B
-			.byte $45
-			.byte $09
-			.byte $A9
-			.byte $0B
-			.byte $80
-			.byte $09
-			.byte $A9
-			.byte $0C
-			.byte $30
-			.byte $0D
-			.byte $80
-			.byte $0C
-			.byte $80
-			.byte $0D
-			.byte $60
-			.byte $0D
-			.byte $A0
-			.byte $0D
-			.byte $60
-			.byte $0D
-			.byte $E0
-			.byte $0D
-			.byte $60
-			.byte $FF
-			.byte $FF
-			.byte $00
-			.byte $00
+	.byte $01
+	.byte $00
+	.byte $07
+	.byte $A9
+	.byte $01
+	.byte $90
+	.byte $0D
+	.byte $70
+	.byte $02
+	.byte $30
+	.byte $07
+	.byte $A9
+	.byte $02
+	.byte $A0
+	.byte $0D
+	.byte $70
+	.byte $03
+	.byte $30
+	.byte $0D
+	.byte $80
+	.byte $04
+	.byte $00
+	.byte $09
+	.byte $A9
+	.byte $04
+	.byte $B0
+	.byte $09
+	.byte $A9
+	.byte $05
+	.byte $30
+	.byte $0D
+	.byte $50
+	.byte $05
+	.byte $C0
+	.byte $07
+	.byte $A9
+	.byte $06
+	.byte $30
+	.byte $0D
+	.byte $58
+	.byte $06
+	.byte $60
+	.byte $07
+	.byte $A9
+	.byte $08
+	.byte $30
+	.byte $0D
+	.byte $80
+	.byte $08
+	.byte $F0
+	.byte $0D
+	.byte $60
+	.byte $0A
+	.byte $30
+	.byte $0D
+	.byte $60
+	.byte $0A
+	.byte $60
+	.byte $0D
+	.byte $A9
+	.byte $0B
+	.byte $45
+	.byte $09
+	.byte $A9
+	.byte $0B
+	.byte $80
+	.byte $09
+	.byte $A9
+	.byte $0C
+	.byte $30
+	.byte $0D
+	.byte $80
+	.byte $0C
+	.byte $80
+	.byte $0D
+	.byte $60
+	.byte $0D
+	.byte $A0
+	.byte $0D
+	.byte $60
+	.byte $0D
+	.byte $E0
+	.byte $0D
+	.byte $60
+	.byte $FF
+	.byte $FF
+	.byte $00
+	.byte $00
 tbl_A1AD:
 	.byte $00
 tbl_A1AE:
@@ -357,11 +313,11 @@ sub_A1E1:
 	TAX
 	LDA tbl_A155,X
 	STA $25
-	LDA tbl_A156,X
+	LDA tbl_A155+1,X
 	STA $26
-	LDA tbl_A157,X
+	LDA tbl_A155+2,X
 	STA $27
-	LDA tbl_A158,X
+	LDA tbl_A155+3,X
 	STA $28
 	LDA PlayerXScreenDup
 	CMP $25
@@ -369,25 +325,25 @@ sub_A1E1:
 	LDA PlayerXPosDup
 	CMP $26
 	BNE bra_A22E_RTS
-	LDX #$03
+	LDX #$03	;Set GS0 sprite slot to 4
 bra_A209:
-	LDA $B2,X
-	BEQ bra_A214
-	INX
+	LDA GS0SpriteFrame,X
+	BEQ bra_A214	;Branch if the frame slot is empty
+	INX	;Go to next slot
 	CPX #$06
-	BCC bra_A209
-	BCS bra_A22B
+	BCC bra_A209	;Keep checking slots until an enemy frame ID is found
+	BCS bra_A22B	;Branch once it is found
 bra_A214:
-	STX $30
+	STX GS0SpriteCount
 	LDA $27
-	JSR $8DF8
+	JSR jmp_42_8DF8
 	LDX $30
 	LDA $28
-	STA $0356,X
+	STA GS0SpriteYPos,X
 	LDA #$01
-	STA $034D,X
+	STA GS0SpriteFlags,X
 	LDA #$40
-	STA $41,X
+	STA GS0SpriteXPos,X
 bra_A22B:
 	INC $0360
 bra_A22E_RTS:
@@ -423,10 +379,10 @@ sub_A263:
 	ASL
 	TAY
 	LDA tbl_A275,Y
-	STA $32
+	STA Data0
 	LDA tbl_A276,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl_A275:
 	.byte $AE
 tbl_A276:
@@ -461,11 +417,11 @@ tbl_A276:
 	JSR $96F6
 	CLC
 	LDA $42
-	ADC $A153
+	ADC TitleYoshiXOfs
 	STA $43
 	CLC
 	LDA $0357
-	ADC $A154
+	ADC TitleYoshiYOfs
 	STA $0358
 bra_A2AD_RTS:
 	RTS
@@ -507,11 +463,11 @@ bra_A2C9:
 	STA $0357
 	CLC
 	LDA $42
-	ADC $A153
+	ADC TitleYoshiXOfs
 	STA $43
 	CLC
 	LDA $0357
-	ADC $A154
+	ADC TitleYoshiYOfs
 	STA $0358
 	LDA tbl_A336,X
 	STA $B3
@@ -617,11 +573,11 @@ tbl_A34F:
 	STA $0357
 	CLC
 	LDA $42
-	ADC $A153
+	ADC TitleYoshiXOfs
 	STA $43
 	CLC
 	LDA $0357
-	ADC $A154
+	ADC TitleYoshiYOfs
 	STA $0358
 	LDA PlayerTitleYPos	;
 	CMP #$9E			;if the player's y position is below this,
@@ -630,11 +586,11 @@ tbl_A34F:
 	STA PlayerTitleYPos	;set y position to $9E
 	CLC
 	LDA $42
-	ADC $A153
+	ADC TitleYoshiXOfs
 	STA $43
 	CLC
 	LDA $0357
-	ADC $A154
+	ADC TitleYoshiYOfs
 	STA $0358
 	JMP loc_A3C5
 bra_A3B7:
@@ -665,11 +621,11 @@ loc_A3C5:
 	STA $0357
 	CLC
 	LDA $42
-	ADC $A153
+	ADC TitleYoshiXOfs
 	STA $43
 	CLC
 	LDA $0357
-	ADC $A154
+	ADC TitleYoshiYOfs
 	STA $0358
 	LDA $0366
 	CMP #$0C
@@ -681,11 +637,11 @@ loc_A3C5:
 	STA $0357
 	CLC
 	LDA $42
-	ADC $A153
+	ADC TitleYoshiXOfs
 	STA $43
 	CLC
 	LDA $0357
-	ADC $A154
+	ADC TitleYoshiYOfs
 	STA $0358
 	JMP loc_A432
 bra_A424:
@@ -716,11 +672,11 @@ loc_A432:
 	STA $0357
 	CLC
 	LDA $42
-	ADC $A153
+	ADC TitleYoshiXOfs
 	STA $43
 	CLC
 	LDA $0357
-	ADC $A154
+	ADC TitleYoshiYOfs
 	STA $0358
 	LDA tbl_A518,X
 	STA $B3
@@ -748,11 +704,11 @@ bra_A477:
 	STA $0357
 	CLC
 	LDA $42
-	ADC $A153
+	ADC TitleYoshiXOfs
 	STA $43
 	CLC
 	LDA $0357
-	ADC $A154
+	ADC TitleYoshiYOfs
 	STA $0358
 	LDA tbl_A518,X
 	STA $B3
@@ -946,11 +902,11 @@ bra_A581:
 	INC $0362
 	LDX $30
 	LDA #$80
-	STA $0356,X
+	STA GS0SpriteYPos,X
 	LDA #$00
-	STA $034D,X
+	STA GS0SpriteFlags,X
 	LDA #$C0
-	STA $41,X
+	STA GS0SpriteXPos,X
 bra_A5AB_RTS:
 	RTS
 sub_A5AC:
@@ -1011,14 +967,14 @@ sub_A5F9:
 	LDA $8A51,X
 	STA $AF
 	LDY #$00
-	LDA ($AE),Y
+	LDA (GS0SpriteAnimPtr),Y
 	STA $25
 	INY
-	LDA ($AE),Y
+	LDA (GS0SpriteAnimPtr),Y
 	STA $26
 	INY
 	INY
-	LDA ($AE),Y
+	LDA (GS0SpriteAnimPtr),Y
 	STA $27
 	LDA FrameCount
 	AND $27
@@ -1088,6 +1044,7 @@ tbl_A691:
 	.byte $30
 	.byte $20
 	.byte $30
+pnt5_A695:
 	JSR sub_A1E1
 	JSR sub_A22F
 	JSR sub_A64D
@@ -1146,6 +1103,7 @@ bra_A6FB:
 	CPY #$06
 	BCC bra_A6FB
 	RTS
+pnt5_A706:
 	JSR $99B2
 	JSR $8823
 	LDA ButtonsPressed
@@ -1189,6 +1147,7 @@ bra_A74B:
 	STA SFXRegister
 bra_A760_RTS:
 	RTS
+pnt5_A761:
 	JSR sub_AE96
 	LDA #$2A
 	STA M90_PRG0
@@ -1201,11 +1160,11 @@ bra_A760_RTS:
 	JSR sub_AAD4
 	JSR sub_AAE0
 	LDA #$03
-	STA $0310
+	STA BGPalette
 	LDA #$00
-	STA BGBlackoutFlag
+	STA FadeoutMode
 	STA $0312
-	STA $0607
+	STA HUDDisplay
 	STA InterruptMode
 	STA LogoFlag
 	STA $02
@@ -1215,6 +1174,7 @@ bra_A760_RTS:
 	JSR sub_B068
 	INC a:Event
 	RTS
+pnt5_A7A6:
 	LDA ButtonsHeld
 	BNE bra_A7BB
 	LDA FrameCount
@@ -1237,6 +1197,7 @@ bra_A7BB:
 	STA $0361
 bra_A7D2_RTS:
 	RTS
+pnt5_A7D3:
 	LDA #$2A
 	STA $08
 	NOP
@@ -1279,6 +1240,7 @@ tbl_A7DF:
 	.byte $26
 	.byte $26	;World 7
 	.byte $00
+pnt5_A7FF:
 	LDX #$01
 	LDA CurrentPlayer
 	BNE bra_A808
@@ -1289,17 +1251,17 @@ bra_A808:
 	TAX
 	LDA tbl_A7DF,X
 	STA MusicRegister
-	LDA LevelsCompleted,X
+	LDA P1LevelsUnlocked,X
 	CMP #$06
 	BEQ bra_A825
-	LDA LevelsCompleted,X
+	LDA P1LevelsUnlocked,X
 	CMP #$14
 	BEQ bra_A825
 	JMP loc_A828
 bra_A825:
-	INC LevelsCompleted,X
+	INC P1LevelsUnlocked,X
 loc_A828:
-	LDA LevelsCompleted,X
+	LDA P1LevelsUnlocked,X
 	STA $039B
 	JSR sub_AAE0
 	JSR sub_AAD4
@@ -1333,6 +1295,7 @@ tbl_A869:
 	.byte $E5
 	.byte $E6
 	.byte $E7
+pnt5_A86F:
 	JSR sub_B75D
 	JSR $99D6
 	JSR sub_AE96
@@ -1348,6 +1311,7 @@ tbl_A869:
 	JSR sub_AE8A
 	INC a:Event
 	RTS
+pnt5_A892:
 	LDX #$01
 	LDA CurrentPlayer
 	BNE bra_A89B
@@ -1363,18 +1327,18 @@ bra_A8A6:
 	JSR sub_B800
 	LDA MapLevelID
 	ASL
-	ASL
-	TAX
+	ASL	;(multiply ID value by 4)
+	TAX	;Get Y scroll position for current level ID
 	LDA tbl_AB9F,X
-	STA $03
+	STA ScrollYPos	;Set Y scroll position for current level ID
 	LDA #$00
 	STA $3C
 	STA PlayerXSpeed
 	STA PlayerYSpeed
 	STA PlayerMovement
-	STA PlayerSpriteAttributes
+	STA PlayerSpriteAttributes	;Clear player variables
 	LDA #$2A
-	STA M90_PRG0
+	STA M90_PRG0	;Swap bank 42 into 1st PRG slot
 	JSR $9C43
 	LDA #$00
 	STA $0378
@@ -1387,17 +1351,18 @@ bra_A8A6:
 bra_A8DF:
 	LDA #$04
 bra_A8E1:
-	STA $0310
+	STA BGPalette
 	LDA #$00
-	STA BGBlackoutFlag
+	STA FadeoutMode
 	STA $0312
-	STA $0607
+	STA HUDDisplay
 	STA LogoFlag
 	LDA #$0B
 	STA InterruptMode
 	JSR sub_B068
 	INC a:Event
 	RTS
+pnt5_A8FE:
 	LDA $0379
 	BNE bra_A90F
 	JSR sub_AA5F
@@ -1414,25 +1379,28 @@ loc_A912:
 	STA M90_PRG0
 	JSR $9DF8
 	RTS
+pnt5_A924:
 	JSR $9DF8
+pnt5_A927:
 	LDA #$05
 	STA $0312
 	JSR sub_B068
 	INC a:Event
 	RTS
+pnt5_A933:
 	JSR sub_B75D
 	LDA $0390
 	ASL
 	ASL
 	TAX
 	LDA tbl_A98F,X
-	STA $51
+	STA CameraXScreen
 	STA PlayerWallColPos
 	STA PlayerXScreen
 	LDA tbl_A990,X
 	STA $52
 	STA $65
-	STA $02
+	STA ScrollXPos
 	CLC
 	ADC PlayerXPos
 	STA PlayerXPos
@@ -1458,7 +1426,7 @@ loc_A912:
 	JSR sub_AAE0
 	JSR sub_AE8A
 	LDA #$00
-	STA BGBlackoutFlag
+	STA FadeoutMode
 	STA $0312
 	JSR sub_B068
 	INC a:Event
@@ -1490,6 +1458,7 @@ tbl_A991:
 	.byte $00
 	.byte $EF
 	.byte $00
+pnt5_A9A7:
 	INC $0360
 	LDA #$00
 	STA $037C
@@ -1608,7 +1577,7 @@ sub_AA5F:
 	RTS
 bra_AA6A:
 	LDX CurrentPlayer
-	LDA LevelsCompleted,X
+	LDA P1LevelsUnlocked,X
 	STA $039B
 	LDA MapLevelID
 	ASL
@@ -1713,6 +1682,7 @@ tbl_AB0E:
 	.byte $20
 	.byte $01
 	.byte $40
+pnt5_AB1D:
 	LDA ButtonsPressed
 	AND #$02
 	BEQ bra_AB30
@@ -1747,7 +1717,7 @@ bra_AB45:
 bra_AB62:
 	LDA MapLevelID
 	STA LevelID,X
-	STA LevelsCompleted,X
+	STA P1LevelsUnlocked,X
 	LDA #$05
 	STA $0312
 	JSR sub_B068
@@ -1963,7 +1933,7 @@ bra_AC70:
 	BNE bra_AC6E
 sub_AC85_RTS:
 	RTS
-tbl_AC86:
+YoshiHouseIDs:
 	.byte $00
 	.byte $06
 	.byte $14
@@ -1971,6 +1941,7 @@ tbl_AC86:
 	.byte $00
 	.byte $00
 	.byte $00
+pnt5_AC8D:
 	LDY #$00
 	LDX #$01
 	LDA CurrentPlayer
@@ -1978,17 +1949,17 @@ tbl_AC86:
 	LDX #$00
 bra_AC98:
 	LDA LevelID,X
-	CMP tbl_AC86,Y
-	BEQ bra_ACA8
-	INY
+	CMP YoshiHouseIDs,Y
+	BEQ bra_ACA8	;If current level ID is one of the Yoshi house IDs, branch
+	INY	;Go to next byte of ID list
 	CPY #$03
-	BCC bra_AC98
+	BCC bra_AC98	;Keep going until 3 bytes are read
 	JMP loc_ACB3
 bra_ACA8:
 	LDY #$40
 	JSR sub_AC6E
 	LDA #$2E
-	STA a:Event
+	STA a:Event	;Enter Yoshi house
 	RTS
 loc_ACB3:
 	LDA #$00
@@ -2011,12 +1982,12 @@ loc_ACD3:
 	JSR sub_AAD4
 	JSR sub_AAE0
 	LDA #$00
-	STA BGBlackoutFlag
+	STA FadeoutMode
 	STA $0312
-	STA $0607
+	STA HUDDisplay
 	STA LogoFlag
 	LDA #$05
-	STA $0310
+	STA BGPalette
 	JSR $9A44
 	LDY #$40
 	JSR sub_AC6E
@@ -2062,6 +2033,7 @@ tbl_AD09:
 	.byte $62
 	.byte $63
 	.byte $00
+pnt5_AD29:
 	LDA #$00
 	STA $037E
 	STA UnlockNextLevel
@@ -2085,6 +2057,7 @@ tbl_AD09:
 	LDA #$00
 	STA a:Event
 	RTS
+pnt5_AD5C:
 	LDA #$00
 	STA $5B
 	LDA #$2A
@@ -2114,6 +2087,7 @@ tbl_AD68:
 	.byte $07
 	.byte $0A
 	.byte $00
+pnt5_AD7E:
 	JSR sub_AAE0
 	LDA $0361
 	AND #$1F
@@ -2148,6 +2122,7 @@ bra_ADBF:
 	LDA #$21
 	STA a:Event
 	RTS
+pnt5_ADC5:
 	JSR sub_AE96
 	LDA #musEnding
 	STA MusicRegister
@@ -2160,14 +2135,14 @@ bra_ADBF:
 	JSR $9A44
 	JSR sub_AE8A
 	LDA #$00
-	STA BGBlackoutFlag
+	STA FadeoutMode
 	STA $0312
-	STA $0607
+	STA HUDDisplay
 	STA LogoFlag
 	STA $02
 	STA $03
 	LDA #$02
-	STA $0310
+	STA BGPalette
 	LDA #$0C
 	STA InterruptMode
 	JSR sub_B068
@@ -2175,6 +2150,7 @@ bra_ADBF:
 	JSR sub_AC6E
 	INC a:Event
 	RTS
+pnt5_AE09:
 	JSR sub_AE96
 	LDA #$2A
 	STA M90_PRG0
@@ -2193,12 +2169,12 @@ bra_AE26:
 	CPX #$30
 	BCC bra_AE26
 	LDA #$00
-	STA BGBlackoutFlag
+	STA FadeoutMode
 	STA $0312
-	STA $0607
+	STA HUDDisplay
 	STA LogoFlag
 	LDA #$01
-	STA $0310
+	STA BGPalette
 	LDA #$0C
 	STA InterruptMode
 	LDY #$A0
@@ -2258,10 +2234,10 @@ tbl_AE5A:
 	.byte $00
 	.byte $A8
 sub_AE8A:
-	LDA #$18
-	STA $01
-	LDA #$88
-	STA PPUCtrl
+	LDA #%00011000
+	STA PPUMaskRegister	;Set PPU mask bits
+	LDA #%10001000
+	STA PPUCtrl	;Set PPU control bits
 	STA $00
 	RTS
 sub_AE96:
@@ -2287,6 +2263,7 @@ tbl_AEB2:
 	.byte $16
 	.byte $1A
 	.byte $1E
+pnt5_AEB9:
 	LDY #$00
 	LDX CurrentPlayer
 bra_AEBE:
@@ -2315,10 +2292,10 @@ bra_AEE3:
 	BNE bra_AEF9
 	LDA #$08
 	STA a:Event
-	LDY LevelsCompleted
+	LDY P1LevelsUnlocked
 	CPY LevelID
 	BNE bra_AEF8_RTS
-	INC LevelsCompleted
+	INC P1LevelsUnlocked
 bra_AEF8_RTS:
 	RTS
 bra_AEF9:
@@ -2327,19 +2304,22 @@ bra_AEF9:
 	BNE bra_AF02
 	LDX #$00
 bra_AF02:
-	LDA LevelsCompleted,X
+	LDA P1LevelsUnlocked,X
 	CMP LevelID,X
 	BNE bra_AF0D
-	INC LevelsCompleted,X
+	INC P1LevelsUnlocked,X
 bra_AF0D:
 	LDA #$25
 	STA a:Event
 	RTS
+pnt5_AF13:
 	RTS
+pnt5_AF14:
 	JSR sub_AEA3
 	LDA #$02
 	JSR $986A
 	JMP loc_ACD3
+pnt5_AF1F:
 	LDA GameType
 	BEQ bra_AF2B
 	LDX #$01
@@ -2364,6 +2344,7 @@ bra_AF46:
 	LDA #$25
 	STA a:Event
 	RTS
+pnt5_AF4C:
 	JSR sub_AEA3
 	LDA #$00
 	JSR $986A
@@ -2372,12 +2353,12 @@ bra_AF46:
 	JSR sub_AAD4
 	JSR sub_AAE0
 	LDA #$00
-	STA BGBlackoutFlag
+	STA FadeoutMode
 	STA $0312
-	STA $0607
+	STA HUDDisplay
 	STA LogoFlag
 	LDA #$05
-	STA $0310
+	STA BGPalette
 	JSR $9A44
 	LDY #$40
 	JSR sub_AC6E
@@ -2392,6 +2373,7 @@ bra_AF46:
 	JSR sub_AC6E
 	INC a:Event
 	RTS
+pnt5_AF93:
 	LDA GameType
 	BNE bra_AFA0
 loc_AF98:
@@ -2406,6 +2388,7 @@ bra_AFA0:
 bra_AFAB:
 	INC a:Event
 	RTS
+pnt5_AFAF:
 	LDA GameType
 	BEQ bra_AFD5
 	LDA Player1Lives
@@ -2439,6 +2422,7 @@ bra_AFEB:
 	LDY #$40
 	JSR sub_AC6E
 	JMP $E193
+pnt5_AFF3:
 	LDA $0379
 	BNE bra_AFFE
 	INC a:Event
@@ -2453,6 +2437,7 @@ loc_B001:
 	STA M90_PRG0
 	JSR $9DF8
 	RTS
+pnt5_B013:
 	LDA FrameCount
 	AND #$1F
 	BNE bra_B01C
@@ -2473,6 +2458,7 @@ loc_B02C:
 	STA M90_PRG0
 	JSR $9DF8
 	RTS
+pnt5_B03E:
 	LDA #$00
 	STA $037E
 	STA $0398
@@ -2487,18 +2473,19 @@ loc_B02C:
 	LDA #$00
 	STA a:Event
 	RTS
+pnt5_B062:
 	LDA #$07
 	STA a:Event
 	RTS
 sub_B068:
-	LDA $0310
+	LDA BGPalette
 	ASL
 	TAY
 	LDA tbl_B0EB,Y
-	STA $32
+	STA Data0
 	LDA tbl_B0EC,Y
-	STA $33
-	LDA BGBlackoutFlag
+	STA Data0+1
+	LDA FadeoutMode
 	ASL
 	TAY
 	LDA tbl_B0E7,Y
@@ -2507,7 +2494,7 @@ sub_B068:
 	STA $35
 bra_B086:
 loc_B086:
-	LDA $03A1
+	LDA PPUUpdatePtr
 	BNE bra_B086
 	LDA FrameCount
 	AND #$03
@@ -2519,10 +2506,10 @@ loc_B086:
 bra_B09B:
 	LDA ($34),Y
 	BPL bra_B0A4
-	LDA ($32),Y
+	LDA (Data0),Y
 	JMP loc_B0AD
 bra_B0A4:
-	LDA ($32),Y
+	LDA (Data0),Y
 	SEC
 	SBC $25
 	BPL bra_B0AD
@@ -2534,9 +2521,9 @@ loc_B0AD:
 	CPY #$20
 	BNE bra_B09B
 	LDA #$3F
-	STA $03A1
+	STA PPUUpdatePtr
 	LDA #$00
-	STA $03A2
+	STA PPUUpdatePtr+1
 	STA $03A0
 	LDA #$20
 	STA $03A4
@@ -3405,7 +3392,7 @@ loc_B4BB:
 	LDA PlayerYPosDup
 	STA PlayerYPos
 	LDA $55
-	STA $51
+	STA CameraXScreen
 	LDA $56
 	STA $52
 	RTS
@@ -3700,9 +3687,9 @@ bra_B684:
 	TAY
 	AND #$1F
 	ORA #$80
-	STA $33
+	STA Data0+1
 	LDA #$00
-	STA $32
+	STA Data0
 	TYA
 	AND #$20
 	BNE bra_B6A9
@@ -3726,7 +3713,7 @@ loc_B6AF:
 	STA $2B
 bra_B6C0:
 	LDY $2B
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $6E,X
 	INX
 	CPX #$1C
@@ -3818,7 +3805,7 @@ sub_B75D:
 	ASL
 	ASL
 	ASL
-	STA $32
+	STA Data0
 	LDA LevelNumber
 	ASL
 	ASL
@@ -3845,22 +3832,22 @@ sub_B75D:
 	ASL
 	TAY
 	LDA tbl_BA2D,Y
-	STA $32
+	STA Data0
 	LDA tbl_BA2E,Y
-	STA $33
+	STA Data0+1
 	LDA LevelNumber
 	ASL
 	ASL
 	ASL
 	TAY
-	LDA ($32),Y
-	STA $51
+	LDA (Data0),Y
+	STA CameraXScreen
 	STA PlayerWallColPos
 	LDA #$00
 	STA $52
 	STA $65
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $53
 	ASL
 	STA $5B
@@ -3868,29 +3855,29 @@ sub_B75D:
 	STA $66
 	STA $54
 	STA $67
-	LDA $51
+	LDA CameraXScreen
 	STA PlayerXScreen
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA PlayerXPos
 	STA $12
 	LDA $53
 	STA PlayerYScreen
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA PlayerYPos
 	STA $13
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $060F
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA ScreenCount
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA VertScrollLock
 	INY
-	LDA ($32),Y
+	LDA (Data0),Y
 	STA $060E
 	RTS
 	RTS
@@ -4851,7 +4838,7 @@ bra_BD01:
 	JMP loc_BD0E
 bra_BD04:
 	STA $12
-	LDA $51
+	LDA CameraXScreen
 	STA $55
 	LDA $52
 	STA $56
@@ -4989,7 +4976,7 @@ bra_BDEC:
 	EOR $56
 	AND #$F8
 	BEQ bra_BE22_RTS
-	LDA $51
+	LDA CameraXScreen
 	STA PlayerWallColPos
 	LDA $52
 	STA $65
@@ -5007,7 +4994,7 @@ bra_BDEC:
 	RTS
 bra_BE1A:
 	JSR sub_B52B
-	LDA $51
+	LDA CameraXScreen
 	STA $04F2
 bra_BE22_RTS:
 	RTS
@@ -5020,7 +5007,7 @@ sub_BE23:
 	LDA $56
 	STA $52
 	LDA $55
-	STA $51
+	STA CameraXScreen
 	RTS
 bra_BE36:
 	AND #$7F
@@ -5032,7 +5019,7 @@ bra_BE36:
 	LDA $56
 	STA $52
 	LDA $55
-	STA $51
+	STA CameraXScreen
 	RTS
 	RTS
 sub_BE4D:
@@ -5058,9 +5045,9 @@ loc_BE5D:
 	TAY
 	AND #$1F
 	ORA #$80
-	STA $33
+	STA Data0+1
 	LDA #$00
-	STA $32
+	STA Data0
 	TYA
 	AND #$20
 	BNE bra_BE8B
@@ -5081,12 +5068,12 @@ loc_BE91:
 	AND #$F0
 	ORA $25
 	TAY
-	LDA ($32),Y
+	LDA (Data0),Y
 	TAY
 	LDA DataBank2
 	STA M90_PRG0
 	LDA ($DA),Y
-	STA $96
+	STA PlayerBehindColl
 	LDA #$3C
 	STA M90_PRG0
 	JSR $8000
@@ -5167,9 +5154,9 @@ sub_BF31:
 	LDA ($8C),Y
 	AND #$1F
 	ORA #$80
-	STA $33
+	STA Data0+1
 	LDA #$00
-	STA $32
+	STA Data0
 	LDA DataBank1
 	STA M90_PRG0
 	LDA $65
@@ -5182,14 +5169,14 @@ sub_BF31:
 	AND #$F0
 	ORA $25
 	TAY
-	LDA ($32),Y
+	LDA (Data0),Y
 	TAY
 	LDA DataBank2
 	STA M90_PRG0
 	LDA ($DA),Y
 	CMP #$78
 	BCC bra_BF7A_RTS
-	STA $96
+	STA PlayerBehindColl
 	LDA #$3C
 	STA M90_PRG0
 	JSR $8000

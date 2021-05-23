@@ -41,7 +41,7 @@
 	.byte $BC
 	LDA #$00	;all of the code here is useless padding
 	STA ObjectState,X
-	STA $0578,X
+	STA ObjectVariables,X
 	LDA #$02
 	STA GuidedObjStatus,X
 	RTS
@@ -136,10 +136,10 @@ bra14_8694:
 	.byte $00
 	.byte $00
 	LDA tbl14_86B1,Y
-	STA PCPointerLoByte
+	STA Data0
 	LDA $86B2,Y
-	STA PCPointerHiByte
-	JMP (PCPointerLoByte)
+	STA Data0+1
+	JMP (Data0)
 tbl14_86B1:
 	SBC #$86
 	LDA $86,X
@@ -190,9 +190,9 @@ bra14_86C0:
 	RTS
 	JSR $B057
 	BEQ bra14_874F
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$80
-	STA $0578,X
+	STA ObjectVariables,X
 	INC GuidedObjStatus,X
 	LDA #$E0
 	BMI bra14_8716
@@ -455,9 +455,9 @@ bra14_8EC2:
 	ASL
 	TAX
 	LDA tbl14_8EFC,X
-	STA PCPointerLoByte
+	STA Data0
 	LDA tbl14_8EFD,X
-	STA PCPointerHiByte
+	STA Data0+1
 	LDY #$80
 	LDX $A4
 	LDA ObjectSlot,X
@@ -529,9 +529,9 @@ tbl14_8EFD:
 	ASL
 	TAX
 	LDA tbl14_8F66,X
-	STA PCPointerLoByte
+	STA Data0
 	LDA tbl14_8F67,X
-	STA PCPointerHiByte
+	STA Data0+1
 	LDY #$80
 	LDX $A4
 	LDA ObjectSlot,X
@@ -719,7 +719,7 @@ bra14_9619:
 	ADC #$00
 	STA ObjectYScreen,Y
 	LDA #$00
-	STA $0578,Y
+	STA ObjectVariables,Y
 	LDA #$BC
 	STA ObjectSlot,Y
 	LDA #$C4
@@ -822,7 +822,7 @@ loc14_970B_RTS:
 	STA ObjectSlot,Y
 	LDA #$00
 	STA ObjectState,Y
-	STA $0578,Y
+	STA ObjectVariables,Y
 	STA GuidedObjStatus,Y
 	STA EnemyAnimFrame,Y
 	LDA #$01
@@ -891,10 +891,10 @@ bra14_97CA:
 	ASL
 	TAY
 	LDA tbl14_97DC,Y
-	STA PCPointerLoByte
+	STA Data0
 	LDA tbl14_97DD,Y
-	STA PCPointerHiByte
-	JMP (PCPointerLoByte)
+	STA Data0+1
+	JMP (Data0)
 tbl14_97DC:
 	.byte $E2
 tbl14_97DD:
@@ -906,7 +906,7 @@ tbl14_97DD:
 	LDA $062B
 	AND #$03
 	BNE bra14_97F6_RTS
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$28
 	BCC bra14_97F7
 	INC GuidedObjStatus,X
@@ -914,7 +914,7 @@ tbl14_97DD:
 bra14_97F6_RTS:
 	RTS
 bra14_97F7:
-	INC $0578,X
+	INC ObjectVariables,X
 	LDA #$20
 	STA $06E1
 	.byte $BD

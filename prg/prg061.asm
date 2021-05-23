@@ -1540,7 +1540,7 @@ tbl6_A200:
 	.byte $23
 sub6_A600:
 	LDY $2B
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	BNE bra6_A607
 	RTS
 bra6_A607:
@@ -1550,7 +1550,7 @@ bra6_A607:
 	ADC #$10
 	STA $2C
 	TAY
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BEQ bra6_A683
 	STA $3F
@@ -1578,11 +1578,11 @@ bra6_A607:
 	STA ObjectSlot,X
 	TAY
 	LDA tbl6_A728,Y
-	STA $0578,X
+	STA ObjectVariables,X
 	LDA #$00
 	STA ObjectYScreen,X
 	LDY $2C
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	AND #$F0
 	STA ObjectYPos,X
 	BEQ bra6_A664
@@ -1606,7 +1606,7 @@ bra6_A683:
 	ADC #$20
 	TAY
 	STY $2C
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	CMP #$FF
 	BEQ bra6_A704_RTS
 	STA $3F
@@ -1636,11 +1636,11 @@ bra6_A683:
 	STA ObjectSlot,X
 	TAY
 	LDA tbl6_A728,Y
-	STA $0578,X
+	STA ObjectVariables,X
 	LDA #$01
 	STA ObjectYScreen,X
 	LDY $2C
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	AND #$F0
 	STA ObjectYPos,X
 	BEQ bra6_A6E5
@@ -3453,7 +3453,7 @@ jmp_61_AE8F:
 	LDA PlayerYPosDup
 	STA PlayerYPos
 	LDA $55
-	STA $51
+	STA CameraXScreen
 	LDA $56
 	STA $52
 	RTS
@@ -3749,9 +3749,9 @@ bra6_B06A:
 	TAY
 	AND #$1F
 	ORA #$80
-	STA PCPointerHiByte
+	STA Data0+1
 	LDA #$00
-	STA PCPointerLoByte
+	STA Data0
 	TYA
 	AND #$20
 	BNE bra6_B08F
@@ -3774,7 +3774,7 @@ loc6_B095:
 	TAY
 	STA $2B
 bra6_B0A6:
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	BPL bra6_B0DF
 	STY $2B
 	STA $25
@@ -3927,12 +3927,12 @@ jmp_61_B19E:
 	STA $34
 	ASL
 	ASL
-	STA PCPointerLoByte
+	STA Data0
 	LDA LevelNumber
 	ASL
 	ASL
 	CLC
-	ADC PCPointerLoByte
+	ADC Data0
 	TAX
 	LDA $34
 	CLC
@@ -3950,7 +3950,7 @@ bra6_B1C6:
 	LDA tbl6_B5EA,X
 	STA DataBank2
 	LDA tbl6_B5EB,X
-	STA $0310
+	STA BGPalette
 	LDA tbl6_B5E8,X
 	AND #$C0
 	STA $061D
@@ -3969,7 +3969,7 @@ bra6_B1FD:
 	LDA tbl6_B56E,X
 	STA DataBank2
 	LDA tbl6_B56F,X
-	STA $0310
+	STA BGPalette
 	LDA tbl6_B56C,X
 	AND #$C0
 	STA $061D
@@ -4012,28 +4012,28 @@ bra6_B25D:
 	LDA $06A2,X
 	BEQ bra6_B26D
 	LDA tbl6_B76E,Y
-	STA PCPointerLoByte
+	STA Data0
 	LDA tbl6_B76F,Y
 	JMP loc6_B275
 bra6_B26D:
 	LDA tbl6_B676,Y
-	STA PCPointerLoByte
+	STA Data0
 	LDA tbl6_B677,Y
 loc6_B275:
-	STA PCPointerHiByte
+	STA Data0+1
 	LDA LevelNumber
 	ASL
 	ASL
 	ASL
 	TAY
-	LDA (PCPointerLoByte),Y
-	STA $51
+	LDA (Data0),Y
+	STA CameraXScreen
 	STA PlayerWallColPos
 	LDA #$00
 	STA $52
 	STA $65
 	INY
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	STA $53
 	ASL
 	STA $5B
@@ -4041,29 +4041,29 @@ loc6_B275:
 	STA $66
 	STA $54
 	STA $67
-	LDA $51
+	LDA CameraXScreen
 	STA PlayerXScreen
 	INY
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	STA PlayerXPos
 	STA PlayerSprXPos
 	LDA $53
 	STA PlayerYScreen
 	INY
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	STA PlayerYPos
 	STA PlayerSprYPos
 	INY
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	STA $060F
 	INY
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	STA $0610
 	INY
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	STA VertScrollLock
 	INY
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	STA $060E
 	LDA #$01
 	STA InterruptMode
@@ -4307,7 +4307,7 @@ sub6_B49D:
 bra6_B4B0_RTS:
 	RTS
 sub6_B4B1:
-	LDA $0310
+	LDA BGPalette
 	ASL
 	TAY
 	LDA tbl6_B51C,Y
@@ -4315,11 +4315,11 @@ sub6_B4B1:
 	AND #$F0
 	STA $37
 	LDA tbl6_B51D,Y
-	STA $38
+	STA Pointer3
 	AND #$F0
-	STA $39
+	STA Pointer3+1
 	LDY #$00
-	LDA $38
+	LDA Pointer3
 bra6_B4CC:
 	STA $0478,Y
 	INY
@@ -4339,22 +4339,22 @@ bra6_B4DE:
 	BCC bra6_B4DE
 	LDA $0472
 	AND #$0F
-	ORA $39
+	ORA Pointer3+1
 	STA $0472
 	LDA $0473
 	AND #$CF
 	STA $36
-	LDA $38
+	LDA Pointer3
 	AND #$30
 	ORA $36
 	STA $0473
 	LDA $0476
 	AND #$0F
-	ORA $39
+	ORA Pointer3+1
 	STA $0476
 	LDA $0477
 	AND #$0F
-	ORA $39
+	ORA Pointer3+1
 	STA $0477
 	RTS
 tbl6_B51C:
@@ -5286,7 +5286,7 @@ bra6_B8FF:
 	JMP loc6_B90C
 bra6_B902:
 	STA PlayerSprXPos
-	LDA $51
+	LDA CameraXScreen
 	STA $55
 	LDA $52
 	STA $56
@@ -5424,7 +5424,7 @@ bra6_B9EA:
 	EOR $56
 	AND #$F8
 	BEQ bra6_BA20_RTS
-	LDA $51
+	LDA CameraXScreen
 	STA PlayerWallColPos
 	LDA $52
 	STA $65
@@ -5442,7 +5442,7 @@ bra6_B9EA:
 	RTS
 bra6_BA18:
 	JSR sub6_AF11
-	LDA $51
+	LDA CameraXScreen
 	STA $04F2
 bra6_BA20_RTS:
 	RTS
@@ -5455,7 +5455,7 @@ sub6_BA21:
 	LDA $56
 	STA $52
 	LDA $55
-	STA $51
+	STA CameraXScreen
 	RTS
 bra6_BA34:
 	AND #$7F
@@ -5467,7 +5467,7 @@ bra6_BA34:
 	LDA $56
 	STA $52
 	LDA $55
-	STA $51
+	STA CameraXScreen
 	RTS
 sub6_BA4A:
 	SEC
@@ -5501,7 +5501,7 @@ bra6_BA73_RTS:
 bra6_BA81_RTS:
 	RTS
 bra6_BA82:
-	LDA $51
+	LDA CameraXScreen
 	STA PlayerWallColPos
 	LDA $52
 	STA $65
@@ -5590,16 +5590,16 @@ bra6_BB0D:
 	LDA InterruptMode
 	CMP #$04
 	BEQ bra6_BB34_RTS
-	LDA $03A1
+	LDA PPUUpdatePtr
 	BNE bra6_BB34_RTS
 	LDA HUDUpdate
 	ASL
 	TAY
 	LDA tbl6_BB35,Y
-	STA PCPointerLoByte
+	STA Data0
 	LDA tbl6_BB36,Y
-	STA PCPointerHiByte
-	JMP (PCPointerLoByte)
+	STA Data0+1
+	JMP (Data0)
 bra6_BB34_RTS:
 	RTS
 tbl6_BB35:
@@ -5689,9 +5689,9 @@ bra6_BBB5:
 bra6_BBCF:
 	LDA #$0B
 	STA $26
-	LDA $0372,X
+	LDA P1Score,X
 	STA $34
-	LDA $0373,X
+	LDA P1Score+1,X
 	STA $35
 	JSR sub6_BC52
 	LDY #$00
@@ -5733,9 +5733,9 @@ sub6_BC1F:
 	ASL
 	TAX
 	LDA tbl6_BC3E,X
-	STA $03A1
+	STA PPUUpdatePtr
 	LDA tbl6_BC3F,X
-	STA $03A2
+	STA PPUUpdatePtr+1
 	LDA tbl6_BC40,X
 	STA $03A3
 	LDA tbl6_BC41,X
@@ -5767,13 +5767,13 @@ tbl6_BC41:
 	.byte $02
 sub6_BC52:
 	LDA #$00
-	STA $39
+	STA Pointer3+1
 	STA $25
 	LDA #$0A
-	STA $38
+	STA Pointer3
 bra6_BC5C:
 	JSR sub6_BC83
-	LDA PCPointerLoByte
+	LDA Data0
 	CLC
 	ADC $26
 	LDY $25
@@ -5795,24 +5795,24 @@ bra6_BC82_RTS:
 	RTS
 sub6_BC83:
 	LDA #$00
-	STA PCPointerLoByte
-	STA PCPointerHiByte
+	STA Data0
+	STA Data0+1
 	LDX #$10
 bra6_BC8B:
 	ASL $34
 	ROL $35
-	ROL PCPointerLoByte
-	ROL PCPointerHiByte
-	LDA PCPointerLoByte
+	ROL Data0
+	ROL Data0+1
+	LDA Data0
 	SEC
 	SBC $38
 	TAY
-	LDA PCPointerHiByte
+	LDA Data0+1
 	SBC $39
 	BCC bra6_BCA5
 	INC $34
-	STA PCPointerHiByte
-	STY PCPointerLoByte
+	STA Data0+1
+	STY Data0
 bra6_BCA5:
 	DEX
 	BNE bra6_BC8B
@@ -6330,16 +6330,16 @@ tbl6_BED6:
 sub6_BEE7:
 	LDX #$00
 	LDA tbl6_BF60,X
-	STA PCPointerLoByte
+	STA Data0
 	LDA tbl6_BF61,X
-	STA PCPointerHiByte
-	LDA PCPointerLoByte
+	STA Data0+1
+	LDA Data0
 	CLC
 	ADC #$02
-	STA PCPointerLoByte
-	LDA PCPointerHiByte
+	STA Data0
+	LDA Data0+1
 	ADC #$00
-	STA PCPointerHiByte
+	STA Data0+1
 	RTS
 tbl6_BF01:
 	.byte $00
@@ -6354,7 +6354,7 @@ tbl6_BF02:
 sub6_BF09:
 	LDA #$00
 	STA PPUCtrl
-	STA $2001
+	STA PPUMask
 	LDA $25
 	ASL
 	TAX
@@ -6365,7 +6365,7 @@ sub6_BF09:
 	LDA tbl6_BF01,X
 	STA PPUAddr
 loc6_BF26:
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	BPL bra6_BF44
 	CMP #$FF
 	BEQ bra6_BF58_RTS
@@ -6373,7 +6373,7 @@ loc6_BF26:
 	STA $2B
 bra6_BF32:
 	JSR sub6_BF59
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 	STA PPUData
 	DEC $2B
 	BNE bra6_BF32
@@ -6382,7 +6382,7 @@ bra6_BF32:
 bra6_BF44:
 	STA $2B
 	JSR sub6_BF59
-	LDA (PCPointerLoByte),Y
+	LDA (Data0),Y
 bra6_BF4B:
 	STA PPUData
 	DEC $2B
@@ -6392,9 +6392,9 @@ bra6_BF4B:
 bra6_BF58_RTS:
 	RTS
 sub6_BF59:
-	INC PCPointerLoByte
+	INC Data0
 	BNE bra6_BF5F_RTS
-	INC PCPointerHiByte
+	INC Data0+1
 bra6_BF5F_RTS:
 	RTS
 tbl6_BF60:
@@ -6404,7 +6404,7 @@ tbl6_BF61:
 	.byte $04
 	STA ObjectState,X
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	PLA
 	PLA
 	RTS

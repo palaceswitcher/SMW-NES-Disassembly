@@ -46,10 +46,10 @@ loc7_805A:
 	ASL
 	TAY
 	LDA tbl7_806E,Y
-	STA $32
+	STA Data0
 	LDA tbl7_806F,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl7_806E:
 	.byte $78
 tbl7_806F:
@@ -335,11 +335,11 @@ loc7_8229:
 	PLA
 	SEC
 	SBC PlayerXPosDup
-	STA $32
+	STA Data0
 	LDA $34
 	SBC PlayerXScreenDup
 	BNE bra7_826C
-	LDA $32
+	LDA Data0
 	CMP #$14
 	BCS bra7_826C
 	LDA YoshiYPos
@@ -352,11 +352,11 @@ loc7_8229:
 	PLA
 	SEC
 	SBC PlayerYPosDup
-	STA $32
+	STA Data0
 	LDA $34
 	SBC PlayerYScreenDup
 	BNE bra7_826C
-	LDA $32
+	LDA Data0
 	CMP #$08
 	BCS bra7_826C
 	LDA PlayerMovement
@@ -388,9 +388,9 @@ bra7_828C:
 	ASL
 	TAX
 	LDA tbl7_82A2,X
-	STA $32
+	STA Data0
 	LDA tbl7_82A3,X
-	STA $33
+	STA Data0+1
 	LDA #$40
 	STA $36
 	JMP $A463
@@ -685,7 +685,7 @@ bra7_83FB:
 	LDA #$05
 	STA ObjectSlot,X
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	LDA #$04
 	STA ObjectState,X
 	RTS
@@ -741,7 +741,7 @@ bra7_8474:
 loc7_8474:
 	LDA #$01
 	STA FreezeFlag
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$7F
 	CMP #PlayerAnimationFrame
 	BCC bra7_84C25_RTS
@@ -878,10 +878,10 @@ bra7_8596:
 	ASL
 	TAY
 	LDA tbl7_85AA,Y
-	STA $32
+	STA Data0
 	LDA tbl7_85AB,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl7_85AA:
 	.byte $BB
 tbl7_85AB:
@@ -1058,7 +1058,7 @@ bra7_86E1:
 	ORA #$04
 	STA ObjectState,X
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 bra7_86F25_RTS:
 	RTS
 	LDA #$03
@@ -1116,10 +1116,10 @@ bra7_875D:
 	ASL
 	TAY
 	LDA tbl7_8771,Y
-	STA $32
+	STA Data0
 	LDA tbl7_8772,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl7_8771:
 	.byte $BB
 tbl7_8772:
@@ -1493,7 +1493,7 @@ bra7_8A30:
 	STA ObjectSlot,X
 	LDA #$00
 	STA ObjectState,X
-	STA $0578,X
+	STA ObjectVariables,X
 	STA PlayerHoldFlag
 	STA $0641,X
 	RTS
@@ -1558,10 +1558,10 @@ bra7_8AD4:
 	ASL
 	TAY
 	LDA tbl7_8AE8,Y
-	STA $32
+	STA Data0
 	LDA tbl7_8AE9,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl7_8AE8:
 	.byte $BB
 tbl7_8AE9:
@@ -1646,7 +1646,7 @@ bra7_8B6B:
 bra7_8B74:
 	STA ObjectState,X
 	LDA #$80
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 	LDA FrameCount
 	AND #$00
@@ -1660,10 +1660,10 @@ bra7_8B88:
 	RTS
 	LDA FrameCount
 	AND #$00
-	BNE bra7_8B9C5_RTS
+	BNE bra7_8B95_RTS
 	LDA #$27
 	JSR $B1DA
-bra7_8B9C5_RTS:
+bra7_8B95_RTS:
 	RTS
 	LDX $A4
 	LDA ObjectState,X
@@ -1725,7 +1725,7 @@ loc7_8C14:
 	BEQ bra7_8C1A
 	RTS
 bra7_8C1A:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BPL bra7_8C36
 	LDA $05A0,X
 	BPL bra7_8C29
@@ -1735,9 +1735,9 @@ bra7_8C1A:
 bra7_8C29:
 	CMP #$18
 	BCC bra7_8C415_RTS
-	LDA $0578,X
+	LDA ObjectVariables,X
 	AND #$7F
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 bra7_8C36:
 	JSR sub7_8C42
@@ -1803,10 +1803,10 @@ bra7_8CAC:
 	ASL
 	TAY
 	LDA tbl7_8CC0,Y
-	STA $32
+	STA Data0
 	LDA tbl7_8CC1,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl7_8CC0:
 	.byte $BB
 tbl7_8CC1:
@@ -1842,7 +1842,7 @@ bra7_8CED:
 	AND #$C0
 	STA ObjectState,X
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 	LDX $A4
 	LDA ObjectXPos,X
@@ -1964,10 +1964,10 @@ sub7_8DEA:
 	ASL
 	TAY
 	LDA tbl7_8E02,Y
-	STA $32
+	STA Data0
 	LDA tbl7_8E03,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl7_8E02:
 	.byte $BB
 tbl7_8E03:
@@ -1989,7 +1989,7 @@ tbl7_8E03:
 	LDA #$03
 	JSR $BCD4
 	RTS
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$0E
 	BCS bra7_8E34
 	LDA FrameCount
@@ -2004,7 +2004,7 @@ bra7_8E34:
 	AND #$E0
 	STA ObjectState,X
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 	LDX $A4
 	JSR sub7_8F50
@@ -2382,10 +2382,10 @@ sub7_9149:
 	ASL
 	TAY
 	LDA tbl7_9161,Y
-	STA $32
+	STA Data0
 	LDA tbl7_9162,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl7_9161:
 	.byte $BB
 tbl7_9162:
@@ -2405,7 +2405,7 @@ tbl7_9162:
 	LDA #$03
 	JSR $BCD4
 	RTS
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$0E
 	BCS bra7_91A2
 	LDA ObjectSlot,X
@@ -2431,7 +2431,7 @@ bra7_91A2:
 	AND #$E0
 	STA ObjectState,X
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 	LDX $A4
 	LDA ObjectXPos,X
@@ -2537,7 +2537,7 @@ loc7_9282:
 	BEQ bra7_9288
 	RTS
 bra7_9288:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$0F
 	BCS bra7_9290
 	RTS
@@ -2549,10 +2549,10 @@ bra7_9290:
 	ASL
 	TAY
 	LDA tbl7_92A8,Y
-	STA $32
+	STA Data0
 	LDA tbl7_92A9,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl7_92A8:
 	.byte $BB
 tbl7_92A9:
@@ -2679,7 +2679,7 @@ loc7_93A0:
 	BEQ bra7_93A6
 	RTS
 bra7_93A6:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$0F
 	BCS bra7_93AE
 	RTS
@@ -2691,10 +2691,10 @@ bra7_93AE:
 	ASL
 	TAY
 	LDA tbl7_93C6,Y
-	STA $32
+	STA Data0
 	LDA tbl7_93C7,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl7_93C6:
 	.byte $BB
 tbl7_93C7:
@@ -2767,13 +2767,13 @@ bra7_9447:
 	LDA ObjectState,X
 	AND #$0F
 	CMP #$04
-	BCS bra7_94615_RTS
+	BCS bra7_9461_RTS
 	LDA FrameCount
 	AND #$01
-	BNE bra7_94615_RTS
+	BNE bra7_9461_RTS
 	LDA #$0E
 	JSR $B1DA
-bra7_94615_RTS:
+bra7_9461_RTS:
 	RTS
 sub7_9462:
 	LDA #$06
@@ -2783,10 +2783,10 @@ sub7_9462:
 	ASL
 	TAY
 	LDA tbl7_947A,Y
-	STA $32
+	STA Data0
 	LDA tbl7_947B,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl7_947A:
 	.byte $BB
 tbl7_947B:
@@ -2807,7 +2807,7 @@ tbl7_947B:
 	LDA #$03
 	JSR $BCD4
 	RTS
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$0E
 	BCS bra7_94AA
 	LDA FrameCount
@@ -2822,7 +2822,7 @@ bra7_94AA:
 	AND #$E0
 	STA ObjectState,X
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 	LDX $A4
 	LDA ObjectXPos,X
@@ -2910,7 +2910,7 @@ loc7_955E:
 	JSR sub7_9792
 	LDY #$0D
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BMI bra7_9573
 	CMP #$10
 	BCC bra7_9573
@@ -2920,9 +2920,9 @@ bra7_9573:
 	ASL
 	TAX
 	LDA tbl7_95AB,X
-	STA $32
+	STA Data0
 	LDA tbl7_95AC,X
-	STA $33
+	STA Data0+1
 	LDA #$40
 	STA $36
 	LDA #$40
@@ -2934,9 +2934,9 @@ bra7_9573:
 	ASL
 	TAX
 	LDA tbl7_95AB,X
-	STA $32
+	STA Data0
 	LDA tbl7_95AC,X
-	STA $33
+	STA Data0+1
 	LDA #$40
 	STA $36
 	LDA #$40
@@ -3086,9 +3086,9 @@ tbl7_95AC:
 	ASL
 	TAX
 	LDA tbl7_95AB,X
-	STA $32
+	STA Data0
 	LDA tbl7_95AC,X
-	STA $33
+	STA Data0+1
 	LDA #$40
 	STA $36
 	LDA #$00
@@ -3120,9 +3120,9 @@ bra7_966F:
 	ASL
 	TAX
 	LDA tbl7_95AB,X
-	STA $32
+	STA Data0
 	LDA tbl7_95AC,X
-	STA $33
+	STA Data0+1
 	LDA #$40
 	STA $36
 	LDA #$80
@@ -3134,9 +3134,9 @@ bra7_968A:
 	ASL
 	TAX
 	LDA tbl7_95AB,X
-	STA $32
+	STA Data0
 	LDA tbl7_95AC,X
-	STA $33
+	STA Data0+1
 	LDA #$40
 	STA $36
 	LDY #$00
@@ -3157,9 +3157,9 @@ bra7_96B0:
 	ASL
 	TAX
 	LDA tbl7_95AB,X
-	STA $32
+	STA Data0
 	LDA tbl7_95AC,X
-	STA $33
+	STA Data0+1
 	LDA #$40
 	STA $36
 	LDA #$00
@@ -3171,9 +3171,9 @@ bra7_96B0:
 	ASL
 	TAX
 	LDA tbl7_95AB,X
-	STA $32
+	STA Data0
 	LDA tbl7_95AC,X
-	STA $33
+	STA Data0+1
 	LDA #$00
 	STA $36
 	LDA $062B
@@ -3193,9 +3193,9 @@ bra7_96B0:
 	ASL
 	TAX
 	LDA tbl7_971B,X
-	STA $32
+	STA Data0
 	LDA tbl7_971C,X
-	STA $33
+	STA Data0+1
 	LDA #$40
 	STA $36
 	JSR $A118
@@ -3217,9 +3217,9 @@ tbl7_971C:
 	ASL
 	TAX
 	LDA tbl7_95AB,X
-	STA $32
+	STA Data0
 	LDA tbl7_95AC,X
-	STA $33
+	STA Data0+1
 	LDA #$40
 	STA $36
 	LDA #$00
@@ -3231,9 +3231,9 @@ tbl7_971C:
 	ASL
 	TAX
 	LDA tbl7_95AB,X
-	STA $32
+	STA Data0
 	LDA tbl7_95AC,X
-	STA $33
+	STA Data0+1
 	LDA #$40
 	STA $36
 	LDY #$40
@@ -3250,14 +3250,14 @@ bra7_9762:
 	ASL
 	TAX
 	LDA tbl7_95AB,X
-	STA $32
+	STA Data0
 	LDA tbl7_95AC,X
-	STA $33
+	STA Data0+1
 	LDA #$40
 	STA $36
 	LDX $A4
 	LDY #$00
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$14
 	BCC bra7_978B
 	LDY #$40
@@ -3267,7 +3267,7 @@ bra7_978B:
 	RTS
 sub7_9792:
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BPL bra7_979B5_RTS
 	PLA
 	PLA
@@ -3284,9 +3284,9 @@ bra7_97A9:
 	ASL
 	TAX
 	LDA tbl7_95AB,X
-	STA $32
+	STA Data0
 	LDA tbl7_95AC,X
-	STA $33
+	STA Data0+1
 	LDA #$40
 	STA $36
 	LDA #$00
@@ -3477,7 +3477,7 @@ bra7_98AC:
 	STA $0212
 	RTS
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BPL bra7_9908
 	JSR $B5BB
 	RTS
@@ -3537,10 +3537,10 @@ bra7_9972:
 	ASL
 	TAY
 	LDA tbl7_9986,Y
-	STA $32
+	STA Data0
 	LDA tbl7_9987,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl7_9986:
 	.byte $BB
 tbl7_9987:
@@ -3567,7 +3567,7 @@ bra7_999B:
 	INC ObjectSlot,X
 	LDA #$00
 	STA $0641,X
-	STA $0578,X
+	STA ObjectVariables,X
 	LDA #$28
 	STA ObjectState,X
 	LDA #$18
@@ -3577,7 +3577,7 @@ bra7_999B:
 	INC ObjectSlot,X
 	INC ObjectSlot,X
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	RTS
 	LDY #$00
 	LDA $062B
@@ -3589,9 +3589,9 @@ bra7_99D7:
 	ASL
 	TAX
 	LDA tbl7_99FF,X
-	STA $32
+	STA Data0
 	LDA tbl7_9A00,X
-	STA $33
+	STA Data0+1
 	LDY #$80
 	LDX $A4
 	LDA ObjectSlot,X
@@ -3629,9 +3629,9 @@ tbl7_9A00:
 	ASL
 	TAX
 	LDA tbl7_9A99,X
-	STA $32
+	STA Data0
 	LDA tbl7_9A9A,X
-	STA $33
+	STA Data0+1
 	LDY #$80
 	LDX $A4
 	LDA ObjectSlot,X
@@ -3651,9 +3651,9 @@ bra7_9A3B:
 	ASL
 	TAX
 	LDA tbl7_9A99,X
-	STA $32
+	STA Data0
 	LDA tbl7_9A9A,X
-	STA $33
+	STA Data0+1
 	LDY #$80
 	LDX $A4
 	LDA ObjectSlot,X
@@ -3684,9 +3684,9 @@ bra7_9A77:
 	ASL
 	TAX
 	LDA tbl7_9A99,X
-	STA $32
+	STA Data0
 	LDA tbl7_9A9A,X
-	STA $33
+	STA Data0+1
 	LDY #$80
 	LDX $A4
 	LDA ObjectSlot,X
@@ -3785,10 +3785,10 @@ loc7_9B1F:
 	BEQ bra7_9B25
 	.byte $60
 bra7_9B25:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BPL bra7_9B4E
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	LDA WorldNumber
 	ASL
 	ASL
@@ -3815,10 +3815,10 @@ bra7_9B4E:
 	ASL
 	TAY
 	LDA tbl7_9B66,Y
-	STA $32
+	STA Data0
 	LDA tbl7_9B67,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl7_9B66:
 	.byte $BB
 tbl7_9B67:
@@ -3896,9 +3896,9 @@ bra7_9BD5:
 	ASL
 	TAX
 	LDA tbl7_95AB,X
-	STA $32
+	STA Data0
 	LDA tbl7_95AC,X
-	STA $33
+	STA Data0+1
 	LDA #$40
 	STA $36
 	LDA #$40
@@ -3914,9 +3914,9 @@ bra7_9BD5:
 	ASL
 	TAX
 	LDA tbl7_95AB,X
-	STA $32
+	STA Data0
 	LDA tbl7_95AC,X
-	STA $33
+	STA Data0+1
 	LDY #$80
 	LDX $A4
 	LDA ObjectSlot,X
@@ -3937,7 +3937,7 @@ bra7_9C16:
 	.byte $36
 	.byte $36
 	LDX $A4
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BMI bra7_9C32
 	JMP loc7_9D0B
 bra7_9C32:
@@ -3988,7 +3988,7 @@ loc7_9C90:
 	BEQ bra7_9C96
 	RTS
 bra7_9C96:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	CMP #$80
 	BNE bra7_9D07
 	JSR $B5BB
@@ -4030,7 +4030,7 @@ loc7_9CC2:
 	STA ObjectState,Y
 	STA $0565,Y
 	LDA #$00
-	STA $0578,Y
+	STA ObjectVariables,Y
 	STA $0579,Y
 	STA GuidedObjStatus,Y
 	STA $066A,Y
@@ -4094,10 +4094,10 @@ bra7_9D75:
 	ASL
 	TAY
 	LDA tbl7_9D89,Y
-	STA $32
+	STA Data0
 	LDA tbl7_9D8A,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl7_9D89:
 	.byte $BB
 tbl7_9D8A:
@@ -4123,9 +4123,9 @@ bra7_9D9E:
 	ASL
 	TAX
 	LDA tbl7_971B,X
-	STA $32
+	STA Data0
 	LDA tbl7_971C,X
-	STA $33
+	STA Data0+1
 	LDA #$40
 	STA $36
 	LDX $A4
@@ -4183,10 +4183,10 @@ loc7_9E27:
 	BEQ bra7_9E2D
 	RTS
 bra7_9E2D:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BPL bra7_9E4F
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	STA $0641,X
 	STA GuidedObjStatus,X
 	LDA ObjectXPos,X
@@ -4240,10 +4240,10 @@ loc7_9E98:
 	ASL
 	TAY
 	LDA tbl7_9EB0,Y
-	STA $32
+	STA Data0
 	LDA tbl7_9EB1,Y
-	STA $33
-	JMP ($32)
+	STA Data0+1
+	JMP (Data0)
 tbl7_9EB0:
 	.byte $BB
 tbl7_9EB1:
@@ -4337,13 +4337,13 @@ loc7_9F57:
 	BEQ bra7_9F5D
 	RTS
 bra7_9F5D:
-	LDA $0578,X
+	LDA ObjectVariables,X
 	BPL bra7_9F78
 	LDA $058C,X
 	CMP #$02
 	BEQ bra7_9F78
 	LDA #$00
-	STA $0578,X
+	STA ObjectVariables,X
 	LDA ObjectXPos,X
 	CLC
 	ADC #$0F
