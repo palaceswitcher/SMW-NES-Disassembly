@@ -2388,44 +2388,25 @@ bra4_ACCF:
 	STA Data0+1
 	JMP (Data0)
 tbl4_ACDE:
-	.db $4F
-	.db $AE
-	.db $4F
-	.db $AE
-	.db $4F
-	.db $AE
-	.db $7C
-	.db $B6
-	.db $7C
-	.db $B5
-	.db $24
-	.db $B7
-	.db $DE
-	.db $B8
-	.db $DE
-	.db $B8
-	.db $0C
-	.db $B9
-	.db $24
-	.db $B7
-	.db $6A
-	.db $B7
-	.db $82
-	.db $B7
-	.db $94
-	.db $B7
-	.db $B5
-	.db $B7
-	.db $CD
-	.db $B7
-	.db $DF
-	.db $B7
-	.db $F7
-	.db $B7
-	.db $0F
-	.db $B8
-	.db $21
-	.db $B8
+	.word ofs_AE4F
+	.word ofs_AE4F
+	.word ofs_AE4F
+	.word ofs_B67C
+	.word ofs_B57C
+	.word ofs_B724
+	.word ofs_B8DE
+	.word ofs_B8DE
+	.word ofs_B90C
+	.word ofs_B724
+	.word ofs_B76A
+	.word ofs_B782
+	.word ofs_B794
+	.word ofs_B7B5
+	.word ofs_B7CD
+	.word ofs_B7DF
+	.word ofs_B7F7
+	.word ofs_B80F
+	.word ofs_B821
 jmp_57_AD04:
 	LDA PlayerPowerupBuffer
 	BEQ bra4_AD1E
@@ -2591,11 +2572,11 @@ bra4_AE45:	LDA ItemBoxSFX,X	;
 ItemBoxLogicDone:	RTS
 
 ItemBoxSFX:
-	.db $00			;empty
-	.db sfxPowerup	;mushroom
-	.db sfxPowerup	;flower
-	.db sfxFeather	;feather
-
+	.db $00			;Empty
+	.db sfxPowerup	;Mushroom
+	.db sfxPowerup	;Flower
+	.db sfxFeather	;Feather
+ofs_AE4F:
 	LDA PlayerPowerup	;
 	CMP #$03			;if the player doesn't have a cape,
 	BCC bra4_AE59		;branch
@@ -2910,7 +2891,7 @@ bra4_B08C:
 	LDA #$00
 	STA $058C,Y
 	STA ObjectVariables,Y
-	STA GuidedObjStatus,Y
+	STA ObjectAction,Y
 	INC ObjectCount			;add to total object count
 	LDA UsedFireballSlots
 	EOR #$01
@@ -3164,7 +3145,7 @@ loc4_B26C:
 bra4_B26F:
 	LDA #$00
 	STA $058C,Y
-	STA GuidedObjStatus,Y
+	STA ObjectAction,Y
 	INY
 	LDA PlayerMovement
 	AND #$40
@@ -3219,7 +3200,7 @@ loc4_B2D4:
 bra4_B2D7:
 	LDA #$00
 	STA $058C,Y
-	STA GuidedObjStatus,Y
+	STA ObjectAction,Y
 	INY
 	LDA PlayerMovement
 	AND #$40
@@ -3274,7 +3255,7 @@ loc4_B33C:
 bra4_B33F:
 	LDA #$00
 	STA $058C,Y
-	STA GuidedObjStatus,Y
+	STA ObjectAction,Y
 	INY
 	STY ObjectCount
 	LDA #sfxYoshiFireSpit
@@ -3578,7 +3559,7 @@ DoLookUp:		LDA ButtonsHeld		;
 				LDA #$08			;
 				STA PlayerAction	;set action to looking up
 LookupDuckDone:	RTS
-
+ofs_B57C:
 	JSR SpinCapeRoutine
 	LDA PlayerActionDup	;load current animation
 	ASL					;multiply it by 2
@@ -3719,6 +3700,7 @@ sub4_B669:
 	STA PlayerYSpeed	;set Y speed to $40
 bra4_B67B_RTS:
 	RTS
+ofs_B67C:
 	LDA ButtonsHeld	;
 	AND #$0F		;if any direction is pressed,
 	BNE bra4_B68D	;branch
@@ -3811,6 +3793,7 @@ bra4_B71F:
 	LDA #$0E
 	STA PlayerAction
 	RTS
+ofs_B724:
 	JSR TongueSpeedBoost
 	JSR TongueSwimChk
 	LDX #$0D
@@ -3847,6 +3830,7 @@ bra4_B75C:
 	STA $062E
 bra4_B769_RTS:
 	RTS
+ofs_B76A:
 	JSR TongueSpeedBoost
 	JSR TongueSwimChk
 	LDX #$0E
@@ -3859,6 +3843,7 @@ bra4_B77A:
 	STA Data0
 	JSR sub4_B741
 	RTS
+ofs_B782:
 	JSR TongueSpeedBoost
 	JSR TongueSwimChk
 	LDX #$06
@@ -3867,6 +3852,7 @@ bra4_B77A:
 	STA Data0
 	JSR sub4_B741
 	RTS
+ofs_B794:
 	JSR TongueSpeedBoost
 	JSR TongueSwimChk
 	LDX #$0D
@@ -3884,6 +3870,7 @@ bra4_B7AD:
 	STA Data0
 	JSR sub4_B741
 	RTS
+ofs_B7B5:
 	JSR TongueSpeedBoost
 	JSR TongueSwimChk
 	LDX #$0E
@@ -3896,6 +3883,7 @@ bra4_B7C5:
 	STA Data0
 	JSR sub4_B741
 	RTS
+ofs_B7CD:
 	JSR TongueSpeedBoost
 	JSR TongueSwimChk
 	LDX #$06
@@ -3904,6 +3892,7 @@ bra4_B7C5:
 	STA Data0
 	JSR sub4_B741
 	RTS
+ofs_B7DF:
 	JSR SwimMove
 	JSR TongueSwimChk
 	LDX #$0D
@@ -3916,6 +3905,7 @@ bra4_B7EF:
 	STA Data0
 	JSR sub4_B741
 	RTS
+ofs_B7F7:
 	JSR SwimMove
 	JSR TongueSwimChk
 	LDX #$0E
@@ -3928,6 +3918,7 @@ bra4_B807:
 	STA Data0
 	JSR sub4_B741
 	RTS
+ofs_B80F:
 	JSR SwimMove
 	JSR TongueSwimChk
 	LDX #$06
@@ -3936,6 +3927,7 @@ bra4_B807:
 	STA Data0
 	JSR sub4_B741
 	RTS
+ofs_B821:
 	JSR SwimMove
 	JSR TongueSwimChk
 	LDX #$00
@@ -4036,6 +4028,7 @@ bra4_B8D8:
 	LDA #$00
 	STA $0614
 	RTS
+ofs_B8DE:
 	LDA PlayerYSpeed
 	BNE bra4_B90B_RTS
 	LDA #$07
@@ -4058,6 +4051,7 @@ bra4_B8D8:
 	STA PlayerState
 bra4_B90B_RTS:
 	RTS
+ofs_B90C:
 	JSR SwimMove
 	JSR unknownrout1
 	LDA #$05
@@ -5129,7 +5123,7 @@ sub4_BF7A:
 	CMP #$4C
 	BCC bra4_BF9B
 bra4_BF87:
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BMI bra4_BF93
 	LDA ObjectState,X
 	ORA #$40

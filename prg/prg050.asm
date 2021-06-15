@@ -7,10 +7,10 @@ bra6_800A:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra6_8026
 	CMP #$FF
@@ -20,31 +20,31 @@ bra6_8026:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra6_8068
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra6_8057
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	JMP loc6_8068
 bra6_8057:
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	SEC	;unlogged
 	SBC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	SBC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 bra6_8068:
 loc6_8068:
 	LDA FreezeFlag
@@ -80,10 +80,10 @@ loc6_809C:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra6_80BE
 	CMP #$FF
@@ -93,31 +93,31 @@ bra6_80BE:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra6_8100
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra6_80EF
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	JMP loc6_8100
 bra6_80EF:
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	SEC	;unlogged
 	SBC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	SBC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 bra6_8100:
 loc6_8100:
 	LDA FreezeFlag
@@ -204,9 +204,9 @@ bra6_8196:
 	TYA
 	ASL
 	TAX
-	LDA tbl6_81B6,X
+	LDA NinjiMappings,X
 	STA Data0
-	LDA tbl6_81B7,X
+	LDA NinjiMappings+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -218,36 +218,31 @@ bra6_81B0:
 	STY $36
 	JSR $A118
 	RTS
-tbl6_81B6:
-	.byte $BA
-tbl6_81B7:
-	.byte $81
-	.byte $C1
-	.byte $81
-	.byte $02	;ninji mappings
-	.byte $02
-	.byte $A6
-	.byte $22
-	.byte $23
-	.byte $24
-	.byte $25
-	.byte $02
-	.byte $02
-	.byte $A6
-	.byte $26
-	.byte $27
-	.byte $28
-	.byte $29
+NinjiMappings:
+	.word NinjiStand
+	.word NinjiJump
+NinjiStand:
+	.byte $02	;Tile Width
+	.byte $02	;Tile Height
+	.byte $A6	;1K CHR Bank
+	.byte $22, $23
+	.byte $24, $25
+NinjiJump:
+	.byte $02	;Tile Width
+	.byte $02	;Tile Height
+	.byte $A6	;1K CHR Bank
+	.byte $26, $27
+	.byte $28, $29
 	LDA #$07
 	STA $25
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra6_81EA
 	CMP #$FF
@@ -257,31 +252,31 @@ bra6_81EA:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra6_822C
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra6_821B
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	JMP loc6_822C
 bra6_821B:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra6_822C:
 loc6_822C:
 	LDA FreezeFlag
@@ -336,7 +331,7 @@ tbl6_8271:
 	.byte $83
 	.byte $66
 	.byte $83
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	AND #$40
 	EOR #$40
 	STA $25
@@ -344,9 +339,9 @@ tbl6_8271:
 	AND #$BF
 	ORA $25
 	STA ObjectState,X
-	LDA $05A0,X
+	LDA ObjectXDistance,X
 	TAY
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BEQ bra6_82A0
 	CMP #$FF
 	BNE bra6_82A7_RTS
@@ -360,7 +355,7 @@ bra6_82A4:
 	INC ObjectVariables,X
 bra6_82A7_RTS:
 	RTS
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	AND #$40
 	EOR #$40
 	STA $25
@@ -368,13 +363,13 @@ bra6_82A7_RTS:
 	AND #$BF
 	ORA $25
 	STA ObjectState,X
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BEQ bra6_82C6
 	CMP #$FF
 	BEQ bra6_82D4
 	BNE bra6_82E0	;unlogged
 bra6_82C6:
-	LDA $05A0,X
+	LDA ObjectXDistance,X
 	SEC
 	SBC #$18
 	BCC bra6_82E6
@@ -382,7 +377,7 @@ bra6_82C6:
 	BCC bra6_82E5_RTS
 	BCS bra6_82E0
 bra6_82D4:
-	LDA $05A0,X
+	LDA ObjectXDistance,X
 	CLC
 	ADC #$30
 	BCS bra6_82E6
@@ -502,9 +497,9 @@ bra6_83B2_RTS:
 	AND #$0F
 	ASL
 	TAX
-	LDA tbl6_83E1,X
+	LDA ThwompMappings,X
 	STA Data0
-	LDA tbl6_83E2,X
+	LDA ThwompMappings+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -516,71 +511,44 @@ bra6_83DB:
 	STY $36
 	JSR $A118
 	RTS
-tbl6_83E1:
-	.byte $EB
-tbl6_83E2:
-	.byte $83
-	.byte $FA
-	.byte $83
-	.byte $09
-	.byte $84
-	.byte $09
-	.byte $84
-	.byte $09
-	.byte $84
-	.byte $03	;thwomp mappings
-	.byte $04
-	.byte $AB
-	.byte $21
-	.byte $22
-	.byte $23
-	.byte $24
-	.byte $25
-	.byte $26
-	.byte $2C
-	.byte $2D
-	.byte $2E
-	.byte $35
-	.byte $36
-	.byte $37
-	.byte $03
-	.byte $04
-	.byte $AB
-	.byte $21
-	.byte $22
-	.byte $23
-	.byte $2A
-	.byte $2B
-	.byte $26
-	.byte $32
-	.byte $33
-	.byte $34
-	.byte $35
-	.byte $36
-	.byte $37
-	.byte $03
-	.byte $04
-	.byte $AB
-	.byte $21
-	.byte $22
-	.byte $23
-	.byte $27
-	.byte $28
-	.byte $29
-	.byte $2F
-	.byte $30
-	.byte $31
-	.byte $35
-	.byte $36
-	.byte $37
+ThwompMappings:
+	.word ThwompIdle
+	.word ThwompStare
+	.word ThwompAngry
+	.word ThwompAngry
+	.word ThwompAngry
+ThwompIdle:
+	.byte $03	;Tile Width
+	.byte $04	;Tile Height
+	.byte $AB	;1K CHR Bank
+	.byte $21, $22, $23
+	.byte $24, $25, $26
+	.byte $2C, $2D, $2E
+	.byte $35, $36, $37
+ThwompStare:
+	.byte $03	;Tile Width
+	.byte $04	;Tile Height
+	.byte $AB	;1K CHR Bank
+	.byte $21, $22, $23
+	.byte $2A, $2B, $26
+	.byte $32, $33, $34
+	.byte $35, $36, $37
+ThwompAngry:
+	.byte $03	;Tile Width
+	.byte $04	;Tile Height
+	.byte $AB	;1K CHR Bank
+	.byte $21, $22, $23
+	.byte $27, $28, $29
+	.byte $2F, $30, $31
+	.byte $35, $36, $37
 	LDX $A4	;unlogged code start
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra6_8436
 	CMP #$FF
@@ -590,31 +558,31 @@ bra6_8436:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra6_8478
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra6_8467
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	JMP loc6_8478
 bra6_8467:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra6_8478:
 loc6_8478:
 	LDA FreezeFlag
@@ -648,10 +616,10 @@ bra6_84A7:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra6_84CC
 	CMP #$FF
@@ -661,31 +629,31 @@ bra6_84CC:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra6_850E
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra6_84FD
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	JMP loc6_850E
 bra6_84FD:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra6_850E:
 loc6_850E:
 	LDA FreezeFlag
@@ -769,10 +737,10 @@ tbl6_8571:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra6_85A8
 	CMP #$FF
@@ -782,31 +750,31 @@ bra6_85A8:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra6_85EA
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra6_85D9
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	JMP loc6_85EA
 bra6_85D9:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra6_85EA:
 loc6_85EA:
 	LDA FreezeFlag
@@ -937,10 +905,10 @@ bra6_86CE_RTS:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra6_86F1
 	CMP #$FF
@@ -950,31 +918,31 @@ bra6_86F1:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra6_8733
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra6_8722
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	JMP loc6_8733
 bra6_8722:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra6_8733:
 loc6_8733:
 	LDA FreezeFlag
@@ -1099,9 +1067,9 @@ bra6_880A:
 	TYA
 	ASL
 	TAX
-	LDA tbl6_882F,X
+	LDA UrchinMappings,X
 	STA Data0
-	LDA tbl6_8830,X
+	LDA UrchinMappings+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -1115,50 +1083,25 @@ bra6_8824:
 	STA $05F0
 	JSR $A118
 	RTS
-tbl6_882F:
-	.byte $33
-tbl6_8830:
-	.byte $88
-	.byte $46
-	.byte $88
-	.byte $04	;urchin mappings
-	.byte $04
-	.byte $A8
-	.byte $09
-	.byte $0A
-	.byte $0B
-	.byte $0C
-	.byte $0D
-	.byte $0E
-	.byte $0F
-	.byte $10
-	.byte $13
-	.byte $14
-	.byte $15
-	.byte $16
-	.byte $19
-	.byte $1A
-	.byte $1B
-	.byte $1C
-	.byte $04
-	.byte $04
-	.byte $A8
-	.byte $09
-	.byte $0A
-	.byte $0B
-	.byte $0C
-	.byte $0D
-	.byte $11
-	.byte $12
-	.byte $10
-	.byte $13
-	.byte $17
-	.byte $18
-	.byte $16
-	.byte $19
-	.byte $1A
-	.byte $1B
-	.byte $1C
+UrchinMappings:
+	.word UrchinOpen
+	.word UrchinClose
+UrchinOpen:
+	.byte $04	;Tile Width
+	.byte $04	;Tile Height
+	.byte $A8	;1K CHR Bank
+	.byte $09, $0A, $0B, $0C
+	.byte $0D, $0E, $0F, $10
+	.byte $13, $14, $15, $16
+	.byte $19, $1A, $1B, $1C
+UrchinClose:
+	.byte $04	;Tile Width
+	.byte $04	;Tile Height
+	.byte $A8	;1K CHR Bank
+	.byte $09, $0A, $0B, $0C
+	.byte $0D, $11, $12, $10
+	.byte $13, $17, $18, $16
+	.byte $19, $1A, $1B, $1C
 	.byte $00	;unlogged data start
 	.byte $00
 	.byte $00
@@ -1438,7 +1381,7 @@ tbl6_88DA:
 bra6_8971:
 	JSR sub6_8BCA
 	LDX $A4
-	LDA GuidedObjStatus,X
+	LDA ObjectAction,X
 	ASL
 	TAY
 	LDA tbl6_8988,Y
@@ -1487,7 +1430,7 @@ bra6_89C1:
 	AND #$C0
 	ORA #$80
 	STA EnemyAnimFrame,X
-	LDA $05A0,X
+	LDA ObjectXDistance,X
 	BPL bra6_89DB
 	EOR #$FF
 	CMP #$1C
@@ -1498,9 +1441,9 @@ bra6_89DB:
 	BCS bra6_89EA
 bra6_89DF:
 	LDA #$04
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	LDA #$00
-	STA $0641,X
+	STA ObjActionTimer,X
 	RTS
 bra6_89EA:
 	LDA ObjectState,X
@@ -1518,21 +1461,21 @@ bra6_89F4:
 	JMP loc6_8B20
 bra6_8A09:
 	JMP loc6_8B44
-	LDY $0641,X
+	LDY ObjActionTimer,X
 	LDA tbl6_8A53,Y
 	STA EnemyAnimFrame,X
 	LDA $062B
 	AND #$01
 	BNE bra6_8A52_RTS
-	LDA $0641,X
+	LDA ObjActionTimer,X
 	LSR
 	CLC
 	ADC ObjectYPos,X
 	STA ObjectYPos,X
-	LDA $0641,X
+	LDA ObjActionTimer,X
 	CMP #$0F
 	BCS bra6_8A31
-	INC $0641,X
+	INC ObjActionTimer,X
 bra6_8A31:
 	JSR $B077
 	BEQ bra6_8A52_RTS
@@ -1545,8 +1488,8 @@ bra6_8A31:
 	AND #$F8
 	STA ObjectYPos,X
 	LDA #$00
-	STA $0641,X
-	INC GuidedObjStatus,X
+	STA ObjActionTimer,X
+	INC ObjectAction,X
 bra6_8A52_RTS:
 	RTS
 tbl6_8A53:
@@ -1566,8 +1509,8 @@ tbl6_8A53:
 	.byte $53
 	.byte $53
 	.byte $55
-	INC $0641,X
-	LDA $0641,X
+	INC ObjActionTimer,X
+	LDA ObjActionTimer,X
 	CMP #$10
 	BCC bra6_8A97_RTS
 	CMP #$18
@@ -1575,7 +1518,7 @@ tbl6_8A53:
 	CMP #$14
 	BNE bra6_8A97_RTS
 	LDA #$00
-	LDY $05B4,X
+	LDY ObjXScreenDistance,X
 	BMI bra6_8A7E
 	LDA #$40
 bra6_8A7E:
@@ -1588,23 +1531,23 @@ bra6_8A7E:
 bra6_8A8C:
 	LDA #$00
 	STA FreezeFlag
-	STA GuidedObjStatus,X
-	STA $0641,X
+	STA ObjectAction,X
+	STA ObjActionTimer,X
 bra6_8A97_RTS:
 	RTS
 	LDA #$02
 	CMP ObjectVariables,X
 	BCS bra6_8AAF
 	LDA #$07
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	LDA #$00
-	STA $0641,X
+	STA ObjActionTimer,X
 	LDA #$18
 	STA EnemyAnimFrame,X
 	RTS
 bra6_8AAF:
-	INC $0641,X
-	LDA $0641,X
+	INC ObjActionTimer,X
+	LDA ObjActionTimer,X
 	CMP #$18
 	BCS bra6_8ABD
 	LDA #PlayerAnimationFrame
@@ -1622,12 +1565,12 @@ bra6_8AC7:
 	LDA #$15
 	STA EnemyAnimFrame,X
 	LDA #$05
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	LDA #$00
-	STA $0641,X
+	STA ObjActionTimer,X
 bra6_8ADA_RTS:
 	RTS
-	LDA $0641,X
+	LDA ObjActionTimer,X
 	CMP #$30
 	BCC bra6_8B13
 	BNE bra6_8AEA
@@ -1661,7 +1604,7 @@ bra6_8B0A:
 bra6_8B10:
 	STA EnemyAnimFrame,X
 bra6_8B13:
-	INC $0641,X
+	INC ObjActionTimer,X
 	RTS
 bra6_8B17:
 	LDA #musVictory
@@ -1674,7 +1617,7 @@ loc6_8B20:
 	CMP #$20
 	BCS bra6_8B2D
 	LDA #$02
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	RTS
 bra6_8B2D:
 	DEC ObjectYPos,X
@@ -1692,7 +1635,7 @@ loc6_8B44:
 	CMP #$80
 	BCC bra6_8B51
 	LDA #$00
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	RTS
 bra6_8B51:
 	INC ObjectYPos,X
@@ -1713,7 +1656,7 @@ loc6_8B6D:
 	CMP #$20
 	BCS bra6_8B7A
 	LDA #$01
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	RTS
 bra6_8B7A:
 	DEC ObjectXPos,X
@@ -1730,7 +1673,7 @@ loc6_8B8F:
 	CMP #$C8
 	BCC bra6_8B9C
 	LDA #$03
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	RTS
 bra6_8B9C:
 	INC ObjectXPos,X
@@ -1744,7 +1687,7 @@ bra6_8BA9:
 loc6_8BAE:
 	STA EnemyAnimFrame,X
 	LDY #$01
-	LDA GuidedObjStatus,X
+	LDA ObjectAction,X
 	BEQ bra6_8BBA
 	LDY #$09
 bra6_8BBA:
@@ -1765,10 +1708,10 @@ sub6_8BCA:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra6_8BEC
 	CMP #$FF
@@ -1778,31 +1721,31 @@ bra6_8BEC:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra6_8C2E
-	LDA $05DC,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	BPL bra6_8C1D	;unlogged
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	CLC	;unlogged
 	ADC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	ADC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 	JMP loc6_8C2E	;unlogged
 bra6_8C1D:
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	SEC	;unlogged
 	SBC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	SBC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 bra6_8C2E:
 loc6_8C2E:
 	LDA FreezeFlag
@@ -1830,14 +1773,14 @@ tbl6_8C49:
 	.byte $8C
 	.byte $88	;unlogged
 	.byte $AD	;unlogged
-	LDA GuidedObjStatus,X
+	LDA ObjectAction,X
 	CMP #$04
 	BCS bra6_8CA1_RTS
 	JSR $BEBC
 	LDA InvincibilityTimer
 	CMP #$F7
 	BCS bra6_8CA1_RTS
-	LDA GuidedObjStatus,X
+	LDA ObjectAction,X
 	BEQ bra6_8C86
 	CMP #$01
 	BNE bra6_8C78
@@ -1859,9 +1802,9 @@ bra6_8C86:
 	LDA #sfxFeather
 	STA SFXRegister
 	LDA #$06
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	LDA #$00
-	STA $0641,X
+	STA ObjActionTimer,X
 	INC ObjectVariables,X
 	LDA PlayerMovement
 	ORA #$04
@@ -1878,7 +1821,7 @@ bra6_8CA1_RTS:
 	TAX
 	LDA tbl6_8D45,X
 	STA Data0
-	LDA tbl6_8D46,X
+	LDA tbl6_8D45+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -1909,7 +1852,7 @@ bra6_8CD7:
 	TAX
 	LDA tbl6_8D45,X
 	STA Data0
-	LDA tbl6_8D46,X
+	LDA tbl6_8D45+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -1935,7 +1878,7 @@ bra6_8D12:
 	TAX
 	LDA tbl6_8DB7,X
 	STA Data0
-	LDA tbl6_8DB8,X
+	LDA tbl6_8DB7+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -1952,302 +1895,144 @@ bra6_8D35:
 	JSR $A118
 	RTS
 tbl6_8D45:
-	.byte $CF
-tbl6_8D46:
-	.byte $90
-	.byte $ED
-	.byte $90
-	.byte $FC
-	.byte $90
-	.byte $29
-	.byte $91
-	.byte $35
-	.byte $91
-	.byte $59	;unlogged
-	.byte $91	;unlogged
-	.byte $68	;unlogged
-	.byte $91	;unlogged
-	.byte $77	;unlogged
-	.byte $91	;unlogged
-	.byte $DE	;unlogged
-	.byte $90	;unlogged
-	.byte $0B
-	.byte $91
-	.byte $1A
-	.byte $91
-	.byte $41
-	.byte $91
-	.byte $4D
-	.byte $91
-	.byte $86	;unlogged
-	.byte $91	;unlogged
-	.byte $95	;unlogged
-	.byte $91	;unlogged
-	.byte $A4	;unlogged
-	.byte $91	;unlogged
-	.byte $B3
-	.byte $91
-	.byte $C6
-	.byte $91
-	.byte $E2
-	.byte $91
-	.byte $F5
-	.byte $91
-	.byte $11
-	.byte $92
-	.byte $24
-	.byte $92
-	.byte $37
-	.byte $92
-	.byte $46
-	.byte $92
-	.byte $5D
-	.byte $92
-	.byte $74
-	.byte $92
-	.byte $8B
-	.byte $92
-	.byte $A2
-	.byte $92
-	.byte $B9
-	.byte $92
-	.byte $4A
-	.byte $8F
-	.byte $5D
-	.byte $8F
-	.byte $70
-	.byte $8F
-	.byte $83
-	.byte $8F
-	.byte $96
-	.byte $8F
-	.byte $A9
-	.byte $8F
-	.byte $BC
-	.byte $8F
-	.byte $CF	;unlogged
-	.byte $8F	;unlogged
-	.byte $E2
-	.byte $8F
-	.byte $F5
-	.byte $8F
-	.byte $08
-	.byte $90
-	.byte $1B
-	.byte $90
-	.byte $32
-	.byte $90
-	.byte $49
-	.byte $90
-	.byte $58
-	.byte $90
-	.byte $67
-	.byte $90
-	.byte $76
-	.byte $90
-	.byte $CF	;unlogged
-	.byte $90	;unlogged
-	.byte $CF	;unlogged
-	.byte $90	;unlogged
-	.byte $CF	;unlogged
-	.byte $90	;unlogged
-	.byte $CF	;unlogged
-	.byte $90	;unlogged
-	.byte $89
-	.byte $90
-	.byte $9C
-	.byte $90
-	.byte $AF
-	.byte $90
-	.byte $B6
-	.byte $90
-	.byte $BD
-	.byte $90
-	.byte $C4
-	.byte $90
-	.byte $CB
-	.byte $90
+	.word ofs_90CF
+	.word ofs_90ED
+	.word ofs_90FC
+	.word ofs_9129
+	.word ofs_9135
+	.word ofs_9159	;unlogged
+	.word ofs_9168	;unlogged
+	.word ofs_9177	;unlogged
+	.word ofs_90DE	;unlogged
+	.word ofs_910B
+	.word ofs_911A
+	.word ofs_9141
+	.word ofs_914D
+	.word ofs_9186	;unlogged
+	.word ofs_9195	;unlogged
+	.word ofs_91A4	;unlogged
+	.word ofs_91B3
+	.word ofs_91C6
+	.word ofs_91E2
+	.word ofs_91F5
+	.word ofs_9211
+	.word ofs_9224
+	.word ofs_9237
+	.word ofs_9246
+	.word ofs_925D
+	.word ofs_9274
+	.word ofs_928B
+	.word ofs_92A2
+	.word ofs_92B9
+	.word ofs_8F4A
+	.word ofs_8F5D
+	.word ofs_8F70
+	.word ofs_8F83
+	.word ofs_8F96
+	.word ofs_8FA9
+	.word ofs_8FBC
+	.word ofs_8FCF	;unlogged
+	.word ofs_8FE2
+	.word ofs_8FF5
+	.word ofs_9008
+	.word ofs_901B
+	.word ofs_9032
+	.word ofs_9049
+	.word ofs_9058
+	.word ofs_9067
+	.word ofs_9076
+	.word ofs_90CF	;unlogged
+	.word ofs_90CF	;unlogged
+	.word ofs_90CF	;unlogged
+	.word ofs_90CF	;unlogged
+	.word ofs_9089
+	.word ofs_909C
+	.word ofs_90AF
+	.word ofs_90B6
+	.word ofs_90BD
+	.word ofs_90C4
+	.word ofs_90CB
 tbl6_8DB7:
-	.byte $E5
-tbl6_8DB8:
-	.byte $8D
-	.byte $F8
-	.byte $8D
-	.byte $0B
-	.byte $8E
-	.byte $1E
-	.byte $8E
-	.byte $31
-	.byte $8E
-	.byte $44
-	.byte $8E
-	.byte $57
-	.byte $8E
-	.byte $6A
-	.byte $8E
-	.byte $7D
-	.byte $8E
-	.byte $90
-	.byte $8E
-	.byte $A3
-	.byte $8E
-	.byte $B6
-	.byte $8E
-	.byte $CD
-	.byte $8E
-	.byte $E4
-	.byte $8E
-	.byte $02
-	.byte $8F
-	.byte $02
-	.byte $8F
-	.byte $11
-	.byte $8F
-	.byte $37	;unlogged
-	.byte $8F	;unlogged
-	.byte $37	;unlogged
-	.byte $8F	;unlogged
-	.byte $37	;unlogged
-	.byte $8F	;unlogged
-	.byte $37	;unlogged
-	.byte $8F	;unlogged
-	.byte $24
-	.byte $8F
-	.byte $37
-	.byte $8F
-	.byte $04	;wendy mappings
-	.byte $04
-	.byte $B8
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $0F
-	.byte $10
-	.byte $FF
-	.byte $22
-	.byte $26
-	.byte $27
-	.byte $25
-	.byte $32
-	.byte $36
-	.byte $37
-	.byte $35
-	.byte $04
-	.byte $04
-	.byte $B8
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $0D
-	.byte $0E
-	.byte $FF
-	.byte $22
-	.byte $23
-	.byte $24
-	.byte $25
-	.byte $32
-	.byte $33
-	.byte $34
-	.byte $35
-	.byte $04
-	.byte $04
-	.byte $B8
-	.byte $01
-	.byte $02
-	.byte $03
-	.byte $FF
-	.byte $04
-	.byte $05
-	.byte $06
-	.byte $FF
-	.byte $11
-	.byte $12
-	.byte $13
-	.byte $FF
-	.byte $FF
-	.byte $28
-	.byte $29
-	.byte $FF
-	.byte $04
-	.byte $04
-	.byte $B8
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $07
-	.byte $08
-	.byte $FF
-	.byte $14
-	.byte $15
-	.byte $16
-	.byte $FF
-	.byte $FF
-	.byte $28
-	.byte $29
-	.byte $FF
-	.byte $04
-	.byte $04
-	.byte $B8
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $09
-	.byte $0A
-	.byte $FF
-	.byte $FF
-	.byte $17
-	.byte $18
-	.byte $19
-	.byte $FF
-	.byte $FF
-	.byte $28
-	.byte $29
-	.byte $FF
-	.byte $04
-	.byte $04
-	.byte $B9
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $42
-	.byte $43
-	.byte $FF
-	.byte $4E
-	.byte $4F
-	.byte $50
-	.byte $51
-	.byte $5C
-	.byte $5D
-	.byte $5E
-	.byte $5F
-	.byte $04
-	.byte $04
-	.byte $B9
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $44
-	.byte $45
-	.byte $FF
-	.byte $4E
-	.byte $52
-	.byte $53
-	.byte $51
-	.byte $5C
-	.byte $60
-	.byte $61
-	.byte $5F
+	.word WendyLook1
+	.word WendyLook2
+	.word WendyStare
+	.word WendySideLook
+	.word WendyMouthOpen
+	.word WendyWeirdFace1
+	.word WendyWeirdFace2
+	.word ofs_8E6A
+	.word ofs_8E7D
+	.word ofs_8E90
+	.word ofs_8EA3
+	.word ofs_8EB6
+	.word ofs_8ECD
+	.word ofs_8EE4
+	.word ofs_8F02
+	.word ofs_8F02
+	.word ofs_8F11
+	.word ofs_8F37	;unlogged
+	.word ofs_8F37	;unlogged
+	.word ofs_8F37	;unlogged
+	.word ofs_8F37	;unlogged
+	.word ofs_8F24
+	.word ofs_8F37
+WendyLook1:
+	.byte $04	;Tile Width
+	.byte $04	;Tile Height
+	.byte $B8	;1K CHR Bank
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $0F, $10, $FF
+	.byte $22, $26, $27, $25
+	.byte $32, $36, $37, $35
+WendyLook2:
+	.byte $04	;Tile Width
+	.byte $04	;Tile Height
+	.byte $B8	;1K CHR Bank
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $0D, $0E, $FF
+	.byte $22, $23, $24, $25
+	.byte $32, $33, $34, $35
+WendyStare:
+	.byte $04	;Tile Width
+	.byte $04	;Tile Height
+	.byte $B8	;1K CHR Bank
+	.byte $01, $02, $03, $FF
+	.byte $04, $05, $06, $FF
+	.byte $11, $12, $13, $FF
+	.byte $FF, $28, $29, $FF
+WendySideLook:
+	.byte $04	;Tile Width
+	.byte $04	;Tile Height
+	.byte $B8	;1K CHR Bank
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $07, $08, $FF
+	.byte $14, $15, $16, $FF
+	.byte $FF, $28, $29, $FF
+WendyMouthOpen:
+	.byte $04	;Tile Width
+	.byte $04	;Tile Height
+	.byte $B8	;1K CHR Bank
+	.byte $FF, $FF, $FF, $FF
+	.byte $09, $0A, $FF, $FF
+	.byte $17, $18, $19, $FF
+	.byte $FF, $28, $29, $FF
+WendyWeirdFace1:
+	.byte $04	;Tile Width
+	.byte $04	;Tile Height
+	.byte $B9	;1K CHR Bank
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $42, $43, $FF
+	.byte $4E, $4F, $50, $51
+	.byte $5C, $5D, $5E, $5F
+WendyWeirdFace2:
+	.byte $04	;Tile Width
+	.byte $04	;Tile Height
+	.byte $B9	;1K CHR Bank
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $44, $45, $FF
+	.byte $4E, $52, $53, $51
+	.byte $5C, $60, $61, $5F
+ofs_8E6A:
 	.byte $04
 	.byte $04
 	.byte $B8
@@ -2267,6 +2052,7 @@ tbl6_8DB8:
 	.byte $30
 	.byte $31
 	.byte $FF
+ofs_8E7D:
 	.byte $04
 	.byte $04
 	.byte $B9
@@ -2286,6 +2072,7 @@ tbl6_8DB8:
 	.byte $76
 	.byte $77
 	.byte $FF
+ofs_8E90:
 	.byte $04
 	.byte $04
 	.byte $B9
@@ -2305,6 +2092,7 @@ tbl6_8DB8:
 	.byte $72
 	.byte $73
 	.byte $74
+ofs_8EA3:
 	.byte $04
 	.byte $04
 	.byte $B9
@@ -2324,6 +2112,7 @@ tbl6_8DB8:
 	.byte $6F
 	.byte $70
 	.byte $71
+ofs_8EB6:
 	.byte $04
 	.byte $05
 	.byte $B9
@@ -2347,6 +2136,7 @@ tbl6_8DB8:
 	.byte $7B
 	.byte $7C
 	.byte $7D
+ofs_8ECD:
 	.byte $04
 	.byte $05
 	.byte $B9
@@ -2370,6 +2160,7 @@ tbl6_8DB8:
 	.byte $7B
 	.byte $7C
 	.byte $7D
+ofs_8EE4:
 	.byte $04	;wendy dummy mappings
 	.byte $03
 	.byte $B9
@@ -2400,6 +2191,7 @@ tbl6_8DB8:
 	.byte $3D
 	.byte $3E
 	.byte $3F
+ofs_8F02:
 	.byte $04
 	.byte $03
 	.byte $B9
@@ -2415,6 +2207,7 @@ tbl6_8DB8:
 	.byte $55
 	.byte $56
 	.byte $57
+ofs_8F11:
 	.byte $04
 	.byte $04
 	.byte $B8
@@ -2434,6 +2227,7 @@ tbl6_8DB8:
 	.byte $2A
 	.byte $2B
 	.byte $FF
+ofs_8F24:
 	.byte $04
 	.byte $04
 	.byte $BA
@@ -2453,6 +2247,7 @@ tbl6_8DB8:
 	.byte $89
 	.byte $8A
 	.byte $8B
+ofs_8F37:
 	.byte $04
 	.byte $04
 	.byte $BA
@@ -2472,6 +2267,7 @@ tbl6_8DB8:
 	.byte $8C
 	.byte $8D
 	.byte $FF
+ofs_8F4A:
 	.byte $04
 	.byte $04
 	.byte $B4
@@ -2491,6 +2287,7 @@ tbl6_8DB8:
 	.byte $1E
 	.byte $1F
 	.byte $20
+ofs_8F5D:
 	.byte $04
 	.byte $04
 	.byte $B4
@@ -2510,6 +2307,7 @@ tbl6_8DB8:
 	.byte $21
 	.byte $22
 	.byte $20
+ofs_8F70:
 	.byte $04
 	.byte $04
 	.byte $B4
@@ -2529,6 +2327,7 @@ tbl6_8DB8:
 	.byte $23
 	.byte $24
 	.byte $FF
+ofs_8F83:
 	.byte $04
 	.byte $04
 	.byte $B4
@@ -2548,6 +2347,7 @@ tbl6_8DB8:
 	.byte $25
 	.byte $24
 	.byte $FF
+ofs_8F96:
 	.byte $04
 	.byte $04
 	.byte $B4
@@ -2567,6 +2367,7 @@ tbl6_8DB8:
 	.byte $25
 	.byte $24
 	.byte $FF
+ofs_8FA9:
 	.byte $04
 	.byte $04
 	.byte $B4
@@ -2586,6 +2387,7 @@ tbl6_8DB8:
 	.byte $36
 	.byte $37
 	.byte $38
+ofs_8FBC:
 	.byte $04
 	.byte $04
 	.byte $B4
@@ -2605,6 +2407,7 @@ tbl6_8DB8:
 	.byte $39
 	.byte $3A
 	.byte $38
+ofs_8FCF:
 	.byte $04
 	.byte $04
 	.byte $B4
@@ -2624,6 +2427,7 @@ tbl6_8DB8:
 	.byte $3B
 	.byte $3C
 	.byte $FF
+ofs_8FE2:
 	.byte $04
 	.byte $04
 	.byte $B5
@@ -2643,6 +2447,7 @@ tbl6_8DB8:
 	.byte $54
 	.byte $55
 	.byte $FF
+ofs_8FF5:
 	.byte $04
 	.byte $04
 	.byte $B5
@@ -2662,6 +2467,7 @@ tbl6_8DB8:
 	.byte $4D
 	.byte $4E
 	.byte $4F
+ofs_9008:
 	.byte $04
 	.byte $04
 	.byte $B5
@@ -2681,6 +2487,7 @@ tbl6_8DB8:
 	.byte $51
 	.byte $52
 	.byte $53
+ofs_901B:
 	.byte $04
 	.byte $05
 	.byte $B5
@@ -2704,6 +2511,7 @@ tbl6_8DB8:
 	.byte $5B
 	.byte $5C
 	.byte $5D
+ofs_9032:
 	.byte $04
 	.byte $05
 	.byte $B5
@@ -2727,6 +2535,7 @@ tbl6_8DB8:
 	.byte $5B
 	.byte $5C
 	.byte $5D
+ofs_9049:
 	.byte $04
 	.byte $03
 	.byte $B5
@@ -2742,6 +2551,7 @@ tbl6_8DB8:
 	.byte $74
 	.byte $75
 	.byte $76
+ofs_9058:
 	.byte $04
 	.byte $03
 	.byte $B5
@@ -2757,6 +2567,7 @@ tbl6_8DB8:
 	.byte $78
 	.byte $79
 	.byte $FF
+ofs_9067:
 	.byte $04
 	.byte $03
 	.byte $B5
@@ -2772,6 +2583,7 @@ tbl6_8DB8:
 	.byte $7B
 	.byte $7C
 	.byte $7D
+ofs_9076:
 	.byte $04
 	.byte $04
 	.byte $B5
@@ -2791,6 +2603,7 @@ tbl6_8DB8:
 	.byte $7E
 	.byte $7F
 	.byte $FF
+ofs_9089:
 	.byte $04
 	.byte $04
 	.byte $B7
@@ -2810,6 +2623,7 @@ tbl6_8DB8:
 	.byte $C7
 	.byte $C8
 	.byte $FF
+ofs_909C:
 	.byte $04
 	.byte $04
 	.byte $B7
@@ -2829,6 +2643,7 @@ tbl6_8DB8:
 	.byte $CA
 	.byte $CB
 	.byte $CC
+ofs_90AF:
 	.byte $02	;diagonal podoboo mappings
 	.byte $02
 	.byte $A7
@@ -2836,6 +2651,7 @@ tbl6_8DB8:
 	.byte $2C
 	.byte $36
 	.byte $37
+ofs_90B6:
 	.byte $02
 	.byte $02
 	.byte $A7
@@ -2843,6 +2659,7 @@ tbl6_8DB8:
 	.byte $2E
 	.byte $38
 	.byte $39
+ofs_90BD:
 	.byte $02
 	.byte $02
 	.byte $A7
@@ -2850,6 +2667,7 @@ tbl6_8DB8:
 	.byte $37
 	.byte $2B
 	.byte $2C
+ofs_90C4:
 	.byte $02
 	.byte $02
 	.byte $A7
@@ -2857,10 +2675,12 @@ tbl6_8DB8:
 	.byte $39
 	.byte $2D
 	.byte $2E
+ofs_90CB:
 	.byte $01
 	.byte $01
 	.byte $A7
 	.byte $FF
+ofs_90CF:
 	.byte $03	;morton mappings (7 unused frames)
 	.byte $04
 	.byte $B0
@@ -2876,6 +2696,7 @@ tbl6_8DB8:
 	.byte $28
 	.byte $29
 	.byte $2A
+ofs_90DE:
 	.byte $03
 	.byte $04
 	.byte $B0
@@ -2891,6 +2712,7 @@ tbl6_8DB8:
 	.byte $01
 	.byte $FF
 	.byte $FF
+ofs_90ED:
 	.byte $03
 	.byte $04
 	.byte $B0
@@ -2906,6 +2728,7 @@ tbl6_8DB8:
 	.byte $2B
 	.byte $2C
 	.byte $2D
+ofs_90FC:
 	.byte $03
 	.byte $04
 	.byte $B0
@@ -2921,6 +2744,7 @@ tbl6_8DB8:
 	.byte $2E
 	.byte $2F
 	.byte $30
+ofs_910B:
 	.byte $03
 	.byte $04
 	.byte $B0
@@ -2936,6 +2760,7 @@ tbl6_8DB8:
 	.byte $01
 	.byte $FF
 	.byte $FF
+ofs_911A:
 	.byte $03
 	.byte $04
 	.byte $B0
@@ -2951,6 +2776,7 @@ tbl6_8DB8:
 	.byte $01
 	.byte $FF
 	.byte $FF
+ofs_9129:
 	.byte $03
 	.byte $03
 	.byte $B0
@@ -2963,6 +2789,7 @@ tbl6_8DB8:
 	.byte $31
 	.byte $32
 	.byte $33
+ofs_9135:
 	.byte $03
 	.byte $03
 	.byte $B0
@@ -2975,6 +2802,7 @@ tbl6_8DB8:
 	.byte $34
 	.byte $32
 	.byte $33
+ofs_9141:
 	.byte $03
 	.byte $03
 	.byte $B0
@@ -2987,6 +2815,7 @@ tbl6_8DB8:
 	.byte $0C
 	.byte $0D
 	.byte $0E
+ofs_914D:
 	.byte $03
 	.byte $03
 	.byte $B0
@@ -2999,6 +2828,7 @@ tbl6_8DB8:
 	.byte $0C
 	.byte $0D
 	.byte $0E
+ofs_9159:
 	.byte $03
 	.byte $04
 	.byte $B0
@@ -3014,6 +2844,7 @@ tbl6_8DB8:
 	.byte $35
 	.byte $36
 	.byte $37
+ofs_9168:
 	.byte $03
 	.byte $04
 	.byte $B0
@@ -3029,6 +2860,7 @@ tbl6_8DB8:
 	.byte $38
 	.byte $39
 	.byte $3A
+ofs_9177:
 	.byte $03
 	.byte $04
 	.byte $B0
@@ -3044,6 +2876,7 @@ tbl6_8DB8:
 	.byte $3B
 	.byte $3C
 	.byte $3D
+ofs_9186:
 	.byte $03
 	.byte $04
 	.byte $B0
@@ -3059,6 +2892,7 @@ tbl6_8DB8:
 	.byte $FF
 	.byte $02
 	.byte $03
+ofs_9195:
 	.byte $03
 	.byte $04
 	.byte $B0
@@ -3074,6 +2908,7 @@ tbl6_8DB8:
 	.byte $04
 	.byte $05
 	.byte $06
+ofs_91A4:
 	.byte $03
 	.byte $04
 	.byte $B0
@@ -3089,6 +2924,7 @@ tbl6_8DB8:
 	.byte $07
 	.byte $08
 	.byte $FF
+ofs_91B3:
 	.byte $04
 	.byte $04
 	.byte $B1
@@ -3108,6 +2944,7 @@ tbl6_8DB8:
 	.byte $76
 	.byte $77
 	.byte $FF
+ofs_91C6:
 	.byte $05
 	.byte $05
 	.byte $B1
@@ -3136,6 +2973,7 @@ tbl6_8DB8:
 	.byte $78
 	.byte $FF
 	.byte $FF
+ofs_91E2:
 	.byte $04
 	.byte $04
 	.byte $B1
@@ -3155,6 +2993,7 @@ tbl6_8DB8:
 	.byte $7A
 	.byte $7B
 	.byte $7C
+ofs_91F5:
 	.byte $05
 	.byte $05
 	.byte $B1
@@ -3183,6 +3022,7 @@ tbl6_8DB8:
 	.byte $7D
 	.byte $FF
 	.byte $FF
+ofs_9211:
 	.byte $04
 	.byte $04
 	.byte $B2
@@ -3202,6 +3042,7 @@ tbl6_8DB8:
 	.byte $A7
 	.byte $A8
 	.byte $A9
+ofs_9224:
 	.byte $04
 	.byte $04
 	.byte $B2
@@ -3221,6 +3062,7 @@ tbl6_8DB8:
 	.byte $AB
 	.byte $AC
 	.byte $AD
+ofs_9237:
 	.byte $03
 	.byte $04
 	.byte $B2
@@ -3236,6 +3078,7 @@ tbl6_8DB8:
 	.byte $AE
 	.byte $AF
 	.byte $B0
+ofs_9246:
 	.byte $05
 	.byte $04
 	.byte $B2
@@ -3259,6 +3102,7 @@ tbl6_8DB8:
 	.byte $B3
 	.byte $B4
 	.byte $B5
+ofs_925D:
 	.byte $05
 	.byte $04
 	.byte $B2
@@ -3282,6 +3126,7 @@ tbl6_8DB8:
 	.byte $BD
 	.byte $BE
 	.byte $BF
+ofs_9274:
 	.byte $05
 	.byte $04
 	.byte $B3
@@ -3305,6 +3150,7 @@ tbl6_8DB8:
 	.byte $C2
 	.byte $C3
 	.byte $FF
+ofs_928B:
 	.byte $05
 	.byte $04
 	.byte $B3
@@ -3328,6 +3174,7 @@ tbl6_8DB8:
 	.byte $CB
 	.byte $CC
 	.byte $FF
+ofs_92A2:
 	.byte $05
 	.byte $04
 	.byte $B3
@@ -3351,6 +3198,7 @@ tbl6_8DB8:
 	.byte $CD
 	.byte $CE
 	.byte $FF
+ofs_92B9:
 	.byte $05
 	.byte $04
 	.byte $B3
@@ -3381,10 +3229,10 @@ sub6_92D0:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra6_92F2
 	CMP #$FF
@@ -3394,31 +3242,31 @@ bra6_92F2:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra6_9334
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra6_9323
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	JMP loc6_9334
 bra6_9323:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra6_9334:
 loc6_9334:
 	LDA FreezeFlag
@@ -3459,7 +3307,7 @@ bra6_9363_RTS:
 	TAX
 	LDA tbl6_8D45,X
 	STA Data0
-	LDA tbl6_8D46,X
+	LDA tbl6_8D45+1,X
 	STA Data0+1
 	LDA #$40
 	STA $36
@@ -3476,7 +3324,7 @@ bra6_9363_RTS:
 	TAX
 	LDA tbl6_8D45,X
 	STA Data0
-	LDA tbl6_8D46,X
+	LDA tbl6_8D45+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -3569,10 +3417,10 @@ bra6_93E8:
 	STA ObjectState,X
 	STA ObjectState+1,X
 	STA ObjectState+2,X
-	STA GuidedObjStatus,X
-	STA GuidedObjStatus+1,X
-	STA GuidedObjStatus+2,X
-	STA $0641,X
+	STA ObjectAction,X
+	STA ObjectAction+1,X
+	STA ObjectAction+2,X
+	STA ObjActionTimer,X
 	STA $0642,X
 	STA $0643,X
 	INC ObjectCount
@@ -3580,7 +3428,7 @@ bra6_93E8:
 	RTS
 loc6_9488:
 	JSR sub6_9670
-	LDA GuidedObjStatus,X
+	LDA ObjectAction,X
 	ASL
 	TAY
 	LDA tbl6_949D,Y
@@ -3607,16 +3455,16 @@ tbl6_949E:
 	LDA $062B
 	AND #$03
 	BNE bra6_94C1_RTS
-	LDA $0641,X
+	LDA ObjActionTimer,X
 	CMP #$18
 	BCC bra6_94C2
 	LDA #$00
-	STA $0641,X
-	INC GuidedObjStatus,X
+	STA ObjActionTimer,X
+	INC ObjectAction,X
 bra6_94C1_RTS:
 	RTS
 bra6_94C2:
-	INC $0641,X
+	INC ObjActionTimer,X
 	LDA ObjectSlot,X
 	CMP #$72
 	BEQ bra6_94E5
@@ -3640,16 +3488,16 @@ bra6_94E5:
 	LDA $062B
 	AND #$03
 	BNE bra6_94FF_RTS
-	LDA $0641,X
+	LDA ObjActionTimer,X
 	CMP #$18
 	BCC bra6_9500
 	LDA #$00
-	STA $0641,X
-	INC GuidedObjStatus,X
+	STA ObjActionTimer,X
+	INC ObjectAction,X
 bra6_94FF_RTS:
 	RTS
 bra6_9500:
-	INC $0641,X
+	INC ObjActionTimer,X
 	LDA ObjectSlot,X
 	CMP #$72
 	BEQ bra6_950E
@@ -3674,16 +3522,16 @@ bra6_9525:
 	LDA $062B
 	AND #$03
 	BNE bra6_953F_RTS
-	LDA $0641,X
+	LDA ObjActionTimer,X
 	CMP #$1C
 	BCC bra6_9540
 	LDA #$00
-	STA $0641,X
-	INC GuidedObjStatus,X
+	STA ObjActionTimer,X
+	INC ObjectAction,X
 bra6_953F_RTS:
 	RTS
 bra6_9540:
-	INC $0641,X
+	INC ObjActionTimer,X
 	INC ObjectYPos,X
 	LDA ObjectSlot,X
 	CMP #$72
@@ -3699,12 +3547,12 @@ bra6_9557:
 	LDA $062B
 	AND #$03
 	BNE bra6_9585_RTS
-	LDA $0641,X
+	LDA ObjActionTimer,X
 	CMP #$18
 	BCC bra6_9586
 	LDA #$00
-	STA $0641,X
-	STA GuidedObjStatus,X
+	STA ObjActionTimer,X
+	STA ObjectAction,X
 	LDA ObjectVariables,X
 	ORA #$80
 	STA ObjectVariables,X
@@ -3716,13 +3564,13 @@ bra6_9557:
 bra6_9585_RTS:
 	RTS
 bra6_9586:
-	INC $0641,X
+	INC ObjActionTimer,X
 	RTS
-	LDA $0641,X
+	LDA ObjActionTimer,X
 	CMP #$30
 	BCC bra6_95A6
 	LDA #$00
-	STA $0641,X
+	STA ObjActionTimer,X
 	LDY #$02
 	LDA ObjectSlot,X
 	CMP #$72
@@ -3730,10 +3578,10 @@ bra6_9586:
 	LDY #$06
 bra6_95A1:
 	TYA
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	RTS
 bra6_95A6:
-	INC $0641,X
+	INC ObjActionTimer,X
 	LDA $062B
 	AND #$18
 	LSR
@@ -3824,7 +3672,7 @@ tbl6_95FC:
 	LDA ObjectYPos,X
 	CMP #$E0
 	BCS bra6_9611
-	LDA $0641,X
+	LDA ObjActionTimer,X
 	CMP #$50
 	BCC bra6_961A
 bra6_9611:
@@ -3842,24 +3690,24 @@ bra6_961A:
 bra6_9624:
 	TYA
 	STA EnemyAnimFrame,X
-	INC $0641,X
+	INC ObjActionTimer,X
 	INC ObjectYPos,X
 	INC ObjectYPos,X
 	RTS
 	LDA $062B
 	AND #$03
 	BNE bra6_964A_RTS
-	LDA $0641,X
+	LDA ObjActionTimer,X
 	CMP #$1C
 	BCC bra6_964B
 	LDA #$00
-	STA $0641,X
+	STA ObjActionTimer,X
 	LDA #$03
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 bra6_964A_RTS:
 	RTS
 bra6_964B:
-	INC $0641,X
+	INC ObjActionTimer,X
 	LDY $0667
 	LDA tbl6_95DD,Y
 	TAY
@@ -3882,10 +3730,10 @@ sub6_9670:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra6_9692
 	CMP #$FF
@@ -3895,31 +3743,31 @@ bra6_9692:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra6_96D4
-	LDA $05DC,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	BPL bra6_96C3	;unlogged
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	CLC	;unlogged
 	ADC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	ADC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 	JMP loc6_96D4	;unlogged
 bra6_96C3:
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	SEC	;unlogged
 	SBC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	SBC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 bra6_96D4:
 loc6_96D4:
 	LDA FreezeFlag
@@ -3947,7 +3795,7 @@ tbl6_96EF:
 	.byte $96
 	.byte $88
 	.byte $AD
-	LDA GuidedObjStatus,X
+	LDA ObjectAction,X
 	CMP #$02
 	BCC bra6_9700
 bra6_96FF_RTS:
@@ -4006,39 +3854,37 @@ loc6_9747:
 	LDA PlayerYSpeed
 	BNE bra6_9767
 bra6_9763:
-	.byte $20
-	.byte $74
-	.byte $BF
-	.byte $60
+	JSR $BF74
+	RTS
 bra6_9767:
 	LDA InvincibilityTimer
 	CMP #$F7
-	BCS bra6_97A3_RTS
+	BCS bra6_97A3_RTS	;If the invincibility timer is above this, stop
 	LDA #$30
-	STA PlayerYSpeed
+	STA PlayerYSpeed	;Give player vertical height when hitting them
 	LDA PlayerMovement
 	ORA #$04
-	STA PlayerMovement
+	STA PlayerMovement	;Make player move upwards
 	LDA #$04
-	STA PlayerAction
-	LDA #$0E
-	STA SFXRegister
-	LDY #$04
+	STA PlayerAction	;Make player jump off
+	LDA #sfxFeather
+	STA SFXRegister	;Play feather/hit sound
+	LDY #$04	;Load "hit" action into Y register
 	LDA ObjectSlot,X
 	CMP #$72
 	BNE bra6_979A
-	INC ObjectVariables,X
+	INC ObjectVariables,X	;Add to hit count
 	LDA ObjectVariables,X
-	AND #$7F
+	AND #%01111111	;Mask out bit 7
 	CMP #$03
-	BCC bra6_979A
-	LDY #$05
-	STY ReznorsDefeated
+	BCC bra6_979A	;If Lemmy/Wendy hasn't been hit 3 times, branch
+	LDY #$05	;If they have, load "defeat" action into Y register
+	STY ReznorsDefeated	;Also store here (why??)
 bra6_979A:
 	TYA
-	STA GuidedObjStatus,X
+	STA ObjectAction,X	;Trigger loaded action
 	LDA #$00
-	STA $0641,X
+	STA ObjActionTimer,X	;Clear action timer
 bra6_97A3_RTS:
 	RTS
 	LDX $A4
@@ -4049,10 +3895,10 @@ bra6_97AE:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X	;Subtract the object's X position by the player's to get its distance from it
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X	;Calculate object's horizontal screen distance from the player
 	STA $28
 	BEQ bra6_97CA
 	CMP #$FF
@@ -4062,52 +3908,52 @@ bra6_97CA:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X	;Subtract the object's Y position by the player's to get its distance from them
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X	;Do the same for the object's Y screen
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra6_980C
-	LDA $05DC,X
-	BPL bra6_97FB
-	LDA $05C8,X
+	BEQ bra6_980C	;If the player and the object are on the same vertical screen, branch
+	LDA ObjYScreenDistance,X
+	BPL bra6_97FB	;Branch if the vertical screen difference is lower than 80h
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X	;Add to the object's distance
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X	;Add (nothing?) to the object's distance
 	JMP loc6_980C
 bra6_97FB:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X	;Subtract from the object's distance
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X	;Subtract (nothing?) from the object's distance
 bra6_980C:
 loc6_980C:
 	LDA FreezeFlag
-	BEQ bra6_9812
-	.byte $60
+	BEQ bra6_9812	;Branch if the game currently isn't frozen
+	RTS
 bra6_9812:
 	LDA ObjectSlot,X
 	CMP #$71
-	BNE bra6_981E
+	BNE bra6_981E	;If a diagonal podoboo isn't in the object slot, branch
 	LDA #$A7
-	STA $03C8
+	STA SpriteBank2	;Swap 1K CHR bank into second bank slot
 bra6_981E:
 	LDA #$00
-	STA ObjectVariables,X
-	LDY #$80
-	LDA $05B4,X
-	BMI bra6_982C
-	LDY #$C0
+	STA ObjectVariables,X	;Clear any variables for the object
+	LDY #$80	;Load down-right direction
+	LDA ObjXScreenDistance,X
+	BMI bra6_982C	;Branch if the player is a screen or more ahead of it
+	LDY #$C0	;If the player isn't, load down-left direction
 bra6_982C:
 	TYA
-	STA GuidedObjStatus,X
+	STA ObjectAction,X	;Store loaded direction
 	RTS
 loc6_9831:
 	JSR sub6_92D0
@@ -4115,67 +3961,67 @@ loc6_9831:
 	BEQ bra6_9845
 	CMP #$02
 	BEQ bra6_9845
-	LDA GuidedObjStatus,X
+	LDA ObjectAction,X
 	EOR #$40
-	STA GuidedObjStatus,X
+	STA ObjectAction,X	;Horizontally flip the podoboo
 bra6_9845:
 	JSR sub6_9997
 	BEQ bra6_9856
 	CMP #$02
 	BEQ bra6_9856
-	LDA GuidedObjStatus,X
+	LDA ObjectAction,X
 	EOR #$80
-	STA GuidedObjStatus,X
+	STA ObjectAction,X	;Vertically flip the podoboo
 bra6_9856:
-	LDA GuidedObjStatus,X
-	AND #$40
-	BEQ bra6_9860
-	JMP loc6_98EB
+	LDA ObjectAction,X
+	AND #$40	;Get the horizontal direction of the podoboo
+	BEQ bra6_9860	;If it's facing right, branch
+	JMP loc6_98EB	;If it's facing left, jump
 bra6_9860:
-	LDA #$01
-	PHA
+	LDA #$01	;Load speed value of 1
+	PHA	;Store the value in the stack
 	CLC
 	ADC ObjectXPos,X
-	STA ObjectXPos,X
-	PLA
-	BMI bra6_9874
+	STA ObjectXPos,X	;Add that speed value to the object's X position	
+	PLA	;Load the previously stored speed value
+	BMI bra6_9874	;Branch if it's over 80h/negative
 	LDA ObjectXScreen,X
-	ADC #$00
-	BPL bra6_9879
+	ADC #$00	;Add (nothing?) to it's X screen value
+	BPL bra6_9879	;Branch if it's less than 80h/positive
 bra6_9874:
-	LDA ObjectXScreen,X	;unlogged
-	SBC #$00	;unlogged
+	LDA ObjectXScreen,X
+	SBC #$00	;Subtract (nothing?) from it's X screen value
 bra6_9879:
 	STA ObjectXScreen,X
-	LDA GuidedObjStatus,X
-	AND #$80
-	BNE bra6_98B7
+	LDA ObjectAction,X
+	AND #$80	;Get the vertical diagonal of the podoboo
+	BNE bra6_98B7	;If facing up, branch
 	LDA #$FF
-	BMI bra6_98A0
-	CLC	;unlogged
-	ADC ObjectYPos,X	;unlogged
-	STA ObjectYPos,X	;unlogged
-	BCS bra6_9894	;unlogged
-	CMP #$F0	;unlogged
-	BCC bra6_98B2	;unlogged
-bra6_9894:
-	CLC	;unlogged
-	ADC #$10	;unlogged
-	STA ObjectYPos,X	;unlogged
-	INC ObjectYScreen,X	;unlogged
-	JMP $98B2	;unlogged
+	BMI bra6_98A0	;If facing down, load speed value of -1 and branch
+	CLC	;unused
+	ADC ObjectYPos,X
+	STA ObjectYPos,X
+	BCS bra6_9894
+	CMP #$F0
+	BCC bra6_98B2
+bra6_9894:	;unused
+	CLC
+	ADC #$10
+	STA ObjectYPos,X
+	INC ObjectYScreen,X
+	JMP bra6_98B2
 bra6_98A0:
 	CLC
 	ADC ObjectYPos,X
-	STA ObjectYPos,X
+	STA ObjectYPos,X	;Add loaded speed value to it's Y position
 	BCS bra6_98B2
 	SEC
 	SBC #$10
-	STA ObjectYPos,X
-	DEC ObjectYScreen,X
+	STA ObjectYPos,X	;Move the podoboo down 16 units
+	DEC ObjectYScreen,X	;Move it to the lower horizontal screen
 bra6_98B2:
-	LDY #$34
-	JMP loc6_9972
+	LDY #$34	;Load animation frame 34h
+	JMP loc6_9972	;Jump
 bra6_98B7:
 	LDA #$01
 	BMI bra6_98D4
@@ -4220,7 +4066,7 @@ bra6_98FF:
 	SBC #$00
 bra6_9904:
 	STA ObjectXScreen,X
-	LDA GuidedObjStatus,X
+	LDA ObjectAction,X
 	AND #$80
 	BNE bra6_9941
 	LDA #$FF
@@ -4279,16 +4125,16 @@ loc6_9970:
 bra6_9972:
 loc6_9972:
 	LDA $062B
-	AND #$04
-	BEQ bra6_997A
-	INY
+	AND #$04	;Set frequency to 4 frames using a bitmask
+	BEQ bra6_997A	;If the bits are masked out, use the 1st sprite and branch
+	INY	;Otherwise, continue and go to the 2nd podoboo sprite
 bra6_997A:
 	TYA
-	STA EnemyAnimFrame,X
-	JMP loc6_9BEA
+	STA EnemyAnimFrame,X	;Store loaded podoboo sprite
+	JMP loc6_9BEA	;Jump
 sub6_9981:
 	STY $2B
-	LDA GuidedObjStatus,X
+	LDA ObjectAction,X
 	AND #$40
 	BEQ bra6_998E
 	LDA #$00
@@ -4303,7 +4149,7 @@ sub6_9997:
 	STY $2B
 	LDA #$08
 	STA $36
-	LDA GuidedObjStatus,X
+	LDA ObjectAction,X
 	AND #$80
 	BEQ bra6_99A6
 	LDA #$10
@@ -4372,10 +4218,10 @@ bra6_99FF_RTS:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra6_9A1E
 	CMP #$FF
@@ -4385,42 +4231,42 @@ bra6_9A1E:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra6_9A60
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra6_9A4F
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	JMP loc6_9A60
 bra6_9A4F:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra6_9A60:
 loc6_9A60:
 	LDA $06DF
 	BEQ bra6_9A6C
 	LDA #$02
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	BNE bra6_9A6F
 bra6_9A6C:
 	JSR $BD3D
 bra6_9A6F:
-	LDA GuidedObjStatus,X
+	LDA ObjectAction,X
 	ASL
 	TAY
 	LDA tbl6_9A81,Y
@@ -4470,15 +4316,15 @@ bra6_9AB6:
 bra6_9AC4:
 	TYA
 	STA EnemyAnimFrame,X
-	INC $0641,X
-	LDA $0641,X
+	INC ObjActionTimer,X
+	LDA ObjActionTimer,X
 	CMP #$10
 	BCC bra6_9ADE_RTS
 	LDA ObjectYPos,X
 	CLC
 	ADC #$12
 	STA $06DE
-	INC GuidedObjStatus,X
+	INC ObjectAction,X
 bra6_9ADE_RTS:
 	RTS
 	LDA #$FF
@@ -4512,7 +4358,7 @@ bra6_9B0E:
 	BEQ bra6_9B28
 	LDA #$00
 	STA FreezeFlag
-	INC GuidedObjStatus,X
+	INC ObjectAction,X
 	LDA ObjectYPos,X
 	STA $06DF
 	RTS
@@ -4568,15 +4414,15 @@ bra6_9B7A_RTS:
 	BNE bra6_9BD6_RTS
 	LDA PlayerHoldFlag
 	BNE bra6_9BD6_RTS
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BPL bra6_9B99
 	LDA #$10
 	CLC
-	ADC $05A0,X
+	ADC ObjectXDistance,X
 	BCS bra6_9BA0
 	BCC bra6_9BD7
 bra6_9B99:
-	LDA $05A0,X
+	LDA ObjectXDistance,X
 	CMP #$00
 	BCS bra6_9BD7
 bra6_9BA0:
@@ -4627,10 +4473,10 @@ loc6_9BEA:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra6_9C06
 	CMP #$FF
@@ -4640,31 +4486,31 @@ bra6_9C06:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra6_9C48
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra6_9C37
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	JMP loc6_9C48
 bra6_9C37:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra6_9C48:
 loc6_9C48:
 	LDA FreezeFlag

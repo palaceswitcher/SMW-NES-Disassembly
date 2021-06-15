@@ -1,5 +1,5 @@
 ;disassembled by BZK 6502 Disassembler
-	.incbin levels/title_level.bin	;self explanatory, includes data for the title screen level
+	.incbin levels/title_level.bin	;Self explanatory, includes data for the title screen level
 	.dsb 4418, $00	;fills in 0x1142 of 00s
 
 	AND #$1F	;not sure where all of this code is used, it could just be padding

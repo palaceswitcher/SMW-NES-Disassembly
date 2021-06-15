@@ -1597,7 +1597,7 @@ bra6_A664:
 	STA ObjectState,X
 	STA $0641,X
 	STA EnemyAnimFrame,X
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	JSR sub6_A705
 	INC ObjectCount
 bra6_A683:
@@ -1655,7 +1655,7 @@ bra6_A6E5:
 	STA ObjectState,X
 	STA $0641,X
 	STA EnemyAnimFrame,X
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	JSR sub6_A705
 	INC ObjectCount
 bra6_A704_RTS:
@@ -1664,17 +1664,17 @@ sub6_A705:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	RTS
 tbl6_A728:
 	.byte $00
@@ -4100,7 +4100,7 @@ bra6_B2DB:
 	STA $06EE
 	LDX #$00
 bra6_B317:
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	INX
 	CPX #$14
 	BCC bra6_B317
@@ -6424,7 +6424,7 @@ sub6_BF7A:
 	CMP #$4C
 	BCC bra6_BF9B
 bra6_BF87:
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BMI bra6_BF93
 	LDA ObjectState,X
 	ORA #$40

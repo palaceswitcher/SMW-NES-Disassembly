@@ -3661,9 +3661,9 @@ bra2_96E6:
 bra2_96F5_RTS:
 	RTS
 sub2_96F6:
-	INC $41,X
+	INC GS0SpriteXPos,X	;Move sprite one pixel ahead
 	BNE bra2_96FD_RTS
-	INC $034D,X
+	INC GS0SpriteFlags,X	;Make sprite visible?
 bra2_96FD_RTS:
 	RTS
 	LDX $0395

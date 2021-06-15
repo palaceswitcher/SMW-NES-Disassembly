@@ -1,172 +1,90 @@
-;disassembled by BZK 6502 Disassembler
-	.byte $15
-	.byte $E8
-	.byte $A1
-	.byte $E8
-	.byte $18
-	.byte $E8
-	.byte $18
-	.byte $E8
-	.byte $18
-	.byte $E8
-	.byte $61
-	.byte $E8
-	.byte $56
-	.byte $E8
-	.byte $61
-	.byte $E8
-	.byte $61
-	.byte $E8
-	.byte $61
-	.byte $E8
-	.byte $61
-	.byte $E8
-	.byte $9E
-	.byte $E8
-	.byte $A1
-	.byte $E8
-	.byte $D4
-	.byte $E8
-	.byte $15
-	.byte $E9
-	.byte $24
-	.byte $E9
-	.byte $43
-	.byte $E9
-	.byte $43
-	.byte $E9
-	.byte $24
-	.byte $E9
-	.byte $43
-	.byte $E9
-	.byte $84
-	.byte $E9
-	.byte $C5
-	.byte $E9
-	.byte $36
-	.byte $EA
-	.byte $36
-	.byte $EA
-	.byte $36
-	.byte $EA
-	.byte $5F
-	.byte $EA
-	.byte $92
-	.byte $EA
-	.byte $95
-	.byte $EA
-	.byte $06
-	.byte $EB
-	.byte $77
-	.byte $EB
-	.byte $E8
-	.byte $EB
-	.byte $5A
-	.byte $ED
-	.byte $59
-	.byte $EC
-	.byte $AC
-	.byte $EC
-	.byte $4D
-	.byte $ED
-	.byte $D0
-	.byte $E7
-	.byte $B5
-	.byte $E7
-	.byte $53
-	.byte $E8
-	.byte $AC
-	.byte $E7
-	.byte $AF
-	.byte $E7
-	.byte $A9
-	.byte $E7
-	.byte $B2
-	.byte $E7
-	.byte $7F
-	.byte $E8
-	.byte $F6
-	.byte $E5
-	.byte $31
-	.byte $E5
-	.byte $9C
-	.byte $E4
-	.byte $A7
-	.byte $E4
-	.byte $B2
-	.byte $E4
-	.byte $BD
-	.byte $E4
-	.byte $C8
-	.byte $E4
-	.byte $D3
-	.byte $E4
-	.byte $DE
-	.byte $E4
-	.byte $E9
-	.byte $E4
-	.byte $F4
-	.byte $E4
-	.byte $0B
-	.byte $E5
-	.byte $22
-	.byte $E5
-	.byte $34
-	.byte $E5
-	.byte $95
-	.byte $E5
-	.byte $45
-	.byte $E4
-	.byte $3F
-	.byte $E6
-	.byte $F4
-	.byte $E6
-	.byte $EB
-	.byte $E3
-	.byte $EE
-	.byte $E3
-	.byte $45
-	.byte $E3
-	.byte $50
-	.byte $E3
-	.byte $6F
-	.byte $E3
-	.byte $98
-	.byte $E3
-	.byte $C1
-	.byte $E3
-	.byte $CC
-	.byte $E3
-	.byte $28
-	.byte $E8
-	.byte $EB
-	.byte $E1
-	.byte $98
-	.byte $E2
-	.byte $D6
-	.byte $E1
-	.byte $B7
-	.byte $E1
-	.byte $94
-	.byte $E1
-	.byte $7F
-	.byte $E1
-	.byte $6A
-	.byte $E1
-	.byte $41
-	.byte $E1
-	.byte $14
-	.byte $E1
-	.byte $14
-	.byte $E1
-	.byte $A8
-	.byte $E0
-	.byte $C3
-	.byte $E0
-	.byte $DE
-	.byte $E0
-	.byte $F9
-	.byte $E0
+; 0x066010-0x06800F
+tbl_51_E000:
+	.word ofs_E815
+	.word ofs_E8A1
+	.word ofs_E818
+	.word ofs_E818
+	.word ofs_E818
+	.word ofs_E861
+	.word ofs_E856
+	.word ofs_E861
+	.word ofs_E861
+	.word ofs_E861
+	.word ofs_E861
+	.word ofs_E89E
+	.word ofs_E8A1
+	.word ofs_E8D4
+	.word ofs_E915
+	.word ofs_E924
+	.word ofs_E943
+	.word ofs_E943
+	.word ofs_E924
+	.word ofs_E943
+	.word ofs_E984
+	.word ofs_E9C5
+	.word ofs_EA36
+	.word ofs_EA36
+	.word ofs_EA36
+	.word ofs_EA5F
+	.word ofs_EA92
+	.word ofs_EA95
+	.word ofs_EB06
+	.word ofs_EB77
+	.word ofs_EBE8
+	.word ofs_ED5A
+	.word ofs_EC59
+	.word ofs_ECAC
+	.word ofs_ED4D
+	.word ofs_E7D0
+	.word ofs_E7B5
+	.word ofs_E853
+	.word ofs_E7AC
+	.word ofs_E7AF
+	.word ofs_E7A9
+	.word ofs_E7B2
+	.word ofs_E87F
+	.word ofs_E5F6
+	.word ofs_E531
+	.word ofs_E49C
+	.word ofs_E4A7
+	.word ofs_E4B2
+	.word ofs_E4BD
+	.word ofs_E4C8
+	.word ofs_E4D3
+	.word ofs_E4DE
+	.word ofs_E4E9
+	.word ofs_E4F4
+	.word ofs_E50B
+	.word ofs_E522
+	.word ofs_E534
+	.word ofs_E595
+	.word ofs_E445
+	.word ofs_E63F
+	.word ofs_E6F4
+	.word ofs_E3EB
+	.word ofs_E3EE
+	.word ofs_E345
+	.word ofs_E350
+	.word ofs_E36F
+	.word ofs_E398
+	.word ofs_E3C1
+	.word ofs_E3CC
+	.word ofs_E828
+	.word ofs_E1EB
+	.word ofs_E298
+	.word ofs_E1D6
+	.word ofs_E1B7
+	.word ofs_E194
+	.word ofs_E17F
+	.word ofs_E16A
+	.word ofs_E141
+	.word ofs_E114
+	.word ofs_E114
+	.word ofs_E0A8
+	.word ofs_E0C3
+	.word ofs_E0DE
+	.word ofs_E0F9
+ofs_E0A8:
 	.byte $FE
 	.byte $FE
 	.byte $FE
@@ -194,6 +112,7 @@
 	.byte $00
 	.byte $00
 	.byte $81
+ofs_E0C3:
 	.byte $FE
 	.byte $02
 	.byte $FE
@@ -221,6 +140,7 @@
 	.byte $00
 	.byte $00
 	.byte $81
+ofs_E0DE:
 	.byte $02
 	.byte $FE
 	.byte $02
@@ -248,6 +168,7 @@
 	.byte $00
 	.byte $00
 	.byte $81
+ofs_E0F9:
 	.byte $02
 	.byte $02
 	.byte $02
@@ -275,6 +196,7 @@
 	.byte $00
 	.byte $00
 	.byte $81
+ofs_E114:
 	.byte $02
 	.byte $01
 	.byte $02
@@ -320,6 +242,7 @@
 	.byte $02
 	.byte $FF
 	.byte $96
+ofs_E141:
 	.byte $02
 	.byte $01
 	.byte $02
@@ -361,6 +284,7 @@
 	.byte $02
 	.byte $FF
 	.byte $94
+ofs_E16A:
 	.byte $03
 	.byte $F9
 	.byte $04
@@ -382,6 +306,7 @@
 	.byte $06
 	.byte $03
 	.byte $80
+ofs_E17F:
 	.byte $01
 	.byte $F9
 	.byte $02
@@ -403,6 +328,7 @@
 	.byte $05
 	.byte $03
 	.byte $80
+ofs_E194:
 	.byte $00
 	.byte $FF
 	.byte $00
@@ -438,6 +364,7 @@
 	.byte $00
 	.byte $00
 	.byte $81
+ofs_E1B7:
 	.byte $00
 	.byte $F8
 	.byte $00
@@ -469,6 +396,7 @@
 	.byte $00
 	.byte $00
 	.byte $81
+ofs_E1D6:
 	.byte $00
 	.byte $FC
 	.byte $00
@@ -490,6 +418,7 @@
 	.byte $00
 	.byte $00
 	.byte $81
+ofs_E1EB:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -663,6 +592,7 @@
 	.byte $00
 	.byte $01
 	.byte $80
+ofs_E298:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -836,6 +766,7 @@
 	.byte $00
 	.byte $FF
 	.byte $80
+ofs_E345:
 	.byte $00
 	.byte $06
 	.byte $FE
@@ -847,6 +778,7 @@
 	.byte $F8
 	.byte $04
 	.byte $80
+ofs_E350:
 	.byte $F6
 	.byte $04
 	.byte $F4
@@ -878,6 +810,7 @@
 	.byte $00
 	.byte $FA
 	.byte $80
+ofs_E36F:
 	.byte $00
 	.byte $06
 	.byte $02
@@ -919,6 +852,7 @@
 	.byte $00
 	.byte $FA
 	.byte $80
+ofs_E398:
 	.byte $00
 	.byte $06
 	.byte $FE
@@ -960,6 +894,7 @@
 	.byte $00
 	.byte $FA
 	.byte $80
+ofs_E3C1:
 	.byte $00
 	.byte $06
 	.byte $02
@@ -971,6 +906,7 @@
 	.byte $08
 	.byte $04
 	.byte $80
+ofs_E3CC:
 	.byte $0A
 	.byte $04
 	.byte $0C
@@ -1002,9 +938,11 @@
 	.byte $00
 	.byte $FA
 	.byte $80
+ofs_E3EB:
 	.byte $FE
 	.byte $02
 	.byte $80
+ofs_E3EE:
 	.byte $FE
 	.byte $02
 	.byte $FE
@@ -1092,6 +1030,7 @@
 	.byte $00
 	.byte $00
 	.byte $81
+ofs_E445:
 	.byte $02
 	.byte $02
 	.byte $02
@@ -1179,6 +1118,7 @@
 	.byte $FF
 	.byte $00
 	.byte $80
+ofs_E49C:
 	.byte $01
 	.byte $FA
 	.byte $02
@@ -1190,6 +1130,7 @@
 	.byte $06
 	.byte $FF
 	.byte $80
+ofs_E4A7:
 	.byte $06
 	.byte $01
 	.byte $04
@@ -1201,6 +1142,7 @@
 	.byte $01
 	.byte $06
 	.byte $80
+ofs_E4B2:
 	.byte $FF
 	.byte $06
 	.byte $FE
@@ -1212,6 +1154,7 @@
 	.byte $FA
 	.byte $01
 	.byte $80
+ofs_E4BD:
 	.byte $FA
 	.byte $FF
 	.byte $FC
@@ -1223,6 +1166,7 @@
 	.byte $FF
 	.byte $FA
 	.byte $80
+ofs_E4C8:
 	.byte $FA
 	.byte $01
 	.byte $FC
@@ -1234,6 +1178,7 @@
 	.byte $FF
 	.byte $06
 	.byte $80
+ofs_E4D3:
 	.byte $01
 	.byte $06
 	.byte $02
@@ -1245,6 +1190,7 @@
 	.byte $06
 	.byte $01
 	.byte $80
+ofs_E4DE:
 	.byte $06
 	.byte $FF
 	.byte $04
@@ -1256,6 +1202,7 @@
 	.byte $01
 	.byte $FA
 	.byte $80
+ofs_E4E9:
 	.byte $FF
 	.byte $FA
 	.byte $FE
@@ -1267,6 +1214,7 @@
 	.byte $FA
 	.byte $FF
 	.byte $80
+ofs_E4F4:
 	.byte $07
 	.byte $FE
 	.byte $07
@@ -1290,6 +1238,7 @@
 	.byte $00
 	.byte $07
 	.byte $80
+ofs_E50B:
 	.byte $07
 	.byte $FB
 	.byte $07
@@ -1313,6 +1262,7 @@
 	.byte $01
 	.byte $05
 	.byte $80
+ofs_E522:
 	.byte $00
 	.byte $F9
 	.byte $00
@@ -1328,9 +1278,11 @@
 	.byte $00
 	.byte $FF
 	.byte $80
+ofs_E531:
 	.byte $01
 	.byte $02
 	.byte $80
+ofs_E534:
 	.byte $FA
 	.byte $01
 	.byte $FA
@@ -1428,6 +1380,7 @@
 	.byte $FA
 	.byte $FF
 	.byte $80
+ofs_E595:
 	.byte $06
 	.byte $01
 	.byte $06
@@ -1525,6 +1478,7 @@
 	.byte $06
 	.byte $FF
 	.byte $80
+ofs_E5F6:
 	.byte $F7
 	.byte $01
 	.byte $F8
@@ -1598,6 +1552,7 @@
 	.byte $F7
 	.byte $FF
 	.byte $80
+ofs_E63F:
 	.byte $FF
 	.byte $00
 	.byte $FF
@@ -1779,6 +1734,7 @@
 	.byte $FF
 	.byte $00
 	.byte $80
+ofs_E6F4:
 	.byte $01
 	.byte $00
 	.byte $01
@@ -1960,18 +1916,23 @@
 	.byte $01
 	.byte $00
 	.byte $80
+ofs_E7A9:
 	.byte $02
 	.byte $00
 	.byte $80
+ofs_E7AC:
 	.byte $03
 	.byte $00
 	.byte $80
+ofs_E7AF:
 	.byte $00
 	.byte $00
 	.byte $80
+ofs_E7B2:
 	.byte $01
 	.byte $00
 	.byte $80
+ofs_E7B5:
 	.byte $02
 	.byte $FA
 	.byte $02
@@ -1999,6 +1960,7 @@
 	.byte $00
 	.byte $00
 	.byte $81
+ofs_E7D0:
 	.byte $03
 	.byte $00
 	.byte $03
@@ -2068,9 +2030,11 @@
 	.byte $01
 	.byte $00
 	.byte $80
+ofs_E815:
 	.byte $00
 	.byte $00
 	.byte $80
+ofs_E818:
 	.byte $00
 	.byte $F7
 	.byte $00
@@ -2087,6 +2051,7 @@
 	.byte $F8
 	.byte $00
 	.byte $F9
+ofs_E828:
 	.byte $00
 	.byte $F9
 	.byte $00
@@ -2130,9 +2095,11 @@
 	.byte $00
 	.byte $00
 	.byte $81
+ofs_E853:
 	.byte $04
 	.byte $00
 	.byte $80
+ofs_E856:
 	.byte $04
 	.byte $FC
 	.byte $04
@@ -2144,6 +2111,7 @@
 	.byte $04
 	.byte $00
 	.byte $80
+ofs_E861:
 	.byte $00
 	.byte $FF
 	.byte $00
@@ -2174,6 +2142,7 @@
 	.byte $FF
 	.byte $00
 	.byte $FF
+ofs_E87F:
 	.byte $02
 	.byte $F9
 	.byte $02
@@ -2205,9 +2174,11 @@
 	.byte $03
 	.byte $00
 	.byte $81
+ofs_E89E:
 	.byte $02
 	.byte $00
 	.byte $81
+ofs_E8A1:
 	.byte $00
 	.byte $FF
 	.byte $00
@@ -2259,6 +2230,7 @@
 	.byte $00
 	.byte $00
 	.byte $89
+ofs_E8D4:
 	.byte $00
 	.byte $F8
 	.byte $00
@@ -2324,6 +2296,7 @@
 	.byte $FD
 	.byte $FF
 	.byte $98
+ofs_E915:
 	.byte $03
 	.byte $FA
 	.byte $03
@@ -2339,6 +2312,7 @@
 	.byte $03
 	.byte $00
 	.byte $80
+ofs_E924:
 	.byte $02
 	.byte $F9
 	.byte $02
@@ -2370,6 +2344,7 @@
 	.byte $00
 	.byte $00
 	.byte $80
+ofs_E943:
 	.byte $01
 	.byte $00
 	.byte $01
@@ -2435,6 +2410,7 @@
 	.byte $01
 	.byte $00
 	.byte $80
+ofs_E984:
 	.byte $02
 	.byte $00
 	.byte $02
@@ -2500,6 +2476,7 @@
 	.byte $02
 	.byte $00
 	.byte $80
+ofs_E9C5:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -2613,6 +2590,7 @@
 	.byte $00
 	.byte $02
 	.byte $80
+ofs_EA36:
 	.byte $04
 	.byte $00
 	.byte $04
@@ -2654,6 +2632,7 @@
 	.byte $04
 	.byte $00
 	.byte $81
+ofs_EA5F:
 	.byte $04
 	.byte $03
 	.byte $04
@@ -2705,9 +2684,11 @@
 	.byte $04
 	.byte $FE
 	.byte $81
+ofs_EA92:
 	.byte $00
 	.byte $00
 	.byte $80
+ofs_EA95:
 	.byte $00
 	.byte $FC
 	.byte $00
@@ -2821,6 +2802,7 @@
 	.byte $01
 	.byte $05
 	.byte $88
+ofs_EB06:
 	.byte $00
 	.byte $FA
 	.byte $00
@@ -2934,6 +2916,7 @@
 	.byte $01
 	.byte $05
 	.byte $88
+ofs_EB77:
 	.byte $00
 	.byte $FA
 	.byte $00
@@ -3047,6 +3030,7 @@
 	.byte $01
 	.byte $05
 	.byte $88
+ofs_EBE8:
 	.byte $00
 	.byte $FC
 	.byte $00
@@ -3160,6 +3144,7 @@
 	.byte $01
 	.byte $05
 	.byte $88
+ofs_EC59:
 	.byte $01
 	.byte $00
 	.byte $01
@@ -3243,6 +3228,7 @@
 	.byte $FF
 	.byte $00
 	.byte $80
+ofs_ECAC:
 	.byte $00
 	.byte $FF
 	.byte $00
@@ -3404,6 +3390,7 @@
 	.byte $00
 	.byte $01
 	.byte $80
+ofs_ED4D:
 	.byte $02
 	.byte $02
 	.byte $02
@@ -3417,6 +3404,7 @@
 	.byte $02
 	.byte $FE
 	.byte $80
+ofs_ED5A:
 	.byte $02
 	.byte $07
 	.byte $02
@@ -3624,66 +3612,66 @@
 	.byte $D0
 	.byte $E0
 	.byte $F0
-	LDA PlayerBehindColl	;useless duplicate code to pad out the bank
+	LDA $96	;Padding garbage code
 	AND #$0F
 	TAX
-	LDA PlayerWallColPos
+	LDA $64
 	ASL
 	CLC
-	ADC tbl2_EF17,X
+	ADC ptbl_EF17,X
 	TAY
 	LDA $067E,Y
-	AND tbl2_EF27,X
-	BNE bra2_EE3F
+	AND ptbl_EF27,X
+	BNE pbra_EE3F
 	RTS
-bra2_EE3F:
+pbra_EE3F:
 	LDA $067E,Y
-	AND tbl2_EF37,X
+	AND ptbl_EF37,X
 	STA $067E,Y
 	LDX CurrentPlayer
 	TXA
 	ASL
 	TAY
-	LDA PlayerBehindColl
+	LDA $96
 	CMP #$8E
-	BCC bra2_EE78
+	BCC pbra_EE78
 	LDA Player1YoshiCoins,X
 	CMP #$05
-	BCS bra2_EE62
+	BCS pbra_EE62
 	INC Player1YoshiCoins,X
 	LDA #$06
-	BNE bra2_EEA1
-bra2_EE62:
+	BNE pbra_EEA1
+pbra_EE62:
 	LDA #$01
 	STA Player1YoshiCoins,X
-	LDA P1Score,Y
+	LDA $0372,Y
 	CLC
 	ADC #$E8
-	STA P1Score,Y
-	LDA P1Score+1,Y
+	STA $0372,Y
+	LDA $0373,Y
 	ADC #$03
-	JMP loc2_EE99
-bra2_EE78:
+	JMP ploc_EE99
+pbra_EE78:
 	LDA Player1Coins,X
 	CMP #$64
-	BCS bra2_EE86
+	BCS pbra_EE86
 	INC Player1Coins,X
 	LDA #$08
-	BNE bra2_EEA1
-bra2_EE86:
+	BNE pbra_EEA1
+pbra_EE86:
 	LDA #$01
 	STA Player1Coins,X
-	LDA P1Score,Y
+	LDA $0372,Y
 	CLC
 	ADC #$64
-	STA P1Score,Y
-	LDA P1Score+1,Y
+	STA $0372,Y
+	LDA $0373,Y
 	ADC #$00
-loc2_EE99:
-	STA P1Score+1,Y
+ploc_EE99:
+	STA $0373,Y
 	INC $036A,X
 	LDA #$07
-bra2_EEA1:
+pbra_EEA1:
 	STA SFXRegister
 	LDA $65
 	SEC
@@ -3695,12 +3683,12 @@ bra2_EEA1:
 	TAX
 	LDA $66
 	CMP $53
-	BEQ bra2_EEBB
+	BEQ pbra_EEBB
 	TXA
 	SEC
 	SBC #$10
 	TAX
-bra2_EEBB:
+pbra_EEBB:
 	STX $2B
 	LDA $02
 	CLC
@@ -3710,15 +3698,15 @@ bra2_EEBB:
 	LDA $03
 	CLC
 	ADC $2B
-	BCS bra2_EEDB
+	BCS pbra_EEDB
 	CMP #$F0
-	BCS bra2_EEDB
+	BCS pbra_EEDB
 	AND #$F0
 	STA $2B
 	LDA $5B
 	STA $25
-	BPL bra2_EEE8
-bra2_EEDB:
+	BPL pbra_EEE8
+pbra_EEDB:
 	CLC
 	ADC #$10
 	AND #$F0
@@ -3726,20 +3714,20 @@ bra2_EEDB:
 	LDA $5B
 	EOR #$02
 	STA $25
-bra2_EEE8:
+pbra_EEE8:
 	LDX $28
 	LDY $2B
-	LDA tbl2_EF47,X
-	ORA tbl2_F047,Y
+	LDA ptbl_EF47,X
+	ORA ptbl_F047,Y
 	LDX $03FE
 	STA $03E6,X
-	LDA tbl2_F147,Y
+	LDA ptbl_F147,Y
 	LDY $25
-	BEQ bra2_EF01
+	BEQ pbra_EF01
 	ORA #$08
-bra2_EF01:
+pbra_EF01:
 	STA $03E5,X
-	LDA PlayerBehindColl
+	LDA $96
 	STA $03E4,X
 	INX
 	INX
@@ -3749,7 +3737,7 @@ bra2_EF01:
 	STA $03E4,X
 	STA $26
 	RTS
-tbl2_EF17:
+ptbl_EF17:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -3766,7 +3754,7 @@ tbl2_EF17:
 	.byte $01
 	.byte $01
 	.byte $01
-tbl2_EF27:
+ptbl_EF27:
 	.byte $01
 	.byte $02
 	.byte $04
@@ -3783,7 +3771,7 @@ tbl2_EF27:
 	.byte $20
 	.byte $40
 	.byte $80
-tbl2_EF37:
+ptbl_EF37:
 	.byte $FE
 	.byte $FD
 	.byte $FB
@@ -3800,7 +3788,7 @@ tbl2_EF37:
 	.byte $DF
 	.byte $BF
 	.byte $7F
-tbl2_EF47:
+ptbl_EF47:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -4057,7 +4045,7 @@ tbl2_EF47:
 	.byte $CC
 	.byte $F2
 	.byte $D9
-tbl2_F047:
+ptbl_F047:
 	.byte $F2
 	.byte $E2
 	.byte $F2
@@ -4314,7 +4302,7 @@ tbl2_F047:
 	.byte $07
 	.byte $00
 	.byte $0B
-tbl2_F147:
+ptbl_F147:
 	.byte $00
 	.byte $01
 	.byte $00

@@ -1,30 +1,30 @@
 ;disassembled by BZK 6502 Disassembler
 jmp_54_A000:
 	LDA YoshiUnmountedState
-	BNE bra3_A006
+	BNE bra3_A006	;If riding Yoshi, branch
 	RTS
 bra3_A006:
 	LDA Event
 	CMP #$04
-	BEQ bra3_A023
+	BEQ bra3_A023	;If the player is dying, branch
 	LDA #$35
-	STA $AC
-	LDA $AC
-	STA M90_PRG0
+	STA ObjectPRGBank	;Set current object bank to 53
+	LDA ObjectPRGBank
+	STA M90_PRG0	;Swap the current object bank in
 	LDA #$33
-	STA M90_PRG3
-	JSR $8000
+	STA M90_PRG3	;Swap bank 51 into the 4th PRG slot
+	JSR jmp_53_8000	;Jump
 	LDA #$3F
-	STA M90_PRG3
+	STA M90_PRG3	;Swap bank 63 back in
 	RTS
 bra3_A023:
 	LDA YoshiXPos
 	SEC
 	SBC PlayerXPosDup
-	STA $05F9
+	STA YoshiXDistance
 	LDA YoshiXScreen
 	SBC PlayerXScreenDup
-	STA $05FA
+	STA YoshiXScreenDist
 	BEQ bra3_A03B
 	CMP #$FF
 	BEQ bra3_A03B
@@ -32,32 +32,32 @@ bra3_A023:
 bra3_A03B:
 	LDA YoshiYPos
 	SEC
-	SBC PlayerYPosDup
-	STA $05FB
+	SBC PlayerYPosDup	;Yoshi Y position - Player Y position =
+	STA YoshiYDistance	;vertical distance between the player and Yoshi
 	LDA YoshiYScreen
-	SBC PlayerYScreenDup
-	STA $05FC
+	SBC PlayerYScreenDup	;Yoshi Y screen - player Y screen =
+	STA YoshiYScreenDist	;vertical screen distance between the player and Yoshi
 	LDA PlayerYScreenDup
 	CMP YoshiYScreen
-	BEQ bra3_A07D_RTS
-	LDA $05FC
-	BPL bra3_A06C
-	LDA $05FB
+	BEQ bra3_A07D_RTS	;If the player and Yoshi are on the same vertical screen, branch
+	LDA YoshiYScreenDist
+	BPL bra3_A06C	;Branch if Yoshi is at a higher vertical screen than the player
+	LDA YoshiYDistance
 	CLC
 	ADC #$10
-	STA $05FB
-	LDA $05FC
+	STA YoshiYDistance	;Add 16 to Yoshi's vertical distance
+	LDA YoshiYScreenDist
 	ADC #$00
-	STA $05FC
-	JMP loc3_A07D_RTS
+	STA YoshiYScreenDist	;Add (nothing?) to Yoshi's vertical screen distance
+	JMP loc3_A07D_RTS	;Jump
 bra3_A06C:
-	LDA $05FB
+	LDA YoshiYDistance
 	SEC
 	SBC #$10
-	STA $05FB
-	LDA $05FC
+	STA YoshiYDistance
+	LDA YoshiYScreenDist
 	SBC #$00
-	STA $05FC
+	STA YoshiYScreenDist
 bra3_A07D_RTS:
 loc3_A07D_RTS:
 	RTS
@@ -90,8 +90,8 @@ bra3_A0A6:
 	TAY
 	LDA tbl3_A635,Y
 bra3_A0AE:
-	STA $AC
-	LDA $AC
+	STA ObjectPRGBank
+	LDA ObjectPRGBank
 	STA M90_PRG0
 	LDA ObjectSlot,X
 	BMI bra3_A0C9
@@ -121,10 +121,10 @@ bra3_A0DB:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra3_A100
 	CMP #$FF
@@ -134,31 +134,31 @@ bra3_A100:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra3_A142
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra3_A131
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	JMP loc3_A142
 bra3_A131:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra3_A142:
 loc3_A142:
 	LDA FreezeFlag
@@ -206,8 +206,8 @@ bra3_A160:
 	STA $0641,X
 	LDA EnemyAnimFrame,Y
 	STA EnemyAnimFrame,X
-	LDA GuidedObjStatus,Y
-	STA GuidedObjStatus,X
+	LDA ObjectAction,Y
+	STA ObjectAction,X
 	LDA #$00
 	STA ObjectSlot,Y
 	INX
@@ -1505,7 +1505,7 @@ tbl3_A635:
 	.byte $31
 loc3_A6B5:
 	LDA #$00
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	STA ObjectSlot,X
 	STA ObjectState,X
 	STA ObjectVariables,X
@@ -1516,6 +1516,7 @@ loc3_A6B5:
 	AND $FD80,Y
 	STA $03CE,X
 	RTS
+jmp_54_A6D4:
 	LDA Player1YoshiStatus
 	BNE bra3_A6E0_RTS
 	LDA PlayerPowerup
@@ -1533,21 +1534,21 @@ bra3_A6E1:
 	STA $36
 	LDA tbl3_A97B,Y
 	STA Pointer3
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BPL bra3_A708
 	LDA #$10
 	CLC
 	ADC $36
 	CLC
-	ADC $05A0,X
+	ADC ObjectXDistance,X
 	BCS bra3_A70F
 	BCC bra3_A72F
 bra3_A708:
-	LDA $05A0,X
+	LDA ObjectXDistance,X
 	CMP #$10
 	BCS bra3_A72F
 bra3_A70F:
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BEQ bra3_A725
 	CMP #$FF
 	BNE bra3_A72F
@@ -1555,11 +1556,11 @@ bra3_A70F:
 	CLC
 	ADC $38
 	CLC
-	ADC $05C8,X
+	ADC ObjectYDistance,X
 	BCS bra3_A72C
 	BCC bra3_A72F
 bra3_A725:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CMP #$00
 	BCS bra3_A72F
 bra3_A72C:
@@ -1583,6 +1584,7 @@ bra3_A730:
 	PLA
 bra3_A74C_RTS:
 	RTS
+jmp_54_A74D:
 	LDA Player1YoshiStatus
 	BNE bra3_A758
 	LDA $1E
@@ -1604,21 +1606,21 @@ bra3_A758:
 	PLA
 bra3_A772_RTS:
 	RTS
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BPL bra3_A785
 	LDA #$08
 	CLC
 	ADC #$10
 	CLC
-	ADC $05A0,X
+	ADC ObjectXDistance,X
 	BCS bra3_A78C
 	BCC bra3_A7AC
 bra3_A785:
-	LDA $05A0,X
+	LDA ObjectXDistance,X
 	CMP #$08
 	BCS bra3_A7AC
 bra3_A78C:
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BEQ bra3_A7A2
 	CMP #$FF
 	BNE bra3_A7AC
@@ -1626,11 +1628,11 @@ bra3_A78C:
 	CLC
 	ADC #$10
 	CLC
-	ADC $05C8,X
+	ADC ObjectYDistance,X
 	BCS bra3_A7A9
 	BCC bra3_A7AC
 bra3_A7A2:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CMP #$00
 	BCS bra3_A7AC
 bra3_A7A9:
@@ -1648,6 +1650,7 @@ bra3_A7AD:
 	RTS
 bra3_A7BA_RTS:
 	RTS
+ptr_A7BB:
 	LDA $25
 	CMP #$07
 	BNE bra3_A7C4
@@ -1666,11 +1669,11 @@ bra3_A7CE:
 	LDA PlayerMovement
 	AND #$40
 	BNE bra3_A7E3
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BMI bra3_A7CB
 	BPL bra3_A7E8
 bra3_A7E3:
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BPL bra3_A7CB
 bra3_A7E8:
 	LDX PlayerAnimationFrame
@@ -1685,21 +1688,21 @@ bra3_A7E8:
 	LDA tbl3_A97B,X
 	STA Pointer3
 	LDX $A4
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BPL bra3_A816
 	LDA Data0
 	CLC
 	ADC $36
 	CLC
-	ADC $05A0,X
+	ADC ObjectXDistance,X
 	BCS bra3_A81D
 	BCC bra3_A83D
 bra3_A816:
-	LDA $05A0,X
+	LDA ObjectXDistance,X
 	CMP $32
 	BCS bra3_A83D
 bra3_A81D:
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BEQ bra3_A833
 	CMP #$FF
 	BNE bra3_A83D
@@ -1707,11 +1710,11 @@ bra3_A81D:
 	CLC
 	ADC $38
 	CLC
-	ADC $05C8,X
+	ADC ObjectYDistance,X
 	BCS bra3_A83A
 	BCC bra3_A83D
 bra3_A833:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CMP #$00
 	BCS bra3_A83D
 bra3_A83A:
@@ -2281,6 +2284,7 @@ tbl3_A97B:
 	.byte $20
 	.byte $20
 	.byte $20
+ptr_AA7B:
 	LDY $A4
 	LDX PlayerAnimationFrame
 	CPX #$0C
@@ -2386,6 +2390,7 @@ tbl3_AB1B:
 	.byte $10
 	.byte $10
 	.byte $10
+ptr_AB29:
 	LDA $25
 	CMP #$06
 	BNE bra3_AB33
@@ -2777,7 +2782,7 @@ tbl3_AE0F:
 	.byte $03
 	.byte $04
 	.byte $FF
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BPL bra3_AE23
 	LDA ObjectState,X
 	ORA #$40
@@ -3323,7 +3328,7 @@ bra3_B0D8:
 	TAY
 	LDA $FF00,Y
 	PHA
-	LDA $AC
+	LDA ObjectPRGBank
 	STA M90_PRG0
 	LDY $2B
 	PLA
@@ -3335,7 +3340,7 @@ bra3_B0D8:
 	LDA $E001,Y
 	STA Data0+1
 	JSR sub3_B132
-	LDA $AC
+	LDA ObjectPRGBank
 	STA M90_PRG0
 	RTS
 sub3_B132:
@@ -3436,7 +3441,7 @@ sub3_B1DA:
 	LDA $E001,Y
 	STA Data0+1
 	JSR sub3_B1EF
-	LDA $AC
+	LDA ObjectPRGBank
 	STA M90_PRG0
 	RTS
 sub3_B1EF:
@@ -3683,13 +3688,13 @@ bra3_B3B1:
 	JMP loc3_B3E4
 	ASL
 	TAY
-	LDA $E000,Y
+	LDA tbl_51_E000,Y
 	STA Data0
-	LDA $E001,Y
+	LDA tbl_51_E000+1,Y
 	STA Data0+1
 	JSR sub3_B3C9
-	LDA $AC
-	STA M90_PRG0
+	LDA ObjectPRGBank
+	STA M90_PRG0	;Swap PRG bank out for current object
 	RTS
 sub3_B3C9:
 	LDX $A4
@@ -3705,12 +3710,12 @@ bra3_B3DC:
 loc3_B3DC:
 	LDA ObjectState,X
 	EOR #$40
-	STA ObjectState,X
+	STA ObjectState,X	;Flip the object horizontally
 bra3_B3E4:
 loc3_B3E4:
 	LDA ObjectState,X
-	AND #$40
-	BEQ bra3_B3F5
+	AND #%01000000
+	BEQ bra3_B3F5	;If the object is facing right, branch
 	LDA (Data0),Y
 	EOR #$FF
 	CLC
@@ -3790,7 +3795,7 @@ bra3_B46C:
 	LDA $E001,Y
 	STA Data0+1
 	JSR sub3_B485
-	LDA $AC
+	LDA ObjectPRGBank
 	STA M90_PRG0
 	RTS
 sub3_B485:
@@ -3907,10 +3912,10 @@ bra3_B556:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra3_B572
 	CMP #$FF
@@ -3920,31 +3925,31 @@ bra3_B572:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra3_B5B4
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra3_B5A3
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	JMP $B5B4
 bra3_B5A3:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra3_B5B4:
 	LDA FreezeFlag
 	BEQ bra3_B5BA_RTS
@@ -3954,7 +3959,7 @@ bra3_B5BA_RTS:
 	LDA #$00
 	STA ObjectVariables,X
 	TAY
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BMI bra3_B5C8
 	LDY #$40
 bra3_B5C8:
@@ -3968,7 +3973,7 @@ bra3_B5C8:
 	LDA $E001,Y
 	STA Data0+1
 	JSR sub3_B5E2
-	LDA $AC
+	LDA ObjectPRGBank
 	STA M90_PRG0
 	RTS
 sub3_B5E2:
@@ -4272,7 +4277,7 @@ sub3_B7F2:
 	LDA $E001,Y
 	STA Data0+1
 	JSR sub3_B807
-	LDA $AC
+	LDA ObjectPRGBank
 	STA M90_PRG0
 	RTS
 sub3_B807:
@@ -4292,7 +4297,7 @@ sub3_B807:
 	LDA (Data0),Y
 	CMP #$80
 	BNE bra3_B82F
-	INC GuidedObjStatus,X
+	INC ObjectAction,X
 	LDA #$FF
 	STA $0641,X
 bra3_B82F:
@@ -4346,7 +4351,7 @@ loc3_B883:
 	LDA (Data0),Y
 	CMP #$80
 	BNE bra3_B892
-	INC GuidedObjStatus,X
+	INC ObjectAction,X
 	LDA #$FF
 	STA $0641,X
 bra3_B892:
@@ -4356,7 +4361,7 @@ bra3_B892:
 	STA $34
 	LDA $F001,Y
 	STA $35
-	LDA GuidedObjStatus,X
+	LDA ObjectAction,X
 	ASL
 	ASL
 	STA $3F
@@ -4419,7 +4424,7 @@ tbl3_B8C0:
 	BCC $B903
 	LDA #$00
 	STA $0641,X
-	INC GuidedObjStatus,X
+	INC ObjectAction,X
 	RTS
 bra3_B904:
 	LDA ($34),Y
@@ -4472,7 +4477,7 @@ loc3_B954:
 	BCC bra3_B967_RTS
 	LDA #$00
 	STA $0641,X
-	INC GuidedObjStatus,X
+	INC ObjectAction,X
 bra3_B967_RTS:
 	RTS
 	LDY $3F
@@ -4492,17 +4497,17 @@ bra3_B967_RTS:
 bra3_B982_RTS:
 	RTS
 	LDA #$00
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	RTS
 	LDA $0668
 	BNE bra3_B992
-	INC GuidedObjStatus,X
+	INC ObjectAction,X
 	RTS
 bra3_B992:
 	LDY $3F
 	INY
 	LDA ($34),Y
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	RTS
 	RTS
 	LDA ObjectVariables,X
@@ -4539,23 +4544,23 @@ loc3_B9D5_RTS:
 	LDY $3F
 	INY
 	LDA ($34),Y
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	RTS
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BPL bra3_B9F1
 	LDA #$05
 	CLC
 	ADC #$20
 	CLC
-	ADC $05A0,X
+	ADC ObjectXDistance,X
 	BCS bra3_B9F8
 	BCC bra3_BA18
 bra3_B9F1:
-	LDA $05A0,X
+	LDA ObjectXDistance,X
 	CMP #$05
 	BCS bra3_BA18
 bra3_B9F8:
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BEQ bra3_BA0E
 	CMP #$FF
 	BNE bra3_BA18
@@ -4563,11 +4568,11 @@ bra3_B9F8:
 	CLC
 	ADC #$0C
 	CLC
-	ADC $05C8,X
+	ADC ObjectYDistance,X
 	BCS bra3_BA15
 	BCC bra3_BA18
 bra3_BA0E:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CMP #$00
 	BCS bra3_BA18
 bra3_BA15:
@@ -4577,21 +4582,21 @@ bra3_BA18:
 	SEC
 bra3_BA19:
 	JMP loc3_BA56
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BPL bra3_BA2E
 	LDA #$05
 	CLC
 	ADC #$30
 	CLC
-	ADC $05A0,X
+	ADC ObjectXDistance,X
 	BCS bra3_BA35
 	BCC bra3_BA55
 bra3_BA2E:
-	LDA $05A0,X
+	LDA ObjectXDistance,X
 	CMP #$05
 	BCS bra3_BA55
 bra3_BA35:
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BEQ bra3_BA4B
 	CMP #$FF
 	BNE bra3_BA55
@@ -4599,11 +4604,11 @@ bra3_BA35:
 	CLC
 	ADC #$0C
 	CLC
-	ADC $05C8,X
+	ADC ObjectYDistance,X
 	BCS bra3_BA52
 	BCC bra3_BA55
 bra3_BA4B:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CMP #$00
 	BCS bra3_BA55
 bra3_BA52:
@@ -4622,23 +4627,23 @@ loc3_BA56:
 	LDY $3F
 	INY
 	LDA ($34),Y
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 bra3_BA6A_RTS:
 	RTS
 	LDY $3F
 	INY
 	LDA ($34),Y
 	CLC
-	ADC GuidedObjStatus,X
-	STA GuidedObjStatus,X
+	ADC ObjectAction,X
+	STA ObjectAction,X
 	RTS
 	LDA $06DC
 	BEQ bra3_BA80_RTS
-	INC GuidedObjStatus,X
+	INC ObjectAction,X
 bra3_BA80_RTS:
 	RTS
 	LDY $3F
-	LDA $05A0,X
+	LDA ObjectXDistance,X
 	CMP #$E8
 	BCC bra3_BA8B
 	INY
@@ -4646,12 +4651,12 @@ bra3_BA8B:
 	INY
 	LDA ($34),Y
 	CLC
-	ADC GuidedObjStatus,X
-	STA GuidedObjStatus,X
+	ADC ObjectAction,X
+	STA ObjectAction,X
 	RTS
 	INC $05F7
 	LDA #$00
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	STA $05F6
 	RTS
 	LDA #$01
@@ -4680,7 +4685,7 @@ bra3_BABD:
 	STA ObjectVariables,X
 	DEC EnemyAnimFrame,X
 	BNE bra3_BADB_RTS
-	INC GuidedObjStatus,X
+	INC ObjectAction,X
 bra3_BADB_RTS:
 	RTS
 	LDX $A4
@@ -4888,21 +4893,21 @@ bra3_BC56:
 	LDY #$08
 bra3_BC5E:
 	STY $32
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BPL bra3_BC72
 	LDA #$05
 	CLC
 	ADC $36
 	CLC
-	ADC $05A0,X
+	ADC ObjectXDistance,X
 	BCS bra3_BC79
 	BCC bra3_BC99
 bra3_BC72:
-	LDA $05A0,X
+	LDA ObjectXDistance,X
 	CMP #$05
 	BCS bra3_BC99
 bra3_BC79:
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BEQ bra3_BC8F
 	CMP #$FF
 	BNE bra3_BC99
@@ -4910,11 +4915,11 @@ bra3_BC79:
 	CLC
 	ADC $38
 	CLC
-	ADC $05C8,X
+	ADC ObjectYDistance,X
 	BCS bra3_BC96
 	BCC bra3_BC99
 bra3_BC8F:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CMP #$00
 	BCS bra3_BC99
 bra3_BC96:
@@ -4931,7 +4936,7 @@ bra3_BC9A:
 	PLA
 bra3_BCA6_RTS:
 	RTS
-	LDA #$12
+	LDA #sfxEnemyHit2
 	STA SFXRegister
 	LDA #$30
 	STA PlayerYSpeed
@@ -4942,7 +4947,8 @@ bra3_BCA6_RTS:
 	STA PlayerMovement
 	LDA #$01
 	JMP loc3_BCD4
-	LDA #$12
+jmp_54_BCBE:
+	LDA #sfxEnemyHit2
 	STA SFXRegister
 	LDA #$08
 	STA PlayerYSpeed
@@ -5033,7 +5039,7 @@ bra3_BD56:
 	LDA #$00
 	STA ObjectSlot,X
 	STA ObjectState,X
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	LDA #$FF
 	STA ObjectVariables,X
 bra3_BD66:
@@ -5044,7 +5050,7 @@ bra3_BD6B_RTS:
 	RTS
 bra3_BD6C:
 	LDA #$F2
-	STA GuidedObjStatus,X
+	STA ObjectAction,X
 	LDY #$22
 	LDA PlayerPowerup
 	BNE bra3_BD7F
@@ -5053,21 +5059,21 @@ bra3_BD6C:
 	LDY #$18
 bra3_BD7F:
 	STY $25
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BPL bra3_BD93
 	LDA #$06
 	CLC
 	ADC #$10
 	CLC
-	ADC $05A0,X
+	ADC ObjectXDistance,X
 	BCS bra3_BD9A
 	BCC bra3_BDBA
 bra3_BD93:
-	LDA $05A0,X
+	LDA ObjectXDistance,X
 	CMP #$06
 	BCS bra3_BDBA
 bra3_BD9A:
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BEQ bra3_BDB0
 	CMP #$FF
 	BNE bra3_BDBA
@@ -5075,11 +5081,11 @@ bra3_BD9A:
 	CLC
 	ADC #$10
 	CLC
-	ADC $05C8,X
+	ADC ObjectYDistance,X
 	BCS bra3_BDB7
 	BCC bra3_BDBA
 bra3_BDB0:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CMP #$00
 	BCS bra3_BDBA
 bra3_BDB7:
@@ -5127,7 +5133,7 @@ bra3_BDE6:
 	STA ObjectSlot,Y
 	LDA #$00
 	STA ObjectVariables,Y
-	STA GuidedObjStatus,Y
+	STA ObjectAction,Y
 	STA $0641,Y
 	STA EnemyAnimFrame,Y
 	LDA ObjectState,Y
@@ -5219,6 +5225,7 @@ bra3_BEAE:
 bra3_BEB7:
 	LDX $A4
 	JMP loc3_BDCE
+jmp_54_BEBC:
 	LDX $A4
 	LDY ObjectSlot,X
 	LDA tbl3_A87B,Y
@@ -5236,21 +5243,21 @@ bra3_BED4:
 	LDY #$08
 bra3_BEDC:
 	STY $32
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BPL bra3_BEF0
 	LDA #$05
 	CLC
 	ADC $36
 	CLC
-	ADC $05A0,X
+	ADC ObjectXDistance,X
 	BCS bra3_BEF7
 	BCC bra3_BF17
 bra3_BEF0:
-	LDA $05A0,X
+	LDA ObjectXDistance,X
 	CMP #$05
 	BCS bra3_BF17
 bra3_BEF7:
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BEQ bra3_BF0D
 	CMP #$FF
 	BNE bra3_BF17
@@ -5258,11 +5265,11 @@ bra3_BEF7:
 	CLC
 	ADC $38
 	CLC
-	ADC $05C8,X
+	ADC ObjectYDistance,X
 	BCS bra3_BF14
 	BCC bra3_BF17
 bra3_BF0D:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CMP #$00
 	BCS bra3_BF17
 bra3_BF14:
@@ -5280,9 +5287,9 @@ bra3_BF1A:
 	PLA
 	RTS
 bra3_BF25:
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra3_BF51
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CMP #$F2
 	BCC bra3_BF51
 	LDA PlayerAction
@@ -5334,7 +5341,7 @@ sub3_BF7A:
 	CMP #$4C
 	BCC bra3_BF9B
 bra3_BF87:
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BMI bra3_BF93
 	LDA ObjectState,X
 	ORA #$40

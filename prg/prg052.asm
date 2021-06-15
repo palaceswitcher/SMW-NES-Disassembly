@@ -146,7 +146,7 @@ jmp_52_A0F3:
 	LDX #$00
 bra2_A0F5:
 	STX $A4
-	LDA GuidedObjStatus,X
+	LDA ObjectAction,X
 	CMP #$F2
 	BEQ bra2_A102
 	CMP #$F3
@@ -160,7 +160,7 @@ bra2_A105:
 	BCC bra2_A0F5
 	RTS
 sub2_A10D:
-	LDA GuidedObjStatus,X
+	LDA ObjectAction,X
 	AND #$0F
 	STA $2D
 	JSR sub2_A5D0
@@ -191,11 +191,11 @@ sub2_A10D:
 	BEQ bra2_A18C
 	LDX #$00
 	LDY $A4
-	LDA $05A0,Y
+	LDA ObjectXDistance,Y
 	CLC
 	ADC PlayerSprXPos
 	STA $28
-	LDA $05B4,Y
+	LDA ObjXScreenDistance,Y
 	ADC #$00
 	BMI bra2_A16E
 	BEQ bra2_A15E
@@ -244,9 +244,9 @@ bra2_A18C:
 	INC $41
 bra2_A19B:
 	CLC
-	ADC $05A0,Y
+	ADC ObjectXDistance,Y
 	STA $28
-	LDA $05B4,Y
+	LDA ObjXScreenDistance,Y
 	ADC $41
 	BMI bra2_A1BB
 	BEQ bra2_A1AB
@@ -286,11 +286,11 @@ bra2_A1D0:
 bra2_A1D7:
 	LDX #$00
 	LDY $A4
-	LDA $05C8,Y
+	LDA ObjectYDistance,Y
 	CLC
 	ADC PlayerSprYPos
 	STA $2B
-	LDA $05DC,Y
+	LDA ObjYScreenDistance,Y
 	ADC #$00
 	BMI bra2_A205
 	BEQ bra2_A1ED
@@ -454,11 +454,11 @@ sub2_A2DE:
 	BEQ bra2_A33E
 	LDX #$00
 	LDY $A4
-	LDA $05A0,Y
+	LDA ObjectXDistance,Y
 	CLC
 	ADC PlayerSprXPos
 	STA $28
-	LDA $05B4,Y
+	LDA ObjXScreenDistance,Y
 	ADC #$00
 	BMI bra2_A320
 	BEQ bra2_A310
@@ -507,9 +507,9 @@ bra2_A33E:
 	INC $41
 bra2_A34D:
 	CLC
-	ADC $05A0,Y
+	ADC ObjectXDistance,Y
 	STA $28
-	LDA $05B4,Y
+	LDA ObjXScreenDistance,Y
 	ADC $41
 	BMI bra2_A36D
 	BEQ bra2_A35D
@@ -549,11 +549,11 @@ bra2_A382:
 bra2_A389:
 	LDX #$00
 	LDY $A4
-	LDA $05C8,Y
+	LDA ObjectYDistance,Y
 	CLC
 	ADC PlayerSprYPos
 	STA $2B
-	LDA $05DC,Y
+	LDA ObjYScreenDistance,Y
 	ADC #$00
 	BMI bra2_A3B7
 	BEQ bra2_A39F
@@ -707,11 +707,11 @@ tbl2_A45B:
 	AND #$40
 	BEQ bra2_A4D5
 	LDX #$00
-	LDA $05F9
+	LDA YoshiXDistance
 	CLC
 	ADC PlayerSprXPos
 	STA $28
-	LDA $05FA
+	LDA YoshiXScreenDist
 	ADC #$00
 	BMI bra2_A4B7
 	BEQ bra2_A4A7
@@ -755,9 +755,9 @@ bra2_A4D5:
 	CLC
 	ADC PlayerSprXPos
 	CLC
-	ADC $05F9
+	ADC YoshiXDistance
 	STA $28
-	LDA $05FA
+	LDA YoshiXScreenDist
 	ADC #$00
 	BMI bra2_A4FC
 	BEQ bra2_A4EC
@@ -796,11 +796,11 @@ bra2_A511:
 	BCC bra2_A511
 bra2_A518:
 	LDX #$00
-	LDA $05FB
+	LDA YoshiYDistance
 	CLC
 	ADC PlayerSprYPos
 	STA $2B
-	LDA $05FC
+	LDA YoshiYScreenDist
 	ADC #$00
 	BMI bra2_A544
 	BEQ bra2_A52C
@@ -915,11 +915,11 @@ sub2_A5D0:
 	BEQ bra2_A624
 	LDX #$00
 	LDY $A4
-	LDA $05A0,Y
+	LDA ObjectXDistance,Y
 	CLC
 	ADC PlayerSprXPos
 	STA $28
-	LDA $05B4,Y
+	LDA ObjXScreenDistance,Y
 	ADC #$00
 	BMI bra2_A606
 	BEQ bra2_A5F6
@@ -968,9 +968,9 @@ bra2_A624:
 	INC $41
 bra2_A633:
 	CLC
-	ADC $05A0,Y
+	ADC ObjectXDistance,Y
 	STA $28
-	LDA $05B4,Y
+	LDA ObjXScreenDistance,Y
 	ADC $41
 	BMI bra2_A653
 	BEQ bra2_A643
@@ -1010,11 +1010,11 @@ bra2_A668:
 bra2_A66F:
 	LDX #$00
 	LDY $A4
-	LDA $05C8,Y
+	LDA ObjectYDistance,Y
 	CLC
 	ADC PlayerSprYPos
 	STA $2B
-	LDA $05DC,Y
+	LDA ObjYScreenDistance,Y
 	ADC #$00
 	BMI bra2_A69D
 	BEQ bra2_A685
@@ -2454,11 +2454,11 @@ tbl2_ABBB:
 	BEQ bra2_ACAA
 	LDX #$00
 	LDY $A4
-	LDA $05A0,Y
+	LDA ObjectXDistance,Y
 	CLC
 	ADC PlayerSprXPos
 	STA $28
-	LDA $05B4,Y
+	LDA ObjXScreenDistance,Y
 	ADC #$00
 	BMI bra2_AC8C
 	BEQ bra2_AC7C
@@ -2507,9 +2507,9 @@ bra2_ACAA:
 	INC $41	;unlogged
 bra2_ACB9:
 	CLC
-	ADC $05A0,Y
+	ADC ObjectXDistance,Y
 	STA $28
-	LDA $05B4,Y
+	LDA ObjXScreenDistance,Y
 	ADC $41
 	BMI bra2_ACD9
 	BEQ bra2_ACC9
@@ -2549,11 +2549,11 @@ bra2_ACEE:
 bra2_ACF5:
 	LDX #$00
 	LDY $A4
-	LDA $05C8,Y
+	LDA ObjectYDistance,Y
 	CLC
 	ADC PlayerSprYPos
 	STA $2B
-	LDA $05DC,Y
+	LDA ObjYScreenDistance,Y
 	ADC #$00
 	BMI bra2_AD23
 	BEQ bra2_AD0B
@@ -2675,11 +2675,11 @@ loc2_ADA5:
 	BEQ bra2_AE13
 	LDX #$00
 	LDY $A4
-	LDA $05A0,Y
+	LDA ObjectXDistance,Y
 	CLC
 	ADC PlayerSprXPos
 	STA $28
-	LDA $05B4,Y
+	LDA ObjXScreenDistance,Y
 	ADC #$00
 	BMI bra2_ADF5
 	BEQ bra2_ADE5
@@ -2724,9 +2724,9 @@ bra2_AE13:
 	CLC
 	ADC PlayerSprXPos
 	CLC
-	ADC $05A0,Y
+	ADC ObjectXDistance,Y
 	STA $28
-	LDA $05B4,Y
+	LDA ObjXScreenDistance,Y
 	ADC #$00
 	BMI bra2_AE3C
 	BEQ bra2_AE2C
@@ -2766,11 +2766,11 @@ bra2_AE51:
 bra2_AE58:
 	LDX #$00
 	LDY $A4
-	LDA $05C8,Y
+	LDA ObjectYDistance,Y
 	CLC
 	ADC PlayerSprYPos
 	STA $2B
-	LDA $05DC,Y
+	LDA ObjYScreenDistance,Y
 	ADC #$00
 	BMI bra2_AE86
 	BEQ bra2_AE6E

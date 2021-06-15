@@ -133,7 +133,7 @@ sub_A107:
 	LDA #$13
 	JSR $8DF8
 	LDA #$9E
-	STA $0357
+	STA GS0SpriteYPos+1
 	LDA #$60
 	STA GS0SpriteXPos+1	;Set player's starting position
 	LDA #$00
@@ -368,118 +368,111 @@ sub_A22F:
 	CMP $26
 	BNE bra_A262_RTS
 	LDA $27
-	STA $0365
+	STA TitleDemoAction
 	LDA $28
-	STA $0366
+	STA TitleJumpTimer
 	INC $0361
 bra_A262_RTS:
 	RTS
 sub_A263:
-	LDA $0365
+	LDA TitleDemoAction
 	ASL
-	TAY
+	TAY	;Get pointer for current jump type
 	LDA tbl_A275,Y
-	STA Data0
-	LDA tbl_A276,Y
-	STA Data0+1
-	JMP (Data0)
+	STA Data0	;Load lower byte of pointer
+	LDA tbl_A275+1,Y
+	STA Data0+1	;Load upper byte of pointer
+	JMP (Data0)	;Jump to loaded pointer
 tbl_A275:
-	.byte $AE
-tbl_A276:
-	.byte $A2
-	.byte $D8
-	.byte $A2
-	.byte $3B
-	.byte $A4
-	.byte $69
-	.byte $A5
-	.byte $8D
-	.byte $A2
-	.byte $CE
-	.byte $A3
-	.byte $68
-	.byte $A3
-	.byte $80
-	.byte $A4
-	.byte $80
-	.byte $A4
-	.byte $80
-	.byte $A4
-	.byte $80
-	.byte $A4
-	.byte $80
-	.byte $A4
+	.word sub_A2AE
+	.word ptr2_A2D8
+	.word ptr2_A43B
+	.word ptr2_A569
+	.word ptr2_A28D
+	.word ptr2_A3CE
+	.word ptr2_A368
+	.word ptr2_A480
+	.word ptr2_A480
+	.word ptr2_A480
+	.word ptr2_A480
+	.word ptr2_A480
+ptr2_A28D:
 	JSR sub_A2AE
-	LDA $42
+	LDA GS0SpriteXPos+1
 	CMP #$B0
-	BCS bra_A2AD_RTS
-	LDX #$01
-	JSR $96F6
+	BCS bra_A2AD_RTS	;If Mario's sprite hasn't reached the middle of the screen, continue
+	LDX #$01	;Set X index for Mario's sprite
+	JSR sub2_96F6	;Jump
 	CLC
-	LDA $42
+	LDA GS0SpriteXPos+1
 	ADC TitleYoshiXOfs
-	STA $43
+	STA GS0SpriteXPos+2	;Set the horizontal offset for Yoshi
 	CLC
-	LDA $0357
+	LDA GS0SpriteYPos+1
 	ADC TitleYoshiYOfs
-	STA $0358
+	STA GS0SpriteYPos+2	;Set the horizontal offset for Mario
 bra_A2AD_RTS:
 	RTS
 sub_A2AE:
 	LDA FrameCount
-	AND #$07
-	BNE bra_A2C8_RTS
-	INC $0367
-	LDA $0367
+	AND #$07	;Mask out 3 LSB of global frame counter
+	BNE bra_A2C8_RTS	;Branch if not zero to do this every 8th frame
+	INC TitleWalkTimer	;Increment walk timer
+	LDA TitleWalkTimer
 	AND #$01
-	BEQ bra_A2C9
-	LDA $A2D4
-	STA $B3
-	LDA $A2D6
-	STA $B4
+	BEQ bra_A2C9	;Branch if the walk timer is an even number
+	LDA TitleMarioWalk1	;If it's an odd number, continue
+	STA GS0SpriteFrame+1	;Switch Mario to the 1st walk sprite
+	LDA TitleYoshiWalk1
+	STA GS0SpriteFrame+2	;Switch Yoshi to the 1st walk sprite
 bra_A2C8_RTS:
 	RTS
 bra_A2C9:
-	LDA $A2D5
-	STA $B3
-	LDA $A2D7
-	STA $B4
+	LDA TitleMarioWalk2
+	STA GS0SpriteFrame+1	;Switch Mario to the 2nd walk sprite
+	LDA TitleYoshiWalk2
+	STA GS0SpriteFrame+2	;Switch Yoshi to the 2nd walk sprite
 	RTS
-	.byte $11	;player/yoshi frames?
-	.byte $12	;
-	.byte $13	;
-	.byte $14	;
+TitleMarioWalk1:
+	.byte $11
+TitleMarioWalk2:
+	.byte $12
+TitleYoshiWalk1:
+	.byte $13
+TitleYoshiWalk2:
+	.byte $14
+ptr2_A2D8:
 	LDA FrameCount
 	AND #$01
-	BEQ bra_A313_RTS
-	LDA $0366
-	BEQ bra_A313_RTS
-	LDX $0366
-	LDA tbl_A31D,X	;load values from table
-	CMP #$80		;when $80 loaded,
-	BEQ bra_A314	;branch
+	BEQ bra_A313_RTS	;Only do this on an odd frame number
+	LDA TitleJumpTimer
+	BEQ bra_A313_RTS	;Make sure the jump timer is set
+	LDX TitleJumpTimer	;Set the X index to the jump timer value
+	LDA tbl_A31D,X	;Load vertical speed value for the jump timer's current value
+	CMP #$80
+	BEQ bra_A314	;Branch when the end marker is reached ($80)
 	CLC
-	ADC $0357
-	STA $0357
+	ADC GS0SpriteYPos+1
+	STA GS0SpriteYPos+1	;Add loaded speed value
 	CLC
-	LDA $42
+	LDA GS0SpriteXPos+1
 	ADC TitleYoshiXOfs
-	STA $43
+	STA GS0SpriteXPos+2	;Set horizontal offset for Yoshi
 	CLC
-	LDA $0357
+	LDA GS0SpriteYPos+1
 	ADC TitleYoshiYOfs
-	STA $0358
-	LDA tbl_A336,X
-	STA $B3
-	LDA tbl_A34F,X
-	STA $B4
-	INC $0366
+	STA GS0SpriteYPos+2	;Set vertical offset for Yoshi
+	LDA tbl_A336,X	;Load Mario's sprite for the current jump timer value
+	STA GS0SpriteFrame+1	;Make Mario use it
+	LDA tbl_A34F,X	;Load Yoshi's sprite for the current jump timer value
+	STA GS0SpriteFrame+2	;Make Yoshi use it
+	INC TitleJumpTimer	;Increment jump timer
 bra_A313_RTS:
 	RTS
 bra_A314:
 	LDA #$00
-	STA $0366
-	STA $0365
+	STA TitleJumpTimer	;Clear jump timer
+	STA TitleDemoAction	;Set demo action to walking
 	RTS
 tbl_A31D:
 	.byte $00
@@ -559,165 +552,169 @@ tbl_A34F:
 	.byte $13
 	.byte $13
 	.byte $80
+ptr2_A368:
 	LDA FrameCount
 	AND #$01
-	BEQ bra_A3C4_RTS
-	LDA $0366
-	BEQ bra_A3C4_RTS
-	LDX $0366
-	LDA tbl_A31D,X
+	BEQ bra_A3C4_RTS	;Only continue if on an odd frame number
+	LDA TitleJumpTimer
+	BEQ bra_A3C4_RTS	;Make sure the jump timer is still active
+	LDX TitleJumpTimer	;Set the X index to the jump timer value
+	LDA tbl_A31D,X	;Load vertical speed value for the jump timer's current value
 	CMP #$80
-	BEQ bra_A3C5
+	BEQ bra_A3C5	;Branch if the end marker is reached ($80)
 	CLC
-	ADC $0357
-	STA $0357
+	ADC GS0SpriteYPos+1
+	STA GS0SpriteYPos+1	;Add loaded speed value
 	CLC
-	LDA $42
+	LDA GS0SpriteXPos+1
 	ADC TitleYoshiXOfs
-	STA $43
+	STA GS0SpriteXPos+2	;Set horizontal offset for Yoshi's sprite
 	CLC
-	LDA $0357
+	LDA GS0SpriteYPos+1
 	ADC TitleYoshiYOfs
-	STA $0358
-	LDA PlayerTitleYPos	;
-	CMP #$9E			;if the player's y position is below this,
-	BCC bra_A3B7		;branch
-	LDA #$9E			;
-	STA PlayerTitleYPos	;set y position to $9E
+	STA GS0SpriteYPos+2	;Set vertical offset for Yoshi's sprite
+	LDA PlayerTitleYPos
+	CMP #$9E
+	BCC bra_A3B7	;Branch if Mario's Y position is below $9E
+	LDA #$9E
+	STA PlayerTitleYPos	;Otherwise, set it to $9E
 	CLC
-	LDA $42
+	LDA GS0SpriteXPos+1
 	ADC TitleYoshiXOfs
-	STA $43
+	STA GS0SpriteXPos+2	;Set horizontal offset again?
 	CLC
-	LDA $0357
+	LDA GS0SpriteYPos+1
 	ADC TitleYoshiYOfs
-	STA $0358
+	STA GS0SpriteYPos+2	;Set vertical offset again?
 	JMP loc_A3C5
 bra_A3B7:
 	LDA tbl_A336,X
-	STA $B3
+	STA GS0SpriteFrame+1	;Load animation frame for Mario
 	LDA tbl_A34F,X
-	STA $B4
-	INC $0366
+	STA GS0SpriteFrame+2	;Load animation frame for Yoshi
+	INC TitleJumpTimer	;Increment jump timer
 bra_A3C4_RTS:
 	RTS
 bra_A3C5:
 loc_A3C5:
 	LDA #$00
-	STA $0366
-	STA $0365
+	STA TitleJumpTimer	;Clear jump timer
+	STA TitleDemoAction	;Set demo action to walking
 	RTS
+ptr2_A3CE:
 	LDA FrameCount
 	AND #$01
-	BEQ bra_A431_RTS
-	LDA $0366
-	BEQ bra_A431_RTS
-	LDX $0366
-	LDA tbl_A31D,X
+	BEQ bra_A431_RTS	;Check if the global frame count is odd
+	LDA TitleJumpTimer
+	BEQ bra_A431_RTS	;Make sure the jump timer is still active
+	LDX TitleJumpTimer	;Set the X index to the jump timer value
+	LDA tbl_A31D,X	;Load vertical speed value for the jump timer's current value
 	CMP #$80
-	BEQ bra_A432
+	BEQ bra_A432	;Branch when the end marker is reached ($80)
 	CLC
-	ADC $0357
-	STA $0357
+	ADC GS0SpriteYPos+1
+	STA GS0SpriteYPos+1	;Add loaded speed value
 	CLC
-	LDA $42
+	LDA GS0SpriteXPos+1
 	ADC TitleYoshiXOfs
-	STA $43
+	STA GS0SpriteXPos+2	;Set horizontal offset for Yoshi
 	CLC
-	LDA $0357
+	LDA GS0SpriteYPos+1
 	ADC TitleYoshiYOfs
-	STA $0358
-	LDA $0366
+	STA GS0SpriteYPos+2	;Set vertical offset for Yoshi
+	LDA TitleJumpTimer
 	CMP #$0C
-	BCC bra_A424
-	LDA $0357
+	BCC bra_A424	;Branch if the jump timer is under $0C
+	LDA GS0SpriteYPos+1
 	CMP #$7E
-	BCC bra_A424
+	BCC bra_A424	;Branch if Mario's Y position is below $7E
 	LDA #$7E
-	STA $0357
+	STA GS0SpriteYPos+1	;Otherwise, set it to $7E
 	CLC
-	LDA $42
+	LDA GS0SpriteXPos+1
 	ADC TitleYoshiXOfs
-	STA $43
+	STA GS0SpriteXPos+2	;Set horizontal offset again?
 	CLC
-	LDA $0357
+	LDA GS0SpriteYPos+1
 	ADC TitleYoshiYOfs
-	STA $0358
+	STA GS0SpriteYPos+2	;Set vertical offset again?
 	JMP loc_A432
 bra_A424:
-	LDA tbl_A336,X
-	STA $B3
-	LDA tbl_A34F,X
-	STA $B4
-	INC $0366
+	LDA tbl_A336,X	;Load Mario's sprite for the current jump timer value
+	STA GS0SpriteFrame+1	;Make Mario use it
+	LDA tbl_A34F,X	;Load Yoshi's sprite for the current jump timer value
+	STA GS0SpriteFrame+2	;Make Yoshi use it
+	INC TitleJumpTimer	;Increment jump timer
 bra_A431_RTS:
 	RTS
 bra_A432:
 loc_A432:
 	LDA #$00
-	STA $0366
-	STA $0365
+	STA TitleJumpTimer	;Clear jump timer
+	STA TitleDemoAction	;Set demo action to walking
 	RTS
+ptr2_A43B:
 	LDA FrameCount
 	AND #$01
-	BEQ bra_A476_RTS
-	LDA $0366
-	BEQ bra_A476_RTS
-	LDX $0366
-	LDA tbl_A4FD,X
+	BEQ bra_A476_RTS	;Only continue if on an odd frame number
+	LDA TitleJumpTimer
+	BEQ bra_A476_RTS	;Make sure the jump timer is active
+	LDX TitleJumpTimer	;Set the X index to the current jump timer value
+	LDA tbl_A4FD,X	;Load vertical speed value for the jump timer's current value
 	CMP #$80
-	BEQ bra_A477
+	BEQ bra_A477	;Branch when the end marker is reached ($80)
 	CLC
-	ADC $0357
-	STA $0357
+	ADC GS0SpriteYPos+1
+	STA GS0SpriteYPos+1	;Add loaded speed value
 	CLC
-	LDA $42
+	LDA GS0SpriteXPos+1
 	ADC TitleYoshiXOfs
-	STA $43
+	STA GS0SpriteXPos+2	;Set Yoshi's horizontal offset
 	CLC
-	LDA $0357
+	LDA GS0SpriteYPos+1
 	ADC TitleYoshiYOfs
-	STA $0358
-	LDA tbl_A518,X
-	STA $B3
-	LDA tbl_A533,X
-	STA $B4
-	INC $0366
+	STA GS0SpriteYPos+2	;Set Yoshi's vertical offset
+	LDA tbl_A518,X	;Load Mario's sprite for the current jump timer value
+	STA GS0SpriteFrame+1	;Make Mario use it
+	LDA tbl_A533,X	;Load Yoshi's sprite for the current jump timer value
+	STA GS0SpriteFrame+2	;Make Yoshi use it
+	INC TitleJumpTimer	;Increment jump timer
 bra_A476_RTS:
 	RTS
 bra_A477:
 	LDA #$00
-	STA $0366
-	STA $0365
+	STA TitleJumpTimer	;Clear jump timer
+	STA TitleDemoAction	;Set demo action to walking
 	RTS
+ptr2_A480:
 	LDA FrameCount
 	AND #$01
-	BEQ bra_A4C3_RTS
-	LDA $0366
-	BEQ bra_A4C3_RTS
-	LDX $0366
-	LDA tbl_A4FD,X
+	BEQ bra_A4C3_RTS	;Only continue if on an odd frame number
+	LDA TitleJumpTimer
+	BEQ bra_A4C3_RTS	;Make sure the jump timer is active
+	LDX TitleJumpTimer	;Set the X index to the current jump timer value
+	LDA tbl_A4FD,X	;Load vertical speed value for the jump timer's current value
 	CMP #$80
-	BEQ bra_A4C4
+	BEQ bra_A4C4	;Branch if the end marker is reached ($80)
 	CLC
-	ADC $0357
-	STA $0357
+	ADC GS0SpriteYPos+1
+	STA GS0SpriteYPos+1	;Add loaded speed value
 	CLC
-	LDA $42
+	LDA GS0SpriteXPos+1
 	ADC TitleYoshiXOfs
-	STA $43
+	STA GS0SpriteXPos+2	;Set Yoshi's horizontal offset
 	CLC
-	LDA $0357
+	LDA GS0SpriteYPos+1
 	ADC TitleYoshiYOfs
-	STA $0358
+	STA GS0SpriteYPos+2	;Set Yoshi's vertical offset
 	LDA tbl_A518,X
-	STA $B3
+	STA GS0SpriteFrame+1	;Get sprite for Mario (based on jump timer)
 	LDA tbl_A533,X
-	STA $B4
+	STA GS0SpriteFrame+2	;Get sprite for Yoshi (based on jump timer)
 	LDA tbl_A54E,X
-	STA $B2
+	STA GS0SpriteFrame	;Get sprite for "pop" effect (based on jump timer)
 	JSR sub_A4E8
-	INC $0366
+	INC TitleJumpTimer	;Increment jump timer
 bra_A4C3_RTS:
 	RTS
 bra_A4C4:
@@ -725,9 +722,9 @@ bra_A4C4:
 	LDA tbl_A4D7,X
 	TAX
 	LDA #$00
-	STA $0366
-	STA $0365
-	STA $B2,X
+	STA TitleJumpTimer
+	STA TitleDemoAction
+	STA GS0SpriteFrame,X
 	RTS
 	.byte $00
 tbl_A4D7:
@@ -750,15 +747,17 @@ tbl_A4D7:
 	.byte $00
 sub_A4E8:
 	CLC
-	LDA $42
-	ADC $A4FB
-	STA $41
+	LDA GS0SpriteXPos+1
+	ADC PopEffectXOfs
+	STA GS0SpriteXPos	;Set horizontal offset for the enemy "pop" effect
 	CLC
-	LDA $0357
-	ADC $A4FC
-	STA $0356
+	LDA GS0SpriteYPos+1
+	ADC PopEffectYOfs
+	STA GS0SpriteYPos	;Set vertical offset for the "pop" effect
 	RTS
+PopEffectXOfs:
 	.byte $04
+PopEffectYOfs:
 	.byte $1B
 tbl_A4FD:
 	.byte $00
@@ -872,6 +871,7 @@ tbl_A54E:
 	.byte $04
 	.byte $00
 	.byte $80
+ptr2_A569:
 	LDA #$11
 	STA $B3
 	LDA #$13
@@ -925,14 +925,14 @@ bra_A5AE:
 	BNE bra_A5DF
 bra_A5C5:
 	DEC $41,X
-	LDA $41,X
+	LDA GS0SpriteXPos,X
 	CMP #$FF
 	BNE bra_A5D0
 	DEC $034D,X
 bra_A5D0:
 	LDA $034D,X
 	BNE bra_A5DF
-	LDA $41,X
+	LDA GS0SpriteXPos,X
 	CMP #$20
 	BCS bra_A5DF
 	LDA #$00
@@ -999,7 +999,7 @@ bra_A636:
 	LDA #$07
 	STA $0365
 	LDA #$01
-	STA $0366
+	STA TitleJumpTimer
 bra_A64C_RTS:
 	RTS
 sub_A64D:
@@ -1129,7 +1129,7 @@ bra_A735:
 	AND #$08
 	BEQ bra_A74B
 	LDA #$80
-	STA $0357
+	STA GS0SpriteYPos+1
 	LDA #$00
 	STA GameType
 	LDA #sfxBeep
@@ -1140,7 +1140,7 @@ bra_A74B:
 	AND #$04
 	BEQ bra_A760_RTS
 	LDA #$90
-	STA $0357
+	STA GS0SpriteYPos+1
 	LDA #$01
 	STA GameType
 	LDA #$05
@@ -1731,9 +1731,9 @@ bra_AB79:
 	LDA tbl_AB0D,X
 	STA $034D
 	LDA tbl_AB0E,X
-	STA $41
+	STA GS0SpriteXPos
 	LDA #$50
-	STA $0356
+	STA GS0SpriteYPos
 	JSR $9728
 	JSR $8823
 	RTS
@@ -1883,16 +1883,16 @@ sub_AC1D:
 	LDA $9B83,X
 	STA $034D
 	LDA $9B84,X
-	STA $41
+	STA GS0SpriteXPos
 	LDA $9B85,X
-	STA $0356
+	STA GS0SpriteYPos
 	LDX CurrentPlayer
 	LDA P1YoshiBackup,X
 	BEQ bra_AC5C
 	SEC
-	LDA $0356
+	LDA GS0SpriteYPos
 	SBC #$09
-	STA $0356
+	STA GS0SpriteYPos
 	LDA #$07
 	STA $0361
 	LDA MapLevelID

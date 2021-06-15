@@ -353,10 +353,10 @@ bra4_8289:
 	LDA ObjectXPos,X	;unlogged
 	SEC	;unlogged
 	SBC PlayerXPosDup	;unlogged
-	STA $05A0,X	;unlogged
+	STA ObjectXDistance,X	;unlogged
 	LDA ObjectXScreen,X	;unlogged
 	SBC PlayerXScreenDup	;unlogged
-	STA $05B4,X	;unlogged
+	STA ObjXScreenDistance,X	;unlogged
 	STA $28	;unlogged
 	BEQ bra4_82A5	;unlogged
 	CMP #$FF	;unlogged
@@ -366,31 +366,31 @@ bra4_82A5:
 	LDA ObjectYPos,X	;unlogged
 	SEC	;unlogged
 	SBC PlayerYPosDup	;unlogged
-	STA $05C8,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
 	LDA ObjectYScreen,X	;unlogged
 	SBC PlayerYScreenDup	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 	LDA PlayerYScreenDup	;unlogged
 	CMP ObjectYScreen,X	;unlogged
 	BEQ bra4_82E7	;unlogged
-	LDA $05DC,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	BPL bra4_82D6	;unlogged
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	CLC	;unlogged
 	ADC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	ADC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 	JMP loc4_82E7	;unlogged
 bra4_82D6:
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	SEC	;unlogged
 	SBC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	SBC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 bra4_82E7:
 loc4_82E7:
 	LDA FreezeFlag	;unlogged
@@ -405,10 +405,10 @@ loc4_82F0:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_8312
 	CMP #$FF
@@ -418,31 +418,31 @@ bra4_8312:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_8354
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_8343
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	CLC	;unlogged
 	ADC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	ADC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 	JMP loc4_8354	;unlogged
 bra4_8343:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra4_8354:
 loc4_8354:
 	LDA FreezeFlag
@@ -535,7 +535,7 @@ loc4_83F4:
 	LDA ObjectVariables,X
 	CMP #$04
 	BCC bra4_8421_RTS
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_8421_RTS
 	LDA ObjectSlot,X
 	CLC
@@ -543,7 +543,7 @@ loc4_83F4:
 	STA ObjectSlot,X
 	LDA #$11
 	STA ObjectVariables,X
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	AND #$40
 	EOR #$40
 	STA $25
@@ -617,10 +617,10 @@ bra4_848F:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_84AB
 	CMP #$FF
@@ -630,31 +630,31 @@ bra4_84AB:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_84ED
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_84DC
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	CLC	;unlogged
 	ADC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	ADC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 	JMP loc4_84ED	;unlogged
 bra4_84DC:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra4_84ED:
 loc4_84ED:
 	LDA FreezeFlag
@@ -669,10 +669,10 @@ loc4_84F6:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_8518
 	CMP #$FF
@@ -682,31 +682,31 @@ bra4_8518:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_855A
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_8549
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	CLC	;unlogged
 	ADC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	ADC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 	JMP loc4_855A	;unlogged
 bra4_8549:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra4_855A:
 loc4_855A:
 	LDA FreezeFlag
@@ -791,11 +791,11 @@ bra4_85E2:
 	BNE bra4_8610_RTS
 	LDA ObjectVariables,X
 	BNE bra4_8610_RTS
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_85FD
 	JMP loc4_8631
 bra4_85FD:
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	AND #$40
 	EOR #$40
 	STA $25
@@ -809,9 +809,9 @@ bra4_8611:
 	LDA $062B
 	AND #$1E
 	BNE bra4_863F_RTS
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_8631
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	AND #$40
 	EOR #$40
 	STA $25
@@ -865,10 +865,10 @@ bra4_867F:
 	LDA ObjectXPos,X	;unlogged
 	SEC	;unlogged
 	SBC PlayerXPosDup	;unlogged
-	STA $05A0,X	;unlogged
+	STA ObjectXDistance,X	;unlogged
 	LDA ObjectXScreen,X	;unlogged
 	SBC PlayerXScreenDup	;unlogged
-	STA $05B4,X	;unlogged
+	STA ObjXScreenDistance,X	;unlogged
 	STA $28	;unlogged
 	BEQ bra4_869B	;unlogged
 	CMP #$FF	;unlogged
@@ -878,31 +878,31 @@ bra4_869B:
 	LDA ObjectYPos,X	;unlogged
 	SEC	;unlogged
 	SBC PlayerYPosDup	;unlogged
-	STA $05C8,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
 	LDA ObjectYScreen,X	;unlogged
 	SBC PlayerYScreenDup	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 	LDA PlayerYScreenDup	;unlogged
 	CMP ObjectYScreen,X	;unlogged
 	BEQ bra4_86DD	;unlogged
-	LDA $05DC,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	BPL bra4_86CC	;unlogged
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	CLC	;unlogged
 	ADC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	ADC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 	JMP loc4_86DD	;unlogged
 bra4_86CC:
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	SEC	;unlogged
 	SBC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	SBC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 bra4_86DD:
 loc4_86DD:
 	LDA FreezeFlag	;unlogged
@@ -917,10 +917,10 @@ loc4_86E6:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_8708
 	CMP #$FF
@@ -930,31 +930,31 @@ bra4_8708:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_874A
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_8739
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	CLC	;unlogged
 	ADC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	ADC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 	JMP loc4_874A	;unlogged
 bra4_8739:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra4_874A:
 loc4_874A:
 	LDA FreezeFlag
@@ -1081,10 +1081,10 @@ bra4_881E:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_883A
 	CMP #$FF
@@ -1094,31 +1094,31 @@ bra4_883A:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_887C
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_886B
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	CLC	;unlogged
 	ADC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	ADC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 	JMP loc4_887C	;unlogged
 bra4_886B:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra4_887C:
 loc4_887C:
 	LDA FreezeFlag
@@ -1150,10 +1150,10 @@ loc4_88AB:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_88CA
 	CMP #$FF
@@ -1163,31 +1163,31 @@ bra4_88CA:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_890C
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_88FB
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	CLC	;unlogged
 	ADC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	ADC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 	JMP loc4_890C	;unlogged
 bra4_88FB:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra4_890C:
 loc4_890C:
 	LDA FreezeFlag
@@ -1207,10 +1207,10 @@ loc4_8920:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_8942
 	CMP #$FF
@@ -1220,31 +1220,31 @@ bra4_8942:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_8984
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_8973
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	CLC	;unlogged
 	ADC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	ADC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 	JMP loc4_8984	;unlogged
 bra4_8973:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra4_8984:
 loc4_8984:
 	LDA FreezeFlag
@@ -1301,13 +1301,13 @@ sub4_89DA:
 	LDA ObjectVariables,X
 	BNE bra4_8A06
 	LDY #$01
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_89EF
 	LDY #$11
 bra4_89EF:
 	TYA
 	STA ObjectVariables,X
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	AND #$40
 	EOR #$40
 	STA $25
@@ -1365,7 +1365,7 @@ loc4_8A55:
 	STA ObjectState,Y
 	LDA #$00
 	STA ObjectVariables,Y
-	STA GuidedObjStatus,Y
+	STA ObjectAction,Y
 	LDA ObjectSlot,X
 	AND #$01
 	ORA #$B0
@@ -1430,10 +1430,10 @@ tbl4_8AAB:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_8AE9
 	CMP #$FF
@@ -1443,31 +1443,31 @@ bra4_8AE9:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_8B2B
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_8B1A
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	CLC	;unlogged
 	ADC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	ADC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 	JMP loc4_8B2B	;unlogged
 bra4_8B1A:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra4_8B2B:
 loc4_8B2B:
 	LDA FreezeFlag
@@ -1523,10 +1523,10 @@ bra4_8B90:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_8BAC
 	CMP #$FF	;unlogged
@@ -1536,31 +1536,31 @@ bra4_8BAC:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_8BEE	;unlogged
-	LDA $05DC,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	BPL bra4_8BDD	;unlogged
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	CLC	;unlogged
 	ADC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	ADC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 	JMP loc4_8BEE	;unlogged
 bra4_8BDD:
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	SEC	;unlogged
 	SBC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	SBC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 bra4_8BEE:
 loc4_8BEE:
 	LDA FreezeFlag
@@ -1575,10 +1575,10 @@ loc4_8BF7:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_8C19
 	CMP #$FF
@@ -1588,31 +1588,31 @@ bra4_8C19:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_8C5B
-	LDA $05DC,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	BPL bra4_8C4A	;unlogged
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	CLC	;unlogged
 	ADC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	ADC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 	JMP loc4_8C5B	;unlogged
 bra4_8C4A:
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	SEC	;unlogged
 	SBC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	SBC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 bra4_8C5B:
 loc4_8C5B:
 	LDA FreezeFlag
@@ -1666,7 +1666,7 @@ sub4_8CB1:
 	LDA ObjectVariables,X
 	BNE bra4_8CCC
 	INC ObjectVariables,X
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	AND #$40
 	EOR #$40
 	STA $25
@@ -1732,7 +1732,7 @@ loc4_8D2D:
 	STA ObjectState,Y
 	LDA #$06
 	STA ObjectVariables,Y
-	STA GuidedObjStatus,Y
+	STA ObjectAction,Y
 	LDA ObjectSlot,X
 	AND #$01
 	ORA #$B2
@@ -1762,10 +1762,10 @@ bra4_8D71:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_8D9E
 	CMP #$FF
@@ -1775,31 +1775,31 @@ bra4_8D9E:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_8DE0
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_8DCF
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	JMP loc4_8DE0
 bra4_8DCF:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra4_8DE0:
 loc4_8DE0:
 	LDA FreezeFlag
@@ -1815,9 +1815,9 @@ sub4_8DEC:
 	LDA ObjectVariables,X
 	BNE bra4_8E0B
 	LDA $062B
-	ADC GoalTapeDistance,X
+	ADC ObjectXDistance+1,X
 	LSR
-	ADC $05C8,X
+	ADC ObjectYDistance,X
 	AND #$03
 	TAY
 	LDA tbl4_8E24,Y
@@ -1859,10 +1859,10 @@ bra4_8E47:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_8E63
 	CMP #$FF
@@ -1872,38 +1872,38 @@ bra4_8E63:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_8EA5
-	LDA $05DC,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	BPL bra4_8E94	;unlogged
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	CLC	;unlogged
 	ADC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	ADC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 	JMP loc4_8EA5	;unlogged
 bra4_8E94:
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	SEC	;unlogged
 	SBC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	SBC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 bra4_8EA5:
 loc4_8EA5:
 	LDA FreezeFlag
 	BEQ bra4_8EAB
 	RTS	;unlogged
 bra4_8EAB:
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	AND #$40
 	EOR #$40
 	STA $25
@@ -1937,10 +1937,10 @@ loc4_8EE3:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_8F05
 	CMP #$FF
@@ -1950,31 +1950,31 @@ bra4_8F05:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_8F47
-	LDA $05DC,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	BPL bra4_8F36	;unlogged
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	CLC	;unlogged
 	ADC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	ADC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 	JMP loc4_8F47	;unlogged
 bra4_8F36:
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	SEC	;unlogged
 	SBC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	SBC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 bra4_8F47:
 loc4_8F47:
 	LDA FreezeFlag
@@ -2073,7 +2073,7 @@ loc4_8FEE:
 	STA ObjectState,Y
 	LDA #$06
 	STA ObjectVariables,Y
-	STA GuidedObjStatus,Y
+	STA ObjectAction,Y
 	LDA ObjectSlot,X
 	AND #$01
 	ORA #$B4
@@ -2121,10 +2121,10 @@ bra4_905A:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_9076
 	CMP #$FF
@@ -2134,31 +2134,31 @@ bra4_9076:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_90B8
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_90A7
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	JMP loc4_90B8
 bra4_90A7:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra4_90B8:
 loc4_90B8:
 	LDA FreezeFlag
@@ -2594,18 +2594,18 @@ tbl4_9123:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
-	LDA $05B4,X
+	STA ObjYScreenDistance,X
+	LDA ObjXScreenDistance,X
 	BEQ bra4_92C0_RTS
 	CMP #$FF
 	BEQ bra4_92C0_RTS
@@ -2730,18 +2730,18 @@ bra4_937B:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
-	LDA $05B4,X
+	STA ObjYScreenDistance,X
+	LDA ObjXScreenDistance,X
 	BEQ bra4_93AA
 	CMP #$FF
 	BEQ bra4_93AA
@@ -2807,10 +2807,10 @@ bra4_940E:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_942A
 	CMP #$FF
@@ -2820,31 +2820,31 @@ bra4_942A:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_946C
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_945B
-	LDA $05C8,X	;unlogged
+	LDA ObjectYDistance,X	;unlogged
 	CLC	;unlogged
 	ADC #$10	;unlogged
-	STA $05C8,X	;unlogged
-	LDA $05DC,X	;unlogged
+	STA ObjectYDistance,X	;unlogged
+	LDA ObjYScreenDistance,X	;unlogged
 	ADC #$00	;unlogged
-	STA $05DC,X	;unlogged
+	STA ObjYScreenDistance,X	;unlogged
 	JMP loc4_946C	;unlogged
 bra4_945B:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra4_946C:
 loc4_946C:
 	LDA FreezeFlag
@@ -2859,10 +2859,10 @@ loc4_9475:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_9497
 	CMP #$FF
@@ -2872,31 +2872,31 @@ bra4_9497:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_94D9
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_94C8
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	JMP loc4_94D9
 bra4_94C8:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra4_94D9:
 loc4_94D9:
 	LDA FreezeFlag
@@ -2943,10 +2943,10 @@ bra4_951E:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_953A
 	CMP #$FF
@@ -2956,31 +2956,31 @@ bra4_953A:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_957C
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_956B
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	JMP loc4_957C
 bra4_956B:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra4_957C:
 loc4_957C:
 	LDA FreezeFlag
@@ -2993,11 +2993,11 @@ bra4_9582:
 	LDA PlayerMovement
 	AND #$40
 	STA $25
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	AND #$40
 	CMP $25
 	BEQ bra4_95BC
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BMI bra4_95AD
 	LDA #$00
 	STA ObjectVariables,X
@@ -3016,7 +3016,7 @@ bra4_95B8:
 	STA ObjectVariables,X
 bra4_95BC:
 loc4_95BC:
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	AND #$40
 	EOR #$40
 	STA $25
@@ -3032,7 +3032,7 @@ bra4_95D0:
 	LDA PlayerMovement
 	AND #$40
 	STA $25
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	AND #$40
 	CMP $25
 	BNE bra4_95F2
@@ -3048,9 +3048,9 @@ bra4_95F2:
 	AND #$0F
 	CMP #$0E
 	BCC bra4_961A
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_961A
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CMP #$C8
 	BCS bra4_961A
 	LDA FrameCount
@@ -3062,7 +3062,7 @@ bra4_95F2:
 	ORA #$20
 	STA ObjectState,X
 bra4_961A:
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	AND #$40
 	EOR #$40
 	STA $25
@@ -3075,7 +3075,7 @@ bra4_962E:
 	LDA PlayerMovement
 	AND #$40
 	STA $25
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	AND #$40
 	CMP $25
 	BNE bra4_9649
@@ -3091,9 +3091,9 @@ bra4_9649:
 	AND #$0F
 	CMP #$0E
 	BCC bra4_9671
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_965E
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CMP #$E0
 	BCC bra4_9671
 bra4_965E:
@@ -3106,7 +3106,7 @@ bra4_965E:
 	AND #$DF
 	STA ObjectState,X
 bra4_9671:
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	AND #$40
 	EOR #$40
 	STA $25
@@ -3124,10 +3124,10 @@ bra4_9691:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_96AD
 	CMP #$FF
@@ -3137,31 +3137,31 @@ bra4_96AD:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_96EF
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_96DE
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	JMP loc4_96EF
 bra4_96DE:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra4_96EF:
 loc4_96EF:
 	LDA FreezeFlag
@@ -3179,10 +3179,10 @@ loc4_9703:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_9722
 	CMP #$FF
@@ -3192,31 +3192,31 @@ bra4_9722:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_9764
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_9753
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	JMP loc4_9764
 bra4_9753:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra4_9764:
 loc4_9764:
 	LDA FreezeFlag
@@ -3240,9 +3240,9 @@ bra4_9783:
 	LDA ObjectState,X
 	AND #$40
 	BNE bra4_97A7
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BMI bra4_97A4
-	LDA $05A0,X
+	LDA ObjectXDistance,X
 	CMP #$43
 	BCC bra4_97A4
 	LDA FrameCount
@@ -3254,9 +3254,9 @@ bra4_9783:
 bra4_97A4:
 	JMP loc4_97C1
 bra4_97A7:
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	BPL bra4_97C1
-	LDA $05A0,X
+	LDA ObjectXDistance,X
 	CMP #$C6
 	BCS bra4_97C1
 	LDA FrameCount
@@ -3270,7 +3270,7 @@ loc4_97C1:
 	LDA FrameCount
 	AND #$7F
 	BNE bra4_97E7_RTS
-	LDA $05B4,X
+	LDA ObjXScreenDistance,X
 	EOR ObjectState,X
 	AND #$40
 	BEQ bra4_97E7_RTS
@@ -3289,10 +3289,10 @@ bra4_97E7_RTS:
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA $05A0,X
+	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA $05B4,X
+	STA ObjXScreenDistance,X
 	STA $28
 	BEQ bra4_9806
 	CMP #$FF
@@ -3302,31 +3302,31 @@ bra4_9806:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
-	STA $05C8,X
+	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra4_9848
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_9837
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	ADC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 	JMP loc4_9848
 bra4_9837:
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	SEC
 	SBC #$10
-	STA $05C8,X
-	LDA $05DC,X
+	STA ObjectYDistance,X
+	LDA ObjYScreenDistance,X
 	SBC #$00
-	STA $05DC,X
+	STA ObjYScreenDistance,X
 bra4_9848:
 loc4_9848:
 	LDA FreezeFlag
@@ -3355,9 +3355,9 @@ bra4_986F:
 	LDA FrameCount
 	AND #$1F
 	BNE bra4_9895_RTS
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_9888
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CMP #$D0
 	BCC bra4_9895_RTS
 bra4_9888:
@@ -3372,9 +3372,9 @@ bra4_9896:
 	LDA FrameCount
 	AND #$0F
 	BNE bra4_98B6_RTS
-	LDA $05DC,X
+	LDA ObjYScreenDistance,X
 	BPL bra4_98B6_RTS
-	LDA $05C8,X
+	LDA ObjectYDistance,X
 	CMP #$9B
 	BCS bra4_98B6_RTS
 	LDA ObjectSlot,X
@@ -3420,8 +3420,8 @@ tbl4_98DD:
 	CMP #$20
 	BCC bra4_990A
 	LDY #$05
-	INC GuidedObjStatus,X
-	LDA GuidedObjStatus,X
+	INC ObjectAction,X
+	LDA ObjectAction,X
 	BMI bra4_990A
 	CMP #$20
 	BCS bra4_990A
