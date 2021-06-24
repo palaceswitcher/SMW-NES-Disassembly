@@ -1,8 +1,8 @@
 ;disassembled by BZK 6502 Disassembler
 	.incbin levels/title_level.bin	;Self explanatory, includes data for the title screen level
-	.dsb 4418, $00	;fills in 0x1142 of 00s
+	.dsb 4418, $00	;Fills in 0x1142 of 00s
 
-	AND #$1F	;not sure where all of this code is used, it could just be padding
+	AND #$1F	;Useless padding code
 	ORA #$80
 	STA Data0+1
 	LDA #$00

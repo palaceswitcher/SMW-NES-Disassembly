@@ -139,7 +139,7 @@
 	.byte $00
 	.byte $00
 	.byte $00
-	LDA FrameCount	;not sure if any of this code is used, it could be padding
+	LDA FrameCount	;More useless padding code?
 	AND #$07
 	BNE bra13_999F
 	INC $032F

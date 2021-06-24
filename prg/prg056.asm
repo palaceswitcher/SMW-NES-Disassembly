@@ -10,7 +10,7 @@ sub9_8000:
 	BNE bra9_8013
 	JMP loc9_80A2
 bra9_8013:
-	JSR $B077
+	JSR sub3_B077
 	BNE bra9_8078
 	LDA ObjectVariables,X
 	AND #$7F
@@ -32,7 +32,7 @@ bra9_8036:
 	SBC #$00
 bra9_803B:
 	STA ObjectYScreen,X
-	JSR $B057
+	JSR sub3_B057
 	BEQ bra9_804B
 	LDA ObjectState,X
 	EOR #$40
@@ -90,7 +90,7 @@ loc9_80A2:
 	INY
 	LDA (Data0),Y
 	BMI bra9_80BD
-	JSR $B077
+	JSR sub3_B077
 	BNE bra9_80BD
 	LDA ObjectState,X
 	ORA #$20
@@ -101,7 +101,7 @@ loc9_80A2:
 	RTS
 bra9_80BD:
 	DEY
-	JSR $B057
+	JSR sub3_B057
 	BEQ bra9_80CB
 	LDA ObjectState,X
 	EOR #$40
@@ -176,6 +176,7 @@ bra9_8145:
 loc9_8145:
 	INC ObjectVariables,X
 	RTS
+obj_hA0:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_8153
@@ -195,7 +196,7 @@ bra9_8153:
 	BEQ bra9_8175
 	CMP #$FF
 	BEQ bra9_8175
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_8175:
 	LDA ObjectYPos,X
 	SEC
@@ -237,21 +238,16 @@ bra9_81BD:
 	TAY
 	LDA tbl9_81D1,Y
 	STA Data0
-	LDA tbl9_81D2,Y
+	LDA tbl9_81D1+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl9_81D1:
-	.byte $BB
-tbl9_81D2:
-	.byte $A7
-	.byte $7B
-	.byte $AA
-	.byte $29
-	.byte $AB
-	.byte $DB
-	.byte $81
-	.byte $88
-	.byte $AD
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr2_81D1
+	.word ptr_AD88
+ptr2_81D1:
 	LDX $A4
 	LDA ObjectVariables,X
 	BNE bra9_81FC
@@ -269,8 +265,8 @@ bra9_81EB:
 	STA ObjectVariables,X
 bra9_81FC:
 	JSR sub9_82AE
-	JSR $BEBC
-	JSR $A74D
+	JSR jmp_54_BEBC
+	JSR jmp_54_A74D
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -280,7 +276,7 @@ bra9_81FC:
 	LDA #$10
 	STA PlayerXSpeed
 	LDA #$01
-	JSR $BCD4
+	JSR sub3_BCD4
 	LDA #$12
 	STA SFXRegister
 	LDX $A4
@@ -312,7 +308,7 @@ bra9_81FC:
 	BEQ bra9_8265
 	CMP #$FF
 	BEQ bra9_8265
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_8265:
 	LDA ObjectYPos,X
 	SEC
@@ -358,7 +354,7 @@ sub9_82AE:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
 	JSR sub9_8000
 bra9_82C6_RTS:
@@ -383,9 +379,9 @@ bra9_82E1:
 	TYA
 	ASL
 	TAX
-	LDA tbl9_8309,X
+	LDA ParagoombaMappings,X
 	STA Data0
-	LDA tbl9_830A,X
+	LDA ParagoombaMappings+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -395,52 +391,28 @@ bra9_82E1:
 	LDY #$C0
 bra9_8303:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
-tbl9_8309:
-	.byte $0D
-tbl9_830A:
-	.byte $83
-	.byte $20
-	.byte $83
+ParagoombaMappings:
+	.word Paragoomba1
+	.word Paragoomba2
+Paragoomba1:
 	.byte $04
 	.byte $04
 	.byte $A5
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $03
-	.byte $04
-	.byte $05
-	.byte $FF
-	.byte $0A
-	.byte $0B
-	.byte $0C
-	.byte $FF
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $FF, $FF, $FF
+	.byte $03, $04, $05, $FF
+	.byte $0A, $0B, $0C, $FF
+Paragoomba2:
 	.byte $04
 	.byte $04
 	.byte $A5
-	.byte $0F
-	.byte $FF
-	.byte $10
-	.byte $11
-	.byte $12
-	.byte $13
-	.byte $14
-	.byte $15
-	.byte $16
-	.byte $17
-	.byte $18
-	.byte $19
-	.byte $1A
-	.byte $1B
-	.byte $1C
-	.byte $FF
+	.byte $0F, $FF, $10, $11
+	.byte $12, $13, $14, $15
+	.byte $16, $17, $18, $19
+	.byte $1A, $1B, $1C, $FF
+obj_h98:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_83A4
@@ -455,7 +427,7 @@ tbl9_830A:
 	BEQ bra9_8356
 	CMP #$FF
 	BEQ bra9_8356
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_8356:
 	LDA ObjectYPos,X
 	SEC
@@ -509,7 +481,7 @@ bra9_83A4:
 	BEQ bra9_83C6
 	CMP #$FF
 	BEQ bra9_83C6
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_83C6:
 	LDA ObjectYPos,X
 	SEC
@@ -550,22 +522,18 @@ bra9_840E:
 	ASL
 	TAY
 	LDA tbl9_8422,Y
+obj_h8E:
 	STA Data0
-	LDA tbl9_8423,Y
+	LDA tbl9_8422+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl9_8422:
-	.byte $BB
-tbl9_8423:
-	.byte $A7
-	.byte $7B
-	.byte $AA
-	.byte $29
-	.byte $AB
-	.byte $2C
-	.byte $84
-	.byte $88
-	.byte $AD
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr2_842C
+	.word ptr_AD88
+ptr2_842C:
 	LDA ObjXScreenDistance,X
 	EOR #$40
 	STA $25
@@ -574,13 +542,13 @@ tbl9_8423:
 	ORA $25
 	STA ObjectState,X
 	JSR sub9_84FE
-	JSR $B077
+	JSR sub3_B077
 	BEQ bra9_8448
 	JMP loc9_846E
 bra9_8448:
-	JSR $A6D4
-	JSR $BEBC
-	JSR $A74D
+	JSR jmp_54_A6D4
+	JSR jmp_54_BEBC
+	JSR jmp_54_A74D
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -590,7 +558,7 @@ bra9_8448:
 	LDA #$10
 	STA PlayerXSpeed
 	LDA #$01
-	JSR $BCD4
+	JSR sub3_BCD4
 	LDA #$12
 	STA SFXRegister
 	JMP loc9_846E
@@ -625,7 +593,7 @@ loc9_846E:
 	BEQ bra9_84B5
 	CMP #$FF
 	BEQ bra9_84B5
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_84B5:
 	LDA ObjectYPos,X
 	SEC
@@ -671,7 +639,7 @@ sub9_84FE:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
 	JSR sub9_8000
 bra9_8516_RTS:
@@ -699,7 +667,7 @@ bra9_8516_RTS:
 	LDY #$C0
 bra9_8542:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 tbl9_8548:
 	.byte $00
@@ -747,7 +715,7 @@ tbl9_8551:
 	.byte $2E
 	.byte $2F
 	.byte $30
-loc9_8572:
+obj_h94:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_85E0
@@ -762,7 +730,7 @@ loc9_8572:
 	BEQ bra9_8595
 	CMP #$FF
 	BEQ bra9_8595
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_8595:
 	LDA ObjectYPos,X
 	SEC
@@ -814,7 +782,7 @@ bra9_85E0:
 	BEQ bra9_8602
 	CMP #$FF
 	BEQ bra9_8602
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_8602:
 	LDA ObjectYPos,X
 	SEC
@@ -856,24 +824,19 @@ bra9_864A:
 	TAY
 	LDA tbl9_865E,Y
 	STA Data0
-	LDA tbl9_865F,Y
+	LDA tbl9_865E+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl9_865E:
-	.byte $BB
-tbl9_865F:
-	.byte $A7
-	.byte $7B
-	.byte $AA
-	.byte $29
-	.byte $AB
-	.byte $68
-	.byte $86
-	.byte $88
-	.byte $AD
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr2_8668
+	.word ptr_AD88
+ptr2_8668:
 	JSR sub9_8698
-	JSR $BEBC
-	JSR $A74D
+	JSR jmp_54_BEBC
+	JSR jmp_54_A74D
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -883,7 +846,7 @@ tbl9_865F:
 	LDA #$10
 	STA PlayerXSpeed
 	LDA #$01
-	JSR $BCD4
+	JSR sub3_BCD4
 	LDA #$12
 	STA SFXRegister
 	LDX $A4
@@ -906,7 +869,7 @@ bra9_86A2:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
 	JSR sub9_8000
 bra9_86BA_RTS:
@@ -920,11 +883,12 @@ loc9_86BB:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
 	JSR sub9_8000
 bra9_86D3_RTS:
 	RTS
+obj_h96:
 	LDX $A4
 	LDA #$06
 	STA $25
@@ -940,7 +904,7 @@ bra9_86D3_RTS:
 	BEQ bra9_86F8
 	CMP #$FF
 	BEQ bra9_86F8
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_86F8:
 	LDA ObjectYPos,X
 	SEC
@@ -982,26 +946,21 @@ bra9_8740:
 	TAY
 	LDA tbl9_8754,Y
 	STA Data0
-	LDA tbl9_8755,Y
+	LDA tbl9_8754+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl9_8754:
-	.byte $BB
-tbl9_8755:
-	.byte $A7
-	.byte $7B
-	.byte $AA
-	.byte $29
-	.byte $AB
-	.byte $5E
-	.byte $87
-	.byte $88
-	.byte $AD
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr2_875E
+	.word ptr_AD88
+ptr2_875E:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_87D7
 	JSR sub9_887E
-	JSR $B077
+	JSR sub3_B077
 	BEQ bra9_87D6_RTS
 	LDA #$00
 	STA ObjectVariables,X
@@ -1016,7 +975,7 @@ tbl9_8755:
 	BEQ bra9_878E
 	CMP #$FF
 	BEQ bra9_878E
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_878E:
 	LDA ObjectYPos,X
 	SEC
@@ -1063,8 +1022,8 @@ bra9_87D7:
 bra9_87E5:
 	JSR sub9_8865
 loc9_87E8:
-	JSR $BC3E
-	JSR $A74D
+	JSR jmp_54_BC3E
+	JSR jmp_54_A74D
 	LDX $A4
 	LDA ObjectVariables,X
 	BEQ bra9_880B_RTS
@@ -1082,10 +1041,10 @@ bra9_880B_RTS:
 bra9_880C:
 	DEC ObjectSlot,X
 	DEC ObjectSlot,X
-	JSR $B5BB
+	JSR jmp_54_B5BB
 	LDA #$03
 	STA ObjectVariables,X
-	JMP loc9_8572
+	JMP obj_h94
 sub9_881D:
 	LDA ObjectState,X
 	AND #$20
@@ -1098,7 +1057,7 @@ sub9_881D:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
 	JSR sub9_8000
 bra9_883C:
@@ -1119,7 +1078,7 @@ bra9_884C:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
 	JSR sub9_8000
 bra9_8864_RTS:
@@ -1133,7 +1092,7 @@ sub9_8865:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
 	JSR sub9_8000
 bra9_887D_RTS:
@@ -1147,7 +1106,7 @@ sub9_887E:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
 	JSR sub9_8000
 bra9_8896_RTS:
@@ -1188,7 +1147,7 @@ bra9_88B6:
 	LDY #$C0
 bra9_88DA:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 	LDX $A4
 	LDY #$00
@@ -1215,7 +1174,7 @@ bra9_88ED:
 	LDY #$C0
 bra9_890F:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 tbl9_8915:
 	.byte $1D
@@ -1255,6 +1214,7 @@ tbl9_8916:
 	.byte $0E
 	.byte $06
 	.byte $07
+obj_h9A:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_89AE
@@ -1271,7 +1231,7 @@ tbl9_8916:
 	BEQ bra9_8960
 	CMP #$FF
 	BEQ bra9_8960
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_8960:
 	LDA ObjectYPos,X
 	SEC
@@ -1325,7 +1285,7 @@ bra9_89AE:
 	BEQ bra9_89D0
 	CMP #$FF
 	BEQ bra9_89D0
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_89D0:
 	LDA ObjectYPos,X
 	SEC
@@ -1367,26 +1327,21 @@ bra9_8A18:
 	TAY
 	LDA tbl9_8A2C,Y
 	STA Data0
-	LDA tbl9_8A2D,Y
+	LDA tbl9_8A2C+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl9_8A2C:
-	.byte $BB
-tbl9_8A2D:
-	.byte $A7
-	.byte $7B
-	.byte $AA
-	.byte $29
-	.byte $AB
-	.byte $36
-	.byte $8A
-	.byte $88
-	.byte $AD
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr2_8A36
+	.word ptr_AD88
+ptr2_8A36:
 	JSR sub9_8A45
-	JSR $A6D4
-	JSR $BC3E
-	JSR $A74D
-	JMP $BF74
+	JSR jmp_54_A6D4
+	JSR jmp_54_BC3E
+	JSR jmp_54_A74D
+	JMP jmp_54_BF74
 sub9_8A45:
 	LDA $062B
 	AND #$02
@@ -1396,7 +1351,7 @@ sub9_8A45:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
 	JSR sub9_8000
 bra9_8A5D_RTS:
@@ -1412,7 +1367,7 @@ bra9_8A5D_RTS:
 	TAX
 	LDA tbl9_8A8A,X
 	STA Data0
-	LDA tbl9_8A8B,X
+	LDA tbl9_8A8A+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -1422,14 +1377,12 @@ bra9_8A5D_RTS:
 	LDY #$C0
 bra9_8A84:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 tbl9_8A8A:
-	.byte $8E
-tbl9_8A8B:
-	.byte $8A
-	.byte $95
-	.byte $8A
+	.word SpinyWalk1
+	.word SpinyWalk2
+SpinyWalk1:
 	.byte $02
 	.byte $02
 	.byte $A6
@@ -1437,6 +1390,7 @@ tbl9_8A8B:
 	.byte $15
 	.byte $16
 	.byte $17
+SpinyWalk2:
 	.byte $02
 	.byte $02
 	.byte $A6
@@ -1458,6 +1412,7 @@ tbl9_8A8B:
 	.byte $1D
 	.byte $20
 	.byte $21
+obj_h80:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra9_8AB4
@@ -1474,7 +1429,7 @@ bra9_8AB4:
 	BEQ bra9_8AD0
 	CMP #$FF
 	BEQ bra9_8AD0
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_8AD0:
 	LDA ObjectYPos,X
 	SEC
@@ -1513,7 +1468,7 @@ bra9_8B18:
 	LDA ObjectVariables,X
 	CMP #$81
 	BCS bra9_8B23
-	JSR $B5BB
+	JSR jmp_54_B5BB
 	RTS
 bra9_8B23:
 	JSR $B4FC
@@ -1533,7 +1488,7 @@ loc9_8B27:
 	BEQ bra9_8B49
 	CMP #$FF
 	BEQ bra9_8B49
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_8B49:
 	LDA ObjectYPos,X
 	SEC
@@ -1575,21 +1530,16 @@ bra9_8B91:
 	TAY
 	LDA tbl9_8BA5,Y
 	STA Data0
-	LDA tbl9_8BA6,Y
+	LDA tbl9_8BA5+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl9_8BA5:
-	.byte $BB
-tbl9_8BA6:
-	.byte $A7
-	.byte $7B
-	.byte $AA
-	.byte $29
-	.byte $AB
-	.byte $AF
-	.byte $8B
-	.byte $88
-	.byte $AD
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr2_8B8F
+	.word ptr_AD88
+ptr2_8B8F:
 	LDA FrameCount
 	AND #$00
 	BEQ bra9_8BB6
@@ -1600,12 +1550,12 @@ bra9_8BB6:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
-	JSR $B132
-	JSR $A6D4
-	JSR $BEBC
-	JSR $A74D
+	JSR sub3_B132
+	JSR jmp_54_A6D4
+	JSR jmp_54_BEBC
+	JSR jmp_54_A74D
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -1615,7 +1565,7 @@ bra9_8BB6:
 	LDA #$10
 	STA PlayerXSpeed
 	LDA #$01
-	JSR $BCD4
+	JSR sub3_BCD4
 	LDA #$12
 	STA SFXRegister
 	LDX $A4
@@ -1629,9 +1579,9 @@ bra9_8BB6:
 	LDA #$00
 	ASL
 	TAX
-	LDA tbl9_8C1C,X
+	LDA BulletBillMappings,X
 	STA Data0
-	LDA tbl9_8C1D,X
+	LDA BulletBillMappings+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -1641,19 +1591,16 @@ bra9_8BB6:
 	LDY #$C0
 bra9_8C16:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
-tbl9_8C1C:
-	.byte $1E
-tbl9_8C1D:
-	.byte $8C
-	.byte $02
-	.byte $02
-	.byte $A6
-	.byte $2A
-	.byte $2B
-	.byte $2C
-	.byte $2D
+BulletBillMappings:
+	.word BulletBill
+BulletBill:
+	.byte $02	;Tile Width
+	.byte $02	;Tile Height
+	.byte $A6	;1K CHR Bank
+	.byte $2A, $2B
+	.byte $2C, $2D
 	LDY #$00
 	LDX $A4
 	LDA ObjectState,X
@@ -1666,9 +1613,9 @@ bra9_8C38:
 	TYA
 	ASL
 	TAX
-	LDA tbl9_8C58,X
+	LDA VerticalBillMappings,X
 	STA Data0
-	LDA tbl9_8C59,X
+	LDA VerticalBillMappings+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -1678,28 +1625,24 @@ bra9_8C38:
 	LDY #$C0
 bra9_8C52:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
-tbl9_8C58:
-	.byte $5C
-tbl9_8C59:
-	.byte $8C
-	.byte $63
-	.byte $8C
-	.byte $02
-	.byte $02
-	.byte $A6
-	.byte $2E
-	.byte $2F
-	.byte $30
-	.byte $31
-	.byte $02
-	.byte $02
-	.byte $A6
-	.byte $30
-	.byte $31
-	.byte $2E
-	.byte $2F
+VerticalBillMappings:
+	.word VerticalBill1
+	.word VerticalBill2
+VerticalBill1:
+	.byte $02	;Tile Width
+	.byte $02	;Tile Height
+	.byte $A6	;1K CHR Bank
+	.byte $2E, $2F
+	.byte $30, $31
+VerticalBill2:
+	.byte $02	;Tile Width
+	.byte $02	;Tile Height
+	.byte $A6	;1K CHR Bank
+	.byte $30, $31
+	.byte $2E, $2F
+obj_h9C:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_8C76
@@ -1720,7 +1663,7 @@ bra9_8C76:
 	BEQ bra9_8C98
 	CMP #$FF
 	BEQ bra9_8C98
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_8C98:
 	LDA ObjectYPos,X
 	SEC
@@ -1762,21 +1705,16 @@ bra9_8CE0:
 	TAY
 	LDA tbl9_8CF4,Y
 	STA Data0
-	LDA tbl9_8CF5,Y
+	LDA tbl9_8CF4+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl9_8CF4:
-	.byte $BB
-tbl9_8CF5:
-	.byte $A7
-	.byte $7B
-	.byte $AA
-	.byte $29
-	.byte $AB
-	.byte $FE
-	.byte $8C
-	.byte $88
-	.byte $AD
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr2_8CFE
+	.word ptr_AD88
+ptr2_8CFE:
 	LDA ObjectVariables,X
 	CMP #$06
 	BCS bra9_8D73
@@ -1796,7 +1734,7 @@ bra9_8D0E:
 	BEQ bra9_8D2A
 	CMP #$FF
 	BEQ bra9_8D2A
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_8D2A:
 	LDA ObjectYPos,X
 	SEC
@@ -1835,8 +1773,8 @@ bra9_8D72_RTS:
 	RTS
 bra9_8D73:
 	JSR sub9_8D7C
-	JSR $BC3E
-	JMP $BF74
+	JSR jmp_54_BC3E
+	JMP jmp_54_BF74
 sub9_8D7C:
 	LDA FrameCount
 	AND #$02
@@ -1848,7 +1786,7 @@ bra9_8D83:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
 	JSR $B485
 	RTS
@@ -1876,7 +1814,7 @@ bra9_8DB6:
 	TAX
 	LDA tbl9_8DD6,X
 	STA Data0
-	LDA tbl9_8DD7,X
+	LDA tbl9_8DD6+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -1886,18 +1824,14 @@ bra9_8DB6:
 	LDY #$C0
 bra9_8DD0:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 tbl9_8DD6:
-	.byte $DE
-tbl9_8DD7:
-	.byte $8D
-	.byte $E5
-	.byte $8D
-	.byte $EC
-	.byte $8D
-	.byte $F3
-	.byte $8D
+	.word VPodoboo1
+	.word VPodoboo2
+	.word VPodoboo3
+	.word VPodoboo4
+VPodoboo1:
 	.byte $02
 	.byte $02
 	.byte $AD
@@ -1905,6 +1839,7 @@ tbl9_8DD7:
 	.byte $2B
 	.byte $2E
 	.byte $2F
+VPodoboo2:
 	.byte $02
 	.byte $02
 	.byte $AD
@@ -1912,6 +1847,7 @@ tbl9_8DD7:
 	.byte $2D
 	.byte $30
 	.byte $31
+VPodoboo3:
 	.byte $02
 	.byte $02
 	.byte $AD
@@ -1919,6 +1855,7 @@ tbl9_8DD7:
 	.byte $2F
 	.byte $2A
 	.byte $2B
+VPodoboo4:
 	.byte $02
 	.byte $02
 	.byte $AD
@@ -1926,6 +1863,7 @@ tbl9_8DD7:
 	.byte $31
 	.byte $2C
 	.byte $2D
+obj_h9E:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra9_8E04
@@ -1942,7 +1880,7 @@ bra9_8E04:
 	BEQ bra9_8E20
 	CMP #$FF
 	BEQ bra9_8E20
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_8E20:
 	LDA ObjectYPos,X
 	SEC
@@ -1994,7 +1932,7 @@ loc9_8E6B:
 	BEQ bra9_8E8D
 	CMP #$FF
 	BEQ bra9_8E8D
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_8E8D:
 	LDA ObjectYPos,X
 	SEC
@@ -2036,30 +1974,20 @@ bra9_8ED5:
 	TAY
 	LDA tbl9_8EE9,Y
 	STA Data0
-	LDA tbl9_8EEA,Y
+	LDA tbl9_8EE9+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl9_8EE9:
-	.byte $BB
-tbl9_8EEA:
-	.byte $A7
-	.byte $7B
-	TAX
-	.byte $29
-	.byte $AB
-	.byte $F3
-	.byte $8E
-	DEY
-	.byte $AD
-	.byte $20
-	.byte $FC
-	.byte $8E
-	.byte $20
-	.byte $3E
-	.byte $BC
-	.byte $4C
-	.byte $74
-	.byte $BF
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr2_8EF3
+	.word ptr_AD88
+ptr2_8EF3:
+	JSR sub9_8EFC	;unlogged
+	JSR jmp_54_BC3E	;unlogged
+	JMP jmp_54_BF74	;unlogged
+sub9_8EFC:
 	LDA FrameCount
 	AND #$04
 	BEQ bra9_8F03
@@ -2070,9 +1998,9 @@ bra9_8F03:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
-	JSR $B132
+	JSR sub3_B132
 	RTS
 	LDX $A4
 	LDA ObjectState,X
@@ -2107,7 +2035,7 @@ bra9_8F39:
 	LDY #$C0
 bra9_8F53:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 tbl9_8F59:
 	.byte $61
@@ -2147,6 +2075,7 @@ tbl9_8F5A:
 	.byte $39
 	.byte $2D
 	.byte $2E
+obj_h82:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra9_8F87
@@ -2163,7 +2092,7 @@ bra9_8F87:
 	BEQ bra9_8FA3
 	CMP #$FF
 	BEQ bra9_8FA3
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_8FA3:
 	LDA ObjectYPos,X
 	SEC
@@ -2199,7 +2128,7 @@ loc9_8FE5:
 	BEQ bra9_8FEB
 	RTS
 bra9_8FEB:
-	JSR $B5BB
+	JSR jmp_54_B5BB
 	RTS
 loc9_8FEF:
 	LDA #$07
@@ -2216,7 +2145,7 @@ loc9_8FEF:
 	BEQ bra9_9011
 	CMP #$FF
 	BEQ bra9_9011
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_9011:
 	LDA ObjectYPos,X
 	SEC
@@ -2258,19 +2187,15 @@ bra9_9059:
 	TAY
 	LDA tbl9_906D,Y
 	STA Data0
-	LDA tbl9_906E,Y
+	LDA tbl9_906D+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl9_906D:
-	.byte $BB
-tbl9_906E:
-	.byte $A7
-	.byte $7B
-	.byte $AA
-	.byte $29
-	.byte $AB
-	.byte $75
-	.byte $90
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr2_9075
+ptr2_9075:
 	LDA FrameCount
 	AND #$00
 	BEQ bra9_907C
@@ -2281,11 +2206,11 @@ bra9_907C:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
-	JSR $B132
-	JSR $BC3E
-	JMP $BF74
+	JSR sub3_B132
+	JSR jmp_54_BC3E
+	JMP jmp_54_BF74
 	LDX $A4
 	LDA ObjectState,X
 	AND #$40
@@ -2301,7 +2226,7 @@ bra9_90A8:
 	TAX
 	LDA tbl9_90C8,X
 	STA Data0
-	LDA tbl9_90C9,X
+	LDA tbl9_90C8+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -2311,14 +2236,12 @@ bra9_90A8:
 	LDY #$C0
 bra9_90C2:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 tbl9_90C8:
-	.byte $CC
-tbl9_90C9:
-	.byte $90
-	.byte $D5
-	.byte $90
+	.word Eerie1
+	.word Eerie2
+Eerie1:
 	.byte $02
 	.byte $03
 	.byte $AB
@@ -2328,6 +2251,7 @@ tbl9_90C9:
 	.byte $14
 	.byte $1A
 	.byte $1B
+Eerie2:
 	.byte $02
 	.byte $03
 	.byte $AB
@@ -2337,6 +2261,7 @@ tbl9_90C9:
 	.byte $16
 	.byte $1A
 	.byte $1C
+obj_hAA:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra9_90E8
@@ -2353,7 +2278,7 @@ bra9_90E8:
 	BEQ bra9_9104
 	CMP #$FF
 	BEQ bra9_9104
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_9104:
 	LDA ObjectYPos,X
 	SEC
@@ -2405,7 +2330,7 @@ loc9_914F:
 	BEQ bra9_9171
 	CMP #$FF
 	BEQ bra9_9171
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_9171:
 	LDA ObjectYPos,X
 	SEC
@@ -2447,21 +2372,16 @@ bra9_91B9:
 	TAY
 	LDA tbl9_91CD,Y
 	STA Data0
-	LDA tbl9_91CE,Y
+	LDA tbl9_91CD+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl9_91CD:
-	.byte $BB
-tbl9_91CE:
-	.byte $A7
-	.byte $7B
-	.byte $AA
-	.byte $29
-	.byte $AB
-	.byte $D7
-	.byte $91
-	.byte $88
-	.byte $AD
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr2_91D7
+	.word ptr_AD88
+ptr2_91D7:
 	LDA ObjectVariables,X
 	CMP #$40
 	BCS bra9_91E4
@@ -2470,9 +2390,9 @@ tbl9_91CE:
 bra9_91E4:
 	JSR sub9_9260
 loc9_91E7:
-	JSR $A6D4
-	JSR $BEBC
-	JSR $A74D
+	JSR jmp_54_A6D4
+	JSR jmp_54_BEBC
+	JSR jmp_54_A74D
 	LDA ObjectVariables,X
 	CMP #$40
 	BCS bra9_9221
@@ -2485,7 +2405,7 @@ loc9_91E7:
 	LDA #$10
 	STA PlayerXSpeed
 	LDA #$01
-	JSR $BCD4
+	JSR sub3_BCD4
 	LDA #$12
 	STA SFXRegister
 	LDX $A4
@@ -2497,7 +2417,7 @@ loc9_91E7:
 	STA ObjectVariables,X
 	RTS
 bra9_9221:
-	JMP $BF74
+	JMP jmp_54_BF74
 sub9_9224:
 	LDA FrameCount
 	AND #$02
@@ -2509,9 +2429,9 @@ bra9_922B:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
-	JSR $B39B
+	JSR jmp_54_B39B
 	LDX $A4
 	LDA ObjectVariables,X
 	BEQ bra9_9247
@@ -2542,9 +2462,9 @@ bra9_9267:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
-	JSR $B39B
+	JSR jmp_54_B39B
 	RTS
 	LDX $A4
 	LDA ObjectVariables,X
@@ -2575,7 +2495,7 @@ bra9_929B:
 	TAX
 	LDA tbl9_92D0,X
 	STA Data0
-	LDA tbl9_92D1,X
+	LDA tbl9_92D0+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -2585,7 +2505,7 @@ bra9_929B:
 	LDY #$C0
 bra9_92BD:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 tbl9_92C3:
 	.byte $02
@@ -2602,15 +2522,11 @@ tbl9_92C3:
 	.byte $02
 	.byte $02
 tbl9_92D0:
-	.byte $D8
-tbl9_92D1:
-	.byte $92
-	.byte $DF
-	.byte $92
-	.byte $E6
-	.byte $92
-	.byte $ED
-	.byte $92
+	.word BonyBeetle1
+	.word BonyBeetle2
+	.word BonyBeetle3
+	.word BonyBeetle4
+BonyBeetle1:
 	.byte $02
 	.byte $02
 	.byte $AD
@@ -2618,6 +2534,7 @@ tbl9_92D1:
 	.byte $02
 	.byte $09
 	.byte $0A
+BonyBeetle2:
 	.byte $02
 	.byte $02
 	.byte $AD
@@ -2625,6 +2542,7 @@ tbl9_92D1:
 	.byte $04
 	.byte $0B
 	.byte $0C
+BonyBeetle3:
 	.byte $02
 	.byte $02
 	.byte $AD
@@ -2632,6 +2550,7 @@ tbl9_92D1:
 	.byte $08
 	.byte $0F
 	.byte $10
+BonyBeetle4:
 	.byte $02
 	.byte $02
 	.byte $AD
@@ -2639,6 +2558,7 @@ tbl9_92D1:
 	.byte $06
 	.byte $0D
 	.byte $0E
+obj_hAC:
 	LDX $A4
 	LDA ObjectVariables,X
 	CMP #$05
@@ -2659,7 +2579,7 @@ loc9_9306:
 	BEQ bra9_9322
 	CMP #$FF
 	BEQ bra9_9322
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_9322:
 	LDA ObjectYPos,X
 	SEC
@@ -2719,9 +2639,9 @@ bra9_938C:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
-	JSR $B132
+	JSR sub3_B132
 	RTS
 sub9_939E:
 	LDA FrameCount
@@ -2734,7 +2654,7 @@ bra9_93A5:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
 	JSR $B485
 	RTS
@@ -2753,7 +2673,7 @@ bra9_93CC:
 	TAX
 	LDA tbl9_93EC,X
 	STA Data0
-	LDA tbl9_93ED,X
+	LDA tbl9_93EC+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -2763,14 +2683,12 @@ bra9_93CC:
 	LDY #$C0
 bra9_93E6:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 tbl9_93EC:
-	.byte $F0
-tbl9_93ED:
-	.byte $93
-	.byte $F9
-	.byte $93
+	.word StunBonyBeetle1
+	.word StunBonyBeetle2
+StunBonyBeetle1:
 	.byte $03
 	.byte $02
 	.byte $AD
@@ -2780,6 +2698,7 @@ tbl9_93ED:
 	.byte $15
 	.byte $16
 	.byte $17
+StunBonyBeetle2:
 	.byte $03
 	.byte $02
 	.byte $AD
@@ -2789,6 +2708,7 @@ tbl9_93ED:
 	.byte $18
 	.byte $19
 	.byte $1A
+obj_h8A:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_9470
@@ -2803,7 +2723,7 @@ tbl9_93ED:
 	BEQ bra9_9425
 	CMP #$FF
 	BEQ bra9_9425
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_9425:
 	LDA ObjectYPos,X
 	SEC
@@ -2899,22 +2819,18 @@ bra9_94DA:
 	TAY
 	LDA tbl9_94EE,Y
 	STA Data0
-	LDA tbl9_94EF,Y
+	LDA tbl9_94EE+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl9_94EE:
-	.byte $BB
-tbl9_94EF:
-	.byte $A7
-	.byte $7B
-	.byte $AA
-	.byte $29
-	.byte $AB
-	.byte $F6
-	.byte $94
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr2_94F6
+ptr2_94F6:
 	JSR sub9_9500
-	JSR $BEBC
-	JSR $BF74
+	JSR jmp_54_BEBC
+	JSR jmp_54_BF74
 	RTS
 sub9_9500:
 	LDA FrameCount
@@ -2927,9 +2843,9 @@ bra9_9507:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
-	JSR $B132
+	JSR sub3_B132
 	RTS
 	LDX $A4
 	LDA ObjectState,X
@@ -2950,7 +2866,7 @@ bra9_9536:
 	TAX
 	LDA tbl9_9556,X
 	STA Data0
-	LDA tbl9_9557,X
+	LDA tbl9_9556+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -2960,16 +2876,13 @@ bra9_9536:
 	LDY #$C0
 bra9_9550:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 tbl9_9556:
-	.byte $5C
-tbl9_9557:
-	.byte $95
-	.byte $65
-	.byte $95
-	.byte $6E
-	.byte $95
+	.word FishBones1
+	.word FishBones2
+	.word FishBones3
+FishBones1:
 	.byte $03
 	.byte $02
 	.byte $AD
@@ -2979,6 +2892,7 @@ tbl9_9557:
 	.byte $1E
 	.byte $1F
 	.byte $20
+FishBones2:
 	.byte $03
 	.byte $02
 	.byte $AD
@@ -2988,6 +2902,7 @@ tbl9_9557:
 	.byte $21
 	.byte $1F
 	.byte $20
+FishBones3:
 	.byte $03
 	.byte $02
 	.byte $AD
@@ -2997,6 +2912,7 @@ tbl9_9557:
 	.byte $1E
 	.byte $1F
 	.byte $23
+obj_h8C:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3009,7 +2925,7 @@ tbl9_9557:
 	BEQ bra9_9595
 	CMP #$FF
 	BEQ bra9_9595
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_9595:
 	LDA ObjectYPos,X
 	SEC
@@ -3080,10 +2996,10 @@ bra9_9621:
 	LDA $062B
 	AND #$03
 	BNE bra9_962B
-	JSR $BBC3
+	JSR jmp_54_BBC3
 bra9_962B:
-	JSR $BEBC
-	JSR $BF74
+	JSR jmp_54_BEBC
+	JSR jmp_54_BF74
 	RTS
 	LDY #$00
 	LDX $A4
@@ -3092,7 +3008,7 @@ bra9_962B:
 	TAX
 	LDA tbl9_9657,X
 	STA Data0
-	LDA tbl9_9658,X
+	LDA tbl9_9657+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -3102,12 +3018,11 @@ bra9_962B:
 	LDY #$C0
 bra9_9651:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 tbl9_9657:
-	.byte $59
-tbl9_9658:
-	.byte $96
+	.word SpikeBall
+SpikeBall:
 	.byte $04
 	.byte $04
 	.byte $AC
@@ -3127,6 +3042,7 @@ tbl9_9658:
 	.byte $0E
 	.byte $0F
 	.byte $10
+obj_hA4:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra9_9676
@@ -3143,7 +3059,7 @@ bra9_9676:
 	BEQ bra9_9692
 	CMP #$FF
 	BEQ bra9_9692
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_9692:
 	LDA ObjectYPos,X
 	SEC
@@ -3195,7 +3111,7 @@ loc9_96DD:
 	BEQ bra9_96FF
 	CMP #$FF
 	BEQ bra9_96FF
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_96FF:
 	LDA ObjectYPos,X
 	SEC
@@ -3237,25 +3153,20 @@ bra9_9747:
 	TAY
 	LDA tbl9_975B,Y
 	STA Data0
-	LDA tbl9_975C,Y
+	LDA tbl9_975B+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl9_975B:
-	.byte $BB
-tbl9_975C:
-	.byte $A7
-	.byte $7B
-	.byte $AA
-	.byte $29
-	.byte $AB
-	.byte $65
-	.byte $97
-	.byte $88
-	.byte $AD
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr2_9765
+	.word ptr_AD88
+ptr2_9765:
 	JSR sub9_978D
-	JSR $A6D4
-	JSR $BEBC
-	JSR $A74D
+	JSR jmp_54_A6D4
+	JSR jmp_54_BEBC
+	JSR jmp_54_A74D
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -3265,7 +3176,7 @@ tbl9_975C:
 	LDA #$10
 	STA PlayerXSpeed
 	LDA #$01
-	JSR $BCD4
+	JSR sub3_BCD4
 	LDA #$12
 	STA SFXRegister
 	JMP loc9_98D1
@@ -3280,10 +3191,11 @@ bra9_9794:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
-	JSR $B39B
+	JSR jmp_54_B39B
 	RTS
+obj_hA2:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra9_97B0
@@ -3300,7 +3212,7 @@ bra9_97B0:
 	BEQ bra9_97CC
 	CMP #$FF
 	BEQ bra9_97CC
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_97CC:
 	LDA ObjectYPos,X
 	SEC
@@ -3352,7 +3264,7 @@ loc9_9817:
 	BEQ bra9_9839
 	CMP #$FF
 	BEQ bra9_9839
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_9839:
 	LDA ObjectYPos,X
 	SEC
@@ -3394,21 +3306,16 @@ bra9_9881:
 	TAY
 	LDA tbl9_9895,Y
 	STA Data0
-	LDA tbl9_9896,Y
+	LDA tbl9_9895+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl9_9895:
-	.byte $BB
-tbl9_9896:
-	.byte $A7
-	.byte $7B
-	.byte $AA
-	.byte $29
-	.byte $AB
-	.byte $9F
-	.byte $98
-	.byte $88
-	.byte $AD
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr2_989F
+	.word ptr_AD88
+ptr2_989F:
 	LDA ObjectVariables,X
 	CMP #$40
 	BCS bra9_98AC
@@ -3417,9 +3324,9 @@ tbl9_9896:
 bra9_98AC:
 	JSR sub9_991E
 loc9_98AF:
-	JSR $A6D4
-	JSR $BEBC
-	JSR $A74D
+	JSR jmp_54_A6D4
+	JSR jmp_54_BEBC
+	JSR jmp_54_A74D
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -3429,7 +3336,7 @@ loc9_98AF:
 	LDA #$10
 	STA PlayerXSpeed
 	LDA #$01
-	JSR $BCD4
+	JSR sub3_BCD4
 	LDA #$12
 	STA SFXRegister
 loc9_98D1:
@@ -3452,9 +3359,9 @@ bra9_98E9:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
-	JSR $B39B
+	JSR jmp_54_B39B
 	LDX $A4
 	LDA ObjectVariables,X
 	BEQ bra9_9905
@@ -3485,9 +3392,9 @@ bra9_9925:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
-	JSR $B39B
+	JSR jmp_54_B39B
 	LDA ObjectVariables,X
 	CMP #$46
 	BNE bra9_997F_RTS
@@ -3547,7 +3454,7 @@ bra9_99A2:
 	TAX
 	LDA tbl9_99CA,X
 	STA Data0
-	LDA tbl9_99CB,X
+	LDA tbl9_99CA+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -3557,16 +3464,13 @@ bra9_99A2:
 	LDY #$C0
 bra9_99C4:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 tbl9_99CA:
-	.byte $D0
-tbl9_99CB:
-	.byte $99
-	.byte $DF
-	.byte $99
-	.byte $EE
-	.byte $99
+	.word DryBones1
+	.word DryBones2
+	.word DryBones3
+DryBones1:
 	.byte $03
 	.byte $04
 	.byte $AC
@@ -3582,6 +3486,7 @@ tbl9_99CB:
 	.byte $28
 	.byte $29
 	.byte $2A
+DryBones2:
 	.byte $03
 	.byte $04
 	.byte $AC
@@ -3597,6 +3502,7 @@ tbl9_99CB:
 	.byte $28
 	.byte $2B
 	.byte $2C
+DryBones3:
 	.byte $03
 	.byte $04
 	.byte $AC
@@ -3612,6 +3518,7 @@ tbl9_99CB:
 	.byte $FF
 	.byte $2D
 	.byte $2C
+obj_hA8:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3624,7 +3531,7 @@ tbl9_99CB:
 	BEQ bra9_9A1B
 	CMP #$FF
 	BEQ bra9_9A1B
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_9A1B:
 	LDA ObjectYPos,X
 	SEC
@@ -3695,7 +3602,7 @@ bra9_9AA2:
 	TAX
 	LDA tbl9_9AC2,X
 	STA Data0
-	LDA tbl9_9AC3,X
+	LDA tbl9_9AC2+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -3705,16 +3612,13 @@ bra9_9AA2:
 	LDY #$C0
 bra9_9ABC:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 tbl9_9AC2:
-	.byte $C8
-tbl9_9AC3:
-	.byte $9A
-	.byte $D7
-	.byte $9A
-	.byte $E6
-	.byte $9A
+	.word StunDryBones1
+	.word StunDryBones2
+	.word StunDryBones3
+StunDryBones1:
 	.byte $03
 	.byte $04
 	.byte $AC
@@ -3730,6 +3634,7 @@ tbl9_9AC3:
 	.byte $36
 	.byte $37
 	.byte $38
+StunDryBones2:
 	.byte $03
 	.byte $04
 	.byte $AC
@@ -3745,6 +3650,7 @@ tbl9_9AC3:
 	.byte $33
 	.byte $34
 	.byte $35
+StunDryBones3:
 	.byte $03
 	.byte $04
 	.byte $AC
@@ -3760,6 +3666,7 @@ tbl9_9AC3:
 	.byte $25
 	.byte $26
 	.byte $27
+obj_hA6:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3772,7 +3679,7 @@ tbl9_9AC3:
 	BEQ bra9_9B13
 	CMP #$FF
 	BEQ bra9_9B13
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_9B13:
 	LDA ObjectYPos,X
 	SEC
@@ -3818,11 +3725,11 @@ bra9_9B62:
 	TAY
 	LDA tbl9_9C5E,Y
 	STA Data0
-	LDA tbl9_9C5F,Y
+	LDA tbl9_9C5E+1,Y
 	STA Data0+1
-	JSR $B132
-	JSR $BEBC
-	JMP $BF74
+	JSR sub3_B132
+	JSR jmp_54_BEBC
+	JMP jmp_54_BF74
 	LDY #$00
 	LDX $A4
 	LDA FrameCount
@@ -3835,7 +3742,7 @@ bra9_9B62:
 	TAX
 	LDA tbl9_9BBA,X
 	STA Data0
-	LDA tbl9_9BBB,X
+	LDA tbl9_9BBA+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -3845,7 +3752,7 @@ bra9_9B62:
 	LDY #$C0
 bra9_9BA4:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 tbl9_9BAA:
 	.byte $00
@@ -3866,15 +3773,11 @@ tbl9_9BAB:
 	.byte $00
 	.byte $00
 tbl9_9BBA:
-	.byte $C2
-tbl9_9BBB:
-	.byte $9B
-	.byte $C9
-	.byte $9B
-	.byte $D0
-	.byte $9B
-	.byte $D7
-	.byte $9B
+	.word Bone1
+	.word Bone2
+	.word Bone3
+	.word Bone4
+Bone1:
 	.byte $02
 	.byte $02
 	.byte $AC
@@ -3882,6 +3785,7 @@ tbl9_9BBB:
 	.byte $31
 	.byte $39
 	.byte $3A
+Bone2:
 	.byte $02
 	.byte $02
 	.byte $AC
@@ -3889,6 +3793,7 @@ tbl9_9BBB:
 	.byte $32
 	.byte $FF
 	.byte $3B
+Bone3:
 	.byte $02
 	.byte $02
 	.byte $AC
@@ -3896,6 +3801,7 @@ tbl9_9BBB:
 	.byte $3A
 	.byte $FF
 	.byte $31
+Bone4:
 	.byte $02
 	.byte $02
 	.byte $AC
@@ -4032,39 +3938,28 @@ tbl9_9BBB:
 	.byte $01
 	.byte $01
 tbl9_9C5E:
-	.byte $78
-tbl9_9C5F:
-	.byte $9C
-	.byte $7B
-	.byte $9C
-	.byte $78
-	.byte $9C
-	.byte $7E
-	.byte $9C
-	.byte $9F
-	.byte $9C
-	.byte $CC
-	.byte $9C
-	.byte $ED
-	.byte $9C
-	.byte $F0
-	.byte $9C
-	.byte $3B
-	.byte $9D
-	.byte $BC
-	.byte $9D
-	.byte $F3
-	.byte $9D
-	.byte $84
-	.byte $9E
-	.byte $87
-	.byte $9E
+	.word ofs_9C78
+	.word ofs_9C7B
+	.word ofs_9C78
+	.word ofs_9C7E
+	.word ofs_9C9F
+	.word ofs_9CCC
+	.word ofs_9CED
+	.word ofs_9CF0
+	.word ofs_9D3B
+	.word ofs_9DBC
+	.word ofs_9DF3
+	.word ofs_9E84
+	.word ofs_9E87
+ofs_9C78:
 	.byte $03
 	.byte $00
 	.byte $80
+ofs_9C7B:
 	.byte $00
 	.byte $01
 	.byte $80
+ofs_9C7E:
 	.byte $01
 	.byte $00
 	.byte $01
@@ -4098,6 +3993,7 @@ tbl9_9C5F:
 	.byte $00
 	.byte $00
 	.byte $80
+ofs_9C9F:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -4143,6 +4039,7 @@ tbl9_9C5F:
 	.byte $00
 	.byte $00
 	.byte $80
+ofs_9CCC:
 	.byte $00
 	.byte $00
 	.byte $02
@@ -4176,9 +4073,11 @@ tbl9_9C5F:
 	.byte $00
 	.byte $08
 	.byte $80
+ofs_9CED:
 	.byte $02
 	.byte $00
 	.byte $80
+ofs_9CF0:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -4254,6 +4153,7 @@ tbl9_9C5F:
 	.byte $00
 	.byte $00
 	.byte $80
+ofs_9D3B:
 	.byte $02
 	.byte $02
 	.byte $02
@@ -4383,6 +4283,7 @@ tbl9_9C5F:
 	.byte $02
 	.byte $FE
 	.byte $80
+ofs_9DBC:
 	.byte $02
 	.byte $00
 	.byte $02
@@ -4438,6 +4339,7 @@ tbl9_9C5F:
 	.byte $02
 	.byte $00
 	.byte $80
+ofs_9DF3:
 	.byte $01
 	.byte $00
 	.byte $01
@@ -4583,9 +4485,11 @@ tbl9_9C5F:
 	.byte $00
 	.byte $00
 	.byte $80
+ofs_9E84:
 	.byte $01
 	.byte $00
 	.byte $80
+ofs_9E87:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -4623,7 +4527,7 @@ tbl9_9C5F:
 	.byte $81
 	.byte $9E
 	STA Data0+1
-	JMP (Data0)
+	JMP (Data0)	;This code seems to be cut off/overwritten
 	.byte $BB
 	.byte $A7
 	.byte $7B
@@ -4632,7 +4536,7 @@ tbl9_9C5F:
 	.byte $AB
 	.byte $B8
 	.byte $9E
-	LDA ObjXScreenDistance,X
+	LDA ObjXScreenDistance,X	;The rest of the code in this is unused
 	BPL bra9_9EE4_RTS
 	LDA #$23
 	STA MusicRegister
@@ -4678,7 +4582,7 @@ bra9_9EF6_RTS:
 	BEQ bra9_9F15
 	CMP #$FF
 	BEQ bra9_9F15
-	JMP $A6B5
+	JMP loc3_A6B5
 bra9_9F15:
 	LDA ObjectYPos,X
 	SEC

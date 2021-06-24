@@ -7,7 +7,7 @@ jmp_63_E000:
 	TYA
 	PHA
 	LDA PPUMaskRegister
-	STA PPUMask			;Copy software register to hardware register
+	STA PPUMask	;Copy software register to hardware register
 	LDA XScroll
 	STA PPUScroll	;Set horizontal scroll in the PPU
 	LDA YScroll
@@ -326,15 +326,16 @@ loc3_E2BE:
 	TAY 
 	LDA tbl3_E2DB,Y 
 	STA Data0
-	LDA tbl3_E2DC,Y
+	LDA tbl3_E2DB+1,Y
 	STA Data0+1
 	JMP (Data0)
-tbl3_E2DB:	.byte $E5
-tbl3_E2DC:	.byte $E2
-			.word pnt2_E316
-			.word pnt2_E316
-			.word pnt2_E316
-			.word pnt2_E316
+tbl3_E2DB:
+	.word pnt2_E2E5
+	.word pnt2_E316
+	.word pnt2_E316
+	.word pnt2_E316
+	.word pnt2_E316
+pnt2_E2E5:
 	LDA ButtonsPressed
 	AND #buttonA
 	BEQ bra3_E2FE	;If the A button is pressed,
@@ -369,27 +370,28 @@ loc3_E317:
 	LDA tbl3_E329+1,Y
 	STA Data0+1
 	JMP (Data0)
-tbl3_E329:	.word pnt2_E353	;Event 0
-			.word pnt2_E372	;Go out of door
-			.word pnt2_E409	;Normal/Nothing
-			.word pnt2_E4CA	;Door enter
-			.word pnt2_E534	;Death
-			.word pnt2_E610	;Castle intro
-			.word pnt2_E6ED	;Level complete
-			.word pnt2_E79E	;Event 7
-			.word pnt2_E7A2	;Event 8
-			.word pnt2_E7D0	;Event 9
-			.word pnt2_E85F	;JY Easter egg
-			.word pnt2_ED75	;Bonus pipe down
-			.word pnt2_EE02	;Walk out pipe
-			.word pnt2_EE23	;Go out of pipe up
-			.word pnt2_EE59	;Enter 1st cannon pipe
-			.word pnt2_EE96	;Launch out of 1st cannon
-			.word pnt2_EEC8	;Enter 2nd cannon pipe
-			.word pnt2_EE96	;Launch out of 2nd cannon
-			.word pnt2_EEC8	;Enter pipe up
-			.word pnt2_ED75
-			.word pnt2_EEFD
+tbl3_E329:
+	.word pnt2_E353	;Event 0
+	.word pnt2_E372	;Go out of door
+	.word pnt2_E409	;Normal/Nothing
+	.word pnt2_E4CA	;Door enter
+	.word pnt2_E534	;Death
+	.word pnt2_E610	;Castle intro
+	.word pnt2_E6ED	;Level complete
+	.word pnt2_E79E	;Event 7
+	.word pnt2_E7A2	;Event 8
+	.word pnt2_E7D0	;Event 9
+	.word pnt2_E85F	;JY Easter egg
+	.word pnt2_ED75	;Bonus pipe down
+	.word pnt2_EE02	;Walk out pipe
+	.word pnt2_EE23	;Go out of pipe up
+	.word pnt2_EE59	;Enter 1st cannon pipe
+	.word pnt2_EE96	;Launch out of 1st cannon
+	.word pnt2_EEC8	;Enter 2nd cannon pipe
+	.word pnt2_EE96	;Launch out of 2nd cannon
+	.word pnt2_EEC8	;Enter pipe up
+	.word pnt2_ED75
+	.word pnt2_EEFD
 pnt2_E353:
 	LDA Player2YoshiStatus
 	STA Player1YoshiStatus	;Copy player 2's yoshi to current yoshi
@@ -412,8 +414,9 @@ pnt2_E372:
 	LDA tbl3_E384+1,Y
 	STA Data0+1	;Load upper byte of pointer
 	JMP (Data0)	;Jump to loaded Data0
-tbl3_E384:	.word pnt2_E388
-			.word pnt2_E3DD
+tbl3_E384:
+	.word pnt2_E388
+	.word pnt2_E3DD
 pnt2_E388:
 	LDA #$00
 	STA PPUCtrl
@@ -509,7 +512,7 @@ bra3_E445:
 	INC PSwitchFrameCount	;Increment frame count
 	LDA PSwitchFrameCount
 	CMP #$3B
-	BCC bra3_E45F			;After 60 frames pass,
+	BCC bra3_E45F	;After 60 frames pass,
 	DEC PSwitchSeconds		;Decrease timer
 	LDA #$00
 	STA PSwitchFrameCount	;Clear frame count
@@ -570,10 +573,11 @@ pnt2_E4CA:
 	LDA tbl3_E4DC+1,Y
 	STA Data0+1
 	JMP (Data0)
-tbl3_E4DC:	.word pnt2_E4E4
-			.word pnt2_E4EC
-			.word pnt2_E4F7
-			.word pnt2_E509
+tbl3_E4DC:
+	.word pnt2_E4E4
+	.word pnt2_E4EC
+	.word pnt2_E4F7
+	.word pnt2_E509
 pnt2_E4E4:
 	LDA #sfxWarp
 	STA SFXRegister	;Play warp sound
@@ -620,10 +624,11 @@ pnt2_E534:
 	LDA tbl3_E546+1,Y
 	STA Data0+1	;Load upper byte of pointer
 	JMP (Data0)	;Jump to loaded Data0
-tbl3_E546:	.word pnt2_E54E
-			.word pnt2_E570
-			.word pnt2_E585
-			.word pnt2_E597
+tbl3_E546:
+	.word pnt2_E54E
+	.word pnt2_E570
+	.word pnt2_E585
+	.word pnt2_E597
 pnt2_E54E:
 	LDA #$11
 	STA PlayerAction	;Set action to "dying"
@@ -736,10 +741,11 @@ bra3_E62F:
 	LDA tbl3_E641+1,Y
 	STA Data0+1	;Load upper byte of pointer
 	JMP (Data0)	;Jump to loaded Data0
-tbl3_E641:	.word pnt2_E649
-			.word pnt2_E68B
-			.word pnt2_E69E
-			.word pnt2_E6B0
+tbl3_E641:
+	.word pnt2_E649
+	.word pnt2_E68B
+	.word pnt2_E69E
+	.word pnt2_E6B0
 pnt2_E649:
 	LDA PlayerYSpeed
 	BNE bra3_E68A	;Branch if moving vertically
@@ -850,10 +856,11 @@ pnt2_E6ED:
 	LDA tbl3_E71F+1,Y
 	STA Data0+1	;Load upper byte of pointer
 	JMP (Data0)	;Jump to loaded Data0
-tbl3_E71F:	.word pnt2_E727
-			.word pnt2_E748
-			.word pnt2_E769
-			.word pnt2_E774
+tbl3_E71F:
+	.word pnt2_E727
+	.word pnt2_E748
+	.word pnt2_E769
+	.word pnt2_E774
 pnt2_E727:
 	LDA PlayerYSpeed
 	BNE bra3_E747	;If player not moving vertically,
@@ -960,8 +967,9 @@ pnt2_E7D0:
 	LDA tbl3_E80F+1,Y
 	STA Data0+1	;Load upper byte of pointer
 	JMP (Data0)	;Jump to loaded Data0
-tbl3_E80F:	.word pnt2_E813
-			.word pnt2_E81E
+tbl3_E80F:
+	.word pnt2_E813
+	.word pnt2_E81E
 pnt2_E813:
 	LDX #$06
 	LDY #$3B
@@ -2140,23 +2148,17 @@ pnt2_EE96:
 	TAY
 	LDA tbl3_EEA8,Y
 	STA Data0
-	LDA tbl3_EEA9,Y
+	LDA tbl3_EEA8+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl3_EEA8:
-	.byte $93
-tbl3_EEA9:
-	.byte $ED
-	.byte $AA
-	.byte $ED
-	.byte $CF
-	.byte $ED
-	.byte $B4
-	.byte $EE
-	.byte $88
-	.byte $E3
-	.byte $DD
-	.byte $E3
+	.word pnt2_ED93
+	.word pnt2_EDAA
+	.word pnt2_EDCF
+	.word ofs5_EEB4
+	.word pnt2_E388
+	.word pnt2_E3DD
+ofs5_EEB4:
 	LDY #$3A
 	LDA a:Event
 	CMP #$0F
@@ -2667,7 +2669,7 @@ bra3_F270:
 	RTS
 sub3_F27F:
 	LDA InterruptMode	;
-	CMP #$04			;If using the interrupt for the Bowser fight,
+	CMP #$04	;If using the interrupt for the Bowser fight,
 	BEQ bra3_F29D		;branch
 	LDA PPUUpdatePtr
 	BNE bra3_F29D	;Stop if the upper byte of the PPU Data0 is empty
@@ -2682,11 +2684,11 @@ sub3_F27F:
 bra3_F29D:
 	RTS
 tbl3_F29E:
-			.word pnt2_F2A8
-			.word pnt2_F2D6
-			.word pnt2_F303
-			.word pnt2_F329
-			.word pnt2_F358
+	.word pnt2_F2A8
+	.word pnt2_F2D6
+	.word pnt2_F303
+	.word pnt2_F329
+	.word pnt2_F358
 pnt2_F2A8:
 	JSR sub3_F388
 	INC HUDUpdate
@@ -2784,10 +2786,10 @@ pnt2_F358:
 	JSR sub3_F388
 	LDA #$00
 	STA HUDUpdate
-	LDX #$00			;Set to Player 1
+	LDX #$00	;Set to Player 1
 	LDA CurrentPlayer
 	BEQ bra3_F369		;Branch if Player 1 is playing
-	LDX #$01			;Otherwise, set values to Player 2
+	LDX #$01	;Otherwise, set values to Player 2
 bra3_F369:
 	LDA Player1Coins,X	;Load current player's coin count
 	STA $34
@@ -3487,19 +3489,19 @@ InterruptLineTable:
 	.byte $D0	;Overworld Map
 
 tbl3_F71A:	.word pnt2_F152
-			.word bra3_F751
-			.word bra3_F76E
+	.word bra3_F751
+	.word bra3_F76E
 
 tbl3_F720:	.word bra3_F78B
-			.word bra3_F7A8
-			.word pnt2_F734
-			.word pnt2_F734
-			.word pnt2_F734
-			.word pnt2_F734
-			.word pnt2_F734
-			.word pnt2_F0F8
-			.word pnt2_F127
-			.word pnt2_F152
+	.word bra3_F7A8
+	.word pnt2_F734
+	.word pnt2_F734
+	.word pnt2_F734
+	.word pnt2_F734
+	.word pnt2_F734
+	.word pnt2_F0F8
+	.word pnt2_F127
+	.word pnt2_F152
 pnt2_F734:
 	LDA HUDDisplay
 	BNE bra3_F73C	;Branch if HUD BG isn't updated at all(not sure about these)
@@ -3610,68 +3612,68 @@ bra3_F7EA:
 	LSR
 	TAY
 	LDA tbl3_F812,Y
-	STA $A6			;Load lower byte of pointer
+	STA $A6	;Load lower byte of pointer
 	LDA tbl3_F812+1,Y
-	STA $A7			;Load upper byte of pointer
+	STA $A7	;Load upper byte of pointer
 	LDA FrameCount
 	AND #%00011000	;Mask 2 middle bits of frame counter
 	LSR
 	LSR
-	LSR				;Divide result by 8
-	TAY				;Copy it to the Y reg
+	LSR		;Divide result by 8
+	TAY		;Copy it to the Y reg
 	LDA ($A6),Y		;Load data from Data0
 	STA M90_BG_CHR3
 bra3_F811:
 	RTS
 tbl3_F812:
-			.word pnt2_F84E
-			.word pnt2_F84E
-			.word pnt2_F852
-			.word pnt2_F84E
-			.word pnt2_F84E
-			.word pnt2_F84E
-			.word pnt2_F84A
-			.word pnt2_F84A
-			.word pnt2_F84E
-			.word pnt2_F84E
-			.word pnt2_F84A
-			.word pnt2_F84A
-			.word pnt2_F852
-			.word pnt2_F852
-			.word pnt2_F852
-			.word pnt2_F84A
-			.word pnt2_F84E
-			.word pnt2_F84A
-			.word pnt2_F84E
-			.word pnt2_F84A
-			.word pnt2_F852
-			.word pnt2_F84E
-			.word pnt2_F84A
-			.word pnt2_F84A
-			.word pnt2_F84A
-			.word pnt2_F856
-			.word pnt2_F84A
-			.word pnt2_F84E
+	.word pnt2_F84E
+	.word pnt2_F84E
+	.word pnt2_F852
+	.word pnt2_F84E
+	.word pnt2_F84E
+	.word pnt2_F84E
+	.word pnt2_F84A
+	.word pnt2_F84A
+	.word pnt2_F84E
+	.word pnt2_F84E
+	.word pnt2_F84A
+	.word pnt2_F84A
+	.word pnt2_F852
+	.word pnt2_F852
+	.word pnt2_F852
+	.word pnt2_F84A
+	.word pnt2_F84E
+	.word pnt2_F84A
+	.word pnt2_F84E
+	.word pnt2_F84A
+	.word pnt2_F852
+	.word pnt2_F84E
+	.word pnt2_F84A
+	.word pnt2_F84A
+	.word pnt2_F84A
+	.word pnt2_F856
+	.word pnt2_F84A
+	.word pnt2_F84E
 pnt2_F84A:
-			.byte $01
-			.byte $45
-			.byte $41
-			.byte $0A
+	.byte $01
+	.byte $45
+	.byte $41
+	.byte $0A
 pnt2_F84E:
-			.byte $5B
-			.byte $56
-			.byte $16
-			.byte $36
+	.byte $5B
+	.byte $56
+	.byte $16
+	.byte $36
 pnt2_F852:
-			.byte $0D
-			.byte $33
-			.byte $63
-			.byte $79
+	.byte $0D
+	.byte $33
+	.byte $63
+	.byte $79
 pnt2_F856:
-			.byte $C4
-			.byte $C5
-			.byte $C6
-			.byte $C7
+	.byte $C4
+	.byte $C5
+	.byte $C6
+	.byte $C7
 loc3_F85A:
 	LDA #$1D
 	STA M90_IRQ_DISABLE
@@ -3735,9 +3737,9 @@ bra3_F8B7:
 	RTS
 loc3_F8D7:
 	LDX #$22
-	LDY #$D8			;Set interrupt line
+	LDY #$D8	;Set interrupt line
 	STX PPUAddr
-	STY PPUAddr			;Store interrupt line
+	STY PPUAddr	;Store interrupt line
 	LDA PPUStatus
 	LDA #$00
 	STA PPUScroll
@@ -3774,20 +3776,20 @@ sub3_F919:
 	BEQ bra3_F939
 	LDA tbl3_FA96,Y
 	STA $30
-	LDA tbl3_FA97,Y
+	LDA tbl3_FA96+1,Y
 	STA $31
 	LDA tbl3_FA94,Y
 	STA Data0
-	LDA tbl3_FA95,Y
+	LDA tbl3_FA94+1,Y
 	JMP loc3_F94B
 bra3_F939:
 	LDA tbl3_F9FE,Y
 	STA $30
-	LDA tbl3_F9FF,Y
+	LDA tbl3_F9FE+1,Y
 	STA $31
 	LDA tbl3_F9FC,Y
 	STA Data0
-	LDA tbl3_F9FD,Y
+	LDA tbl3_F9FC+1,Y
 loc3_F94B:
 	STA Data0+1
 	LDA FadeoutMode
@@ -3796,11 +3798,11 @@ loc3_F94B:
 	TAY
 	LDA tbl3_FE8C,Y
 	STA $34
-	LDA tbl3_FE8D,Y
+	LDA tbl3_FE8C+1,Y
 	STA $35
 	LDA tbl3_FE8E,Y
 	STA $2E
-	LDA tbl3_FE8F,Y
+	LDA tbl3_FE8E+1,Y
 	STA $2F
 	LDA PPUUpdatePtr
 	BNE bra3_F9E7
@@ -3891,433 +3893,366 @@ tbl3_F9F3:
 	.byte $30
 	.byte $40
 tbl3_F9FC:
-	.byte $2C
-tbl3_F9FD:
-	.byte $FB
+	.word ofs_FB2C
 tbl3_F9FE:
-	.byte $4C
-tbl3_F9FF:
-	.byte $FD
-	.byte $3C
-	.byte $FB
-	.byte $4C
-	.byte $FD
-	.byte $4C
-	.byte $FB
-	.byte $4C
-	.byte $FD
-	.byte $5C
-	.byte $FB
-	.byte $4C
-	.byte $FD
-	.byte $6C
-	.byte $FB
-	.byte $4C
-	.byte $FD
-	.byte $7C
-	.byte $FB
-	.byte $4C
-	.byte $FD
-	.byte $8C
-	.byte $FB
-	.byte $4C
-	.byte $FD
-	.byte $5C
-	.byte $FB
-	.byte $4C
-	.byte $FD
-	.byte $9C
-	.byte $FB
-	.byte $4C
-	.byte $FD
-	.byte $AC
-	.byte $FB
-	.byte $4C
-	.byte $FD
-	.byte $8C
-	.byte $FB
-	.byte $4C
-	.byte $FD
-	.byte $BC
-	.byte $FB
-	.byte $4C
-	.byte $FD
-	.byte $CC
-	.byte $FB
-	.byte $4C
-	.byte $FD
-	.byte $CC
-	.byte $FB
-	.byte $4C
-	.byte $FD
-	.byte $DC
-	.byte $FB
-	.byte $4C
-	.byte $FD
-	.byte $EC
-	.byte $FB
-	.byte $4C
-	.byte $FD
-	.byte $FC
-	.byte $FB
-	.byte $4C
-	.byte $FD
-	.byte $0C
-	.byte $FC
-	.byte $4C
-	.byte $FD
-	.byte $1C
-	.byte $FC
-	.byte $4C
-	.byte $FD
-	.byte $2C
-	.byte $FC
-	.byte $8C
-	.byte $FD
-	.byte $3C
-	.byte $FC
-	.byte $4C
-	.byte $FD
-	.byte $4C
-	.byte $FC
-	.byte $4C
-	.byte $FD
-	.byte $5C
-	.byte $FC
-	.byte $4C
-	.byte $FD
-	.byte $6C
-	.byte $FC
-	.byte $8C
-	.byte $FD
-	.byte $7C
-	.byte $FC
-	.byte $4C
-	.byte $FD
-	.byte $8C
-	.byte $FC
-	.byte $4C
-	.byte $FD
-	.byte $9C
-	.byte $FC
-	.byte $4C
-	.byte $FD
-	.byte $AC
-	.byte $FC
-	.byte $8C
-	.byte $FD
-	.byte $BC
-	.byte $FC
-	.byte $4C
-	.byte $FD
-	.byte $CC
-	.byte $FC
-	.byte $4C
-	.byte $FD
-	.byte $DC
-	.byte $FC
-	.byte $5C
-	.byte $FD
-	.byte $EC
-	.byte $FC
-	.byte $6C
-	.byte $FD
-	.byte $FC
-	.byte $FC
-	.byte $7C
-	.byte $FD
-	.byte $0C
-	.byte $FD
-	.byte $8C
-	.byte $FD
-	.byte $1C
-	.byte $FD
-	.byte $9C
-	.byte $FD
-	.byte $DC
-	.byte $FC
-	.byte $AC
-	.byte $FD
-	.byte $2C
-	.byte $FD
-	.byte $BC
-	.byte $FD
-	.byte $3C
-	.byte $FD
-	.byte $CC
-	.byte $FD
+	.word ofs_FD4C
+	.word ofs_FB3C
+	.word ofs_FD4C
+	.word ofs_FB4C
+	.word ofs_FD4C
+	.word ofs_FB5C
+	.word ofs_FD4C
+	.word ofs_FB6C
+	.word ofs_FD4C
+	.word ofs_FB7C
+	.word ofs_FD4C
+	.word ofs_FB8C
+	.word ofs_FD4C
+	.word ofs_FB5C
+	.word ofs_FD4C
+	.word ofs_FB9C
+	.word ofs_FD4C
+	.word ofs_FBAC
+	.word ofs_FD4C
+	.word ofs_FB8C
+	.word ofs_FD4C
+	.word ofs_FBBC
+	.word ofs_FD4C
+	.word ofs_FBCC
+	.word ofs_FD4C
+	.word ofs_FBCC
+	.word ofs_FD4C
+	.word ofs_FBDC
+	.word ofs_FD4C
+	.word ofs_FBEC
+	.word ofs_FD4C
+	.word ofs_FBFC
+	.word ofs_FD4C
+	.word ofs_FC0C
+	.word ofs_FD4C
+	.word ofs_FC1C
+	.word ofs_FD4C
+	.word ofs_FC2C
+	.word ofs_FD8C
+	.word ofs_FC3C
+	.word ofs_FD4C
+	.word ofs_FC4C
+	.word ofs_FD4C
+	.word ofs_FC5C
+	.word ofs_FD4C
+	.word ofs_FC6C
+	.word ofs_FD8C
+	.word ofs_FC7C
+	.word ofs_FD4C
+	.word ofs_FC8C
+	.word ofs_FD4C
+	.word ofs_FC9C
+	.word ofs_FD4C
+	.word ofs_FCAC
+	.word ofs_FD8C
+	.word ofs_FCBC
+	.word ofs_FD4C
+	.word ofs_FCCC
+	.word ofs_FD4C
+	.word ofs_FCDC
+	.word ofs_FD5C
+	.word ofs_FCEC
+	.word ofs_FD6C
+	.word ofs_FCFC
+	.word ofs_FD7C
+	.word ofs_FD0C
+	.word ofs_FD8C
+	.word ofs_FD1C
+	.word ofs_FD9C
+	.word ofs_FCDC
+	.word ofs_FDAC
+	.word ofs_FD2C
+	.word ofs_FDBC
+	.word ofs_FD3C
+	.word ofs_FDCC
 tbl3_FA94:
-	.byte $2C
-tbl3_FA95:
-	.byte $FB
+	.word ofs_FB2C
 tbl3_FA96:
-	.byte $DC
-tbl3_FA97:
-	.byte $FD
-	.byte $3C
-	.byte $FB
-	.byte $DC
-	.byte $FD
-	.byte $4C
-	.byte $FB
-	.byte $DC
-	.byte $FD
-	.byte $5C
-	.byte $FB
-	.byte $DC
-	.byte $FD
-	.byte $6C
-	.byte $FB
-	.byte $DC
-	.byte $FD
-	.byte $7C
-	.byte $FB
-	.byte $DC
-	.byte $FD
-	.byte $8C
-	.byte $FB
-	.byte $DC
-	.byte $FD
-	.byte $5C
-	.byte $FB
-	.byte $DC
-	.byte $FD
-	.byte $9C
-	.byte $FB
-	.byte $DC
-	.byte $FD
-	.byte $AC
-	.byte $FB
-	.byte $DC
-	.byte $FD
-	.byte $8C
-	.byte $FB
-	.byte $DC
-	.byte $FD
-	.byte $BC
-	.byte $FB
-	.byte $DC
-	.byte $FD
-	.byte $CC
-	.byte $FB
-	.byte $DC
-	.byte $FD
-	.byte $CC
-	.byte $FB
-	.byte $DC
-	.byte $FD
-	.byte $DC
-	.byte $FB
-	.byte $DC
-	.byte $FD
-	.byte $EC
-	.byte $FB
-	.byte $DC
-	.byte $FD
-	.byte $FC
-	.byte $FB
-	.byte $DC
-	.byte $FD
-	.byte $0C
-	.byte $FC
-	.byte $DC
-	.byte $FD
-	.byte $1C
-	.byte $FC
-	.byte $DC
-	.byte $FD
+	.word ofs_FDDC
+	.word ofs_FB3C
+	.word ofs_FDDC
+	.word ofs_FB4C
+	.word ofs_FDDC
+	.word ofs_FB5C
+	.word ofs_FDDC
+	.word ofs_FB6C
+	.word ofs_FDDC
+	.word ofs_FB7C
+	.word ofs_FDDC
+	.word ofs_FB8C
+	.word ofs_FDDC
+	.word ofs_FB5C
+	.word ofs_FDDC
+	.word ofs_FB9C
+	.word ofs_FDDC
+	.word ofs_FBAC
+	.word ofs_FDDC
+	.word ofs_FB8C
+	.word ofs_FDDC
+	.word ofs_FBBC
+	.word ofs_FDDC
+	.word ofs_FBCC
+	.word ofs_FDDC
+	.word ofs_FBCC
+	.word ofs_FDDC
+	.word ofs_FBDC
+	.word ofs_FDDC
+	.word ofs_FBEC
+	.word ofs_FDDC
+	.word ofs_FBFC
+	.word ofs_FDDC
+	.word ofs_FC0C
+	.word ofs_FDDC
+	.word ofs_FC1C
+	.word ofs_FDDC
+	.word ofs_FC2C
+	.word ofs_FE3C
+	.word ofs_FC3C
+	.word ofs_FDDC
+	.word ofs_FC4C
+	.word ofs_FDDC
+	.word ofs_FC5C
+	.word ofs_FDDC
+	.word ofs_FC6C
+	.word ofs_FE3C
+	.word ofs_FC7C
+	.word ofs_FDDC
+	.word ofs_FC8C
+	.word ofs_FDDC
+	.word ofs_FC9C
+	.word ofs_FDDC
+	.word ofs_FCAC
+	.word ofs_FE3C
+	.word ofs_FCBC
+	.word ofs_FDDC
+	.word ofs_FCCC
+	.word ofs_FDDC
+	.word ofs_FCDC
+	.word ofs_FE0C
+	.word ofs_FCEC
+	.word ofs_FE1C
+	.word ofs_FCFC
+	.word ofs_FE2C
+	.word ofs_FD0C
+	.word ofs_FE3C
+	.word ofs_FD1C
+	.word ofs_FE4C
+	.word ofs_FCDC
+	.word ofs_FE5C
+	.word ofs_FD2C
+	.word ofs_FE6C
+	.word ofs_FD3C
+	.word ofs_FE7C
+ofs_FB2C:
+	.byte $11
+	.byte $30
+	.byte $38
+	.byte $3D
+	.byte $11
+	.byte $30
+	.byte $2A
+	.byte $1A
+	.byte $11
+	.byte $37
+	.byte $2A
+	.byte $1A
+	.byte $11
 	.byte $2C
-	.byte $FC
 	.byte $3C
-	.byte $FE
-	.byte $3C
-	.byte $FC
-	.byte $DC
-	.byte $FD
-	.byte $4C
-	.byte $FC
-	.byte $DC
-	.byte $FD
-	.byte $5C
-	.byte $FC
-	.byte $DC
-	.byte $FD
-	.byte $6C
-	.byte $FC
-	.byte $3C
-	.byte $FE
-	.byte $7C
-	.byte $FC
-	.byte $DC
-	.byte $FD
-	.byte $8C
-	.byte $FC
-	.byte $DC
-	.byte $FD
-	.byte $9C
-	.byte $FC
-	.byte $DC
-	.byte $FD
-	.byte $AC
-	.byte $FC
-	.byte $3C
-	.byte $FE
-	.byte $BC
-	.byte $FC
-	.byte $DC
-	.byte $FD
-	.byte $CC
-	.byte $FC
-	.byte $DC
-	.byte $FD
-	.byte $DC
-	.byte $FC
-	.byte $0C
-	.byte $FE
-	.byte $EC
-	.byte $FC
-	.byte $1C
-	.byte $FE
-	.byte $FC
-	.byte $FC
+	.byte $30
+ofs_FB3C:
+	.byte $0A
 	.byte $2C
-	.byte $FE
-	.byte $0C
-	.byte $FD
-	.byte $3C
-	.byte $FE
 	.byte $1C
-	.byte $FD
-	.byte $4C
-	.byte $FE
-	.byte $DC
-	.byte $FC
-	.byte $5C
-	.byte $FE
-	.byte $2C
-	.byte $FD
-	.byte $6C
-	.byte $FE
+	.byte $30
+	.byte $0A
+	.byte $30
+	.byte $38
+	.byte $28
+	.byte $0A
+	.byte $37
+	.byte $2A
+	.byte $1A
+	.byte $0A
+	.byte $29
+	.byte $19
+	.byte $39
+ofs_FB4C:
+	.byte $0E
+	.byte $11
 	.byte $3C
-	.byte $FD
-	.byte $7C
-	.byte $FE
-	.byte $11, $30, $38, $3D	;Level 1-1 BG Palette
-	.byte $11, $30, $2A, $1A
-	.byte $11, $37, $2A, $1A
-	.byte $11, $2C, $3C, $30
-	.byte $0A, $2C, $1C, $30	;Level 1-2 BG Palette
-	.byte $0A, $30, $38, $28
-	.byte $0A, $37, $2A, $1A
-	.byte $0A, $29, $19, $39
-	.byte $0E, $11, $3C, $30	;Level 1-3 BG Palette
-	.byte $0E, $30, $37, $27
-	.byte $0E, $29, $38, $18
-	.byte $0E, $00, $10, $30
-	.byte $0E, $11, $3C, $30	;Castle BG Palette
-	.byte $0E, $30, $28, $18
-	.byte $0E, $00, $10, $20
-	.byte $0E, $27, $17, $37
-	.byte $11, $11, $3C, $30	;Level 2-1 BG Palette
-	.byte $11, $30, $38, $28
-	.byte $11, $37, $2A, $1A
-	.byte $11, $39, $29, $1A
-	.byte $0A, $31, $11, $30	;Level 2-2 BG Palette
-	.byte $0A, $30, $38, $28
-	.byte $0A, $0E, $2A, $30
-	.byte $0A, $2A, $19, $39
-	.byte $0E, $11, $3C, $30	;Ghost House BG Palette
-	.byte $0E, $30, $28, $18
-	.byte $0E, $1C, $2C, $38
-	.byte $0E, $37, $27, $18
-	.byte $0E, $21, $11, $30	;Level 3-1 BG Palette
-	.byte $0E, $30, $28, $18
-	.byte $0E, $37, $0C, $1C
-	.byte $0E, $38, $27, $17
-	.byte $01, $2C, $1C, $3C	;Level 3-2 BG Palette
-	.byte $01, $30, $38, $28
-	.byte $01, $00, $10, $30
-	.byte $01, $38, $27, $17
-	.byte $0E, $11, $21, $30	;Unused
-	.byte $0E, $30, $28, $18
-	.byte $0E, $00, $10, $30
-	.byte $0E, $27, $17, $37
-	.byte $30, $11, $2C, $0E	;Bridge Level BG Palette
-	.byte $30, $28, $18, $0E
-	.byte $30, $37, $31, $0E
-	.byte $30, $30, $2A, $0A
-	.byte $30, $11, $21, $0E	;Level 4-3 BG Palette
-	.byte $30, $28, $18, $0E
-	.byte $30, $37, $2A, $0A
-	.byte $30, $0E, $2A, $1A
-	.byte $0E, $11, $3C, $30	;Unknown
-	.byte $0E, $30, $28, $18
-	.byte $0E, $00, $10, $30
-	.byte $0E, $27, $17, $37
-	.byte $0E, $2C, $1C, $30	;Level 5-1 BG Palette
-	.byte $0E, $30, $28, $18
-	.byte $0E, $1A, $28, $18
-	.byte $0E, $1A, $0A, $2A
-	.byte $0E, $11, $3C, $30	;Level 5-2 BG Palette
-	.byte $0E, $30, $28, $18
-	.byte $0E, $0C, $1C, $2C
-	.byte $0E, $37, $27, $18
-	.byte $01, $2C, $1C, $3C	;Level 5-3 BG Palette
-	.byte $01, $30, $38, $28
-	.byte $01, $00, $10, $38
-	.byte $01, $38, $27, $17
-	.byte $0E, $11, $3C, $30	;Level 5-4 BG Palette
-	.byte $0E, $30, $28, $18
-	.byte $0E, $00, $10, $20
-	.byte $0E, $27, $17, $37
-	.byte $0E, $01, $21, $30	;Level 6-1 BG Palette
-	.byte $0E, $30, $28, $18
-	.byte $0E, $29, $38, $18
-	.byte $0E, $29, $30, $18
-	.byte $0E, $11, $3C, $30	;Level 6-2 BG Palette
-	.byte $0E, $30, $28, $18
-	.byte $0E, $0C, $1C, $2C
-	.byte $0E, $37, $27, $18
-	.byte $01, $1C, $2C, $30	;Level 6-3 BG Palette
-	.byte $01, $30, $28, $18
-	.byte $01, $37, $2A, $1C
-	.byte $01, $3C, $2C, $1C
-	.byte $0E, $01, $31, $30	;Level 6-4 BG Palette
-	.byte $0E, $30, $28, $18
-	.byte $0E, $00, $10, $30
-	.byte $0E, $27, $17, $37
-	.byte $0E, $21, $11, $30	;Level 7-1 BG Palette
-	.byte $0E, $30, $38, $28
-	.byte $0E, $1A, $2A, $30
-	.byte $0E, $00, $10, $30
-	.byte $0E, $31, $22, $30	;Level 7-2 BG Palette
-	.byte $0E, $30, $38, $28
-	.byte $0E, $1A, $2A, $30
-	.byte $0E, $00, $10, $30
-	.byte $0E, $11, $3C, $30	;Level 7-3 BG Palette
-	.byte $0E, $30, $28, $18
-	.byte $0E, $0C, $1C, $31
-	.byte $0E, $37, $27, $18
-	.byte $0E, $15, $1A, $30	;Level 7-4 BG Palette
-	.byte $0E, $30, $28, $18
-	.byte $0E, $00, $10, $30
-	.byte $0E, $27, $16, $37
-	.byte $0E, $30, $0C, $15	;Ghost House Intro BG Palette
-	.byte $0E, $01, $31, $30
-	.byte $0E, $37, $2A, $1A
-	.byte $0E, $10, $0C, $00
-	.byte $0E, $21, $31, $30	;Castle Intro BG Palette
-	.byte $0E, $31, $2A, $1A
-	.byte $0E, $37, $2A, $1A
-	.byte $0E, $00, $10, $20
-	.byte $0E, $11, $3C, $30	;Unknown (Grey Ghost House?)
-	.byte $0E, $30, $28, $18
-	.byte $0E, $00, $10, $20
-	.byte $0E, $27, $17, $37
-	.byte $0E, $11, $21, $30	;Unknown
-	.byte $0E, $30, $28, $18
-	.byte $0E, $00, $10, $30
-	.byte $0E, $27, $17, $37
+	.byte $30
+	.byte $0E
+	.byte $30
+	.byte $37
+	.byte $27
+	.byte $0E
+	.byte $29
+	.byte $38
+	.byte $18
+	.byte $0E
+	.byte $00
+	.byte $10
+	.byte $30
+ofs_FB5C:
+	.byte $0E
+	.byte $11
+	.byte $3C
+	.byte $30
+	.byte $0E
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $00
+	.byte $10
+	.byte $20
+	.byte $0E
+	.byte $27
+	.byte $17
+	.byte $37
+ofs_FB6C:
+	.byte $11
+	.byte $11
+	.byte $3C
+	.byte $30
+	.byte $11
+	.byte $30
+	.byte $38
+	.byte $28
+	.byte $11
+	.byte $37
+	.byte $2A
+	.byte $1A
+	.byte $11
+	.byte $39
+	.byte $29
+	.byte $1A
+ofs_FB7C:
+	.byte $0A
+	.byte $31
+	.byte $11
+	.byte $30
+	.byte $0A
+	.byte $30
+	.byte $38
+	.byte $28
+	.byte $0A
+	.byte $0E
+	.byte $2A
+	.byte $30
+	.byte $0A
+	.byte $2A
+	.byte $19
+	.byte $39
+ofs_FB8C:
+	.byte $0E
+	.byte $11
+	.byte $3C
+	.byte $30
+	.byte $0E
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $1C
+	.byte $2C
+	.byte $38
+	.byte $0E
+	.byte $37
+	.byte $27
+	.byte $18
+ofs_FB9C:
+	.byte $0E
+	.byte $21
+	.byte $11
+	.byte $30
+	.byte $0E
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $37
+	.byte $0C
+	.byte $1C
+	.byte $0E
+	.byte $38
+	.byte $27
+	.byte $17
+ofs_FBAC:
+	.byte $01
+	.byte $2C
+	.byte $1C
+	.byte $3C
+	.byte $01
+	.byte $30
+	.byte $38
+	.byte $28
+	.byte $01
+	.byte $00
+	.byte $10
+	.byte $30
+	.byte $01
+	.byte $38
+	.byte $27
+	.byte $17
+ofs_FBBC:
+	.byte $0E
+	.byte $11
+	.byte $21
+	.byte $30
+	.byte $0E
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $00
+	.byte $10
+	.byte $30
+	.byte $0E
+	.byte $27
+	.byte $17
+	.byte $37
+ofs_FBCC:
+	.byte $30
+	.byte $11
+	.byte $2C
+	.byte $0E
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $30
+	.byte $37
+	.byte $31
+	.byte $0E
+	.byte $30
+	.byte $30
+	.byte $2A
+	.byte $0A
+ofs_FBDC:
+	.byte $30
+	.byte $11
+	.byte $21
+	.byte $0E
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $30
+	.byte $37
+	.byte $2A
+	.byte $0A
+	.byte $30
+	.byte $0E
+	.byte $2A
+	.byte $1A
+ofs_FBEC:
 	.byte $0E
 	.byte $11
 	.byte $3C
@@ -4334,6 +4269,279 @@ tbl3_FA97:
 	.byte $27
 	.byte $17
 	.byte $37
+ofs_FBFC:
+	.byte $0E
+	.byte $2C
+	.byte $1C
+	.byte $30
+	.byte $0E
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $1A
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $1A
+	.byte $0A
+	.byte $2A
+ofs_FC0C:
+	.byte $0E
+	.byte $11
+	.byte $3C
+	.byte $30
+	.byte $0E
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $0C
+	.byte $1C
+	.byte $2C
+	.byte $0E
+	.byte $37
+	.byte $27
+	.byte $18
+ofs_FC1C:
+	.byte $01
+	.byte $2C
+	.byte $1C
+	.byte $3C
+	.byte $01
+	.byte $30
+	.byte $38
+	.byte $28
+	.byte $01
+	.byte $00
+	.byte $10
+	.byte $38
+	.byte $01
+	.byte $38
+	.byte $27
+	.byte $17
+ofs_FC2C:
+	.byte $0E
+	.byte $11
+	.byte $3C
+	.byte $30
+	.byte $0E
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $00
+	.byte $10
+	.byte $20
+	.byte $0E
+	.byte $27
+	.byte $17
+	.byte $37
+ofs_FC3C:
+	.byte $0E
+	.byte $01
+	.byte $21
+	.byte $30
+	.byte $0E
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $29
+	.byte $38
+	.byte $18
+	.byte $0E
+	.byte $29
+	.byte $30
+	.byte $18
+ofs_FC4C:
+	.byte $0E
+	.byte $11
+	.byte $3C
+	.byte $30
+	.byte $0E
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $0C
+	.byte $1C
+	.byte $2C
+	.byte $0E
+	.byte $37
+	.byte $27
+	.byte $18
+ofs_FC5C:
+	.byte $01
+	.byte $1C
+	.byte $2C
+	.byte $30
+	.byte $01
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $01
+	.byte $37
+	.byte $2A
+	.byte $1C
+	.byte $01
+	.byte $3C
+	.byte $2C
+	.byte $1C
+ofs_FC6C:
+	.byte $0E
+	.byte $01
+	.byte $31
+	.byte $30
+	.byte $0E
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $00
+	.byte $10
+	.byte $30
+	.byte $0E
+	.byte $27
+	.byte $17
+	.byte $37
+ofs_FC7C:
+	.byte $0E
+	.byte $21
+	.byte $11
+	.byte $30
+	.byte $0E
+	.byte $30
+	.byte $38
+	.byte $28
+	.byte $0E
+	.byte $1A
+	.byte $2A
+	.byte $30
+	.byte $0E
+	.byte $00
+	.byte $10
+	.byte $30
+ofs_FC8C:
+	.byte $0E
+	.byte $31
+	.byte $22
+	.byte $30
+	.byte $0E
+	.byte $30
+	.byte $38
+	.byte $28
+	.byte $0E
+	.byte $1A
+	.byte $2A
+	.byte $30
+	.byte $0E
+	.byte $00
+	.byte $10
+	.byte $30
+ofs_FC9C:
+	.byte $0E
+	.byte $11
+	.byte $3C
+	.byte $30
+	.byte $0E
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $0C
+	.byte $1C
+	.byte $31
+	.byte $0E
+	.byte $37
+	.byte $27
+	.byte $18
+ofs_FCAC:
+	.byte $0E
+	.byte $15
+	.byte $1A
+	.byte $30
+	.byte $0E
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $00
+	.byte $10
+	.byte $30
+	.byte $0E
+	.byte $27
+	.byte $16
+	.byte $37
+ofs_FCBC:
+	.byte $0E
+	.byte $30
+	.byte $0C
+	.byte $15
+	.byte $0E
+	.byte $01
+	.byte $31
+	.byte $30
+	.byte $0E
+	.byte $37
+	.byte $2A
+	.byte $1A
+	.byte $0E
+	.byte $10
+	.byte $0C
+	.byte $00
+ofs_FCCC:
+	.byte $0E
+	.byte $21
+	.byte $31
+	.byte $30
+	.byte $0E
+	.byte $31
+	.byte $2A
+	.byte $1A
+	.byte $0E
+	.byte $37
+	.byte $2A
+	.byte $1A
+	.byte $0E
+	.byte $00
+	.byte $10
+	.byte $20
+ofs_FCDC:
+	.byte $0E
+	.byte $11
+	.byte $3C
+	.byte $30
+	.byte $0E
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $00
+	.byte $10
+	.byte $20
+	.byte $0E
+	.byte $27
+	.byte $17
+	.byte $37
+ofs_FCEC:
+	.byte $0E
+	.byte $11
+	.byte $21
+	.byte $30
+	.byte $0E
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $00
+	.byte $10
+	.byte $30
+	.byte $0E
+	.byte $27
+	.byte $17
+	.byte $37
+ofs_FCFC:
 	.byte $0E
 	.byte $11
 	.byte $3C
@@ -4350,6 +4558,24 @@ tbl3_FA97:
 	.byte $27
 	.byte $17
 	.byte $37
+ofs_FD0C:
+	.byte $0E
+	.byte $11
+	.byte $3C
+	.byte $30
+	.byte $0E
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $00
+	.byte $10
+	.byte $30
+	.byte $0E
+	.byte $27
+	.byte $17
+	.byte $37
+ofs_FD1C:
 	.byte $0E
 	.byte $2A
 	.byte $2C
@@ -4366,14 +4592,41 @@ tbl3_FA97:
 	.byte $1C
 	.byte $2C
 	.byte $30
-	.byte $1E, $10, $00, $0E	;Bowser Fight BG Palette
-	.byte $1E, $27, $22, $20
-	.byte $1E, $2A, $1A, $20
-	.byte $1E, $27, $16, $20
-	.byte $0E, $30, $2C, $0E	;Bonus Room BG Palette
-	.byte $0E, $30, $28, $18
-	.byte $0E, $30, $2A, $19
-	.byte $0E, $30, $21, $23
+ofs_FD2C:
+	.byte $1E
+	.byte $10
+	.byte $00
+	.byte $0E
+	.byte $1E
+	.byte $27
+	.byte $22
+	.byte $20
+	.byte $1E
+	.byte $2A
+	.byte $1A
+	.byte $20
+	.byte $1E
+	.byte $27
+	.byte $16
+	.byte $20
+ofs_FD3C:
+	.byte $0E
+	.byte $30
+	.byte $2C
+	.byte $0E
+	.byte $0E
+	.byte $30
+	.byte $28
+	.byte $18
+	.byte $0E
+	.byte $30
+	.byte $2A
+	.byte $19
+	.byte $0E
+	.byte $30
+	.byte $21
+	.byte $23
+ofs_FD4C:
 	.byte $11
 	.byte $37
 	.byte $16
@@ -4390,6 +4643,7 @@ tbl3_FA97:
 	.byte $38
 	.byte $16
 	.byte $0E
+ofs_FD5C:
 	.byte $0E
 	.byte $37
 	.byte $16
@@ -4406,6 +4660,7 @@ tbl3_FA97:
 	.byte $38
 	.byte $16
 	.byte $0E
+ofs_FD6C:
 	.byte $0E
 	.byte $37
 	.byte $16
@@ -4422,6 +4677,7 @@ tbl3_FA97:
 	.byte $38
 	.byte $16
 	.byte $0E
+ofs_FD7C:
 	.byte $0E
 	.byte $37
 	.byte $16
@@ -4438,6 +4694,7 @@ tbl3_FA97:
 	.byte $38
 	.byte $16
 	.byte $0E
+ofs_FD8C:
 	.byte $0E
 	.byte $37
 	.byte $16
@@ -4454,6 +4711,7 @@ tbl3_FA97:
 	.byte $38
 	.byte $16
 	.byte $0E
+ofs_FD9C:
 	.byte $0E
 	.byte $37
 	.byte $16
@@ -4470,6 +4728,7 @@ tbl3_FA97:
 	.byte $38
 	.byte $16
 	.byte $0E
+ofs_FDAC:
 	.byte $1E
 	.byte $37
 	.byte $16
@@ -4486,6 +4745,7 @@ tbl3_FA97:
 	.byte $28
 	.byte $16
 	.byte $0E
+ofs_FDBC:
 	.byte $0E
 	.byte $37
 	.byte $16
@@ -4502,6 +4762,7 @@ tbl3_FA97:
 	.byte $28
 	.byte $16
 	.byte $0E
+ofs_FDCC:
 	.byte $3D
 	.byte $37
 	.byte $16
@@ -4518,6 +4779,7 @@ tbl3_FA97:
 	.byte $28
 	.byte $16
 	.byte $0E
+ofs_FDDC:
 	.byte $11
 	.byte $37
 	.byte $2B
@@ -4566,6 +4828,7 @@ tbl3_FA97:
 	.byte $38
 	.byte $16
 	.byte $0E
+ofs_FE0C:
 	.byte $0E
 	.byte $37
 	.byte $2B
@@ -4582,6 +4845,7 @@ tbl3_FA97:
 	.byte $38
 	.byte $16
 	.byte $0E
+ofs_FE1C:
 	.byte $0E
 	.byte $37
 	.byte $2B
@@ -4598,6 +4862,7 @@ tbl3_FA97:
 	.byte $38
 	.byte $16
 	.byte $0E
+ofs_FE2C:
 	.byte $0E
 	.byte $37
 	.byte $2B
@@ -4614,6 +4879,7 @@ tbl3_FA97:
 	.byte $38
 	.byte $16
 	.byte $0E
+ofs_FE3C:
 	.byte $0E
 	.byte $37
 	.byte $2B
@@ -4630,6 +4896,7 @@ tbl3_FA97:
 	.byte $38
 	.byte $16
 	.byte $0E
+ofs_FE4C:
 	.byte $0E
 	.byte $37
 	.byte $2B
@@ -4646,6 +4913,7 @@ tbl3_FA97:
 	.byte $38
 	.byte $16
 	.byte $0E
+ofs_FE5C:
 	.byte $1E
 	.byte $37
 	.byte $2B
@@ -4662,6 +4930,7 @@ tbl3_FA97:
 	.byte $28
 	.byte $16
 	.byte $0E
+ofs_FE6C:
 	.byte $0E
 	.byte $37
 	.byte $2B
@@ -4678,6 +4947,7 @@ tbl3_FA97:
 	.byte $28
 	.byte $16
 	.byte $0E
+ofs_FE7C:
 	.byte $3D
 	.byte $37
 	.byte $2B
@@ -4695,17 +4965,12 @@ tbl3_FA97:
 	.byte $16
 	.byte $0E
 tbl3_FE8C:
-	.byte $94
-tbl3_FE8D:
-	.byte $FE
+	.word ofs_FE94
 tbl3_FE8E:
-	.byte $94
-tbl3_FE8F:
-	.byte $FE
-	.byte $94
-	.byte $FE
-	.byte $A4
-	.byte $FE
+	.word ofs_FE94
+	.word ofs_FE94
+	.word ofs_FEA4
+ofs_FE94:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -4722,6 +4987,7 @@ tbl3_FE8F:
 	.byte $00
 	.byte $00
 	.byte $00
+ofs_FEA4:
 	.byte $FF
 	.byte $FF
 	.byte $FF
@@ -5023,7 +5289,7 @@ tbl3_FE8F:
 	.byte $01
 	.byte $01
 MapperProtection:
-	LDA #$05				;Use 5 for both values to multiply
+	LDA #$05		;Use 5 for both values to multiply
 	STA M90_MULTIPLICAND	;First value to multiply (5)
 	STA M90_MULTIPLIER		;Multiplier (5)
 	LDA #$00

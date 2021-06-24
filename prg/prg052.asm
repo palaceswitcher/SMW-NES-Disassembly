@@ -2,6 +2,7 @@
 jmp_52_A000:
 	LDY ItemBox
 	BNE bra2_A006
+ptr6_A005:
 	RTS
 bra2_A006:
 	LDX tbl2_A064,Y
@@ -131,7 +132,7 @@ bra2_A0C7:
 	TAX
 	LDA tbl2_A83B,X
 	STA Data0
-	LDA tbl2_A83C,X
+	LDA tbl2_A83B+1,X
 	STA Data0+1
 	JMP (Data0)
 bra2_A0E4:
@@ -139,7 +140,7 @@ bra2_A0E4:
 	TAX
 	LDA tbl2_AABB,X
 	STA Data0
-	LDA tbl2_AABC,X
+	LDA tbl2_AABB+1,X
 	STA Data0+1
 	JMP (Data0)
 jmp_52_A0F3:
@@ -218,12 +219,12 @@ bra2_A172:
 	STY $41,X
 	INX
 	CPX $2A
-	BCS bra2_A1802_RTS
+	BCS bra2_A180_RTS
 	CLC
 	ADC #$08
 	BCC bra2_A172
 	BCS bra2_A160
-bra2_A1802_RTS:
+bra2_A180_RTS:
 	RTS
 bra2_A181:
 	LDA #$00
@@ -269,12 +270,12 @@ bra2_A1BF:
 	STY $41,X
 	INX
 	CPX $2A
-	BCS bra2_A1CD2_RTS
+	BCS bra2_A1CD_RTS
 	SEC
 	SBC #$08
 	BCS bra2_A1BF
 	BCC bra2_A1AD	;unlogged
-bra2_A1CD2_RTS:
+bra2_A1CD_RTS:
 	RTS
 bra2_A1CE:
 	LDA #$00
@@ -317,12 +318,12 @@ bra2_A209:
 	STY $B2,X
 	INX
 	CPX $2D
-	BCS bra2_A2172_RTS
+	BCS bra2_A217_RTS
 	CLC
 	ADC #$08
 	BCC bra2_A209
 	BCS bra2_A1F5
-bra2_A2172_RTS:
+bra2_A217_RTS:
 	RTS
 bra2_A218:
 	LDA #$00
@@ -397,7 +398,7 @@ loc2_A28A:
 	STX $3C
 	LDA $36
 	AND #$80
-	BEQ bra2_A2A72_RTS
+	BEQ bra2_A2A7_RTS
 	LDY #$01
 	LDA $36
 	AND #$40
@@ -406,7 +407,7 @@ loc2_A28A:
 bra2_A2A2:
 	LDA $2E
 	STA $03C9,Y
-bra2_A2A72_RTS:
+bra2_A2A7_RTS:
 	RTS
 	LDY #$00
 	LDA (Data0),Y
@@ -481,12 +482,12 @@ bra2_A324:
 	STY $41,X	;unlogged
 	INX	;unlogged
 	CPX $2A	;unlogged
-	BCS bra2_A3322_RTS	;unlogged
+	BCS bra2_A332_RTS	;unlogged
 	CLC	;unlogged
 	ADC #$08	;unlogged
 	BCC bra2_A324	;unlogged
 	BCS bra2_A312	;unlogged
-bra2_A3322_RTS:
+bra2_A332_RTS:
 	RTS	;unlogged
 bra2_A333:
 	LDA #$00	;unlogged
@@ -532,12 +533,12 @@ bra2_A371:
 	STY $41,X
 	INX
 	CPX $2A
-	BCS bra2_A37F2_RTS
+	BCS bra2_A37F_RTS
 	SEC
 	SBC #$08
 	BCS bra2_A371
 	BCC bra2_A35F	;unlogged
-bra2_A37F2_RTS:
+bra2_A37F_RTS:
 	RTS
 bra2_A380:
 	LDA #$00
@@ -581,12 +582,12 @@ bra2_A3BB:
 	STY $B2,X
 	INX
 	CPX $2D
-	BCS bra2_A3C92_RTS
+	BCS bra2_A3C9_RTS
 	CLC	;unlogged
 	ADC #$08	;unlogged
 	BCC bra2_A3BB	;unlogged
 	BCS bra2_A3A7	;unlogged
-bra2_A3C92_RTS:
+bra2_A3C9_RTS:
 	RTS
 	LDA #$00	;unlogged
 bra2_A3CC:
@@ -662,7 +663,7 @@ loc2_A43C:
 sub2_A446:
 	LDA $36
 	AND #$80
-	BEQ bra2_A45A2_RTS
+	BEQ bra2_A45A_RTS
 	LDY #$01
 	LDA $36
 	AND #$40
@@ -671,7 +672,7 @@ sub2_A446:
 bra2_A455:
 	LDA $2E
 	STA $03C9,Y
-bra2_A45A2_RTS:
+bra2_A45A_RTS:
 	RTS
 tbl2_A45B:
 	.byte $00
@@ -682,6 +683,7 @@ tbl2_A45B:
 	.byte $20
 	.byte $28
 	.byte $30
+jmp_52_A463:
 	LDY #$00
 	LDA (Data0),Y
 	STA $2A
@@ -734,12 +736,12 @@ bra2_A4BB:
 	STY $41,X
 	INX
 	CPX $2A
-	BCS bra2_A4C92_RTS
+	BCS bra2_A4C9_RTS
 	CLC
 	ADC #$08
 	BCC bra2_A4BB
 	BCS bra2_A4A9
-bra2_A4C92_RTS:
+bra2_A4C9_RTS:
 	RTS
 bra2_A4CA:
 	LDA #$00
@@ -780,12 +782,12 @@ bra2_A500:
 	STY $41,X
 	INX
 	CPX $2A
-	BCS bra2_A50E2_RTS
+	BCS bra2_A50E_RTS
 	SEC
 	SBC #$08
 	BCS bra2_A500
 	BCC bra2_A4EE	;unlogged
-bra2_A50E2_RTS:
+bra2_A50E_RTS:
 	RTS
 bra2_A50F:
 	LDA #$00
@@ -827,12 +829,12 @@ bra2_A548:
 	STY $B2,X
 	INX
 	CPX $2D
-	BCS bra2_A5562_RTS
+	BCS bra2_A556_RTS
 	CLC
 	ADC #$08
 	BCC bra2_A548
 	BCS bra2_A534
-bra2_A5562_RTS:
+bra2_A556_RTS:
 	RTS
 bra2_A557:
 	LDA #$00
@@ -942,12 +944,12 @@ bra2_A60A:
 	STY $41,X
 	INX
 	CPX #$02
-	BCS bra2_A6182_RTS
+	BCS bra2_A618_RTS
 	CLC
 	ADC #$08
 	BCC bra2_A60A
 	BCS bra2_A5F8
-bra2_A6182_RTS:
+bra2_A618_RTS:
 	RTS
 bra2_A619:
 	LDA #$00
@@ -993,12 +995,12 @@ bra2_A657:
 	STY $41,X
 	INX
 	CPX #$02
-	BCS bra2_A6652_RTS
+	BCS bra2_A665_RTS
 	SEC
 	SBC #$08
 	BCS bra2_A657
 	BCC bra2_A645
-bra2_A6652_RTS:
+bra2_A665_RTS:
 	RTS
 bra2_A666:
 	LDA #$00
@@ -1041,12 +1043,12 @@ bra2_A6A1:
 	STY $B2,X
 	INX
 	CPX $2D
-	BCS bra2_A6AF2_RTS
+	BCS bra2_A6AF_RTS
 	CLC
 	ADC #$08
 	BCC bra2_A6A1
 	BCS bra2_A68D
-bra2_A6AF2_RTS:
+bra2_A6AF_RTS:
 	RTS
 bra2_A6B0:
 	LDA #$00
@@ -1401,9 +1403,7 @@ tbl2_A71F:
 	.byte $DF
 	.byte $95
 tbl2_A83B:
-	.byte $05
-tbl2_A83C:
-	.byte $A0
+	.word ptr6_A005
 	.byte $62
 	.byte $95
 	.byte $90
@@ -2045,7 +2045,6 @@ tbl2_A93B:
 	.byte $97
 tbl2_AABB:
 	.byte $F1
-tbl2_AABC:
 	.byte $8B
 	.byte $F1
 	.byte $8B
@@ -2430,6 +2429,7 @@ tbl2_ABBB:
 	.byte $31
 	.byte $31
 	.byte $31
+jmp_52_AC3B:
 	LDY #$00
 	LDA (Data0),Y
 	STA $2A
@@ -2481,12 +2481,12 @@ bra2_AC90:
 	STY $41,X
 	INX
 	CPX $2A
-	BCS bra2_AC9E2_RTS
+	BCS bra2_AC9E_RTS
 	CLC
 	ADC #$08
 	BCC bra2_AC90
 	BCS bra2_AC7E
-bra2_AC9E2_RTS:
+bra2_AC9E_RTS:
 	RTS
 bra2_AC9F:
 	LDA #$00
@@ -2532,12 +2532,12 @@ bra2_ACDD:
 	STY $41,X
 	INX
 	CPX $2A
-	BCS bra2_ACEB2_RTS
+	BCS bra2_ACEB_RTS
 	SEC
 	SBC #$08
 	BCS bra2_ACDD
 	BCC bra2_ACCB	;unlogged
-bra2_ACEB2_RTS:
+bra2_ACEB_RTS:
 	RTS
 bra2_ACEC:
 	LDA #$00
@@ -2580,12 +2580,12 @@ bra2_AD27:
 	STY $B2,X
 	INX
 	CPX $2D
-	BCS bra2_AD352_RTS
+	BCS bra2_AD35_RTS
 	CLC
 	ADC #$08
 	BCC bra2_AD27
 	BCS bra2_AD13
-bra2_AD352_RTS:
+bra2_AD35_RTS:
 	RTS
 bra2_AD36:
 	LDA #$00
@@ -2702,12 +2702,12 @@ bra2_ADF9:
 	STY $41,X	;unlogged
 	INX	;unlogged
 	CPX #$02	;unlogged
-	BCS bra2_AE072_RTS	;unlogged
+	BCS bra2_AE07_RTS	;unlogged
 	CLC	;unlogged
 	ADC #$08	;unlogged
 	BCC bra2_ADF9	;unlogged
 	BCS bra2_ADE7	;unlogged
-bra2_AE072_RTS:
+bra2_AE07_RTS:
 	RTS	;unlogged
 bra2_AE08:
 	LDA #$00	;unlogged
@@ -2749,12 +2749,12 @@ bra2_AE40:
 	STY $41,X	;unlogged
 	INX	;unlogged
 	CPX #$02	;unlogged
-	BCS bra2_AE4E2_RTS	;unlogged
+	BCS bra2_AE4E_RTS	;unlogged
 	SEC	;unlogged
 	SBC #$08	;unlogged
 	BCS bra2_AE40	;unlogged
 	BCC bra2_AE2E	;unlogged
-bra2_AE4E2_RTS:
+bra2_AE4E_RTS:
 	RTS	;unlogged
 bra2_AE4F:
 	LDA #$00	;unlogged
@@ -2797,12 +2797,12 @@ bra2_AE8A:
 	STY $B2,X
 	INX
 	CPX #$02
-	BCS bra2_AE982_RTS
+	BCS bra2_AE98_RTS
 	CLC
 	ADC #$08
 	BCC bra2_AE8A
 	BCS bra2_AE76
-bra2_AE982_RTS:
+bra2_AE98_RTS:
 	RTS
 bra2_AE99:
 	LDA #$00
@@ -2877,7 +2877,7 @@ loc2_AF0B:
 	STX $3C
 	LDA $36
 	AND #$80
-	BEQ bra2_AF282_RTS
+	BEQ bra2_AF28_RTS
 	LDY #$01
 	LDA $36
 	AND #$40
@@ -2886,7 +2886,7 @@ loc2_AF0B:
 bra2_AF23:
 	LDA $2E
 	STA $03C9,Y
-bra2_AF282_RTS:
+bra2_AF28_RTS:
 	RTS
 	.byte $00
 	.byte $00

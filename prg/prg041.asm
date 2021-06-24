@@ -2483,15 +2483,15 @@ sub_B068:
 	TAY
 	LDA tbl_B0EB,Y
 	STA Data0
-	LDA tbl_B0EC,Y
+	LDA tbl_B0EB+1,Y
 	STA Data0+1
 	LDA FadeoutMode
 	ASL
 	TAY
 	LDA tbl_B0E7,Y
-	STA $34
-	LDA tbl_B0E8,Y
-	STA $35
+	STA Data1
+	LDA tbl_B0E7+1,Y
+	STA Data1+1
 bra_B086:
 loc_B086:
 	LDA PPUUpdatePtr
@@ -2549,27 +2549,17 @@ tbl_B0DE:
 	.byte $30	;
 	.byte $40	;
 tbl_B0E7:
-	.byte $C9
-tbl_B0E8:
-	.byte $B1
-	.byte $E9
-	.byte $B1
+	.word ofs_B1C9
+	.word ofs_B1E9
 tbl_B0EB:
-	.byte $F9
-tbl_B0EC:
-	.byte $B0
-	.byte $19
-	.byte $B1
-	.byte $39
-	.byte $B1
-	.byte $49
-	.byte $B1
-	.byte $69
-	.byte $B1
-	.byte $89
-	.byte $B1
-	.byte $A9
-	.byte $B1
+	.word ofs_B0F9
+	.word ofs_B119
+	.word ofs_B139
+	.word ofs_B149
+	.word ofs_B169
+	.word ofs_B189
+	.word ofs_B1A9
+ofs_B0F9:
 	.byte $11
 	.byte $30
 	.byte $2A
@@ -2602,6 +2592,7 @@ tbl_B0EC:
 	.byte $28
 	.byte $16
 	.byte $0E
+ofs_B119:
 	.byte $0E
 	.byte $20
 	.byte $35
@@ -2634,6 +2625,7 @@ tbl_B0EC:
 	.byte $30
 	.byte $20
 	.byte $10
+ofs_B139:
 	.byte $0E
 	.byte $2A
 	.byte $2C
@@ -2650,6 +2642,7 @@ tbl_B0EC:
 	.byte $1C
 	.byte $2C
 	.byte $30
+ofs_B149:
 	.byte $0E
 	.byte $11
 	.byte $2C
@@ -2682,6 +2675,7 @@ tbl_B0EC:
 	.byte $1C
 	.byte $2C
 	.byte $30
+ofs_B169:
 	.byte $0E
 	.byte $21
 	.byte $37
@@ -2714,6 +2708,7 @@ tbl_B0EC:
 	.byte $20
 	.byte $2A
 	.byte $0E
+ofs_B189:
 	.byte $0E
 	.byte $27
 	.byte $30
@@ -2746,6 +2741,7 @@ tbl_B0EC:
 	.byte $37
 	.byte $27
 	.byte $17
+ofs_B1A9:
 	.byte $0E
 	.byte $21
 	.byte $37
@@ -2778,6 +2774,7 @@ tbl_B0EC:
 	.byte $20
 	.byte $2A
 	.byte $0E
+ofs_B1C9:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -2810,6 +2807,7 @@ tbl_B0EC:
 	.byte $00
 	.byte $00
 	.byte $00
+ofs_B1E9:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -3833,7 +3831,7 @@ sub_B75D:
 	TAY
 	LDA tbl_BA2D,Y
 	STA Data0
-	LDA tbl_BA2E,Y
+	LDA tbl_BA2D+1,Y
 	STA Data0+1
 	LDA LevelNumber
 	ASL
@@ -4300,21 +4298,14 @@ bra_BA24:
 	STA $61
 	RTS
 tbl_BA2D:
-	.byte $3B
-tbl_BA2E:
-	.byte $BA
-	.byte $5B
-	.byte $BA
-	.byte $7B
-	.byte $BA
-	.byte $9B
-	.byte $BA
-	.byte $BB
-	.byte $BA
-	.byte $DB
-	.byte $BA
-	.byte $FB
-	.byte $BA
+	.word ofs_BA3B
+	.word ofs_BA5B
+	.word ofs_BA7B
+	.word ofs_BA9B
+	.word ofs_BABB
+	.word ofs_BADB
+	.word ofs_BAFB
+ofs_BA3B:
 	.byte $00
 	.byte $00
 	.byte $80
@@ -4347,6 +4338,7 @@ tbl_BA2E:
 	.byte $10
 	.byte $FF
 	.byte $01
+ofs_BA5B:
 	.byte $04
 	.byte $00
 	.byte $80
@@ -4379,6 +4371,7 @@ tbl_BA2E:
 	.byte $02
 	.byte $FF
 	.byte $01
+ofs_BA7B:
 	.byte $08
 	.byte $00
 	.byte $80
@@ -4411,6 +4404,7 @@ tbl_BA2E:
 	.byte $09
 	.byte $FF
 	.byte $00
+ofs_BA9B:
 	.byte $00
 	.byte $00
 	.byte $80
@@ -4443,6 +4437,7 @@ tbl_BA2E:
 	.byte $10
 	.byte $FF
 	.byte $01
+ofs_BABB:
 	.byte $00
 	.byte $00
 	.byte $80
@@ -4475,6 +4470,7 @@ tbl_BA2E:
 	.byte $10
 	.byte $FF
 	.byte $01
+ofs_BADB:
 	.byte $00
 	.byte $00
 	.byte $80
@@ -4507,6 +4503,7 @@ tbl_BA2E:
 	.byte $10
 	.byte $FF
 	.byte $01
+ofs_BAFB:
 	.byte $00
 	.byte $00
 	.byte $80

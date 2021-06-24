@@ -258,7 +258,7 @@ sub2_8848:
 	STA Data0+1
 	LDA tbl2_8986,X
 	STA Pointer3
-	LDA tbl2_8987,X
+	LDA tbl2_8986+1,X
 	STA Pointer3+1
 	LDA a:$41,Y
 	STA $25
@@ -337,276 +337,141 @@ bra2_88E1:
 bra2_88FF_RTS:
 	RTS
 tbl2_8900:
-	.byte $B2
-	.byte $8A
-	.byte $B2
-	.byte $8A
-	.byte $E6
-	.byte $8A
-	.byte $EC
-	.byte $8A
-	.byte $00
-	.byte $8B
-	.byte $0C
-	.byte $8B
-	.byte $16
-	.byte $8B
-	.byte $20
-	.byte $8B
-	.byte $3C
-	.byte $8B
-	.byte $4A
-	.byte $8B
-	.byte $66
-	.byte $8B
-	.byte $74
-	.byte $8B
-	.byte $80
-	.byte $8B
-	.byte $86
-	.byte $8B
-	.byte $96
-	.byte $8B
-	.byte $9E
-	.byte $8B
-	.byte $C2
-	.byte $8B
-	.byte $E6
-	.byte $8B
-	.byte $FA
-	.byte $8B
-	.byte $04
-	.byte $8C
-	.byte $28
-	.byte $8C
-	.byte $3A
-	.byte $8C
-	.byte $52
-	.byte $8C
-	.byte $58
-	.byte $8C
-	.byte $5E
-	.byte $8C
-	.byte $64
-	.byte $8C
-	.byte $6A
-	.byte $8C
-	.byte $70
-	.byte $8C
-	.byte $76
-	.byte $8C
-	.byte $7C
-	.byte $8C
-	.byte $82
-	.byte $8C
-	.byte $88
-	.byte $8C
-	.byte $94
-	.byte $8C
-	.byte $9A
-	.byte $8C
-	.byte $A0
-	.byte $8C
-	.byte $A6
-	.byte $8C
-	.byte $AC
-	.byte $8C
-	.byte $B2
-	.byte $8C
-	.byte $BF
-	.byte $8C
-	.byte $C2
-	.byte $8C
-	.byte $D6
-	.byte $8C
-	.byte $DE
-	.byte $8C
-	.byte $F1
-	.byte $8C
-	.byte $FC
-	.byte $8C
-	.byte $0F
-	.byte $8D
-	.byte $17
-	.byte $8D
-	.byte $1F
-	.byte $8D
-	.byte $27
-	.byte $8D
-	.byte $3A
-	.byte $8D
-	.byte $45
-	.byte $8D
-	.byte $50
-	.byte $8D
-	.byte $58
-	.byte $8D
-	.byte $60
-	.byte $8D
-	.byte $66
-	.byte $8D
-	.byte $6E
-	.byte $8D
-	.byte $76
-	.byte $8D
-	.byte $7E
-	.byte $8D
-	.byte $86
-	.byte $8D
-	.byte $8C
-	.byte $8D
-	.byte $98
-	.byte $8D
-	.byte $9E
-	.byte $8D
-	.byte $AA
-	.byte $8D
-	.byte $B0
-	.byte $8D
-	.byte $C1
-	.byte $8D
-	.byte $CC
-	.byte $8D
-	.byte $E2
-	.byte $8D
-	.byte $ED
-	.byte $8D
+	.word pnt3_8AB2
+	.word pnt3_8AB2
+	.word pnt3_8AE6
+	.word pnt3_8AEC
+	.word pnt3_8B00
+	.word pnt3_8B0C
+	.word pnt3_8B16
+	.word pnt3_8B20
+	.word pnt3_8B3C
+	.word pnt3_8B4A
+	.word pnt3_8B66
+	.word pnt3_8B74
+	.word pnt3_8B80
+	.word pnt3_8B86
+	.word pnt3_8B96
+	.word pnt3_8B9E
+	.word pnt3_8BC2
+	.word pnt3_8BE6
+	.word pnt3_8BFA
+	.word pnt3_8C04
+	.word pnt3_8C28
+	.word pnt3_8C3A
+	.word pnt3_8C52
+	.word pnt3_8C58
+	.word pnt3_8C5E
+	.word pnt3_8C64
+	.word pnt3_8C6A
+	.word pnt3_8C70
+	.word pnt3_8C76
+	.word pnt3_8C7C
+	.word pnt3_8C82
+	.word pnt3_8C88
+	.word pnt3_8C94
+	.word pnt3_8C9A
+	.word pnt3_8CA0
+	.word pnt3_8CA6
+	.word pnt3_8CAC
+	.word pnt3_8CB2
+	.word pnt3_8CBF
+	.word pnt3_8CC2
+	.word pnt3_8CD6
+	.word pnt3_8CDE
+	.word pnt3_8CF1
+	.word pnt3_8CFC
+	.word pnt3_8D0F
+	.word pnt3_8D17
+	.word pnt3_8D1F
+	.word pnt3_8D27
+	.word pnt3_8D3A
+	.word pnt3_8D45
+	.word pnt3_8D50
+	.word pnt3_8D58
+	.word pnt3_8D60
+	.word pnt3_8D66
+	.word pnt3_8D6E
+	.word pnt3_8D76
+	.word pnt3_8D7E
+	.word pnt3_8D86
+	.word pnt3_8D8C
+	.word pnt3_8D98
+	.word pnt3_8D9E
+	.word pnt3_8DAA
+	.word pnt3_8DB0
+	.word pnt3_8DC1
+	.word pnt3_8DCC
+	.word pnt3_8DE2
+	.word pnt3_8DED
 tbl2_8986:
-	.byte $CC
-tbl2_8987:
-	.byte $8A
-	.byte $CC
-	.byte $8A
-	.byte $E9
-	.byte $8A
-	.byte $F6
-	.byte $8A
-	.byte $06
-	.byte $8B
-	.byte $06
-	.byte $8B
-	.byte $06
-	.byte $8B
-	.byte $2E
-	.byte $8B
-	.byte $2E
-	.byte $8B
-	.byte $58
-	.byte $8B
-	.byte $58
-	.byte $8B
-	.byte $7A
-	.byte $8B
-	.byte $7A
-	.byte $8B
-	.byte $8E
-	.byte $8B
-	.byte $8E
-	.byte $8B
-	.byte $B0
-	.byte $8B
-	.byte $D4
-	.byte $8B
-	.byte $F0
-	.byte $8B
-	.byte $F0
-	.byte $8B
-	.byte $16
-	.byte $8C
-	.byte $16
-	.byte $8C
-	.byte $16
-	.byte $8C
-	.byte $4C
-	.byte $8C
-	.byte $4C
-	.byte $8C
-	.byte $4C
-	.byte $8C
-	.byte $4C
-	.byte $8C
-	.byte $4C
-	.byte $8C
-	.byte $4C
-	.byte $8C
-	.byte $4C
-	.byte $8C
-	.byte $4C
-	.byte $8C
-	.byte $4C
-	.byte $8C
-	.byte $4C
-	.byte $8C
-	.byte $8E
-	.byte $8C
-	.byte $8E
-	.byte $8C
-	.byte $8E
-	.byte $8C
-	.byte $8E
-	.byte $8C
-	.byte $8E
-	.byte $8C
-	.byte $8E
-	.byte $8C
-	.byte $B8
-	.byte $8C
-	.byte $BB
-	.byte $8C
-	.byte $C6
-	.byte $8C
-	.byte $CE
-	.byte $8C
-	.byte $E6
-	.byte $8C
-	.byte $E6
-	.byte $8C
-	.byte $07
-	.byte $8D
-	.byte $07
-	.byte $8D
-	.byte $C6
-	.byte $8C
-	.byte $CE
-	.byte $8C
-	.byte $2F
-	.byte $8D
-	.byte $2F
-	.byte $8D
-	.byte $07
-	.byte $8D
-	.byte $07
-	.byte $8D
-	.byte $4C
-	.byte $8C
-	.byte $C6
-	.byte $8C
-	.byte $CE
-	.byte $8C
-	.byte $C6
-	.byte $8C
-	.byte $CE
-	.byte $8C
-	.byte $8E
-	.byte $8C
-	.byte $8E
-	.byte $8C
-	.byte $92
-	.byte $8D
-	.byte $92
-	.byte $8D
-	.byte $A4
-	.byte $8D
-	.byte $A4
-	.byte $8D
-	.byte $B6
-	.byte $8D
-	.byte $B6
-	.byte $8D
-	.byte $D7
-	.byte $8D
-	.byte $D7
-	.byte $8D
+	.word pnt3_8ACC
+	.word pnt3_8ACC
+	.word pnt3_8AE9
+	.word pnt3_8AF6
+	.word pnt3_8B06
+	.word pnt3_8B06
+	.word pnt3_8B06
+	.word pnt3_8B2E
+	.word pnt3_8B2E
+	.word pnt3_8B58
+	.word pnt3_8B58
+	.word pnt3_8B7A
+	.word pnt3_8B7A
+	.word pnt3_8B8E
+	.word pnt3_8B8E
+	.word pnt3_8BB0
+	.word pnt3_8BD4
+	.word pnt3_8BF0
+	.word pnt3_8BF0
+	.word pnt3_8C16
+	.word pnt3_8C16
+	.word pnt3_8C16
+	.word pnt3_8C4C
+	.word pnt3_8C4C
+	.word pnt3_8C4C
+	.word pnt3_8C4C
+	.word pnt3_8C4C
+	.word pnt3_8C4C
+	.word pnt3_8C4C
+	.word pnt3_8C4C
+	.word pnt3_8C4C
+	.word pnt3_8C4C
+	.word pnt3_8C8E
+	.word pnt3_8C8E
+	.word pnt3_8C8E
+	.word pnt3_8C8E
+	.word pnt3_8C8E
+	.word pnt3_8C8E
+	.word pnt3_8CB8
+	.word pnt3_8CBB
+	.word pnt3_8CC6
+	.word pnt3_8CCE
+	.word pnt3_8CE6
+	.word pnt3_8CE6
+	.word pnt3_8D07
+	.word pnt3_8D07
+	.word pnt3_8CC6
+	.word pnt3_8CCE
+	.word pnt3_8D2F
+	.word pnt3_8D2F
+	.word pnt3_8D07
+	.word pnt3_8D07
+	.word pnt3_8C4C
+	.word pnt3_8CC6
+	.word pnt3_8CCE
+	.word pnt3_8CC6
+	.word pnt3_8CCE
+	.word pnt3_8C8E
+	.word pnt3_8C8E
+	.word pnt3_8D92
+	.word pnt3_8D92
+	.word pnt3_8DA4
+	.word pnt3_8DA4
+	.word pnt3_8DB6
+	.word pnt3_8DB6
+	.word pnt3_8DD7
+	.word pnt3_8DD7
 tbl2_8A0C:
 	.byte $00
 	.byte $00
@@ -776,6 +641,7 @@ pnt3_8AAD:
 	.byte $94
 	.byte $0F
 	.byte $C0
+pnt3_8AB2:
 	.byte $08
 	.byte $03
 	.byte $8F
@@ -802,6 +668,7 @@ pnt3_8AAD:
 	.byte $93
 	.byte $94
 	.byte $95
+pnt3_8ACC:
 	.byte $08
 	.byte $03
 	.byte $03
@@ -828,12 +695,15 @@ pnt3_8AAD:
 	.byte $03
 	.byte $03
 	.byte $03
+pnt3_8AE6:
 	.byte $01
 	.byte $01
 	.byte $8E
+pnt3_8AE9:
 	.byte $01
 	.byte $01
 	.byte $03
+pnt3_8AEC:
 	.byte $04
 	.byte $02
 	.byte $38
@@ -844,6 +714,7 @@ pnt3_8AAD:
 	.byte $3D
 	.byte $3D
 	.byte $3E
+pnt3_8AF6:
 	.byte $04
 	.byte $02
 	.byte $21
@@ -854,18 +725,21 @@ pnt3_8AAD:
 	.byte $21
 	.byte $21
 	.byte $21
+pnt3_8B00:
 	.byte $02
 	.byte $02
 	.byte $00
 	.byte $01
 	.byte $02
 	.byte $03
+pnt3_8B06:
 	.byte $02
 	.byte $02
 	.byte $01
 	.byte $01
 	.byte $01
 	.byte $01
+pnt3_8B0C:
 	.byte $02
 	.byte $04
 	.byte $0C
@@ -876,6 +750,7 @@ pnt3_8AAD:
 	.byte $0E
 	.byte $29
 	.byte $0F
+pnt3_8B16:
 	.byte $02
 	.byte $04
 	.byte $2E
@@ -886,6 +761,7 @@ pnt3_8AAD:
 	.byte $18
 	.byte $1B
 	.byte $19
+pnt3_8B20:
 	.byte $03
 	.byte $04
 	.byte $0E
@@ -900,6 +776,7 @@ pnt3_8AAD:
 	.byte $35
 	.byte $36
 	.byte $2E
+pnt3_8B2E:
 	.byte $03
 	.byte $04
 	.byte $00
@@ -914,6 +791,7 @@ pnt3_8AAD:
 	.byte $00
 	.byte $00
 	.byte $00
+pnt3_8B3C:
 	.byte $03
 	.byte $04
 	.byte $10
@@ -928,6 +806,7 @@ pnt3_8AAD:
 	.byte $37
 	.byte $38
 	.byte $2E
+pnt3_8B4A:
 	.byte $03
 	.byte $04
 	.byte $21
@@ -942,6 +821,7 @@ pnt3_8AAD:
 	.byte $33
 	.byte $34
 	.byte $35
+pnt3_8B58:
 	.byte $03
 	.byte $04
 	.byte $02
@@ -956,6 +836,7 @@ pnt3_8AAD:
 	.byte $02
 	.byte $02
 	.byte $02
+pnt3_8B66:
 	.byte $03
 	.byte $04
 	.byte $23
@@ -970,24 +851,28 @@ pnt3_8AAD:
 	.byte $36
 	.byte $37
 	.byte $38
+pnt3_8B74:
 	.byte $02
 	.byte $02
 	.byte $38
 	.byte $39
 	.byte $3A
 	.byte $3B
+pnt3_8B7A:
 	.byte $02
 	.byte $02
 	.byte $02
 	.byte $02
 	.byte $02
 	.byte $02
+pnt3_8B80:
 	.byte $02
 	.byte $02
 	.byte $3C
 	.byte $3D
 	.byte $3E
 	.byte $3F
+pnt3_8B86:
 	.byte $03
 	.byte $02
 	.byte $06
@@ -996,6 +881,7 @@ pnt3_8AAD:
 	.byte $14
 	.byte $15
 	.byte $16
+pnt3_8B8E:
 	.byte $03
 	.byte $02
 	.byte $02
@@ -1004,6 +890,7 @@ pnt3_8AAD:
 	.byte $00
 	.byte $00
 	.byte $00
+pnt3_8B96:
 	.byte $03
 	.byte $02
 	.byte $06
@@ -1012,6 +899,7 @@ pnt3_8AAD:
 	.byte $14
 	.byte $17
 	.byte $18
+pnt3_8B9E:
 	.byte $04
 	.byte $04
 	.byte $00
@@ -1030,6 +918,7 @@ pnt3_8AAD:
 	.byte $0B
 	.byte $0C
 	.byte $FF
+pnt3_8BB0:
 	.byte $04
 	.byte $04
 	.byte $00
@@ -1048,6 +937,7 @@ pnt3_8AAD:
 	.byte $00
 	.byte $00
 	.byte $00
+pnt3_8BC2:
 	.byte $04
 	.byte $04
 	.byte $FF
@@ -1066,6 +956,7 @@ pnt3_8AAD:
 	.byte $19
 	.byte $1A
 	.byte $FF
+pnt3_8BD4:
 	.byte $04
 	.byte $04
 	.byte $00
@@ -1084,6 +975,7 @@ pnt3_8AAD:
 	.byte $00
 	.byte $00
 	.byte $00
+pnt3_8BE6:
 	.byte $02
 	.byte $04
 	.byte $21
@@ -1094,6 +986,7 @@ pnt3_8AAD:
 	.byte $24
 	.byte $26
 	.byte $27
+pnt3_8BF0:
 	.byte $02
 	.byte $04
 	.byte $40
@@ -1104,6 +997,7 @@ pnt3_8AAD:
 	.byte $41
 	.byte $41
 	.byte $41
+pnt3_8BFA:
 	.byte $02
 	.byte $04
 	.byte $29
@@ -1114,6 +1008,7 @@ pnt3_8AAD:
 	.byte $2C
 	.byte $2F
 	.byte $2E
+pnt3_8C04:
 	.byte $04
 	.byte $04
 	.byte $FF
@@ -1132,6 +1027,7 @@ pnt3_8AAD:
 	.byte $0C
 	.byte $FF
 	.byte $FF
+pnt3_8C16:
 	.byte $04
 	.byte $04
 	.byte $42
@@ -1150,6 +1046,7 @@ pnt3_8AAD:
 	.byte $43
 	.byte $42
 	.byte $42
+pnt3_8C28:
 	.byte $04
 	.byte $04
 	.byte $FF
@@ -1168,6 +1065,7 @@ pnt3_8AAD:
 	.byte $16
 	.byte $FF
 	.byte $FF
+pnt3_8C3A:
 	.byte $04
 	.byte $04
 	.byte $FF
@@ -1186,128 +1084,151 @@ pnt3_8AAD:
 	.byte $1E
 	.byte $FF
 	.byte $FF
+pnt3_8C4C:
 	.byte $02
 	.byte $02
 	.byte $00
 	.byte $00
 	.byte $01
 	.byte $01
+pnt3_8C52:
 	.byte $02
 	.byte $02
 	.byte $05
 	.byte $06
 	.byte $0D
 	.byte $0E
+pnt3_8C58:
 	.byte $02
 	.byte $02
 	.byte $07
 	.byte $08
 	.byte $0F
 	.byte $10
+pnt3_8C5E:
 	.byte $02
 	.byte $02
 	.byte $05
 	.byte $06
 	.byte $11
 	.byte $12
+pnt3_8C64:
 	.byte $02
 	.byte $02
 	.byte $50
 	.byte $51
 	.byte $60
 	.byte $61
+pnt3_8C6A:
 	.byte $02
 	.byte $02
 	.byte $52
 	.byte $53
 	.byte $62
 	.byte $63
+pnt3_8C70:
 	.byte $02
 	.byte $02
 	.byte $2A
 	.byte $2B
 	.byte $36
 	.byte $37
+pnt3_8C76:
 	.byte $02
 	.byte $02
 	.byte $2C
 	.byte $2D
 	.byte $38
 	.byte $39
+pnt3_8C7C:
 	.byte $02
 	.byte $02
 	.byte $44
 	.byte $45
 	.byte $54
 	.byte $55
+pnt3_8C82:
 	.byte $02
 	.byte $02
 	.byte $46
 	.byte $47
 	.byte $56
 	.byte $57
+pnt3_8C88:
 	.byte $02
 	.byte $02
 	.byte $48
 	.byte $49
 	.byte $58
 	.byte $59
+pnt3_8C8E:
 	.byte $02
 	.byte $02
 	.byte $00
 	.byte $00
 	.byte $02
 	.byte $02
+pnt3_8C94:
 	.byte $02
 	.byte $02
 	.byte $07
 	.byte $08
 	.byte $13
 	.byte $14
+pnt3_8C9A:
 	.byte $02
 	.byte $02
 	.byte $05
 	.byte $06
 	.byte $15
 	.byte $16
+pnt3_8CA0:
 	.byte $02
 	.byte $02
 	.byte $50
 	.byte $51
 	.byte $64
 	.byte $65
+pnt3_8CA6:
 	.byte $02
 	.byte $02
 	.byte $52
 	.byte $53
 	.byte $66
 	.byte $67
+pnt3_8CAC:
 	.byte $02
 	.byte $02
 	.byte $24
 	.byte $25
 	.byte $13
 	.byte $14
+pnt3_8CB2:
 	.byte $02
 	.byte $02
 	.byte $22
 	.byte $23
 	.byte $15
 	.byte $16
+pnt3_8CB8:
 	.byte $01
 	.byte $01
 	.byte $02
+pnt3_8CBB:
 	.byte $02
 	.byte $01
 	.byte $03
 	.byte $03
+pnt3_8CBF:
 	.byte $01
 	.byte $01
 	.byte $6E
+pnt3_8CC2:
 	.byte $02
 	.byte $01
 	.byte $71
 	.byte $72
+pnt3_8CC6:
 	.byte $02
 	.byte $03
 	.byte $00
@@ -1316,6 +1237,7 @@ pnt3_8AAD:
 	.byte $01
 	.byte $02
 	.byte $02
+pnt3_8CCE:
 	.byte $02
 	.byte $03
 	.byte $00
@@ -1324,6 +1246,7 @@ pnt3_8AAD:
 	.byte $02
 	.byte $02
 	.byte $02
+pnt3_8CD6:
 	.byte $02
 	.byte $03
 	.byte $01
@@ -1332,6 +1255,7 @@ pnt3_8AAD:
 	.byte $0A
 	.byte $17
 	.byte $18
+pnt3_8CDE:
 	.byte $02
 	.byte $03
 	.byte $03
@@ -1340,6 +1264,7 @@ pnt3_8AAD:
 	.byte $0C
 	.byte $19
 	.byte $1A
+pnt3_8CE6:
 	.byte $03
 	.byte $03
 	.byte $00
@@ -1351,6 +1276,7 @@ pnt3_8AAD:
 	.byte $01
 	.byte $01
 	.byte $01
+pnt3_8CF1:
 	.byte $03
 	.byte $03
 	.byte $00
@@ -1362,6 +1288,7 @@ pnt3_8AAD:
 	.byte $5A
 	.byte $5B
 	.byte $5C
+pnt3_8CFC:
 	.byte $03
 	.byte $03
 	.byte $00
@@ -1373,6 +1300,7 @@ pnt3_8AAD:
 	.byte $5D
 	.byte $5E
 	.byte $5F
+pnt3_8D07:
 	.byte $02
 	.byte $03
 	.byte $00
@@ -1381,6 +1309,7 @@ pnt3_8AAD:
 	.byte $01
 	.byte $02
 	.byte $02
+pnt3_8D0F:
 	.byte $02
 	.byte $03
 	.byte $22
@@ -1389,6 +1318,7 @@ pnt3_8AAD:
 	.byte $2F
 	.byte $3A
 	.byte $3B
+pnt3_8D17:
 	.byte $02
 	.byte $03
 	.byte $24
@@ -1397,6 +1327,7 @@ pnt3_8AAD:
 	.byte $31
 	.byte $3C
 	.byte $3D
+pnt3_8D1F:
 	.byte $02
 	.byte $03
 	.byte $01
@@ -1405,6 +1336,7 @@ pnt3_8AAD:
 	.byte $0A
 	.byte $13
 	.byte $14
+pnt3_8D27:
 	.byte $02
 	.byte $03
 	.byte $03
@@ -1413,6 +1345,7 @@ pnt3_8AAD:
 	.byte $0C
 	.byte $15
 	.byte $16
+pnt3_8D2F:
 	.byte $03
 	.byte $03
 	.byte $02
@@ -1424,6 +1357,7 @@ pnt3_8AAD:
 	.byte $02
 	.byte $02
 	.byte $02
+pnt3_8D3A:
 	.byte $03
 	.byte $03
 	.byte $00
@@ -1435,6 +1369,7 @@ pnt3_8AAD:
 	.byte $68
 	.byte $69
 	.byte $6A
+pnt3_8D45:
 	.byte $03
 	.byte $03
 	.byte $00
@@ -1446,6 +1381,7 @@ pnt3_8AAD:
 	.byte $6B
 	.byte $6C
 	.byte $6D
+pnt3_8D50:
 	.byte $02
 	.byte $03
 	.byte $26
@@ -1454,6 +1390,7 @@ pnt3_8AAD:
 	.byte $33
 	.byte $13
 	.byte $14
+pnt3_8D58:
 	.byte $02
 	.byte $03
 	.byte $28
@@ -1462,12 +1399,14 @@ pnt3_8AAD:
 	.byte $35
 	.byte $15
 	.byte $16
+pnt3_8D60:
 	.byte $02
 	.byte $02
 	.byte $1D
 	.byte $06
 	.byte $20
 	.byte $21
+pnt3_8D66:
 	.byte $02
 	.byte $03
 	.byte $1B
@@ -1476,6 +1415,7 @@ pnt3_8AAD:
 	.byte $0A
 	.byte $17
 	.byte $18
+pnt3_8D6E:
 	.byte $02
 	.byte $03
 	.byte $1C
@@ -1484,6 +1424,7 @@ pnt3_8AAD:
 	.byte $0C
 	.byte $19
 	.byte $1A
+pnt3_8D76:
 	.byte $02
 	.byte $03
 	.byte $1B
@@ -1492,6 +1433,7 @@ pnt3_8AAD:
 	.byte $0A
 	.byte $13
 	.byte $14
+pnt3_8D7E:
 	.byte $02
 	.byte $03
 	.byte $1C
@@ -1500,54 +1442,63 @@ pnt3_8AAD:
 	.byte $0C
 	.byte $15
 	.byte $16
+pnt3_8D86:
 	.byte $02
 	.byte $02
 	.byte $1F
 	.byte $08
 	.byte $13
 	.byte $14
+pnt3_8D8C:
 	.byte $02
 	.byte $02
 	.byte $1D
 	.byte $06
 	.byte $15
 	.byte $16
+pnt3_8D92:
 	.byte $02
 	.byte $02
 	.byte $40
 	.byte $40
 	.byte $41
 	.byte $41
+pnt3_8D98:
 	.byte $02
 	.byte $02
 	.byte $51
 	.byte $50
 	.byte $61
 	.byte $60
+pnt3_8D9E:
 	.byte $02
 	.byte $02
 	.byte $53
 	.byte $52
 	.byte $63
 	.byte $62
+pnt3_8DA4:
 	.byte $02
 	.byte $02
 	.byte $40
 	.byte $40
 	.byte $42
 	.byte $42
+pnt3_8DAA:
 	.byte $02
 	.byte $02
 	.byte $51
 	.byte $50
 	.byte $65
 	.byte $64
+pnt3_8DB0:
 	.byte $02
 	.byte $02
 	.byte $53
 	.byte $52
 	.byte $67
 	.byte $66
+pnt3_8DB6:
 	.byte $03
 	.byte $03
 	.byte $40
@@ -1559,6 +1510,7 @@ pnt3_8AAD:
 	.byte $42
 	.byte $42
 	.byte $42
+pnt3_8DC1:
 	.byte $03
 	.byte $03
 	.byte $41
@@ -1570,6 +1522,7 @@ pnt3_8AAD:
 	.byte $5C
 	.byte $5B
 	.byte $5A
+pnt3_8DCC:
 	.byte $03
 	.byte $03
 	.byte $43
@@ -1581,6 +1534,7 @@ pnt3_8AAD:
 	.byte $5F
 	.byte $5E
 	.byte $5D
+pnt3_8DD7:
 	.byte $03
 	.byte $03
 	.byte $40
@@ -1592,6 +1546,7 @@ pnt3_8AAD:
 	.byte $42
 	.byte $42
 	.byte $42
+pnt3_8DE2:
 	.byte $03
 	.byte $03
 	.byte $41
@@ -1603,6 +1558,7 @@ pnt3_8AAD:
 	.byte $6A
 	.byte $69
 	.byte $68
+pnt3_8DED:
 	.byte $03
 	.byte $03
 	.byte $43
@@ -2213,27 +2169,18 @@ sub2_90B1:
 	TAY
 	LDA tbl2_90C3,Y
 	STA Data0
-	LDA tbl2_90C4,Y
+	LDA tbl2_90C3+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl2_90C3:
-	.byte $F3
-tbl2_90C4:
-	.byte $90
-	.byte $F9
-	.byte $90
-	.byte $02
-	.byte $91
-	.byte $08
-	.byte $91
-	.byte $11
-	.byte $91
-	.byte $17
-	.byte $91
-	.byte $20
-	.byte $91
-	.byte $26
-	.byte $91
+	.word ptr9_90F3
+	.word ptr9_90F9
+	.word ptr9_9102
+	.word ptr9_9108
+	.word ptr9_9111
+	.word ptr9_9117
+	.word ptr9_9120
+	.word ptr9_9126
 sub2_90D3:
 	LDX $0361
 	LDA tbl2_90DD,X
@@ -2262,23 +2209,31 @@ tbl2_90DD:
 	.byte $07
 	.byte $00
 	.byte $00
+ptr9_90F3:
 	JSR sub2_9138
 	JMP loc2_91E9
+ptr9_90F9:
 	JSR sub2_9138
 	JSR sub2_913F
 	JMP loc2_91E9
+ptr9_9102:
 	JSR sub2_913F
 	JMP loc2_91E9
+ptr9_9108:
 	JSR sub2_913F
 	JSR sub2_912F
 	JMP loc2_91E9
+ptr9_9111:
 	JSR sub2_912F
 	JMP loc2_91E9
+ptr9_9117:
 	JSR sub2_9146
 	JSR sub2_912F
 	JMP loc2_91E9
+ptr9_9120:
 	JSR sub2_9146
 	JMP loc2_91E9
+ptr9_9126:
 	JSR sub2_9146
 	JSR sub2_9138
 	JMP loc2_91E9
@@ -2315,44 +2270,35 @@ sub2_9151:
 	TAY
 	LDA tbl2_9163,Y
 	STA Data0
-	LDA tbl2_9164,Y
+	LDA tbl2_9163+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl2_9163:
-	.byte $A1
-tbl2_9164:
-	.byte $91
-	.byte $A7
-	.byte $91
-	.byte $B2
-	.byte $91
-	.byte $BA
-	.byte $91
-	.byte $C5
-	.byte $91
-	.byte $CB
-	.byte $91
-	.byte $D6
-	.byte $91
-	.byte $DE
-	.byte $91
-	.byte $7B
-	.byte $91
-	.byte $83
-	.byte $91
-	.byte $8B
-	.byte $91
-	.byte $93
-	.byte $91
+	.word ptr9_91A1
+	.word ptr9_91A7
+	.word ptr9_91B2
+	.word ptr9_91BA
+	.word ptr9_91C5
+	.word ptr9_91CB
+	.word ptr9_91D6
+	.word ptr9_91DE
+	.word ptr9_917B
+	.word ptr9_9183
+	.word ptr9_918B
+	.word ptr9_9193
+ptr9_917B:
 	LDA #$00
 	STA $0390
 	JMP loc2_919B
+ptr9_9183:
 	LDA #$01
 	STA $0390
 	JMP loc2_919B
+ptr9_918B:
 	LDA #$02
 	STA $0390
 	JMP loc2_919B
+ptr9_9193:
 	LDA #$03
 	STA $0390
 	JMP loc2_919B
@@ -2360,28 +2306,36 @@ loc2_919B:
 	LDA #$0C
 	STA a:Event
 	RTS
+ptr9_91A1:
 	DEC $0356
 	JMP loc2_91E9
+ptr9_91A7:
 	LDX #$00
 	JSR sub2_96F6
 	DEC $0356
 	JMP loc2_91E9
+ptr9_91B2:
 	LDX #$00
 	JSR sub2_96F6
 	JMP loc2_91E9
+ptr9_91BA:
 	LDX #$00
 	JSR sub2_96F6
 	INC $0356
 	JMP loc2_91E9
+ptr9_91C5:
 	INC $0356
 	JMP loc2_91E9
+ptr9_91CB:
 	LDX #$00
 	JSR sub2_96DB
 	INC $0356
 	JMP loc2_91E9
+ptr9_91D6:
 	LDX #$00
 	JSR sub2_96DB
 	JMP loc2_91E9
+ptr9_91DE:
 	DEC $0356
 	LDX #$00
 	JSR sub2_96DB
@@ -4379,7 +4333,7 @@ jmp_42_9A44:
 	TAY
 	LDA tbl2_9A5D,Y
 	STA Data0
-	LDA tbl2_9A5E,Y
+	LDA tbl2_9A5D+1,Y
 	STA Data0+1
 	LDY #$00
 bra2_9A52:
@@ -4390,49 +4344,48 @@ bra2_9A52:
 	BCC bra2_9A52
 	RTS
 tbl2_9A5D:
-	.byte $69
-tbl2_9A5E:
-	.byte $9A
-	.byte $6F
-	.byte $9A
-	.byte $75
-	.byte $9A
-	.byte $7B
-	.byte $9A
-	.byte $81
-	.byte $9A
-	.byte $87
-	.byte $9A
+	.word ofs_9A69
+	.word ofs_9A6F
+	.word ofs_9A75
+	.word ofs_9A7B
+	.word ofs_9A81
+	.word ofs_9A87
+ofs_9A69:
 	.byte $FC
 	.byte $FE
 	.byte $80
 	.byte $81
 	.byte $94
 	.byte $95
+ofs_9A6F:
 	.byte $F8
 	.byte $FA
 	.byte $F8
 	.byte $F9
 	.byte $FA
 	.byte $FB
+ofs_9A75:
 	.byte $F4
 	.byte $F6
 	.byte $80
 	.byte $81
 	.byte $82
 	.byte $83
+ofs_9A7B:
 	.byte $F8
 	.byte $FA
 	.byte $80
 	.byte $81
 	.byte $82
 	.byte $83
+ofs_9A81:
 	.byte $E8
 	.byte $EA
 	.byte $80
 	.byte $81
 	.byte $82
 	.byte $83
+ofs_9A87:
 	.byte $F2
 	.byte $EC
 	.byte $00
@@ -4885,8 +4838,8 @@ sub2_9CA9:
 	STA Data0+1
 	LDX #$10
 bra2_9CB1:
-	ASL $34
-	ROL $35
+	ASL Data1
+	ROL Data1+1
 	ROL Data0
 	ROL Data0+1
 	LDA Data0

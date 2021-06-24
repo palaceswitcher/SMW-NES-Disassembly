@@ -1,4 +1,5 @@
 ;disassembled by BZK 6502 Disassembler
+obj_h88:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra6_800A
@@ -15,7 +16,7 @@ bra6_800A:
 	BEQ bra6_8026
 	CMP #$FF
 	BEQ bra6_8026
-	JMP $A6B5
+	JMP loc3_A6B5
 bra6_8026:
 	LDA ObjectYPos,X
 	SEC
@@ -88,7 +89,7 @@ loc6_809C:
 	BEQ bra6_80BE
 	CMP #$FF
 	BEQ bra6_80BE
-	JMP $A6B5
+	JMP loc3_A6B5
 bra6_80BE:
 	LDA ObjectYPos,X
 	SEC
@@ -130,21 +131,16 @@ bra6_8106:
 	TAY
 	LDA tbl6_811A,Y
 	STA Data0
-	LDA tbl6_811B,Y
+	LDA tbl6_811A+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl6_811A:
-	.byte $BB
-tbl6_811B:
-	.byte $A7
-	.byte $7B	;unlogged
-	.byte $AA	;unlogged
-	.byte $29	;unlogged
-	.byte $AB	;unlogged
-	.byte $24
-	.byte $81
-	.byte $88
-	.byte $AD
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr6_8124
+	.word ptr_AD88
+ptr6_8124:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra6_8151
@@ -165,13 +161,13 @@ bra6_8140:
 	TAY
 	LDA tbl6_88D9,Y
 	STA Data0
-	LDA tbl6_88DA,Y
+	LDA tbl6_88D9+1,Y
 	STA Data0+1
-	JSR $B485
+	JSR sub3_B485
 bra6_8151:
-	JSR $A6D4
-	JSR $BEBC
-	JSR $A74D
+	JSR jmp_54_A6D4
+	JSR jmp_54_BEBC
+	JSR jmp_54_A74D
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -181,7 +177,7 @@ bra6_8151:
 	LDA #$10
 	STA PlayerXSpeed
 	LDA #$01
-	JSR $BCD4
+	JSR sub3_BCD4
 	LDA #sfxEnemyHit2
 	STA SFXRegister
 	LDX $A4
@@ -216,7 +212,7 @@ bra6_8196:
 	LDY #$C0
 bra6_81B0:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 NinjiMappings:
 	.word NinjiStand
@@ -233,6 +229,7 @@ NinjiJump:
 	.byte $A6	;1K CHR Bank
 	.byte $26, $27
 	.byte $28, $29
+obj_h84:
 	LDA #$07
 	STA $25
 	LDX $A4
@@ -247,7 +244,7 @@ NinjiJump:
 	BEQ bra6_81EA
 	CMP #$FF
 	BEQ bra6_81EA
-	JMP $A6B5
+	JMP loc3_A6B5
 bra6_81EA:
 	LDA ObjectYPos,X
 	SEC
@@ -281,7 +278,7 @@ bra6_822C:
 loc6_822C:
 	LDA FreezeFlag
 	BEQ bra6_8232
-	.byte $60
+	RTS
 bra6_8232:
 	LDA ObjectState,X
 	AND #$1F
@@ -289,24 +286,19 @@ bra6_8232:
 	TAY
 	LDA tbl6_8246,Y
 	STA Data0
-	LDA tbl6_8247,Y
+	LDA tbl6_8246+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl6_8246:
-	.byte $BB
-tbl6_8247:
-	.byte $A7
-	.byte $7B	;unlogged
-	.byte $AA	;unlogged
-	.byte $29	;unlogged
-	.byte $AB	;unlogged
-	.byte $50
-	.byte $82
-	.byte $88	;unlogged
-	.byte $AD	;unlogged
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr6_8250
+	.word ptr_AD88
+ptr6_8250:
 	JSR sub6_825A
-	JSR $BEBC
-	JSR $BF74
+	JSR jmp_54_BEBC
+	JSR jmp_54_BF74
 	RTS
 sub6_825A:
 	LDX $A4
@@ -316,21 +308,16 @@ sub6_825A:
 	TAY
 	LDA tbl6_8270,Y
 	STA Data0
-	LDA tbl6_8271,Y
+	LDA tbl6_8270+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl6_8270:
-	.byte $7A
-tbl6_8271:
-	.byte $82
-	.byte $A8
-	.byte $82
-	.byte $EA
-	.byte $82
-	.byte $4C
-	.byte $83
-	.byte $66
-	.byte $83
+	.word ptr6_827A
+	.word ptr6_82A8
+	.word ptr6_82EA
+	.word ptr6_834C
+	.word ptr6_8366
+ptr6_827A:
 	LDA ObjXScreenDistance,X
 	AND #$40
 	EOR #$40
@@ -355,6 +342,7 @@ bra6_82A4:
 	INC ObjectVariables,X
 bra6_82A7_RTS:
 	RTS
+ptr6_82A8
 	LDA ObjXScreenDistance,X
 	AND #$40
 	EOR #$40
@@ -391,6 +379,7 @@ bra6_82E5_RTS:
 bra6_82E6:
 	INC ObjectVariables,X
 	RTS
+ptr6_82EA:
 	LDA #$08
 	BMI bra6_8305
 	CLC
@@ -439,6 +428,7 @@ bra6_8348:
 	INC ObjectVariables,X
 bra6_834B_RTS:
 	RTS
+ptr6_834C:
 	LDA $062B
 	AND #$1E
 	BNE bra6_8365_RTS
@@ -452,6 +442,7 @@ bra6_834B_RTS:
 	INC ObjectVariables,X
 bra6_8365_RTS:
 	RTS
+ptr6_8366:
 	LDA #$FC
 	BMI bra6_8381
 	CLC	;unlogged
@@ -509,7 +500,7 @@ bra6_83B2_RTS:
 	LDY #$C0
 bra6_83DB:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 ThwompMappings:
 	.word ThwompIdle
@@ -553,7 +544,7 @@ ThwompAngry:
 	BEQ bra6_8436
 	CMP #$FF
 	BEQ bra6_8436
-	JMP $A6B5
+	JMP loc3_A6B5
 bra6_8436:
 	LDA ObjectYPos,X
 	SEC
@@ -607,11 +598,12 @@ bra6_849D:
 	LDA $062B
 	AND #$01
 	BNE bra6_84A7
-	JSR $BBC3
+	JSR jmp_54_BBC3
 bra6_84A7:
-	JSR $BEBC
-	JSR $BF74
+	JSR jmp_54_BEBC
+	JSR jmp_54_BF74
 	RTS
+obj_h90:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -624,7 +616,7 @@ bra6_84A7:
 	BEQ bra6_84CC
 	CMP #$FF
 	BEQ bra6_84CC
-	JMP $A6B5
+	JMP loc3_A6B5
 bra6_84CC:
 	LDA ObjectYPos,X
 	SEC
@@ -678,10 +670,10 @@ bra6_8533:
 	LDA $062B
 	AND #$01
 	BNE bra6_853D
-	JSR $BBC3
+	JSR jmp_54_BBC3
 bra6_853D:
-	JSR $BEBC
-	JSR $BF74
+	JSR jmp_54_BEBC
+	JSR jmp_54_BF74
 	RTS
 	LDY #$00
 	LDX $A4
@@ -695,7 +687,7 @@ bra6_8550:
 	TAX
 	LDA tbl6_8570,X
 	STA Data0
-	LDA tbl6_8571,X
+	LDA tbl6_8570+1,X
 	STA Data0+1
 	LDY #$80
 	LDX $A4
@@ -705,14 +697,12 @@ bra6_8550:
 	LDY #$C0
 bra6_856A:
 	STY $36
-	JSR $A118
+	JSR jmp_54_A118
 	RTS	;unlogged code end
 tbl6_8570:
-	.byte $74
-tbl6_8571:
-	.byte $85
-	.byte $7D
-	.byte $85
+	.word Unknown1	;Unused (Fuzzy)
+	.word Unknown2	;Unused (Fuzzy)
+Unknown1:
 	.byte $03
 	.byte $02
 	.byte $A4
@@ -722,6 +712,7 @@ tbl6_8571:
 	.byte $0B
 	.byte $0C
 	.byte $0D
+Unknown2:
 	.byte $03
 	.byte $02
 	.byte $A4
@@ -731,6 +722,7 @@ tbl6_8571:
 	.byte $0E
 	.byte $0C
 	.byte $0F
+obj_h86:
 	LDA #$07
 	STA $25
 	LDX $A4
@@ -745,7 +737,7 @@ tbl6_8571:
 	BEQ bra6_85A8
 	CMP #$FF
 	BEQ bra6_85A8
-	JMP $A6B5
+	JMP loc3_A6B5
 bra6_85A8:
 	LDA ObjectYPos,X
 	SEC
@@ -779,7 +771,7 @@ bra6_85EA:
 loc6_85EA:
 	LDA FreezeFlag
 	BEQ bra6_85F0
-	.byte $60
+	RTS
 bra6_85F0:
 	LDA ObjectState,X
 	AND #$1F
@@ -787,22 +779,18 @@ bra6_85F0:
 	TAY
 	LDA tbl6_8604,Y
 	STA Data0
-	LDA tbl6_8605,Y
+	LDA tbl6_8604+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl6_8604:
-	.byte $BB
-tbl6_8605:
-	.byte $A7
-	.byte $7B	;unlogged
-	.byte $AA	;unlogged
-	.byte $29	;unlogged
-	.byte $AB	;unlogged
-	.byte $0C
-	.byte $86
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr6_860C
+ptr6_860C:
 	JSR sub6_8616
-	JSR $BEBC
-	JSR $BF74
+	JSR jmp_54_BEBC
+	JSR jmp_54_BF74
 	RTS
 sub6_8616:
 	LDX $A4
@@ -813,19 +801,15 @@ sub6_8616:
 	TAY
 	LDA tbl6_862F,Y
 	STA Data0
-	LDA tbl6_8630,Y
+	LDA tbl6_862F+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl6_862F:
-	.byte $DC
-tbl6_8630:
-	.byte $87
-	.byte $37
-	.byte $86
-	.byte $DC
-	.byte $87
-	.byte $82
-	.byte $86
+	.word ptr6_87DC
+	.word ptr6_8637
+	.word ptr6_87DC
+	.word ptr6_8682
+ptr6_8637:
 	LDA #$FF
 	BMI bra6_8652
 	CLC	;unlogged
@@ -862,6 +846,7 @@ loc6_8671:
 	INC ObjectVariables,X
 bra6_8681_RTS:
 	RTS
+ptr6_8682:
 	LDA #$01
 	BMI bra6_869D
 	CLC
@@ -899,6 +884,7 @@ loc6_86BC:
 	STA ObjectVariables,X
 bra6_86CE_RTS:
 	RTS
+obj_h92:
 	LDA #$07
 	STA $25
 	LDX $A4
@@ -913,7 +899,7 @@ bra6_86CE_RTS:
 	BEQ bra6_86F1
 	CMP #$FF
 	BEQ bra6_86F1
-	JMP $A6B5
+	JMP loc3_A6B5
 bra6_86F1:
 	LDA ObjectYPos,X
 	SEC
@@ -955,22 +941,18 @@ bra6_8739:
 	TAY
 	LDA tbl6_874D,Y
 	STA Data0
-	LDA tbl6_874E,Y
+	LDA tbl6_874D+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl6_874D:
-	.byte $BB
-tbl6_874E:
-	.byte $A7
-	.byte $7B	;unlogged
-	.byte $AA	;unlogged
-	.byte $29	;unlogged
-	.byte $AB	;unlogged
-	.byte $55
-	.byte $87
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr6_8755
+ptr6_8755:
 	JSR sub6_875F
-	JSR $BEBC
-	JSR $BF74	;unlogged
+	JSR jmp_54_BEBC
+	JSR jmp_54_BF74	;unlogged
 	RTS	;unlogged
 sub6_875F:
 	LDX $A4
@@ -981,19 +963,15 @@ sub6_875F:
 	TAY
 	LDA tbl6_8778,Y
 	STA Data0
-	LDA tbl6_8779,Y
+	LDA tbl6_8778+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl6_8778:
-	.byte $DC
-tbl6_8779:
-	.byte $87
-	.byte $80
-	.byte $87
-	.byte $DC
-	.byte $87
-	.byte $AD
-	.byte $87
+	.word ptr6_87DC
+	.word ptr6_8780
+	.word ptr6_87DC
+	.word ptr6_87AD
+ptr6_8780:
 	LDA #$FF
 	PHA
 	CLC
@@ -1017,6 +995,7 @@ bra6_8799:
 	INC ObjectVariables,X
 bra6_87AC_RTS:
 	RTS
+ptr6_87AD:
 	LDA #$01
 	PHA
 	CLC
@@ -1041,6 +1020,7 @@ bra6_87C6:
 	STA ObjectVariables,X
 bra6_87DB_RTS:
 	RTS
+ptr6_87DC:
 	LDA $062B
 	AND #$0E
 	BNE bra6_87FD_RTS
@@ -1081,7 +1061,7 @@ bra6_8824:
 	STY $36
 	LDA #$00
 	STA $05F0
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 UrchinMappings:
 	.word UrchinOpen
@@ -1231,22 +1211,21 @@ UrchinClose:
 	.byte $01
 	.byte $01	;unlogged data end
 tbl6_88D9:
-	.byte $E5
-tbl6_88DA:
-	.byte $88
-	.byte $DF	;unlogged data start
-	.byte $88
-	.byte $E2
-	.byte $88
+	.word ofs_88E5
+	.word ofs_88DF	;unlogged data start
+	.word ofs_88E2
+ofs_88DF:
 	.byte $03
 	.byte $00
 	.byte $80
+ofs_88E2:
 	.byte $00
 	.byte $01
 	.byte $80
+ofs_88E5:
 	.byte $00
+	.byte $00	
 	.byte $00	;unlogged data end
-	.byte $00
 	.byte $00
 	.byte $00
 	.byte $FA
@@ -1373,10 +1352,11 @@ tbl6_88DA:
 	.byte $00
 	.byte $0A
 	.byte $80
+obj_h70:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra6_8971
-	JSR $B5BB
+	JSR jmp_54_B5BB
 	RTS
 bra6_8971:
 	JSR sub6_8BCA
@@ -1386,27 +1366,19 @@ bra6_8971:
 	TAY
 	LDA tbl6_8988,Y
 	STA Data0
-	LDA tbl6_8989,Y
+	LDA tbl6_8988+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl6_8988:
-	.byte $98
-tbl6_8989:
-	.byte $89
-	.byte $AD
-	.byte $89
-	.byte $C4
-	.byte $89
-	.byte $F7
-	.byte $89
-	.byte $0C
-	.byte $8A
-	.byte $63
-	.byte $8A
-	.byte $98
-	.byte $8A
-	.byte $DB
-	.byte $8A
+	.word ptr6_899D
+	.word ptr6_89AD
+	.word ptr6_89C4
+	.word ptr6_89F7
+	.word ptr6_8A0C
+	.word ptr6_8A63
+	.word ptr6_8A98
+	.word ptr6_8ADB
+ptr6_899D:
 	LDA EnemyAnimFrame,X
 	AND #$40
 	STA EnemyAnimFrame,X
@@ -1416,6 +1388,7 @@ tbl6_8989:
 	JMP loc6_8B8F
 bra6_89AA:
 	JMP loc6_8B6D
+ptr6_89AD:
 	LDA EnemyAnimFrame,X
 	AND #$C0
 	ORA #$40
@@ -1426,6 +1399,7 @@ bra6_89AA:
 	JMP loc6_8B44
 bra6_89C1:
 	JMP loc6_8B20
+ptr6_89C4:
 	LDA EnemyAnimFrame,X
 	AND #$C0
 	ORA #$80
@@ -1452,6 +1426,7 @@ bra6_89EA:
 	JMP loc6_8B6D
 bra6_89F4:
 	JMP loc6_8B8F
+ptr6_89F7:
 	LDA EnemyAnimFrame,X
 	AND #$80
 	STA EnemyAnimFrame,X
@@ -1461,6 +1436,7 @@ bra6_89F4:
 	JMP loc6_8B20
 bra6_8A09:
 	JMP loc6_8B44
+ptr6_8A0C:
 	LDY ObjActionTimer,X
 	LDA tbl6_8A53,Y
 	STA EnemyAnimFrame,X
@@ -1477,7 +1453,7 @@ bra6_8A09:
 	BCS bra6_8A31
 	INC ObjActionTimer,X
 bra6_8A31:
-	JSR $B077
+	JSR sub3_B077
 	BEQ bra6_8A52_RTS
 	LDA #$01
 	STA ScreenShake
@@ -1509,6 +1485,7 @@ tbl6_8A53:
 	.byte $53
 	.byte $53
 	.byte $55
+ptr6_8A63:
 	INC ObjActionTimer,X
 	LDA ObjActionTimer,X
 	CMP #$10
@@ -1535,6 +1512,7 @@ bra6_8A8C:
 	STA ObjActionTimer,X
 bra6_8A97_RTS:
 	RTS
+ptr6_8A98:
 	LDA #$02
 	CMP ObjectVariables,X
 	BCS bra6_8AAF
@@ -1570,6 +1548,7 @@ bra6_8AC7:
 	STA ObjActionTimer,X
 bra6_8ADA_RTS:
 	RTS
+ptr6_8ADB:
 	LDA ObjActionTimer,X
 	CMP #$30
 	BCC bra6_8B13
@@ -1716,7 +1695,7 @@ sub6_8BCA:
 	BEQ bra6_8BEC
 	CMP #$FF
 	BEQ bra6_8BEC
-	JMP $A6B5	;unlogged
+	JMP loc3_A6B5	;unlogged
 bra6_8BEC:
 	LDA ObjectYPos,X
 	SEC
@@ -1758,25 +1737,20 @@ bra6_8C34:
 	TAY
 	LDA tbl6_8C48,Y
 	STA Data0
-	LDA tbl6_8C49,Y
+	LDA tbl6_8C48+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl6_8C48:
-	.byte $BB
-tbl6_8C49:
-	.byte $A7
-	.byte $7B	;unlogged
-	.byte $AA	;unlogged
-	.byte $29	;unlogged
-	.byte $AB	;unlogged
-	.byte $52
-	.byte $8C
-	.byte $88	;unlogged
-	.byte $AD	;unlogged
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr6_8C52
+	.word ptr_AD88
+ptr6_8C52:
 	LDA ObjectAction,X
 	CMP #$04
 	BCS bra6_8CA1_RTS
-	JSR $BEBC
+	JSR jmp_54_BEBC
 	LDA InvincibilityTimer
 	CMP #$F7
 	BCS bra6_8CA1_RTS
@@ -1837,7 +1811,7 @@ bra6_8CC2:
 	LDA WorldNumber
 	CMP #$04
 	BEQ bra6_8CD7
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 bra6_8CD7:
 	JSR $A2A8
@@ -1866,7 +1840,7 @@ bra6_8D02:
 	AND #$C0
 	ORA #$60
 	STA $05F0
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 bra6_8D12:
 	LDX $A4
@@ -1892,7 +1866,7 @@ bra6_8D35:
 	AND #$C0
 	ORA #$60
 	STA $05F0
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 tbl6_8D45:
 	.word ofs_90CF
@@ -3237,7 +3211,7 @@ sub6_92D0:
 	BEQ bra6_92F2
 	CMP #$FF
 	BEQ bra6_92F2
-	JMP $A6B5
+	JMP loc3_A6B5
 bra6_92F2:
 	LDA ObjectYPos,X
 	SEC
@@ -3279,25 +3253,20 @@ bra6_933A:
 	TAY
 	LDA tbl6_934E,Y
 	STA Data0
-	LDA tbl6_934F,Y
+	LDA tbl6_934E+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl6_934E:
-	.byte $BB
-tbl6_934F:
-	.byte $A7
-	.byte $7B	;unlogged
-	.byte $AA	;unlogged
-	.byte $29	;unlogged
-	.byte $AB	;unlogged
-	.byte $58
-	.byte $93
-	.byte $88	;unlogged
-	.byte $AD	;unlogged
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr6_9358
+	.word ptr_AD88
+ptr6_9358:
 	LDA ReznorsDefeated
 	BNE bra6_9363_RTS
-	JSR $BC3E
-	JSR $BF74
+	JSR jmp_54_BC3E
+	JSR jmp_54_BF74
 bra6_9363_RTS:
 	RTS
 	LDX $A4
@@ -3315,7 +3284,7 @@ bra6_9363_RTS:
 	LDA EnemyAnimFrame,X
 	AND #$C0
 	STA $05F0
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 	LDX $A4
 	LDA EnemyAnimFrame,X
@@ -3337,8 +3306,9 @@ bra6_93A9:
 	LDA EnemyAnimFrame,X
 	AND #$C0
 	STA $05F0
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
+obj_h72:
 	LDX $A4
 	JSR sub6_9BEA
 	LDA ObjectSlot,X
@@ -3353,7 +3323,7 @@ bra6_93CB:
 	AND #$7F
 	STA ObjectVariables,X
 bra6_93D3:
-	JSR $B785
+	JSR jmp_54_B785
 	AND #$07
 	ASL
 	CMP $0668
@@ -3363,7 +3333,7 @@ bra6_93D3:
 	LDA tbl6_95CD,Y
 	STA EnemyAnimFrame,X
 bra6_93E8:
-	JSR $B785
+	JSR jmp_54_B785
 	AND #$07
 	STA Data0
 	ASL
@@ -3433,25 +3403,18 @@ loc6_9488:
 	TAY
 	LDA tbl6_949D,Y
 	STA Data0
-	LDA tbl6_949E,Y
+	LDA tbl6_949D+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl6_949D:
-	.byte $AB
-tbl6_949E:
-	.byte $94
-	.byte $E9
-	.byte $94
-	.byte $29
-	.byte $95
-	.byte $5B
-	.byte $95
-	.byte $8A
-	.byte $95
-	.byte $03
-	.byte $96
-	.byte $32
-	.byte $96
+	.word ptr6_94AB
+	.word ptr6_94E9
+	.word ptr6_9529
+	.word ptr6_955B
+	.word ptr6_958A
+	.word ptr6_9603
+	.word ptr6_9632
+ptr6_94AB:
 	LDA $062B
 	AND #$03
 	BNE bra6_94C1_RTS
@@ -3485,6 +3448,7 @@ bra6_94C2:
 bra6_94E5:
 	DEC ObjectYPos,X
 	RTS
+ptr6_94E9:
 	LDA $062B
 	AND #$03
 	BNE bra6_94FF_RTS
@@ -3519,6 +3483,7 @@ bra6_9522:
 bra6_9525:
 	STA EnemyAnimFrame,X
 	RTS
+ptr6_9529:
 	LDA $062B
 	AND #$03
 	BNE bra6_953F_RTS
@@ -3544,6 +3509,7 @@ bra6_9551:
 bra6_9557:
 	STA EnemyAnimFrame,X
 	RTS
+ptr6_955B:
 	LDA $062B
 	AND #$03
 	BNE bra6_9585_RTS
@@ -3566,6 +3532,7 @@ bra6_9585_RTS:
 bra6_9586:
 	INC ObjActionTimer,X
 	RTS
+ptr6_958A:
 	LDA ObjActionTimer,X
 	CMP #$30
 	BCC bra6_95A6
@@ -3669,6 +3636,7 @@ tbl6_95FC:
 	.byte $58
 	.byte $68
 	.byte $78
+ptr6_9603:
 	LDA ObjectYPos,X
 	CMP #$E0
 	BCS bra6_9611
@@ -3694,6 +3662,7 @@ bra6_9624:
 	INC ObjectYPos,X
 	INC ObjectYPos,X
 	RTS
+ptr6_9632:
 	LDA $062B
 	AND #$03
 	BNE bra6_964A_RTS
@@ -3738,7 +3707,7 @@ sub6_9670:
 	BEQ bra6_9692
 	CMP #$FF
 	BEQ bra6_9692
-	JMP $A6B5	;unlogged
+	JMP loc3_A6B5	;unlogged
 bra6_9692:
 	LDA ObjectYPos,X
 	SEC
@@ -3780,21 +3749,16 @@ bra6_96DA:
 	TAY
 	LDA tbl6_96EE,Y
 	STA Data0
-	LDA tbl6_96EF,Y
+	LDA tbl6_96EE+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl6_96EE:
-	.byte $BB
-tbl6_96EF:
-	.byte $A7
-	.byte $7B
-	.byte $AA
-	.byte $29
-	.byte $AB
-	.byte $F8
-	.byte $96
-	.byte $88
-	.byte $AD
+	.word ptr_A7BB
+	.word ptr_AA7B
+	.word ptr_AB29
+	.word ptr6_96F8
+	.word ptr_AD88
+ptr6_96F8:
 	LDA ObjectAction,X
 	CMP #$02
 	BCC bra6_9700
@@ -3847,14 +3811,14 @@ loc6_9747:
 	SBC #$0C
 	CMP ObjectYPos,X
 	BCC bra6_97A3_RTS
-	JSR $BEBC
+	JSR jmp_54_BEBC
 	LDA PlayerMovement
 	AND #$04
 	BNE bra6_9763
 	LDA PlayerYSpeed
 	BNE bra6_9767
 bra6_9763:
-	JSR $BF74
+	JSR jmp_54_BF74
 	RTS
 bra6_9767:
 	LDA InvincibilityTimer
@@ -3887,6 +3851,7 @@ bra6_979A:
 	STA ObjActionTimer,X	;Clear action timer
 bra6_97A3_RTS:
 	RTS
+obj_h64:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra6_97AE
@@ -3903,7 +3868,7 @@ bra6_97AE:
 	BEQ bra6_97CA
 	CMP #$FF
 	BEQ bra6_97CA
-	JMP $A6B5	;unlogged
+	JMP loc3_A6B5	;unlogged
 bra6_97CA:
 	LDA ObjectYPos,X
 	SEC
@@ -4175,7 +4140,7 @@ bra6_99CC:
 	STY $36
 	LDA #$40
 	STA $05F0
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 tbl6_99D7:
 	.byte $DD
@@ -4209,11 +4174,12 @@ sub6_99EF:
 	BPL bra6_99FF_RTS
 	LDA #$02
 	STA $2D
-	JSR $A5D0
+	JSR sub2_A5D0
 	PLA
 	PLA
 bra6_99FF_RTS:
 	RTS
+obj_h6C:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -4226,7 +4192,7 @@ bra6_99FF_RTS:
 	BEQ bra6_9A1E
 	CMP #$FF
 	BEQ bra6_9A1E
-	JMP $A6B5
+	JMP loc3_A6B5
 bra6_9A1E:
 	LDA ObjectYPos,X
 	SEC
@@ -4271,17 +4237,14 @@ bra6_9A6F:
 	TAY
 	LDA tbl6_9A81,Y
 	STA Data0
-	LDA tbl6_9A82,Y
+	LDA tbl6_9A81+1,Y
 	STA Data0+1
 	JMP (Data0)
 tbl6_9A81:
-	.byte $87
-tbl6_9A82:
-	.byte $9A
-	.byte $DF
-	.byte $9A
-	.byte $7B
-	.byte $9B
+	.word ptr6_9A87
+	.word ptr6_9ADF
+	.word ptr6_9B7B
+ptr6_9A87:
 	LDA #$FF
 	BMI bra6_9AA4
 	CLC	;unlogged
@@ -4327,6 +4290,7 @@ bra6_9AC4:
 	INC ObjectAction,X
 bra6_9ADE_RTS:
 	RTS
+ptr6_9ADF:
 	LDA #$FF
 	BMI bra6_9AFC
 	CLC	;unlogged start
@@ -4354,7 +4318,7 @@ bra6_9B0E:
 	LDA #$08
 	STA $36
 	LDA #$10
-	JSR $B7A2
+	JSR sub3_B7A2
 	BEQ bra6_9B28
 	LDA #$00
 	STA FreezeFlag
@@ -4408,6 +4372,7 @@ bra6_9B75:
 	JSR sub6_9C4F
 bra6_9B7A_RTS:
 	RTS
+ptr6_9B7B:
 	LDA #$02
 	STA EnemyAnimFrame,X
 	LDA Player1YoshiStatus
@@ -4481,7 +4446,7 @@ loc6_9BEA:
 	BEQ bra6_9C06
 	CMP #$FF
 	BEQ bra6_9C06
-	JMP $A6B5
+	JMP loc3_A6B5
 bra6_9C06:
 	LDA ObjectYPos,X
 	SEC

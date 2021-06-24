@@ -1,5 +1,4 @@
-; 0x078010-0x07A00F
-
+;Disassembled with BZK 6502 Disassembler
 tbl11_8000:
 	.byte $00	;logged, not sure what these do
 tbl11_8001:

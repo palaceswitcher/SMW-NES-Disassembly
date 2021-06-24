@@ -34,268 +34,140 @@ bra_E02C:
 	AND #$FE
 	TAY
 	LDA tbl_E048,Y
-	STA $34
-	LDA tbl_E049,Y
-	STA $35
-	JMP ($34)
+	STA Data1
+	LDA tbl_E048+1,Y
+	STA Data1+1
+	JMP (Data1)
 tbl_E048:
-	.db $F4
-tbl_E049:
-	.db $E1
-	.db $F4
-	.db $E1
-	.db $F4
-	.db $E1
-	.db $F4
-	.db $E1
-	.db $94
-	.db $E2
-	.db $94
-	.db $E2
-	.db $94
-	.db $E2
-	.db $94
-	.db $E2
-	.db $5E
-	.db $E3
-	.db $5E
-	.db $E3
-	.db $5E
-	.db $E3
-	.db $5E
-	.db $E3
-	.db $5E
-	.db $E3
-	.db $5E
-	.db $E3
-	.db $5E
-	.db $E3
-	.db $5E
-	.db $E3
-	.db $8C
-	.db $E4
-	.db $8C
-	.db $E4
-	.db $8C
-	.db $E4
-	.db $8C
-	.db $E4
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $6E
-	.db $E5
-	.db $6E
-	.db $E5
-	.db $6E
-	.db $E5
-	.db $6E
-	.db $E5
-	.db $14
-	.db $E6
-	.db $6E
-	.db $E5
-	.db $C2
-	.db $E5
-	.db $C2
-	.db $E5
-	.db $7F
-	.db $E6
-	.db $7F
-	.db $E6
-	.db $7F
-	.db $E6
-	.db $A3
-	.db $F4
-	.db $DD
-	.db $E7
-	.db $DD
-	.db $E7
-	.db $DD
-	.db $E7
-	.db $66
-	.db $E9
-	.db $47
-	.db $F2
-	.db $05
-	.db $F3
-	.db $5C
-	.db $F3
-	.db $29
-	.db $F4
-	.db $B7
-	.db $F2
-	.db $3F
-	.db $F4
-	.db $71
-	.db $F4
-	.db $D5
-	.db $F2
-	.db $73
-	.db $E9
-	.db $73
-	.db $E9
-	.db $73
-	.db $E9
-	.db $73
-	.db $E9
-	.db $C9
-	.db $E1
-	.db $C9
-	.db $E1
-	.db $C9
-	.db $E1
-	.db $C9
-	.db $E1
-	.db $29
-	.db $EE
-	.db $29
-	.db $EE
-	.db $29
-	.db $EE
-	.db $29
-	.db $EE
-	.db $29
-	.db $EE
-	.db $29
-	.db $EE
-	.db $29
-	.db $EE
-	.db $29
-	.db $EE
-	.db $29
-	.db $EE
-	.db $29
-	.db $EE
-	.db $29
-	.db $EE
-	.db $29
-	.db $EE
-	.db $29
-	.db $EE
-	.db $29
-	.db $EE
-	.db $29
-	.db $EE
-	.db $29
-	.db $EE
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $82
-	.db $E2
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $96
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
-	.db $48
-	.db $E1
+	.word loc_E1F4
+	.word loc_E1F4
+	.word loc_E1F4
+	.word loc_E1F4
+	.word ptr8_E294
+	.word ptr8_E294
+	.word ptr8_E294
+	.word ptr8_E294
+	.word ptr8_E35E
+	.word ptr8_E35E
+	.word ptr8_E35E
+	.word ptr8_E35E
+	.word ptr8_E35E
+	.word ptr8_E35E
+	.word ptr8_E35E
+	.word ptr8_E35E
+	.word ptr8_E48C
+	.word ptr8_E48C
+	.word ptr8_E48C
+	.word ptr8_E48C
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E56E
+	.word ptr8_E56E
+	.word ptr8_E56E
+	.word ptr8_E56E
+	.word ptr8_E614
+	.word ptr8_E56E
+	.word ptr8_E5C2
+	.word ptr8_E5C2
+	.word ptr8_E67F
+	.word ptr8_E67F
+	.word ptr8_E67F
+	.word ptr8_F4A3
+	.word ptr8_E7DD
+	.word ptr8_E7DD
+	.word ptr8_E7DD
+	.word ptr8_E966
+	.word ptr8_F247
+	.word loc_F305
+	.word loc_F35C
+	.word ptr8_F429
+	.word ptr8_F2B7
+	.word ptr8_F43F
+	.word ptr8_F471
+	.word ptr8_F2D5
+	.word ptr8_E973
+	.word ptr8_E973
+	.word ptr8_E973
+	.word ptr8_E973
+	.word ptr8_E1C9
+	.word ptr8_E1C9
+	.word ptr8_E1C9
+	.word ptr8_E1C9
+	.word ptr8_EE29
+	.word ptr8_EE29
+	.word ptr8_EE29
+	.word ptr8_EE29
+	.word ptr8_EE29
+	.word ptr8_EE29
+	.word ptr8_EE29
+	.word ptr8_EE29
+	.word ptr8_EE29
+	.word ptr8_EE29
+	.word ptr8_EE29
+	.word ptr8_EE29
+	.word ptr8_EE29
+	.word ptr8_EE29
+	.word ptr8_EE29
+	.word ptr8_EE29
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E282
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E196
+	.word ptr8_E148
+	.word ptr8_E148
+	.word ptr8_E148
+ptr8_E148:
 	LDA InvincibilityTimer
 	BEQ bra_E14E
 	RTS
@@ -334,6 +206,7 @@ bra_E185:
 	STA $06DC
 	STA $06DD
 	RTS
+ptr8_E196:
 	LDA PlayerBehindColl
 	AND #$01
 	BNE bra_E1C2
@@ -361,6 +234,7 @@ bra_E1C2:
 	LDA PlayerYSpeed
 	BEQ bra_E1C1_RTS
 	JMP loc_E1F4
+ptr8_E1C9:
 	LDA DataBank2
 	CMP #$23
 	BEQ bra_E1F2_RTS
@@ -502,6 +376,7 @@ tbl_E232:
 	.db $0D
 	.db $0E
 	.db $0F
+ptr8_E282:
 	LDA #$01
 	STA $95
 	LDA PlayerXSpeed
@@ -513,6 +388,7 @@ tbl_E232:
 bra_E291:
 	STA PlayerXSpeed
 	RTS
+ptr8_E294:
 	LDA #$01
 	STA $95
 	LDA PlayerMovement
@@ -680,6 +556,7 @@ tbl_E2EE:
 	.db $0A
 	.db $0B
 	.db $0B
+ptr8_E35E:
 	LDA #$01
 	STA $95
 	LDA PlayerMovement
@@ -945,6 +822,7 @@ tbl_E3BC:
 	.db $0A
 	.db $0B
 	.db $0B
+ptr8_E48C:
 	LDA #$01
 	STA $95
 	LDA PlayerXSpeed
@@ -1136,6 +1014,7 @@ tbl_E4DE:
 	.db $0A
 	.db $0B
 	.db $0B
+ptr8_E56E:
 	LDA PlayerMovement
 	AND #$04
 	BNE bra_E58B
@@ -1183,6 +1062,7 @@ bra_E5B7:
 bra_E5C1_RTS:
 loc_E5C1_RTS:
 	RTS
+ptr8_E5C2:
 	LDA $95
 	BNE bra_E5C7
 	RTS
@@ -1230,6 +1110,7 @@ loc_E60F:
 	LDA #$00
 	STA $95
 	RTS
+ptr8_E614:
 	LDA #$00
 	STA $15
 	STA PlayerXSpeed
@@ -1290,6 +1171,7 @@ loc_E67A:
 	LDA #$01
 	STA $95
 	RTS
+ptr8_E67F:
 	LDA #$01
 	STA $95
 	JSR sub_E75C
@@ -1506,6 +1388,7 @@ bra_E7CD:
 	SBC #$00
 	STA PlayerWallColPos
 	RTS
+ptr8_E7DD:
 	LDA #$01
 	STA $95
 	LDA PlayerBehindColl
@@ -1748,6 +1631,7 @@ bra_E95E:
 	RTS
 bra_E963:
 	JMP loc_E738
+ptr8_E966:
 	LDY #$00
 	LDA PlayerBehindColl
 	AND #$01
@@ -1756,6 +1640,7 @@ bra_E963:
 bra_E970:
 	STY $98
 	RTS
+ptr8_E973:
 	LDA #$01
 	STA $95
 	JSR sub_EA08
@@ -2860,6 +2745,7 @@ tbl_EE19:
 	.db $D0
 	.db $E0
 	.db $F0
+ptr8_EE29:
 	LDA PlayerBehindColl
 	AND #$0F
 	TAX
@@ -3807,6 +3693,7 @@ tbl_F147:
 	.db $23
 	.db $23
 	.db $23
+ptr8_F247:
 	LDA PlayerBehindColl
 	CMP #$60
 	BEQ bra_F250
@@ -3876,6 +3763,7 @@ loc_F2A9:
 bra_F2B4:
 	STA PlayerXSpeed
 	RTS
+ptr8_F2B7:
 	LDA PlayerMovement
 	AND #$04
 	BNE bra_F2C5
@@ -3892,6 +3780,7 @@ bra_F2C8:
 	LDA #$00
 	STA PlayerYSpeed
 	JMP loc_F2A9
+ptr8_F2D5:
 	LDA PlayerBehindColl
 	CMP #$6E
 	BEQ bra_F2E7
@@ -4109,6 +3998,7 @@ bra_F406:
 	STA $26
 bra_F428_RTS:
 	RTS
+ptr8_F429:
 	LDA PlayerMovement
 	AND #$04
 	BNE bra_F433
@@ -4121,6 +4011,7 @@ bra_F433:
 	JMP loc_F305
 bra_F43C:
 	JMP loc_F35C
+ptr8_F43F:
 	LDA PlayerXPosDup
 	SEC
 	SBC $65
@@ -4150,6 +4041,7 @@ bra_F462:
 	ORA tbl_F34C,Y
 	STA $67
 	RTS
+ptr8_F471:
 	LDA PlayerXPosDup
 	SEC
 	SBC $65
@@ -4179,6 +4071,7 @@ bra_F494:
 	ORA tbl_F3AB,Y
 	STA $67
 	RTS
+ptr8_F4A3:
 	LDA PlayerMovement
 	AND #$04
 	BNE bra_F4D9_RTS

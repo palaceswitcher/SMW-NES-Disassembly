@@ -186,9 +186,9 @@ bra14_86C0:
 	.byte $00
 	.byte $00
 	.byte $12
-	JSR $B1DA
+	JSR sub3_B1DA
 	RTS
-	JSR $B057
+	JSR sub3_B057
 	BEQ bra14_874F
 	LDA ObjectVariables,X
 	AND #$80
@@ -253,7 +253,7 @@ bra14_8759:
 	AND #$01
 	BNE bra14_8766
 	LDA $25
-	JSR $B1DA
+	JSR sub3_B1DA
 bra14_8766:
 	LDY #$00
 	LDA $062B
@@ -294,7 +294,7 @@ bra14_8790:
 	BEQ bra14_87BD
 	CMP #$FF
 	BEQ bra14_87BD
-	JMP $A6B5
+	JMP loc3_A6B5
 bra14_87BD:
 	LDA ObjectYPos,X
 	SEC
@@ -469,7 +469,7 @@ bra14_8EEE:
 	LDA EnemyAnimFrame,X
 	AND #$C0
 	STA $05F0
-	JSR $A118
+	JSR jmp_54_A118
 	RTS
 tbl14_8EFC:
 	.byte $00
@@ -545,7 +545,7 @@ bra14_8F4E:
 	STA $05F0
 	LDA #$00
 	STA $06E1
-	JSR $A118
+	JSR jmp_54_A118
 	LDA #$20
 	STA $06E1
 	RTS
@@ -675,7 +675,7 @@ tbl14_8F67:
 	BEQ bra14_8FF4
 	CMP #$FF
 	BEQ bra14_8FF4
-	JMP $A6B5
+	JMP loc3_A6B5
 bra14_8FF4:
 	LDA ObjectYPos,X
 	SEC
@@ -851,7 +851,7 @@ bra14_9762_RTS:
 	BEQ bra14_9782
 	CMP #$FF
 	BEQ bra14_9782
-	JMP $A6B5
+	JMP loc3_A6B5
 bra14_9782:
 	LDA ObjectYPos,X
 	SEC

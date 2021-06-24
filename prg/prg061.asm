@@ -3567,7 +3567,7 @@ bra6_AF37:
 	LDA $67
 	AND #$08
 	BEQ bra6_AF42
-	.byte $E8
+	INX
 bra6_AF42:
 	STX $2D
 	JSR sub6_B056
@@ -4013,12 +4013,12 @@ bra6_B25D:
 	BEQ bra6_B26D
 	LDA tbl6_B76E,Y
 	STA Data0
-	LDA tbl6_B76F,Y
+	LDA tbl6_B76E+1,Y
 	JMP loc6_B275
 bra6_B26D:
 	LDA tbl6_B676,Y
 	STA Data0
-	LDA tbl6_B677,Y
+	LDA tbl6_B676+1,Y
 loc6_B275:
 	STA Data0+1
 	LDA LevelNumber
@@ -4703,23 +4703,15 @@ bra6_B66D:
 	STA $61
 	RTS
 tbl6_B676:
-	.byte $86
-tbl6_B677:
-	.byte $B6
-	.byte $A6
-	.byte $B6
-	.byte $C6
-	.byte $B6
-	.byte $E6
-	.byte $B6
-	.byte $06
-	.byte $B7
-	.byte $26
-	.byte $B7
-	.byte $46
-	.byte $B7
-	.byte $66
-	.byte $B7
+	.word ofs_B686
+	.word ofs_B6A6
+	.word ofs_B6C6
+	.word ofs_B6E6
+	.word ofs_B706
+	.word ofs_B726
+	.word ofs_B746
+	.word ofs_B766
+ofs_B686:
 	.byte $00
 	.byte $01
 	.byte $40
@@ -4752,6 +4744,7 @@ tbl6_B677:
 	.byte $00
 	.byte $FF
 	.byte $00
+ofs_B6A6:
 	.byte $00
 	.byte $01
 	.byte $40
@@ -4784,6 +4777,7 @@ tbl6_B677:
 	.byte $00
 	.byte $FF
 	.byte $00
+ofs_B6C6:
 	.byte $00
 	.byte $00
 	.byte $40
@@ -4816,6 +4810,7 @@ tbl6_B677:
 	.byte $00
 	.byte $FF
 	.byte $00
+ofs_B6E6:
 	.byte $00
 	.byte $01
 	.byte $20
@@ -4848,6 +4843,7 @@ tbl6_B677:
 	.byte $00
 	.byte $FF
 	.byte $00
+ofs_B706:
 	.byte $00
 	.byte $01
 	.byte $40
@@ -4880,6 +4876,7 @@ tbl6_B677:
 	.byte $00
 	.byte $FF
 	.byte $00
+ofs_B726:
 	.byte $00
 	.byte $01
 	.byte $80
@@ -4912,6 +4909,7 @@ tbl6_B677:
 	.byte $00
 	.byte $FF
 	.byte $00
+ofs_B746:
 	.byte $00
 	.byte $01
 	.byte $80
@@ -4944,6 +4942,7 @@ tbl6_B677:
 	.byte $00
 	.byte $FF
 	.byte $00
+ofs_B766:
 	.byte $00
 	.byte $00
 	.byte $40
@@ -4953,21 +4952,14 @@ tbl6_B677:
 	.byte $FF
 	.byte $00
 tbl6_B76E:
-	.byte $7C
-tbl6_B76F:
-	.byte $B7
-	.byte $9C
-	.byte $B7
-	.byte $BC
-	.byte $B7
-	.byte $DC
-	.byte $B7
-	.byte $FC
-	.byte $B7
-	.byte $1C
-	.byte $B8
-	.byte $3C
-	.byte $B8
+	.word ofs_B77C
+	.word ofs_B79C
+	.word ofs_B7BC
+	.word ofs_B7DC
+	.word ofs_B7FC
+	.word ofs_B81C
+	.word ofs_B83C
+ofs_B77C:
 	.byte $08
 	.byte $01
 	.byte $40
@@ -5000,6 +4992,7 @@ tbl6_B76F:
 	.byte $07
 	.byte $FF
 	.byte $00
+ofs_B79C:
 	.byte $08
 	.byte $01
 	.byte $60
@@ -5032,6 +5025,7 @@ tbl6_B76F:
 	.byte $00
 	.byte $FF
 	.byte $00
+ofs_B7BC:
 	.byte $08
 	.byte $00
 	.byte $90
@@ -5064,6 +5058,7 @@ tbl6_B76F:
 	.byte $00
 	.byte $FF
 	.byte $00
+ofs_B7DC:
 	.byte $09
 	.byte $01
 	.byte $90
@@ -5096,6 +5091,7 @@ tbl6_B76F:
 	.byte $00
 	.byte $FF
 	.byte $00
+ofs_B7FC:
 	.byte $00
 	.byte $00
 	.byte $80
@@ -5128,6 +5124,7 @@ tbl6_B76F:
 	.byte $00
 	.byte $FF
 	.byte $00
+ofs_B81C:
 	.byte $08
 	.byte $01
 	.byte $90
@@ -5160,6 +5157,7 @@ tbl6_B76F:
 	.byte $08
 	.byte $00
 	.byte $01
+ofs_B83C:
 	.byte $09
 	.byte $01
 	.byte $60
@@ -5597,23 +5595,18 @@ bra6_BB0D:
 	TAY
 	LDA tbl6_BB35,Y
 	STA Data0
-	LDA tbl6_BB36,Y
+	LDA tbl6_BB35+1,Y
 	STA Data0+1
 	JMP (Data0)
 bra6_BB34_RTS:
 	RTS
 tbl6_BB35:
-	.byte $3F
-tbl6_BB36:
-	.byte $BB
-	.byte $6D
-	.byte $BB
-	.byte $9A
-	.byte $BB
-	.byte $C0
-	.byte $BB
-	.byte $EF
-	.byte $BB
+	.word off_BB3F
+	.word off_BB6D
+	.word off_BB9A
+	.word off_BBC0
+	.word off_BBEF
+off_BB3F:
 	JSR sub6_BC1F
 	INC HUDUpdate
 	LDX #$00
@@ -5637,6 +5630,7 @@ bra6_BB62:
 	DEX
 	BPL bra6_BB62
 	RTS
+off_BB6D:
 	JSR sub6_BC1F
 	INC HUDUpdate
 	LDX #$04
@@ -5662,6 +5656,7 @@ bra6_BB91:
 	BCC bra6_BB91
 bra6_BB99_RTS:
 	RTS
+off_BB9A:
 	JSR sub6_BC1F
 	INC HUDUpdate
 	LDA LevelTimerLo
@@ -5680,6 +5675,7 @@ bra6_BBB5:
 	DEX
 	BPL bra6_BBB5
 	RTS
+off_BBC0:
 	JSR sub6_BC1F
 	INC HUDUpdate
 	LDX #$00
@@ -5703,6 +5699,7 @@ bra6_BBE4:
 	DEX
 	BPL bra6_BBE4
 	RTS
+off_BBEF:
 	JSR sub6_BC1F
 	LDA #$00
 	STA HUDUpdate
@@ -6331,7 +6328,7 @@ sub6_BEE7:
 	LDX #$00
 	LDA tbl6_BF60,X
 	STA Data0
-	LDA tbl6_BF61,X
+	LDA tbl6_BF60+1,X
 	STA Data0+1
 	LDA Data0
 	CLC
@@ -6399,7 +6396,6 @@ bra6_BF5F_RTS:
 	RTS
 tbl6_BF60:
 	.byte $BA
-tbl6_BF61:
 	.byte $AB
 	.byte $04
 	STA ObjectState,X
