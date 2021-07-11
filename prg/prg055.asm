@@ -64,7 +64,7 @@ bra8_8073:
 	AND #$01
 	BNE bra8_8089_RTS
 	LDA #$10
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra8_8089_RTS:
 	RTS
 bra8_808A:
@@ -390,7 +390,7 @@ bra8_8308:
 	AND #$01
 	BNE bra8_8316
 	LDA #$12
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra8_8316:
 	LDY #$05
 	LDA $062B
@@ -710,7 +710,7 @@ bra8_8589:
 	AND #$00
 	BNE bra8_8596
 	LDA $25
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra8_8596:
 	JSR jmp_54_A6D4
 	JSR jmp_54_BEBC
@@ -2478,7 +2478,7 @@ bra8_9214:
 	AND #$01
 	BNE bra8_9222
 	LDA #$4B
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra8_9222:
 	LDA ObjectXPos,X
 	SEC
@@ -2599,7 +2599,7 @@ ptr3_930F:
 	AND #$00
 	BNE bra8_931A
 	LDA #$13
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra8_931A:
 	JSR jmp_54_BEBC
 	JSR jmp_54_A74D
@@ -2840,7 +2840,7 @@ bra8_94BA:
 	AND #$00
 	BNE bra8_94C5
 	LDA #$27
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra8_94C5:
 	LDA ObjectXPos,X
 	SEC
@@ -2933,7 +2933,7 @@ bra8_9575:
 	AND #$00
 	BNE bra8_9583
 	LDA #$23
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra8_9583:
 	LDA ObjectVariables,X
 	CMP #$07
@@ -2952,7 +2952,7 @@ ptr3_959C:
 	AND #$00
 	BNE bra8_95A7
 	LDA #$45
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra8_95A7:
 	LDA #$20
 	JSR $AEA8
@@ -3244,7 +3244,7 @@ bra8_978B:
 	AND #$00
 	BNE bra8_9796
 	LDA #$23
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra8_9796:
 	LDA #$02
 	STA EnemyAnimFrame,X
@@ -3254,7 +3254,7 @@ bra8_979C:
 	AND #$01
 	BNE bra8_97A7
 	LDA #$11
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra8_97A7:
 	LDY #$00
 	LDA $062B

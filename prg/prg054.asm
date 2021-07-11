@@ -1254,9 +1254,9 @@ loc3_A6B5:
 	STA ObjectVariables,X
 	LDA $058C,X
 	TAY
-	LDX $FC80,Y
+	LDX tbl_51_FC80,Y
 	LDA $03CE,X
-	AND $FD80,Y
+	AND tbl_51_FD80,Y
 	STA $03CE,X
 	RTS
 jmp_54_A6D4:
@@ -1321,7 +1321,7 @@ bra3_A730:
 	STA ObjectVariables,X
 	LDA #$01
 	JSR sub3_BCD4
-	LDA #$12
+	LDA #sfxEnemyHit2
 	STA SFXRegister
 	PLA
 	PLA
@@ -2549,7 +2549,7 @@ bra3_AE28:
 	AND #$00
 	BNE bra3_AE36_RTS
 	LDA #$24
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra3_AE36_RTS:
 	RTS
 sub3_AE37:
@@ -2592,7 +2592,7 @@ bra3_AE74:
 bra3_AE7B:
 	STA ItemBox
 bra3_AE7E:
-	LDA #$09
+	LDA #sfxPowerup
 	STA SFXRegister
 	LDA #$01
 	CPX #$0D
@@ -3188,7 +3188,7 @@ bra3_B1D6:
 loc3_B1D6:
 	INC ObjectVariables,X
 	RTS
-sub3_B1DA:
+GetMovementData:
 	ASL
 	TAY
 	LDA tbl_51_E000,Y
@@ -4886,12 +4886,12 @@ loc3_BDCE:
 	BNE bra3_BDE6
 bra3_BDE1:
 	LDA #$0B
-	STA ObjectSlot,X
+	STA ObjectSlot,X	;Spawn a mushroom in
 bra3_BDE6:
-	LDA #$0B
-	STA SFXRegister
+	LDA #sfxBlockRelease
+	STA SFXRegister	;Play the block release sound
 	LDY ObjectCount
-	INC ObjectCount
+	INC ObjectCount	;Set the index for the new object
 	LDA ObjectXPos,X
 	STA ObjectXPos,Y
 	LDA ObjectXScreen,X
@@ -4899,9 +4899,9 @@ bra3_BDE6:
 	LDA ObjectYPos,X
 	STA ObjectYPos,Y
 	LDA ObjectYScreen,X
-	STA ObjectYScreen,Y
+	STA ObjectYScreen,Y	;Copy the coordinate data over to the spawned mushroom
 	LDA ObjectSlot,X
-	STA ObjectSlot,Y
+	STA ObjectSlot,Y	;Copy the slot value to the mushroom
 	LDA #$00
 	STA ObjectVariables,Y
 	STA ObjectAction,Y

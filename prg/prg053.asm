@@ -898,7 +898,7 @@ ptr5_85B8:
 	AND #$00
 	BNE bra7_85C6
 	LDA #$27
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_85C6:
 	LDA ObjectXPos,X
 	SEC
@@ -1001,7 +1001,7 @@ ptr5_8689:
 	AND #$00
 	BNE bra7_8694_RTS
 	LDA #$26
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_8694_RTS:
 	RTS
 ptr5_8695:
@@ -1009,7 +1009,7 @@ ptr5_8695:
 	AND #$00
 	BNE bra7_86A0
 	LDA #$04
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_86A0:
 	LDA ObjectState,X
 	AND #$20
@@ -1137,7 +1137,7 @@ ptr5_8789:
 	AND #$00
 	BNE bra7_8797
 	LDA #$27
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_8797:
 	LDA ObjectXPos,X
 	SEC
@@ -1234,7 +1234,7 @@ ptr5_884C:
 	AND #$00
 	BNE bra7_8857
 	LDA #$26
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_8857:
 	LDA ObjectXPos,X
 	SEC
@@ -1289,7 +1289,7 @@ ptr5_88BC:
 	AND #$00
 	BNE bra7_88C7
 	LDA #$27
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_88C7:
 	LDA ObjectXPos,X
 	SEC
@@ -1346,7 +1346,7 @@ ptr5_8931:
 	AND #$00
 	BNE bra7_893C
 	LDA #$27
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_893C:
 	LDA ObjectXPos,X
 	SEC
@@ -1417,7 +1417,7 @@ ptr5_89C1:
 	AND #$00
 	BNE bra7_89CC
 	LDA #$27
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_89CC:
 	LDA ObjectXPos,X
 	SEC
@@ -1636,7 +1636,7 @@ ptr5_8B7D:
 	AND #$00
 	BNE bra7_8B88
 	LDA #$04
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_8B88:
 	LDA #$10
 	JSR sub3_AEA8
@@ -1647,7 +1647,7 @@ ptr5_8B91:
 	AND #$00
 	BNE bra7_8B9C_RTS
 	LDA #$27
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_8B9C_RTS:
 	RTS
 obj_h38:
@@ -1662,7 +1662,7 @@ bra7_8BAB:
 	AND #$00
 	BNE bra7_8BB6
 	LDA #$25
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_8BB6:
 	LDA ObjectXPos,X
 	SEC
@@ -1936,7 +1936,7 @@ loc7_8DD0:
 	AND #$01
 	BNE bra7_8DE9_RTS
 	LDA #$0B
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_8DE9_RTS:
 	RTS
 sub7_8DEA:
@@ -1975,7 +1975,7 @@ ptr5_8E21:
 	AND #$03
 	BNE bra7_8E33_RTS
 	LDA #$05
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_8E33_RTS:
 	RTS
 bra7_8E34:
@@ -2002,7 +2002,7 @@ bra7_8E5B:
 	AND #$00
 	BNE bra7_8E66
 	LDA #$06
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_8E66:
 	LDA #$08
 	JSR sub3_AEA8
@@ -2042,7 +2042,7 @@ bra7_8EA8:
 	AND #$00
 	BNE bra7_8EB3
 	LDA #$06
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_8EB3:
 	LDA #$08
 	JSR sub3_AEA8
@@ -2349,15 +2349,15 @@ loc7_9128:
 bra7_912E:
 	JSR jmp_54_BD3D
 	JSR sub7_9149
-	LDA ObjectState,X
-	AND #$0F
+	LDA ObjectState,X	;Get the current object state
+	AND #%00001111	;Mask the lower 4 bits out
 	CMP #$04
-	BCS bra7_9148_RTS
+	BCS bra7_9148_RTS	;Continue if the result is less than $04
 	LDA FrameCount
 	AND #$01
-	BNE bra7_9148_RTS
+	BNE bra7_9148_RTS	;Only continue if on an even frame
 	LDA #$0B
-	JSR sub3_B1DA
+	JSR GetMovementData	;Get the movement data
 bra7_9148_RTS:
 	RTS
 sub7_9149:
@@ -2398,7 +2398,7 @@ obj_h3A:
 	AND #$00
 	BNE bra7_9195_RTS
 	LDA #$2A
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_9195_RTS:
 	RTS
 bra7_9196:
@@ -2406,7 +2406,7 @@ bra7_9196:
 	AND #$03
 	BNE bra7_91A1_RTS
 	LDA #$05
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_91A1_RTS:
 	RTS
 bra7_91A2:
@@ -2749,7 +2749,7 @@ bra7_9447:
 	AND #$01
 	BNE bra7_9461_RTS
 	LDA #$0E
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_9461_RTS:
 	RTS
 sub7_9462:
@@ -2787,7 +2787,7 @@ ptr5_9497:
 	AND #$03
 	BNE bra7_94A9_RTS
 	LDA #$05
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_94A9_RTS:
 	RTS
 bra7_94AA:
@@ -3524,7 +3524,7 @@ ptr5_9990:
 	AND #$00
 	BNE bra7_999B
 	LDA #$29
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra7_999B:
 	JSR jmp_54_A6D4
 	JSR jmp_54_BEBC

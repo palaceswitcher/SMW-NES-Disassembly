@@ -10,11 +10,11 @@ jmp_39_E000:
 	LDA ButtonsHeld
 	AND #dirDown	;If down isn't held,
 	BEQ bra_E02C	;branch
-	LDA PlayerBehindColl	;Though the name says behind, its actually for tiles that the player is standing over like coins. Sorry for any confusion
+	LDA PlayerBackColl	;Though the name says behind, its actually for tiles that the player is standing over like coins. Sorry for any confusion
 	BNE bra_E023	;Branch if player is behind a tile
 	BEQ bra_E02C	;Branch if player is behind air
 bra_E01D:
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	CMP #$F8
 	BEQ bra_E02C
 bra_E023:
@@ -24,7 +24,7 @@ bra_E023:
 	STA PlayerAction	;Not sure what action 0A is for
 	RTS
 bra_E02C:
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	TAX
 	AND #$0F
 	TAY
@@ -207,7 +207,7 @@ bra_E185:
 	STA $06DD
 	RTS
 ptr8_E196:
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	AND #$01
 	BNE bra_E1C2
 	LDA $49
@@ -250,7 +250,7 @@ ptr8_E1C9:
 	STA WarpLevelNumber
 	LDA #$03
 	STA Event
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	SEC
 	SBC #$78
 	ASL
@@ -1051,14 +1051,14 @@ bra_E58B:
 	AND #$F0
 	STA $65
 	LDA PlayerXScreen
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	JMP loc_E5C1_RTS
 bra_E5B7:
 	LDA PlayerXPos
 	ORA #$0F
 	STA $65
 	LDA PlayerXScreen
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 bra_E5C1_RTS:
 loc_E5C1_RTS:
 	RTS
@@ -1079,14 +1079,14 @@ bra_E5C7:
 	AND #$F0
 	STA $65
 	LDA PlayerXScreenDup
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	JMP loc_E5ED
 bra_E5E3:
 	LDA PlayerXPosDup
 	ORA #$0F
 	STA $65
 	LDA PlayerXScreenDup
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 loc_E5ED:
 	LDA PlayerYPosDup
 	SEC
@@ -1132,14 +1132,14 @@ ptr8_E614:
 	AND #$F0
 	STA $65
 	LDA $0A
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	JMP loc_E64C
 bra_E642:
 	LDA $0B
 	ORA #$0F
 	STA $65
 	LDA $0A
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 bra_E64C:
 loc_E64C:
 	LDA $0D
@@ -1188,7 +1188,7 @@ bra_E693:
 bra_E697_RTS:
 	RTS
 sub_E698:
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	AND #$07
 	BNE bra_E6B7
 	LDA PlayerMovement
@@ -1312,7 +1312,7 @@ bra_E759:
 	STA PlayerXSpeed
 	RTS
 sub_E75C:
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	AND #$07
 	TAX
 	LDA tbl_EE19,X
@@ -1384,14 +1384,14 @@ bra_E7CD:
 	SBC #$10
 	ORA #$0F
 	STA $65
-	LDA PlayerWallColPos
+	LDA PlayerColXScreen
 	SBC #$00
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	RTS
 ptr8_E7DD:
 	LDA #$01
 	STA $95
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	AND #$07
 	LDY $98
 	BEQ bra_E7EC
@@ -1445,7 +1445,7 @@ bra_E827:
 	RTS
 	LDA #$01
 	STA $95
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	AND #$07
 	LDY $98
 	BEQ bra_E848
@@ -1471,7 +1471,7 @@ bra_E848:
 	AND #$F0
 	ORA $25
 	STA $67
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	AND #$07
 	CMP #$03
 	BCC bra_E879
@@ -1511,7 +1511,7 @@ tbl_E897:
 	.db $50
 	LDA #$01
 	STA $95
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	AND #$07
 	LDY $98
 	BEQ bra_E8B2
@@ -1569,7 +1569,7 @@ tbl_E8F4:
 	.db $40
 	.db $50
 loc_E900:
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	AND #$07
 	BNE bra_E909
 	JMP loc_E714
@@ -1633,7 +1633,7 @@ bra_E963:
 	JMP loc_E738
 ptr8_E966:
 	LDY #$00
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	AND #$01
 	BEQ bra_E970
 	LDY #$01
@@ -1657,7 +1657,7 @@ bra_E987:
 bra_E98B_RTS:
 	RTS
 sub_E98C:
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	AND #$07
 	BNE bra_E9AB
 	LDA PlayerMovement
@@ -1735,7 +1735,7 @@ loc_E9FA:
 bra_EA05:
 	JMP loc_E738
 sub_EA08:
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	AND #$07
 	TAX
 	LDA tbl_EE19,X
@@ -1807,9 +1807,9 @@ bra_EA79:
 	ADC #$10
 	AND #$F0
 	STA $65
-	LDA PlayerWallColPos
+	LDA PlayerColXScreen
 	ADC #$00
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	RTS
 	.db $47
 	.db $2A
@@ -2746,10 +2746,10 @@ tbl_EE19:
 	.db $E0
 	.db $F0
 ptr8_EE29:
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	AND #$0F
 	TAX
-	LDA PlayerWallColPos
+	LDA PlayerColXScreen
 	ASL
 	CLC
 	ADC tbl_EF17,X
@@ -2766,47 +2766,47 @@ bra_EE3F:
 	TXA
 	ASL
 	TAY
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	CMP #$8E
-	BCC bra_EE78
+	BCC bra_EE78	;Branch if not touching a yoshi coin tile
 	LDA Player1YoshiCoins,X
 	CMP #$05
-	BCS bra_EE62
+	BCS bra_EE62	;Branch if the player has more than 5 yoshi coins
 	INC Player1YoshiCoins,X
-	LDA #$06
-	BNE bra_EEA1
+	LDA #$06	;Load the yoshi coin sound effect
+	BNE bra_EEA1	;Branch and play it
 bra_EE62:
 	LDA #$01
-	STA Player1YoshiCoins,X
+	STA Player1YoshiCoins,X	;Set the yoshi coin coin to 1
 	LDA P1Score,Y
 	CLC
 	ADC #$E8
 	STA P1Score,Y
 	LDA P1Score+1,Y
-	ADC #$03
+	ADC #$03	;Give the player 10000 points
 	JMP loc_EE99
 bra_EE78:
 	LDA Player1Coins,X
 	CMP #$64
-	BCS bra_EE86
-	INC Player1Coins,X
-	LDA #$08
-	BNE bra_EEA1
+	BCS bra_EE86	;Branch if the player has 100 or more coins
+	INC Player1Coins,X	;Otherwise, add to the coin counter
+	LDA #$08	;Load the coin sound effect
+	BNE bra_EEA1	;Branch and play it
 bra_EE86:
 	LDA #$01
-	STA Player1Coins,X
+	STA Player1Coins,X	;Set the player's coin count to 1
 	LDA P1Score,Y
 	CLC
 	ADC #$64
-	STA P1Score,Y
+	STA P1Score,Y	;Give the player 1000 points
 	LDA P1Score+1,Y
-	ADC #$00
+	ADC #$00	;Add to high byte (if needed)
 loc_EE99:
-	STA P1Score+1,Y
+	STA P1Score+1,Y	;Store added high byte
 	INC Player1Lives,X
-	LDA #$07
+	LDA #$07	;Load 1up sound effect
 bra_EEA1:
-	STA SFXRegister
+	STA SFXRegister	;Play the loaded sound effect
 	LDA $65
 	SEC
 	SBC $52
@@ -2861,7 +2861,7 @@ bra_EEE8:
 	ORA #$08
 bra_EF01:
 	STA $03E5,X
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	STA $03E4,X
 	INX
 	INX
@@ -3694,7 +3694,7 @@ tbl_F147:
 	.db $23
 	.db $23
 ptr8_F247:
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	CMP #$60
 	BEQ bra_F250
 	JMP loc_F27F
@@ -3713,9 +3713,9 @@ loc_F254:
 	ADC #$10
 	AND #$F0
 	STA $65
-	LDA PlayerWallColPos
+	LDA PlayerColXScreen
 	ADC #$00
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	RTS
 bra_F26F:
 	LDA $65
@@ -3723,9 +3723,9 @@ bra_F26F:
 	SBC #$10
 	ORA #$0F
 	STA $65
-	LDA PlayerWallColPos
+	LDA PlayerColXScreen
 	SBC #$00
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	RTS
 loc_F27F:
 	LDA PlayerMovement
@@ -3781,7 +3781,7 @@ bra_F2C8:
 	STA PlayerYSpeed
 	JMP loc_F2A9
 ptr8_F2D5:
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	CMP #$6E
 	BEQ bra_F2E7
 	LDA PlayerXPosDup
@@ -3811,7 +3811,7 @@ bra_F2F3:
 bra_F304_RTS:
 	RTS
 loc_F305:
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	CMP #$63
 	BNE bra_F30E
 	JMP loc_F3BB
@@ -3987,9 +3987,9 @@ bra_F406:
 	CLC
 	ADC #$01
 	STA $65
-	LDA PlayerWallColPos
+	LDA PlayerColXScreen
 	ADC #$00
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	LDA Data0
 	EOR $65
 	AND #$F0
@@ -4005,7 +4005,7 @@ ptr8_F429:
 	LDA #$00
 	STA PlayerYSpeed
 bra_F433:
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	CMP #$66
 	BNE bra_F43C
 	JMP loc_F305
@@ -6660,301 +6660,3 @@ bra_F4D9_RTS:
 	.db $00
 	.db $3D
 	.db $01
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00

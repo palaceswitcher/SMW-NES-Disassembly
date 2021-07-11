@@ -186,7 +186,7 @@ bra14_86C0:
 	.byte $00
 	.byte $00
 	.byte $12
-	JSR sub3_B1DA
+	JSR GetMovementData
 	RTS
 	JSR sub3_B057
 	BEQ bra14_874F
@@ -253,7 +253,7 @@ bra14_8759:
 	AND #$01
 	BNE bra14_8766
 	LDA $25
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra14_8766:
 	LDY #$00
 	LDA $062B

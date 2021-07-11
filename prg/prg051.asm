@@ -7043,6 +7043,7 @@ ofs_F9A0:
 	.byte $00
 	.byte $00
 	.byte $00
+tbl_51_FC80:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -7299,6 +7300,7 @@ ofs_F9A0:
 	.byte $20
 	.byte $40
 	.byte $80
+tbl_51_FD80:
 	.byte $FE
 	.byte $FD
 	.byte $FB

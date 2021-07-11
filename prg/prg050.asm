@@ -4338,7 +4338,7 @@ bra6_9B31:
 	LDA ObjectXPos,X
 	STA $65
 	LDA ObjectXScreen,X
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	LDA ObjectYPos,X
 	STA $67
 	LDA ObjectYScreen,X
@@ -4524,7 +4524,7 @@ bra6_9C6C:
 	ORA #$08
 bra6_9C99:
 	STA $03E5,X
-	LDA PlayerBehindColl
+	LDA PlayerBackColl
 	STA $03E4,X
 	INX
 	INX

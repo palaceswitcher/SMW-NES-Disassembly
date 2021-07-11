@@ -454,7 +454,7 @@ bra_8380:
 	AND #$01
 	BNE bra_838E
 	LDA #$4C
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra_838E:
 	LDA ObjectXPos,X
 	SEC
@@ -509,7 +509,7 @@ bra_83F3:
 	AND #$00
 	BNE bra_83FE
 	LDA #$0B
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra_83FE:
 	LDA ObjectXPos,X
 	SEC
@@ -875,7 +875,7 @@ bra_86DD:
 	AND #$01
 	BNE bra_86E8_RTS
 	LDA #$12
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra_86E8_RTS:
 	RTS
 sub_86E9:
@@ -944,7 +944,7 @@ bra_8759:
 	AND #$01
 	BNE bra_8766
 	LDA $25
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra_8766:
 	LDY #$00
 	LDA $062B

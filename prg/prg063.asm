@@ -1,13 +1,13 @@
 ;disassembled by BZK 6502 Disassembler
 jmp_63_E000:
-	PHP
-	PHA
+	PHP	;Push the CPU status into the stack
+	PHA	;Push the accumulator into the stack
 	TXA
-	PHA
+	PHA	;Push the X register into the stack
 	TYA
-	PHA
+	PHA	;Push the Y register into the stack
 	LDA PPUMaskRegister
-	STA PPUMask	;Copy software register to hardware register
+	STA PPUMask	;Copy the software mask register to the hardware register
 	LDA XScroll
 	STA PPUScroll	;Set horizontal scroll in the PPU
 	LDA YScroll
@@ -35,14 +35,17 @@ jmp_63_E000:
 	LDA SpriteBank4
 	STA M90_SP_CHR3	;Update 4th sprite bank
 	PLA
-	TAY	;Pull stack into Y register
+	TAY	;Pull the Y register from the stack
 	PLA
-	TAX	;Pull stack into X register
-	PLA	;Pull stack into accumulator
-	PLP	;Pull CPU status from stack
+	TAX	;Pull the X register from the stack
+	PLA	;Pull the accumulator from the stack
+	PLP	;Pull CPU status from the stack
 	RTI
+NMI_E05C:
 	JMP loc3_EF10
+NMI_E05F:
 	JMP loc3_EFE0
+NMI_E062:
 	PHP
 	PHA
 	TXA
@@ -185,81 +188,81 @@ bra3_E12F:
 	RTI
 Reset:
 	SEI
-	CLD	;Standard 2a03/6502 initialization
+	CLD	;Standard 2A03/6502 initialization
 	LDX #$FF
-	TXS
+	TXS	;Set the stack pointer to $FF
 	LDA #$00
-	STA M90_IRQ_DISABLE
-	STA PPUMask
+	STA M90_IRQ_DISABLE	;Disable mapper interrupts
+	STA PPUMask	;Clear the screen
 	STA PPUCtrl
-	LDX #$02
+	LDX #$02	;Set the amount of frames to wait
 bra3_E1A5:
 	BIT PPUStatus
-	BPL bra3_E1A5
+	BPL bra3_E1A5	;Wait for a frame
 bra3_E1AA:
 	BIT PPUStatus
-	BMI bra3_E1AA
+	BMI bra3_E1AA	;Wait for VBlank to end??
 	DEX
-	BNE bra3_E1A5
+	BNE bra3_E1A5	;Loop until the set amount of frames have passed
 	LDA #$3E
-	STA M90_PRG2
+	STA M90_PRG2	;Swap bank 62 into the 3rd PRG bank
 	LDA #$3F
-	STA M90_PRG3
-	LDA #$85
-	STA $C001
-	LDA #$3E
-	STA $D000
+	STA M90_PRG3	;Swap bank 63 into the 4th PRG bank
+	LDA #%10000101
+	STA M90_IRQ_MODE	;Set mapper IRQ mode
+	LDA #%00111110
+	STA M90_BANK_SIZE	;Set mapper bank sizes (8K PRG, 1K CHR)
 	LDA #$00
-	STA $B000
+	STA M90_NT0
 	LDA #$01
-	STA $B001
+	STA M90_NT1
 	LDA #$02
-	STA $B002
+	STA M90_NT2
 	LDA #$03
-	STA $B003
+	STA M90_NT3	;Set 1K nametable banks (Seems useless, ROM nametables are already disabled)
 	LDA #$00
-	STA $C006
-	STA $D002
-	STA $D003
-	LDA #$01
-	STA M90_CHR_CTRL2
-	LDA #$0F
-	STA APUStatus
+	STA M90_IRQ_XOR	;Clear the XOR register
+	STA M90_PPU_CFG	;Clear PPU address config
+	STA M90_CHR_CTRL1	;Disable outer bank selection
+	LDA #%00000001
+	STA M90_CHR_CTRL2	;Enable horizontal nametable mirroring
+	LDA #%00001111
+	STA APUStatus	;Enable audio channels (excluding DMC)
 	LDA #$00
-	STA DMCFreq
-	LDA #$40
-	STA Joy2Frame
-	STA M90_IRQ_DISABLE
-	LDA PPUStatus
-	LDA #$10
-	TAX
-bra3_E202:
+	STA DMCFreq	;Disable the DMC
+	LDA #%01000000
+	STA Joy2Frame	;Disable the IRQ for the APU frame counter
+	STA M90_IRQ_DISABLE	;Disable mapper interrupts
+	LDA PPUStatus	;Clear PPU address latch
+	LDA #$10	;Set the high/low byte of the PPU address
+	TAX	;Also set the loop count
+bra3_E202:	;No idea what this loop is for
 	STA PPUAddr
-	STA PPUAddr
-	EOR #$10
+	STA PPUAddr	;Store the high/low bytes
+	EOR #$10	;Do XOR operation
 	DEX
-	BNE bra3_E202
-	LDA #$00
-	LDX #$00
+	BNE bra3_E202	;Keep looping until the loop count is reached
+	LDA #$00	;Load zero
+	LDX #$00	;Clear the X index
 ClearMemory:
 	STA $00,X
 	STA $0200,X
 	STA $0300,X
-	STA TileAttributes,X
+	STA $0400,X
 	STA $0500,X
 	STA $0600,X
 	STA $0700,X	;Wipe all pages of memory
 	DEX
-	BNE ClearMemory	;Keep looping until 0 is reached
-	LDA #$00	;Clear accumulator
-	JSR MapperProtection	;Check mapper
+	BNE ClearMemory	;Keep looping until every page is cleared
+	LDA #$00	;Clear the accumulator
+	JSR MapperProtection	;Make sure the game is on Mapper 90
 	LDA #$3A
-	STA M90_PRG0	;Swap music bank into 1st PRG slot
+	STA M90_PRG0	;Swap the music bank into 1st PRG slot
 	LDA #$3B
-	STA M90_PRG1	;Swap 2nd music bank into 2nd PRG slot
+	STA M90_PRG1	;Swap the 2nd music bank into 2nd PRG slot
 	JSR jmp_58_85D6
 	LDA #$20
-	STA MusicRegister	;Play title screen music
+	STA MusicRegister	;Play the title screen music
 	JSR $8E24	;Jump (inbetween opcode?)
 	INC MuteFlag	;Enable audio
 	LDA #$00
@@ -271,12 +274,12 @@ ClearMemory:
 	LDA #$03
 	STA PlayerPowerup	;Set powerup to cape
 	LDA #$4C
-	STA $063A
+	STA NMIJMPOpcode	;Store the first byte of the NMI JMP
 	LDX #$04
-	LDA tbl3_EF08,X
-	STA $063B
+	LDA tbl3_EF08,X	
+	STA NMIJMPOpcode+1	;Load the low byte of the NMI JMP location
 	LDA #$E0
-	STA $063C
+	STA NMIJMPOpcode+2	;Set the high byte of the NMI JMP location
 	LDA #%10001000
 	STA PPUCtrl
 	STA PPUControlRegister	;Set PPU control
@@ -323,12 +326,12 @@ loc3_E2BE:
 	RTS
 	LDA a:Event
 	ASL
-	TAY 
+	TAY	;Get the pointer for the current event
 	LDA tbl3_E2DB,Y 
-	STA Data0
+	STA Data0	;Load lower byte of pointer
 	LDA tbl3_E2DB+1,Y
-	STA Data0+1
-	JMP (Data0)
+	STA Data0+1	;Load upper byte of pointer
+	JMP (Data0)	;Jump to the loaded pointer
 tbl3_E2DB:
 	.word pnt2_E2E5
 	.word pnt2_E316
@@ -362,14 +365,14 @@ pnt2_E316:
 	RTS
 bra3_E317:
 loc3_E317:
-	LDA a:Event	;Load event trigger
-	ASL	;Multiply by 2
-	TAY	;Load Data0 based on event number
+	LDA a:Event
+	ASL
+	TAY	;Get the pointer for the current event
 	LDA tbl3_E329,Y
-	STA Data0
+	STA Data0	;Load lower byte of pointer
 	LDA tbl3_E329+1,Y
-	STA Data0+1
-	JMP (Data0)
+	STA Data0+1	;Load upper byte of pointer
+	JMP (Data0)	;Jump to loaded pointer
 tbl3_E329:
 	.word pnt2_E353	;Event 0
 	.word pnt2_E372	;Go out of door
@@ -408,12 +411,12 @@ pnt2_E353:
 pnt2_E372:
 	LDA a:EventPart
 	ASL
-	TAY
+	TAY	;Get the pointer for the current event part
 	LDA tbl3_E384,Y
 	STA Data0	;Load lower byte of pointer
 	LDA tbl3_E384+1,Y
 	STA Data0+1	;Load upper byte of pointer
-	JMP (Data0)	;Jump to loaded Data0
+	JMP (Data0)	;Jump to loaded pointer
 tbl3_E384:
 	.word pnt2_E388
 	.word pnt2_E3DD
@@ -453,11 +456,12 @@ bra3_E397:
 	JSR sub3_F0CB	;Jump
 	INC a:EventPart	;Go to next part of event
 	RTS
-TimerSetting:	.word $012C	;Timer data for levels (300 in decimal)
+TimerSetting:
+	.word $012C	;Timer data for levels (300 in decimal)
 
 pnt2_E3DD:
 	LDA #$00
-	STA FadeoutMode	;Disable 'blackout' effect
+	STA FadeoutMode	;Disable "blackout" effect
 	JSR sub3_E6E0
 	JSR sub3_F919
 	LDA #$00
@@ -618,12 +622,12 @@ pnt2_E509:
 pnt2_E534:
 	LDA a:EventPart	;Load part of event
 	ASL	;Multiply by 2
-	TAY	;Load Data0 based on event part
+	TAY	;Load pointer based on event part
 	LDA tbl3_E546,Y
 	STA Data0	;Load lower byte of pointer
 	LDA tbl3_E546+1,Y
 	STA Data0+1	;Load upper byte of pointer
-	JMP (Data0)	;Jump to loaded Data0
+	JMP (Data0)	;Jump to loaded pointer
 tbl3_E546:
 	.word pnt2_E54E
 	.word pnt2_E570
@@ -735,12 +739,12 @@ pnt2_E610:
 bra3_E62F:
 	LDA a:EventPart	;Load event part
 	ASL	;Multiply by 2
-	TAY	;Load Data0 based on event part
+	TAY	;Load pointer based on event part
 	LDA tbl3_E641,Y
 	STA Data0	;Load lower byte of pointer
 	LDA tbl3_E641+1,Y
 	STA Data0+1	;Load upper byte of pointer
-	JMP (Data0)	;Jump to loaded Data0
+	JMP (Data0)	;Jump to loaded pointer
 tbl3_E641:
 	.word pnt2_E649
 	.word pnt2_E68B
@@ -850,12 +854,12 @@ pnt2_E6ED:
 	JSR sub3_E9C4
 	LDA a:EventPart	;Load event part
 	ASL
-	TAY	;Load Data0 based on event part
+	TAY	;Load pointer based on event part
 	LDA tbl3_E71F,Y
 	STA Data0	;Load lower byte of pointer
 	LDA tbl3_E71F+1,Y
 	STA Data0+1	;Load upper byte of pointer
-	JMP (Data0)	;Jump to loaded Data0
+	JMP (Data0)	;Jump to loaded pointer
 tbl3_E71F:
 	.word pnt2_E727
 	.word pnt2_E748
@@ -961,12 +965,12 @@ pnt2_E7D0:
 	JSR sub3_E9C4	;Jump
 	LDA a:EventPart
 	ASL
-	TAY	;Load Data0 based on event part
+	TAY	;Load pointer based on event part
 	LDA tbl3_E80F,Y
 	STA Data0	;Load lower byte of pointer
 	LDA tbl3_E80F+1,Y
 	STA Data0+1	;Load upper byte of pointer
-	JMP (Data0)	;Jump to loaded Data0
+	JMP (Data0)	;Jump to loaded pointer
 tbl3_E80F:
 	.word pnt2_E813
 	.word pnt2_E81E
@@ -1023,7 +1027,7 @@ sub3_E870:
 	LDA (Data0),Y	;Load warp X screen from Data0
 	AND #%01111111	;Mask out bit 7
 	STA CameraXScreen	;Store as camera X screen
-	STA PlayerWallColPos	;Store as wall collision position
+	STA PlayerColXScreen	;Store as wall collision position
 	LDA #$00
 	STA $52
 	STA $65
@@ -1062,7 +1066,7 @@ sub3_E870:
 	STA $060E
 	LDA WarpNumber	;Load warp number
 	LSR	;Divide it by 2
-	TAY	;Load Data0 based on the result
+	TAY	;Load pointer based on the result
 	LDA (Data1),Y		;Load byte from 2nd Data0 location
 	AND #%00100000
 	STA PlayerAttributes	;Mask out and store BG priority bit
@@ -2002,12 +2006,12 @@ sub3_ED48:
 pnt2_ED75:
 	LDA a:EventPart	;Load event part
 	ASL
-	TAY	;Load Data0 based on event part
+	TAY	;Load pointer based on event part
 	LDA tbl3_ED87,Y
 	STA Data0	;Load lower byte of pointer
 	LDA tbl3_ED87+1,Y
 	STA Data0+1	;Load upper byte of pointer
-	JMP (Data0)	;Jump to loaded Data0 location
+	JMP (Data0)	;Jump to loaded pointer location
 tbl3_ED87:
 	.word pnt2_ED93
 	.word pnt2_EDAA
@@ -2131,7 +2135,7 @@ bra3_EE72:
 	LDA ActionFrameCount
 	CMP #$02
 	BNE bra3_EE84
-	LDA #$0A
+	LDA #sfxWarp
 	STA SFXRegister
 bra3_EE84:
 	LDX #$00
@@ -2202,21 +2206,17 @@ pnt2_EEFD:
 	STA a:Event
 	RTS
 tbl3_EF08:
-	.byte $62
-	.byte $E0
-	.byte $00
-	.byte $E0
-	.byte $5C
-	.byte $E0
-	.byte $5F
-	.byte $E0
+	.word NMI_E062
+	.word jmp_63_E000
+	.word NMI_E05C
+	.word NMI_E05F
 loc3_EF10:
-	PHP
-	PHA
+	PHP	;Push the CPU status into the stack
+	PHA	;Push the accumulator into the stack
 	TXA
-	PHA
+	PHA	;Push the X register into the stack
 	TYA
-	PHA
+	PHA	;Push the Y register into the stack
 	LDA #$3D
 	STA M90_PRG1
 	LDA ColumnFinishFlag
@@ -2668,7 +2668,7 @@ bra3_F270:
 	STA $00E4
 	RTS
 sub3_F27F:
-	LDA InterruptMode	;
+	LDA InterruptMode
 	CMP #$04	;If using the interrupt for the Bowser fight,
 	BEQ bra3_F29D		;branch
 	LDA PPUUpdatePtr
@@ -2692,20 +2692,20 @@ tbl3_F29E:
 pnt2_F2A8:
 	JSR sub3_F388
 	INC HUDUpdate
-	LDX #$00	;Set X reg offset for Player 1
+	LDX #$00	;Set X index for Player 1
 	LDA CurrentPlayer
 	BEQ bra3_F2B7	;Branch if Player 1 is playing
-	LDX #$01	;Otherwise, set X reg offset for Player 2
+	LDX #$01	;Otherwise, set X index for Player 2
 bra3_F2B7:
 	LDA Player1Lives,X
 	STA $34	;Store current player's life count in temporary register
 	LDA #$00
-	STA $35	;Clear other temporary register
+	STA $35	;Clear the other temporary register
 	LDA #$0B
-	STA $26
+	STA $26	;Temporarily store value $0B
 	JSR sub3_F3BB
 	LDY #$00	;Clear Y offset
-	LDX #$01
+	LDX #$01	;Set X index to 1
 bra3_F2CB:
 	LDA HUDUpdateTiles,Y	;Load currently updated HUD tile
 	STA $03A5,X
@@ -3439,7 +3439,7 @@ IRQ:
 	PHA
 	TYA
 	PHA
-	JSR FakeJMPOpcode	;Execute 'fake' JMP opcode
+	JSR MemJMPOpcode	;Execute 'fake' JMP opcode
 	PLA
 	TAY
 	PLA
@@ -3448,23 +3448,23 @@ IRQ:
 	PLP
 	RTI
 	LDA #$4C
-	STA FakeJMPOpcode	;Load fake JMP opcode into memory
+	STA MemJMPOpcode	;Load fake JMP opcode into memory
 	LDA tbl3_F720
-	STA FakeJMPLoByte	;Load lower byte of fake JMP
+	STA MemJMPLoByte	;Load lower byte of fake JMP
 	LDA tbl3_F720+1
-	STA FakeJMPHiByte	;Load upper byte of fake JMP
+	STA MemJMPHiByte	;Load upper byte of fake JMP
 	JMP loc3_F6F3
 sub3_F6E0:
 	LDA #$4C
-	STA FakeJMPOpcode	;Load fake JMP opcode into memory
+	STA MemJMPOpcode	;Load fake JMP opcode into memory
 	LDA InterruptMode
 	ASL
 	TAX
 	LDA tbl3_F71A,X
-	STA FakeJMPLoByte
+	STA MemJMPLoByte
 	LDA tbl3_F71A+1,X
 loc3_F6F3:
-	STA FakeJMPHiByte
+	STA MemJMPHiByte
 	LDX InterruptMode
 	LDA PPUStatus
 	LDA InterruptLineTable,X
@@ -3487,12 +3487,12 @@ InterruptLineTable:
 	.byte $08
 	.byte $64	;Title Screen
 	.byte $D0	;Overworld Map
-
-tbl3_F71A:	.word pnt2_F152
+tbl3_F71A:
+	.word pnt2_F152
 	.word bra3_F751
 	.word bra3_F76E
-
-tbl3_F720:	.word bra3_F78B
+tbl3_F720:
+	.word bra3_F78B
 	.word bra3_F7A8
 	.word pnt2_F734
 	.word pnt2_F734
@@ -3504,7 +3504,7 @@ tbl3_F720:	.word bra3_F78B
 	.word pnt2_F152
 pnt2_F734:
 	LDA HUDDisplay
-	BNE bra3_F73C	;Branch if HUD BG isn't updated at all(not sure about these)
+	BNE bra3_F73C	;Branch if HUD BG isn't updated at all (not sure about these)
 	JMP loc3_F7C5	;Jump if it is
 bra3_F73C:
 	CMP #$01
@@ -3598,7 +3598,7 @@ sub3_F7DA:
 	LDA PauseFlag	;If the game is paused,
 	BNE bra3_F811	;branch
 	LDA DataBank2
-	CMP #$26		;If the final boss area isn't loaded,
+	CMP #$26	;If the final boss area isn't loaded,
 	BNE bra3_F7EA	;branch
 	JSR sub3_F90B	;If it is, continue and jump
 	RTS
@@ -3619,9 +3619,9 @@ bra3_F7EA:
 	AND #%00011000	;Mask 2 middle bits of frame counter
 	LSR
 	LSR
-	LSR		;Divide result by 8
-	TAY		;Copy it to the Y reg
-	LDA ($A6),Y		;Load data from Data0
+	LSR	;Divide result by 8
+	TAY	;Copy it to the Y reg
+	LDA ($A6),Y	;Load data from Data0
 	STA M90_BG_CHR3
 bra3_F811:
 	RTS
@@ -5321,6 +5321,6 @@ MapperProtectLoop:
 	.byte $02
 	.byte $01
 ;Interrupt vectors
-	.dw $063A	;Unused?
+	.dw NMIJMPOpcode	;Unused?
 	.dw Reset
 	.dw IRQ

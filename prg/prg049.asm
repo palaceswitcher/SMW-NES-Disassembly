@@ -4198,7 +4198,7 @@ bra5_9C9B:
 	AND #$00
 	BNE bra5_9CA6
 	LDA #$0B
-	JSR sub3_B1DA
+	JSR GetMovementData
 bra5_9CA6:
 	LDA ObjXScreenDistance,X
 	BPL bra5_9CB8

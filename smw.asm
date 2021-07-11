@@ -90,9 +90,10 @@ Data0 = $32
 Data1 = $34
 Pointer3 = $38
 Pointer4 = $E5
+NMIJMPOpcode = $063A
 CameraXScreen = $51
 VerticalScrollFlag = $5B
-PlayerBehindColl = $96
+PlayerBackColl = $96
 TileRowCount = $B0
 BGPalDataSize = $B1
 MetaspriteRowAlignment = $B2
@@ -123,6 +124,9 @@ GS0SpriteFrame = $B2
 GS0SpriteSlot = $033B
 GS0SpriteFlags = $034D
 GS0SpriteYPos = $0356
+TitleDemoAction = $0365
+TitleJumpTimer = $0366
+TitleWalkTimer = $0367
 Current8x8Tilemap = $032F
 TileRepeatCount = $3E
 TileRepeatBytesLeft = $3E
@@ -176,20 +180,17 @@ PlayerWidth = $3A
 PlayerHeight = $3B
 PlayerPalMappingLo = $C9
 PlayerPalMappingHi = $CA
-FakeJMPOpcode = $0600
-FakeJMPLoByte = $0601
-FakeJMPHiByte = $0602
+MemJMPOpcode = $0600
+MemJMPLoByte = $0601
+MemJMPHiByte = $0602
 CapeAction = $062C
 PlayerAttributes = $06E0
 
-PlayerWallColPos = $64
+PlayerColXScreen = $64
+PlayerColXPos = $65
+PlayerColYScreen = $66
+PlayerColYPos = $67
 
-YoshiUnmountedState = $05F1
-YoshiXPos = $05F2
-YoshiXScreen = $05F3
-YoshiYPos = $05F4
-YoshiYScreen = $05F5
-YoshiAnimation = $05F8
 FireballSlot = $062F
 FireballSlot2 = $0630
 UsedFireballSlots = $0631
@@ -242,7 +243,9 @@ NextBGColumn = $0481
 ; Object RAM
 
 ;object handler
+ObjectPRGBank = $AC
 ObjectCount = $A3
+LowerObjSlot = $A4
 ObjectSlot = $0500
 ObjectXPos = $0514
 ObjectXScreen = $0528
@@ -250,7 +253,13 @@ ObjectYPos = $053C
 ObjectYScreen = $0550
 ObjectState = $0564
 ObjectVariables = $0578
-GuidedObjStatus = $0669
+ObjectXDistance = $05A0
+ObjXScreenDistance = $05B4
+ObjectYDistance = $05C8
+ObjYScreenDistance = $05DC
+ObjectAttributes = $05F0
+ObjectAction = $0669
+ObjActionTimer = $0641
 EnemyAnimFrame = $0655
 
 ;special objects
@@ -264,8 +273,16 @@ BooBuddiesXScreen = $C5
 BooBuddiesYPos = $C6
 BooBuddiesYScreen = $C7
 
-GoalTapeDistance = $05A1
-GoalTapeYPos = $05C9
+YoshiUnmountedState = $05F1
+YoshiXPos = $05F2
+YoshiXScreen = $05F3
+YoshiYPos = $05F4
+YoshiYScreen = $05F5
+YoshiAnimation = $05F8
+YoshiXDistance = $05F9
+YoshiXScreenDist = $05FA
+YoshiYDistance = $05FB
+YoshiYScreenDist = $05FC
 
 JYEasterEggInput = $05EF
 BowserStatus = $05F7
@@ -363,6 +380,12 @@ M90_SP_CHR1 = $9005
 M90_SP_CHR2 = $9006
 M90_SP_CHR3 = $9007
 
+;Nametable banks
+M90_NT0 = $B000
+M90_NT1 = $B001
+M90_NT2 = $B002
+M90_NT3 = $B003
+
 ;Multiplier
 M90_MULTIPLICAND = $5800
 M90_MULTIPLIER = $5801
@@ -378,6 +401,7 @@ M90_IRQ_XOR = $C006
 ;Misc
 M90_BANK_SIZE = $D000
 M90_CHR_CTRL2 = $D001
+M90_PPU_CFG = $D002
 M90_CHR_CTRL1 = $D003
 
 ;--------------------------------------
@@ -409,8 +433,9 @@ M90_CHR_CTRL1 = $D003
 
 .base $E000
 .include prg/prg039.asm
+.pad $E000+8192
 ;4e010 - 5000f
-;collision code and tile behavior
+;Collision code and tile behavior
 
 .include prg/prg040.asm
 ;50010 - 5200f
@@ -467,18 +492,18 @@ M90_CHR_CTRL1 = $D003
 .include prg/prg049.asm
 .pad $A000
 ;62010 - 6400f
-;code for platforms and other objects
+;Code for platforms and other objects
 
 .base $8000
 .include prg/prg050.asm
 .pad $A000
 ;64010 - 6600f
-;object stuff
+;Object stuff
 
 .base $E000
 .include prg/prg051.asm
 ;66010 - 6800f
-;movement data for various objects
+;Movement data for various objects
 
 .base $A000
 .include prg/prg052.asm
@@ -495,18 +520,19 @@ M90_CHR_CTRL1 = $D003
 .include prg/prg054.asm
 .pad $C000
 ;6c010 - 6e00f
+;Object handler
 
 .base $8000
 .include prg/prg055.asm
 .pad $A000
 ;6e010 - 7000f
-;more code for objects
+;More code for objects
 
 .base $8000
 .include prg/prg056.asm
 .pad $A000
 ;70010 - 7200f
-;even more object code
+;Even more object code
 
 .base $A000
 .include prg/prg057.asm
@@ -517,7 +543,7 @@ M90_CHR_CTRL1 = $D003
 .base $8000
 .include prg/prg058_59.asm
 .pad $C000
-;74010 - 7600f
+;74010 - 7800f
 ;Music data and sound driver
 
 .base $8000

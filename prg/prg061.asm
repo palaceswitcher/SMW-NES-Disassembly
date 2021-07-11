@@ -1591,7 +1591,7 @@ bra6_A664:
 	LDA $65
 	AND #$F0
 	STA ObjectXPos,X
-	LDA PlayerWallColPos
+	LDA PlayerColXScreen
 	STA ObjectXScreen,X
 	LDA #$00
 	STA ObjectState,X
@@ -1649,7 +1649,7 @@ bra6_A6E5:
 	LDA $65
 	AND #$F0
 	STA ObjectXPos,X
-	LDA PlayerWallColPos
+	LDA PlayerColXScreen
 	STA ObjectXScreen,X
 	LDA #$00
 	STA ObjectState,X
@@ -3789,7 +3789,7 @@ bra6_B0BB:
 	TAY
 	LDA tbl6_BE75,Y
 	STA $28
-	LDA PlayerWallColPos
+	LDA PlayerColXScreen
 	ASL
 	CLC
 	ADC tbl6_BE65,Y
@@ -4028,7 +4028,7 @@ loc6_B275:
 	TAY
 	LDA (Data0),Y
 	STA CameraXScreen
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	LDA #$00
 	STA $52
 	STA $65
@@ -5423,7 +5423,7 @@ bra6_B9EA:
 	AND #$F8
 	BEQ bra6_BA20_RTS
 	LDA CameraXScreen
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	LDA $52
 	STA $65
 	LDA #$00
@@ -5500,7 +5500,7 @@ bra6_BA81_RTS:
 	RTS
 bra6_BA82:
 	LDA CameraXScreen
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	LDA $52
 	STA $65
 	LDA $53

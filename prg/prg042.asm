@@ -4263,7 +4263,7 @@ bra2_99CC:
 	TAX
 	LDA tbl2_9A8D,X
 	STA CameraXScreen
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	STA PlayerXScreen
 	LDA tbl2_9A8E,X
 	STA $52

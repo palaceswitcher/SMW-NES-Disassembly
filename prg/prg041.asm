@@ -1395,7 +1395,7 @@ pnt5_A933:
 	TAX
 	LDA tbl_A98F,X
 	STA CameraXScreen
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	STA PlayerXScreen
 	LDA tbl_A990,X
 	STA $52
@@ -3840,7 +3840,7 @@ sub_B75D:
 	TAY
 	LDA (Data0),Y
 	STA CameraXScreen
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	LDA #$00
 	STA $52
 	STA $65
@@ -4974,7 +4974,7 @@ bra_BDEC:
 	AND #$F8
 	BEQ bra_BE22_RTS
 	LDA CameraXScreen
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	LDA $52
 	STA $65
 	LDA #$00
@@ -5021,7 +5021,7 @@ bra_BE36:
 	RTS
 sub_BE4D:
 	LDA PlayerXScreenDup
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	LDA PlayerXPosDup
 	STA $65
 	LDA PlayerYScreenDup
@@ -5070,7 +5070,7 @@ loc_BE91:
 	LDA DataBank2
 	STA M90_PRG0
 	LDA ($DA),Y
-	STA PlayerBehindColl
+	STA PlayerBackColl
 	LDA #$3C
 	STA M90_PRG0
 	JSR $8000
@@ -5081,7 +5081,7 @@ bra_BEBC:
 	JMP loc_BEC1
 	STA $95
 loc_BEC1:
-	LDA PlayerWallColPos
+	LDA PlayerColXScreen
 	STA PlayerXScreenDup
 	LDA $65
 	STA PlayerXPosDup
@@ -5092,7 +5092,7 @@ loc_BEC1:
 	RTS
 sub_BED2:
 	LDA PlayerXScreen
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	LDA PlayerXPos
 	SEC
 	SBC #$08
@@ -5105,7 +5105,7 @@ sub_BED2:
 	STA $67
 	JSR sub_BF31
 	LDA PlayerXScreen
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	LDA PlayerXPos
 	CLC
 	ADC #$08
@@ -5118,7 +5118,7 @@ sub_BED2:
 	STA $67
 	JSR sub_BF31
 	LDA PlayerXScreen
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	LDA PlayerXPos
 	SEC
 	SBC #$08
@@ -5129,7 +5129,7 @@ sub_BED2:
 	STA $67
 	JSR sub_BF31
 	LDA PlayerXScreen
-	STA PlayerWallColPos
+	STA PlayerColXScreen
 	LDA PlayerXPos
 	SEC
 	SBC #$08
@@ -5173,7 +5173,7 @@ sub_BF31:
 	LDA ($DA),Y
 	CMP #$78
 	BCC bra_BF7A_RTS
-	STA PlayerBehindColl
+	STA PlayerBackColl
 	LDA #$3C
 	STA M90_PRG0
 	JSR $8000

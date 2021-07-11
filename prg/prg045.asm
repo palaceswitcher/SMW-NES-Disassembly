@@ -26,7 +26,7 @@
 	LDA ($DA),Y
 	CMP #$78
 	BCC bra12_9F7A_RTS
-	STA PlayerBehindColl
+	STA PlayerBackColl
 	LDA #$3C
 	STA M90_PRG0
 	JSR $8000
