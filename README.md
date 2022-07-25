@@ -3,3 +3,8 @@ This is a very WIP disassembly of the unlicensed Dendy port of SMW. There's a [D
 
 # How to compile
 Run "compile.bat". You'll have to rip the .chr yourself.
+
+# To-do:
+-Try documenting some of the collision code.
+-Document how warp data works, specifically the data in the latter half of bank 36.
+-Finish cleaning, organizing, and fixing the labels for the music ASM. As of right now, they're extremely messy.

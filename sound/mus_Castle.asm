@@ -186,7 +186,7 @@ Castle_P1Loop:
 	.word Castle_P1Loop
 	.byte $FF
 Castle_P1Seg:
-	.byte Nlen+6
+	.byte NLen+6
 	.byte A3
 	.byte A3
 	.byte A3
