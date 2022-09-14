@@ -10,13 +10,13 @@ jmp_39_E000:
 	LDA ButtonsHeld
 	AND #dirDown	;If down isn't held,
 	BEQ bra_E02C	;branch
-	LDA PlayerBackColl	;Though the name says behind, its actually for tiles that the player is standing over like coins
+	LDA PlayerBackColl
 	BNE bra_E023	;Branch if player is behind a tile
 	BEQ bra_E02C	;Branch if player is behind air
 bra_E01D:
 	LDA PlayerBackColl
 	CMP #$F8
-	BEQ bra_E02C
+	BEQ bra_E02C	;Branch if the player is behind a climbable tile. Otherwise, continue and make the player fall off
 bra_E023:
 	LDA #$00
 	STA PlayerState	;Stop climbing
@@ -25,19 +25,19 @@ bra_E023:
 	RTS
 bra_E02C:
 	LDA PlayerBackColl
-	TAX	;Copy the background collision ID into the X register
+	TAX	;Copy the background tile collision ID into the X register
 	AND #%00001111
 	TAY	;Use the lower nybble of the ID as the Y index
 	LDA tbl_EE19,Y
-	STA $97
+	STA $97	;Move the low nybble of the back collision to the high nybble of this (most likely the bottom collision)
 	TXA
-	AND #%11111110	;Make the collision ID an even number
+	AND #%11111110	;Make the collision ID an even number it will work as a pointer index
 	TAY	;Get pointer for collision ID
 	LDA tbl_E048,Y
 	STA $34	;Load lower byte of pointer
 	LDA tbl_E048+1,Y
 	STA $35	;Load upper byte of pointer
-	JMP ($34)	;Jump to loaded pointer
+	JMP ($34)	;Jump to the loaded pointer
 tbl_E048:
 	.word loc_E1F4
 	.word loc_E1F4
@@ -210,30 +210,30 @@ ptr8_E196:
 	LDA PlayerBackColl
 	AND #$01
 	BNE bra_E1C2	;Branch if the collision ID is an odd number?
-	LDA $49
+	LDA PlayerClimbingState
 	CMP #$03
-	BNE bra_E1C2
-	LDA $1E
-	CMP #$0D
+	BNE bra_E1C2	;Branch if the player isn't climbing on the inside
+	LDA PlayerPrevAction
+	CMP #$0D	;(Check for climbing while still)
 	BEQ bra_E1C2
-	CMP #$0E
-	BEQ bra_E1C2
+	CMP #$0E	;(Check for climbing while moving)
+	BEQ bra_E1C2	;Branch if the player was already climbing prior
 	LDA ButtonsHeld
-	AND #$08
-	BEQ bra_E1C2
+	AND #dirUp
+	BEQ bra_E1C2	;Branch if the player is holding up
 	LDA #$00
 	STA PlayerYSpeed
-	STA PlayerXSpeed
+	STA PlayerXSpeed	;Clear the player's vertical and horizontal speed
 	LDA #$03
 	STA PlayerState
 	LDA #$0D
-	STA PlayerAction
+	STA PlayerAction	;Set their state and action to climbing
 bra_E1C1_RTS:
 	RTS
 bra_E1C2:
 	LDA PlayerYSpeed
-	BEQ bra_E1C1_RTS
-	JMP loc_E1F4
+	BEQ bra_E1C1_RTS	;Make sure the player has vertical speed
+	JMP loc_E1F4	;Jump
 ptr8_E1C9:
 	LDA DataBank2
 	CMP #$23
@@ -262,11 +262,11 @@ bra_E1F2_RTS:
 	RTS
 loc_E1F4:
 	LDA #$01
-	STA $95
+	STA $95	;Currently unknown flag
 	LDA PlayerMovement
 	AND #$04
-	BNE bra_E224
-	LDA $65
+	BNE bra_E224	;Branch if the player is moving upwards
+	LDA PlayerColXPos
 	AND #$0F
 	ORA $97
 	AND #$7F
@@ -275,14 +275,14 @@ loc_E1F4:
 	STA $25
 	CMP #$FF
 	BEQ bra_E224
-	LDA $67
+	LDA PlayerColYPos
 	AND #$0F
 	CMP $25
 	BCC bra_E224
-	LDA $67
+	LDA PlayerColYPos
 	AND #$F0
 	ORA $25
-	STA $67
+	STA PlayerColYPos
 	LDA #$00
 	STA PlayerYSpeed
 bra_E224:
@@ -290,10 +290,10 @@ bra_E224:
 	SEC
 	SBC #$01
 	CMP #$F8
-	BCC bra_E22F
+	BCC bra_E22F	;Subtract the player's speed until it underflows to #$F8
 	LDA #$00
 bra_E22F:
-	STA PlayerXSpeed
+	STA PlayerXSpeed	;Clear the player's X speed if its greater than #$F8
 	RTS
 tbl_E232:
 	.db $FF
@@ -403,7 +403,7 @@ bra_E2A7:
 	STA PlayerXSpeed
 	RTS
 bra_E2AA:
-	LDA $65
+	LDA PlayerColXPos
 	AND #$0F
 	ORA $97
 	AND #$7F
@@ -412,14 +412,14 @@ bra_E2AA:
 	STA $25
 	CMP #$FF
 	BEQ bra_E2D0
-	LDA $67
+	LDA PlayerColYPos
 	AND #$0F
 	CMP $25
 	BCC bra_E2D0
-	LDA $67
+	LDA PlayerColYPos
 	AND #$F0
 	ORA $25
-	STA $67
+	STA PlayerColYPos
 	LDA #$00
 	STA PlayerYSpeed
 bra_E2D0:
@@ -572,7 +572,7 @@ bra_E373:
 	STA PlayerXSpeed
 	RTS
 bra_E376:
-	LDA $65
+	LDA PlayerColXPos
 	AND #$0F
 	ORA $97
 	TAY
@@ -580,14 +580,14 @@ bra_E376:
 	STA $25
 	CMP #$FF
 	BEQ bra_E39A
-	LDA $67
+	LDA PlayerColYPos
 	AND #$0F
 	CMP $25
 	BCC bra_E39A
-	LDA $67
+	LDA PlayerColYPos
 	AND #$F0
 	ORA $25
-	STA $67
+	STA PlayerColYPos
 	LDA #$00
 	STA PlayerYSpeed
 bra_E39A:
@@ -835,7 +835,7 @@ bra_E499:
 	LDA PlayerMovement
 	AND #$04
 	BNE bra_E4C5_RTS
-	LDA $65
+	LDA PlayerColXPos
 	AND #$0F
 	ORA $97
 	TAY
@@ -843,24 +843,24 @@ bra_E499:
 	STA $25
 	CMP #$F0
 	BEQ bra_E4C6
-	LDA $67
+	LDA PlayerColYPos
 	AND #$0F
 	CMP $25
 	BCC bra_E4C5_RTS
-	LDA $67
+	LDA PlayerColYPos
 	AND #$F0
 	ORA $25
-	STA $67
+	STA PlayerColYPos
 	LDA #$00
 	STA PlayerYSpeed
 bra_E4C5_RTS:
 	RTS
 bra_E4C6:
-	LDA $67
+	LDA PlayerColYPos
 	SEC
 	SBC #$10
 	ORA #$0F
-	STA $67
+	STA PlayerColYPos
 	LDA $66
 	SBC #$00
 	STA $66
@@ -1018,11 +1018,11 @@ ptr8_E56E:
 	LDA PlayerMovement
 	AND #$04
 	BNE bra_E58B
-	LDA $67
+	LDA PlayerColYPos
 	SEC
 	SBC #$10
 	ORA #$0F
-	STA $67
+	STA PlayerColYPos
 	LDA $66
 	SBC #$00
 	STA $66
@@ -1031,32 +1031,32 @@ ptr8_E56E:
 	LDA #$00
 	STA PlayerYSpeed
 bra_E58B:
-	LDA $67
+	LDA PlayerColYPos
 	AND #$0F
 	CMP #$08
 	BCS bra_E5C1_RTS
 	LDA PlayerXPos
-	EOR $65
+	EOR PlayerColXPos
 	AND #$F0
 	BEQ bra_E5C1_RTS
 	LDA #$01
 	STA $26
 	LDA PlayerXPos
 	SEC
-	SBC $65
+	SBC PlayerColXPos
 	LDA PlayerXScreen
 	SBC $64
 	BMI bra_E5B7
 	LDA PlayerXPos
 	AND #$F0
-	STA $65
+	STA PlayerColXPos
 	LDA PlayerXScreen
 	STA PlayerColXScreen
 	JMP loc_E5C1_RTS
 bra_E5B7:
 	LDA PlayerXPos
 	ORA #$0F
-	STA $65
+	STA PlayerColXPos
 	LDA PlayerXScreen
 	STA PlayerColXScreen
 bra_E5C1_RTS:
@@ -1071,39 +1071,39 @@ bra_E5C7:
 	STA $26
 	LDA PlayerXPosDup
 	SEC
-	SBC $65
+	SBC PlayerColXPos
 	LDA PlayerXScreenDup
 	SBC $64
 	BMI bra_E5E3
 	LDA PlayerXPosDup
 	AND #$F0
-	STA $65
+	STA PlayerColXPos
 	LDA PlayerXScreenDup
 	STA PlayerColXScreen
 	JMP loc_E5ED
 bra_E5E3:
 	LDA PlayerXPosDup
 	ORA #$0F
-	STA $65
+	STA PlayerColXPos
 	LDA PlayerXScreenDup
 	STA PlayerColXScreen
 loc_E5ED:
 	LDA PlayerYPosDup
 	SEC
-	SBC $67
+	SBC PlayerColYPos
 	LDA PlayerYScreenDup
 	SBC $66
 	BMI bra_E605
 	LDA PlayerYPosDup
 	AND #$F0
-	STA $67
+	STA PlayerColYPos
 	LDA PlayerYScreenDup
 	STA $66
 	JMP loc_E60F
 bra_E605:
 	LDA PlayerYPosDup
 	ORA #$0F
-	STA $67
+	STA PlayerColYPos
 	LDA PlayerYScreenDup
 	STA $66
 loc_E60F:
@@ -1117,53 +1117,53 @@ ptr8_E614:
 	LDA #$01
 	STA $26
 	LDA $0B
-	EOR $65
+	EOR PlayerColXPos
 	AND #$F0
 	BEQ bra_E64C
 	LDA #$01
 	STA $26
 	LDA $0B
 	SEC
-	SBC $65
+	SBC PlayerColXPos
 	LDA $0A
 	SBC $64
 	BMI bra_E642
 	LDA $0B
 	AND #$F0
-	STA $65
+	STA PlayerColXPos
 	LDA $0A
 	STA PlayerColXScreen
 	JMP loc_E64C
 bra_E642:
 	LDA $0B
 	ORA #$0F
-	STA $65
+	STA PlayerColXPos
 	LDA $0A
 	STA PlayerColXScreen
 bra_E64C:
 loc_E64C:
 	LDA $0D
-	EOR $67
+	EOR PlayerColYPos
 	AND #$F0
 	BEQ bra_E67A
 	LDA #$01
 	STA $26
 	LDA $0D
 	SEC
-	SBC $67
+	SBC PlayerColYPos
 	LDA $0C
 	SBC $66
 	BMI bra_E670
 	LDA $0D
 	AND #$F0
-	STA $67
+	STA PlayerColYPos
 	LDA $0C
 	STA $66
 	JMP loc_E67A
 bra_E670:
 	LDA $0D
 	ORA #$0F
-	STA $67
+	STA PlayerColYPos
 	LDA $0C
 	STA $66
 bra_E67A:
@@ -1321,21 +1321,21 @@ sub_E75C:
 	BCC bra_E76D
 	JMP loc_E7A5
 bra_E76D:
-	LDA $65
+	LDA PlayerColXPos
 	AND #$0F
 	ORA $97
 	TAY
 	LDA tbl_EB29,Y
 	STA $25
 	BMI bra_E78C
-	LDA $67
+	LDA PlayerColYPos
 	AND #$0F
 	CMP $25
 	BCC bra_E790
-	LDA $67
+	LDA PlayerColYPos
 	AND #$F0
 	ORA $25
-	STA $67
+	STA PlayerColYPos
 	RTS
 bra_E78C:
 	CMP #$FF
@@ -1345,31 +1345,31 @@ bra_E790:
 	STA $25
 	RTS
 bra_E795:
-	LDA $67
+	LDA PlayerColYPos
 	SEC
 	SBC #$10
 	ORA #$0F
-	STA $67
+	STA PlayerColYPos
 	LDA $66
 	SBC #$00
 	STA $66
 	RTS
 loc_E7A5:
-	LDA $67
+	LDA PlayerColYPos
 	AND #$0F
 	ORA $97
 	TAY
 	LDA tbl_EB29,Y
 	STA $25
 	BMI bra_E7C4
-	LDA $65
+	LDA PlayerColXPos
 	AND #$0F
 	CMP $25
 	BCC bra_E7C8
-	LDA $65
+	LDA PlayerColXPos
 	AND #$F0
 	ORA $25
-	STA $65
+	STA PlayerColXPos
 	RTS
 bra_E7C4:
 	CMP #$FF
@@ -1379,11 +1379,11 @@ bra_E7C8:
 	STA $25
 	RTS
 bra_E7CD:
-	LDA $65
+	LDA PlayerColXPos
 	SEC
 	SBC #$10
 	ORA #$0F
-	STA $65
+	STA PlayerColXPos
 	LDA PlayerColXScreen
 	SBC #$00
 	STA PlayerColXScreen
@@ -1401,21 +1401,21 @@ bra_E7EC:
 	TAX
 	LDA tbl_EE19,X
 	STA $97
-	LDA $65
+	LDA PlayerColXPos
 	AND #$0F
 	ORA $97
 	TAY
 	LDA tbl_EBA9,Y
 	STA $25
 	BMI bra_E81E
-	LDA $67
+	LDA PlayerColYPos
 	AND #$0F
 	CMP $25
 	BCC bra_E822
-	LDA $67
+	LDA PlayerColYPos
 	AND #$F0
 	ORA $25
-	STA $67
+	STA PlayerColYPos
 	LDA $14
 	SEC
 	SBC #$01
@@ -1434,11 +1434,11 @@ bra_E822:
 	RTS
 bra_E827:
 	STA $26
-	LDA $67
+	LDA PlayerColYPos
 	SEC
 	SBC #$10
 	ORA #$0F
-	STA $67
+	STA PlayerColYPos
 	LDA $66
 	SBC #$00
 	STA $66
@@ -1456,21 +1456,21 @@ bra_E848:
 	LDA tbl_E897,X
 	BMI bra_E880
 	STA $97
-	LDA $65
+	LDA PlayerColXPos
 	AND #$0F
 	ORA $97
 	TAY
 	LDA tbl_EC99,Y
 	STA $25
 	BMI bra_E87C
-	LDA $67
+	LDA PlayerColYPos
 	AND #$0F
 	CMP $25
 	BCS bra_E880
-	LDA $67
+	LDA PlayerColYPos
 	AND #$F0
 	ORA $25
-	STA $67
+	STA PlayerColYPos
 	LDA PlayerBackColl
 	AND #$07
 	CMP #$03
@@ -1487,11 +1487,11 @@ bra_E880:
 	RTS
 bra_E885:
 	STA $26
-	LDA $67
+	LDA PlayerColYPos
 	CLC
 	ADC #$10
 	AND #$F0
-	STA $67
+	STA PlayerColYPos
 	LDA $66
 	ADC #$00
 	STA $66
@@ -1521,21 +1521,21 @@ bra_E8B2:
 	TAX
 	LDA tbl_E8F4,X
 	STA $97
-	LDA $65
+	LDA PlayerColXPos
 	AND #$0F
 	ORA $97
 	TAY
 	LDA tbl_ECF9,Y
 	STA $25
 	BMI bra_E8D9
-	LDA $67
+	LDA PlayerColYPos
 	AND #$0F
 	CMP $25
 	BCS bra_E8DD
-	LDA $67
+	LDA PlayerColYPos
 	AND #$F0
 	ORA $25
-	STA $67
+	STA PlayerColYPos
 	JMP loc_E900
 bra_E8D9:
 	CMP #$FF
@@ -1546,11 +1546,11 @@ bra_E8DD:
 	RTS
 bra_E8E2:
 	STA $26
-	LDA $67
+	LDA PlayerColYPos
 	CLC
 	ADC #$10
 	AND #$F0
-	STA $67
+	STA PlayerColYPos
 	LDA $66
 	ADC #$00
 	STA $66
@@ -1744,21 +1744,21 @@ sub_EA08:
 	BCC bra_EA19
 	JMP loc_EA51
 bra_EA19:
-	LDA $65
+	LDA PlayerColXPos
 	AND #$0F
 	ORA $97
 	TAY
 	LDA tbl_ED99,Y
 	STA $25
 	BMI bra_EA38
-	LDA $67
+	LDA PlayerColYPos
 	AND #$0F
 	CMP $25
 	BCC bra_EA3C
-	LDA $67
+	LDA PlayerColYPos
 	AND #$F0
 	ORA $25
-	STA $67
+	STA PlayerColYPos
 	RTS
 bra_EA38:
 	CMP #$FF
@@ -1768,31 +1768,31 @@ bra_EA3C:
 	STA $25
 	RTS
 bra_EA41:
-	LDA $67
+	LDA PlayerColYPos
 	SEC
 	SBC #$10
 	ORA #$0F
-	STA $67
+	STA PlayerColYPos
 	LDA $66
 	SBC #$00
 	STA $66
 	RTS
 loc_EA51:
-	LDA $67
+	LDA PlayerColYPos
 	AND #$0F
 	ORA $97
 	TAY
 	LDA tbl_ED99,Y
 	STA $25
 	BMI bra_EA70
-	LDA $65
+	LDA PlayerColXPos
 	AND #$0F
 	CMP $25
 	BCS bra_EA74
-	LDA $65
+	LDA PlayerColXPos
 	AND #$F0
 	ORA $25
-	STA $65
+	STA PlayerColXPos
 	RTS
 bra_EA70:
 	CMP #$FF
@@ -1802,171 +1802,211 @@ bra_EA74:
 	STA $25
 	RTS
 bra_EA79:
-	LDA $65
+	LDA PlayerColXPos
 	CLC
 	ADC #$10
 	AND #$F0
-	STA $65
+	STA PlayerColXPos
 	LDA PlayerColXScreen
 	ADC #$00
 	STA PlayerColXScreen
 	RTS
+tbl_39_EA89:
 	.db $47
 	.db $2A
 	.db $13
 	.db $5B
+
 	.db $4C
 	.db $22
 	.db $08
 	.db $5B
+
 	.db $50
 	.db $1C
 	.db $43
 	.db $0D
+
 	.db $20
 	.db $28
 	.db $4B
 	.db $5B
+
 	.db $02
 	.db $39
 	.db $68
 	.db $5B
+
 	.db $4A
 	.db $5C
 	.db $06
 	.db $5B
+
 	.db $76
 	.db $49
 	.db $35
 	.db $01
+
 	.db $61
 	.db $52
 	.db $3B
 	.db $01
+
 	.db $27
 	.db $59
 	.db $6D
 	.db $5B
+
 	.db $4E
 	.db $51
 	.db $11
 	.db $5B
+
 	.db $24
 	.db $58
 	.db $71
 	.db $01
+
 	.db $60
 	.db $42
 	.db $30
 	.db $01
+
 	.db $15
 	.db $04
 	.db $19
 	.db $0D
+
 	.db $5A
 	.db $65
 	.db $72
 	.db $0D
+
 	.db $7B
 	.db $5D
 	.db $2C
 	.db $0D
+
 	.db $37
 	.db $6B
 	.db $5E
 	.db $01
+
 	.db $38
 	.db $14
 	.db $5F
 	.db $5B
+
 	.db $7E
 	.db $54
 	.db $6A
 	.db $01
+
 	.db $26
 	.db $1A
 	.db $00
 	.db $5B
+
 	.db $31
 	.db $3F
 	.db $0C
 	.db $01
+
 	.db $17
 	.db $2E
 	.db $0F
 	.db $0D
+
 	.db $74
 	.db $67
 	.db $3D
 	.db $5B
+
 	.db $05
 	.db $12
 	.db $7C
 	.db $01
+
 	.db $6E
 	.db $2B
 	.db $1E
 	.db $01
+
 	.db $1F
 	.db $29
 	.db $1B
 	.db $5B
+
 	.db $55
 	.db $46
 	.db $2D
 	.db $C4
+
 	.db $48
 	.db $3C
 	.db $21
 	.db $01
+
 	.db $66
 	.db $3A
 	.db $7F
 	.db $5B
+
 	.db $13
 	.db $5F
 	.db $6A
 	.db $6B
+
 	.db $15
 	.db $24
 	.db $27
 	.db $33
+
 	.db $34
 	.db $55
 	.db $16
 	.db $25
+
 	.db $01
 	.db $38
 	.db $43
 	.db $17
+
 	.db $1D
 	.db $19
 	.db $19
 	.db $2D
+
 	.db $13
 	.db $2A
 	.db $37
 	.db $1F
+
 	.db $8C
 	.db $8D
 	.db $8E
 	.db $8F
+
 	.db $18
 	.db $34
 	.db $44
 	.db $25
+
 	.db $20
 	.db $24
 	.db $14
 	.db $5A
+
 	.db $29
 	.db $46
 	.db $23
 	.db $2D
+
 	.db $18
 	.db $37
 	.db $3E
 	.db $3F
+
 	.db $23
 	.db $4D
 	.db $7D
@@ -2807,11 +2847,11 @@ loc_EE99:
 	LDA #$07	;Load 1up sound effect
 bra_EEA1:
 	STA SFXRegister	;Play the loaded sound effect
-	LDA $65
+	LDA PlayerColXPos
 	SEC
 	SBC $52
 	STA $28
-	LDA $67
+	LDA PlayerColYPos
 	SEC
 	SBC $54
 	TAX
@@ -3704,25 +3744,25 @@ bra_F250:
 loc_F254:
 	LDA PlayerXPosDup
 	SEC
-	SBC $65
+	SBC PlayerColXPos
 	LDA PlayerXScreenDup
 	SBC $64
 	BMI bra_F26F
-	LDA $65
+	LDA PlayerColXPos
 	CLC
 	ADC #$10
 	AND #$F0
-	STA $65
+	STA PlayerColXPos
 	LDA PlayerColXScreen
 	ADC #$00
 	STA PlayerColXScreen
 	RTS
 bra_F26F:
-	LDA $65
+	LDA PlayerColXPos
 	SEC
 	SBC #$10
 	ORA #$0F
-	STA $65
+	STA PlayerColXPos
 	LDA PlayerColXScreen
 	SBC #$00
 	STA PlayerColXScreen
@@ -3731,7 +3771,7 @@ loc_F27F:
 	LDA PlayerMovement
 	AND #$04
 	BNE bra_F28D
-	LDA $67
+	LDA PlayerColYPos
 	AND #$0F
 	CMP #$07
 	BCC bra_F290
@@ -3739,14 +3779,14 @@ bra_F28D:
 	JMP loc_F254
 bra_F290:
 loc_F290:
-	LDA $67
+	LDA PlayerColYPos
 	SEC
 	SBC #$10
 	ORA #$0F
-	STA $67
+	STA PlayerColYPos
 	BCS bra_F2A1
 	LDA #$EF
-	STA $67
+	STA PlayerColYPos
 	DEC $66
 bra_F2A1:
 	LDA #$00
@@ -3767,16 +3807,16 @@ ptr8_F2B7:
 	LDA PlayerMovement
 	AND #$04
 	BNE bra_F2C5
-	LDA $67
+	LDA PlayerColYPos
 	AND #$0F
 	CMP #$06
 	BCC bra_F2C8
 bra_F2C5:
 	JMP loc_F254
 bra_F2C8:
-	LDA $67
+	LDA PlayerColYPos
 	AND #$F0
-	STA $67
+	STA PlayerColYPos
 	LDA #$00
 	STA PlayerYSpeed
 	JMP loc_F2A9
@@ -3786,7 +3826,7 @@ ptr8_F2D5:
 	BEQ bra_F2E7
 	LDA PlayerXPosDup
 	SEC
-	SBC $65
+	SBC PlayerColXPos
 	LDA PlayerXScreenDup
 	SBC $64
 	BPL bra_F2F3
@@ -3794,7 +3834,7 @@ ptr8_F2D5:
 bra_F2E7:
 	LDA PlayerXPosDup
 	SEC
-	SBC $65
+	SBC PlayerColXPos
 	LDA PlayerXScreenDup
 	SBC $64
 	BMI bra_F2F3
@@ -3803,7 +3843,7 @@ bra_F2F3:
 	LDA PlayerMovement
 	AND #$04
 	BNE bra_F304_RTS
-	LDA $67
+	LDA PlayerColYPos
 	AND #$0F
 	CMP #$08
 	BCS bra_F304_RTS
@@ -3818,7 +3858,7 @@ loc_F305:
 bra_F30E:
 	LDA PlayerXPosDup
 	SEC
-	SBC $65
+	SBC PlayerColXPos
 	LDA PlayerXScreenDup
 	SBC $64
 	BMI bra_F31A
@@ -3844,13 +3884,13 @@ bra_F339:
 	LDA #$12
 	STA PlayerXSpeed
 bra_F33D:
-	LDA $65
+	LDA PlayerColXPos
 	AND #$0F
 	TAY
-	LDA $67
+	LDA PlayerColYPos
 	AND #$F0
 	ORA tbl_F34C,Y
-	STA $67
+	STA PlayerColYPos
 	RTS
 tbl_F34C:
 	.db $0F
@@ -3872,7 +3912,7 @@ tbl_F34C:
 loc_F35C:
 	LDA PlayerXPosDup
 	SEC
-	SBC $65
+	SBC PlayerColXPos
 	LDA PlayerXScreenDup
 	SBC $64
 	BPL bra_F368
@@ -3899,21 +3939,21 @@ bra_F389:
 	LDA #$12
 	STA PlayerXSpeed
 bra_F38D:
-	LDA $65
+	LDA PlayerColXPos
 	AND #$0F
 	TAY
 	LDA PlayerMovement
 	AND #$01
 	BEQ bra_F3A1
-	LDA $67
+	LDA PlayerColYPos
 	AND #$0F
 	CMP tbl_F3AB,Y
 	BCC bra_F3AA_RTS
 bra_F3A1:
-	LDA $67
+	LDA PlayerColYPos
 	AND #$F0
 	ORA tbl_F3AB,Y
-	STA $67
+	STA PlayerColYPos
 bra_F3AA_RTS:
 	RTS
 tbl_F3AB:
@@ -3936,7 +3976,7 @@ tbl_F3AB:
 loc_F3BB:
 	LDA PlayerXPosDup
 	SEC
-	SBC $65
+	SBC PlayerColXPos
 	LDA PlayerXScreenDup
 	SBC $64
 	BMI bra_F3C7
@@ -3950,13 +3990,13 @@ bra_F3C7:
 	BEQ bra_F3D7
 	JMP loc_F2A9
 bra_F3D7:
-	LDA $65
+	LDA PlayerColXPos
 	AND #$0F
 	TAY
-	LDA $67
+	LDA PlayerColYPos
 	AND #$F0
 	ORA tbl_F34C,Y
-	STA $67
+	STA PlayerColYPos
 	LDA #$00
 	STA PlayerYSpeed
 bra_F3E9_RTS:
@@ -3967,7 +4007,7 @@ sub_F3EA:
 	BEQ bra_F406
 	LDA PlayerXSpeed
 	BEQ bra_F406
-	LDA $67
+	LDA PlayerColYPos
 	STA $32
 	CLC
 	ADC #$02
@@ -3976,22 +4016,22 @@ sub_F3EA:
 	INC $66
 	LDA #$00
 bra_F403:
-	STA $67
+	STA PlayerColYPos
 	RTS
 bra_F406:
 	LDA $062B
 	AND #$03
 	BNE bra_F428_RTS
-	LDA $65
+	LDA PlayerColXPos
 	STA $32
 	CLC
 	ADC #$01
-	STA $65
+	STA PlayerColXPos
 	LDA PlayerColXScreen
 	ADC #$00
 	STA PlayerColXScreen
 	LDA $32
-	EOR $65
+	EOR PlayerColXPos
 	AND #$F0
 	BEQ bra_F428_RTS
 	LDA #$01
@@ -4014,7 +4054,7 @@ bra_F43C:
 ptr8_F43F:
 	LDA PlayerXPosDup
 	SEC
-	SBC $65
+	SBC PlayerColXPos
 	LDA PlayerXScreenDup
 	SBC $64
 	BMI bra_F44B
@@ -4033,18 +4073,18 @@ bra_F454:
 	LDA #$00
 	STA PlayerXSpeed
 bra_F462:
-	LDA $65
+	LDA PlayerColXPos
 	AND #$0F
 	TAY
-	LDA $67
+	LDA PlayerColYPos
 	AND #$F0
 	ORA tbl_F34C,Y
-	STA $67
+	STA PlayerColYPos
 	RTS
 ptr8_F471:
 	LDA PlayerXPosDup
 	SEC
-	SBC $65
+	SBC PlayerColXPos
 	LDA PlayerXScreenDup
 	SBC $64
 	BPL bra_F47D
@@ -4063,13 +4103,13 @@ bra_F486:
 	LDA #$00
 	STA PlayerXSpeed
 bra_F494:
-	LDA $65
+	LDA PlayerColXPos
 	AND #$0F
 	TAY
-	LDA $67
+	LDA PlayerColYPos
 	AND #$F0
 	ORA tbl_F3AB,Y
-	STA $67
+	STA PlayerColYPos
 	RTS
 ptr8_F4A3:
 	LDA PlayerMovement
@@ -4083,23 +4123,23 @@ ptr8_F4A3:
 bra_F4B3:
 	LDA PlayerXPosDup
 	SEC
-	SBC $65
+	SBC PlayerColXPos
 	LDA PlayerXScreenDup
 	SBC $64
 	BMI bra_F4C7
-	LDA $65
+	LDA PlayerColXPos
 	AND #$0F
 	CMP #$05
 	BCC bra_F4C7
 	RTS
 bra_F4C7:
-	LDA $67
+	LDA PlayerColYPos
 	AND #$0F
 	CMP #$03
 	BCS bra_F4D9_RTS
-	LDA $67
+	LDA PlayerColYPos
 	AND #$F0
-	STA $67
+	STA PlayerColYPos
 	LDA #$00
 	STA PlayerYSpeed
 bra_F4D9_RTS:

@@ -4544,7 +4544,7 @@ ofs_9E87:
 	TAY
 bra9_9ED9:
 	LDA #$00
-	STA $06A2,Y
+	STA CheckpointFlag,Y
 	STA InvincibilityTimer
 	STA PlayerPowerupBuffer
 bra9_9EE4_RTS:

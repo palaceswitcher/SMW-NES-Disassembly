@@ -3783,8 +3783,8 @@ sub_B75D:
 	LDA tbl_B99A,X
 	STA $6D
 	LDY #$00
-	STY $04FA
-	STA $04FB
+	STY LevelTopScreenOffset
+	STA LevelBottomScreenOffset
 	LDY LevelNumber
 	LDA tbl_BA07,Y
 	STA $8C
@@ -3831,7 +3831,7 @@ sub_B75D:
 	STA $13
 	INY
 	LDA ($32),Y
-	STA $060F
+	STA HorizScrollLock
 	INY
 	LDA ($32),Y
 	STA XScreenCount
@@ -3840,7 +3840,7 @@ sub_B75D:
 	STA VertScrollLock
 	INY
 	LDA ($32),Y
-	STA $060E
+	STA YScreenCount
 	RTS
 	RTS
 sub_B800:
@@ -4746,7 +4746,7 @@ bra_BC84:
 	ADC #$00
 	STA $56
 bra_BCA6:
-	LDA $060F
+	LDA HorizScrollLock
 	CMP $55
 	BNE bra_BCC0
 	LDA #$00
@@ -4884,7 +4884,7 @@ bra_BD70:
 	ADC #$00
 	STA $57
 bra_BD9B:
-	LDA $060E
+	LDA YScreenCount
 	CMP $57
 	BNE bra_BDB5
 	STA $57
@@ -4996,7 +4996,7 @@ loc_BE5D:
 	LDA #$00
 	STA $26
 	LDY $66
-	LDA $04FA,Y
+	LDA LevelTopScreenOffset,Y
 	CLC
 	ADC $64
 	TAY
@@ -5106,7 +5106,7 @@ sub_BED2:
 	RTS
 sub_BF31:
 	LDY $66
-	LDA $04FA,Y
+	LDA LevelTopScreenOffset,Y
 	CLC
 	ADC $64
 	TAY

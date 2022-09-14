@@ -65,7 +65,7 @@ NMI_E062:
 	STA PPUAddr
 	LDX #$00
 bra3_E088:
-	LDA TileRowMem,X
+	LDA TileColumnMem,X
 	STA PPUData
 	INX
 	CPX #$1E
@@ -77,7 +77,7 @@ bra3_E088:
 	LDA NextBGColumn
 	STA PPUAddr
 bra3_E0A4:
-	LDA TileRowMem,X
+	LDA TileColumnMem,X
 	STA PPUData
 	INX
 	CPX #$38
@@ -1053,7 +1053,7 @@ sub3_E870:
 	STA PlayerSprYPos	;Get Y position
 	INY	;Move to next byte
 	LDA ($32),Y
-	STA $060F	;Set horizontal scroll lock
+	STA HorizScrollLock	;Set horizontal scroll lock
 	INY	;Move to next byte
 	LDA ($32),Y
 	STA XScreenCount	;Set horizontal screen count
@@ -2376,7 +2376,7 @@ sub3_F055:
 	STA PPUAddr	;Load current column into low byte of PPU address
 	LDX #$00	;Set row to 0
 bra3_F070:
-	LDA TileRowMem,X	;Load 8x8 tile row data
+	LDA TileColumnMem,X	;Load 8x8 tile row data
 	STA PPUData	;Store it in the PPU
 	INX	;Move to next row
 	CPX #$1E	;Keep looping until row 30 is reached
@@ -2388,7 +2388,7 @@ bra3_F070:
 	LDA NextBGColumn
 	STA PPUAddr	;Load current column into lower byte of PPU address
 bra3_F08C:
-	LDA TileRowMem,X	;Load 8x8 tile row data
+	LDA TileColumnMem,X	;Load 8x8 tile row data
 	STA PPUData	;Store it in the PPU
 	INX	;Move to next row
 	CPX TileRowCount	;Keep looping until current row count is reached
@@ -3608,9 +3608,9 @@ bra3_F7EA:
 	BEQ bra3_F811
 	CMP #$2B
 	BEQ bra3_F811
-	LDA $03CD
+	LDA BGBankAnimation
 	LSR
-	TAY
+	TAY	;Get pointer index for BG bank animation
 	LDA AnimatedBankPointers,Y
 	STA $A6	;Load lower byte of pointer
 	LDA AnimatedBankPointers+1,Y

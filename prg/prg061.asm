@@ -1588,7 +1588,7 @@ bra6_A607:
 	BEQ bra6_A664
 	DEC ObjectYPos,X
 bra6_A664:
-	LDA $65
+	LDA PlayerColXPos
 	AND #$F0
 	STA ObjectXPos,X
 	LDA PlayerColXScreen
@@ -1646,7 +1646,7 @@ bra6_A683:
 	BEQ bra6_A6E5
 	DEC ObjectYPos,X
 bra6_A6E5:
-	LDA $65
+	LDA PlayerColXPos
 	AND #$F0
 	STA ObjectXPos,X
 	LDA PlayerColXScreen
@@ -3464,15 +3464,15 @@ sub6_AEB8:
 	ASL
 	ASL
 	ASL
-	TAY
-	LDX #$00
+	TAY	;Multiply the level number by 16 to get the index based off the level number
+	LDX #$00	;Clear X index
 bra6_AEC2:
-	LDA tbl6_AED1,Y
-	STA $D0,X
-	INY
-	INX
+	LDA tbl6_AED1,Y	;Load the tile buffer??(Unsure of what $D0-$DB is for) for the current level number
+	STA $D0,X	;Store in RAM
+	INY	;Move to the next byte in the byte
+	INX	;Move to the next byte in the table
 	CPX #$0C
-	BCC bra6_AEC2
+	BCC bra6_AEC2	;Loop until 12 bytes from the table have been copied to RAM
 	JSR sub6_A828
 	RTS
 tbl6_AED1:
@@ -3543,7 +3543,7 @@ tbl6_AED1:
 sub6_AF11:
 	LDA #$00
 	STA $9C
-	LDA $02
+	LDA ScrollXPos
 	LSR
 	LSR
 	LSR
@@ -3557,14 +3557,14 @@ sub6_AF11:
 	EOR #$01
 	STA $9B
 	LDX #$00
-	LDA $65
+	LDA PlayerColXPos
 	AND #$08
 	BEQ bra6_AF37
 	INX
 bra6_AF37:
 	STX $2A
 	LDX #$00
-	LDA $67
+	LDA PlayerColYPos
 	AND #$08
 	BEQ bra6_AF42
 	INX
@@ -3595,7 +3595,7 @@ bra6_AF68:
 loc6_AF70:
 	LDY $2D
 loc6_AF72:
-	LDA a: $60,Y
+	LDA a:$60,Y
 	LDX $9C
 	STA $0485,X
 	LDA $9B
@@ -3665,7 +3665,7 @@ bra6_AFEF:
 	INC $28
 	JMP loc6_AF51
 bra6_AFF8:
-	LDA $02
+	LDA ScrollXPos
 	ROR
 	ROR
 	ROR
@@ -3701,7 +3701,7 @@ bra6_B01E:
 	CPX #$30
 	BCC bra6_B005
 	RTS
-	LDA $02
+	LDA ScrollXPos
 	LSR
 	LSR
 	LSR
@@ -3725,9 +3725,9 @@ bra6_B053:
 	STA $5A
 	RTS
 sub6_B056:
-	LDA $66
+	LDA PlayerColYScreen
 	PHA
-	LDA $67
+	LDA PlayerColYPos
 	PHA
 	LDX #$00
 loc6_B05E:
@@ -3762,13 +3762,13 @@ bra6_B08F:
 	LDA $04F4
 	STA M90_PRG0
 loc6_B095:
-	LDA $65
+	LDA PlayerColXPos
 	LSR
 	LSR
 	LSR
 	LSR
 	STA $25
-	LDA $67
+	LDA PlayerColYPos
 	AND #$F0
 	ORA $25
 	TAY
@@ -3818,9 +3818,9 @@ bra6_B0DF:
 	LDY $2B
 	CMP #$F0
 	BCC bra6_B0A6
-	INC $66
+	INC PlayerColYScreen
 	LDA #$00
-	STA $67
+	STA PlayerColYPos
 	JMP loc6_B05E
 bra6_B0FC:
 	LDA $2B
@@ -3834,9 +3834,9 @@ bra6_B0FC:
 bra6_B10C:
 	LDX $28
 	PLA
-	STA $67
+	STA PlayerColYPos
 	PLA
-	STA $66
+	STA PlayerColYScreen
 	RTS
 	.byte $00
 	.byte $F0
@@ -3923,29 +3923,29 @@ jmp_61_B19E:
 	JSR sub6_AEB8
 	LDA WorldNumber
 	ASL
+	ASL	;Multiply the world number by 4
+	STA $34	;Store it at $32 in scratch RAM
 	ASL
-	STA $34
-	ASL
-	ASL
-	STA $32
+	ASL	;Multiply it by 4 again, effectively moving the low nybble to the high nybble
+	STA $32	;Store it at $32 in scratch RAM
 	LDA LevelNumber
 	ASL
-	ASL
+	ASL	;Multiply the level number by 4
 	CLC
-	ADC $32
-	TAX
+	ADC $32	;Add the shifted Y value to it
+	TAX	;Set it as the X index
 	LDA $34
 	CLC
-	ADC LevelNumber
-	TAY
+	ADC LevelNumber	;Add the level number to the previously multiplied world value, getting the ordered level number
+	TAY	;Back it up in the Y register
 	LDA CurrentPlayer
-	BEQ bra6_B1C6
+	BEQ bra6_B1C6	;Branch ahead if player 1 is playing
 	TYA
 	CLC
 	ADC #$1C
-	TAY
+	TAY	;Otherwise, move the index 28 spots for player 2
 bra6_B1C6:
-	LDA $06A2,Y
+	LDA CheckpointFlag,Y
 	BEQ bra6_B1FD
 	LDA tbl6_B5EA,X
 	STA DataBank2
@@ -3985,88 +3985,88 @@ bra6_B1FD:
 	LDA tbl6_B56D,X
 loc6_B22C:
 	JSR sub6_B34A
-	LDA #$12
+	LDA #$12	;Player bottom screen offset (see below)
 	STA $6D
-	LDY #$00
-	STY $04FA
-	STA $04FB
-	LDY LevelNumber
-	LDA tbl6_B5E0,Y
-	STA $8C
-	LDA tbl6_B5E4,Y
-	STA $8D
+	LDY #$00	;Player top screen offset (see below)
+	STY LevelTopScreenOffset	;Preset the offset for determining the player's screen ID on the top screen
+	STA LevelBottomScreenOffset	;Preset offset for determining the player's screen ID on the bottom screen
+	LDY LevelNumber	;Use level number as index
+	LDA LvlScreenOrderPtrLo,Y
+	STA LevelScreenOrderPtr	;Get the low byte of the screen order pointer based off the level number
+	LDA LvlScreenOrderPtrHi,Y
+	STA LevelScreenOrderPtr+1	;Get the high byte of the screen order pointer based off the level number
 	LDA WorldNumber
 	ASL
-	TAY
-	ASL
+	TAY	;Get Y pointer index from world number
+	ASL	;(Multiply by 4)
 	CLC
-	ADC LevelNumber
-	TAX
+	ADC LevelNumber	;Add the product to the level number to get the ordered level number
+	TAX	;Set as the checkpoint index
 	LDA CurrentPlayer
-	BEQ bra6_B25D
+	BEQ bra6_B25D	;Branch if player 1 is playing
 	TXA
 	CLC
 	ADC #$1C
-	TAX
+	TAX	;Otherwise, move the index 28 bytes ahead for player 2
 bra6_B25D:
-	LDA $06A2,X
-	BEQ bra6_B26D
+	LDA CheckpointFlag,X
+	BEQ bra6_B26D	;Branch if the checkpoint isn't set
 	LDA tbl6_B76E,Y
 	STA $32
-	LDA tbl6_B76E+1,Y
-	JMP loc6_B275
+	LDA tbl6_B76E+1,Y	;If the checkpoint is set, load the checkpoint spawn coordinates
+	JMP loc6_B275	;Jump ahead
 bra6_B26D:
 	LDA tbl6_B676,Y
 	STA $32
-	LDA tbl6_B676+1,Y
+	LDA tbl6_B676+1,Y	;If the checkpoint isn't set, load the normal level spawn coordinates
 loc6_B275:
-	STA $33
+	STA $33	;Store high byte of spawn pointer
 	LDA LevelNumber
 	ASL
 	ASL
 	ASL
-	TAY
+	TAY	;Get index for current level
 	LDA ($32),Y
 	STA CameraXScreen
 	STA PlayerColXScreen
 	LDA #$00
 	STA $52
-	STA $65
+	STA PlayerColXPos
 	INY
 	LDA ($32),Y
 	STA $53
 	ASL
 	STA $5B
 	LDA #$00
-	STA $66
+	STA PlayerColYScreen
 	STA $54
-	STA $67
+	STA PlayerColYPos
 	LDA CameraXScreen
 	STA PlayerXScreen
-	INY
+	INY	;(Move one byte ahead)
 	LDA ($32),Y
 	STA PlayerXPos
-	STA PlayerSprXPos
+	STA PlayerSprXPos	;Load the player's X spawn coordinate
 	LDA $53
 	STA PlayerYScreen
-	INY
+	INY	;(Move one byte ahead)
 	LDA ($32),Y
 	STA PlayerYPos
-	STA PlayerSprYPos
-	INY
+	STA PlayerSprYPos	;Load the player's Y spawn coordinate
+	INY	;(Move one byte ahead)
 	LDA ($32),Y
-	STA $060F
-	INY
+	STA HorizScrollLock	;Set horizontal scroll lock (If present. Very broken)
+	INY	;(Move one byte ahead)
 	LDA ($32),Y
-	STA $0610
-	INY
+	STA XScreenCount	;Get horizontal screen count
+	INY	;(Move one byte ahead)
 	LDA ($32),Y
-	STA VertScrollLock
-	INY
+	STA VertScrollLock	;Set the vertical scroll lock (If it's set)
+	INY	;(Move one byte ahead)
 	LDA ($32),Y
-	STA $060E
+	STA YScreenCount	;Get vertical screen count
 	LDA #$01
-	STA InterruptMode
+	STA InterruptMode	;Set the horizontal split/interrupt for levels
 	LDX #$00
 	LDA #$FF
 bra6_B2D1:
@@ -4136,25 +4136,25 @@ bra6_B352:
 	INX
 	STX BGBank3
 	INX
-	STX $03CC
+	STX BGBank4
 	RTS
 bra6_B365:
 	ASL
 	ASL
-	STA $03CD
+	STA BGBankAnimation	;Set bank 4 mode?
 	TAX
 	LDA #$27
-	STA M90_PRG3
-	LDA $EA89,X
-	STA BGBank1
-	LDA $EA8A,X
-	STA BGBank2
-	LDA $EA8B,X
-	STA BGBank3
-	LDA $EA8C,X
-	STA $03CC
+	STA M90_PRG3	;Swap bank 39 into the 4th PRG slot ($E000-$FFFF)
+	LDA tbl_39_EA89,X
+	STA BGBank1	;Set BG bank 1
+	LDA tbl_39_EA89+1,X
+	STA BGBank2	;Set BG bank 2
+	LDA tbl_39_EA89+2,X
+	STA BGBank3	;Set BG bank 3
+	LDA tbl_39_EA89+3,X
+	STA BGBank4	;Set BG bank 4 (redundant)
 	LDA #$3F
-	STA M90_PRG3
+	STA M90_PRG3	;Swap bank 63 back in
 	RTS
 jmp_61_B38E:
 	LDA PPUStatus
@@ -4167,7 +4167,7 @@ jmp_61_B38E:
 	STA FireballSlot
 	STA FireballSlot2
 	STA ObjectCount
-	STA $02
+	STA ScrollXPos
 	STA $03
 	STA $59
 	STA $30
@@ -4258,10 +4258,10 @@ bra6_B438:
 bra6_B44F:
 	LDA $26
 	BEQ bra6_B461
-	LDA $65
+	LDA PlayerColXPos
 	CLC
 	ADC #$10
-	STA $65
+	STA PlayerColXPos
 	BCC bra6_B45E
 	INC $64
 bra6_B45E:
@@ -4299,7 +4299,7 @@ sub6_B49D:
 	CMP #$04
 	BNE bra6_B4B0_RTS
 	LDA #$A8
-	STA $02
+	STA ScrollXPos
 	LDA #$CF
 	STA $03
 	LDA #$02
@@ -4559,12 +4559,12 @@ tbl6_B56F:
 	.byte $3D
 	.byte $23
 	.byte $22
-tbl6_B5E0:
+LvlScreenOrderPtrLo:
 	.byte $00
 	.byte $40
 	.byte $80
 	.byte $C0
-tbl6_B5E4:
+LvlScreenOrderPtrHi:
 	.byte $86
 	.byte $86
 	.byte $86
@@ -5223,12 +5223,12 @@ bra6_B872:
 	ADC #$00
 	STA $56
 bra6_B894:
-	LDA $060F
+	LDA HorizScrollLock
 	CMP $55
 	BNE bra6_B8BE
 	LDA #$00
 	STA $56
-	LDY $060F
+	LDY HorizScrollLock
 	INY
 	STY $55
 	LDA PlayerXPosDup
@@ -5266,7 +5266,7 @@ bra6_B8C1:
 	ADC #$00
 	STA $56
 bra6_B8E3:
-	LDA $0610
+	LDA XScreenCount
 	CMP $55
 	BNE bra6_B8FF
 	STA $55
@@ -5369,7 +5369,7 @@ bra6_B96E:
 	ADC #$00
 	STA $57
 bra6_B999:
-	LDA $060E
+	LDA YScreenCount
 	CMP $57
 	BNE bra6_B9B3
 	STA $57
@@ -5425,11 +5425,11 @@ bra6_B9EA:
 	LDA CameraXScreen
 	STA PlayerColXScreen
 	LDA $52
-	STA $65
+	STA PlayerColXPos
 	LDA #$00
-	STA $66
+	STA PlayerColYScreen
 	LDA #$00
-	STA $67
+	STA PlayerColYPos
 	LDA ScrollSpeed
 	BMI bra6_BA18
 	INC $64
@@ -5448,8 +5448,8 @@ sub6_BA21:
 	LDA ScrollSpeed
 	BMI bra6_BA34
 	CLC
-	ADC $02
-	STA $02
+	ADC ScrollXPos
+	STA ScrollXPos
 	LDA $56
 	STA $52
 	LDA $55
@@ -5458,10 +5458,10 @@ sub6_BA21:
 bra6_BA34:
 	AND #$7F
 	STA ScrollSpeed
-	LDA $02
+	LDA ScrollXPos
 	SEC
 	SBC ScrollSpeed
-	STA $02
+	STA ScrollXPos
 	LDA $56
 	STA $52
 	LDA $55
@@ -5502,27 +5502,27 @@ bra6_BA82:
 	LDA CameraXScreen
 	STA PlayerColXScreen
 	LDA $52
-	STA $65
+	STA PlayerColXPos
 	LDA $53
-	STA $66
+	STA PlayerColYScreen
 	LDA $54
-	STA $67
+	STA PlayerColYPos
 	LDA $0327
 	BMI bra6_BA9A
-	INC $66
+	INC PlayerColYScreen
 	RTS
 bra6_BA9A:
-	LDA $67
+	LDA PlayerColYPos
 	SEC
 	SBC #$08
 	BCS bra6_BAAA
-	DEC $66
+	DEC PlayerColYScreen
 	CMP #$F0
 	BCC bra6_BAAA
 	SEC
 	SBC #$10
 bra6_BAAA:
-	STA $67
+	STA PlayerColYPos
 	LDA $5B
 	STA $28
 	LDA $03
@@ -6267,7 +6267,7 @@ tbl6_BE75:
 jmp_61_BE85:
 	LDA #$00
 	STA MusicRegister
-	STA $02
+	STA ScrollXPos
 	STA $03
 	STA $5B
 	STA InterruptMode
@@ -6278,7 +6278,7 @@ jmp_61_BE85:
 	INX
 	STX BGBank3
 	INX
-	STX $03CC
+	STX BGBank4
 	JSR sub6_BEE7
 	JSR sub6_BF09
 	JSR sub6_BEBE

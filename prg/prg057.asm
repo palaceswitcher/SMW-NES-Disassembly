@@ -1,9 +1,9 @@
 ;disassembled by BZK 6502 Disassembler
 jmp_57_A000:
 	LDA PlayerAction
-	CMP $1E
-	BEQ bra4_A020
-	BNE bra4_A014
+	CMP PlayerPrevAction
+	BEQ bra4_A020	;Branch here if the player's action stays the same
+	BNE bra4_A014	;If it doesn't, branch here
 	LDA PlayerXSpeed	;unlogged
 	ROR	;unlogged
 	ROR	;unlogged
@@ -13,10 +13,10 @@ jmp_57_A000:
 	TAX	;unlogged
 	LDA tbl4_A095,X	;unlogged
 bra4_A014:
-	STA PlayerAnimation
+	STA PlayerAnimation	;Update the player's animation
 	LDA #$00
-	STA PlayerAnimationFrame
-	JSR sub4_A185
+	STA PlayerAnimationFrame	;Switch to first frame of animation
+	JSR PlayerAnimationSub
 	JMP loc4_A03E
 bra4_A020:
 	CMP #$01
@@ -37,7 +37,7 @@ loc4_A035:
 	CPY PlayerAnimation	;compare current animation to frame loaded from table
 	BEQ bra4_A03E		;branch if they're equal
 	STY PlayerAnimation	;unlogged
-	JSR sub4_A185	;unlogged
+	JSR PlayerAnimationSub	;unlogged
 bra4_A03E:
 loc4_A03E:
 	LDA PlayerAction
@@ -241,10 +241,10 @@ bra4_A16E:
 	ASL		;multiply it by 2
 	TAY		;move it to y offset
 	LDA ($32),Y	;load lower byte of 2nd pointer
-	STA Pointer4	;
+	STA PlayerAnimationPtr	;
 	INY
 	LDA ($32),Y	;load upper byte of 2nd pointer
-	STA Pointer4+1	;
+	STA PlayerAnimationPtr+1	;
 	RTS
 sub4_A17C:
 	LDA $18
@@ -253,51 +253,50 @@ sub4_A17C:
 	RTS
 bra4_A183:
 	INC PlayerAnimationFrame
-sub4_A185:
-loc4_A185:
-	LDA PlayerAnimation		;load animation value
-	ASL		;multiply it by 2
-	TAY		;copy to y index
-	LDA #36			;
-	STA M90_PRG2	;load animation bank into 3rd PRG slot
-	LDA (Pointer4),Y;
-	STA $32		;load 3rd pointer into low byte of main pointer regs
-	INY		;
-	LDA (Pointer4),Y;load 3rd pointer into high byte of main pointer regs
-	STA $33		;
-	LDA PlayerAnimationFrame;load player's current frame/sprite,
-	ASL		;
-	ASL		;multiply it by 4
-	TAY		;move it to y reg
-	LDA ($32),Y	;
-	STA PlayerFramePCLow	;load 1st byte of mapping data
-	INY		;
-	LDA ($32),Y	;load 2nd byte of mapping data
-	STA PlayerFramePCHigh	;
-	INY		;
-	LDA ($32),Y	;if low byte is positive (below 7F),
-	BPL bra4_A1B1	;branch
-	AND #$7F		;make number negative,
-	STA PlayerAnimationFrame;store it as player's animation frame
-	JMP loc4_A185
+PlayerAnimationSub:
+	LDA PlayerAnimation	;Load player's animation value
+	ASL
+	TAY	;Get the pointer index for it
+	LDA #36	
+	STA M90_PRG2	;Load the animation bank into the 3rd PRG slot
+	LDA (PlayerAnimationPtr),Y
+	STA $32	;Load the low byte of the player animation pointer
+	INY
+	LDA (PlayerAnimationPtr),Y
+	STA $33	;Load the high byte of the player animation pointer
+	LDA PlayerAnimationFrame	;Load player's animation frame
+	ASL
+	ASL
+	TAY	;Get the pointer index for it
+	LDA ($32),Y
+	STA PlayerFramePtr	;Load the low byte of the player's mapping data pointer
+	INY	;Move to next byte of animation data
+	LDA ($32),Y
+	STA PlayerFramePtr+1	;Load the high byte of the player's mapping data pointer
+	INY	;Move to next byte of animation data
+	LDA ($32),Y
+	BPL bra4_A1B1	;Check bit 7. If it's cleared, treat this byte like a frame length byte and branch.
+	AND #$7F
+	STA PlayerAnimationFrame	;If bit 7 is set, clear it and use the resulting value as the animation loop point.
+	JMP PlayerAnimationSub	;Continue looping animation
 bra4_A1B1:
-	STA $18
+	STA $18	;Store the animation frame length
 	RTS
 sub4_A1B4:
 	LDY #$00	;Clear Y index
 	LDA #$24
 	STA M90_PRG2	;Load animation bank into 3rd PRG slot
-	LDA (PlayerFramePCLow),Y
+	LDA (PlayerFramePtr),Y
 	AND #$3F	;Remove attribute bits
 	STA PlayerWidth	;Load player sprite width
-	LDA (PlayerFramePCLow),Y
+	LDA (PlayerFramePtr),Y
 	AND #$C0
 	STA PlayerSpriteAttributes	;get attributes from width mapping
 	INY
-	LDA (PlayerFramePCLow),Y
+	LDA (PlayerFramePtr),Y
 	STA PlayerHeight	;load/store player sprite height
 	INY
-	LDA (PlayerFramePCLow),Y
+	LDA (PlayerFramePtr),Y
 	ASL
 	TAX	;Get attribute pointer for the sprite's CHR bank
 	LDA #$2F
@@ -320,14 +319,14 @@ sub4_A1B4:
 	BNE bra4_A208	;branch
 	LDA PlayerSprXPos
 	SEC
-	SBC (PlayerFramePCLow),Y	;subtract x position by mapping offset
+	SBC (PlayerFramePtr),Y	;subtract x position by mapping offset
 	STA PlayerSprXPosOfs		;set it as offset
 	LDA #$00
 	SBC #$00
 	STA $20
 	JMP loc4_A218
 bra4_A208:
-	LDA (PlayerFramePCLow),Y
+	LDA (PlayerFramePtr),Y
 	SEC
 	SBC #$08			;subtract loaded offset by 8
 	CLC
@@ -686,7 +685,7 @@ bra4_A45F:
 	LDY $40
 	LDA #$24
 	STA M90_PRG2
-	LDA (PlayerFramePCLow),Y
+	LDA (PlayerFramePtr),Y
 	CMP #$FF
 	BEQ bra4_A4A8
 	ORA $24
@@ -727,7 +726,7 @@ loc4_A4B2:
 	LDY #$02
 	LDA #$24
 	STA M90_PRG2
-	LDA (PlayerFramePCLow),Y
+	LDA (PlayerFramePtr),Y
 	LDY Player1YoshiStatus
 	BEQ bra4_A4CA
 	LDY #$01
@@ -1060,12 +1059,12 @@ ofs_A616:
 	.byte $FF
 	.byte $FF
 	.byte $FF
-	.byte $64
-	.byte $65
+	.byte PlayerColXScreen
+	.byte PlayerColXPos
 	.byte $FF
 	.byte $FF
-	.byte $66
-	.byte $67
+	.byte PlayerColYScreen
+	.byte PlayerColYPos
 	.byte $FF
 	.byte $FF
 	.byte $54
@@ -1076,12 +1075,12 @@ ofs_A616:
 	.byte $FF
 	.byte $FF
 	.byte $FF
-	.byte $65
-	.byte $64
+	.byte PlayerColXPos
+	.byte PlayerColXScreen
 	.byte $FF
 	.byte $FF
-	.byte $67
-	.byte $66
+	.byte PlayerColYPos
+	.byte PlayerColYScreen
 	.byte $FF
 	.byte $FF
 	.byte $55
@@ -1486,12 +1485,12 @@ ofs_A79A:
 	.byte $63
 	.byte $FF
 	.byte $FF
-	.byte $64
-	.byte $65
+	.byte PlayerColXScreen
+	.byte PlayerColXPos
 	.byte $FF
 	.byte $FF
-	.byte $66
-	.byte $67
+	.byte PlayerColYScreen
+	.byte PlayerColYPos
 	.byte $FF
 	.byte $FF
 	.byte $61
@@ -1502,12 +1501,12 @@ ofs_A79A:
 	.byte $62
 	.byte $FF
 	.byte $FF
-	.byte $65
-	.byte $64
+	.byte PlayerColXPos
+	.byte PlayerColXScreen
 	.byte $FF
 	.byte $FF
-	.byte $67
-	.byte $66
+	.byte PlayerColYPos
+	.byte PlayerColYScreen
 	.byte $FF
 	.byte $FF
 	.byte $FF
@@ -2260,7 +2259,7 @@ tbl4_AC41:
 ofs_AC4B:
 	.db $5D
 	.db $AC
-	.db $65
+	.db PlayerColXPos
 	.db $AC
 	.db $6D
 	.db $AC
@@ -2611,30 +2610,30 @@ tbl4_AE6A:
 	.word pnt_AF92
 PAct_Idle:
 	LDA PlayerYSpeed
-	BNE FallRoutine	;Branch if player is moving vertically
+	BNE PlayerIdleFallChk	;Branch if player is moving vertically
 	LDA PlayerMovement
 	AND #$04
-	BNE bra4_AEAF_RTS	;Make sure the player isn't moving up
+	BNE PAct_IdleDone	;Make sure the player isn't moving up
 	LDA ButtonsHeld
-	BNE bra4_AEA3	;Branch if any button is held
+	BNE PAct_IdleChecks	;Branch if any button is held
 	STA PlayerAction	;Make the player stand still if none are held
-bra4_AEA3:
-	JSR LookupDuckRoutine
-	JSR PlayerWalkRoutine
-	JSR SwimHoldRoutine
-	JSR ShootFireball
-bra4_AEAF_RTS:
+PAct_IdleChecks:
+	JSR LookUpDuckRoutine	;Check for ducking and looking up
+	JSR PlayerWalkRoutine	;Check for walking
+	JSR SwimHoldRoutine	;Check for swimming
+	JSR ShootFireball	;Check for shooting fireballs
+PAct_IdleDone:
 	RTS
-FallRoutine:
+PlayerIdleFallChk:
 	LDA PlayerMovement
 	AND #$04
-	BNE bra4_AEAF_RTS	;Branch if the player is already moving up
+	BNE PAct_IdleDone	;Branch if the player is already moving up
 	LDA #$0A
 	STA PlayerAction	;Trigger the "falling" action
 	RTS
 PAct_Duck:
 	LDA PlayerYSpeed
-	BNE bra4_AEDA	;Branch if the player is moving vertically
+	BNE PlayerDuckFallChk	;Branch if the player is moving vertically
 	LDA PlayerMovement	;Continue if they aren't
 	AND #$04
 	BNE PAct_DuckDone	;Branch if the player is moving up
@@ -2644,12 +2643,12 @@ PAct_Duck:
 	LDA #$00
 	STA PlayerAction	;If not, set action to standing still
 bra4_AED0:
-	JSR LookupDuckRoutine
+	JSR LookUpDuckRoutine
 	JSR SwimHoldRoutine
 	JSR ShootFireball
 PAct_DuckDone:
 	RTS
-bra4_AEDA:
+PlayerDuckFallChk:
 	LDA PlayerMovement
 	AND #$04
 	BNE PAct_DuckDone	;If player not moving up,
@@ -2657,13 +2656,13 @@ bra4_AEDA:
 	STA PlayerAction	;Set action to falling
 	RTS
 PAct_Walk:
-	JSR FallingActionChk	;Make sure player is on solid ground
+	JSR PlayerWalkFallRout	;Make sure player is on solid ground
 	LDA PlayerXSpeed
 	BNE bra4_AEEE
 	STA PlayerAction	;Make the player stop when their horizontal speed reaches 0
 bra4_AEEE:
 	JSR PlayerWalkRoutine
-	JSR PlayerWalkRoutine2
+	JSR PlayerRunRoutine
 	JSR SwimHoldRoutine
 	JSR ShootFireball
 	LDA ButtonsHeld
@@ -2674,26 +2673,26 @@ bra4_AEEE:
 bra4_AF05_RTS:
 	RTS
 PAct_Run:
-	JSR FallingActionChk	;Make sure player is on solid ground
+	JSR PlayerWalkFallRout	;Make sure the player is on solid ground
 	LDA PlayerXSpeed
 	BNE bra4_AF0F
 	STA PlayerAction	;Make the player stop when their horizontal speed reaches 0
 bra4_AF0F:
 	JSR PlayerWalkRoutine
-	JSR PlayerWalkRoutine2
+	JSR PlayerRunRoutine
 	JSR SwimHoldRoutine
 	JSR LeapRoutine
 	JSR ShootFireball
 	RTS
-FallingActionChk:
+PlayerWalkFallRout:
 	LDA PlayerYSpeed
 	CMP #$07
 	BCC FallingChkDone	;Make sure the player's Y speed is greater than 7
-	LDX #$0A	;Make the player fall
+	LDX #$0A	;If it is, make the player fall
 	LDA UnderwaterFlag
-	BEQ bra4_AF2E
+	BEQ SetPlayerFallingAct
 	LDX #$0B	;If underwater, make the player sink instead
-bra4_AF2E:
+SetPlayerFallingAct:
 	STX PlayerAction	;Store loaded action
 	PLA
 	PLA
@@ -3277,11 +3276,11 @@ loc4_B368:
 	STA PlayerMovement	;Store movement value
 	LDA PlayerXSpeed
 	CMP #$10
-	BCS SetWalking	;If X speed < 16,
+	BCS SetWalking	;Set walking speed at #$10, or 16 decimal
 	LDA PlayerXSpeed
 	CLC
 	ADC #$04
-	STA PlayerXSpeed	;Add 4 to the player's X speed
+	STA PlayerXSpeed	;Accelerate the player's speed by 4
 SetWalking:
 	LDA #$01
 	STA PlayerAction	;Trigger "walking" action
@@ -3409,7 +3408,7 @@ DoLowJump:
 	BEQ ExecuteJump
 	LDY #$28	;If down is held, set vertical speed to $28
 ExecuteJump:
-	STY PlayerYSpeed	;Store the jump length
+	STY PlayerYSpeed	;Store the jump height
 	LDA PlayerMovement
 	ORA #$04
 	STA PlayerMovement	;Set vertical movement upwards
@@ -3503,71 +3502,71 @@ LeapRoutine:
 	STA PlayerAction	;set action to leap
 LeapingDone:
 	RTS
-PlayerWalkRoutine2:		;(yes, there really are 2 of these. no idea why)
+PlayerRunRoutine:
 	LDA UnderwaterFlag
-	BNE bra4_B55B_RTS	;if not underwater,
+	BNE bra4_B55B_RTS	;Make sure the player isn't underwater
 	LDA ButtonsHeld
-	AND #$03	;if left or right aren't held,
-	BEQ bra4_B55C		;branch
-	LDA ButtonsHeld
+	AND #$03
+	BEQ bra4_B55C	;Make sure either left or right are held. If they aren't, skip ahead.
+	LDA ButtonsHeld	;Otherwise, continue
 	AND #buttonB
-	BNE bra4_B538		;branch if b is held
-	STA $0314
+	BNE SetupPlayerRun	;Switch to running if B is held
+	STA $0314	;Likely an unused or residual opcode. Does nothing.
 	LDA PlayerXSpeed
 	CMP #$10
-	BCS PlayerWalk2Done	;If X speed < 16,
+	BCS PlayerWalk2Done	;Limit the player's X speed to #$10, or 16 decimal
 	LDA PlayerXSpeed
 	CLC
 	ADC #$04
-	STA PlayerXSpeed	;add 4 to x speed
+	STA PlayerXSpeed	;Increment the player's X speed by 4
 PlayerWalk2Done:
 	RTS
 unused_func1:
 	LDA $0314	;unlogged
 	CMP #$30	;unlogged
-	BCS bra4_B538	;unlogged
+	BCS SetupPlayerRun	;unlogged
 	INC $0314	;unlogged
 	RTS	;unlogged
-bra4_B538:
-	LDA PlayerMovement
-	AND #$01
-	CMP $4F
-	BEQ bra4_B54A
-	STA $4F
+SetupPlayerRun:
+	LDA PlayerMovement	;Load the player's movement info
+	AND #$01	;Test the horizontal movement bit
+	CMP $4F	;Compare with the previous direction
+	BEQ DoPlayerRun	;If the player stays in the same direction, have them run like normal
+	STA $4F	;Otherwise, make the player turn around
 	LDA #$10
-	STA PlayerXSpeed
+	STA PlayerXSpeed	;Set their horizontal speed to #$10
 	LDA #$00
-	STA PlayerAction
-bra4_B54A:
+	STA PlayerAction	;Reset their action to standing still
+DoPlayerRun:
 	LDA #$02
-	STA PlayerAction
+	STA PlayerAction	;Set action to running
 	LDA PlayerXSpeed
 	CMP #$40
-	BCS bra4_B55B_RTS
+	BCS bra4_B55B_RTS	;Set running speed cap at #$40, or 64 decimal
 	LDA PlayerXSpeed
 	CLC
 	ADC #$04
-	STA PlayerXSpeed
+	STA PlayerXSpeed	;Accelerate the player's speed by 4 until the cap is reached
 bra4_B55B_RTS:
 	RTS
 bra4_B55C:
 	LDA PlayerXSpeed
-	BEQ bra4_B55B_RTS
+	BEQ bra4_B55B_RTS	;Make sure the player is moving horizontally
 	LDA #$01
-	STA PlayerAction
+	STA PlayerAction	;Set action to walking
 	RTS
-LookupDuckRoutine:
+LookUpDuckRoutine:
 	LDA ButtonsHeld
 	AND #dirDown
-	BEQ DoLookUp	;Branch if down not held
+	BEQ DoLookUp	;If down isn't held, move to the next check
 	LDA #$07
-	STA PlayerAction	;Set action to ducking
+	STA PlayerAction	;Otherwise, set the player's action to ducking
 DoLookUp:
 	LDA ButtonsHeld
 	AND #dirUp
 	BEQ LookupDuckDone	;Make sure up is held
 	LDA #$08
-	STA PlayerAction	;Set action to looking up
+	STA PlayerAction	;Set the player's action to looking up
 LookupDuckDone:
 	RTS
 ofs_B57C:
@@ -4379,7 +4378,7 @@ loc4_BB09:
 	LDA #$00
 	STA $26
 	LDY PlayerColYScreen
-	LDA $04FA,Y
+	LDA LevelTopScreenOffset,Y
 	CLC
 	ADC PlayerColXScreen
 	TAY
@@ -4387,8 +4386,8 @@ loc4_BB09:
 	STA M90_PRG0
 	LDA ($9F),Y
 	STA $9E
-	LDA ($8C),Y
-	STA $99
+	LDA (LevelScreenOrderPtr),Y
+	STA PlayerScreenID
 	TAY
 	AND #$1F
 	ORA #$80
@@ -4450,17 +4449,17 @@ bra4_BB80:
 loc4_BB95:
 	LDA #$00
 	STA $26
-	LDY $66
-	LDA $04FA,Y
+	LDY PlayerColYScreen
+	LDA LevelTopScreenOffset,Y
 	CLC
-	ADC $64
+	ADC PlayerColXScreen
 	TAY
 	LDA DataBank2
 	STA M90_PRG0
 	LDA ($9F),Y
 	STA $9E
-	LDA ($8C),Y
-	STA $99
+	LDA (LevelScreenOrderPtr),Y
+	STA PlayerScreenID
 	TAY
 	AND #$1F
 	ORA #$80
@@ -4564,7 +4563,7 @@ tbl4_BC2F:
 sub4_BC50:
 	LDY #$10
 	LDA PlayerPowerup	;if player is small,
-	BEQ bra4_BC59		;branch
+	BEQ bra4_BC59	;branch
 	LDY #$18
 bra4_BC59:
 	STY $2B
@@ -4586,21 +4585,21 @@ bra4_BC59:
 	STA PlayerColYPos
 	LDY PlayerYScreenDup
 	DEY
-	STY $66
+	STY PlayerColYScreen
 bra4_BC7E:
 	LDA #$00
 	STA $26
-	LDY $66
-	LDA $04FA,Y
+	LDY PlayerColYScreen	;Use the vertical screen of the player's collision as the index
+	LDA LevelTopScreenOffset,Y	;Determines what to offset the player's collision X screen number based on what vertical screen they're on. If they're on the top screen, offset it by #$12. If they're on the bottom, don't offset it.
 	CLC
-	ADC $64
-	TAY
+	ADC PlayerColXScreen	;Player X Screen + Offset = Absolute Screen
+	TAY	;Set the ordered screen value as the index
 	LDA DataBank2
-	STA M90_PRG0
-	LDA ($9F),Y
-	STA $9E
-	LDA ($8C),Y
-	STA $99
+	STA M90_PRG0	;Move the second bank into the first bank slot ($8000-$9FFF)
+	LDA ($9F),Y	;(This value is seemingly always zero anyways)
+	STA $9E	;(This is stored but doesn't seem to be used anywhere)
+	LDA (LevelScreenOrderPtr),Y	;Find the screen the player is on from the screen order table
+	STA PlayerScreenID	;Set the player's current screen ID
 	TAY
 	AND #$1F
 	ORA #$80
@@ -4617,7 +4616,7 @@ bra4_BCB2:
 	LDA $04F4
 	STA M90_PRG0
 loc4_BCB8:
-	LDY $65
+	LDY PlayerColXPos
 	LDA PlayerColYPos
 	AND #$F0
 	ORA tbl4_BD6D,Y
@@ -4640,17 +4639,17 @@ loc4_BCB8:
 	LDA PlayerColXScreen
 	SBC #$00
 	STA PlayerColXScreen
-	LDY $66
-	LDA $04FA,Y
+	LDY PlayerColYScreen
+	LDA LevelTopScreenOffset,Y
 	CLC
-	ADC $64
+	ADC PlayerColXScreen
 	TAY
 	LDA DataBank2
 	STA M90_PRG0
 	LDA ($9F),Y
 	STA $9E
-	LDA ($8C),Y
-	STA $99
+	LDA (LevelScreenOrderPtr),Y
+	STA PlayerScreenID
 	TAY
 	AND #$1F
 	ORA #$80
@@ -4667,7 +4666,7 @@ bra4_BD17:
 	LDA $04F4
 	STA M90_PRG0
 loc4_BD1D:
-	LDY $65
+	LDY PlayerColXPos
 	LDA PlayerColYPos
 	AND #$F0
 	ORA tbl4_BD6D,Y
@@ -4705,7 +4704,7 @@ bra4_BD62:
 	CLC
 	ADC #$10
 	STA PlayerYPosDup
-	LDY $66
+	LDY PlayerColYScreen
 	INY
 	STY PlayerYScreenDup
 bra4_BD6C_RTS:
@@ -4982,10 +4981,10 @@ bra4_BE84_RTS:
 	RTS
 bra4_BE83:
 	LDA #$27
-	STA M90_PRG3
-	JSR jmp_63_E000
+	STA M90_PRG3	;Swap bank 39 into the 4th PRG slot ($E000-$FFFF)
+	JSR jmp_39_E000
 	LDA #$3F
-	STA M90_PRG3	;load bank 63 into $E000
+	STA M90_PRG3	;Swap bank 63 into the 4th PRG slot($E000-$FFFF)
 	RTS
 sub4_BE91:
 	LDA $06DE
@@ -5060,7 +5059,7 @@ bra4_BEF1:
 	CLC
 	ADC #$10
 	STA PlayerColYPos
-	INC $66
+	INC PlayerColYScreen
 bra4_BF05_RTS:
 	RTS
 bra4_BF06:
@@ -5068,9 +5067,9 @@ bra4_BF06:
 	STA PlayerXSpeed
 	LDA PlayerXPosDup
 	SEC
-	SBC $65
+	SBC PlayerColXPos
 	LDA PlayerXScreenDup
-	SBC $64
+	SBC PlayerColXScreen
 	BMI bra4_BF25
 	LDA PlayerColXPos
 	CLC

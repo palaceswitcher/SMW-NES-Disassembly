@@ -3053,7 +3053,7 @@ loc3_B0CF:
 	RTS
 bra3_B0D8:
 	LDY $AB
-	LDA $04FA,Y
+	LDA LevelTopScreenOffset,Y
 	CLC
 	ADC $A9
 	TAY
@@ -3657,7 +3657,7 @@ bra3_B52A:
 bra3_B53C:
 loc3_B53C:
 	LDA ObjectYScreen,X
-	CMP $060E
+	CMP YScreenCount
 	BCC bra3_B556
 	LDA ObjectYPos,X
 	CMP #$E0
