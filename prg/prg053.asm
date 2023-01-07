@@ -2001,7 +2001,7 @@ obj_h06:
 bra7_8E5B:
 	LDA FrameCount
 	AND #$00
-	BNE bra7_8E66
+	BNE bra7_8E66 ;Set speed to once every frame
 	LDA #$06
 	JSR GetMovementData
 bra7_8E66:
@@ -2128,12 +2128,12 @@ sub7_8F50:
 	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	STA ObjXScreenDistance,X ;Player X Screen - Object X Screen = X Screen Distance
 	STA $28
-	BEQ bra7_8F6C
-	CMP #$FF
-	BEQ bra7_8F6C
-	JMP loc3_A6B5
+	BEQ bra7_8F6C ;Branch ahead if the player is on the same screen as the object
+	CMP #$FF ;Is the object 1 screen ahead of the player?
+	BEQ bra7_8F6C ;If so, branch ahead
+	JMP loc3_A6B5 ;Otherwise, jump
 bra7_8F6C:
 	LDA ObjectYPos,X
 	SEC

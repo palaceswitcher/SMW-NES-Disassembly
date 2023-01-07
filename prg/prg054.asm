@@ -1392,14 +1392,14 @@ bra3_A7BA_RTS:
 ptr_A7BB:
 	LDA $25
 	CMP #$07
-	BNE bra3_A7C4	;Branch if the object isn't edible?
+	BNE bra3_A7C4	;Branch if the object isn't edible(?)
 	JMP loc3_A852	;Otherwise, jump
 bra3_A7C4:
 	LDA YoshiTongueState
 	CMP #$01
-	BEQ bra3_A7CE	;Branch if there's no Yoshi?? (No idea, this is always 01 once you enter a level)
+	BEQ bra3_A7CE	;Branch if there's nothing on Yoshi's tongue already
 bra3_A7CB:
-	JMP loc3_A852	;Otherwise, jump
+	JMP loc3_A852	;If there is, jump
 bra3_A7CE:
 	LDX $A4	;Get index for current object
 	LDA PlayerState
@@ -1419,11 +1419,11 @@ bra3_A7E8:
 	CPX #$06
 	BCC bra3_A852	;Make sure the player is on the 6th or less frame of their current animation?
 	LDA tbl3_A85F,X
-	STA $32	;Store [unknown1] based off the player's animation frame
+	STA $32	;Store pointer based off the player's animation frame
 	LDY $A4	;Get index for current object
 	LDX ObjectSlot,Y
 	LDA tbl3_A87B,X
-	STA $36	;Load [unknown2] for object into memory
+	STA $36	;Load pointer for object into memory
 	LDA tbl3_A97B,X
 	STA $38
 	LDX $A4
@@ -3189,11 +3189,11 @@ loc3_B1D6:
 	RTS
 GetMovementData:
 	ASL
-	TAY
+	TAY ;Get pointer index
 	LDA tbl_51_E000,Y
 	STA $32
 	LDA tbl_51_E000+1,Y
-	STA $33
+	STA $33 ;Store movement data pointer in memory
 	JSR sub3_B1EF
 	LDA ObjectPRGBank
 	STA M90_PRG0

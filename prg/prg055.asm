@@ -1021,9 +1021,9 @@ ptr3_87FE:
 	AND #$03
 	BNE bra8_8809
 	LDA #$15
-	JSR jmp_54_B11D
+	JSR jmp_54_B11D ;Use movement data string #$15 (21 in decimal), which is used for the piranha plant
 bra8_8809:
-	JSR ptr_A7BB
+	JSR ptr_A7BB ;Handle edibility
 	RTS
 ptr3_880D:
 	LDA FrameCount
@@ -1576,36 +1576,36 @@ ofs_8B7F:
 	.byte $27
 	.byte $28
 obj_h24:
-	LDX $A4
+	LDX LowerObjSlot ;Get the index for the current object slot
 	LDA ObjectState,X
 	CMP #$04
 	BCS bra8_8BB3
 	LDA $062B
 	AND #$07
-	BNE bra8_8BB3
+	BNE bra8_8BB3 ;Increment the object's timer every 8th frame
 	LDA ObjectVariables,X
 	CMP #$1F
 	BCC bra8_8BA9
 	LDA #$00
-	STA ObjectVariables,X
+	STA ObjectVariables,X ;Clear the lotus timer if it goes above #$1F
 	BEQ bra8_8BB3
 bra8_8BA9:
 	CMP #$04
-	BNE bra8_8BB0
-	JSR sub8_8C53
+	BNE bra8_8BB0 ;Continue each time the timer is at 4. 8 frames x 32 ticks = 256 frames (~4s NTSC)
+	JSR SpawnLotusPollen ;Spawns 4 seeds when the timer is at 4
 bra8_8BB0:
-	INC ObjectVariables,X
+	INC ObjectVariables,X ;Increments lotus timer
 bra8_8BB3:
 	LDA #$06
 	STA $25
-	LDX $A4
+	LDX LowerObjSlot
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA ObjectXDistance,X
+	STA ObjectXDistance,X ;Calculate x distance from player
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	STA ObjXScreenDistance,X ;Calculate x screen distance from player
 	STA $28
 	BEQ bra8_8BD5
 	CMP #$FF
@@ -1673,34 +1673,38 @@ ptr3_8C48:
 	LDA #$00
 	STA ObjectState,X
 	RTS
-sub8_8C53:
-	LDY ObjectCount
+;-----
+	
+SpawnLotusPollen:
+	LDY ObjectCount ;Load index for starting pollen slot
 	INC ObjectCount
 	INC ObjectCount
 	INC ObjectCount
-	INC ObjectCount
+	INC ObjectCount ;Update the object count
 	LDA ObjectXPos,X
 	CLC
 	ADC #$0C
 	STA ObjectXPos,Y
 	STA ObjectXPos+1,Y
 	STA ObjectXPos+2,Y
-	STA ObjectXPos+3,Y
+	STA ObjectXPos+3,Y ;Spawn the pollen pellets 12 x pixels from the base of the lotus
 	LDA ObjectXScreen,X
-	STA ObjectXScreen,Y
+	STA ObjectXScreen,Y 
 	STA ObjectXScreen+1,Y
 	STA ObjectXScreen+2,Y
-	STA ObjectXScreen+3,Y
+	STA ObjectXScreen+3,Y ;Spawn them on the same screen as the lotus
 	LDA ObjectYPos,X
 	STA ObjectYPos,Y
 	STA ObjectYPos+1,Y
 	STA ObjectYPos+2,Y
-	STA ObjectYPos+3,Y
+	STA ObjectYPos+3,Y ;Spawn them on the same y position as the lotus
 	LDA ObjectYScreen,X
 	STA ObjectYScreen,Y
 	STA ObjectYScreen+1,Y
 	STA ObjectYScreen+2,Y
-	STA ObjectYScreen+3,Y
+	STA ObjectYScreen+3,Y ;Spawn them on the same y screen as the lotus
+	
+;This piece of code moves two object IDs up by two starting form 24, which spawns in each pollen pellet in order
 	LDA ObjectSlot,X
 	CLC
 	ADC #$02
@@ -1714,6 +1718,8 @@ sub8_8C53:
 	CLC
 	ADC #$02
 	STA ObjectSlot+3,Y
+;-----
+;Initialize the pellet variables
 	LDA #$00
 	STA ObjectState,Y
 	STA ObjectState+1,Y
@@ -1728,6 +1734,8 @@ sub8_8C53:
 	STA ObjectAction+2,Y
 	STA ObjectAction+3,Y
 	RTS
+;----- (Stops)
+
 	LDX $A4
 	LDA ObjectVariables,X
 	TAY
