@@ -252,6 +252,7 @@ ptr_8201:
 	LDA #$00
 	STA ObjectVariables,X	;Clear speed variables?
 	RTS
+ptr6_820E:
 	LDX $A4
 	LDA EnemyAnimFrame,X
 	ASL
@@ -804,8 +805,10 @@ bra8_8648:
 	STA ObjectState,X
 	JSR jmp_54_BCBE
 	RTS
+ptr6_8657:
 	LDY #$00
 	BEQ bra8_865F
+ptr6_865B:
 	LDX $A4
 	LDY #$03
 bra8_865F:
@@ -1060,6 +1063,7 @@ bra8_8836:
 	JSR jmp_54_BF74
 bra8_884A_RTS:
 	RTS
+ptr6_884B:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra8_8853
@@ -1183,6 +1187,7 @@ loc8_890B:
 	RTS	;unlogged
 bra8_8911_RTS:
 	RTS
+ptr6_8912:
 	RTS
 obj_h1E:
 	LDX $A4
@@ -1378,6 +1383,7 @@ bra8_8A96:
 	LDA #$81
 	STA ObjectVariables,X
 	RTS
+ptr6_8AA0:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra8_8AAB
@@ -1736,6 +1742,7 @@ SpawnLotusPollen:
 	RTS
 ;----- (Stops)
 
+ptr6_8CDE:
 	LDX $A4
 	LDA ObjectVariables,X
 	TAY
@@ -1929,6 +1936,7 @@ ptr3_8E0E:
 	STA ObjectSlot,X
 	STA ObjectState,X
 	RTS
+ptr6_8E17:
 	LDY #$00
 	LDA $062B
 	AND #$04
@@ -2125,6 +2133,7 @@ bra8_8F7C:
 	LDA #$82
 	STA ObjectVariables,X
 	RTS
+ptr6_8F90:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra8_8FA1
@@ -2336,6 +2345,7 @@ bra8_910B:
 	JSR jmp_54_A74D
 	JSR jmp_54_BF74
 	RTS
+ptr6_9118:
 	LDY #$00
 	LDX $A4
 	LDA ObjectState,X
@@ -2632,6 +2642,7 @@ tbl8_9345:
 	.byte $04
 	.byte $06
 	.byte $04
+ptr6_9349:
 	LDX $A4
 	LDA ObjectVariables,X
 	AND #$06
@@ -2969,6 +2980,7 @@ tbl8_95AC:
 	LDA #$01
 	STA $06E4
 	RTS
+ptr6_95B5:
 	LDX $A4
 	LDA $0641,X
 	CMP #$D0

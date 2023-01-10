@@ -823,6 +823,7 @@ loc4_8631:
 	STA ObjectVariables,X
 bra4_863F_RTS:
 	RTS
+ptr6_8640:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra4_864B
@@ -1017,6 +1018,7 @@ bra4_87B2:
 bra4_87C7_RTS:
 loc4_87C7_RTS:
 	RTS
+ptr6_87C8:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra4_87DC
@@ -1357,6 +1359,7 @@ loc4_8A55:
 	STA ObjectSlot,Y
 bra4_8A80_RTS:
 	RTS
+ptr6_8A81:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra4_8A8C
@@ -1491,6 +1494,7 @@ bra4_8B68:
 	JSR jmp_54_A6D4
 	JSR jmp_54_BEBC
 	JMP jmp_54_BF74
+ptr6_8B71:
 	LDY #$00
 	LDX $A4
 	LDA $062B
@@ -1721,6 +1725,7 @@ loc4_8D2D:
 	STA ObjectSlot,Y
 bra4_8D58_RTS:
 	RTS
+ptr6_8D59:
 	LDX $A4
 	LDY #$03
 	LDA ObjectState,X
@@ -1824,6 +1829,7 @@ tbl4_8E24:
 	.byte $31
 	.byte $31
 	.byte $20
+ptr6_8E28:
 	LDY #$00
 	LDX $A4
 	LDA $062B
@@ -2060,6 +2066,7 @@ loc4_8FEE:
 bra4_9019_RTS:
 loc4_9019_RTS:
 	RTS
+ptr6_901A:
 	LDX $A4
 	LDY #$0F
 	LDA ObjectVariables,X
@@ -2147,6 +2154,7 @@ loc4_90B8:
 bra4_90BE:
 	JSR jmp_54_BC3E
 	JMP jmp_54_BF74
+ptr6_90C4:
 	LDY #$00
 	STY $05F0
 	LDA #$02
@@ -2381,6 +2389,7 @@ ofs_9277:
 	.byte $13, $14, $15
 	.byte $22, $23, $24
 	.byte $32, $33, $34
+ptr6_9286:
 	RTS
 obj_hD6:
 	LDX $A4
@@ -3179,6 +3188,7 @@ bra4_9896:
 	STA ObjectVariables,X
 bra4_98B6_RTS:
 	RTS
+ptr6_98B7:
 	LDA FrameCount
 	AND #$01
 	BEQ bra4_98BE
@@ -3205,6 +3215,7 @@ tbl4_98DD:
 	.byte $02
 	.byte $04
 	.byte $02
+ptr6_98E1:
 	LDX $A4
 	LDA ObjectState,X
 	AND #$40
@@ -3226,6 +3237,7 @@ tbl4_98DD:
 bra4_990A:
 	TYA
 	JMP loc4_992B
+ptr6_990E:
 	LDX $A4
 	LDY #$00
 	LDA ObjectState,X

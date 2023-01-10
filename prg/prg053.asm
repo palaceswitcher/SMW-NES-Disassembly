@@ -2905,7 +2905,9 @@ bra7_9573:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
+ptr6_958D:
 	JSR sub7_9792
+ptr6_9590:
 	LDA #$01
 	ASL
 	TAX
@@ -3051,6 +3053,7 @@ ofs_9629:
 	.byte $30
 	.byte $31
 	.byte $32
+ptr6_9630:
 	LDX $A4
 	LDA ObjectState,X
 	AND #$1F
@@ -3081,6 +3084,7 @@ tbl7_9654:
 	.byte $04
 	.byte $04
 	.byte $04
+ptr6_9660:
 	LDY $A4
 	LDA ObjectState,Y
 	AND #$1F
@@ -3125,6 +3129,7 @@ bra7_96B0:
 	STY $05F0
 	JSR jmp_54_A118
 	RTS
+ptr6_96B7:
 	JSR sub7_9792
 	LDA #$09
 	ASL
@@ -3139,6 +3144,7 @@ bra7_96B0:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
+ptr6_96D5:
 	LDY $A4
 	LDA #$0B
 	ASL
@@ -3157,6 +3163,7 @@ bra7_96B0:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
+ptr7_96F8:
 	LDX $A4
 	LDA ObjectState,X
 	STA $05F0
@@ -3184,7 +3191,9 @@ HPodoboo:
 	.byte $0A
 	.byte $13
 	.byte $14
+ptr6_9724:
 	JSR sub7_9792
+ptr6_9727:
 	LDA #$00
 	ASL
 	TAX
@@ -3198,6 +3207,7 @@ HPodoboo:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
+ptr6_9742:
 	JSR sub7_9792
 	LDA #$05
 	ASL
@@ -3217,6 +3227,7 @@ bra7_9762:
 	STY $05F0
 	JSR jmp_54_A118
 	RTS
+ptr6_9769:
 	JSR sub7_9792
 	LDA #$08
 	ASL
@@ -3245,6 +3256,7 @@ sub7_9792:
 	PLA
 bra7_979B_RTS:
 	RTS
+ptr6_979C:
 	JSR sub7_9792
 	LDY #$07
 	LDA FrameCount
@@ -3265,6 +3277,7 @@ bra7_97A9:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
+ptr6_97C3:
 	LDA #$40
 	STA $05F0
 	LDA #$08
@@ -3548,6 +3561,7 @@ ptr5_99BF:
 	LDA #$00
 	STA ObjectVariables,X
 	RTS
+ptr6_99CD:
 	LDY #$00
 	LDA $062B
 	AND #$08
@@ -3593,6 +3607,7 @@ BuzzyWalk2:
 	.byte $21
 	.byte $28
 	.byte $29
+ptr6_9A11:
 	LDA #$02
 	ASL
 	TAX
@@ -3639,6 +3654,7 @@ bra7_9A61:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
+ptr6_9A68:
 	LDA $062B
 	AND #$0C
 	LSR
@@ -3855,6 +3871,7 @@ bra7_9BD5:
 	LDA #$01
 	STA CheckpointFlag,Y
 	RTS
+ptr6_9BDB:
 	LDA #$0F
 	ASL
 	TAX
@@ -3874,6 +3891,7 @@ ofs_9BF6:
 	.byte $90
 	.byte $3E
 	.byte $3E
+ptr6_9BFB:
 	LDA #$10
 	ASL
 	TAX

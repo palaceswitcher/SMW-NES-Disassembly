@@ -1,4 +1,5 @@
 ;disassembled with BZK 6502 Disassembler
+ptr7_8000:
 	LDA PlayerYScreen
 	BNE bra_8005
 	RTS
@@ -415,6 +416,7 @@ bra_8344:
 	PLA
 bra_8348_RTS:
 	RTS
+ptr6_8349:
 	LDA #$00
 	ASL
 	TAX
@@ -566,6 +568,7 @@ bra_8462:
 	LDA #$03
 	JSR sub3_BCD4
 	RTS
+ptr6_8475:
 	LDX $A4
 	LDA EnemyAnimFrame,X
 	AND #$3F
@@ -1120,6 +1123,7 @@ bra_88BC:
 	STA ObjectAction,X
 	JSR jmp_54_BCBE
 	RTS
+ptr6_88D1:
 	LDX $A4
 	LDA EnemyAnimFrame,X
 	AND #$3F
@@ -1138,6 +1142,7 @@ bra_88BC:
 	LDA #$20
 	STA $06E1
 	RTS
+ptr6_88F9:
 	LDX $A4
 	LDA EnemyAnimFrame,X
 	AND #$3F
@@ -2190,6 +2195,7 @@ bra_8EC2:
 	STA $06E2
 	STA $06E3
 	RTS
+ptr6_8ECE:
 	LDX $A4
 	LDA EnemyAnimFrame,X
 	AND #$3F
@@ -2263,6 +2269,7 @@ ofs_8F17:
 	.byte $E9
 	.byte $EA
 	.byte $FF
+ptr6_8F2E:
 	LDX $A4
 	LDA EnemyAnimFrame,X
 	AND #$3F

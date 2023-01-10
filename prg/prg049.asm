@@ -1,4 +1,5 @@
 ;disassembled by BZK 6502 Disassembler
+ptr6_8000:
 	LDA $062B
 	AND #$01
 	BEQ bra5_8008
@@ -29,6 +30,7 @@ bra5_802B:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
+ptr6_8039:
 	LDX $A4
 	LDA EnemyAnimFrame,X
 	AND #$3F
@@ -3294,6 +3296,7 @@ tbl5_9667:
 	.byte $3B
 	.byte $3B
 	.byte $3D
+ptr6_9670:
 	LDY #$00
 	LDX $A4
 	LDA $062B
@@ -3363,6 +3366,7 @@ WallUrchin2:
 	.byte $1A
 	.byte $1B
 	.byte $1C
+ptr6_96CB:
 	LDX $A4
 	LDA EnemyAnimFrame,X
 	ASL
@@ -3744,6 +3748,7 @@ tbl5_994A:
 	.byte $FF
 	.byte $0B
 	.byte $0D
+ptr6_9951:
 	LDX $A4
 	LDA EnemyAnimFrame,X
 	AND #$3F
@@ -4110,6 +4115,7 @@ bra5_9BE5:
 	RTS
 ptr10_9BEC:
 	RTS
+ptr6_9BED:
 	LDA #$04
 	ASL
 	TAX

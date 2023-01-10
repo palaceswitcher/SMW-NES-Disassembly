@@ -359,6 +359,7 @@ sub9_82AE:
 	JSR sub9_8000
 bra9_82C6_RTS:
 	RTS
+ptr6_82C7:
 	LDY #$08
 	LDX $A4
 	LDA ObjectVariables,X
@@ -644,6 +645,7 @@ sub9_84FE:
 	JSR sub9_8000
 bra9_8516_RTS:
 	RTS
+ptr6_8517:
 	LDA $062B
 	LSR
 	LSR
@@ -667,6 +669,7 @@ bra9_8516_RTS:
 	LDY #$C0
 bra9_8542:
 	STY $36
+ptr6_8544:
 	JSR jmp_54_A118
 	RTS
 tbl9_8548:
@@ -1111,6 +1114,7 @@ sub9_887E:
 	JSR sub9_8000
 bra9_8896_RTS:
 	RTS
+ptr6_8897:
 	LDX $A4
 	LDY #$08
 	LDA ObjectVariables,X
@@ -1149,6 +1153,7 @@ bra9_88DA:
 	STY $36
 	JSR jmp_54_A118
 	RTS
+ptr6_88E0:
 	LDX $A4
 	LDY #$00
 	LDA $062B
@@ -1356,6 +1361,7 @@ sub9_8A45:
 	JSR sub9_8000
 bra9_8A5D_RTS:
 	RTS
+ptr6_8A5E:
 	LDA #$00
 	STA $05F0
 	LDA $062B
@@ -1572,6 +1578,7 @@ bra9_8BB6:
 	LDA #$81
 	STA ObjectVariables,X
 	RTS
+ptr6_8BF1:
 	LDX $A4
 	LDA ObjectState,X
 	AND #$40
@@ -1790,6 +1797,7 @@ bra9_8D83:
 	STA $33
 	JSR sub3_B485
 	RTS
+ptr6_8D95:
 	LDY #$00
 	STY $05F0
 	LDX $A4
@@ -2002,6 +2010,7 @@ bra9_8F03:
 	STA $33
 	JSR sub3_B132
 	RTS
+ptr6_8F15:
 	LDX $A4
 	LDA ObjectState,X
 	AND #$40
@@ -2211,6 +2220,7 @@ bra9_907C:
 	JSR sub3_B132
 	JSR jmp_54_BC3E
 	JMP jmp_54_BF74
+ptr6_9093:
 	LDX $A4
 	LDA ObjectState,X
 	AND #$40
@@ -2466,6 +2476,7 @@ bra9_9267:
 	STA $33
 	JSR jmp_54_B39B
 	RTS
+ptr6_9279:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_9281
@@ -2658,6 +2669,7 @@ bra9_93A5:
 	STA $33
 	JSR sub3_B485
 	RTS
+ptr6_93B7:
 	LDY #$00
 	LDX $A4
 	LDA ObjectState,X
@@ -2847,6 +2859,7 @@ bra9_9507:
 	STA $33
 	JSR sub3_B132
 	RTS
+ptr6_9519:
 	LDX $A4
 	LDA ObjectState,X
 	AND #$40
@@ -2989,6 +3002,7 @@ bra9_962B:
 	JSR jmp_54_BEBC
 	JSR jmp_54_BF74
 	RTS
+ptr7_9632:
 	LDY #$00
 	LDX $A4
 	LDA #$00
@@ -3415,6 +3429,7 @@ bra9_9925:
 	STA ObjectSlot,Y
 bra9_997F_RTS:
 	RTS
+ptr6_9980:
 	LDX $A4
 	LDA ObjectVariables,X
 	CMP #$40
@@ -3572,6 +3587,7 @@ bra9_9A63:
 	STA ObjectVariables,X
 bra9_9A86_RTS:
 	RTS
+ptr7_9A87:
 	LDY #$00
 	LDX $A4
 	LDA ObjectState,X
@@ -3718,6 +3734,7 @@ bra9_9B62:
 	JSR sub3_B132
 	JSR jmp_54_BEBC
 	JMP jmp_54_BF74
+ptr6_9B79:
 	LDY #$00
 	LDX $A4
 	LDA FrameCount

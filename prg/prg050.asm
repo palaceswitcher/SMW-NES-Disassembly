@@ -184,6 +184,7 @@ bra6_8151:
 	LDA #$81
 	STA ObjectVariables,X
 	RTS
+ptr6_817B:
 	LDX $A4
 	LDA ObjectState,X
 	AND #$40
@@ -480,6 +481,7 @@ loc6_83A0:
 	STA ObjectVariables,X
 bra6_83B2_RTS:
 	RTS
+ptr6_83B3:
 	LDX $A4
 	LDA ObjectState,X
 	AND #$40
@@ -675,6 +677,7 @@ bra6_853D:
 	JSR jmp_54_BEBC
 	JSR jmp_54_BF74
 	RTS
+ptr7_8544:
 	LDY #$00
 	LDX $A4
 	LDA $062B
@@ -1037,6 +1040,7 @@ ptr6_87DC:
 	STA ObjectVariables,X
 bra6_87FD_RTS:
 	RTS
+ptr6_87FE:
 	LDY #$00
 	LDX $A4
 	LDA $062B
@@ -1788,6 +1792,7 @@ bra6_8C9B:
 	STA PlayerYSpeed
 bra6_8CA1_RTS:
 	RTS
+ptr6_8CA2:
 	LDX $A4
 	LDA EnemyAnimFrame,X
 	AND #$3F
@@ -1816,6 +1821,7 @@ bra6_8CC2:
 bra6_8CD7:
 	JSR sub_52_A2A8
 	RTS
+ptr6_8CDB:
 	LDA WorldNumber
 	CMP #$02
 	BNE bra6_8D12
@@ -3269,6 +3275,7 @@ ptr6_9358:
 	JSR jmp_54_BF74
 bra6_9363_RTS:
 	RTS
+ptr6_9364:
 	LDX $A4
 	LDA EnemyAnimFrame,X
 	AND #$3F
@@ -3286,6 +3293,7 @@ bra6_9363_RTS:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
+ptr6_9389:
 	LDX $A4
 	LDA EnemyAnimFrame,X
 	AND #$3F
@@ -4120,6 +4128,7 @@ sub6_9997:
 	LDA #$10
 bra6_99A6:
 	JMP loc3_B08D
+ptr6_99A9:
 	JSR sub6_99EF
 	LDX $A4
 	LDA EnemyAnimFrame,X
