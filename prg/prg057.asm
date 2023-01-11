@@ -1767,333 +1767,412 @@ ofs_A8BE:
 	.byte $FA
 	.byte $E7
 	.byte $FF
+;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+;CAPE CODE START
+;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-	
 jmp_57_A8DE:
 	LDA PlayerPowerup
-	CMP #$03
-	BCS bra4_A8E6
-	RTS
-bra4_A8E6:
+	CMP #$03 
+	BCS bra4_A8E6 ;if player has cape (static or moving), branch ahead
+	RTS ;else, end
+bra4_A8E6: ;if player has cape
 	LDA PlayerPowerupBuffer
-	BMI bra4_A909_RTS
-	BEQ bra4_A8F4
-	LDA FrameCount	;
-	AND #$04		;if 4 frames pass,
-	BEQ bra4_A90A	;branch
-	RTS
-bra4_A8F4:
-	LDA #$02
-	LDY InvincibilityTimer
-	BEQ bra4_A90A
-	CPY #$D0
-	BCC bra4_A905
-	CPY #$F6
-	BCS bra4_A90A
-	LDA #$01
+	BMI bra4_A909_RTS ;end if powerup buffer is negative (I think this prevents cape from appearing if the player is changing powerups)
+	BEQ bra4_A8F4 ;if it's 00, branch ahead 
+;else if it's positive but not 00	
+	LDA FrameCount	
+	AND #$04		;Mask framecount %00000100
+	BEQ bra4_A90A	;if 4 frames pass, branch ahead
+	RTS ;else end
+	
+bra4_A8F4:;if powerup buffer 00
+	LDA #$02 ;set bitmask to #$02
+	LDY InvincibilityTimer 
+	BEQ bra4_A90A ;if invincibility timer 00, go to pit check
+;If invincibility timer not 00
+	CPY #$D0 ;else compare timer to #$D0
+	BCC bra4_A905 ;if it's less than #$D0, branch ahead to frame check
+;else 
+	CPY #$F6 ;if Y >= #$D0, compare to #$F6
+	BCS bra4_A90A ;if Y >= to #$F6, branch to pit check
+;else
+	LDA #$01; else if Y < #$F6, set bitmask to #$01
+
 bra4_A905:
-	AND FrameCount
-	BEQ bra4_A90A
+	AND FrameCount ;mask #$02 or #$01 against the frame count
+	BEQ bra4_A90A ;branch to pit check when they match (1 or 2 frames pass)
 bra4_A909_RTS:
-	RTS
-bra4_A90A:
+	RTS ;if they don't match, end
+	
+bra4_A90A: 
 	LDA PlayerSprYPos		;
 	CMP #$E0		;if player goes below screen/pit,
-	BCS bra4_A93D_RTS		;stop
+	BCS bra4_A93D_RTS		;end
+;Else
 	LDY #$04		;load "cape moving" state into y reg
-	LDX PlayerAction+1		;load action into y index/reg
+	LDX PlayerAction+1		;load previous player action into X reg 
 	LDA Player1YoshiStatus	;
-	CMP #$01		;if player doesn't have yoshi,
-	BCC bra4_A929	;branch
-	LDA PlayerXSpeed		;if player has x speed,
-	BNE bra4_A923	;branch
-	LDA PlayerYSpeed		;if player has no y speed,
-	BEQ bra4_A929	;branch
-bra4_A923:
+	CMP #$01		;if player doesn't have yoshi (#$01= Yoshi with empty mouth)
+	BCC bra4_A929	;branch to load animation (essentially if it's equal to 00, why write it like that?)
+;Else if Player has Yoshi
+	LDA PlayerXSpeed		
+	BNE bra4_A923	;;if player has x speed, branch ahead
+	LDA PlayerYSpeed		;
+	BEQ bra4_A929	;if player has no y speed, branch ahead
+;if player has Y speed, coderoll	
+
+bra4_A923: ;if player has Yoshi 
 	LDA YoshiCapeAnimTable,X;load action from table
-	JMP loc4_A92C	;jump
-bra4_A929:
-	LDA CapeAnimTable,X
-loc4_A92C:
-	STA $34			;store loaded byte
-	BMI bra4_A936	;branch if a value above $7F is loaded
-	STY PlayerPowerup		;set cape to moving
-	JSR sub4_A14A	;jump
+	JMP loc4_A92C	;jump to store animation value
+	
+bra4_A929: ;if no Yoshi or Yoshi with no X speed or Y speed
+	LDA CapeAnimTable,X ;pick which cape animation to use
+
+loc4_A92C: 
+	STA $34			;store loaded animation value
+	BMI bra4_A936	;branch ahead if a value above $7F is loaded
+	STY PlayerPowerup		;else, set cape to moving (#$04 loaded earlier)
+	JSR sub4_A14A	;jump to sub (check if Yoshi present or player carrying objects)
+;coderoll on return
 bra4_A936:
-	LDY PlayerPowerup		;
+	LDY PlayerPowerup	;get player powerup
 	CPY #$04		;if cape is moving,
-	BEQ bra4_A93E	;branch
+	BEQ CapeAnimCyclePick	;branch to pick which animation cycle to use
 bra4_A93D_RTS:
-	RTS
-bra4_A93E:
-	LDA $34			;
+	RTS ;else if cape static, end
+	
+;****************************************************	
+;Pick cape animation cycle to use
+CapeAnimCyclePick: ;CapeAnimCyclePick; If cape is moving
+	LDA $34			;get cape animation frame (loaded from respective animation table)
 	AND #%00001111	;mask out upper 4 bits
 	BNE bra4_A947	;branch if not zero
-	JMP loc4_AB16	;jump
+	JMP loc4_AB16	;jump if it was (standing cape cycle code)
 bra4_A947:
 	CMP #$01		;if #$01 wasn't loaded,
 	BNE bra4_A94E	;branch
-	JMP loc4_AB3C	;jump
+	JMP loc4_AB3C	;jump if it was (jumping cape cycle code)
 bra4_A94E:
 	CMP #$02		;if #$02 wasn't loaded,
 	BNE bra4_A955	;branch
-	JMP loc4_AB70	;jump
+	JMP loc4_AB70	;jump if it was (set cape to static?? code)
 bra4_A955:
 	CMP #$03		;if #$03 wasn't loaded,
 	BNE bra4_A95C	;branch
-	JMP loc4_AB82	;jump
+	JMP loc4_AB82	;jump if it was (?? code)
 bra4_A95C:
 	CMP #$04		;if #$04 wasn't loaded,
 	BNE bra4_A963	;branch
-	JMP loc4_ABB0	;jump
-bra4_A963:
-	LDY $0627
-	LDA WalkCapeCycle,Y
-	JMP loc4_AB42
-loc4_A96C:
+	JMP loc4_ABB0	;jump if it was (?? code)
+bra4_A963: ;
+	LDY $0627 ;get cape frame picker for use as offset
+	LDA WalkCapeCycle,Y ;select frame from WalkCycle
+	JMP loc4_AB42 ;jump ahead (check if loaded value was positive like with the others)
+;****************************************************
+;(code returns to here from those above jumps using another jump)
+loc4_A96C: ; check for Yoshi 
 	LDX Player1YoshiStatus
-	BEQ bra4_A974
-	JMP loc4_AA45
-bra4_A974:
-	PHA
-	LDA PlayerPowerup
-	ASL
-	TAY
-	LDA tbl4_AC41,Y
-	STA $34
-	LDA tbl4_AC41+1,Y
-	STA $35
-	PLA
-	PHA
-	ASL
-	TAY
+	BEQ BuildCapeSprNoYoshi ;branch if no Yoshi
+	JMP BuildCapeSprYoshiVer ;else, jump to Yoshi segment
+;*********************************************************
+;If Player Doesn't Have Yoshi START here
+;;********************************************************	
+BuildCapeSprNoYoshi: ;if player doesn't have Yoshi
+	PHA ;push value from A to stack 
+	LDA PlayerPowerup 
+	ASL ; double player powerup (result should be 06 or 08 depending on cape state)
+	TAY ;transfer it to Y
+	LDA tbl4_AC41,Y ;this table has 5 identical entries, it simply points to the cape frame selection table   
+	STA $34 ;store the low byte
+	LDA tbl4_AC41+1,Y ;meaning this segment is probably redundant 
+	STA $35 ;store the high byte
+	
+	PLA ;get value from stack
+	PHA ;copy it back to the stack again
+	ASL ;double it
+	TAY ;transfer it to Y
+	LDA ($34),Y ;get cape mapping pointer from table the above section pointed to
+	STA $32 ;store low byte
+	INY ;advance to next byte of mapping pointer
 	LDA ($34),Y
-	STA $32
-	INY
-	LDA ($34),Y
-	STA $33
-	LDA #$00
-	STA $2E
-	PLA
-	TAY
-	LDA PlayerSprYPos
+	STA $33 ; ;store high byte
+;**************************************************
+;Position cape vertically
+;**************************************************
+	LDA #$00 
+	STA $2E ;clear $2E UNKNOWN use
+	PLA ;get value from stack again
+	TAY ;move it to Y	
+	LDA PlayerSprYPos  
 	SEC
-	SBC tbl4_AC0B,Y
-	LDX PlayerAction+1
+	SBC CapeVoffset,Y ;subtract value loaded from sprite Y position
+	LDX PlayerAction+1 ;Load previous player action 
 	CLC
-	ADC tbl4_ABF2,X
+	ADC CapeVoffset2,X  ;add secondary vertical offset??? to PlayerSprYPos (this table is mostly 00 except for one entry of 06)
+;As far as I can tell both tables affect vertical position, I'm guessing this is a weird way of fixing something
 	LDX PlayerPowerup
-	BNE bra4_A9AB
-	SEC	;unlogged
-	SBC #$03	;unlogged
-bra4_A9AB:
-	STA PlayerMetaspriteVAlign
+	BNE bra4_A9AB ;branch if the player has a powerup (?? not exactly sure the purpose of this)
+	SEC	;unlogged ;if they dont,
+	SBC #$03	;unlogged  ;subtract 3 from the vertical offset
+;**************************************************	
+;Position Cape Horizontally
+;**************************************************
+bra4_A9AB: ;
+	STA PlayerMetaspriteVAlign ;This is being reused for the capes alignment since this is calculated per frame for both
 	LDA PlayerMovement
-	EOR PlayerSpriteAttributes
-	AND #$40
-	BNE bra4_A9D6
+	EOR PlayerSpriteAttributes 
+	AND #$40 ;determine mirror direction 
+	BNE bra4_A9D6 ;if player isn't H mirrored (facing left), branch
+;else player is mirrored (facing right)
 	LDA PlayerSprXPos
 	CLC
-	ADC tbl4_AC1D,Y
-	STA PlayerMetaspriteHAlign
-loc4_A9BD:
-	LDA $2E
+	ADC tbl4_AC1D,Y ;calculate cape X position
+	STA PlayerMetaspriteHAlign ;store it 
+;**************************************************
+loc4_A9BD: ;If player H mirrored, (facing right) 
+	LDA $2E ;mapping byte offset
 	CLC
-	ADC #$04
-	TAY
-	LDX $3C ;OAM tracker byte
-	LDA ($32),Y
-	CMP #$FF
-	BEQ bra4_AA31
-	AND #$3F
-	STA $0201,X
-	PHA
-	LDA #$40
-	JMP loc4_A9F0
-bra4_A9D6:
+	ADC #$04 ;add 4 (select mirrored mappings)
+	TAY ;move it to Y
+	LDX $3C ;put OAM tracker byte into X
+	LDA ($32),Y ;get tile ID from mapping
+	CMP #$FF 
+	BEQ bra4_AA31 ;branch if it's a null tile
+;Load tile ID
+	AND #$3F ;else strip attributes
+	STA $0201,X ;store tile ID 
+	PHA ;push masked tile ID to stack
+	LDA #$40 ;set mirroring for tile (mirrored)
+	JMP loc4_A9F0 ;go to Cape OAM manager 
+;**************************************************
+bra4_A9D6: ;If player not H mirrored (facing left)
 	LDA PlayerSprXPos
 	CLC
-	ADC tbl4_AC26,Y
-	STA PlayerMetaspriteHAlign
-bra4_A9DE:
-	LDY $2E
+	ADC tbl4_AC26,Y ;calculate cape X position
+	STA PlayerMetaspriteHAlign ;store it 
+;coderoll into load tile ID
+;**************************************************
+;Cape object OAM manager
+;**************************************************
+bra4_A9DE: ;get unmirrored tile ID (code loops back to here but starts ahead of it)
+	LDY $2E ;Unknown
 	LDX $3C ;OAM tracker byte
-	LDA ($32),Y
+	LDA ($32),Y ;get tile ID from mapping
 	CMP #$FF
-	BEQ bra4_AA31
-	AND #$3F
-	STA $0201,X
-	PHA
-	LDA #$00
-loc4_A9F0:
-	STA $38
-	LDA SpriteBank1
-	ASL
-	TAY
+	BEQ bra4_AA31 ;branch if it's a null tile
+	AND #$3F ;else strip attributes
+	STA $0201,X ;store tile ID
+	PHA ;push masked tile ID to stack
+	LDA #$00 ;set mirroing for tile (unmirrored)
+;**************************************************
+;
+;**************************************************
+loc4_A9F0: ;START HERE for cape OAM manager
+	STA $38 ;Store mirroring for tile in temp byte
+;Select attribute bank 	
+	LDA SpriteBank1	
+	ASL ;double bank ID
+	TAY ;move it to Y
 	LDA #$2F
-	STA M90_PRG2
+	STA M90_PRG2 ;put the attributes bank into the 2nd PRG slot
 	LDA tbl_47_C000,Y
-	STA $34
+	STA $34 ;lowbyte of attribute pointer
 	LDA tbl_47_C000+1,Y
-	STA $35
-	PLA
-	TAY
-	LDA ($34),Y
-	ORA $38
-	ORA $06E0
-	STA $0202,X
+	STA $35 ;highbyte of attribute pointer 
+	PLA ;retrive masked tile ID from stack
+	TAY ;move it to Y
+	LDA ($34),Y ;load attributes 
+;probably to do with mirroring, not sure what these values contain
+	ORA $38 ; use tile mirroring temp byte as bitmask to set some bits (00/40 bitmask: 1=set 0=ignore)
+	ORA $06E0 ; use ?? as bitmask to set some bits
+	STA $0202,X ;store attributes
+	
 	LDA #$24
-	STA M90_PRG2
-	LDY $2E
+	STA M90_PRG2 ;load the player animation bank into the 2nd PRG slot
+	LDY $2E  ;put $2E into Y
 	LDA PlayerMetaspriteHAlign
 	CLC
-	ADC tbl4_AC03,Y
-	STA $0203,X
+	ADC tbl4_AC03,Y ;add column spacing to horizontal alignment
+	STA $0203,X ;store X position
+	
 	LDA PlayerMetaspriteVAlign
 	CLC
-	ADC tbl4_AC07,Y
-	STA SpriteMem,X
+	ADC tbl4_AC07,Y ;Add row spacing to vertical offset 
+	STA SpriteMem,X ;store Y position
 	TXA
 	CLC
 	ADC #$04
-	STA $3C ;add one tile to OAM tracker byte
+	STA $3C ;add one tile to the OAM tracker byte
+	
 bra4_AA31:
-	INC $2E
+	INC $2E ;add one to $2E (loop counter for routine)
 	LDA $2E
-	CMP #$04
-	BCS bra4_AA44_RTS
+	CMP #$04 
+	BCS bra4_AA44_RTS ;if $2E >= #$04, branch to end 
 	LDA PlayerMovement
 	EOR PlayerSpriteAttributes
-	AND #$40
-	BNE bra4_A9DE
-	JMP loc4_A9BD
+	AND #$40 ;determine sprite mirror
+	BNE bra4_A9DE ;if not mirrored, branch to load unmirrored tile ID
+	JMP loc4_A9BD ;if mirrored branch back to mirrored section
 bra4_AA44_RTS:
 	RTS
-loc4_AA45:
-	PHA
-	LDA PlayerPowerup
-	ASL
-	TAY
-	LDA tbl4_AC41,Y
-	STA $34
-	LDA tbl4_AC41+1,Y
-	STA $35
-	PLA
-	PHA
-	ASL
-	TAY
+;*********************************************************
+;If Player has Yoshi START here
+;;********************************************************
+;most of this literally matches the code for if you don't have Yoshi so that's some grade A space efficiency right there
+BuildCapeSprYoshiVer: ;If the player has Yoshi 
+	PHA ;push value from A to stack 
+	LDA PlayerPowerup 
+	ASL ; double player powerup (result should be 06 or 08 depending on cape state)
+	TAY ;transfer it to Y
+	LDA tbl4_AC41,Y ;this table has 5 identical entries, it simply points to the cape frame selection table   
+	STA $34 ;store the low byte
+	LDA tbl4_AC41+1,Y ;meaning this segment is probably redundant 
+	STA $35 ;store the high byte
+	
+	PLA ;get value from stack
+	PHA ;copy it back to the stack again
+	ASL ;double it
+	TAY ;transfer it to Y
+	LDA ($34),Y ;get cape mapping pointer from table the above section pointed to
+	STA $32 ;store low byte
+	INY ;advance to next byte of mapping pointer
 	LDA ($34),Y
-	STA $32
-	INY
-	LDA ($34),Y
-	STA $33
+	STA $33 ; ;store high byte
+;**************************************************
+;Position cape vertically
+;**************************************************	
 	LDA #$00
-	STA $2E
-	PLA
-	TAY
+	STA $2E ;clear $2E UNKNOWN use
+	PLA ;retrive value from the stack again
+	TAY ;move it to Y
 	LDA PlayerSprYPos
 	SEC
-	SBC tbl4_AC14,Y
-	LDX PlayerAction+1
+	SBC CapeVoffsetYoshi,Y ;subtract Y offset 
+	LDX PlayerAction+1 ;get previous player action
 	CLC
-	ADC tbl4_ABF2,X
+	ADC CapeVoffset2,X ;add secondary vertical offset? to PlayerSprYPos (this table is mostly 00 except for one entry of 06)
 	LDX PlayerPowerup
-	BNE bra4_AA7C
-	SEC	;unlogged
-	SBC #$03	;unlogged
+	BNE bra4_AA7C ;branch if the player has a powerup (?? not exactly sure the purpose of this)
+	SEC	;unlogged ;if they dont,
+	SBC #$03	;unlogged  ;subtract 3 from the vertical offset	
+;**************************************************	
+;Position Cape Horizontally
+;**************************************************
 bra4_AA7C:
-	STA PlayerMetaspriteVAlign
+	STA PlayerMetaspriteVAlign ;This is being reused for the capes alignment since this is calculated per frame for both
 	LDA PlayerMovement
 	EOR PlayerSpriteAttributes
-	AND #$40
-	BNE bra4_AAA7
+	AND #$40 ;determine mirror direction 
+	BNE bra4_AAA7 ;if player isn't H mirrored (facing left), branch
+;else player is mirrored (facing right)
 	LDA PlayerSprXPos
 	CLC
-	ADC tbl4_AC2F,Y
-	STA PlayerMetaspriteHAlign
-loc4_AA8E:
-	LDA $2E
+	ADC tbl4_AC2F,Y ;calculate cape X position
+	STA PlayerMetaspriteHAlign ;store it 
+;**************************************************	
+loc4_AA8E: ;If player H mirrored, (facing right) 
+	LDA $2E ;mapping byte offset
 	CLC
-	ADC #$04
-	TAY
-	LDX $3C
-	LDA ($32),Y
-	CMP #$FF
-	BEQ bra4_AB02
-	AND #$3F
-	STA $0201,X
-	PHA
-	LDA #$40
-	JMP loc4_AAC1
-bra4_AAA7:
+	ADC #$04 ;add 4 (select mirrored mappings)
+	TAY ;move it to Y
+	LDX $3C ;put OAM tracker byte into X
+	LDA ($32),Y ;get tile ID from mapping
+	CMP #$FF 
+	BEQ bra4_AB02  ;branch if it's a null tile
+;Load tile ID	
+	AND #$3F ;else strip attributes
+	STA $0201,X ;store tile ID 
+	PHA ;push masked tile ID to stack
+	LDA #$40 ;set mirroring for tile (mirrored)
+	JMP loc4_AAC1 ;go to Yoshi Cape OAM manager
+;**************************************************
+bra4_AAA7: ;If player not H mirrored (facing left)
 	LDA PlayerSprXPos
 	CLC
-	ADC tbl4_AC38,Y
-	STA PlayerMetaspriteHAlign
-bra4_AAAF:
-	LDY $2E
-	LDX $3C
-	LDA ($32),Y
+	ADC tbl4_AC38,Y ;calculate cape X position
+	STA PlayerMetaspriteHAlign ;store it 
+;coderoll into load tile ID
+;**************************************************
+;Cape object OAM manager (Yoshi Version)
+;**************************************************	
+bra4_AAAF: ;get unmirrored tile ID (code loops back to here but starts ahead of it)
+	LDY $2E  ;Unknown
+	LDX $3C ;OAM tracker byte
+	LDA ($32),Y ;get tile ID from mapping
 	CMP #$FF
-	BEQ bra4_AB02
-	AND #$3F
-	STA $0201,X
-	PHA
-	LDA #$00
-loc4_AAC1:
-	STA $38
-	LDA SpriteBank1
-	ASL
-	TAY
+	BEQ bra4_AB02 ;branch if it's a null tile
+	AND #$3F ;else strip attributes
+	STA $0201,X ;store tile ID
+	PHA ;push masked tile ID to stack
+	LDA #$00 ;set mirroing for tile (unmirrored)
+;**************************************************
+;
+;**************************************************
+loc4_AAC1: ;START HERE for cape OAM manager
+	STA $38 ;Store mirroring for tile in temp byte
+;Select attribute bank 	
+	LDA SpriteBank1	
+	ASL ;double bank ID
+	TAY ;move it to Y
 	LDA #$2F
-	STA M90_PRG2
+	STA M90_PRG2 ;put the attributes bank into the 2nd PRG slot
 	LDA tbl_47_C000,Y
-	STA $34
+	STA $34 ;lowbyte of attribute pointer
 	LDA tbl_47_C000+1,Y
-	STA $35
-	PLA
-	TAY
-	LDA ($34),Y
-	ORA $38
-	ORA $06E0
-	STA $0202,X
+	STA $35 ;highbyte of attribute pointer 
+	PLA ;retrive masked tile ID from stack
+	TAY ;move it to Y
+	LDA ($34),Y ;load attributes 
+;probably to do with mirroring, not sure what these values contain
+	ORA $38 ; use tile mirroring temp byte as bitmask to set some bits (00/40 bitmask: 1=set 0=ignore)
+	ORA $06E0 ; use ?? as bitmask to set some bits
+	STA $0202,X ;store attributes
+	
 	LDA #$24
-	STA M90_PRG2
-	LDY $2E
+	STA M90_PRG2 ;load the player animation bank into the 2nd PRG slot
+	LDY $2E  ;put $2E into Y
 	LDA PlayerMetaspriteHAlign
 	CLC
-	ADC tbl4_AC03,Y
-	STA $0203,X
+	ADC tbl4_AC03,Y ;add column spacing to horizontal alignment
+	STA $0203,X ;store X position
+	
 	LDA PlayerMetaspriteVAlign
 	CLC
-	ADC tbl4_AC07,Y
-	STA SpriteMem,X
+	ADC tbl4_AC07,Y ;Add row spacing to vertical offset 
+	STA SpriteMem,X ;store Y position
 	TXA
 	CLC
 	ADC #$04
-	STA $3C
+	STA $3C ;add one tile to the OAM tracker byte
+	
 bra4_AB02:
-	INC $2E
+	INC $2E ;add one to $2E (loop counter for routine)
 	LDA $2E
-	CMP #$04
-	BCS bra4_AB15_RTS
+	CMP #$04 
+	BCS bra4_AB15_RTS ;if $2E >= #$04, branch to end 
 	LDA PlayerMovement
 	EOR PlayerSpriteAttributes
-	AND #$40
-	BNE bra4_AAAF
-	JMP loc4_AA8E
+	AND #$40 ;determine sprite mirror
+	BNE bra4_AAAF ;if not mirrored, branch to load unmirrored tile ID
+	JMP loc4_AA8E ;if mirrored branch back to mirrored section
 bra4_AB15_RTS:
 	RTS
+;******************************************************************
+;Standing cape cycle code
 loc4_AB16:
-	LDY $0627
-	LDA StandingCapeCycle,Y
-	BPL bra4_AB2D
+	LDY $0627 ;put current cape frame offset into Y
+	LDA StandingCapeCycle,Y ;Use it to pick a frame of animation
+	BPL bra4_AB2D ;branch to jump if it's positive
+;Else if negative 
 	LDA #$00
-	STA $0627
+	STA $0627 ;Clear frame offset
 	LDA #$03
-	STA PlayerPowerup
-	JSR sub4_A14A
-	LDA #$08
+	STA PlayerPowerup ;set cape to static 
+	JSR sub4_A14A ;Select if Yoshi is present or if carrying object
+	LDA #$08 ;load #$08 on return
 bra4_AB2D:
-	JMP loc4_A96C
+	JMP loc4_A96C ;jump to check for Yoshi
 StandingCapeCycle:
 	.db $07
 	.db $07
@@ -2106,21 +2185,25 @@ StandingCapeCycle:
 	.db $08
 	.db $08
 	.db $08
-	.db $80
+	.db $80 ;end of mapping (negative)
+	
+;******************************************************************
+;Jumping cape cycle code
 loc4_AB3C:
-	LDY $0627
-	LDA JumpCapeCycle,Y
+	LDY $0627 ;put current cape frame offset into Y
+	LDA JumpCapeCycle,Y ;Use it to pick a frame of animation
 loc4_AB42:
-	BPL bra4_AB52
+	BPL bra4_AB52 ;branch to jump if it's positive
+;Else if negative (end of mapping)
 	LDA #$00
-	STA $0627
+	STA $0627 ;Clear frame offset
 	LDA PlayerXSpeed
-	BNE bra4_AB50
-	STA $0628
+	BNE bra4_AB50 ;branch if the player has X speed
+	STA $0628 ;if they don't, store X speed at $0628 (clear it)
 bra4_AB50:
-	LDA #$00
+	LDA #$00 ;clear A
 bra4_AB52:
-	JMP loc4_A96C
+	JMP loc4_A96C ;jump to check for Yoshi 
 JumpCapeCycle:
 	.db $08
 	.db $08
@@ -2133,7 +2216,8 @@ JumpCapeCycle:
 	.db $00
 	.db $00
 	.db $80
-WalkCapeCycle:
+;******************************************************************	
+WalkCapeCycle: 
 	.db $08
 	.db $08
 	.db $08
@@ -2150,33 +2234,35 @@ WalkCapeCycle:
 	.db $00
 	.db $00
 	.db $80
+;******************************************************************	
 loc4_AB70:
 	LDA #$00
-	STA $0627
+	STA $0627 ;clear cape frame picker
 	LDA #$03
-	STA PlayerPowerup
-	JSR sub4_A14A
-	LDA #$00
-	JMP loc4_A96C
+	STA PlayerPowerup ;set cape to static
+	JSR sub4_A14A ;;Select if Yoshi is present or if carrying object
+	LDA #$00 ;clear A
+	JMP loc4_A96C ;jump to check for Yoshi 
 loc4_AB82:
-	LDY $0627
+	LDY $0627 ;Put frame picker into Y
 	LDA PlayerMovement
-	AND #$04
+	AND #$04 
 	BEQ bra4_AB8E
 	JMP loc4_AB3C
 bra4_AB8E:
-	LDA FallingCapeCycle,Y
-	BPL bra4_ABA3
+	LDA FallingCapeCycle,Y ;Pick a frame of animation
+	BPL bra4_ABA3 ;if it's positive branch to jump
+;Else if it's negative (end of mapping)
 	LDA #$00
-	STA $0627
+	STA $0627 ;clear frame picker
 	LDA PlayerYSpeed
-	BNE bra4_ABA1
-	LDA #$01
-	STA $0628
+	BNE bra4_ABA1 ;branch if the player has Y speed
+	LDA #$01 ;else,
+	STA $0628 ;set $0628 to #$01
 bra4_ABA1:
-	LDA #$03
+	LDA #$03 ;set A to 03
 bra4_ABA3:
-	JMP loc4_A96C
+	JMP loc4_A96C ;jump to check for Yoshi 
 FallingCapeCycle:
 	.db $04
 	.db $04
@@ -2188,13 +2274,14 @@ FallingCapeCycle:
 	.db $03
 	.db $03
 	.db $80
+;******************************************************************	
 loc4_ABB0:
 	LDA #$00
-	STA $0627
-	LDY #$02
-	LDA $062B
-	AND #$01
-	BNE bra4_ABC0
+	STA $0627 ;clear frame picker
+	LDY #$02 ;set Y to 02
+	LDA $062B ;load UNKNOWN 
+	AND #$01 
+	BNE bra4_ABC0 
 	LDY #$07
 bra4_ABC0:
 	LDA PlayerYSpeed
@@ -2205,7 +2292,7 @@ bra4_ABC0:
 	LDY #$06
 bra4_ABCC:
 	TYA
-	JMP loc4_A96C
+	JMP loc4_A96C ;jump to check for Yoshi 
 CapeAnimTable:
 	.db $80	;standing
 	.db $05	;walking
@@ -2242,7 +2329,7 @@ YoshiCapeAnimTable:
 	.db $01	;yoshi tongue out (while moving)
 	.db $01	;flying
 	.db $80	;victory pose
-tbl4_ABF2:
+CapeVoffset2:
 	.db $00
 	.db $00
 	.db $00
@@ -2260,17 +2347,17 @@ tbl4_ABF2:
 	.db $00
 	.db $00
 	.db $00
-tbl4_AC03:
-	.db $00
-	.db $08
-	.db $00
-	.db $08
-tbl4_AC07:
-	.db $00
-	.db $00
-	.db $08
-	.db $08
-tbl4_AC0B:
+tbl4_AC03: ;Cape column spacing table
+	.db $00 ;tile 1
+	.db $08 ;tile 2
+	.db $00 ;tile 3
+	.db $08 ;tile 4
+tbl4_AC07: ;Cape row spacing table
+	.db $00 ;tile 1
+	.db $00 ;tile 2
+	.db $08 ;tile 3
+	.db $08 ;tile 4
+CapeVoffset: ;Cape vertical alignment table (Mario only)
 	.db $11
 	.db $19
 	.db $11
@@ -2280,7 +2367,7 @@ tbl4_AC0B:
 	.db $1E
 	.db $19
 	.db $17
-tbl4_AC14:
+CapeVoffsetYoshi: ;Cape vertical alignment table (Mario riding Yoshi)
 	.db $1B
 	.db $23
 	.db $1B
@@ -2290,7 +2377,7 @@ tbl4_AC14:
 	.db $29
 	.db $23
 	.db $21
-tbl4_AC1D:
+tbl4_AC1D: ;Cape X position offset for face right
 	.db $EE
 	.db $EE
 	.db $EE
@@ -2300,7 +2387,7 @@ tbl4_AC1D:
 	.db $EF
 	.db $EE
 	.db $EE
-tbl4_AC26:
+tbl4_AC26: ;Cape X position offset for face left
 	.db $02
 	.db $02
 	.db $02
@@ -2330,103 +2417,114 @@ tbl4_AC38:
 	.db $03
 	.db $06
 	.db $06
-tbl4_AC41:
-	.word ofs_AC4B
-	.word ofs_AC4B
-	.word ofs_AC4B
-	.word ofs_AC4B
-	.word ofs_AC4B
-ofs_AC4B:
-	.word ofs_AC5D
-	.word ofs_AC65
-	.word ofs_AC6D
-	.word ofs_AC75
-	.word ofs_AC7D
-	.word ofs_AC85
-	.word ofs_AC8D
-	.word ofs_AC95
-	.word ofs_AC9D
-ofs_AC5D:
+tbl4_AC41: ;(Redundant?) table that just points to the cape mapping selection table
+	.word CapeMappingTbl
+	.word CapeMappingTbl
+	.word CapeMappingTbl
+	.word CapeMappingTbl
+	.word CapeMappingTbl
+CapeMappingTbl: ;Cape mapping selection table 1
+	.word CapeFlap1
+	.word CapeFlap2
+	.word CapeFlap3
+	.word CapeFall1
+	.word CapeFall2
+	.word CapeFall3
+	.word CapeFall4
+	.word CapeFlap4 ;also settle 1
+	.word CapeSettle2
+;Cape mappings 
+CapeFlap1: ;flapping 1
 	.db $01
 	.db $02
 	.db $03
 	.db $04
+;Mirrored version	
 	.db $02
 	.db $01
 	.db $04
 	.db $03
-ofs_AC65:
+CapeFlap2: ;flapping 2
 	.db $05
 	.db $06
 	.db $07
 	.db $08
+;Mirrored version	
 	.db $06
 	.db $05
 	.db $08
 	.db $07
-ofs_AC6D:
+CapeFlap3: ;flapping 3
 	.db $0B
 	.db $0C
 	.db $FF
 	.db $FF
+;Mirrored version	
 	.db $0C
 	.db $0B
 	.db $FF
 	.db $FF
-ofs_AC75:
+CapeFall1: ;Falling 1
 	.db $0D
 	.db $0E
 	.db $0F
 	.db $10
+;Mirrored version	
 	.db $0E
 	.db $0D
 	.db $10
 	.db $0F
-ofs_AC7D:
+CapeFall2: ;Falling 2
 	.db $11
 	.db $12
 	.db $13
 	.db $14
+;Mirrored version	
 	.db $12
 	.db $11
 	.db $14
 	.db $13
-ofs_AC85:
+CapeFall3: ;Falling 3
 	.db $15
 	.db $16
 	.db $17
 	.db $18
+;Mirrored version	
 	.db $16
 	.db $15
 	.db $18
 	.db $17
-ofs_AC8D:
+CapeFall4: ;Falling 4
 	.db $19
 	.db $1A
 	.db $1B
 	.db $1C
+;Mirrored version	
 	.db $1A
 	.db $19
 	.db $1C
 	.db $1B
-ofs_AC95:
+CapeFlap4: ;flapping 4 (frame 1 of settling)
 	.db $FF
 	.db $1D
 	.db $09
 	.db $0A
+;Mirrored version	
 	.db $1D
 	.db $FF
 	.db $0A
 	.db $09
-ofs_AC9D:
+CapeSettle2: ;settle frame 2
 	.db $20
 	.db $FF
 	.db $1E
 	.db $1F
+;Mirrored version		
 	.db $FF
 	.db $20
 	.db $1F
 	.db $1E
+;***************************************
 jmp_57_ACA5: 
 	LDA PlayerState
 	CMP #$09
