@@ -17,7 +17,11 @@ jmp_63_E000:
 	ORA VerticalScrollFlag
 	STA PPUControlMirror
 	STA PPUCtrl
-	JSR sub3_F6E0
+	
+	JSR sub3_F6E0 ;Set interupt mode to on
+;UPDATE CHR ;Seems to have an effect when the game lags too much	
+;I think this is a bandaid fix for the interrupt being mistimed by lag
+;On return from interrupt
 	LDA BGBank1
 	STA M90_BG_CHR0	;Update 1st BG bank
 	LDA BGBank2
@@ -46,19 +50,20 @@ NMI_E05C:
 NMI_E05F:
 	JMP loc3_EFE0
 NMI_E062:
-	PHP
-	PHA
-	TXA
-	PHA
+	PHP ;Push CPU status to stack 
+	PHA ;Push A to stack
+	TXA 
+	PHA ;Push X to stack
 	TYA
-	PHA
+	PHA ;Push Y to stack
+	
 	LDA ColumnFinishFlag
 	BEQ bra3_E0E8
-	LDA PPUStatus
+	LDA PPUStatus ;Clear PPU address data latch
 	LDA PPUControlMirror
 	ORA #$04
 	STA PPUCtrl
-	LDA PPUStatus
+	LDA PPUStatus ;Clear PPU address data latch
 	LDA ColumnFinishFlag
 	STA PPUAddr
 	LDA NextBGColumn
@@ -70,7 +75,7 @@ bra3_E088:
 	INX
 	CPX #$1E
 	BCC bra3_E088
-	LDA PPUStatus
+	LDA PPUStatus ;Clear PPU address data latch
 	LDA ColumnFinishFlag
 	ORA #$08
 	STA PPUAddr
@@ -82,7 +87,7 @@ bra3_E0A4:
 	INX
 	CPX #$38
 	BCC bra3_E0A4
-	LDA PPUStatus
+	LDA PPUStatus ;Clear PPU address data latch
 	LDA PPUControlMirror
 	AND #$FB
 	STA PPUCtrl
@@ -90,7 +95,7 @@ bra3_E0A4:
 	BEQ bra3_E0E1
 	LDX #$00
 bra3_E0C0:
-	LDA PPUStatus
+	LDA PPUStatus ;Clear PPU address data latch
 	LDA PalAssignPtrHi,X
 	STA PPUAddr
 	LDA PalAssignPtrLo,X
@@ -116,34 +121,40 @@ bra3_E0F0:
 	LDA $03E4
 	BEQ bra3_E0F8
 	JSR sub3_F5CE
-bra3_E0F8:
+	
+bra3_E0F8: ;OAM writing for in level sprites
 	LDA #$00
 	STA PPUOAMAddr
-	LDA #$02
-	STA OAMDMA
+	LDA #$02 ; this is the start address $0200
+	STA OAMDMA ;set OAM to copy sprite all data from $0200-$02FF
+	
 	LDA PPUMaskMirror
 	STA PPUMask
 	LDA ScrollXPos
-	STA PPUScroll
+	STA PPUScroll ;update X scrolling
+;Screen shake flag check and timer
 	LDY $03
 	LDA $0633
-	BEQ bra3_E12F
-	CMP #$30
-	BCC bra3_E11E
-	LDA #$00
-	STA $0633
-	BEQ bra3_E12F
-bra3_E11E:
-	INC $0633
+	BEQ bra3_E12F ;if screenshake timer == 00, skip shake
+	CMP #$30 ;else compare #$30
+	BCC bra3_E11E ;if $0633 less than #$30 but > #$00, branch (creates timer for shake)
+;If exceed #$30	
+	LDA #$00 
+	STA $0633 ;clear screenshake timer
+	BEQ bra3_E12F ;skip ahead, always
+	
+bra3_E11E: ;go here if screenshake timer less than #$30 (48 decimal)
+	INC $0633 ;add 1 to screenshake timer
 	LDA FrameCount
 	AND #$04
-	BNE bra3_E12F
+	BNE bra3_E12F ;if not match,  branch to shake screen
 	CPY #$EC
-	BCS bra3_E12F
+	BCS bra3_E12F ;if Framecount >= #$EC, branch
 	INY
 	INY
 	INY
-	INY
+	INY ;Increment Y by 4 
+	
 bra3_E12F:
 	STY PPUScroll
 	LDA PPUControlMirror
@@ -152,6 +163,7 @@ bra3_E12F:
 	STA PPUControlMirror
 	STA PPUCtrl
 	JSR sub3_F6E0
+;Update BG and sprite banks	
 	LDA BGBank1
 	STA M90_BG_CHR0
 	LDA BGBank2
@@ -169,7 +181,7 @@ bra3_E12F:
 	LDA SpriteBank4
 	STA M90_SP_CHR3
 	JSR sub3_F7DA
-	JSR sub3_F19F
+	JSR JoypadReading
 	LDA #$3A
 	STA M90_PRG0
 	LDA #$3B
@@ -186,6 +198,7 @@ bra3_E12F:
 	PLA
 	PLP
 	RTI
+	
 Reset:
 	SEI
 	CLD	;Standard 2A03/6502 initialization
@@ -692,7 +705,7 @@ sub3_E5B6:
 	BCC bra3_E5CE	;Branch if the loaded tick count isn't reached
 bra3_E5CB:
 	PLA
-	PLA	;Pull accumulator from stack twice? (Not sure what this is for)
+	PLA	;Pull accumulator from stack twice (Not sure what this is for)
 	RTS
 bra3_E5CE:
 	LDA #$00
@@ -2228,7 +2241,7 @@ bra3_EF2B:
 	LDA PPUUpdatePtr
 	BEQ bra3_EF33
 	JSR sub3_F20F
-bra3_EF33:
+bra3_EF33: ;OAM writing for title screen and map sprites
 	LDA #$00
 	STA PPUOAMAddr
 	LDA #$02
@@ -2257,6 +2270,7 @@ bra3_EF67:
 	STA PPUScroll
 loc3_EF73:
 	JSR sub3_F6E0
+;Update CHR for title logo and map screen	
 	LDX BGBank1
 	STX M90_BG_CHR0	;Update 1st BG bank
 	INX	;Load next CHR bank
@@ -2273,7 +2287,7 @@ loc3_EF73:
 	STA M90_SP_CHR2	;Update 3rd sprite bank
 	LDA SpriteBank4
 	STA M90_SP_CHR3	;Update 4th sprite bank
-	JSR sub3_F19F	;Jump
+	JSR JoypadReading	;Jump
 	INC SecFrameCount	;Increment second frame counter
 	LDA SecFrameCount
 	CMP #$3C	;If its below 60 frames,
@@ -2482,7 +2496,7 @@ pnt2_F0F8:
 	STA PPUScroll	;Set the horizontal scroll to both axes
 	STA M90_IRQ_DISABLE	;Disable mapper IRQ
 	RTS	;Done
-pnt2_F127:
+pnt2_F127: ;HUD ON MAP SCREEN
 	LDA PPUStatus
 	LDA #$2B	;Load upper byte of PPU address
 	STA PPUAddr
@@ -2524,17 +2538,22 @@ bra3_F15B:
 	LDA ($34),Y
 	STA $33
 	JMP ($32)
+;*****************************************************
+;Clear sprites from screen during gameplay
+;This must happen before sprites are sent to $0200
+;*****************************************************
 sub3_F176:
-	LDA #$F8
-	LDX #$00
-bra3_F17A:
-	STA SpriteMem,X
+	LDA #$F8 ;Y position (offscreen)
+	LDX #$00 ;storage offset
+bra3_F17A: ;In level sprite clearing 
+	STA SpriteMem,X ;store at sprite Y position
 	INX
 	INX
 	INX
-	INX
-	BNE bra3_F17A
-	RTS
+	INX ;increment X until on next Y pos storage byte
+	BNE bra3_F17A ;loop until X overflows to 00  
+	RTS 
+;******************************************************
 sub3_F184:
 	ASL
 	ASL
@@ -2552,7 +2571,10 @@ bra3_F195:
 	DEY
 	BPL bra3_F195
 	RTS
-sub3_F19F:
+;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
+;CONTROLLER READING
+;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
+JoypadReading:
 	JSR sub3_F1C9
 	LDX #$00	;Set the X index for the first controller
 	JSR ControllerLogicSub
@@ -2610,6 +2632,9 @@ bra3_F1F3:
 	ORA Controller2Input
 	STA ButtonsHeld,X
 	RTS
+;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
+;END OF CONTROLLER READING
+;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
 sub3_F20F:
 	LDA PPUUpdatePtr
 	BEQ bra3_F258
@@ -2665,14 +2690,17 @@ bra3_F270:
 	ADC $00E4
 	STA $00E4
 	RTS
+;-=-=-=-===-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-==-=-=-=-==-=-=-=-=-
+;UPDATE HUD CONTENTS 
+;-=-=-=-=-=-=-=-=-=-==-=-=-=-==-=-=-=-=-==-=-=-=-=-=-=-==-=-=-==---		
 sub3_F27F:
 	LDA InterruptMode
 	CMP #$04
-	BEQ bra3_F29D		;Bracnh if using the interrupt for the Bowser fight
+	BEQ bra3_F29D		;Branch to RTS if using the interrupt for the Bowser fight
 	LDA PPUUpdatePtr
 	BNE bra3_F29D	;Stop if the upper byte of the PPU pointer is empty
 	LDA HUDUpdate	;Load current HUD update state
-	ASL
+	ASL ;multiply it by 2
 	TAY	;Get pointer for it
 	LDA tbl3_F29E,Y
 	STA $32	;Load lower byte of pointer
@@ -2681,6 +2709,7 @@ sub3_F27F:
 	JMP ($32)	;Jump to loaded pointer
 bra3_F29D:
 	RTS
+	
 tbl3_F29E:
 	.word pnt2_F2A8
 	.word pnt2_F2D6
@@ -2707,10 +2736,11 @@ bra3_F2B7:
 bra3_F2CB:
 	LDA HUDUpdateTiles,Y	;Load currently updated HUD tile
 	STA PPUDataBuffer,X
-	INY
-	DEX
-	BPL bra3_F2CB
+	INY ;advance to next HUD tile
+	DEX 
+	BPL bra3_F2CB ;repeat on plus
 	RTS
+	
 pnt2_F2D6:
 	JSR sub3_F388
 	INC HUDUpdate
@@ -2720,24 +2750,25 @@ bra3_F2E0:
 	STA PPUDataBuffer,X
 	DEX
 	BPL bra3_F2E0
-	LDX #$00
+	LDX #$00 ;set index for player 1 
 	LDA CurrentPlayer
-	BEQ bra3_F2EF
-	LDX #$01
+	BEQ bra3_F2EF ;if player 1, branch ahead
+	LDX #$01 ;else set index for player 2
 bra3_F2EF:
 	LDA Player1YoshiCoins,X
-	STA $25
-	BEQ bra3_F302
-	LDY #$00
+	STA $25 ;backup the player's Yoshi coins
+	BEQ bra3_F302  ;If Yoshi coin counter is empty, go to RTS
+	LDY #$00 ;else clear Y
 	LDA #$06
 bra3_F2FA:
 	STA PPUDataBuffer,Y
-	INY
-	CPY $25
-	BCC bra3_F2FA
-bra3_F302:
+	INY ;increment Y
+	CPY $25 ;Compare it to Yoshi Coins backup
+	BCC bra3_F2FA ;If Y < $25, loop
+bra3_F302: ;else
 	RTS
-pnt2_F303:
+	
+pnt2_F303: 
 	JSR sub3_F388
 	INC HUDUpdate
 	LDA LevelTimerLo
@@ -2756,14 +2787,16 @@ bra3_F31E:
 	DEX
 	BPL bra3_F31E
 	RTS
+	
 pnt2_F329:
 	JSR sub3_F388
 	INC HUDUpdate	;Update HUD
-	LDX #$00
-	LDA CurrentPlayer
-	BEQ bra3_F338
-	LDX #$02
-bra3_F338:
+	LDX #$00 ;set index for player 1
+	LDA CurrentPlayer ;get current player
+	BEQ bra3_F338 ;branch if it's player 1
+	LDX #$02 ;else set index to #$02 (?? not sure what #$02 would point to, possibly an error)
+	
+bra3_F338: 
 	LDA #$0B
 	STA $26
 	LDA P1Score,X
@@ -2805,11 +2838,12 @@ bra3_F37D:
 	DEX
 	BPL bra3_F37D
 	RTS
+	
 sub3_F388:
-	LDA HUDUpdate
+	LDA HUDUpdate ;get HUD update state
 	ASL
-	ASL
-	TAX	;Get pointer for current HUD update stage
+	ASL ;multiply it by 4
+	TAX	;Get pointer for current HUD update stage  (selects on screen HUD value to update)
 	LDA tbl3_F3A7,X
 	STA PPUUpdatePtr
 	LDA tbl3_F3A7+1,X
@@ -2820,27 +2854,27 @@ sub3_F388:
 	STA PPUWriteCount	;Load tile length
 	RTS
 tbl3_F3A7:
-;Life Counter
+;Life Counter (00)
 	.byte $2B
 	.byte $84	;PPU Address 
 	.byte $01
 	.byte $02	;Tile Length
-;Yoshi Coins
+;Yoshi Coins (04)
 	.byte $2B
 	.byte $68
 	.byte $01
 	.byte $05
-;Timer
+;Timer (08)
 	.byte $2B
 	.byte $94
 	.byte $01
 	.byte $03
-;Score
+;Score (12)
 	.byte $2B
 	.byte $98
 	.byte $01
 	.byte $05
-;Coin Counter
+;Coin Counter (16)
 	.byte $2B
 	.byte $7C
 	.byte $01
@@ -2906,27 +2940,29 @@ bra3_F40E:
  	CMP #$04
  	BEQ bra3_F442
  	LDA CurrentPlayer
- 	BNE bra3_F436
-bra3_F42A:
+ 	BNE bra3_F436 ;if player 2, branch
+bra3_F42A: ;if player 1
  	LDA tbl3_F44E,X
  	STA PPUData
  	INX
  	CPX #$80
  	BCC bra3_F42A
 	RTS
-bra3_F436:
+	
+bra3_F436:  ;If player 2, go here
 	LDA tbl3_F4CE,X
  	STA PPUData
  	INX
  	CPX #$80
  	BCC bra3_F436
  	RTS
-bra3_F442:
- 	LDA tbl3_F54E,X
- 	STA PPUData
-	INX
+	
+bra3_F442: ;not sure, it just loads nothing from a table and clears PPU data over and over
+ 	LDA tbl3_F54E,X ;this entire table is just #$00 and it's massive
+ 	STA PPUData ;clear PPU data
+	INX ;Increment X
  	CPX #$80
- 	BCC bra3_F442
+ 	BCC bra3_F442 ;Loop if X < #$80
  	RTS
 tbl3_F44E:
 	.byte $00
@@ -3502,6 +3538,9 @@ tbl3_F720:
 	.word pnt2_F0F8
 	.word pnt2_F127
 	.word pnt2_F152
+;*******************************
+;HUD MODE CHECKS 
+;*******************************	
 pnt2_F734:
 	LDA HUDDisplay
 	BNE bra3_F73C	;Branch if HUD BG isn't updated at all (not sure about these)
@@ -3602,6 +3641,9 @@ sub3_F7DA:
 	BNE bra3_F7EA	;branch
 	JSR sub3_F90B	;If it is, continue and jump
 	RTS
+;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+; BG BANK ANIMATION
+;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-		
 bra3_F7EA:
 	LDA DataBank2
 	CMP #$23
@@ -3674,10 +3716,13 @@ AnimBank4:
 	.byte $C5
 	.byte $C6
 	.byte $C7
+;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+;END OF BG BANK ANIMATION
+;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-	
 loc3_F85A:
 	LDA #$1D
 	STA M90_IRQ_DISABLE
-	STA M90_IRQ_ENABLE	;Disable then enable interrupts (why??)
+	STA M90_IRQ_ENABLE	;Disable then enable interrupts (removing this causes the HUD to flicker, I assume this is an IRQ reset of some sort)
 	STA M90_IRQ_COUNTER	;Set counter (line?) to $1D
 	LDX #$0C	;Make code loop 12 times
 bra3_F867:
@@ -3687,27 +3732,27 @@ bra3_F867:
 	LDY #$40
 	STX PPUAddr
 	STY PPUAddr	;Set PPU address to $2B40
-	LDA PPUStatus
+	LDA PPUStatus ;clear PPU address data latch 
 	LDA #$00
-	STA PPUScroll	;Set horizontal scroll for HUD
+	STA PPUScroll	;Set horizontal scroll for HUD (seems to position the item box, not the HUD itself)
 	LDA #$C4
 	STA PPUScroll	;Set vertical scroll for HUD
 	INC HUDDisplay
 	LDA #$EC
-	STA M90_BG_CHR0		;Swap in 1st HUD bank
+	STA M90_BG_CHR0		;Swap in 1st HUD bank (contains text and icons)
 	LDA #$ED
-	STA M90_BG_CHR1		;Swap in 2nd HUD bank
+	STA M90_BG_CHR1		;Swap in 2nd HUD bank (nothing to do with HUD, just random level tiles)
 	LDA #$EE
-	STA M90_BG_CHR2		;Swap in 3rd HUD bank
+	STA M90_BG_CHR2		;Swap in 3rd HUD bank (contains item box graphic)
 	LDA #$EF
-	STA M90_BG_CHR3		;Swap in 4th HUD bank
+	STA M90_BG_CHR3		;Swap in 4th HUD bank (nothing to do with HUD, just random level tiles)
 	RTS
 loc3_F899:
 	STA M90_IRQ_DISABLE
 	LDX #$0C
 bra3_F89E:
 	DEX
-	BNE bra3_F89E
+	BNE bra3_F89E 
 	LDA #$10
 	STA PPUMask
 	LDA #$00
