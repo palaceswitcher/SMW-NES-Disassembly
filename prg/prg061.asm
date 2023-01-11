@@ -1939,7 +1939,7 @@ sub6_A828:
 	TAX
 	LDA tbl6_A848,X
 	STA $DC
-	LDA tbl6_A849,X
+	LDA tbl6_A848+1,X
 	STA $DD
 	LDA LevelNumber
 	ASL
@@ -1955,7 +1955,6 @@ bra6_A847_RTS:
 	RTS
 tbl6_A848:
 	.byte $5A
-tbl6_A849:
 	.byte $A8
 	.byte $9A
 	.byte $A8
@@ -4314,7 +4313,7 @@ sub6_B4B1:
 	STA $36
 	AND #$F0
 	STA $37
-	LDA tbl6_B51D,Y
+	LDA tbl6_B51C+1,Y
 	STA $38
 	AND #$F0
 	STA $39
@@ -4359,7 +4358,6 @@ bra6_B4DE:
 	RTS
 tbl6_B51C:
 	.byte $FF
-tbl6_B51D:
 	.byte $AA
 	.byte $00
 	.byte $AA

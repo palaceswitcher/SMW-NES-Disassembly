@@ -827,20 +827,20 @@ bra7_8529:
 	JSR jmp_54_BD3D
 obj_h02:
 	LDA #$02
-	STA $25
-	LDX $A4
+	STA $25 ;Configure this to stay in Yoshi's mouth when eaten 
+	LDX $A4 ;Get the index for the object's slot
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA ObjectXDistance,X
+	STA ObjectXDistance,X ;Calculate the x distance from the player
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	STA ObjXScreenDistance,X ;Calculate the x screen distance from the player
 	STA $28
-	BEQ bra7_854E
-	CMP #$FF
-	BEQ bra7_854E
-	JMP loc3_A6B5
+	BEQ bra7_854E ;Branch if the player and the object are on the same screen
+	CMP #$FF ;If not, check if the object is one screen behind the player
+	BEQ bra7_854E ;If so, branch
+	JMP loc3_A6B5 ;Otherwise, jump
 bra7_854E:
 	LDA ObjectYPos,X
 	SEC
@@ -873,18 +873,18 @@ bra7_857F:
 bra7_8590:
 loc7_8590:
 	LDA FreezeFlag
-	BEQ bra7_8596
-	RTS
+	BEQ bra7_8596 ;Branch if the game isn't freezed
+	RTS ;Otherwise, stop
 bra7_8596:
 	LDA ObjectState,X
-	AND #$1F
+	AND #$1F ;Mask out lower 5 bits
 	ASL
-	TAY
+	TAY ;Get pointer index for status
 	LDA tbl7_85AA,Y
 	STA $32
 	LDA tbl7_85AA+1,Y
-	STA $33
-	JMP ($32)
+	STA $33 ;Load pointer into memory
+	JMP ($32) ;Jump to pointer
 tbl7_85AA:
 	.word ptr_A7BB
 	.word ptr_AA7B
@@ -2922,111 +2922,89 @@ ptr6_9590:
 	JSR jmp_54_A118
 	RTS
 tbl7_95AB:
-	.word ofs_95CD
-	.word ofs_95D4
-	.word ofs_95DB
-	.word ofs_95E9
-	.word ofs_95F0
-	.word ofs_95F7
+	.word SprMap_Mushroom
+	.word SprMap_PSwitch
+	.word SprMap_KoopaShell1
+	.word SprMap_Spring
+	.word SprMap_SpringPressed
+	.word SprMap_FireFlower
 	.word ofs_95FE
-	.word ofs_9605
-	.word ofs_960C
-	.word ofs_9613
+	.word SprMap_Star
+	.word SprMap_Feather
+	.word SprMap_1UP
 	.word ofs_961A
 	.word ofs_961E
-	.word ofs_95E2
+	.word SprMap_KoopaShell2
 	.word ofs_9622
 	.word ofs_9629
 	.word ofs_9BF6
 	.word ofs_9C21
-ofs_95CD:
+SprMap_Mushroom:
+	.byte $02 ;Tile Width
+	.byte $02 ;Tile Height
+	.byte $90 ;CHR Bank ID
+	.byte $01, $02
+	.byte $0B, $0C
+SprMap_PSwitch:
 	.byte $02
 	.byte $02
 	.byte $90
-	.byte $01
-	.byte $02
-	.byte $0B
-	.byte $0C
-ofs_95D4:
+	.byte $03, $04
+	.byte $0D, $0E
+SprMap_KoopaShell1:
 	.byte $02
 	.byte $02
 	.byte $90
-	.byte $03
-	.byte $04
-	.byte $0D
-	.byte $0E
-ofs_95DB:
+	.byte $05, $06
+	.byte $0F, $10
+SprMap_KoopaShell2:
 	.byte $02
 	.byte $02
 	.byte $90
-	.byte $05
-	.byte $06
-	.byte $0F
-	.byte $10
-ofs_95E2:
+	.byte $0F, $10
+	.byte $05, $06
+SprMap_Spring:
 	.byte $02
 	.byte $02
 	.byte $90
-	.byte $0F
-	.byte $10
-	.byte $05
-	.byte $06
-ofs_95E9:
+	.byte $07, $08
+	.byte $11, $12
+SprMap_SpringPressed:
 	.byte $02
 	.byte $02
 	.byte $90
-	.byte $07
-	.byte $08
-	.byte $11
-	.byte $12
-ofs_95F0:
+	.byte $FF, $FF
+	.byte $15, $16
+SprMap_FireFlower:
 	.byte $02
 	.byte $02
 	.byte $90
-	.byte $FF
-	.byte $FF
-	.byte $15
-	.byte $16
-ofs_95F7:
-	.byte $02
-	.byte $02
-	.byte $90
-	.byte $17
-	.byte $18
-	.byte $1F
-	.byte $20
+	.byte $17, $18
+	.byte $1F, $20
 ofs_95FE:
 	.byte $02
 	.byte $02
 	.byte $90
-	.byte $59
-	.byte $5A
-	.byte $61
-	.byte $62
-ofs_9605:
+	.byte $59, $5A
+	.byte $61, $62
+SprMap_Star:
 	.byte $02
 	.byte $02
 	.byte $90
-	.byte $1B
-	.byte $1C
-	.byte $23
-	.byte $24
-ofs_960C:
+	.byte $1B, $1C
+	.byte $23, $24
+SprMap_Feather:
 	.byte $02
 	.byte $02
 	.byte $90
-	.byte $1D
-	.byte $1E
-	.byte $25
-	.byte $26
-ofs_9613:
+	.byte $1D, $1E
+	.byte $25, $26
+SprMap_1UP:
 	.byte $02
 	.byte $02
 	.byte $90
-	.byte $27
-	.byte $28
-	.byte $29
-	.byte $2A
+	.byte $27, $28
+	.byte $29, $2A
 ofs_961A:
 	.byte $01
 	.byte $01
@@ -3041,18 +3019,14 @@ ofs_9622:
 	.byte $02
 	.byte $02
 	.byte $90
-	.byte $33
-	.byte $34
-	.byte $35
-	.byte $36
+	.byte $33, $34
+	.byte $35, $36
 ofs_9629:
 	.byte $02
 	.byte $02
 	.byte $90
-	.byte $2F
-	.byte $30
-	.byte $31
-	.byte $32
+	.byte $2F, $30
+	.byte $31, $32
 ptr6_9630:
 	LDX $A4
 	LDA ObjectState,X

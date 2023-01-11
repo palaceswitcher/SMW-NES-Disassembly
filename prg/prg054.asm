@@ -1246,7 +1246,7 @@ loc3_A6B5:
 	STA ObjectAction,X
 	STA ObjectSlot,X
 	STA ObjectState,X
-	STA ObjectVariables,X
+	STA ObjectVariables,X ;Wipe object from memory
 	LDA $058C,X
 	TAY
 	LDX tbl_51_FC80,Y
@@ -1392,25 +1392,25 @@ bra3_A7BA_RTS:
 ptr_A7BB:
 	LDA $25
 	CMP #$07
-	BNE bra3_A7C4	;Branch if the object isn't edible(?)
-	JMP loc3_A852	;Otherwise, jump
+	BNE bra3_A7C4 ;Branch if the object is completely inedible
+	JMP loc3_A852 ;Otherwise, jump
 bra3_A7C4:
 	LDA YoshiTongueState
 	CMP #$01
-	BEQ bra3_A7CE	;Branch if there's nothing on Yoshi's tongue already
+	BEQ bra3_A7CE ;Branch if there's nothing on Yoshi's tongue already
 bra3_A7CB:
-	JMP loc3_A852	;If there is, jump
+	JMP loc3_A852 ;If there is, jump
 bra3_A7CE:
 	LDX $A4	;Get index for current object
 	LDA PlayerState
 	CMP #$09
-	BCC bra3_A7CB	;Branch (to a jump) if Yoshi's tongue isn't out
+	BCC bra3_A7CB ;Branch (to a jump) if Yoshi's tongue isn't out
 	LDA PlayerMovement
 	AND #$40
-	BNE bra3_A7E3	;Branch if the player is facing left
+	BNE bra3_A7E3 ;Branch if the player is facing left
 	LDA ObjXScreenDistance,X
-	BMI bra3_A7CB	;Branch (to a jump) if the player is right of the object
-	BPL bra3_A7E8	;Branch if the player is left of the object
+	BMI bra3_A7CB ;Branch (to a jump) if the player is right of the object
+	BPL bra3_A7E8 ;Branch if the player is left of the object
 bra3_A7E3:
 	LDA ObjXScreenDistance,X
 	BPL bra3_A7CB	;Branch if the player is left of the object
@@ -1477,7 +1477,7 @@ loc3_A852:
 	LDA ObjectState,X
 	AND #$E0	;Mask out the lower 5 bits
 	ORA #$03
-	STA ObjectState,X	;Set lower 2 bits??
+	STA ObjectState,X	;Set the lower 2 bits, changing the collision state to make the object vulnerable to Yoshi's tongue(?)
 	RTS
 tbl3_A85F:
 	.byte $00
@@ -2024,14 +2024,14 @@ tbl3_A97B:
 	.byte $20
 	.byte $20
 ptr_AA7B:
-	LDY $A4
+	LDY $A4 ;Get index for the current object
 	LDX PlayerAnimationFrame
 	CPX #$0C
 	BCC bra3_AA8D
 	LDA ObjectState,Y
 	CLC
 	ADC #$01
-	STA ObjectState,Y
+	STA ObjectState,Y ;Move to next object state
 	RTS
 bra3_AA8D:
 	LDA tbl3_AB0D,X
@@ -2159,11 +2159,11 @@ bra3_AB55:
 	STA ObjectSlot,X
 	RTS
 ptr_AB5D:
-	LDX $A4
+	LDX $A4 ;Get index for object
 	LDA $058C,X
 	STA $0632
 	LDA #$00
-	STA ObjectSlot,X
+	STA ObjectSlot,X ;Remove object
 	RTS
 jmp_54_AB6B:
 	LDA Player1YoshiStatus
@@ -2185,36 +2185,38 @@ jmp_54_AB6B:
 	PLA
 bra3_AB91_RTS:
 	RTS
+	
+;This routine handles carrying objects
 jmp_54_AB92:
 	LDY $A4
 	LDA ObjectState,Y
 	AND #$80
-	BNE bra3_AB9C
-	RTS
+	BNE bra3_AB9C ;Branch if the object is being carried
+	RTS ;Otherwise, stop
 bra3_AB9C:
 	LDA ButtonsHeld
 	AND #buttonB
-	STA PlayerHoldFlag
-	BEQ bra3_AC08
+	STA PlayerHoldFlag ;Set the player's carrying flag if the B button is held
+	BEQ bra3_AC08 ;Branch if the B button isn't being held
 	LDA PlayerMovement
 	AND #$40
-	BNE bra3_ABBB
+	BNE bra3_ABBB ;Branch if the player is facing left
 	LDA PlayerXPosDup
 	CLC
 	ADC #$06
-	STA ObjectXPos,Y
+	STA ObjectXPos,Y ;Offset the object's 
 	LDA PlayerXScreenDup
-	ADC #$00
+	ADC #$00 ;Update the X screen if needed (high byte)
 	JMP loc3_ABC7
 bra3_ABBB:
 	LDA PlayerXPosDup
 	SEC
 	SBC #$16
-	STA ObjectXPos,Y
+	STA ObjectXPos,Y ;Offset the carried object's position by 38 pixels
 	LDA PlayerXScreenDup
 	SBC #$00
 loc3_ABC7:
-	STA ObjectXScreen,Y
+	STA ObjectXScreen,Y ;Update the X screen if needed (high byte)
 	LDA PlayerYScreenDup
 	STA ObjectYScreen,Y
 	LDA #$EC
@@ -2222,9 +2224,10 @@ loc3_ABC7:
 	CLC
 	ADC PlayerYPosDup
 	STA ObjectYPos,Y
-	BCS $ABDF
+	BCS bra3_ABDF
 	CMP #$F0
-	BCC $AC05
+	BCC bra3_AC05
+bra3_ABDF:
 	CLC
 	ADC #$10
 	STA ObjectYPos,Y
