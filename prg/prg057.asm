@@ -43,7 +43,7 @@ bra4_A03E:
 loc4_A03E:
 	LDA PlayerAction
 	STA PlayerAction+1
-	JSR sub4_A17C
+	JSR DecPlayerFrameLength
 	JSR LoadPlayerSprite
 	LDA #$14 ;skip past first 5 sprites in OAM
 	STA $3C ;store in player OAM tracker byte
@@ -221,92 +221,101 @@ bra4_A119:
 	.db $01
 	.db $01
 	.db $01
+;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
+;PLAYER SPRITES AND ANIMATION
+;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
 ;the following code is poorly commented due to the animation bank having 3 sets of pointers and being extremely hard to follow.
-sub4_A14A:	;Select if Yoshi is present 
+sub4_A14A:	
 	LDA Player1YoshiStatus	;
-	ASL		;multiply current yoshi status by 2,
+	ASL		;multiply current yoshi status by 2
 	TAX		;move it to the x offset
 	LDA #$24			
 	STA M90_PRG2	;load animation bank into 3rd slot
+;Pick Animation table 	
 	LDA lda_36_C000,X		
-	STA $32	;get lower pointer bytes
+	STA $32				;get lower pointer bytes
 	LDA lda_36_C000+1,X		
-	STA $33	;get upper pointer bytes
-	LDA PlayerPowerup		
+	STA $33				;get upper pointer bytes
+	LDA PlayerPowerup 
 	LDY Player1YoshiStatus
-	BNE bra4_A16E	;Branch if the player has Yoshi
+	BNE MakePlayerAnimPtr	;Branch if the player has Yoshi
 	LDY PlayerHoldFlag
-	BEQ bra4_A16E	;Branch if the player isn't carrying anything
+	BEQ MakePlayerAnimPtr	;Branch if the player isn't carrying anything
 	CLC				;If they are
 	ADC #$05		;Make the player use the 2nd set of animations
 	
-bra4_A16E:;Select power up animation set
+MakePlayerAnimPtr: ;Select player animation set
 	AND #$0F		;Mask out the lower 4 bits of the Powerup value
 	ASL		;multiply it by 2
 	TAY		;move it to y offset
 	LDA ($32),Y	;load lower byte of 2nd pointer
-	STA PlayerAnimationPtr	;
+	STA PlayerAnimationPtr	;store it
 	INY
 	LDA ($32),Y	;load upper byte of 2nd pointer
-	STA PlayerAnimationPtr+1	;
-	RTS
-sub4_A17C:
-	LDA $18
-	BMI bra4_A183
-	DEC $18
-	RTS
-bra4_A183:
-	INC PlayerAnimationFrame
+	STA PlayerAnimationPtr+1	;store it
+	RTS ;End
+;**********************************************************************************
+DecPlayerFrameLength:
+	LDA $18 ;get the current frame duration
+	BMI AdvNextPlayerFrame ;if it's underflown, branch ahead
+	DEC $18 ;else decrement frame length 
+	RTS ;end
+;**********************************************************************************	
+AdvNextPlayerFrame: ;if Player frame ended:
+	INC PlayerAnimationFrame ;advance to next frame
 PlayerAnimationSub:
 	LDA PlayerAnimation	;Load player's animation value
 	ASL	;multiply it by 2
-	TAY	;copy to Y for use as index
+	TAY	;copy to Y 
 	LDA #$24 	
 	STA M90_PRG2	;Load the animation bank into the 3rd PRG slot
-	LDA (PlayerAnimationPtr),Y
-	STA $32	;Load the low byte of the player animation pointer
+;Unsure exactly what pointer it's making here (pointer is later used to create the PlayerFramePtr									
+	LDA (PlayerAnimationPtr),Y ;Load the low byte 
+	STA $32	;store it
 	INY
-	LDA (PlayerAnimationPtr),Y
-	STA $33	;Load the high byte of the player animation pointer
-	LDA PlayerAnimationFrame	;Load player's animation frame
+	LDA (PlayerAnimationPtr),Y ;Load the high byte 
+	STA $33	;store it
+;Make Player Frame Pointer
+	LDA PlayerAnimationFrame	;Load player's current animation frame
 	ASL
-	ASL ;multiply it by 4
-	TAY	;move it to the Y reg
-	LDA ($32),Y
-	STA PlayerFramePtr	;Load the low byte of the player's mapping data pointer
-	INY	;Move to next byte of animation data
-	LDA ($32),Y
-	STA PlayerFramePtr+1	;Load the high byte of the player's mapping data pointer
-	INY	;Move to next byte of animation data
-	LDA ($32),Y	;if low byte is positive (below 7F)
-	BPL bra4_A1B1	;branch, Check bit 7. If it's cleared, treat this byte like a frame length byte and branch.
+	ASL			 ;multiply it by 4
+	TAY			 ;move it to the Y reg
+	LDA ($32),Y  ;Load the low byte of the player's mapping data pointer
+	STA PlayerFramePtr	
+	INY 
+	LDA ($32),Y ;Load the high byte of the player's mapping data pointer
+	STA PlayerFramePtr+1
+;Get Frame duration
+	INY	
+	LDA ($32),Y	;if next byte is positive (below 7F)
+	BPL StorePlayerFrameLength	;Check bit 7. If it's cleared, treat this byte like a frame length byte and branch.
 	AND #$7F
 	STA PlayerAnimationFrame	;If bit 7 is set, clear it and use the resulting value as the animation loop point.
-	JMP PlayerAnimationSub	;Continue looping animation
-bra4_A1B1:
+	JMP PlayerAnimationSub		;Restart the routine to get the next frame 
+StorePlayerFrameLength:
 	STA $18	;Store the animation frame length
-	RTS
-	
+	RTS ;end
+;**********************************************************************************	
 LoadPlayerSprite: ;loads the player sprite
 ;Prep 	
 	LDY #$00	;Clear Y index/set to read first byte of sprite format (sprite width)
 	LDA #$24
 	STA M90_PRG2	;Load animation bank into 3rd PRG slot
 ;Get sprite object size
-	LDA (PlayerFramePtr),Y
+	LDA (PlayerFramePtr),Y ;get width byte
 	AND #$3F	;Remove attribute bits (%00111111)
-	STA PlayerWidth	;get player sprite width
-	LDA (PlayerFramePtr),Y
+	STA PlayerWidth	
+	LDA (PlayerFramePtr),Y ;reload width byte
 	AND #$C0 ;remove width bits (%11000000) 
 	STA PlayerSpriteAttributes	;get attributes from width mapping (This is used for sprites that mirror such as the front facing and climbing sprites)
-	INY ;Y=01 move to next byte (sprite height)
-	LDA (PlayerFramePtr),Y
-	STA PlayerHeight	;load/store player sprite height
-	INY ;Y=02 move to next byte (CHR bank)
-;Get attributes
-	LDA (PlayerFramePtr),Y
-	ASL ; double it 
-	TAX	;Get attribute pointer for the sprite's CHR bank
+	INY
+	LDA (PlayerFramePtr),Y ;get height byte
+	STA PlayerHeight	
+	INY 
+;Get attribute pointer for the sprite's CHR bank
+	LDA (PlayerFramePtr),Y ;get CHR bank byte
+	ASL 
+	TAX	;double it and move it to X
 	LDA #$2F
 	STA M90_PRG2	;load palette mapping bank into 3rd PRG slot
 	LDA tbl_47_C000,X
@@ -321,17 +330,17 @@ LoadPlayerSprite: ;loads the player sprite
 	EOR #$40	;reverse it
 	STA PlayerSpriteMirror	;set it to player sprite mirroring
 	LDA #$00
-	STA $24
-	INY	; Y=03 move 1 byte ahead (Horizontal offset)
+	STA $24 ;clear UNKNOWN
+	INY	; advance to next byte of mapping (Horizontal offset)
 ;Get Horizontal Offset 
 	LDA PlayerSpriteMirror
-	AND #$40	;if player's sprite is H mirrored,
+	AND #$40	;if player's sprite is H mirrored (facing right)
 	BNE bra4_A208	;branch
-	;Else
+;Else if sprite not mirrored (facing left)
 	LDA PlayerSprXPos
 	SEC
 	SBC (PlayerFramePtr),Y	;subtract x position by mapping offset
-	STA PlayerSprXPosOfs		;set it as offset
+	STA PlayerSprXPosOfs		;set it as sprite X offset
 	LDA #$00
 	SBC #$00 ;subtract carry if present
 	STA $20	;store it
@@ -340,35 +349,34 @@ LoadPlayerSprite: ;loads the player sprite
 bra4_A208: ;If Sprite H Mirrored
 	LDA (PlayerFramePtr),Y
 	SEC
-	SBC #$08			;subtract loaded offset by 8
+	SBC #$08			;subtract loaded mapping offset by 8
 	CLC
-	ADC PlayerSprXPos
-	STA PlayerSprXPosOfs		;add offset to sprite x position
+	ADC PlayerSprXPos 	;add player X position to modified mapping offset
+	STA PlayerSprXPosOfs	;set it as sprite X offset	
 	LDA #$00
 	ADC #$00 ;add carry if present
 	STA $20	;store it
-	
+;get Vertical Offset
 loc4_A218:
-	LDX #$00 ;Clear X 
+	LDX #$00 ;set X to #$00
 	LDY PlayerHeight ;Put player height into Y
-	LDA PlayerSpriteVOffset,Y ;Load Player V Positioning into A with Y as offset
-	BPL bra4_A223 ;branch if A is positive
-	LDX #$FF	;if A negative, set X to #$FF
+	LDA PlayerSpriteVOffset,Y ;Load players vertical offset based on sprite height 
+	BPL bra4_A223 ;branch if offset is positive (only happens if sprite height is 00, unsure when this would ever occur though)
+	LDX #$FF	;else if offset negative, set X to #$FF
 	
-bra4_A223: ;X= 00 (positive) or FF (negative)
+bra4_A223: ;offset player vertically
 	CLC
-	ADC PlayerSprYPos ;add player sprite Y to A (A= PlayerVPos+Height)
-	STA PlayerSprYPosOfs
-	BCC bra4_A22B
-	INX ;increment X (Result: 00 or 01) (if X is #$FF this will underflow to be postive) 
+	ADC PlayerSprYPos ;add player vertical position to loaded vertical offset
+	STA PlayerSprYPosOfs ;set it as sprite Y offset 
+	BCC bra4_A22B ;if carry clear (result less than 255) then branch to end of routine (leaves X untouched)
+	INX ;increment X (Result: 00 or 01) (if X is #$FF this will underflow to be #$00) 
 bra4_A22B:
-	STX $22
-	RTS
+	STX $22 ;Unknown purpose (possibly something to do with if the players V offset puts them off screen)
+	RTS ;end
 	
-PlayerSpriteVOffset: ;Player vertical positioning
-;Ok so this table adjusts the sprite offset based on the height of the player, listed next to the offsets are the respective heights
-	.db $00 ;00
-	.db $F8 ;01
+PlayerSpriteVOffset: ;This table adjusts the sprite offset based on the height of the player, listed next to the offsets are the respective heights
+	.db $00 ;00 (unsure when this one is used)
+	.db $F8 ;01 
 	.db $F0 ;02
 	.db $E8 ;03
 	.db $E0	;04			
@@ -463,61 +471,61 @@ bra4_A2C1_RTS:
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
 ;MARIO SPRITE LOADERS (Main player sprites and riding Yoshi)
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
-;RIDING YOSHI BANKING AND META ALIGNMENT
 ;This section ONLY applies to the Mario object used when riding Yoshi
-;Skipping it does not affect standard Mario
-;for that, start at PlayerSpriteBuilder
+;It does not affect standard Mario, Yoshi is drawn using the PlayerSpriteBuilder routine
+;for standard Mario, start at PlayerSpriteBuilder
 bra4_A2C2:
 	LDA Player1YoshiStatus	;if player doesn't have yoshi,
-	BEQ bra4_A2CD	;branch to jump
-	LDA PlayerSprYPos		;
-	CMP #$E0		;if player sprite goes below pit,
-	BCC bra4_A2D0	;branch
-bra4_A2CD:
+	BEQ bra4_A2CD	;branch to jump 
+	LDA PlayerSprYPos		
+	CMP #$E0		;if player has Yoshi, check if player is in a pit 
+	BCC GetPntrRidingSprite	;if they aren't, branch
+bra4_A2CD: ;else jump
 	JMP PlayerSpriteBuilder ;starts at X positioning of sprite tiles
-	
-bra4_A2D0:
+;*******************************************************************************	
+GetPntrRidingSprite: ;Only do this part if player sprite isn't in a pit
 	LDA PlayerPowerup
 	ASL ;double it
-	TAX ;transfer to X as offset 
+	TAX ;move it to X
 	LDA tbl4_A5E7,X ;(This table only has one entry but is followed by another table)
 	STA $38 ;store low byte
-	LDA tbl4_A5E8,X
+	LDA tbl4_A5E8,X ;load the high byte from the next table 
 	STA $39  ;store high byte
-	LDX PlayerAction+1
-	LDA PlayerRidingActionTable,X
-	BNE bra4_A2E9 ;if loaded value not 00, branch
-	JMP loc4_A4FC ;else, jump
-	
+	LDX PlayerAction+1 ;get the previous player action as an offset
+	LDA PlayerRidingActionTable,X ;use that to select an action for the player whilst riding 
+	BNE bra4_A2E9 ;if loaded value not 00, branch to next check
+	JMP loc4_A4FC ;else, jump (checks Y speed and if down is held, unknown use)
 bra4_A2E9:
 	CMP #$01
-	BNE bra4_A2F0 ;if value not 01, branch
-	JMP loc4_A50E ;if it is, jump
+	BNE bra4_A2F0 ;if value not 01, branch to next check
+	JMP loc4_A50E ;if it is, jump (clears a variable and masks another for a check, unknown use)
 bra4_A2F0:
 	CMP #$02
-	BNE bra4_A2F7 ;if value not 02, branch
+	BNE bra4_A2F7 ;if value not 02, branch to next check
 	JMP loc4_A523 ;if it is, jump
-	
-bra4_A2F7: ;Mario Riding Yoshi 1K Banking and Sprite Alignment
-	LDY #$08 ;Set Y offset to #$08 (Y= CHR banking offset)
-loc4_A2F9:
-	LDA ($38),Y ;Combine values in $38 $39, add Y offset to get final address 
-	STA SpriteBank1 ;Set 1st sprite bank (loads required CHR bank for Mario riding Yoshi)
+bra4_A2F7: 
+	LDY #$08 ;Set Y offset to #$08 (adjusts offset for loading CHR bank)
+;coderoll
+;*******************************************************************************
+LoadRidingSprite: ;Mario Riding sprite loader
+	LDA ($38),Y ;load CHR bank from pointer (Y is set before the code gets here from one of 3 locations)
+	STA SpriteBank1 ;Store in the first sprite bank slot (loads required CHR bank for player riding sprites)
 	TYA
-	PHA ;Push Y into the stack (CHR banking offset)
+	PHA ;Push Y into the stack 
+;Get next pointer (unsure of exact use)
 	LDA PlayerPowerup ;Get player powerup
 	ASL ; double it
-	TAY ;Move it to Y for use as new offset (selects what sprite set to use for Mario)
-	LDA tbl4_A60C,Y
-	STA $34 ;Load low byte from table
-	LDA tbl4_A60C+1,Y
-	STA $35 ;Load high byte from table
+	TAY ;Move it to Y for use as new offset 
+	LDA tbl4_A60C,Y ;Load low byte from table
+	STA $34 
+	LDA tbl4_A60C+1,Y ;Load high byte from table
+	STA $35 
 	
-	PLA ;retrive Y from earlier (CHR banking offset)
+	PLA ;retrive Y from earlier 
 	PHA ;put it back in the stack
 	ASL	;double it
-	TAY ;move A to Y (Y= CHR banking offset x2)
-	
+	TAY ;move it to Y
+;Make Mapping Pointer in scratch RAM
 	LDA ($34),Y	;offset loaded address by Y 
 	STA $32 ;store
 	INY 
@@ -525,299 +533,311 @@ loc4_A2F9:
 	STA $33 ;store
 	
 	LDA #$00
-	STA $2E ;clear $2E (unknown use)
+	STA $2E ;clear $2E, used as mapping offset later
 	PLA ;retrive Y from earlier from stack 
-	TAY ;Move it back to Y (Y= CHR Banking offset)
-	
+	TAY ;Move it back to Y 
+;Get Y offset	
 	LDA PlayerSprYPos
 	SEC
-	SBC PlayerRidingSpriteOffset,Y ;Offset the players riding sprite offset and subtract it from the players Y sprite position
-	LDX PlayerAction+1 ;get PAct and offset it by 01
+	SBC PlayerRidingSpriteYOffset,Y ;Load the players riding sprite offset and subtract it from the players sprite Y position
+	LDX PlayerAction+1 ;get previous player action as X offset
 	CLC
-	ADC tbl4_A59B,X ;Get data from table and add it to the result of prior sum 
-	LDX PlayerPowerup
+	ADC tbl4_A59B,X ;Get data from table and add it to the result of prior sum  (Unknown function, probably additional Y adjustment)
+	LDX PlayerPowerup ;get player powerup
 	BNE bra4_A336 ;Branch if the player has a powerup 
 	SEC
-	SBC #$03 ;else subtract 03 from the result of the prior sum
-	
-bra4_A336:
-	STA PlayerMetaspriteVAlign ;store results of sum as the V alignment for the sprite
-	LDA PlayerMovement
-	EOR PlayerSpriteAttributes ;flip bits
-	AND #$40
-	BNE bra4_A361 ;branch if not 00 (skip loc4_A348)
-	LDA PlayerSprXPos ;else
-	CLC
-ADC tbl4_A5D5,Y ;offset table by Y to get data and add to Player sprite X position 
-	STA PlayerMetaspriteHAlign	;store it as the horizontal alignment for the sprite tile
-	
-loc4_A348:
-	LDA $2E ;(unknown use)
-	CLC
-	ADC #$10 ;Add #$10 to $2E
-	TAY ;use as Y offset 
-	LDX $3C ;Set X to $3C (OAM tracker byte)
-	LDA ($32),Y ;Load $32 offset by Y (Y= $2E sum offset)
-	
-	CMP #$FF
-	BEQ bra4_A3BC ;if loaded value is #$FF, branch 
-	AND #$3F ;else, apply bitmask
-	STA $0201,X ;Store it in sprite memory
-	PHA ;push A to stack
-	LDA #$40 
-	JMP loc4_A37B ;jump 
-	
-bra4_A361: ;gets here from bra4_A336
+	SBC #$03 ;else subtract 03 from the Y offset	
+
+bra4_A336: 
+	STA PlayerMetaspriteVAlign ;store results of sum as the vertical alignment for the sprite
+	LDA PlayerMovement ;get current movement direction
+	EOR PlayerSpriteAttributes ;flip bits against sprite attributes
+	AND #$40 ;determine sprite mirror direction
+	BNE bra4_A361 ;If player is facing left, branch
+ ;else if sprite is mirrored (facing right)
 	LDA PlayerSprXPos 
 	CLC
-	ADC tbl4_A5DE,Y ;offset table by Y to get data and add to Player sprite X position
+	ADC RidingRightXoffset,Y ;using prior Y offset, get base X position and add to Player sprite X position 
+	STA PlayerMetaspriteHAlign	;store it as the horizontal alignment for the sprite
+	
+loc4_A348: ;load/store tile ID (facing right)
+	LDA $2E ;get mapping offset 
+	CLC
+	ADC #$10 ;Add #$10 to $2E (note that it doesn't store this in $2E)
+	TAY ;move result to Y (selects reversed tile order for mirrored sprite)
+	LDX $3C ;Set X to OAM tracker byte
+	LDA ($32),Y ;Load tile ID from mapping
+	CMP #$FF
+	BEQ bra4_A3BC ;if loaded a null tile branch to end section of routine
+	AND #$3F ;else, mask out attribute bits
+	STA $0201,X ;Store tile ID
+	PHA ;push A to stack
+	LDA #$40 ;set A for mirrored sprite
+	JMP loc4_A37B ;jump 
+;********************************************************	
+;If sprite not mirrored (facing left)
+bra4_A361: 
+	LDA PlayerSprXPos 
+	CLC
+	ADC RidingLeftXoffset,Y ;offset table by Y to get data and add to Player sprite X position
 	STA PlayerMetaspriteHAlign ;store it as the horizontal alignment for the sprite
 
-bra4_A369:
-	LDY $2E ;Set Y offset to $2E (unknown use)
-	LDX $3C ;Set X offset to $3C (OAM tracker byte) 
-	LDA ($32),Y ;offset $32 by Y
-	
+bra4_A369: ;load/store tile ID (facing left)
+	LDY $2E ;Set Y to mapping offset
+	LDX $3C ;Set X to OAM tracker byte
+	LDA ($32),Y ;Load tile ID from mapping
 	CMP #$FF
-	BEQ bra4_A3BC ;if loaded value is #$FF, branch 
-	AND #$3F ;else apply bitmask
-	STA $0201,X ;Offset RAM address by X ($3C) 
+	BEQ bra4_A3BC ;if loaded a null tile branch to end section of routine
+	AND #$3F ;else, mask out attribute bits
+	STA $0201,X ;Store the tile ID
 	PHA ;push A to stack
-	LDA #$00
-	
+	LDA #$00 ;set A for unmirrored sprite
+;********************************************************	
+;Get Attributes 	
 loc4_A37B:
-	STA $38 ;#$40 (from loc4_A348) or #$00
+	STA $38 ;Store sprite mirroring in temp byte (#$40 or #$00)
 	LDA SpriteBank1
-	ASL ;multiply value of Spritebank1 by 2 (Mario bank x 2)
+	ASL ;double value CHR bank in Spritebank1 (Mario bank x 2)
 	TAY ;set as Y offset 
 	LDA #$2F 
 	STA M90_PRG2 ;load attribute bank into 2nd PRG slot
-	
+;get attribute pointer	
 	LDA tbl_47_C000,Y
 	STA $34 ;get lowbyte
 	LDA tbl_47_C000+1,Y
 	STA $35 ;get highbyte
-	PLA ;retrieve A from earlier 
-	TAY ;set as Y offset 
-	LDA ($34),Y ;Offset loaded address by Y and load from that address 
-	ORA $38								 
-	ORA $06E0 							;set some bits 
-	STA $0202,X ;store it here
+	PLA ;retrieve A from earlier (tile ID)
+	TAY ;move it to Y
+	LDA ($34),Y ;use tile ID to select respective attribute data
+	ORA $38	;ORA against sprite mirroring 						 
+	ORA $06E0 ;ORA again with UNKNOWN (This flips the tiles as needed)
+	STA $0202,X ;store tile attributes
+;********************************************************	
+;Position Tiles X
 	LDA #$24
 	STA M90_PRG2 ;load player animation bank into 2nd PRG slot
-	LDY $2E ;set Y offset to $2E (unknown use)
+	LDY $2E ;set Y offset to $2E (unknown use) Mapping offset?
 	LDA PlayerMetaspriteHAlign
 	CLC
-	ADC PlayerRidingTileHorizPos,Y
-	STA $0203,X
+	ADC PlayerRidingTileHorizPos,Y ;add tile H position to sprite H alignment 
+	STA $0203,X ;store X position 
+;********************************************************	
+;Position Tiles Y	
 	LDA PlayerMetaspriteVAlign
 	CLC
-	ADC PlayerRidingTileVertPos,Y
-	STA SpriteMem,X
-	TXA
+	ADC PlayerRidingTileVertPos,Y ;add tile V position to sprite V alignment
+	STA SpriteMem,X ;store Y position
+;********************************************************		
+	TXA ;move X ($3C) to A
 	CLC
 	ADC #$04
 	STA $3C ;add one tile to OAM tracker byte
-bra4_A3BC:
-	INC $2E
+bra4_A3BC: 
+	INC $2E ;increment Mapping offset
 	LDA $2E
-	CMP #$10
-	BCS bra4_A3CF
-	LDA PlayerMovement
-	EOR PlayerSpriteAttributes
-	AND #$40
-	BNE bra4_A369
-	JMP loc4_A348
+	CMP #$10 ;these sprites are forced to each have #$10 (16) tiles it would appear
+	BCS bra4_A3CF ;If it exceeds #$10, branch to PlayerSpriteBuilder (build Yoshi sprite)
+	LDA PlayerMovement ;get current movement direction
+	EOR PlayerSpriteAttributes ;flip bits against sprite attributes
+	AND #$40 ;determine sprite mirror direction
+	BNE bra4_A369 ;If player facing left branch to respective get next tile ID
+	JMP loc4_A348 ;else if facing right, branch to respective get next tile ID
 ;************************************************************************************************
-;Position X
+;End of Mario Riding sprite builder
 ;************************************************************************************************	
+;-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-===-=-=-=-==-=-=-=-=-=-=--
+;MAIN PLAYER SPRITE BUILDER
+;-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-===-=-=-=-==-=-=-=-=-=-=--
 bra4_A3CF:
-PlayerSpriteBuilder: ;If Mario Doesn't Have Yoshi   
+PlayerSpriteBuilder: ;creates standard Mario or Yoshi sprites (riding sprites have their own routine)
 	LDA PlayerSpriteMirror
 	AND #$40 ;determine player mirror direction
 	BEQ bra4_A3F5 ; branch ahead if direction left
-;Else player facing right (sprite mirrored as tiles face left)
-	LDA PlayerSprXPosOfs ;get X offset for player sprite
-	LDX #$00 ;clear X
-	BEQ bra4_A3E2 ; branch, always (skip next part) 
+;**************************************************************************************	
+;Else player facing RIGHT START (sprite mirrored as tiles face left)
+	LDA PlayerSprXPosOfs ;get X position offset for player sprite
+	LDX #$00 ;clear X (column storage buffer offset)
+	BEQ bra4_A3E2 ; branch, always
 ;****************************************************
 ;Ok so there are a total of two writes to $20
 ;They store the carry bit when calculating the X offset for the sprite
 ;As far as I can tell $20 is always #$00
-;Seems like a waste of a byte	
+;Seems like a waste of a byte and I'm not sure of its use
 ;****************************************************
-;not used on initialise of routine
 SpaceColumnNegative: ;This is for reversing sprite columns when facing right 
 	SEC
 	SBC #$08
 	BCS bra4_A3E2 ;if PlayerSprXPosOfs exceed #$08, skip ahead (only space columns by 8 pixels)
-	DEC $20 ;otherwise decrement RAM $20  
-
-bra4_A3E2:;if player facing right, START here
-	LDY $20 ;load RAM into Y
-	BEQ bra4_A3EC ;If RAM = #$00, branch ahead to store A offset by X 
-;Else
+	DEC $20 ;otherwise decrement $20 (unknown use)
+;****************************************************
+bra4_A3E2: ;if player facing right, it will jump here first
+	LDY $20 ;load $20 into Y (unknown use)
+	BEQ bra4_A3EC ;If #$00, branch to store column alignment
+;Else $20 not 00
 	LDY #$FF ;set Y to #$FF 
-	STY $41,X ;store #$FF in MetaspriteColumnAlignment offset by X (first time we get here X is 00)
-	BMI bra4_A3EE ;branch on minus, always 
+	STY $41,X ;store #$FF in MetaspriteColumnAlignment (unknown use, hide column??)
+	BMI bra4_A3EE ;branch on minus, always (advance to next column)
 	
-bra4_A3EC: ;if $20 = #$00
-	STA $41,X ; store PlayerSprXPosOfs in MetaspriteColumnAlignment offset by X 
-	
-bra4_A3EE:
-	INX ;increment X (move to next storage byte) (first time we get here X is 00)
+bra4_A3EC: ;store column alignment
+	STA $41,X ; store PlayerSprXPosOfs in MetaspriteColumnAlignment 
+;****************************************************	
+bra4_A3EE: 
+	INX ;increment X (move to next column storage buffer byte)
 	CPX PlayerWidth ;compare X to player width
 	BCC SpaceColumnNegative  ;if X < Player width, branch to subtraction (reverse tile order for face right) (branch backwards)
 	BCS bra4_A413 ;if X > player width, branch to Y positioning 	(branch ahead)
 ;****************************************************	
-bra4_A3F5: ;if player facing left ELSE START HERE
-	LDA PlayerSprXPosOfs ;this appears to be the X position of the sprite graphic
-	LDX #$00 ;clear X
+bra4_A3F5: ;if player facing LEFT else START here
+	LDA PlayerSprXPosOfs ;get X position offset for player sprite
+	LDX #$00 ;clear X (column storage buffer offset)
 	BEQ bra4_A402 ;Always
-	
+;****************************************************	
 SpaceColumnPositive: ;This is for spacing sprite columns when facing left ;not used on initialise of routine
 	CLC
 	ADC #$08
 	BCC bra4_A402 ;if less than #$08, skip ahead (only space columns by 8 pixels)
-	INC $20 ;otherwise increment RAM $20
-	
+	INC $20 ;otherwise increment $20 (unknown use)
+;****************************************************		
 bra4_A402:
-	LDY $20 ;load RAM into Y
-	BEQ bra4_A40C ;If RAM = #$00, branch ahead to store A offset by X 
-;Else
-	LDY #$FF ;set Y to #$FF (256)
-	STY $41,X ;store Y in MetaspriteColumnAlignment offset by X (first time we get here X is 00)
-	BMI bra4_A40E ;branch on minus, always
+	LDY $20 ;load $20 into Y (unknown use)
+	BEQ bra4_A40C ;If #$00, branch ahead to store column alignment
+;Else $20 not 00
+	LDY #$FF ;set Y to #$FF 
+	STY $41,X ;store #$FF in MetaspriteColumnAlignment (unknown use, hide column??)
+	BMI bra4_A40E ;branch on minus, always (advance to next column)
 	
-bra4_A40C:
-	STA $41,X ; store A in MetaspriteColumnAlignment offset by X 
-	
+bra4_A40C: ;store column alignment
+	STA $41,X ; store PlayerSprXPosOfs in MetaspriteColumnAlignment 
+;****************************************************
 bra4_A40E:
-	INX ;increment X
-	CPX PlayerWidth ;compare it to PlayerWidth
-	BCC SpaceColumnPositive ;if X < Playerwidth, branch back to space next column 
+	INX ;increment X (move to next column storage buffer byte)
+	CPX PlayerWidth ;compare X to player width
+	BCC SpaceColumnPositive ;if X < Player width, branch to addition (tile order for face left) (branch backwards)
 ;Else coderoll
 ;****************************	
 ; Position Y
 ;****************************	
 ;equivalent code for Y positioning		
 bra4_A413:
-	LDA PlayerSprYPosOfs
-	LDX #$00
+	LDA PlayerSprYPosOfs ;get Y position offset for player sprite
+	LDX #$00 ;clear X (row storage buffer offset)
 	BEQ bra4_A422 ;always 
-	
+;****************************************************
 SpaceRowsVertically: ;this spaces the rows of the sprite (starts from the top, adding moves the position downwards)
 	CLC
-	ADC #$08
-	STA PlayerMetaspriteVAlign
-	BCC bra4_A422
-	INC $22
-	
+	ADC #$08 ;lower row position by 8 pixels
+	STA PlayerMetaspriteVAlign ;store PlayerSprYPosOfs as vertical tile alignment 
+	BCC bra4_A422 ;branch on carry clear
+	INC $22 ;else carry set, increment $22 (unknown use)
+;****************************************************	
 bra4_A422: ;START here
-	LDY $22
-	BEQ bra4_A42C
-	LDY #$FF
-	STY $B2,X ;this is likely the equivalent alignment queue for rows
-	BMI bra4_A438
+	LDY $22 ;load $22 (unknown use)
+	BEQ bra4_A42C ;If #$00, branch ahead to immediate store
+;Else $22 not 00	
+	LDY #$FF ;set Y to #$FF 
+	STY $B2,X ;store #$FF in MetaspriteRowAlignment (unknown use, hide row??)
+	BMI bra4_A438 ;branch on minus, always (advance to next row)
 	
 bra4_A42C:
-	STA PlayerMetaspriteVAlign
-	CMP #$C0
-	BCC bra4_A434
-	LDA #$00
+	STA PlayerMetaspriteVAlign ;store PlayerSprYPosOfs as vertical tile alignment 
+	CMP #$C0 
+	BCC bra4_A434 ;if it's less than #$C0, branch to store row 
+	LDA #$00 ;else if exceed #$C0, set row position to 00 (might be for screen wrapping tiles?)
 bra4_A434:
-	STA $B2,X
-	LDA PlayerMetaspriteVAlign
-	
+	STA $B2,X ;store in MetaspriteColumnAlignment 
+	LDA PlayerMetaspriteVAlign ;get updated vertical tile alignment
+;****************************************************
 bra4_A438:
-	INX
-	CPX PlayerHeight
-	BCC SpaceRowsVertically
-	LDA #$04
-	STA $40
+	INX ;increment X
+	CPX PlayerHeight 
+	BCC SpaceRowsVertically ;if X < Player height, repeat routine
+;Else X >= PlayerHeight	
+	LDA #$04 
+	STA $40 ;set $40 to #$04 (unknown use)
 	LDA #$00
-	STA $3E
-	STA $3F
-	TAX
-	
-bra4_A448:
-	LDA $B2,X
+	STA $3E ;clear $3E (width loop counter)
+	STA $3F ;clear $3F (height loop counter)
+	TAX ;set X to #$00
+;****************************************************
+;Align and store tiles
+bra4_A448: ;load row alignment 
+	LDA $B2,X ;get alignment for first row
 	CMP #$FF
-	BNE bra4_A458
-	LDA $40
+	BNE bra4_A458 ;if it's not #$FF, branch ahead
+	LDA $40 ;else if it is FF, load $40 (unknown use)
 	CLC
-	ADC PlayerWidth
-	STA $40
-	JMP loc4_A4B2
+	ADC PlayerWidth ;add PlayerWidth to $40 
+	STA $40 ;store result in $40 (unknown use)
+	JMP loc4_A4B2 ; Jump to increment height loop counter
 	
-bra4_A458:
-	STA PlayerMetaspriteVAlign
+bra4_A458: ;if row alignment not #$FF
+	STA PlayerMetaspriteVAlign ;store row aligment as metasprite V aligment
 	LDA #$00
-	STA $3E
-	TAX
+	STA $3E ;clear $3E (unknown use)
+	TAX ;set X to #$00
 ;********************
-bra4_A45F:
+bra4_A45F: ;load column spacing
 	LDA $41,X ;load column spacing (X=0 first time we get here)
 	CMP #$FF  ;if loaded value is #$FF
-	BEQ bra4_A4A8 ;Branch ahead
-	;else
-	STA PlayerMetaspriteHAlign
-	LDX $3C ;load 3C into X (OAM tracker byte)
-	LDY $40
+	BEQ bra4_A4A8 ;Branch to increment width loop counter
+;else if column spacing not #$FF
+	STA PlayerMetaspriteHAlign ;store column aligment as metasprite H aligment
+	LDX $3C ;load OAM tracker byte into X
+	LDY $40 ;load $40 (unknown use)
 	LDA #$24
 	STA M90_PRG2 ;load player animation bank into 3rd PRG slot
-	LDA (PlayerFramePtr),Y
-	CMP #$FF ;if loaded value is #$FF
-	BEQ bra4_A4A8 ;branch ahead
-	ORA $24
-	AND #$3F
-	LDY Player1YoshiStatus
-	BEQ PlayerOAMmanager
-	ORA #$40
+	LDA (PlayerFramePtr),Y ;Load tile ID from mapping
+	CMP #$FF ;if loaded value is #$FF (null tile)
+	BEQ bra4_A4A8 ;branch to increment width loop counter
+	ORA $24 ;else set some bits against $24 (unknown use, might be for tile mirroring?)
+	AND #$3F ;Mask out mirroring bits
+	LDY Player1YoshiStatus ;put Yoshi status into Y
+	BEQ PlayerOAMmanager ;branch to Player OAM manager if no Yoshi
+	ORA #$40 ;else set H mirroring bit (%01000000) (why?)
 	
 PlayerOAMmanager: 
-	STA $0201,X ;store tile ID/mirroring byte
-	AND #$3F
-	TAY ;transfer A to Y (Y= masked tile ID) 
+	STA $0201,X ;store tile ID(/mirroring bit, though it's useless here)
+	AND #$3F ;Mask out mirroring bits
+	TAY ;transfer masked tile ID to Y
 	LDA #$2F
-	STA M90_PRG2 ;load ??? bank into 3rd PRG slot
+	STA M90_PRG2 ;load attribute bank into 3rd PRG slot
 	LDA (PlayerPalMappingLo),Y
 	ORA PlayerSpriteMirror ;set mirroring for whole sprite 
-	EOR PlayerSpriteAttributes
-	ORA $06E0
-	STA $0202,X ;store palette byte
+	EOR PlayerSpriteAttributes ;flip mirroring bits against sprite attributes
+	ORA $06E0 ;set some bits against unknown
+	STA $0202,X ;store attributes
 	LDA PlayerMetaspriteHAlign
 	STA $0203,X ;store horizontal position
 	LDA PlayerMetaspriteVAlign
 	STA SpriteMem,X ;store vertical position 
-	TXA 
+	TXA ;move X to A
 	CLC
 	ADC #$04 ;
 	STA $3C ;add one tile to OAM tracker byte
-	
-bra4_A4A8:
-	INC $40 ;Something to do with tiles, freezing this address seems to lock up the tile loader for all objects 
-	INC $3E ;Something to do with V alignment 
-	LDX $3E
-	CPX PlayerWidth ;Compare X ($3E) with PlayerWidth
-	BCC bra4_A45F ;if X < PlayerWidth, go to ??? (repeat routine to build sprite)
-	
-loc4_A4B2: ;else
-	INC $3F
+;***********************************************	
+bra4_A4A8: 
+	INC $40 ;Increment $40 (unknown use)
+	INC $3E ;Increment $3E (width loop counter)
+	LDX $3E 
+	CPX PlayerWidth ;Compare $3E with PlayerWidth
+	BCC bra4_A45F ;if X < PlayerWidth, go to load column spacing (repeat routine to build sprite)
+
+loc4_A4B2: ;else $3E >= PlayerWidth
+	INC $3F ;increment $3F (height loop counter)
 	LDX $3F
-	CPX PlayerHeight
-	BCC bra4_A448 ;If X less than player height, loop until sprite is drawn
+	CPX PlayerHeight ;compare $3F with PlayerHeight
+	BCC bra4_A448 ;If X < PlayerHeight, got to load row alignment 
 ;Else
-	LDY #$02 ;Offset for Mario's frame pointer 
+	LDY #$02 ;Offset for Mario's frame pointer (CHR bank byte)
 	LDA #$24
-	STA M90_PRG2 ;Load player Anim bank 
-	LDA (PlayerFramePtr),Y ;This gets stored 
+	STA M90_PRG2 ;Load player Animation bank 
+	LDA (PlayerFramePtr),Y ;load CHR bank from the mapping
 	LDY Player1YoshiStatus
-	BEQ bra4_A4CA ;if no Yoshi, skip
-	LDY #$01 ;decide Yoshi bank position (slot 2)
+	BEQ bra4_A4CA ;if no Yoshi, skip to store bank
+	LDY #$01 ;else if Yoshi, set to store in 2nd slot 
 bra4_A4CA:
-	STA SpriteBank1,Y ;Store offset frame pointer in sprite bank offset by Y ;Main in level Mario sprite controller (does not affect riding Yoshi sprites)
-	RTS
+	STA SpriteBank1,Y ;Store selected CHR bank in slot 1 (Mario) or slot 2 (Yoshi)
+	RTS ;end
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
 ; END OF MARIO SPRITE LOADER
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
@@ -847,59 +867,65 @@ LevelMusicQueue:
 ;-=-=-=-=-=--=-=-=-=-=-=-
 ;END 
 ;-=-=-=-=-=-==-=-=-=--=-=
-
-loc4_A4FC:
-	LDY #$00
+;**********************************
+;Related to player riding sprite loader
+;**********************************
+loc4_A4FC: ;Unsure of purpose
+	LDY #$00			;clear Y
 	LDA PlayerYSpeed	;if player is moving vertically,
-	BNE bra4_A50B		;branch
+	BNE bra4_A50B		;branch to jump (LoadRidingSprite)
 	LDA ButtonsHeld		;else
 	AND #dirDown		;if down not held,
-	BEQ bra4_A50B		;branch
-	LDY #$06			;else set Y to #$06
+	BEQ bra4_A50B		;branch to jump (LoadRidingSprite)
+	LDY #$06			;else if player isn't moving vertically and down is held set Y to #$06
 bra4_A50B:	
-	JMP loc4_A2F9 ;jump to part of the Mario riding Yoshi sprite loader
-loc4_A50E:
+	JMP LoadRidingSprite ;Jump to load Player riding sprite	
+;**********************************	
+loc4_A50E: ;Unsure of purpose
 	LDA #$00
-	STA $0629
-	LDA $062B
-	AND #$08
-	BEQ bra4_A51E
-	LDY #$00
-	BEQ bra4_A520
+	STA $0629 ;clear Unknown
+	LDA $062B ;get unknown2
+	AND #$08 ;Mask it (%00001000)
+	BEQ bra4_A51E ;if masked bit is 00, branch (set Y as 01)
+	LDY #$00 ;else set Y as 00 (adjusts offset for loading CHR bank)
+	BEQ bra4_A520 ;branch to jump (LoadRidingSprite)
 bra4_A51E:
-	LDY #$01
+	LDY #$01 ;set Y as 01 (adjusts offset for loading CHR bank)
 bra4_A520:
-	JMP loc4_A2F9
-loc4_A523:
+	JMP LoadRidingSprite  ;Jump to load Player riding sprite
+;**********************************	
+loc4_A523: ;Unsure of purpose
 	LDA Player1YoshiStatus
 	CMP #$02
-	BCC bra4_A537
-	LDY #$00
+	BCC bra4_A537 ;if Yoshi Status < #$02, branch ahead 
+	LDY #$00 ;else clear Y
 	LDA ButtonsHeld
 	AND #dirDown
-	BEQ bra4_A555
-	LDY #$07
-	BNE bra4_A555
-bra4_A537:
-	LDY $0629
+	BEQ bra4_A555 ;if down isn't held, branch 
+	LDY #$07 ;if it is, set Y to 07 (adjusts offset for loading CHR bank)
+	BNE bra4_A555 ;branch to jump, always (LoadRidingSprite)
+	
+bra4_A537: ;if Yoshi Status < #$02
+	LDY $0629 ;load unknown into Y
 	LDA ButtonsHeld
 	AND #dirDown
-	BEQ bra4_A547
-	LDX tbl4_A571,Y
-	JMP loc4_A54A
-bra4_A547:
-	LDX tbl4_A558,Y
-loc4_A54A:
-	BPL bra4_A553
-	LDA #$00
-	STA $0629
-	LDX #$04
+	BEQ bra4_A547 ;if down isn't held, branch 
+	LDX tbl4_A571,Y ;if it is, load from table (unknown use)
+	JMP loc4_A54A ;skip next instruction
+bra4_A547: ;if down isn't held
+	LDX tbl4_A558,Y ;load from table (unknown use)
+loc4_A54A: ;if down is held
+	BPL bra4_A553 ;if value loaded was positive, branch ahead
+	LDA #$00 ;else
+	STA $0629 ;clear unknown
+	LDX #$04 ;set X to #$04
 bra4_A553:
-	TXA
-	TAY
+	TXA ;move it to A
+	TAY ;move it to Y (why do it this way??)
 bra4_A555:
-	JMP loc4_A2F9
-tbl4_A558:
+	JMP LoadRidingSprite
+;**********************************	
+tbl4_A558: ;loaded from by bra4_A547
 	.db $00
 	.db $00
 	.db $03
@@ -925,7 +951,7 @@ tbl4_A558:
 	.db $04
 	.db $04
 	.db $80
-tbl4_A571:
+tbl4_A571: ;loaded from by bra4_A537
 	.db $04
 	.db $04
 	.db $05
@@ -997,12 +1023,12 @@ PlayerRidingTileVertPos:
 	.db $08, $08, $08, $08	;2nd column
 	.db $10, $10, $10, $10	;3rd column
 	.db $18, $18, $18, $18	;4th column
-PlayerRidingSpriteOffset:
+PlayerRidingSpriteYOffset:
 	.db $28, $29	;walking
 	.db $24, $28, $24, $24	;pointing
 	.db $2A	;ducking
 	.db $25, $28	;unknown
-tbl4_A5D5:
+RidingRightXoffset:
 	.db $ED
 	.db $ED
 	.db $ED
@@ -1012,7 +1038,7 @@ tbl4_A5D5:
 	.db $EF
 	.db $EF
 	.db $ED
-tbl4_A5DE:
+RidingLeftXoffset:
 	.db $F3
 	.db $F3
 	.db $F3
