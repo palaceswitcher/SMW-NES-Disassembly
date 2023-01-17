@@ -1954,24 +1954,16 @@ sub6_A828:
 bra6_A847_RTS:
 	RTS
 tbl6_A848:
-	.byte $5A
-	.byte $A8
-	.byte $9A
-	.byte $A8
-	.byte $DA
-	.byte $A8
-	.byte $1A
-	.byte $A9
-	.byte $5A
-	.byte $A9
-	.byte $9A
-	.byte $A9
-	.byte $DA
-	.byte $A9
-	.byte $1A
-	.byte $AA
-	.byte $2A
-	.byte $AA
+	.word ofs_A85A
+	.word ofs_A89A
+	.word ofs_A8DA
+	.word ofs_A91A
+	.word ofs_A95A
+	.word ofs_A99A
+	.word ofs_A9DA
+	.word ofs_AA1A
+	.word ofs_AA2A
+ofs_A85A:
 	.byte $74
 	.byte $00
 	.byte $12
@@ -2036,6 +2028,7 @@ tbl6_A848:
 	.byte $00
 	.byte $00
 	.byte $77
+ofs_A89A:
 	.byte $74
 	.byte $1E
 	.byte $20
@@ -2100,6 +2093,7 @@ tbl6_A848:
 	.byte $6B
 	.byte $00
 	.byte $4D
+ofs_A8DA:
 	.byte $74
 	.byte $4A
 	.byte $2F
@@ -2164,6 +2158,7 @@ tbl6_A848:
 	.byte $00
 	.byte $00
 	.byte $4D
+ofs_A91A:
 	.byte $74
 	.byte $22
 	.byte $21
@@ -2228,6 +2223,7 @@ tbl6_A848:
 	.byte $00
 	.byte $00
 	.byte $77
+ofs_A95A:
 	.byte $0C
 	.byte $0E
 	.byte $10
@@ -2292,6 +2288,7 @@ tbl6_A848:
 	.byte $00
 	.byte $00
 	.byte $4D
+ofs_A99A:
 	.byte $15
 	.byte $02
 	.byte $C3
@@ -2356,6 +2353,7 @@ tbl6_A848:
 	.byte $00
 	.byte $74
 	.byte $4D
+ofs_A9DA:
 	.byte $11
 	.byte $0D
 	.byte $FB
@@ -2420,6 +2418,7 @@ tbl6_A848:
 	.byte $00
 	.byte $00
 	.byte $4D
+ofs_AA1A:
 	.byte $7C
 	.byte $00
 	.byte $00
@@ -2436,6 +2435,7 @@ tbl6_A848:
 	.byte $00
 	.byte $00
 	.byte $4D
+ofs_AA2A:
 	.byte $F2
 	.byte $F3
 	.byte $F5
