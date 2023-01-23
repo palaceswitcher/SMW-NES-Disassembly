@@ -135,21 +135,21 @@ bra3_E0F8: ;OAM writing for in level sprites
 ;Screen shake flag check and timer
 	LDY $03
 	LDA $0633
-	BEQ bra3_E12F ;if screenshake timer == 00, skip shake
+	BEQ bra3_E12F ;if screen shake timer == 00, skip shake
 	CMP #$30 ;else compare #$30
 	BCC bra3_E11E ;if $0633 less than #$30 but > #$00, branch (creates timer for shake)
 ;If exceed #$30	
 	LDA #$00 
-	STA $0633 ;clear screenshake timer
+	STA $0633 ;clear screen shake timer
 	BEQ bra3_E12F ;skip ahead, always
 	
-bra3_E11E: ;go here if screenshake timer less than #$30 (48 decimal)
-	INC $0633 ;add 1 to screenshake timer
+bra3_E11E: ;go here if screen shake timer less than #$30 (48 decimal)
+	INC $0633 ;add 1 to screen shake timer
 	LDA FrameCount
 	AND #$04
 	BNE bra3_E12F ;if not match,  branch to shake screen
 	CPY #$EC
-	BCS bra3_E12F ;if Framecount >= #$EC, branch
+	BCS bra3_E12F ;if frame count >= #$EC, branch
 	INY
 	INY
 	INY
@@ -180,12 +180,13 @@ bra3_E12F:
 	STA M90_SP_CHR2
 	LDA SpriteBank4
 	STA M90_SP_CHR3
-	JSR sub3_F7DA
+
+	JSR PauseChk
 	JSR JoypadReading
 	LDA #$3A
 	STA M90_PRG0
 	LDA #$3B
-	STA M90_PRG1
+	STA M90_PRG1 ;Load music banks 58 and 59 into $8000 and $A000 respectively
 	JSR jmp_58_85BE
 	JSR jmp_58_862A
 	LDA #$00
@@ -198,7 +199,7 @@ bra3_E12F:
 	PLA
 	PLP
 	RTI
-	
+
 Reset:
 	SEI
 	CLD	;Standard 2A03/6502 initialization
@@ -222,9 +223,9 @@ bra3_E1AA:
 	LDA #$3F
 	STA M90_PRG3	;Swap bank 63 into the 4th PRG bank
 	LDA #%10000101
-	STA M90_IRQ_MODE	;Set mapper IRQ mode (Count down, normal prescaler, 3 bit prescaler, PPU A12 source)
+	STA M90_IRQ_MODE ;Set mapper IRQ mode (Count down, normal prescaler, 3 bit prescaler, PPU A12 source/scanline counter)
 	LDA #%00111110
-	STA M90_BANK_SIZE	;Set mapper bank sizes (8K PRG, 1K CHR)
+	STA M90_BANK_SIZE ;Set mapper bank sizes (8K PRG, 1K CHR)
 	LDA #$00
 	STA M90_NT0
 	LDA #$01
@@ -234,7 +235,7 @@ bra3_E1AA:
 	LDA #$03
 	STA M90_NT3	;Set 1K nametable banks (Seems useless, ROM nametables are already disabled)
 	LDA #$00
-	STA M90_IRQ_XOR	;Clear the XOR register
+	STA M90_IRQ_XOR	;Set to IRQ XOR to zero
 	STA M90_PPU_CFG	;Clear PPU address config
 	STA M90_CHR_CTRL1	;Disable outer bank selection
 	LDA #%00000001
@@ -267,6 +268,7 @@ ClearMemory:
 	STA $0700,X	;Wipe all pages of memory
 	DEX
 	BNE ClearMemory	;Keep looping until every page is cleared
+
 	LDA #$00	;Clear the accumulator
 	JSR MapperProtection	;Make sure the game is on Mapper 90
 	LDA #$3A
@@ -274,7 +276,7 @@ ClearMemory:
 	LDA #$3B
 	STA M90_PRG1	;Swap the 2nd music bank into 2nd PRG slot
 	JSR jmp_58_85D6
-	LDA #$20
+	LDA #musTitle
 	STA MusicRegister	;Play the title screen music
 	JSR sub_58_8E23+1	;Jumps inbetween an opcode. Probably an error.
 	INC MuteFlag	;Enable audio
@@ -2124,7 +2126,7 @@ pnt2_EE3D:
 	JSR sub3_ED48
 	LDA #$3D
 	STA M90_PRG1
-	JSR sub6_A828
+	JSR GetEntitySetPtr
 	LDA #$20
 	STA PlayerAttributes
 	RTS
@@ -2493,7 +2495,7 @@ pnt2_F0F8:
 	STX PPUAddr	;Store lower byte
 	LDA ScrollXPos
 	STA PPUScroll
-	STA PPUScroll	;Set the horizontal scroll to both axes
+	STA PPUScroll ;Set the horizontal scroll to both axes
 	STA M90_IRQ_DISABLE	;Disable mapper IRQ
 	RTS	;Done
 pnt2_F127: ;HUD ON MAP SCREEN
@@ -3508,7 +3510,7 @@ loc3_F6F3:
 	STA M90_IRQ_COUNTER	;Disable interrupts and set IRQ counter (and set interrupt scanline? no idea how this works)
 	LDA #$FB
 	STA M90_IRQ_PRESCALER
-	STA M90_IRQ_ENABLE	;Enable interrupts and set prescaler
+	STA M90_IRQ_ENABLE	;Enable interrupts and set prescaler to 8 bits
 	RTS
 InterruptLineTable:
 	.byte $08
@@ -3559,20 +3561,20 @@ bra3_F74A:
 	JMP loc3_F7C5
 bra3_F751:
 	LDA HUDDisplay
-	BNE bra3_F759	;Go to next check if the HUD isn't in mode 0
-	JMP loc3_F7CE	;If it is, jump
+	BNE bra3_F759 ;Go to next check if the HUD isn't in mode 0
+	JMP loc3_F7CE ;If it is, jump
 bra3_F759:
 	CMP #$01
-	BNE bra3_F760	;Go to next check if the HUD isn't in mode 1
-	JMP loc3_F85A	;If it is, jump
+	BNE bra3_F760 ;Go to next check if the HUD isn't in mode 1
+	JMP loc3_F85A ;If it is, jump
 bra3_F760:
 	CMP #$02
-	BNE bra3_F767	;Go to next check if the HUD isn't in mode 2
-	JMP loc3_F899	;If it is, jump
+	BNE bra3_F767 ;Go to next check if the HUD isn't in mode 2
+	JMP loc3_F899 ;If it is, jump
 bra3_F767:
 	CMP #$03
-	BNE bra3_F76E	;Go to next check if the HUD isn't in mode 3
-	JMP loc3_F7C5	;If it is, jump
+	BNE bra3_F76E ;Go to next check if the HUD isn't in mode 3
+	JMP loc3_F7C5 ;If it is, jump
 bra3_F76E:
 	LDA HUDDisplay
 	BNE bra3_F776
@@ -3623,7 +3625,7 @@ bra3_F7BE:
 	JMP loc3_F7C5
 bra3_F7C5:
 loc3_F7C5:
-	STA $E000	;Write to useless, unmapped location (why??)
+	STA $E000 ;Write to useless, unmapped location (Maybe this was originally for another mapper?)
 	LDA #$00
 	STA HUDDisplay
 	RTS
@@ -3631,41 +3633,41 @@ loc3_F7CE:
 	INC HUDDisplay
 	LDA #$20
 	STA M90_IRQ_ENABLE
-	STA M90_IRQ_ENABLE	;Enable interrupts
+	STA M90_IRQ_ENABLE ;Enable interrupts
 	RTS
-sub3_F7DA:
-	LDA PauseFlag	;If the game is paused,
-	BNE bra3_F811	;branch
-	LDA DataBank2
-	CMP #$26	;If the final boss area isn't loaded,
-	BNE bra3_F7EA	;branch
-	JSR sub3_F90B	;If it is, continue and jump
+PauseChk:
+	LDA PauseFlag ;Check if the game is paused
+	BNE BGAnimSubDone ;If so, branch (stop)
+	LDA DataBank2 ;Otherwise, continue
+	CMP #$26 ;Check if the final boss area is loaded
+	BNE BGAnimSub ;If not, do standard BG animation
+	JSR sub3_F90B ;If it is, animate the clown car instead
 	RTS
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ; BG BANK ANIMATION
-;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-		
-bra3_F7EA:
+;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+BGAnimSub:
 	LDA DataBank2
 	CMP #$23
-	BEQ bra3_F811
+	BEQ BGAnimSubDone ;Skip BG animation if on special level, which includes Yoshi's house or any of the level intro screens
 	CMP #$2B
-	BEQ bra3_F811
+	BEQ BGAnimSubDone ;Also skip BG animation if the bonus level is loaded
 	LDA BGBankAnimation
 	LSR
-	TAY	;Get pointer index for BG bank animation
+	TAY ;Get pointer index for BG bank animation
 	LDA AnimatedBankPointers,Y
-	STA $A6	;Load lower byte of pointer
+	STA $A6 ;Load lower byte of pointer
 	LDA AnimatedBankPointers+1,Y
-	STA $A7	;Load upper byte of pointer
+	STA $A7 ;Load upper byte of pointer
 	LDA FrameCount
-	AND #%00011000	;Mask out bits 4 and 5 to cycle through 4 values every 32 frames
+	AND #%00011000 ;Mask out bits 4 and 5 to cycle through 4 values every 32 frames
 	LSR
 	LSR
-	LSR	;Divide the result by 8 to get the bank index, effectively switching to the next bank every 8 frames
-	TAY	;Set pointer index
+	LSR ;Divide the result by 8 to get the bank index, effectively switching to the next bank every 8 frames
+	TAY ;Set pointer index
 	LDA ($A6),Y
-	STA M90_BG_CHR3	;Set the 4th bank
-bra3_F811:
+	STA M90_BG_CHR3	;Update the 4th CHR bank
+BGAnimSubDone:
 	RTS
 AnimatedBankPointers:
 	.word AnimBank2
@@ -3722,30 +3724,30 @@ AnimBank4:
 loc3_F85A:
 	LDA #$1D
 	STA M90_IRQ_DISABLE
-	STA M90_IRQ_ENABLE	;Disable then enable interrupts (removing this causes the HUD to flicker, I assume this is an IRQ reset of some sort)
-	STA M90_IRQ_COUNTER	;Set counter (line?) to $1D
-	LDX #$0C	;Make code loop 12 times
+	STA M90_IRQ_ENABLE ;Disable then enable interrupts (removing this causes the HUD to flicker, I assume this is an IRQ reset of some sort)
+	STA M90_IRQ_COUNTER ;Set IRQ counter (line?) to $1D
+	LDX #$0C ;Make code loop 12 times
 bra3_F867:
 	DEX
-	BNE bra3_F867	;Loop this code for the set amount of times (waits 59 cycles)
+	BNE bra3_F867 ;Loop this code for the set amount of times (waits 59 cycles)
 	LDX #$2B
 	LDY #$40
 	STX PPUAddr
-	STY PPUAddr	;Set PPU address to $2B40
+	STY PPUAddr ;Set PPU address to $2B40
 	LDA PPUStatus ;clear PPU address data latch 
 	LDA #$00
-	STA PPUScroll	;Set horizontal scroll for HUD (seems to position the item box, not the HUD itself)
+	STA PPUScroll ;Set horizontal scroll for HUD (seems to position the item box, not the HUD itself)
 	LDA #$C4
-	STA PPUScroll	;Set vertical scroll for HUD
+	STA PPUScroll ;Set vertical scroll for HUD
 	INC HUDDisplay
 	LDA #$EC
-	STA M90_BG_CHR0		;Swap in 1st HUD bank (contains text and icons)
+	STA M90_BG_CHR0 ;Swap in 1st HUD bank (contains text and icons)
 	LDA #$ED
-	STA M90_BG_CHR1		;Swap in 2nd HUD bank (nothing to do with HUD, just random level tiles)
+	STA M90_BG_CHR1 ;Swap in 2nd HUD bank (nothing to do with HUD, just random level tiles)
 	LDA #$EE
-	STA M90_BG_CHR2		;Swap in 3rd HUD bank (contains item box graphic)
+	STA M90_BG_CHR2 ;Swap in 3rd HUD bank (contains item box graphic)
 	LDA #$EF
-	STA M90_BG_CHR3		;Swap in 4th HUD bank (nothing to do with HUD, just random level tiles)
+	STA M90_BG_CHR3 ;Swap in 4th HUD bank (nothing to do with HUD, just random level tiles)
 	RTS
 loc3_F899:
 	STA M90_IRQ_DISABLE
@@ -3782,9 +3784,9 @@ bra3_F8B7:
 	RTS
 loc3_F8D7:
 	LDX #$22
-	LDY #$D8	;Set interrupt line
+	LDY #$D8 ;Set interrupt line
 	STX PPUAddr
-	STY PPUAddr	;Store interrupt line
+	STY PPUAddr ;Store interrupt line
 	LDA PPUStatus
 	LDA #$00
 	STA PPUScroll
@@ -3793,13 +3795,13 @@ loc3_F8D7:
 	LDA #$00
 	STA HUDDisplay
 	LDA #$C8
-	STA M90_BG_CHR0		;Load 1st Clown Car bank into PPU
+	STA M90_BG_CHR0 ;Load 1st Clown Car bank into PPU
 	LDA #$C9
-	STA M90_BG_CHR1		;Load 2nd Clown Car bank into PPU
+	STA M90_BG_CHR1 ;Load 2nd Clown Car bank into PPU
 	LDA #$CA
-	STA M90_BG_CHR2		;Load 3rd Clown Car bank into PPU
+	STA M90_BG_CHR2 ;Load 3rd Clown Car bank into PPU
 	LDA #$CB
-	STA M90_BG_CHR3		;Load 4th Clown Car bank into PPU
+	STA M90_BG_CHR3 ;Load 4th Clown Car bank into PPU
 	STA M90_IRQ_DISABLE
 	RTS
 sub3_F90B:
@@ -3808,10 +3810,10 @@ sub3_F90B:
 	STA M90_BG_CHR0
 	RTS
 ClownCarBanks:
-	.byte $C8	;Default
-	.byte $C9	;Blinking
-	.byte $CA	;Hurt
-	.byte $CB	;Angry
+	.byte $C8 ;Default
+	.byte $C9 ;Blinking
+	.byte $CA ;Hurt
+	.byte $CB ;Angry
 sub3_F919:
 	LDA BGPalette
 	ASL

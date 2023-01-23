@@ -1933,37 +1933,37 @@ tbl6_A728:
 	.byte $80
 	.byte $80
 	.byte $80
-sub6_A828:
+GetEntitySetPtr:
 	LDA WorldNumber
 	ASL
-	TAX
-	LDA tbl6_A848,X
-	STA $DC
-	LDA tbl6_A848+1,X
-	STA $DD
+	TAX ;Get pointer index for current world
+	LDA EntitySetPtrs,X
+	STA EntitySetPtr
+	LDA EntitySetPtrs+1,X
+	STA EntitySetPtr+1 ;Get the entity set pointer for the current world
 	LDA LevelNumber
 	ASL
 	ASL
 	ASL
 	ASL
 	CLC
-	ADC $DC
-	STA $DC
-	BCC bra6_A847_RTS
-	INC $DD
+	ADC EntitySetPtr ;Offset it based on the current level
+	STA EntitySetPtr
+	BCC bra6_A847_RTS ;Check if the low byte overflows
+	INC EntitySetPtr+1 ;If so, increment the high byte (16 bit addition)
 bra6_A847_RTS:
 	RTS
-tbl6_A848:
-	.word ofs_A85A
-	.word ofs_A89A
-	.word ofs_A8DA
-	.word ofs_A91A
-	.word ofs_A95A
-	.word ofs_A99A
-	.word ofs_A9DA
-	.word ofs_AA1A
-	.word ofs_AA2A
-ofs_A85A:
+EntitySetPtrs:
+	.word World1_EntitySet
+	.word World2_EntitySet
+	.word World3_EntitySet
+	.word World4_EntitySet
+	.word World5_EntitySet
+	.word World6_EntitySet
+	.word World7_EntitySet
+	.word World8_EntitySet
+	.word BonusLevel_EntitySet ;(Also used for Yoshi's house)
+World1_EntitySet:
 	.byte $74
 	.byte $00
 	.byte $12
@@ -2028,7 +2028,7 @@ ofs_A85A:
 	.byte $00
 	.byte $00
 	.byte $77
-ofs_A89A:
+World2_EntitySet:
 	.byte $74
 	.byte $1E
 	.byte $20
@@ -2093,7 +2093,7 @@ ofs_A89A:
 	.byte $6B
 	.byte $00
 	.byte $4D
-ofs_A8DA:
+World3_EntitySet:
 	.byte $74
 	.byte $4A
 	.byte $2F
@@ -2158,7 +2158,7 @@ ofs_A8DA:
 	.byte $00
 	.byte $00
 	.byte $4D
-ofs_A91A:
+World4_EntitySet:
 	.byte $74
 	.byte $22
 	.byte $21
@@ -2223,7 +2223,7 @@ ofs_A91A:
 	.byte $00
 	.byte $00
 	.byte $77
-ofs_A95A:
+World5_EntitySet:
 	.byte $0C
 	.byte $0E
 	.byte $10
@@ -2288,7 +2288,7 @@ ofs_A95A:
 	.byte $00
 	.byte $00
 	.byte $4D
-ofs_A99A:
+World6_EntitySet:
 	.byte $15
 	.byte $02
 	.byte $C3
@@ -2353,7 +2353,7 @@ ofs_A99A:
 	.byte $00
 	.byte $74
 	.byte $4D
-ofs_A9DA:
+World7_EntitySet:
 	.byte $11
 	.byte $0D
 	.byte $FB
@@ -2418,7 +2418,7 @@ ofs_A9DA:
 	.byte $00
 	.byte $00
 	.byte $4D
-ofs_AA1A:
+World8_EntitySet:
 	.byte $7C
 	.byte $00
 	.byte $00
@@ -2435,7 +2435,7 @@ ofs_AA1A:
 	.byte $00
 	.byte $00
 	.byte $4D
-ofs_AA2A:
+BonusLevel_EntitySet:
 	.byte $F2
 	.byte $F3
 	.byte $F5
@@ -3466,13 +3466,13 @@ sub6_AEB8:
 	TAY	;Multiply the level number by 16 to get the index based off the level number
 	LDX #$00	;Clear X index
 bra6_AEC2:
-	LDA tbl6_AED1,Y	;Load the tile buffer??(Unsure of what $D0-$DB is for) for the current level number
+	LDA tbl6_AED1,Y	;Load the screen data buffer??(Unsure of what $D0-$DB is for) for the current level number
 	STA $D0,X	;Store in RAM
 	INY	;Move to the next byte in the byte
 	INX	;Move to the next byte in the table
 	CPX #$0C
 	BCC bra6_AEC2	;Loop until 12 bytes from the table have been copied to RAM
-	JSR sub6_A828
+	JSR GetEntitySetPtr
 	RTS
 tbl6_AED1:
 	.byte $00

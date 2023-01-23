@@ -38,6 +38,7 @@ VerticalScrollFlag = $5B
 TileRowCount = $B0
 BGPalDataSize = $B1
 MetaspriteRowAlignment = $B2
+EntitySetPtr = $DC
 GameState = $DE
 Event = $DF
 EventPart = $E0

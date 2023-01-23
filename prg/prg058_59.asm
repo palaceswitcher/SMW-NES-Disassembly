@@ -193,14 +193,14 @@ jmp_58_862A:
 	BEQ bra10_8642
 	LDA #$00
 	STA APUStatus
-	LDA #$07
-	STA APUStatus
+	LDA #%00000111
+	STA APUStatus ;Disable noise channel
 	JSR sub10_8C85
 	JSR sub10_86E8
 	JMP loc10_8671
 bra10_8642:
 	LDA #$0F
-	STA APUStatus
+	STA APUStatus ;Re-enable all channels (excluding DMC)
 loc10_8647:
 	JSR sub10_8C85
 	JSR sub10_86E8
