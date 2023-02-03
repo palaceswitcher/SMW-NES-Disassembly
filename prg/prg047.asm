@@ -101,7 +101,7 @@ tbl_47_C000:
 	.word ofs_D088
 	.word ofs_D0C8
 Attr_Bank80:
-	.byte $00	;sprite palette mappings start
+	.byte $00 ;sprite palette mappings start
 	.byte $00
 	.byte $00
 	.byte $00
@@ -4324,7 +4324,7 @@ ofs_D0C8:
 	.byte $03
 	.byte $03
 	.byte $03
-	.byte $02	;sprite palette mappings end
+	.byte $02 ;sprite palette mappings end
 	.byte $FF
 	.byte $00
 	.byte $FF

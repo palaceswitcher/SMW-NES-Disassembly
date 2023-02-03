@@ -1899,7 +1899,7 @@ bra5_8C8B:
 loc5_8C8B:
 	LDA FreezeFlag
 	BEQ bra5_8C91
-	RTS	;unlogged
+	RTS ;unlogged
 bra5_8C91:
 	LDA ObjectState,X
 	AND #$1F
@@ -3772,7 +3772,7 @@ bra5_9971:
 	JSR sub_52_ADAF
 	RTS
 tbl5_997F:
-	.word ofs_9989	;Bonus ? Block
+	.word ofs_9989 ;Bonus ? Block
 	.word ofs_9990
 	.word ofs_9997
 	.word ofs_999E
@@ -3898,14 +3898,14 @@ ptr10_9A45:
 	STA ObjectSlot,X
 	RTS
 obj_hE8:
-	LDX $A4	;Get index for current object?
+	LDX $A4 ;Get index for current object?
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
 	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X	;Calculate horizontal distance between the player and the object
+	STA ObjXScreenDistance,X ;Calculate horizontal distance between the player and the object
 	STA $28
 	BEQ bra5_9A69
 	CMP #$FF
@@ -3918,7 +3918,7 @@ bra5_9A69:
 	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X	;Calculate vertical distance between the player and the object
+	STA ObjYScreenDistance,X ;Calculate vertical distance between the player and the object
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
 	BEQ bra5_9AAB
@@ -3948,12 +3948,12 @@ loc5_9AAB:
 bra5_9AB1:
 	LDA ObjectAction,X
 	ASL
-	TAY	;Get pointer for current action
+	TAY ;Get pointer for current action
 	LDA tbl5_9AC3,Y
-	STA $32	;Load lower byte
+	STA $32 ;Load lower byte
 	LDA tbl5_9AC3+1,Y
-	STA $33	;Load upper byte
-	JMP ($32)	;Jump to loaded pointer
+	STA $33 ;Load upper byte
+	JMP ($32) ;Jump to loaded pointer
 tbl5_9AC3:
 	.word ptr10_9AD1
 	.word ptr10_9B30
@@ -3967,9 +3967,9 @@ ptr10_9AD1:
 	STA EnemyAnimFrame,X
 	LDY #$22
 	LDA PlayerPowerup
-	BNE bra5_9AE4	;Branch ahead if the player has no powerup
+	BNE bra5_9AE4 ;Branch ahead if the player has no powerup
 	LDA Player1YoshiStatus
-	BNE bra5_9AE4	;Branch ahead if the player is riding Yoshi
+	BNE bra5_9AE4 ;Branch ahead if the player is riding Yoshi
 	LDY #$18
 bra5_9AE4:
 	STY $25
@@ -4100,17 +4100,17 @@ ptr10_9B8C:
 	CMP #$03
 	BNE bra5_9BDA
 	LDA #sfxBlockRelease
-	STA SFXRegister	;Play block release sound
+	STA SFXRegister ;Play block release sound
 	LDA #$E8
-	BNE bra5_9BE5	;Spawn 1UP
+	BNE bra5_9BE5 ;Spawn 1UP
 bra5_9BDA:
 	LDA #$00
-	JSR sub3_BCD4	;Give the player 100 points
+	JSR sub3_BCD4 ;Give the player 100 points
 	LDA #sfxCoin
-	STA SFXRegister	;Play coin sound
-	LDA #$E9	;Spawn coin sprite
+	STA SFXRegister ;Play coin sound
+	LDA #$E9 ;Spawn coin sprite
 bra5_9BE5:
-	STA ObjectSlot,Y	;Store sprite in memory
+	STA ObjectSlot,Y ;Store sprite in memory
 	INC ObjectAction,X
 	RTS
 ptr10_9BEC:

@@ -1,21 +1,21 @@
 ;disassembled by BZK 6502 Disassembler
 jmp_54_A000:
 	LDA YoshiUnmountedState
-	BNE bra3_A006	;If riding Yoshi, branch
+	BNE bra3_A006 ;If riding Yoshi, branch
 	RTS
 bra3_A006:
 	LDA Event
 	CMP #$04
-	BEQ bra3_A023	;If the player is dying, branch
+	BEQ bra3_A023 ;If the player is dying, branch
 	LDA #$35
-	STA ObjectPRGBank	;Set current object bank to 53
+	STA ObjectPRGBank ;Set current object bank to 53
 	LDA ObjectPRGBank
-	STA M90_PRG0	;Swap the current object bank in
+	STA M90_PRG0 ;Swap the current object bank in
 	LDA #$33
-	STA M90_PRG3	;Swap bank 51 into the 4th PRG slot
-	JSR obj_h36	;Jump
+	STA M90_PRG3 ;Swap bank 51 into the 4th PRG slot
+	JSR obj_h36 ;Jump
 	LDA #$3F
-	STA M90_PRG3	;Swap bank 63 back in
+	STA M90_PRG3 ;Swap bank 63 back in
 	RTS
 bra3_A023:
 	LDA YoshiXPos
@@ -32,24 +32,24 @@ bra3_A023:
 bra3_A03B:
 	LDA YoshiYPos
 	SEC
-	SBC PlayerYPosDup	;Yoshi Y position - Player Y position =
-	STA YoshiYDistance	;vertical distance between the player and Yoshi
+	SBC PlayerYPosDup ;Yoshi Y position - Player Y position =
+	STA YoshiYDistance ;vertical distance between the player and Yoshi
 	LDA YoshiYScreen
-	SBC PlayerYScreenDup	;Yoshi Y screen - player Y screen =
-	STA YoshiYScreenDist	;vertical screen distance between the player and Yoshi
+	SBC PlayerYScreenDup ;Yoshi Y screen - player Y screen =
+	STA YoshiYScreenDist ;vertical screen distance between the player and Yoshi
 	LDA PlayerYScreenDup
 	CMP YoshiYScreen
-	BEQ bra3_A07D_RTS	;If the player and Yoshi are on the same vertical screen, branch
+	BEQ bra3_A07D_RTS ;If the player and Yoshi are on the same vertical screen, branch
 	LDA YoshiYScreenDist
-	BPL bra3_A06C	;Branch if Yoshi is at a higher vertical screen than the player
+	BPL bra3_A06C ;Branch if Yoshi is at a higher vertical screen than the player
 	LDA YoshiYDistance
 	CLC
 	ADC #$10
-	STA YoshiYDistance	;Add 16 to Yoshi's vertical distance
+	STA YoshiYDistance ;Add 16 to Yoshi's vertical distance
 	LDA YoshiYScreenDist
 	ADC #$00
-	STA YoshiYScreenDist	;Add (nothing?) to Yoshi's vertical screen distance
-	JMP loc3_A07D_RTS	;Jump
+	STA YoshiYScreenDist ;Add (nothing?) to Yoshi's vertical screen distance
+	JMP loc3_A07D_RTS ;Jump
 bra3_A06C:
 	LDA YoshiYDistance
 	SEC
@@ -348,7 +348,7 @@ tbl3_A1B5:
 	.word obj_h7D
 	.word obj_h7E
 	.word obj_h7E
-	.word ptr4_A0D8	;Unused excess pointers
+	.word ptr4_A0D8 ;Unused excess pointers
 	.byte $62
 	.byte $95
 	.byte $90
@@ -840,11 +840,11 @@ tbl3_A435:
 	.word obj_hE7
 	.word obj_hE8
 	.word obj_hE8
-	.word obj_hE8	;1st bonus block
+	.word obj_hE8 ;1st bonus block
 	.word obj_hE8
-	.word obj_hE8	;2nd bonus block
+	.word obj_hE8 ;2nd bonus block
 	.word obj_hED
-	.word obj_hED	;3rd bonus block
+	.word obj_hED ;3rd bonus block
 	.word obj_hED
 	.word obj_hF0
 	.word obj_hF0
@@ -1346,7 +1346,7 @@ bra3_A772_RTS:
 	RTS
 jmp_54_A773:
 	LDA ObjXScreenDistance,X
-	BPL bra3_A785	;Branch if the player is a screen ahead of the object
+	BPL bra3_A785 ;Branch if the player is a screen ahead of the object
 	LDA #$08
 	CLC
 	ADC #$10
@@ -1357,12 +1357,12 @@ jmp_54_A773:
 bra3_A785:
 	LDA ObjectXDistance,X
 	CMP #$08
-	BCS bra3_A7AC	;Branch if the player isn't within 8 horizontal pixels of the object's hitbox
+	BCS bra3_A7AC ;Branch if the player isn't within 8 horizontal pixels of the object's hitbox
 bra3_A78C:
 	LDA ObjYScreenDistance,X
-	BEQ bra3_A7A2	;Branch if the player is to the left of the object
+	BEQ bra3_A7A2 ;Branch if the player is to the left of the object
 	CMP #$FF
-	BNE bra3_A7AC	;Branch if the player isn't to the right of the object
+	BNE bra3_A7AC ;Branch if the player isn't to the right of the object
 	LDA #$14
 	CLC
 	ADC #$10
@@ -1373,7 +1373,7 @@ bra3_A78C:
 bra3_A7A2:
 	LDA ObjectYDistance,X
 	CMP #$00
-	BCS bra3_A7AC	;Branch if the player is above the object's hitbox?
+	BCS bra3_A7AC ;Branch if the player is above the object's hitbox?
 bra3_A7A9:
 	CLC
 	BCC bra3_A7AD
@@ -1401,7 +1401,7 @@ bra3_A7C4:
 bra3_A7CB:
 	JMP loc3_A852 ;If there is, jump
 bra3_A7CE:
-	LDX $A4	;Get index for current object
+	LDX $A4 ;Get index for current object
 	LDA PlayerState
 	CMP #$09
 	BCC bra3_A7CB ;Branch (to a jump) if Yoshi's tongue isn't out
@@ -1413,17 +1413,17 @@ bra3_A7CE:
 	BPL bra3_A7E8 ;Branch if the player is left of the object
 bra3_A7E3:
 	LDA ObjXScreenDistance,X
-	BPL bra3_A7CB	;Branch if the player is left of the object
+	BPL bra3_A7CB ;Branch if the player is left of the object
 bra3_A7E8:
 	LDX PlayerAnimationFrame
 	CPX #$06
-	BCC bra3_A852	;Make sure the player is on the 6th or less frame of their current animation?
+	BCC bra3_A852 ;Make sure the player is on the 6th or less frame of their current animation?
 	LDA tbl3_A85F,X
-	STA $32	;Store pointer based off the player's animation frame
-	LDY $A4	;Get index for current object
+	STA $32 ;Store pointer based off the player's animation frame
+	LDY $A4 ;Get index for current object
 	LDX ObjectSlot,Y
 	LDA tbl3_A87B,X
-	STA $36	;Load pointer for object into memory
+	STA $36 ;Load pointer for object into memory
 	LDA tbl3_A97B,X
 	STA $38
 	LDX $A4
@@ -1431,7 +1431,7 @@ bra3_A7E8:
 	BPL bra3_A816
 	LDA $32
 	CLC
-	ADC $36	;Add [unknown1] to [unknown2]
+	ADC $36 ;Add [unknown1] to [unknown2]
 	CLC
 	ADC ObjectXDistance,X
 	BCS bra3_A81D
@@ -1475,9 +1475,9 @@ bra3_A852:
 loc3_A852:
 	LDX $A4
 	LDA ObjectState,X
-	AND #$E0	;Mask out the lower 5 bits
+	AND #$E0 ;Mask out the lower 5 bits
 	ORA #$03
-	STA ObjectState,X	;Set the lower 2 bits, changing the collision state to make the object vulnerable to Yoshi's tongue(?)
+	STA ObjectState,X ;Set the lower 2 bits, changing the collision state to make the object vulnerable to Yoshi's tongue(?)
 	RTS
 tbl3_A85F:
 	.byte $00
@@ -2167,20 +2167,20 @@ ptr_AB5D:
 	RTS
 jmp_54_AB6B:
 	LDA Player1YoshiStatus
-	BNE bra3_AB91_RTS	;Make sure the player isn't riding Yoshi
+	BNE bra3_AB91_RTS ;Make sure the player isn't riding Yoshi
 	LDA PlayerHoldFlag
-	BNE bra3_AB91_RTS	;Stop if the player is already carrying something
+	BNE bra3_AB91_RTS ;Stop if the player is already carrying something
 	LDA PlayerAction+1
 	CMP #$04
-	BCS bra3_AB91_RTS	;Only continue if player is either walking, running, or doing nothing
+	BCS bra3_AB91_RTS ;Only continue if player is either walking, running, or doing nothing
 	LDA ButtonsHeld
 	AND #buttonB
-	BEQ bra3_AB91_RTS	;Make sure the B button is held
+	BEQ bra3_AB91_RTS ;Make sure the B button is held
 	STA PlayerHoldFlag
 	LDY $A4
 	LDA ObjectState,Y
 	ORA #$80
-	STA ObjectState,Y	;Set object to "held"
+	STA ObjectState,Y ;Set object to "held"
 	PLA
 	PLA
 bra3_AB91_RTS:
@@ -3259,32 +3259,32 @@ loc3_B24C:
 	EOR #$40
 	STA ObjectState,X
 bra3_B25D:
-	LDY #$00	;Clear Y reg
-	LDA ($32),Y	;Load movement data
-	TAY	;Copy it to the Y reg
+	LDY #$00 ;Clear Y reg
+	LDA ($32),Y ;Load movement data
+	TAY ;Copy it to the Y reg
 	LDA ObjectState,X
 	AND #$40
-	BEQ bra3_B26E	;Branch if the object is facing right
-	TYA	;Load the movement data
-	EOR #$FF	;Negate the value
-	TAY	;Copy it back to the Y register
-	INY	;Increase it by 1
+	BEQ bra3_B26E ;Branch if the object is facing right
+	TYA ;Load the movement data
+	EOR #$FF ;Negate the value
+	TAY ;Copy it back to the Y register
+	INY ;Increase it by 1
 bra3_B26E:
-	TYA	;Copy it back to the accumulator
-	PHA	;Push into stack
+	TYA ;Copy it back to the accumulator
+	PHA ;Push into stack
 	CLC
 	ADC ObjectXPos,X
-	STA ObjectXPos,X	;Move the object by adding to its position
-	PLA	;Pull the value that was just added
-	BMI bra3_B281	;Branch if it's negative
+	STA ObjectXPos,X ;Move the object by adding to its position
+	PLA ;Pull the value that was just added
+	BMI bra3_B281 ;Branch if it's negative
 	LDA ObjectXScreen,X
-	ADC #$00	;Update the horizontal screen (if the object is going left?)
-	BPL bra3_B286	;Branch if the screen is negative?
+	ADC #$00 ;Update the horizontal screen (if the object is going left?)
+	BPL bra3_B286 ;Branch if the screen is negative?
 bra3_B281:
 	LDA ObjectXScreen,X
-	SBC #$00	;Update the horizontal screen (if the object is going right?)
+	SBC #$00 ;Update the horizontal screen (if the object is going right?)
 bra3_B286:
-	STA ObjectXScreen,X	;Update it in memory
+	STA ObjectXScreen,X ;Update it in memory
 	RTS
 loc3_B28A:
 	LDA $AA
@@ -3309,9 +3309,9 @@ bra3_B2A0:
 	RTS
 loc3_B2B4:
 	INY
-	LDA ($32),Y	;Load movement data
-	BMI bra3_B2D3	;Branch if bit 7 of is set
-	JSR sub3_B077	;Otherwise, jump
+	LDA ($32),Y ;Load movement data
+	BMI bra3_B2D3 ;Branch if bit 7 of is set
+	JSR sub3_B077 ;Otherwise, jump
 	BEQ bra3_B2C2
 	CMP #$02
 	BNE bra3_B2F8
@@ -3453,7 +3453,7 @@ sub_54_B3B4:
 	STA $33
 	JSR sub3_B3C9
 	LDA ObjectPRGBank
-	STA M90_PRG0	;Swap PRG bank out for current object
+	STA M90_PRG0 ;Swap PRG bank out for current object
 	RTS
 sub3_B3C9:
 	LDX $A4
@@ -3469,12 +3469,12 @@ bra3_B3DC:
 loc3_B3DC:
 	LDA ObjectState,X
 	EOR #$40
-	STA ObjectState,X	;Flip the object horizontally
+	STA ObjectState,X ;Flip the object horizontally
 bra3_B3E4:
 loc3_B3E4:
 	LDA ObjectState,X
 	AND #%01000000
-	BEQ bra3_B3F5	;If the object is facing right, branch
+	BEQ bra3_B3F5 ;If the object is facing right, branch
 	LDA ($32),Y
 	EOR #$FF
 	CLC
@@ -4128,20 +4128,20 @@ jmp_54_B896:
 	STA $35
 	LDA ObjectAction,X
 	ASL
-	ASL	;Multiply the object's action value by 4
-	STA $3F	;Back up in RAM
-	TAY	;Use as pointer index
+	ASL ;Multiply the object's action value by 4
+	STA $3F ;Back up in RAM
+	TAY ;Use as pointer index
 	LDA ($34),Y ;Load value pointer 
 	ASL
-	TAY	;Get the index for the previously loaded value
+	TAY ;Get the index for the previously loaded value
 	LDA tbl3_B8BF,Y
 	STA $32
 	LDA tbl3_B8BF+1,Y
-	STA $33	;Store the pointer in RAM
+	STA $33 ;Store the pointer in RAM
 	LDA #$00
 	STA $28
 	STA $2B
-	JMP ($32)	;Jump to the pointer
+	JMP ($32) ;Jump to the pointer
 tbl3_B8BF:
 	.word ptr11_B8DB
 	.word ptr11_B968
@@ -4896,12 +4896,12 @@ loc3_BDCE:
 	BNE bra3_BDE6
 bra3_BDE1:
 	LDA #$0B
-	STA ObjectSlot,X	;Spawn a mushroom in
+	STA ObjectSlot,X ;Spawn a mushroom in
 bra3_BDE6:
 	LDA #sfxBlockRelease
-	STA SFXRegister	;Play the block release sound
+	STA SFXRegister ;Play the block release sound
 	LDY ObjectCount
-	INC ObjectCount	;Set the index for the new object
+	INC ObjectCount ;Set the index for the new object
 	LDA ObjectXPos,X
 	STA ObjectXPos,Y
 	LDA ObjectXScreen,X
@@ -4909,9 +4909,9 @@ bra3_BDE6:
 	LDA ObjectYPos,X
 	STA ObjectYPos,Y
 	LDA ObjectYScreen,X
-	STA ObjectYScreen,Y	;Copy the coordinate data over to the spawned mushroom
+	STA ObjectYScreen,Y ;Copy the coordinate data over to the spawned mushroom
 	LDA ObjectSlot,X
-	STA ObjectSlot,Y	;Copy the slot value to the mushroom
+	STA ObjectSlot,Y ;Copy the slot value to the mushroom
 	LDA #$00
 	STA ObjectVariables,Y
 	STA ObjectAction,Y

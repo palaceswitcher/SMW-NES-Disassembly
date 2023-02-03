@@ -1,6 +1,6 @@
 ;disassembled by BZK 6502 Disassembler
 tbl6_A000:
-	.byte $00	;not sure what this data is for
+	.byte $00 ;not sure what this data is for
 	.byte $00
 	.byte $00
 	.byte $00
@@ -3463,15 +3463,15 @@ sub6_AEB8:
 	ASL
 	ASL
 	ASL
-	TAY	;Multiply the level number by 16 to get the index based off the level number
-	LDX #$00	;Clear X index
+	TAY ;Multiply the level number by 16 to get the index based off the level number
+	LDX #$00 ;Clear X index
 bra6_AEC2:
-	LDA tbl6_AED1,Y	;Load the screen data buffer??(Unsure of what $D0-$DB is for) for the current level number
-	STA $D0,X	;Store in RAM
-	INY	;Move to the next byte in the byte
-	INX	;Move to the next byte in the table
+	LDA tbl6_AED1,Y ;Load the screen data buffer??(Unsure of what $D0-$DB is for) for the current level number
+	STA $D0,X ;Store in RAM
+	INY ;Move to the next byte in the byte
+	INX ;Move to the next byte in the table
 	CPX #$0C
-	BCC bra6_AEC2	;Loop until 12 bytes from the table have been copied to RAM
+	BCC bra6_AEC2 ;Loop until 12 bytes from the table have been copied to RAM
 	JSR GetEntitySetPtr
 	RTS
 tbl6_AED1:
@@ -3922,27 +3922,27 @@ jmp_61_B19E:
 	JSR sub6_AEB8
 	LDA WorldNumber
 	ASL
-	ASL	;Multiply the world number by 4
-	STA $34	;Store it at $32 in scratch RAM
+	ASL ;Multiply the world number by 4
+	STA $34 ;Store it at $32 in scratch RAM
 	ASL
-	ASL	;Multiply it by 4 again, effectively moving the low nybble to the high nybble
-	STA $32	;Store it at $32 in scratch RAM
+	ASL ;Multiply it by 4 again, effectively moving the low nybble to the high nybble
+	STA $32 ;Store it at $32 in scratch RAM
 	LDA LevelNumber
 	ASL
-	ASL	;Multiply the level number by 4
+	ASL ;Multiply the level number by 4
 	CLC
-	ADC $32	;Add the shifted Y value to it
-	TAX	;Set it as the X index
+	ADC $32 ;Add the shifted Y value to it
+	TAX ;Set it as the X index
 	LDA $34
 	CLC
-	ADC LevelNumber	;Add the level number to the previously multiplied world value, getting the ordered level number
-	TAY	;Back it up in the Y register
+	ADC LevelNumber ;Add the level number to the previously multiplied world value, getting the ordered level number
+	TAY ;Back it up in the Y register
 	LDA CurrentPlayer
-	BEQ bra6_B1C6	;Branch ahead if player 1 is playing
+	BEQ bra6_B1C6 ;Branch ahead if player 1 is playing
 	TYA
 	CLC
 	ADC #$1C
-	TAY	;Otherwise, move the index 28 spots for player 2
+	TAY ;Otherwise, move the index 28 spots for player 2
 bra6_B1C6:
 	LDA CheckpointFlag,Y
 	BEQ bra6_B1FD
@@ -3984,47 +3984,47 @@ bra6_B1FD:
 	LDA tbl6_B56D,X
 loc6_B22C:
 	JSR sub6_B34A
-	LDA #$12	;Player bottom screen offset (see below)
+	LDA #$12 ;Player bottom screen offset (see below)
 	STA $6D
-	LDY #$00	;Player top screen offset (see below)
-	STY LevelTopScreenOffset	;Preset the offset for determining the player's screen ID on the top screen
-	STA LevelBottomScreenOffset	;Preset offset for determining the player's screen ID on the bottom screen
-	LDY LevelNumber	;Use level number as index
+	LDY #$00 ;Player top screen offset (see below)
+	STY LevelTopScreenOffset ;Preset the offset for determining the player's screen ID on the top screen
+	STA LevelBottomScreenOffset ;Preset offset for determining the player's screen ID on the bottom screen
+	LDY LevelNumber ;Use level number as index
 	LDA LvlScreenOrderPtrLo,Y
-	STA LevelScreenOrderPtr	;Get the low byte of the screen order pointer based off the level number
+	STA LevelScreenOrderPtr ;Get the low byte of the screen order pointer based off the level number
 	LDA LvlScreenOrderPtrHi,Y
-	STA LevelScreenOrderPtr+1	;Get the high byte of the screen order pointer based off the level number
+	STA LevelScreenOrderPtr+1 ;Get the high byte of the screen order pointer based off the level number
 	LDA WorldNumber
 	ASL
-	TAY	;Get Y pointer index from world number
-	ASL	;(Multiply by 4)
+	TAY ;Get Y pointer index from world number
+	ASL ;(Multiply by 4)
 	CLC
-	ADC LevelNumber	;Add the product to the level number to get the ordered level number
-	TAX	;Set as the checkpoint index
+	ADC LevelNumber ;Add the product to the level number to get the ordered level number
+	TAX ;Set as the checkpoint index
 	LDA CurrentPlayer
-	BEQ bra6_B25D	;Branch if player 1 is playing
+	BEQ bra6_B25D ;Branch if player 1 is playing
 	TXA
 	CLC
 	ADC #$1C
-	TAX	;Otherwise, move the index 28 bytes ahead for player 2
+	TAX ;Otherwise, move the index 28 bytes ahead for player 2
 bra6_B25D:
 	LDA CheckpointFlag,X
-	BEQ bra6_B26D	;Branch if the checkpoint isn't set
+	BEQ bra6_B26D ;Branch if the checkpoint isn't set
 	LDA tbl6_B76E,Y
 	STA $32
-	LDA tbl6_B76E+1,Y	;If the checkpoint is set, load the checkpoint spawn coordinates
-	JMP loc6_B275	;Jump ahead
+	LDA tbl6_B76E+1,Y ;If the checkpoint is set, load the checkpoint spawn coordinates
+	JMP loc6_B275 ;Jump ahead
 bra6_B26D:
 	LDA tbl6_B676,Y
 	STA $32
-	LDA tbl6_B676+1,Y	;If the checkpoint isn't set, load the normal level spawn coordinates
+	LDA tbl6_B676+1,Y ;If the checkpoint isn't set, load the normal level spawn coordinates
 loc6_B275:
-	STA $33	;Store high byte of spawn pointer
+	STA $33 ;Store high byte of spawn pointer
 	LDA LevelNumber
 	ASL
 	ASL
 	ASL
-	TAY	;Get index for current level
+	TAY ;Get index for current level
 	LDA ($32),Y
 	STA CameraXScreen
 	STA PlayerColXScreen
@@ -4042,30 +4042,30 @@ loc6_B275:
 	STA PlayerColYPos
 	LDA CameraXScreen
 	STA PlayerXScreen
-	INY	;(Move one byte ahead)
+	INY ;(Move one byte ahead)
 	LDA ($32),Y
 	STA PlayerXPos
-	STA PlayerSprXPos	;Load the player's X spawn coordinate
+	STA PlayerSprXPos ;Load the player's X spawn coordinate
 	LDA $53
 	STA PlayerYScreen
-	INY	;(Move one byte ahead)
+	INY ;(Move one byte ahead)
 	LDA ($32),Y
 	STA PlayerYPos
-	STA PlayerSprYPos	;Load the player's Y spawn coordinate
-	INY	;(Move one byte ahead)
+	STA PlayerSprYPos ;Load the player's Y spawn coordinate
+	INY ;(Move one byte ahead)
 	LDA ($32),Y
-	STA HorizScrollLock	;Set horizontal scroll lock (If present. Very broken)
-	INY	;(Move one byte ahead)
+	STA HorizScrollLock ;Set horizontal scroll lock (If present. Very broken)
+	INY ;(Move one byte ahead)
 	LDA ($32),Y
-	STA XScreenCount	;Get horizontal screen count
-	INY	;(Move one byte ahead)
+	STA XScreenCount ;Get horizontal screen count
+	INY ;(Move one byte ahead)
 	LDA ($32),Y
-	STA VertScrollLock	;Set the vertical scroll lock (If it's set)
-	INY	;(Move one byte ahead)
+	STA VertScrollLock ;Set the vertical scroll lock (If it's set)
+	INY ;(Move one byte ahead)
 	LDA ($32),Y
-	STA YScreenCount	;Get vertical screen count
+	STA YScreenCount ;Get vertical screen count
 	LDA #$01
-	STA InterruptMode	;Set the horizontal split/interrupt for levels
+	STA InterruptMode ;Set the horizontal split/interrupt for levels
 	LDX #$00
 	LDA #$FF
 bra6_B2D1:
@@ -4140,20 +4140,20 @@ bra6_B352:
 bra6_B365:
 	ASL
 	ASL
-	STA BGBankAnimation	;Set bank 4 mode?
+	STA BGBankAnimation ;Set bank 4 mode?
 	TAX
 	LDA #$27
-	STA M90_PRG3	;Swap bank 39 into the 4th PRG slot ($E000-$FFFF)
+	STA M90_PRG3 ;Swap bank 39 into the 4th PRG slot ($E000-$FFFF)
 	LDA tbl_39_EA89,X
-	STA BGBank1	;Set BG bank 1
+	STA BGBank1 ;Set BG bank 1
 	LDA tbl_39_EA89+1,X
-	STA BGBank2	;Set BG bank 2
+	STA BGBank2 ;Set BG bank 2
 	LDA tbl_39_EA89+2,X
-	STA BGBank3	;Set BG bank 3
+	STA BGBank3 ;Set BG bank 3
 	LDA tbl_39_EA89+3,X
-	STA BGBank4	;Set BG bank 4 (redundant)
+	STA BGBank4 ;Set BG bank 4 (redundant)
 	LDA #$3F
-	STA M90_PRG3	;Swap bank 63 back in
+	STA M90_PRG3 ;Swap bank 63 back in
 	RTS
 jmp_61_B38E:
 	LDA PPUStatus

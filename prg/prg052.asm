@@ -274,7 +274,7 @@ bra2_A1BF:
 	SEC
 	SBC #$08
 	BCS bra2_A1BF
-	BCC bra2_A1AD	;unlogged
+	BCC bra2_A1AD ;unlogged
 bra2_A1CD_RTS:
 	RTS
 bra2_A1CE:
@@ -426,8 +426,8 @@ sub_52_A2A8:
 	JSR sub2_A2DE
 	JSR sub2_A446
 	RTS
-	JSR sub2_A2CA	;unlogged
-	RTS	;unlogged
+	JSR sub2_A2CA ;unlogged
+	RTS ;unlogged
 sub2_A2CA:
 	LDY #$00
 	LDA ($32),Y
@@ -464,7 +464,7 @@ sub2_A2DE:
 	ADC #$00
 	BMI bra2_A320
 	BEQ bra2_A310
-	RTS	;unlogged
+	RTS ;unlogged
 bra2_A310:
 	LDA $28
 bra2_A312:
@@ -475,29 +475,29 @@ bra2_A312:
 	CLC
 	ADC #$08
 	BCC bra2_A312
-	BCS bra2_A333	;unlogged
+	BCS bra2_A333 ;unlogged
 bra2_A320:
-	LDA $28	;unlogged
-	LDY #$00	;unlogged
+	LDA $28 ;unlogged
+	LDY #$00 ;unlogged
 bra2_A324:
-	STY $41,X	;unlogged
-	INX	;unlogged
-	CPX $2A	;unlogged
-	BCS bra2_A332_RTS	;unlogged
-	CLC	;unlogged
-	ADC #$08	;unlogged
-	BCC bra2_A324	;unlogged
-	BCS bra2_A312	;unlogged
+	STY $41,X ;unlogged
+	INX ;unlogged
+	CPX $2A ;unlogged
+	BCS bra2_A332_RTS ;unlogged
+	CLC ;unlogged
+	ADC #$08 ;unlogged
+	BCC bra2_A324 ;unlogged
+	BCS bra2_A312 ;unlogged
 bra2_A332_RTS:
-	RTS	;unlogged
+	RTS ;unlogged
 bra2_A333:
-	LDA #$00	;unlogged
+	LDA #$00 ;unlogged
 bra2_A335:
-	STA $41,X	;unlogged
-	INX	;unlogged
-	CPX $2A	;unlogged
-	BCC bra2_A335	;unlogged
-	BCS bra2_A389	;unlogged
+	STA $41,X ;unlogged
+	INX ;unlogged
+	CPX $2A ;unlogged
+	BCC bra2_A335 ;unlogged
+	BCS bra2_A389 ;unlogged
 bra2_A33E:
 	LDX #$00
 	STX $41
@@ -538,7 +538,7 @@ bra2_A371:
 	SEC
 	SBC #$08
 	BCS bra2_A371
-	BCC bra2_A35F	;unlogged
+	BCC bra2_A35F ;unlogged
 bra2_A37F_RTS:
 	RTS
 bra2_A380:
@@ -584,18 +584,18 @@ bra2_A3BB:
 	INX
 	CPX $2D
 	BCS bra2_A3C9_RTS
-	CLC	;unlogged
-	ADC #$08	;unlogged
-	BCC bra2_A3BB	;unlogged
-	BCS bra2_A3A7	;unlogged
+	CLC ;unlogged
+	ADC #$08 ;unlogged
+	BCC bra2_A3BB ;unlogged
+	BCS bra2_A3A7 ;unlogged
 bra2_A3C9_RTS:
 	RTS
-	LDA #$00	;unlogged
+	LDA #$00 ;unlogged
 bra2_A3CC:
-	STA $B2,X	;unlogged
-	INX	;unlogged
-	CPX $2D	;unlogged
-	BCC bra2_A3CC	;unlogged
+	STA $B2,X ;unlogged
+	INX ;unlogged
+	CPX $2D ;unlogged
+	BCC bra2_A3CC ;unlogged
 bra2_A3D3:
 	LDX $3C
 	LDA #$00
@@ -787,7 +787,7 @@ bra2_A500:
 	SEC
 	SBC #$08
 	BCS bra2_A500
-	BCC bra2_A4EE	;unlogged
+	BCC bra2_A4EE ;unlogged
 bra2_A50E_RTS:
 	RTS
 bra2_A50F:
@@ -961,7 +961,7 @@ bra2_A61B:
 	BCC bra2_A61B
 	BCS bra2_A66F
 bra2_A624:
-	LDX #$00	;unlogged code start
+	LDX #$00 ;unlogged code start
 	STX $41
 	LDY $A4
 	LDA $25
@@ -1009,7 +1009,7 @@ bra2_A668:
 	STA $41,X
 	INX
 	CPX #$02
-	BCC bra2_A668	;unlogged code end
+	BCC bra2_A668 ;unlogged code end
 bra2_A66F:
 	LDX #$00
 	LDY $A4
@@ -2252,7 +2252,7 @@ bra2_ACAA:
 	CLC
 	ADC PlayerSprXPos
 	BCC bra2_ACB9
-	INC $41	;unlogged
+	INC $41 ;unlogged
 bra2_ACB9:
 	CLC
 	ADC ObjectXDistance,Y
@@ -2284,7 +2284,7 @@ bra2_ACDD:
 	SEC
 	SBC #$08
 	BCS bra2_ACDD
-	BCC bra2_ACCB	;unlogged
+	BCC bra2_ACCB ;unlogged
 bra2_ACEB_RTS:
 	RTS
 bra2_ACEC:
@@ -2374,9 +2374,9 @@ bra2_AD5D:
 	LDA ($32),Y
 	CMP #$FF
 	BNE bra2_AD7E
-	LDA #$F8	;unlogged
-	STA SpriteMem,X	;unlogged
-	BMI bra2_AD9C	;unlogged
+	LDA #$F8 ;unlogged
+	STA SpriteMem,X ;unlogged
+	BMI bra2_AD9C ;unlogged
 bra2_AD7E:
 	AND #$3F
 	STA $38
@@ -2432,7 +2432,7 @@ sub_52_ADAF:
 	ADC #$00
 	BMI bra2_ADF5
 	BEQ bra2_ADE5
-	RTS	;unlogged
+	RTS ;unlogged
 bra2_ADE5:
 	LDA $28
 bra2_ADE7:
@@ -2443,29 +2443,29 @@ bra2_ADE7:
 	CLC
 	ADC #$08
 	BCC bra2_ADE7
-	BCS bra2_AE08	;unlogged
+	BCS bra2_AE08 ;unlogged
 bra2_ADF5:
-	LDA $28	;unlogged
-	LDY #$00	;unlogged
+	LDA $28 ;unlogged
+	LDY #$00 ;unlogged
 bra2_ADF9:
-	STY $41,X	;unlogged
-	INX	;unlogged
-	CPX #$02	;unlogged
-	BCS bra2_AE07_RTS	;unlogged
-	CLC	;unlogged
-	ADC #$08	;unlogged
-	BCC bra2_ADF9	;unlogged
-	BCS bra2_ADE7	;unlogged
+	STY $41,X ;unlogged
+	INX ;unlogged
+	CPX #$02 ;unlogged
+	BCS bra2_AE07_RTS ;unlogged
+	CLC ;unlogged
+	ADC #$08 ;unlogged
+	BCC bra2_ADF9 ;unlogged
+	BCS bra2_ADE7 ;unlogged
 bra2_AE07_RTS:
-	RTS	;unlogged
+	RTS ;unlogged
 bra2_AE08:
-	LDA #$00	;unlogged
+	LDA #$00 ;unlogged
 bra2_AE0A:
-	STA $41,X	;unlogged
-	INX	;unlogged
-	CPX #$02	;unlogged
-	BCC bra2_AE0A	;unlogged
-	BCS bra2_AE58	;unlogged
+	STA $41,X ;unlogged
+	INX ;unlogged
+	CPX #$02 ;unlogged
+	BCC bra2_AE0A ;unlogged
+	BCS bra2_AE58 ;unlogged
 bra2_AE13:
 	LDX #$00
 	LDY $A4
@@ -2479,7 +2479,7 @@ bra2_AE13:
 	ADC #$00
 	BMI bra2_AE3C
 	BEQ bra2_AE2C
-	RTS	;unlogged
+	RTS ;unlogged
 bra2_AE2C:
 	LDA $28
 bra2_AE2E:
@@ -2490,28 +2490,28 @@ bra2_AE2E:
 	SEC
 	SBC #$08
 	BCS bra2_AE2E
-	BCC bra2_AE4F	;unlogged
+	BCC bra2_AE4F ;unlogged
 bra2_AE3C:
-	LDA $28	;unlogged
-	LDY #$00	;unlogged
+	LDA $28 ;unlogged
+	LDY #$00 ;unlogged
 bra2_AE40:
-	STY $41,X	;unlogged
-	INX	;unlogged
-	CPX #$02	;unlogged
-	BCS bra2_AE4E_RTS	;unlogged
-	SEC	;unlogged
-	SBC #$08	;unlogged
-	BCS bra2_AE40	;unlogged
-	BCC bra2_AE2E	;unlogged
+	STY $41,X ;unlogged
+	INX ;unlogged
+	CPX #$02 ;unlogged
+	BCS bra2_AE4E_RTS ;unlogged
+	SEC ;unlogged
+	SBC #$08 ;unlogged
+	BCS bra2_AE40 ;unlogged
+	BCC bra2_AE2E ;unlogged
 bra2_AE4E_RTS:
-	RTS	;unlogged
+	RTS ;unlogged
 bra2_AE4F:
-	LDA #$00	;unlogged
+	LDA #$00 ;unlogged
 bra2_AE51:
-	STA $41,X	;unlogged
-	INX	;unlogged
-	CPX #$02	;unlogged
-	BCC bra2_AE51	;unlogged
+	STA $41,X ;unlogged
+	INX ;unlogged
+	CPX #$02 ;unlogged
+	BCC bra2_AE51 ;unlogged
 bra2_AE58:
 	LDX #$00
 	LDY $A4
@@ -2592,9 +2592,9 @@ bra2_AEC0:
 	LDA ($32),Y
 	CMP #$FF
 	BNE bra2_AEE1
-	LDA #$F8	;unlogged
-	STA SpriteMem,X	;unlogged
-	BMI bra2_AF02	;unlogged
+	LDA #$F8 ;unlogged
+	STA SpriteMem,X ;unlogged
+	BMI bra2_AF02 ;unlogged
 bra2_AEE1:
 	AND #$3F
 	STA $38

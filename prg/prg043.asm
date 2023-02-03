@@ -88,7 +88,7 @@
 	.byte $00
 	.byte $10
 	CMP ObjectYScreen,X
-	BEQ bra3_8694	;not sure why its jumping to blank data
+	BEQ bra3_8694 ;not sure why its jumping to blank data
 	LDA ObjYScreenDistance,X
 	BPL bra3_8683
 	LDA ObjectYDistance,X
@@ -136,7 +136,7 @@ bra3_8694:
 	.byte $00
 	.byte $00
 	.byte $00
-	LDA tbl3_86B1,Y	;not sure where this is used (none of the code in this bank seems to be)
+	LDA tbl3_86B1,Y ;not sure where this is used (none of the code in this bank seems to be)
 	STA $32
 	LDA tbl3_86B2,Y
 	STA $33

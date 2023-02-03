@@ -1,10 +1,10 @@
 ;Disassembled with BZK 6502 Disassembler
 tbl11_8000:
-	.byte $00	;logged, not sure what these do
+	.byte $00 ;logged, not sure what these do
 tbl11_8001:
-	.byte $81	;
-	.byte $04	;
-	.byte $81	;of course, nothing else here is logged unless stated otherwise
+	.byte $81 ;
+	.byte $04 ;
+	.byte $81 ;of course, nothing else here is logged unless stated otherwise
 	.byte $10
 	.byte $81
 	.byte $16
@@ -1471,7 +1471,7 @@ tbl11_8001:
 	.byte $00
 	.byte $FF
 	.byte $F6
-	LDA $8F	;seems like a copy of the sound driver, useless afaik
+	LDA $8F ;seems like a copy of the sound driver, useless afaik
 	BMI bra11_85C4
 	BNE bra11_85CE
 bra11_85C4:
@@ -2928,7 +2928,7 @@ tbl11_8EC1:
 	.byte $00
 	.byte $02
 	.byte $00
-	.byte $F5	;music data is here for some reason
+	.byte $F5 ;music data is here for some reason
 	.byte $01
 	.byte $F6
 	.byte $00

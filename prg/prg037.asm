@@ -2092,7 +2092,7 @@ bra_8DF5:
 	STA EnemyAnimFrame,X
 	RTS
 tbl_8E12:
-	.byte $00	;Clown car blink cycle
+	.byte $00 ;Clown car blink cycle
 	.byte $00
 	.byte $00
 	.byte $00
@@ -2904,14 +2904,14 @@ bra_93A5:
 	STA ClownCarFace
 	RTS
 tbl_93AF:
-	.byte $00	;phase if no hits
-	.byte $02	;phase after 1 or 2 hits
+	.byte $00 ;phase if no hits
+	.byte $02 ;phase after 1 or 2 hits
 	.byte $02
-	.byte $07	;phase after 3 hits
-	.byte $0E	;phase after 4 or 5 hits 
+	.byte $07 ;phase after 3 hits
+	.byte $0E ;phase after 4 or 5 hits 
 	.byte $0E
-	.byte $13	;phase after 6 hits
-	.byte $1A	;phase after 7 or 8 hits
+	.byte $13 ;phase after 6 hits
+	.byte $1A ;phase after 7 or 8 hits
 	.byte $1A
 	.byte $1F
 ptr7_93B9:

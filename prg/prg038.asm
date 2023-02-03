@@ -39,7 +39,7 @@
 	.byte $00
 	.byte $BE
 	.byte $BC
-	LDA #$00	;all of the code here is useless padding
+	LDA #$00 ;all of the code here is useless padding
 	STA ObjectState,X
 	STA ObjectVariables,X
 	LDA #$02

@@ -4,7 +4,7 @@ TilemapPointers:
 	.word EndingScreen
 	.word ThankYouScreen
 	.word CopyrightScreen
-	.word YoshiHouse	;Unused
+	.word YoshiHouse ;Unused
 TitleLogo:
 	.incbin screens/TitleLogo.bin
 EndingScreen:
@@ -14,7 +14,7 @@ ThankYouScreen:
 CopyrightScreen:
 	.incbin screens/CopyrightScreen.bin
 YoshiHouse:
-	.incbin screens/YoshiHouse.bin	;Unused
+	.incbin screens/YoshiHouse.bin ;Unused
 	.byte $11
 	.byte $30
 	.byte $2A
@@ -146,74 +146,74 @@ YoshiHouse:
 	.byte $60
 sub_42_87AC:
 	LDA #$00
-	STA PPUMask	;Clear PPU mask
-	STA PPUCtrl	;Clear PPU control
-	TAY	;Clear Y register
-	LDA PPUStatus	;Clear PPU address latch
-	LDA Current8x8Tilemap	;Get current tilemap
+	STA PPUMask ;Clear PPU mask
+	STA PPUCtrl ;Clear PPU control
+	TAY ;Clear Y register
+	LDA PPUStatus ;Clear PPU address latch
+	LDA Current8x8Tilemap ;Get current tilemap
 	ASL
-	TAX	;Get the pointer for it
+	TAX ;Get the pointer for it
 	LDA TilemapPointers,X
-	STA $38	;Load lower byte of pointer
+	STA $38 ;Load lower byte of pointer
 	LDA TilemapPointers+1,X
-	STA $39	;Load upper byte of pointer
+	STA $39 ;Load upper byte of pointer
 	LDA ($38),Y
-	STA PPUAddr	;Get upper byte of PPU address from tilemap header
+	STA PPUAddr ;Get upper byte of PPU address from tilemap header
 	JSR GoToNextByte
 	LDA ($38),Y
-	STA PPUAddr	;Get lower byte of PPU address from tilemap header
+	STA PPUAddr ;Get lower byte of PPU address from tilemap header
 ByteTypeCheck:
 	JSR GoToNextByte
-	LDA ($38),Y	;Read next byte
-	BPL bra2_87F1	;Branch if it isn't a byte count (aka bit 7 cleared)
+	LDA ($38),Y ;Read next byte
+	BPL bra2_87F1 ;Branch if it isn't a byte count (aka bit 7 cleared)
 	CMP #$FF
-	BEQ bra2_8801_RTS	;Stop if a null byte is reached
+	BEQ bra2_8801_RTS ;Stop if a null byte is reached
 	AND #%01111111
-	STA TileRepeatBytesLeft	;Mask out bit 7 and get the amount of bytes until the next repeat
+	STA TileRepeatBytesLeft ;Mask out bit 7 and get the amount of bytes until the next repeat
 bra2_87E3:
 	JSR GoToNextByte
-	LDA ($38),Y	;Read next byte
-	STA PPUData	;Store tile data
-	DEC TileRepeatBytesLeft	;Decrement byte count
-	BNE bra2_87E3	;Keep looping until byte count reached
-	BEQ ByteTypeCheck	;Branch once it is reached
+	LDA ($38),Y ;Read next byte
+	STA PPUData ;Store tile data
+	DEC TileRepeatBytesLeft ;Decrement byte count
+	BNE bra2_87E3 ;Keep looping until byte count reached
+	BEQ ByteTypeCheck ;Branch once it is reached
 bra2_87F1:
-	STA TileRepeatCount	;Store repeat count
+	STA TileRepeatCount ;Store repeat count
 	JSR GoToNextByte
-	LDA ($38),Y	;Read next byte
+	LDA ($38),Y ;Read next byte
 RepeatTileRender:
-	STA PPUData	;Store tile data
+	STA PPUData ;Store tile data
 	DEC TileRepeatCount
-	BNE RepeatTileRender	;Repeatedly render that tile until the repeat count is reached
-	BEQ ByteTypeCheck	;Branch once the repeat count is reached
+	BNE RepeatTileRender ;Repeatedly render that tile until the repeat count is reached
+	BEQ ByteTypeCheck ;Branch once the repeat count is reached
 bra2_8801_RTS:
 	RTS
 GoToNextByte:
-	INC $38	;Go to next byte of data
+	INC $38 ;Go to next byte of data
 	BNE NextByteDone
-	INC $39	;Go to next memory page if needed
+	INC $39 ;Go to next memory page if needed
 NextByteDone:
 	RTS
-	LDX #$00	;Clear X offset
+	LDX #$00 ;Clear X offset
 	LDA #$00
 bra2_880D:
-	STA MetaspriteRowAlignment,X	;Clear metasprite row position
+	STA MetaspriteRowAlignment,X ;Clear metasprite row position
 	INX
-	CPX #$09	;Keep clearing all 9 of them
+	CPX #$09 ;Keep clearing all 9 of them
 	BCC bra2_880D
 	RTS
-	LDX #$00	;Clear X index
-	LDA #$F8	;Set off-screen Y position
+	LDX #$00 ;Clear X index
+	LDA #$F8 ;Set off-screen Y position
 bra2_8819:
-	STA SpriteMem,X	;Put sprite at off-screen Y position
+	STA SpriteMem,X ;Put sprite at off-screen Y position
 	INX
 	INX
 	INX
-	INX	;Go to next sprite
-	BNE bra2_8819	;Keep going until all sprites are off-screen
+	INX ;Go to next sprite
+	BNE bra2_8819 ;Keep going until all sprites are off-screen
 	RTS
 ClearOtherSprites:
-	LDX #$10	;Set the X index to $10 and ignore the first 4 sprites
+	LDX #$10 ;Set the X index to $10 and ignore the first 4 sprites
 	LDA #$F8
 bra2_8827:
 	STA SpriteMem,X
@@ -221,7 +221,7 @@ bra2_8827:
 	INX
 	INX
 	INX
-	BNE bra2_8827	;Hide all sprites (excluding the player)
+	BNE bra2_8827 ;Hide all sprites (excluding the player)
 	LDX #$00
 	STX $2C
 	LDA #$00
@@ -477,12 +477,12 @@ tbl2_8986:
 tbl2_8A0C:
 	.byte $00
 	.byte $00
-	.byte $A0	;1/2 Player Text X Position
-	.byte $80	;1/2 Player Text Y Position
-	.byte $90	;Cursor X Position
-	.byte $80	;Cursor Y Position
-	.byte $40	;Unknown
-	.byte $20	;Unknown
+	.byte $A0 ;1/2 Player Text X Position
+	.byte $80 ;1/2 Player Text Y Position
+	.byte $90 ;Cursor X Position
+	.byte $80 ;Cursor Y Position
+	.byte $40 ;Unknown
+	.byte $20 ;Unknown
 	.byte $50
 	.byte $AA
 	.byte $50
@@ -507,33 +507,33 @@ TitleSpriteFrameTypes:
 	.byte $01
 	.byte $03
 	.byte $01
-	.byte $03	;Koopa Walk 1
+	.byte $03 ;Koopa Walk 1
 	.byte $01
-	.byte $01	;Koopa Walk 2
+	.byte $01 ;Koopa Walk 2
 	.byte $01
-	.byte $01	;Rex Walk 1
+	.byte $01 ;Rex Walk 1
 	.byte $01
-	.byte $05	;Rex Walk 2
+	.byte $05 ;Rex Walk 2
 	.byte $01
 	.byte $05
 	.byte $01
 	.byte $07
 	.byte $01
-	.byte $07	;Super Koopa Fly 1
+	.byte $07 ;Super Koopa Fly 1
 	.byte $01
-	.byte $02	;Super Koopa Fly 2
+	.byte $02 ;Super Koopa Fly 2
 	.byte $01
 	.byte $02
 	.byte $01
 	.byte $06
 	.byte $01
-	.byte $06	;Mario Walk 1
+	.byte $06 ;Mario Walk 1
 	.byte $01
-	.byte $08	;Mario Walk 2
+	.byte $08 ;Mario Walk 2
 	.byte $01
-	.byte $08	;Yoshi Walk 1
+	.byte $08 ;Yoshi Walk 1
 	.byte $01
-	.byte $09	;Yoshi Walk 2
+	.byte $09 ;Yoshi Walk 2
 	.byte $01
 	.byte $0A
 	.byte $01
@@ -549,9 +549,9 @@ TitleSpriteAnimations:
 	.word TitleKoopaAnim
 	.word TitleSuperKoopaAnim
 	.word TitlePopEffectAnim
-	.word pnt3_8A80	;Unknown
+	.word pnt3_8A80 ;Unknown
 	.word TitleRexAnim
-	.word pnt3_8A8A	;Unknown
+	.word pnt3_8A8A ;Unknown
 	.word pnt3_8A8F
 	.word pnt3_8A94
 	.word pnt3_8A99
@@ -566,23 +566,23 @@ pnt3_8A6C:
 	.byte $00
 	.byte $00
 TitleKoopaAnim:
-	.byte $07	;1st Frame
-	.byte $08	;2nd Frame
-	.byte $94	;1K CHR Bank
-	.byte $0F	;Animation Speed
-	.byte $80	;Bank Start Tile
+	.byte $07 ;1st Frame
+	.byte $08 ;2nd Frame
+	.byte $94 ;1K CHR Bank
+	.byte $0F ;Animation Speed
+	.byte $80 ;Bank Start Tile
 TitleSuperKoopaAnim:
-	.byte $0D	;1st Frame
-	.byte $0E	;2nd Frame
-	.byte $96	;1K CHR Bank
-	.byte $07	;Animation Speed
-	.byte $C0	;Bank Start Tile
+	.byte $0D ;1st Frame
+	.byte $0E ;2nd Frame
+	.byte $96 ;1K CHR Bank
+	.byte $07 ;Animation Speed
+	.byte $C0 ;Bank Start Tile
 TitlePopEffectAnim:
-	.byte $04	;1st Frame
-	.byte $04	;2nd Frame
-	.byte $FF	;1K CHR Bank
-	.byte $0F	;Animation Speed
-	.byte $00	;Bank Start Tile
+	.byte $04 ;1st Frame
+	.byte $04 ;2nd Frame
+	.byte $FF ;1K CHR Bank
+	.byte $0F ;Animation Speed
+	.byte $00 ;Bank Start Tile
 pnt3_8A80:
 	.byte $01
 	.byte $01
@@ -590,11 +590,11 @@ pnt3_8A80:
 	.byte $0F
 	.byte $80
 TitleRexAnim:
-	.byte $09	;1st Frame
-	.byte $0A	;2nd Frame
-	.byte $95	;1K CHR Bank
-	.byte $0F	;Animation Speed
-	.byte $80	;Bank Start Tile
+	.byte $09 ;1st Frame
+	.byte $0A ;2nd Frame
+	.byte $95 ;1K CHR Bank
+	.byte $0F ;Animation Speed
+	.byte $80 ;Bank Start Tile
 pnt3_8A8A:
 	.byte $0F
 	.byte $10
@@ -1573,37 +1573,37 @@ pnt3_8DED:
 	.byte $6C
 	.byte $6B
 sub_42_8DF8:
-	STA GS0SpriteFrame,X	;Load sprite frame
+	STA GS0SpriteFrame,X ;Load sprite frame
 	ASL
-	TAY	;Get pointer for it
+	TAY ;Get pointer for it
 	LDA tbl2_8A0C,Y
-	STA GS0SpriteXPos,X	;Set X position for sprite (only works for menu?)
+	STA GS0SpriteXPos,X ;Set X position for sprite (only works for menu?)
 	LDA tbl2_8A0C+1,Y
-	STA GS0SpriteYPos,X	;Set Y position for sprite (only works for menu?)
+	STA GS0SpriteYPos,X ;Set Y position for sprite (only works for menu?)
 	LDA TitleSpriteFrameTypes,Y
-	STA GS0SpriteFlags,X	;Store flags for animation frame (useless/unknown?)
+	STA GS0SpriteFlags,X ;Store flags for animation frame (useless/unknown?)
 	LDA TitleSpriteFrameTypes+1,Y
-	STA GS0SpriteSlot,X	;Store sprite type for corresponding animation frame
+	STA GS0SpriteSlot,X ;Store sprite type for corresponding animation frame
 	ASL
-	TAX	;Get pointer for corresponding slot ID
+	TAX ;Get pointer for corresponding slot ID
 	LDA TitleSpriteAnimations,X
-	STA GS0SpriteAnimPtr	;Load lower byte of pointer
+	STA GS0SpriteAnimPtr ;Load lower byte of pointer
 	LDA TitleSpriteAnimations+1,X
-	STA GS0SpriteAnimPtr+1	;Load upper byte of pointer
+	STA GS0SpriteAnimPtr+1 ;Load upper byte of pointer
 	LDY #$02
-	LDA (GS0SpriteAnimPtr),Y	;Load 3rd byte of animation data
-	STA GS0SpriteBankNum	;Set it as the bank number
+	LDA (GS0SpriteAnimPtr),Y ;Load 3rd byte of animation data
+	STA GS0SpriteBankNum ;Set it as the bank number
 	LDY #$04
-	LDA (GS0SpriteAnimPtr),Y	;Load 5th byte of animation data
+	LDA (GS0SpriteAnimPtr),Y ;Load 5th byte of animation data
 	LSR
 	LSR
 	LSR
 	LSR
 	LSR
-	LSR	;Shift out bits 0 - 5
-	TAX	;Set 1K bank to swap
+	LSR ;Shift out bits 0 - 5
+	TAX ;Set 1K bank to swap
 	LDA GS0SpriteBankNum
-	STA SpriteBank1,X	;Swap the bank out in the set bank
+	STA SpriteBank1,X ;Swap the bank out in the set bank
 	RTS
 	TAX
 	LDA tbl2_8E62,X
@@ -2101,7 +2101,7 @@ bra2_905B:
 	STA MusicRegister
 	RTS
 tbl2_9071:
-	.byte $25	;overworld map music settings
+	.byte $25 ;overworld map music settings
 	.byte $25
 	.byte $25
 	.byte $25
@@ -3618,9 +3618,9 @@ bra2_96E6:
 bra2_96F5_RTS:
 	RTS
 sub2_96F6:
-	INC GS0SpriteXPos,X	;Move sprite one pixel ahead
+	INC GS0SpriteXPos,X ;Move sprite one pixel ahead
 	BNE bra2_96FD_RTS
-	INC GS0SpriteFlags,X	;Make sprite visible?
+	INC GS0SpriteFlags,X ;Make sprite visible?
 bra2_96FD_RTS:
 	RTS
 sub_42_96FE:
@@ -3652,25 +3652,25 @@ tbl2_9721:
 AnimateMapPlayer:
 	LDA FrameCount
 	AND #$07
-	BNE bra2_9752_RTS	;Only do this every 8th frame
+	BNE bra2_9752_RTS ;Only do this every 8th frame
 	LDA PlayerMapAnim
 	ASL
-	TAX	;Get pointer for the player's map animation
+	TAX ;Get pointer for the player's map animation
 	LDA tbl2_9753,X
-	STA ScratchRAM	;Load the lower byte
+	STA ScratchRAM ;Load the lower byte
 	LDA tbl2_9753+1,X
-	STA ScratchRAM+1	;Load the upper byte
+	STA ScratchRAM+1 ;Load the upper byte
 	LDY PlayerMapFrame
 bra2_9740:
 	LDA (ScratchRAM),Y
 	CMP #$FF
-	BNE bra2_974D	;Branch if the end byte hasn't been reached
-	LDY #$00	;If it has, continue
+	BNE bra2_974D ;Branch if the end byte hasn't been reached
+	LDY #$00 ;If it has, continue
 	STY PlayerMapFrame
-	BEQ bra2_9740	;Loop back to the start of the animation
+	BEQ bra2_9740 ;Loop back to the start of the animation
 bra2_974D:
-	STA GS0SpriteFrame	;Update the player's sprite
-	INC PlayerMapFrame	;Go to the next animation frame
+	STA GS0SpriteFrame ;Update the player's sprite
+	INC PlayerMapFrame ;Go to the next animation frame
 bra2_9752_RTS:
 	RTS
 tbl2_9753:
@@ -3938,23 +3938,23 @@ bra2_97DF:
 	.byte $00
 TransitionScreenSub:
 	LDX #$21
-	STX PPUAddr	;Set upper byte of address
+	STX PPUAddr ;Set upper byte of address
 	LDX #$80
-	STX PPUAddr	;Set lower byte of address
-	LDY #$00	;Clear Y register
+	STX PPUAddr ;Set lower byte of address
+	LDY #$00 ;Clear Y register
 	ASL
 	ASL
 	ASL
 	ASL
 	ASL
-	ASL	;Get index for transition screen
+	ASL ;Get index for transition screen
 	TAX
 RenderTransitionScreen:
 	LDA TransitionScreenData,X
 	STA PPUData
 	INX
 	INY
-	CPY #$40	;Render 2 rows of tiles
+	CPY #$40 ;Render 2 rows of tiles
 	BCC RenderTransitionScreen
 	RTS
 TransitionScreenData:
@@ -4336,15 +4336,15 @@ tbl2_9A2F:
 	.byte $30
 CHRBankSub:
 	ASL
-	TAY	;Get pointer for value
+	TAY ;Get pointer for value
 	LDA BankPointers,Y
-	STA $32	;Load lower byte of pointer
+	STA $32 ;Load lower byte of pointer
 	LDA BankPointers+1,Y
-	STA $33	;Load upper byte of pointer
+	STA $33 ;Load upper byte of pointer
 	LDY #$00
 bra2_9A52:
-	LDA ($32),Y	;Load banks from pointer location
-	STA BGBank1,Y	;Set CHR banks
+	LDA ($32),Y ;Load banks from pointer location
+	STA BGBank1,Y ;Set CHR banks
 	INY
 	CPY #$06
 	BCC bra2_9A52
@@ -4356,13 +4356,13 @@ BankPointers:
 	.word CopyrightBanks
 	.word OverworldBanks
 	.word TransitionBanks
-TitleLogoBanks:	;Format:
-	.byte $FC	;1st+2nd BG Bank
-	.byte $FE	;3rd+4th BG Bank
-	.byte $80	;1st Sprite Bank
-	.byte $81	;2nd Sprite Bank
-	.byte $94	;3rd Sprite Bank
-	.byte $95	;4th Sprite Bank
+TitleLogoBanks: ;Format:
+	.byte $FC ;1st+2nd BG Bank
+	.byte $FE ;3rd+4th BG Bank
+	.byte $80 ;1st Sprite Bank
+	.byte $81 ;2nd Sprite Bank
+	.byte $94 ;3rd Sprite Bank
+	.byte $95 ;4th Sprite Bank
 EndingBanks:
 	.byte $F8
 	.byte $FA
@@ -4532,18 +4532,18 @@ ClearNametable:
 	ASL
 	ASL
 	CLC
-	ADC #$20	;Add $20 to upper byte
-	LDX #$00	;Set lower byte of address and nametable size
+	ADC #$20 ;Add $20 to upper byte
+	LDX #$00 ;Set lower byte of address and nametable size
 	STA PPUAddr
 	STX PPUAddr
-	LDY #$03	;Set upper byte of nametable size (in tiles)
+	LDY #$03 ;Set upper byte of nametable size (in tiles)
 	LDA #$FF
 ClearNTLoop:
 	STA PPUData
 	DEX
 	BNE ClearNTLoop
 	DEY
-	BPL ClearNTLoop	;Clear the entire screen
+	BPL ClearNTLoop ;Clear the entire screen
 	RTS
 pnt5_9B28:
 	LDA #$00
@@ -4723,8 +4723,8 @@ bra2_9B82_RTS:
 	.byte $00
 MapDirections:
 ;1-Yoshi House
-	.byte dirDown	;Next level
-	.byte $00	;Previous level
+	.byte dirDown ;Next level
+	.byte $00 ;Previous level
 ;1-1
 	.byte dirDown
 	.byte dirUp
@@ -5179,49 +5179,49 @@ tbl2_9D78:
 	.byte $00
 sub_42_9DF8:
 	LDA #$00
-	STA $25	;Set castle number/index
+	STA $25 ;Set castle number/index
 bra2_9DFC:
 	LDA $25
 	TAX
-	INX	;Set index for player #1
+	INX ;Set index for player #1
 	LDA CurrentPlayer
-	BEQ bra2_9E0B	;Branch if player #1 is playing
-	LDA $25	;Otherwise, continue
+	BEQ bra2_9E0B ;Branch if player #1 is playing
+	LDA $25 ;Otherwise, continue
 	CLC
 	ADC #$09
-	TAX	;Set index for player #2
+	TAX ;Set index for player #2
 bra2_9E0B:
 	LDA CastleDestroyFlags,X
-	BEQ bra2_9E53	;Branch if the castle isn't destroyed
-	LDA $25	;Otherwise, continue
+	BEQ bra2_9E53 ;Branch if the castle isn't destroyed
+	LDA $25 ;Otherwise, continue
 	TAX
 	LDA DestroyedCastleAttr,X
-	STA $29	;Assign attributes to the destroyed castle sprite
+	STA $29 ;Assign attributes to the destroyed castle sprite
 	LDA $25
 	ASL
 	ASL
-	TAX	;Get table index for castle
+	TAX ;Get table index for castle
 	ASL
 	ASL
 	TAY
 	LDA tbl2_9E5C,X
-	STA $32	;Set the horizontal screen
+	STA $32 ;Set the horizontal screen
 	SEC
 	LDA tbl2_9E5C+1,X
 	SBC $52
-	STA ScratchRAM+8	;Location - camera position = screen position
+	STA ScratchRAM+8 ;Location - camera position = screen position
 	BCS bra2_9E31
 	DEC $32
 bra2_9E31:
 	LDA $32
 	CMP $51
-	BNE bra2_9E4C	;If the sprite is off-screen, stop rendering it
+	BNE bra2_9E4C ;If the sprite is off-screen, stop rendering it
 	LDA tbl2_9E5C+2,X
-	STA $32	;Set the sprite's vertical screen
+	STA $32 ;Set the sprite's vertical screen
 	SEC
 	LDA tbl2_9E5C+3,X
 	SBC ScrollYPos
-	STA $38	;Location - camera position = screen position
+	STA $38 ;Location - camera position = screen position
 	BCS bra2_9E48
 	DEC $32
 bra2_9E48:
@@ -5229,7 +5229,7 @@ bra2_9E48:
 	BEQ bra2_9E50
 bra2_9E4C:
 	LDA #$F8
-	STA $38	;Hide the castle sprite
+	STA $38 ;Hide the castle sprite
 bra2_9E50:
 	JSR sub2_9E7A
 bra2_9E53:
@@ -5240,10 +5240,10 @@ bra2_9E53:
 	RTS
 tbl2_9E5C:
 ;Castle #1
-	.byte $05	;X Screen
-	.byte $70	;X Position
-	.byte $01	;Y Screen
-	.byte $1F	;Y Position
+	.byte $05 ;X Screen
+	.byte $70 ;X Position
+	.byte $01 ;Y Screen
+	.byte $1F ;Y Position
 ;Castle #2
 	.byte $09
 	.byte $F0

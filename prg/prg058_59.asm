@@ -137,7 +137,7 @@ bra10_85C4:
 	LDA MusicRegister
 	CMP MusicBackup
 	BEQ bra10_85D5_RTS
-	LDA MusicRegister	;Back up the current music ID if it isn't backed up already
+	LDA MusicRegister ;Back up the current music ID if it isn't backed up already
 	STA MusicBackup
 bra10_85CE:
 	JSR sub10_8E2F
@@ -310,7 +310,7 @@ loc10_8716:
 	STA $070A
 	TAX
 	CPX #$FF
-	BEQ bra10_86DF_RTS	;Stop if the end byte is reached ($FF)
+	BEQ bra10_86DF_RTS ;Stop if the end byte is reached ($FF)
 	LDA $070A
 	BMI bra10_872F
 	STA $070B
@@ -612,7 +612,7 @@ ofs_8957:
 	BMI bra10_8971
 	LDY #$64
 bra10_8971:
-	STA MusicSpeed,Y	;Set Music/SFX speed
+	STA MusicSpeed,Y ;Set Music/SFX speed
 	JSR sub10_8E20
 	JMP loc10_87E0
 ofs_897A:
@@ -1418,7 +1418,7 @@ NotePitchTable:
 	.word $0004
 	.word $0003
 	.word $0002
-	;include sfx data
+ ;include sfx data
 	.include sound/sfx_SpinJump.asm
 	.include sound/sfx_Pause.asm
 	.include sound/sfx_Jump.asm
@@ -1448,7 +1448,7 @@ NotePitchTable:
 	.include sound/sfx_YoshiFireSpit.asm
 	.include sound/sfx_Checkpoint.asm
 	.include sound/sfx_Chainsaw.asm
-	;include music data
+ ;include music data
 	.include sound/mus_Title.asm
 	.include sound/mus_GameOver.asm
 	.include sound/mus_PlayerDown.asm

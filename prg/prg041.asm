@@ -1,34 +1,34 @@
 ;Disassembled with BZK 6502 Disassembler
 jmp_41_A000:
-	LDA a:Event	;Load event number
+	LDA a:Event ;Load event number
 	ASL
-	TAY	;Get pointer for it
+	TAY ;Get pointer for it
 	LDA tbl_A012,Y	
-	STA $32	;Load lower byte of pointer
+	STA $32 ;Load lower byte of pointer
 	LDA tbl_A012+1,Y	
-	STA $33	;Load upper byte of pointer
-	JMP ($32)	;Jump to loaded pointer
+	STA $33 ;Load upper byte of pointer
+	JMP ($32) ;Jump to loaded pointer
 tbl_A012:
-	.word pnt5_A074	;Event 0
-	.word pnt5_A0A2	;Event 1
-	.word pnt5_A695	;Event 2
+	.word pnt5_A074 ;Event 0
+	.word pnt5_A0A2 ;Event 1
+	.word pnt5_A695 ;Event 2
 	.word pnt5_A706
 	.word pnt5_A761
 	.word pnt5_A7A6
 	.word pnt5_A09E
 	.word pnt5_A7D3
-	.word pnt5_A7FF	;08
+	.word pnt5_A7FF ;08
 	.word pnt5_A86F
 	.word pnt5_A892
-	.word pnt5_A8FE	;On map
-	.word pnt5_A924	;0c
-	.word pnt5_A933	;0d
+	.word pnt5_A8FE ;On map
+	.word pnt5_A924 ;0c
+	.word pnt5_A933 ;0d
 	.word pnt5_A9A7
-	.word pnt5_A927	;0f
+	.word pnt5_A927 ;0f
 	.word pnt5_A933
 	.word pnt5_AB1D
-	.word pnt5_A927	;12
-	.word pnt5_AC8D	;13
+	.word pnt5_A927 ;12
+	.word pnt5_AC8D ;13
 	.word pnt5_A927
 	.word pnt5_AD29
 	.word pnt5_AD5C
@@ -60,24 +60,24 @@ tbl_A012:
 	.word pnt5_B062
 pnt5_A074:
 	LDA #$2A
-	STA Bank42Backup	;Backup bank value
-	STA M90_PRG0	;Swap bank 42 into 1st PRG slot
+	STA Bank42Backup ;Backup bank value
+	STA M90_PRG0 ;Swap bank 42 into 1st PRG slot
 	LDA #$00
 	STA WorldNumber
-	STA LevelNumber	;Clear world and level numbers	
+	STA LevelNumber ;Clear world and level numbers	
 	LDA #$0F
 	STA Player1Lives
-	STA Player2Lives	;Set life count to 15 for both players
+	STA Player2Lives ;Set life count to 15 for both players
 	LDA #$01
 	STA P1LevelsUnlocked
-	STA P2LevelsUnlocked	;Only set the first level to be unlocked for both players
+	STA P2LevelsUnlocked ;Only set the first level to be unlocked for both players
 	LDA #$1E
-	STA TileRowCount	;Set the 8x8 row count so that only the first nametable is updated
+	STA TileRowCount ;Set the 8x8 row count so that only the first nametable is updated
 	LDA #$18
-	STA BGPalDataSize	;Only update the palette of the first nametable
+	STA BGPalDataSize ;Only update the palette of the first nametable
 	JSR sub_B75D
 pnt5_A09E:
-	INC a:Event	;Go to next event number
+	INC a:Event ;Go to next event number
 	RTS
 pnt5_A0A2:
 	JSR sub_AE96
@@ -85,13 +85,13 @@ pnt5_A0A2:
 	STA $0100
 	JSR sub_B800
 	LDA #$00
-	STA $3C	;(unknown variable)
+	STA $3C ;(unknown variable)
 	STA PlayerXSpeed
 	STA PlayerYSpeed
 	STA PlayerMovement
-	STA PlayerSpriteAttributes	;Clear various player variables
+	STA PlayerSpriteAttributes ;Clear various player variables
 	LDA #$2A
-	STA M90_PRG0	;Swap bank 42 into 1st PRG slot
+	STA M90_PRG0 ;Swap bank 42 into 1st PRG slot
 	LDA #$00
 	STA WorldSelectNum
 	JSR sub_AACB
@@ -100,27 +100,27 @@ pnt5_A0A2:
 	JSR sub_AE8A
 	LDA WorldNumber
 	ASL
-	ASL	;Multiply world number by 4
+	ASL ;Multiply world number by 4
 	CLC
-	ADC LevelNumber	;Then add it to the level number to get the level ID
-	STA BGPalette	;Use palette for corresponding level ID
+	ADC LevelNumber ;Then add it to the level number to get the level ID
+	STA BGPalette ;Use palette for corresponding level ID
 	LDA #musTitle
-	STA MusicRegister	;Play title screen music
+	STA MusicRegister ;Play title screen music
 	LDA #$00
-	STA FadeoutMode	;Set fadeout mode
+	STA FadeoutMode ;Set fadeout mode
 	STA $0312
 	STA BGPalette
 	STA HUDDisplay
 	LDA #$0A
-	STA InterruptMode	;Set interrupt mode for the title screen
-	STA LogoFlag	;Enable the logo
+	STA InterruptMode ;Set interrupt mode for the title screen
+	STA LogoFlag ;Enable the logo
 	JSR sub_A107
 	JSR sub_B068
 	LDA #$00
 	STA $52
 	LDA #$EF
-	STA LogoYOffset	;Set Y offset for the logo
-	INC a:Event	;Go to next event number
+	STA LogoYOffset ;Set Y offset for the logo
+	INC a:Event ;Go to next event number
 	RTS
 sub_A107:
 	LDX #$07
@@ -135,20 +135,20 @@ sub_A107:
 	LDA #$9E
 	STA GS0SpriteYPos+1
 	LDA #$60
-	STA GS0SpriteXPos+1	;Set player's starting position
+	STA GS0SpriteXPos+1 ;Set player's starting position
 	LDA #$00
 	STA GS0SpriteFlags+1
-	STA GS0SpriteFlags+2	;Make the player and Yoshi's sprites visible
+	STA GS0SpriteFlags+2 ;Make the player and Yoshi's sprites visible
 	CLC
 	LDA GS0SpriteXPos+1
 	ADC TitleYoshiXOfs
-	STA GS0SpriteXPos+2	;Set X offset for Yoshi's sprite
+	STA GS0SpriteXPos+2 ;Set X offset for Yoshi's sprite
 	CLC
 	LDA GS0SpriteYPos+1
 	ADC TitleYoshiYOfs
-	STA GS0SpriteYPos+2	;Set Y offset for Yoshi's sprite
+	STA GS0SpriteYPos+2 ;Set Y offset for Yoshi's sprite
 	RTS
-	CLC	;Unused duplicate code
+	CLC ;Unused duplicate code
 	LDA GS0SpriteXPos+1
 	ADC TitleYoshiXOfs
 	STA GS0SpriteXPos+2
@@ -325,14 +325,14 @@ sub_A1E1:
 	LDA PlayerXPosDup
 	CMP $26
 	BNE bra_A22E_RTS
-	LDX #$03	;Set GS0 sprite slot to 4
+	LDX #$03 ;Set GS0 sprite slot to 4
 bra_A209:
 	LDA GS0SpriteFrame,X
-	BEQ bra_A214	;Branch if the frame slot is empty
-	INX	;Go to next slot
+	BEQ bra_A214 ;Branch if the frame slot is empty
+	INX ;Go to next slot
 	CPX #$06
-	BCC bra_A209	;Keep checking slots until an enemy frame ID is found
-	BCS bra_A22B	;Branch once it is found
+	BCC bra_A209 ;Keep checking slots until an enemy frame ID is found
+	BCS bra_A22B ;Branch once it is found
 bra_A214:
 	STX GS0SpriteCount
 	LDA $27
@@ -377,12 +377,12 @@ bra_A262_RTS:
 sub_A263:
 	LDA TitleDemoAction
 	ASL
-	TAY	;Get pointer for current jump type
+	TAY ;Get pointer for current jump type
 	LDA tbl_A275,Y
-	STA $32	;Load lower byte of pointer
+	STA $32 ;Load lower byte of pointer
 	LDA tbl_A275+1,Y
-	STA $33	;Load upper byte of pointer
-	JMP ($32)	;Jump to loaded pointer
+	STA $33 ;Load upper byte of pointer
+	JMP ($32) ;Jump to loaded pointer
 tbl_A275:
 	.word sub_A2AE
 	.word ptr2_A2D8
@@ -400,38 +400,38 @@ ptr2_A28D:
 	JSR sub_A2AE
 	LDA GS0SpriteXPos+1
 	CMP #$B0
-	BCS bra_A2AD_RTS	;If Mario's sprite hasn't reached the middle of the screen, continue
-	LDX #$01	;Set X index for Mario's sprite
-	JSR sub2_96F6	;Jump
+	BCS bra_A2AD_RTS ;If Mario's sprite hasn't reached the middle of the screen, continue
+	LDX #$01 ;Set X index for Mario's sprite
+	JSR sub2_96F6 ;Jump
 	CLC
 	LDA GS0SpriteXPos+1
 	ADC TitleYoshiXOfs
-	STA GS0SpriteXPos+2	;Set the horizontal offset for Yoshi
+	STA GS0SpriteXPos+2 ;Set the horizontal offset for Yoshi
 	CLC
 	LDA GS0SpriteYPos+1
 	ADC TitleYoshiYOfs
-	STA GS0SpriteYPos+2	;Set the horizontal offset for Mario
+	STA GS0SpriteYPos+2 ;Set the horizontal offset for Mario
 bra_A2AD_RTS:
 	RTS
 sub_A2AE:
 	LDA FrameCount
-	AND #$07	;Mask out 3 LSB of global frame counter
-	BNE bra_A2C8_RTS	;Branch if not zero to do this every 8th frame
-	INC TitleWalkTimer	;Increment walk timer
+	AND #$07 ;Mask out 3 LSB of global frame counter
+	BNE bra_A2C8_RTS ;Branch if not zero to do this every 8th frame
+	INC TitleWalkTimer ;Increment walk timer
 	LDA TitleWalkTimer
 	AND #$01
-	BEQ bra_A2C9	;Branch if the walk timer is an even number
-	LDA TitleMarioWalk1	;If it's an odd number, continue
-	STA GS0SpriteFrame+1	;Switch Mario to the 1st walk sprite
+	BEQ bra_A2C9 ;Branch if the walk timer is an even number
+	LDA TitleMarioWalk1 ;If it's an odd number, continue
+	STA GS0SpriteFrame+1 ;Switch Mario to the 1st walk sprite
 	LDA TitleYoshiWalk1
-	STA GS0SpriteFrame+2	;Switch Yoshi to the 1st walk sprite
+	STA GS0SpriteFrame+2 ;Switch Yoshi to the 1st walk sprite
 bra_A2C8_RTS:
 	RTS
 bra_A2C9:
 	LDA TitleMarioWalk2
-	STA GS0SpriteFrame+1	;Switch Mario to the 2nd walk sprite
+	STA GS0SpriteFrame+1 ;Switch Mario to the 2nd walk sprite
 	LDA TitleYoshiWalk2
-	STA GS0SpriteFrame+2	;Switch Yoshi to the 2nd walk sprite
+	STA GS0SpriteFrame+2 ;Switch Yoshi to the 2nd walk sprite
 	RTS
 TitleMarioWalk1:
 	.byte $11
@@ -444,35 +444,35 @@ TitleYoshiWalk2:
 ptr2_A2D8:
 	LDA FrameCount
 	AND #$01
-	BEQ bra_A313_RTS	;Only do this on an odd frame number
+	BEQ bra_A313_RTS ;Only do this on an odd frame number
 	LDA TitleJumpTimer
-	BEQ bra_A313_RTS	;Make sure the jump timer is set
-	LDX TitleJumpTimer	;Set the X index to the jump timer value
-	LDA tbl_A31D,X	;Load vertical speed value for the jump timer's current value
+	BEQ bra_A313_RTS ;Make sure the jump timer is set
+	LDX TitleJumpTimer ;Set the X index to the jump timer value
+	LDA tbl_A31D,X ;Load vertical speed value for the jump timer's current value
 	CMP #$80
-	BEQ bra_A314	;Branch when the end marker is reached ($80)
+	BEQ bra_A314 ;Branch when the end marker is reached ($80)
 	CLC
 	ADC GS0SpriteYPos+1
-	STA GS0SpriteYPos+1	;Add loaded speed value
+	STA GS0SpriteYPos+1 ;Add loaded speed value
 	CLC
 	LDA GS0SpriteXPos+1
 	ADC TitleYoshiXOfs
-	STA GS0SpriteXPos+2	;Set horizontal offset for Yoshi
+	STA GS0SpriteXPos+2 ;Set horizontal offset for Yoshi
 	CLC
 	LDA GS0SpriteYPos+1
 	ADC TitleYoshiYOfs
-	STA GS0SpriteYPos+2	;Set vertical offset for Yoshi
-	LDA tbl_A336,X	;Load Mario's sprite for the current jump timer value
-	STA GS0SpriteFrame+1	;Make Mario use it
-	LDA tbl_A34F,X	;Load Yoshi's sprite for the current jump timer value
-	STA GS0SpriteFrame+2	;Make Yoshi use it
-	INC TitleJumpTimer	;Increment jump timer
+	STA GS0SpriteYPos+2 ;Set vertical offset for Yoshi
+	LDA tbl_A336,X ;Load Mario's sprite for the current jump timer value
+	STA GS0SpriteFrame+1 ;Make Mario use it
+	LDA tbl_A34F,X ;Load Yoshi's sprite for the current jump timer value
+	STA GS0SpriteFrame+2 ;Make Yoshi use it
+	INC TitleJumpTimer ;Increment jump timer
 bra_A313_RTS:
 	RTS
 bra_A314:
 	LDA #$00
-	STA TitleJumpTimer	;Clear jump timer
-	STA TitleDemoAction	;Set demo action to walking
+	STA TitleJumpTimer ;Clear jump timer
+	STA TitleDemoAction ;Set demo action to walking
 	RTS
 tbl_A31D:
 	.byte $00
@@ -555,166 +555,166 @@ tbl_A34F:
 ptr2_A368:
 	LDA FrameCount
 	AND #$01
-	BEQ bra_A3C4_RTS	;Only continue if on an odd frame number
+	BEQ bra_A3C4_RTS ;Only continue if on an odd frame number
 	LDA TitleJumpTimer
-	BEQ bra_A3C4_RTS	;Make sure the jump timer is still active
-	LDX TitleJumpTimer	;Set the X index to the jump timer value
-	LDA tbl_A31D,X	;Load vertical speed value for the jump timer's current value
+	BEQ bra_A3C4_RTS ;Make sure the jump timer is still active
+	LDX TitleJumpTimer ;Set the X index to the jump timer value
+	LDA tbl_A31D,X ;Load vertical speed value for the jump timer's current value
 	CMP #$80
-	BEQ bra_A3C5	;Branch if the end marker is reached ($80)
+	BEQ bra_A3C5 ;Branch if the end marker is reached ($80)
 	CLC
 	ADC GS0SpriteYPos+1
-	STA GS0SpriteYPos+1	;Add loaded speed value
+	STA GS0SpriteYPos+1 ;Add loaded speed value
 	CLC
 	LDA GS0SpriteXPos+1
 	ADC TitleYoshiXOfs
-	STA GS0SpriteXPos+2	;Set horizontal offset for Yoshi's sprite
+	STA GS0SpriteXPos+2 ;Set horizontal offset for Yoshi's sprite
 	CLC
 	LDA GS0SpriteYPos+1
 	ADC TitleYoshiYOfs
-	STA GS0SpriteYPos+2	;Set vertical offset for Yoshi's sprite
+	STA GS0SpriteYPos+2 ;Set vertical offset for Yoshi's sprite
 	LDA PlayerTitleYPos
 	CMP #$9E
-	BCC bra_A3B7	;Branch if Mario's Y position is below $9E
+	BCC bra_A3B7 ;Branch if Mario's Y position is below $9E
 	LDA #$9E
-	STA PlayerTitleYPos	;Otherwise, set it to $9E
+	STA PlayerTitleYPos ;Otherwise, set it to $9E
 	CLC
 	LDA GS0SpriteXPos+1
 	ADC TitleYoshiXOfs
-	STA GS0SpriteXPos+2	;Set horizontal offset again?
+	STA GS0SpriteXPos+2 ;Set horizontal offset again?
 	CLC
 	LDA GS0SpriteYPos+1
 	ADC TitleYoshiYOfs
-	STA GS0SpriteYPos+2	;Set vertical offset again?
+	STA GS0SpriteYPos+2 ;Set vertical offset again?
 	JMP loc_A3C5
 bra_A3B7:
 	LDA tbl_A336,X
-	STA GS0SpriteFrame+1	;Load animation frame for Mario
+	STA GS0SpriteFrame+1 ;Load animation frame for Mario
 	LDA tbl_A34F,X
-	STA GS0SpriteFrame+2	;Load animation frame for Yoshi
-	INC TitleJumpTimer	;Increment jump timer
+	STA GS0SpriteFrame+2 ;Load animation frame for Yoshi
+	INC TitleJumpTimer ;Increment jump timer
 bra_A3C4_RTS:
 	RTS
 bra_A3C5:
 loc_A3C5:
 	LDA #$00
-	STA TitleJumpTimer	;Clear jump timer
-	STA TitleDemoAction	;Set demo action to walking
+	STA TitleJumpTimer ;Clear jump timer
+	STA TitleDemoAction ;Set demo action to walking
 	RTS
 ptr2_A3CE:
 	LDA FrameCount
 	AND #$01
-	BEQ bra_A431_RTS	;Check if the global frame count is odd
+	BEQ bra_A431_RTS ;Check if the global frame count is odd
 	LDA TitleJumpTimer
-	BEQ bra_A431_RTS	;Make sure the jump timer is still active
-	LDX TitleJumpTimer	;Set the X index to the jump timer value
-	LDA tbl_A31D,X	;Load vertical speed value for the jump timer's current value
+	BEQ bra_A431_RTS ;Make sure the jump timer is still active
+	LDX TitleJumpTimer ;Set the X index to the jump timer value
+	LDA tbl_A31D,X ;Load vertical speed value for the jump timer's current value
 	CMP #$80
-	BEQ bra_A432	;Branch when the end marker is reached ($80)
+	BEQ bra_A432 ;Branch when the end marker is reached ($80)
 	CLC
 	ADC GS0SpriteYPos+1
-	STA GS0SpriteYPos+1	;Add loaded speed value
+	STA GS0SpriteYPos+1 ;Add loaded speed value
 	CLC
 	LDA GS0SpriteXPos+1
 	ADC TitleYoshiXOfs
-	STA GS0SpriteXPos+2	;Set horizontal offset for Yoshi
+	STA GS0SpriteXPos+2 ;Set horizontal offset for Yoshi
 	CLC
 	LDA GS0SpriteYPos+1
 	ADC TitleYoshiYOfs
-	STA GS0SpriteYPos+2	;Set vertical offset for Yoshi
+	STA GS0SpriteYPos+2 ;Set vertical offset for Yoshi
 	LDA TitleJumpTimer
 	CMP #$0C
-	BCC bra_A424	;Branch if the jump timer is under $0C
+	BCC bra_A424 ;Branch if the jump timer is under $0C
 	LDA GS0SpriteYPos+1
 	CMP #$7E
-	BCC bra_A424	;Branch if Mario's Y position is below $7E
+	BCC bra_A424 ;Branch if Mario's Y position is below $7E
 	LDA #$7E
-	STA GS0SpriteYPos+1	;Otherwise, set it to $7E
+	STA GS0SpriteYPos+1 ;Otherwise, set it to $7E
 	CLC
 	LDA GS0SpriteXPos+1
 	ADC TitleYoshiXOfs
-	STA GS0SpriteXPos+2	;Set horizontal offset again?
+	STA GS0SpriteXPos+2 ;Set horizontal offset again?
 	CLC
 	LDA GS0SpriteYPos+1
 	ADC TitleYoshiYOfs
-	STA GS0SpriteYPos+2	;Set vertical offset again?
+	STA GS0SpriteYPos+2 ;Set vertical offset again?
 	JMP loc_A432
 bra_A424:
-	LDA tbl_A336,X	;Load Mario's sprite for the current jump timer value
-	STA GS0SpriteFrame+1	;Make Mario use it
-	LDA tbl_A34F,X	;Load Yoshi's sprite for the current jump timer value
-	STA GS0SpriteFrame+2	;Make Yoshi use it
-	INC TitleJumpTimer	;Increment jump timer
+	LDA tbl_A336,X ;Load Mario's sprite for the current jump timer value
+	STA GS0SpriteFrame+1 ;Make Mario use it
+	LDA tbl_A34F,X ;Load Yoshi's sprite for the current jump timer value
+	STA GS0SpriteFrame+2 ;Make Yoshi use it
+	INC TitleJumpTimer ;Increment jump timer
 bra_A431_RTS:
 	RTS
 bra_A432:
 loc_A432:
 	LDA #$00
-	STA TitleJumpTimer	;Clear jump timer
-	STA TitleDemoAction	;Set demo action to walking
+	STA TitleJumpTimer ;Clear jump timer
+	STA TitleDemoAction ;Set demo action to walking
 	RTS
 ptr2_A43B:
 	LDA FrameCount
 	AND #$01
-	BEQ bra_A476_RTS	;Only continue if on an odd frame number
+	BEQ bra_A476_RTS ;Only continue if on an odd frame number
 	LDA TitleJumpTimer
-	BEQ bra_A476_RTS	;Make sure the jump timer is active
-	LDX TitleJumpTimer	;Set the X index to the current jump timer value
-	LDA tbl_A4FD,X	;Load vertical speed value for the jump timer's current value
+	BEQ bra_A476_RTS ;Make sure the jump timer is active
+	LDX TitleJumpTimer ;Set the X index to the current jump timer value
+	LDA tbl_A4FD,X ;Load vertical speed value for the jump timer's current value
 	CMP #$80
-	BEQ bra_A477	;Branch when the end marker is reached ($80)
+	BEQ bra_A477 ;Branch when the end marker is reached ($80)
 	CLC
 	ADC GS0SpriteYPos+1
-	STA GS0SpriteYPos+1	;Add loaded speed value
+	STA GS0SpriteYPos+1 ;Add loaded speed value
 	CLC
 	LDA GS0SpriteXPos+1
 	ADC TitleYoshiXOfs
-	STA GS0SpriteXPos+2	;Set Yoshi's horizontal offset
+	STA GS0SpriteXPos+2 ;Set Yoshi's horizontal offset
 	CLC
 	LDA GS0SpriteYPos+1
 	ADC TitleYoshiYOfs
-	STA GS0SpriteYPos+2	;Set Yoshi's vertical offset
-	LDA tbl_A518,X	;Load Mario's sprite for the current jump timer value
-	STA GS0SpriteFrame+1	;Make Mario use it
-	LDA tbl_A533,X	;Load Yoshi's sprite for the current jump timer value
-	STA GS0SpriteFrame+2	;Make Yoshi use it
-	INC TitleJumpTimer	;Increment jump timer
+	STA GS0SpriteYPos+2 ;Set Yoshi's vertical offset
+	LDA tbl_A518,X ;Load Mario's sprite for the current jump timer value
+	STA GS0SpriteFrame+1 ;Make Mario use it
+	LDA tbl_A533,X ;Load Yoshi's sprite for the current jump timer value
+	STA GS0SpriteFrame+2 ;Make Yoshi use it
+	INC TitleJumpTimer ;Increment jump timer
 bra_A476_RTS:
 	RTS
 bra_A477:
 	LDA #$00
-	STA TitleJumpTimer	;Clear jump timer
-	STA TitleDemoAction	;Set demo action to walking
+	STA TitleJumpTimer ;Clear jump timer
+	STA TitleDemoAction ;Set demo action to walking
 	RTS
 ptr2_A480:
 	LDA FrameCount
 	AND #$01
-	BEQ bra_A4C3_RTS	;Only continue if on an odd frame number
+	BEQ bra_A4C3_RTS ;Only continue if on an odd frame number
 	LDA TitleJumpTimer
-	BEQ bra_A4C3_RTS	;Make sure the jump timer is active
-	LDX TitleJumpTimer	;Set the X index to the current jump timer value
-	LDA tbl_A4FD,X	;Load vertical speed value for the jump timer's current value
+	BEQ bra_A4C3_RTS ;Make sure the jump timer is active
+	LDX TitleJumpTimer ;Set the X index to the current jump timer value
+	LDA tbl_A4FD,X ;Load vertical speed value for the jump timer's current value
 	CMP #$80
-	BEQ bra_A4C4	;Branch if the end marker is reached ($80)
+	BEQ bra_A4C4 ;Branch if the end marker is reached ($80)
 	CLC
 	ADC GS0SpriteYPos+1
-	STA GS0SpriteYPos+1	;Add loaded speed value
+	STA GS0SpriteYPos+1 ;Add loaded speed value
 	CLC
 	LDA GS0SpriteXPos+1
 	ADC TitleYoshiXOfs
-	STA GS0SpriteXPos+2	;Set Yoshi's horizontal offset
+	STA GS0SpriteXPos+2 ;Set Yoshi's horizontal offset
 	CLC
 	LDA GS0SpriteYPos+1
 	ADC TitleYoshiYOfs
-	STA GS0SpriteYPos+2	;Set Yoshi's vertical offset
+	STA GS0SpriteYPos+2 ;Set Yoshi's vertical offset
 	LDA tbl_A518,X
-	STA GS0SpriteFrame+1	;Get sprite for Mario (based on jump timer)
+	STA GS0SpriteFrame+1 ;Get sprite for Mario (based on jump timer)
 	LDA tbl_A533,X
-	STA GS0SpriteFrame+2	;Get sprite for Yoshi (based on jump timer)
+	STA GS0SpriteFrame+2 ;Get sprite for Yoshi (based on jump timer)
 	LDA tbl_A54E,X
-	STA GS0SpriteFrame	;Get sprite for "pop" effect (based on jump timer)
+	STA GS0SpriteFrame ;Get sprite for "pop" effect (based on jump timer)
 	JSR sub_A4E8
-	INC TitleJumpTimer	;Increment jump timer
+	INC TitleJumpTimer ;Increment jump timer
 bra_A4C3_RTS:
 	RTS
 bra_A4C4:
@@ -749,11 +749,11 @@ sub_A4E8:
 	CLC
 	LDA GS0SpriteXPos+1
 	ADC PopEffectXOfs
-	STA GS0SpriteXPos	;Set horizontal offset for the enemy "pop" effect
+	STA GS0SpriteXPos ;Set horizontal offset for the enemy "pop" effect
 	CLC
 	LDA GS0SpriteYPos+1
 	ADC PopEffectYOfs
-	STA GS0SpriteYPos	;Set vertical offset for the "pop" effect
+	STA GS0SpriteYPos ;Set vertical offset for the "pop" effect
 	RTS
 PopEffectXOfs:
 	.byte $04
@@ -1208,37 +1208,37 @@ pnt5_A7D3:
 	NOP
 	RTS
 tbl_A7DF:
-	.byte $25	;world select music settings
+	.byte $25 ;world select music settings
 	.byte $25
 	.byte $25
 	.byte $25
-	.byte $25	;World 1
+	.byte $25 ;World 1
 	.byte $24
 	.byte $24
 	.byte $24
 	.byte $24
-	.byte $24	;World 2
+	.byte $24 ;World 2
 	.byte $24
 	.byte $24
 	.byte $24
-	.byte $24	;World 3
+	.byte $24 ;World 3
 	.byte $24
 	.byte $24
 	.byte $24
-	.byte $24	;World 4
+	.byte $24 ;World 4
 	.byte $28
 	.byte $28
 	.byte $28
 	.byte $28
-	.byte $28	;World 5
+	.byte $28 ;World 5
 	.byte $27
 	.byte $27
 	.byte $27
-	.byte $27	;World 6
+	.byte $27 ;World 6
 	.byte $27
 	.byte $27
 	.byte $26
-	.byte $26	;World 7
+	.byte $26 ;World 7
 	.byte $00
 pnt5_A7FF:
 	LDX #$01
@@ -1327,18 +1327,18 @@ bra_A8A6:
 	JSR sub_B800
 	LDA MapLevelID
 	ASL
-	ASL	;(multiply ID value by 4)
-	TAX	;Get Y scroll position for current level ID
+	ASL ;(multiply ID value by 4)
+	TAX ;Get Y scroll position for current level ID
 	LDA tbl_AB9F,X
-	STA ScrollYPos	;Set Y scroll position for current level ID
+	STA ScrollYPos ;Set Y scroll position for current level ID
 	LDA #$00
 	STA $3C
 	STA PlayerXSpeed
 	STA PlayerYSpeed
 	STA PlayerMovement
-	STA PlayerSpriteAttributes	;Clear player variables
+	STA PlayerSpriteAttributes ;Clear player variables
 	LDA #$2A
-	STA M90_PRG0	;Swap bank 42 into 1st PRG slot
+	STA M90_PRG0 ;Swap bank 42 into 1st PRG slot
 	JSR sub_42_9C43
 	LDA #$00
 	STA $0378
@@ -1364,7 +1364,7 @@ bra_A8E1:
 	RTS
 pnt5_A8FE:
 	LDA MapMovementFlag
-	BNE bra_A90F	;Branch if the player starts moving
+	BNE bra_A90F ;Branch if the player starts moving
 	JSR sub_AA5F
 	JSR WorldSelectCheck
 	JSR sub_42_96FE
@@ -1376,16 +1376,16 @@ loc_A912:
 	JSR ClearOtherSprites
 	JSR sub_B486
 	LDA #$2A
-	STA M90_PRG0	;Swap bank 42 into the 1st PRG slot
+	STA M90_PRG0 ;Swap bank 42 into the 1st PRG slot
 	JSR sub_42_9DF8
 	RTS
 pnt5_A924:
 	JSR sub_42_9DF8
 pnt5_A927:
 	LDA #$05
-	STA PalTransition	;Start palette fadeout
+	STA PalTransition ;Start palette fadeout
 	JSR sub_B068
-	INC a:Event	;Go to the next event
+	INC a:Event ;Go to the next event
 	RTS
 pnt5_A933:
 	JSR sub_B75D
@@ -1500,63 +1500,63 @@ tbl_A9B5:
 	.byte $00
 PlayLevel:
 	CLC
-	LDX #$08	;Set index for player #2
+	LDX #$08 ;Set index for player #2
 	LDA CurrentPlayer
-	BNE LevelDestroyCheck	;Branch if player #2 is playing
-	LDX #$00	;Otherwise, set index for player #1
+	BNE LevelDestroyCheck ;Branch if player #2 is playing
+	LDX #$00 ;Otherwise, set index for player #1
 LevelDestroyCheck:
-	STX $25	;Store index value
+	STX $25 ;Store index value
 	LDY MapLevelID
 	LDA tbl_A9B5,Y
 	ADC $25
-	STA $25	;Add to index
+	STA $25 ;Add to index
 	LDX $25
 	LDA CastleDestroyFlags,X
-	BEQ bra_A9F3	;Branch if the current level isn't destroyed
+	BEQ bra_A9F3 ;Branch if the current level isn't destroyed
 	RTS
 bra_A9F3:
-	LDX #$01	;Set index for player #2
+	LDX #$01 ;Set index for player #2
 	LDA CurrentPlayer
-	BNE bra_A9FC	;Branch if player #2 is playing
-	LDX #$00	;Otherwise, set index for player #1
+	BNE bra_A9FC ;Branch if player #2 is playing
+	LDX #$00 ;Otherwise, set index for player #1
 bra_A9FC:
 	LDA MapLevelID
-	STA LevelID,X	;Set level ID
+	STA LevelID,X ;Set level ID
 	LDA PlayerMapAnim
-	CMP #$07	;Check if the player is on Yoshi
-	BNE bra_AA0D	;Branch if not
+	CMP #$07 ;Check if the player is on Yoshi
+	BNE bra_AA0D ;Branch if not
 	LDA #$0E
-	BNE bra_AA25	;Otherwise, set animation
+	BNE bra_AA25 ;Otherwise, set animation
 bra_AA0D:
 	LDA PlayerMapAnim
-	CMP #$0A	;Check if the player is on a water level with Yoshi
-	BNE bra_AA18	;If not, branch
+	CMP #$0A ;Check if the player is on a water level with Yoshi
+	BNE bra_AA18 ;If not, branch
 	LDA #$0F
-	BNE bra_AA25	;Otherwise, set animation
+	BNE bra_AA25 ;Otherwise, set animation
 bra_AA18:
 	LDA PlayerMapAnim
-	CMP #$04	;Check if the player is on a water level
-	BNE bra_AA23	;If they aren't, branch
+	CMP #$04 ;Check if the player is on a water level
+	BNE bra_AA23 ;If they aren't, branch
 	LDA #$10
-	BNE bra_AA25	;Otherwise, set animation for it
+	BNE bra_AA25 ;Otherwise, set animation for it
 bra_AA23:
-	LDA #$0D	;Use normal "start" animation
+	LDA #$0D ;Use normal "start" animation
 bra_AA25:
 	STA PlayerMapAnim
 	LDA #sfxBeep
-	STA SFXRegister	;Play "beep" sound
+	STA SFXRegister ;Play "beep" sound
 	LDA #$00
-	STA OverworldMapTimer	;Clear overworld timer
+	STA OverworldMapTimer ;Clear overworld timer
 	STA FrameCount
-	STA FrameCount+1	;Clear global frame counters
-	STA PlayerMapFrame	;Reset animation frame
+	STA FrameCount+1 ;Clear global frame counters
+	STA PlayerMapFrame ;Reset animation frame
 bra_AA38:
 	LDA FrameCount
 	CMP FrameCount+1
-	BEQ bra_AA38	;Wait for the two frame counters to desync
-	STA FrameCount+1	;Synchronize them
+	BEQ bra_AA38 ;Wait for the two frame counters to desync
+	STA FrameCount+1 ;Synchronize them
 	JSR AnimateMapPlayer
-	JSR ClearOtherSprites	;Clear non-player sprites
+	JSR ClearOtherSprites ;Clear non-player sprites
 	JSR sub_42_9DF8
 	LDA FrameCount
 	AND #$1F
@@ -1565,15 +1565,15 @@ bra_AA38:
 bra_AA52:
 	LDA WorldSelectNum
 	CMP #$04
-	BCC bra_AA38	;Branch if the timer hasn't reached 4 yet
+	BCC bra_AA38 ;Branch if the timer hasn't reached 4 yet
 	LDA #$12
-	STA a:Event	;Otherwise, start fadeout
+	STA a:Event ;Otherwise, start fadeout
 	RTS
 sub_AA5F:
 	LDA ButtonsPressed
-	AND #buttonA+buttonStart	;Check if A or start is pressed
-	BEQ bra_AA6A	;If not, branch
-	JSR PlayLevel	;If they are, jump
+	AND #buttonA+buttonStart ;Check if A or start is pressed
+	BEQ bra_AA6A ;If not, branch
+	JSR PlayLevel ;If they are, jump
 	RTS
 bra_AA6A:
 	LDX CurrentPlayer
@@ -1634,7 +1634,7 @@ ClearGS0Sprites:
 GS0ClearLoop:
 	STA GS0SpriteFrame,X
 	INX
-	CPX #$07	;Make all sprites blank
+	CPX #$07 ;Make all sprites blank
 	BCC GS0ClearLoop
 	RTS
 ClearSprites:
@@ -1646,22 +1646,22 @@ ClearSpritesLoop:
 	INX
 	INX
 	INX
-	BNE ClearSpritesLoop	;Move all 8x8 sprites off-screen
+	BNE ClearSpritesLoop ;Move all 8x8 sprites off-screen
 	RTS
 WorldSelectCheck:
 	LDA WorldSelectTrigger
-	BEQ bra_AAFA	;Branch if the world select trigger is set to zero
+	BEQ bra_AAFA ;Branch if the world select trigger is set to zero
 	LDA ButtonsPressed
-	AND #buttonSelect	;Check if select is pressed
-	BEQ bra_AB0C_RTS	;If not, stop
+	AND #buttonSelect ;Check if select is pressed
+	BEQ bra_AB0C_RTS ;If not, stop
 bra_AAFA:
 	LDA #$04
-	STA OverworldMapScreen	;Set screen
+	STA OverworldMapScreen ;Set screen
 	LDA #$00
-	STA PlayerMapAnim	;Reset the player's animation
-	STA WorldSelectNum	;Set the starting spot
-	LDA #$0F	;Set next event
-	JSR sub_BFD0	;Reset the trigger
+	STA PlayerMapAnim ;Reset the player's animation
+	STA WorldSelectNum ;Set the starting spot
+	LDA #$0F ;Set next event
+	JSR sub_BFD0 ;Reset the trigger
 bra_AB0C_RTS:
 	RTS
 tbl_AB0D:
@@ -1928,9 +1928,9 @@ CycleCountLoop:
 	NOP
 	NOP
 	DEX
-	BNE CycleCountLoop	;Wait a frame worth of cycles
+	BNE CycleCountLoop ;Wait a frame worth of cycles
 	DEY
-	BNE bra_AC6E	;Wait for the set amount of frames
+	BNE bra_AC6E ;Wait for the set amount of frames
 CycleFrameEnd:
 	RTS
 YoshiHouseIDs:
@@ -1950,54 +1950,54 @@ pnt5_AC8D:
 bra_AC98:
 	LDA LevelID,X
 	CMP YoshiHouseIDs,Y
-	BEQ bra_ACA8	;If current level ID is one of the Yoshi house IDs, branch
-	INY	;Go to next byte of ID list
+	BEQ bra_ACA8 ;If current level ID is one of the Yoshi house IDs, branch
+	INY ;Go to next byte of ID list
 	CPY #$03
-	BCC bra_AC98	;Keep going until 3 bytes are read
+	BCC bra_AC98 ;Keep going until 3 bytes are read
 	JMP loc_ACB3
 bra_ACA8:
 	LDY #$40
 	JSR CycleFrameCount
 	LDA #$2E
-	STA a:Event	;Enter Yoshi house
+	STA a:Event ;Enter Yoshi house
 	RTS
 loc_ACB3:
 	LDA #$00
 	STA ScrollXPos
 	STA ScrollYPos
 	STA PPUMask
-	STA PPUMaskMirror	;Clear PPU registers
-	JSR ClearNametable	;Clear the screen
+	STA PPUMaskMirror ;Clear PPU registers
+	JSR ClearNametable ;Clear the screen
 	LDA #$2E
-	STA MusicRegister	;Stop playing music
+	STA MusicRegister ;Stop playing music
 	LDA CurrentPlayer
-	BNE P2TransitionSet	;Branch if player #2 is playing
+	BNE P2TransitionSet ;Branch if player #2 is playing
 	LDA #$01
-	BNE bra_ACD0	;Set transition for player #1
+	BNE bra_ACD0 ;Set transition for player #1
 P2TransitionSet:
-	LDA #$03	;Set transition for player #2
+	LDA #$03 ;Set transition for player #2
 bra_ACD0:
 	JSR TransitionScreenSub
 loc_ACD3:
-	JSR ClearGS0Sprites	;Hide sprites
+	JSR ClearGS0Sprites ;Hide sprites
 	JSR ClearSprites
 	LDA #$00
-	STA FadeoutMode	;Set fadeout mode
-	STA PalTransition	;Fade the screen in
-	STA HUDDisplay	;Turn off the HUD
+	STA FadeoutMode ;Set fadeout mode
+	STA PalTransition ;Fade the screen in
+	STA HUDDisplay ;Turn off the HUD
 	STA LogoFlag
 	LDA #$05
-	STA BGPalette	;Set palette
+	STA BGPalette ;Set palette
 	JSR CHRBankSub
 	LDY #$40
-	JSR CycleFrameCount	;Wait 64 frames
+	JSR CycleFrameCount ;Wait 64 frames
 	LDA #%00011110
-	STA PPUMaskMirror	;Set the PPU mask
+	STA PPUMaskMirror ;Set the PPU mask
 	LDA #$0C
-	STA InterruptMode	;Set horizontal interrupt mode
+	STA InterruptMode ;Set horizontal interrupt mode
 	JSR sub_B068
 	LDY #$E0
-	JSR CycleFrameCount	;Wait 224 frames
+	JSR CycleFrameCount ;Wait 224 frames
 	INC a:Event
 	RTS
 tbl_AD09:
@@ -2199,9 +2199,9 @@ tbl_AE5A:
 	.byte $30, $0C, $00, $A8
 sub_AE8A:
 	LDA #%00011000
-	STA PPUMaskMirror	;Set PPU mask bits
+	STA PPUMaskMirror ;Set PPU mask bits
 	LDA #%10001000
-	STA PPUCtrl	;Set PPU control bits
+	STA PPUCtrl ;Set PPU control bits
 	STA PPUControlMirror
 	RTS
 sub_AE96:
@@ -2209,15 +2209,15 @@ sub_AE96:
 	STA PPUCtrl
 	STA PPUControlMirror
 	STA PPUMask
-	STA PPUMaskMirror	;Clear the PPU mask and control registers
+	STA PPUMaskMirror ;Clear the PPU mask and control registers
 	RTS
 sub_AEA3:
 	LDA #$00
 	STA ScrollXPos
 	STA ScrollYPos
 	STA PPUMask
-	STA PPUMaskMirror	;Clear the PPU registers
-	JSR ClearNametable	;Clear the screen
+	STA PPUMaskMirror ;Clear the PPU registers
+	JSR ClearNametable ;Clear the screen
 	RTS
 tbl_AEB2:
 	.byte $04
@@ -2285,18 +2285,18 @@ pnt5_AF14:
 	JMP loc_ACD3
 pnt5_AF1F:
 	LDA GameType
-	BEQ bra_AF2B	;Branch if in 1 player mode
-	LDX #$01	;Set index for player #2
+	BEQ bra_AF2B ;Branch if in 1 player mode
+	LDX #$01 ;Set index for player #2
 	LDA CurrentPlayer
-	BNE bra_AF2D	;Branch if player #2 is playing
+	BNE bra_AF2D ;Branch if player #2 is playing
 bra_AF2B:
-	LDX #$00	;Set index for player #1
+	LDX #$00 ;Set index for player #1
 bra_AF2D:
-	DEC Player1Lives,X	;Subtract from the player's life count
+	DEC Player1Lives,X ;Subtract from the player's life count
 	LDA Player1Lives,X
-	BEQ SetGameOver	;Branch if the player has zero lives
+	BEQ SetGameOver ;Branch if the player has zero lives
 	LDA GameType
-	BNE SetPlayerChange	;Switch to the other player
+	BNE SetPlayerChange ;Switch to the other player
 	LDA #$2C
 	STA a:Event
 	RTS
@@ -2444,25 +2444,25 @@ pnt5_B062:
 sub_B068:
 	LDA BGPalette
 	ASL
-	TAY	;Get palette pointer
+	TAY ;Get palette pointer
 	LDA tbl_B0EB,Y
 	STA $32
 	LDA tbl_B0EB+1,Y
-	STA $33	;Store pointer
+	STA $33 ;Store pointer
 	LDA FadeoutMode
 	ASL
-	TAY	;Get fadeout mode pointer
+	TAY ;Get fadeout mode pointer
 	LDA tbl_B0E7,Y
 	STA $34
 	LDA tbl_B0E7+1,Y
-	STA $35	;Store pointer
+	STA $35 ;Store pointer
 bra_B086:
 loc_B086:
 	LDA PPUUpdatePtr
-	BNE bra_B086	;Make sure the PPU address low byte is 0??
+	BNE bra_B086 ;Make sure the PPU address low byte is 0??
 	LDA FrameCount
-	AND #$03	;Mask out 2 LSB
-	BNE bra_B086	;Only do this every 4th frame
+	AND #$03 ;Mask out 2 LSB
+	BNE bra_B086 ;Only do this every 4th frame
 	LDX PalTransition
 	LDA tbl_B0DE,X
 	STA $25
@@ -2503,15 +2503,15 @@ loc_B0AD:
 bra_B0DD_RTS:
 	RTS
 tbl_B0DE:
-	.byte $40	;fadeout effect
-	.byte $30	;
-	.byte $20	;
-	.byte $10	;
-	.byte $00	;
-	.byte $10	;
-	.byte $20	;
-	.byte $30	;
-	.byte $40	;
+	.byte $40 ;fadeout effect
+	.byte $30 ;
+	.byte $20 ;
+	.byte $10 ;
+	.byte $00 ;
+	.byte $10 ;
+	.byte $20 ;
+	.byte $30 ;
+	.byte $40 ;
 tbl_B0E7:
 	.word ofs_B1C9
 	.word ofs_B1E9
@@ -4983,7 +4983,7 @@ bra_BE36:
 	STA CameraXScreen
 	RTS
 	RTS
-sub_BE4D:	;Unused code starts here
+sub_BE4D: ;Unused code starts here
 	LDA PlayerXScreenDup
 	STA PlayerColXScreen
 	LDA PlayerXPosDup
@@ -5037,7 +5037,7 @@ loc_BE91:
 	STA PlayerBackColl
 	LDA #$3C
 	STA M90_PRG0
-	JSR $8000	;Unused function, bank 60 is just padding
+	JSR $8000 ;Unused function, bank 60 is just padding
 	LDA $26
 	BEQ bra_BEBC
 	JMP loc_BE5D
@@ -5227,11 +5227,11 @@ bra_BF7A_RTS:
 	.byte $8A
 	.byte $84
 	.byte $CD
-	.byte $1A	;Unlogged data ends here
+	.byte $1A ;Unlogged data ends here
 sub_BFD0:
-	STA a:Event	;Store set event
+	STA a:Event ;Store set event
 	LDA #$01
-	STA WorldSelectTrigger	;Reset the trigger
+	STA WorldSelectTrigger ;Reset the trigger
 	RTS
 	.byte $EA
 	.byte $EA

@@ -1,13 +1,13 @@
 ;disassembled by BZK 6502 Disassembler
 	.byte $C8
-	.byte $C0	;these are logged but i dont know what they're for
-	.byte $08	;
-	.byte $C1	;
-	.byte $48	;
-	.byte $C1	;
-	.byte $88	;
+	.byte $C0 ;these are logged but i dont know what they're for
+	.byte $08 ;
+	.byte $C1 ;
+	.byte $48 ;
+	.byte $C1 ;
+	.byte $88 ;
 	.byte $C1	
-	.byte $C8	;(nothing else here is logged unless stated otherwise)
+	.byte $C8 ;(nothing else here is logged unless stated otherwise)
 	.byte $C1
 	.byte $08
 	.byte $C2
@@ -4095,10 +4095,10 @@
 	.byte $00
 	.byte $00
 	.byte $00
-	.byte $00	;these are logged too
-	.byte $00	;for whatever reason
-	.byte $00	;
-	.byte $00	;
+	.byte $00 ;these are logged too
+	.byte $00 ;for whatever reason
+	.byte $00 ;
+	.byte $00 ;
 	.byte $00
 	.byte $00
 	.byte $00

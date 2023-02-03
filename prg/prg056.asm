@@ -1603,9 +1603,9 @@ bra9_8C16:
 BulletBillMappings:
 	.word BulletBill
 BulletBill:
-	.byte $02	;Tile Width
-	.byte $02	;Tile Height
-	.byte $A6	;1K CHR Bank
+	.byte $02 ;Tile Width
+	.byte $02 ;Tile Height
+	.byte $A6 ;1K CHR Bank
 	.byte $2A, $2B
 	.byte $2C, $2D
 	LDY #$00
@@ -1638,15 +1638,15 @@ VerticalBillMappings:
 	.word VerticalBill1
 	.word VerticalBill2
 VerticalBill1:
-	.byte $02	;Tile Width
-	.byte $02	;Tile Height
-	.byte $A6	;1K CHR Bank
+	.byte $02 ;Tile Width
+	.byte $02 ;Tile Height
+	.byte $A6 ;1K CHR Bank
 	.byte $2E, $2F
 	.byte $30, $31
 VerticalBill2:
-	.byte $02	;Tile Width
-	.byte $02	;Tile Height
-	.byte $A6	;1K CHR Bank
+	.byte $02 ;Tile Width
+	.byte $02 ;Tile Height
+	.byte $A6 ;1K CHR Bank
 	.byte $30, $31
 	.byte $2E, $2F
 obj_h9C:
@@ -1992,9 +1992,9 @@ tbl9_8EE9:
 	.word ptr2_8EF3
 	.word ptr_AD88
 ptr2_8EF3:
-	JSR sub9_8EFC	;unlogged
-	JSR jmp_54_BC3E	;unlogged
-	JMP jmp_54_BF74	;unlogged
+	JSR sub9_8EFC ;unlogged
+	JSR jmp_54_BC3E ;unlogged
+	JMP jmp_54_BF74 ;unlogged
 sub9_8EFC:
 	LDA FrameCount
 	AND #$04
@@ -2870,7 +2870,7 @@ ptr6_9519:
 	BNE bra9_9536
 	LDY #$01
 	LDA $062B
-	AND #$04	;Set animation speed to per 4 frames
+	AND #$04 ;Set animation speed to per 4 frames
 	BNE bra9_9536
 	INY
 bra9_9536:
@@ -2896,8 +2896,8 @@ tbl9_9556:
 	.word FishBones2
 	.word FishBones3
 FishBones1:
-	.byte $03	;Tile Width
-	.byte $02	;Tile Height
+	.byte $03 ;Tile Width
+	.byte $02 ;Tile Height
 	.byte $AD
 	.byte $1B, $1C, $1D
 	.byte $1E, $1F, $20
@@ -4532,7 +4532,7 @@ ofs_9E87:
 	.byte $81
 	.byte $9E
 	STA $33
-	JMP ($32)	;This code seems to be cut off/overwritten
+	JMP ($32) ;This code seems to be cut off/overwritten
 	.byte $BB
 	.byte $A7
 	.byte $7B
@@ -4541,7 +4541,7 @@ ofs_9E87:
 	.byte $AB
 	.byte $B8
 	.byte $9E
-	LDA ObjXScreenDistance,X	;The rest of the code in this is unused
+	LDA ObjXScreenDistance,X ;The rest of the code in this is unused
 	BPL bra9_9EE4_RTS
 	LDA #$23
 	STA MusicRegister

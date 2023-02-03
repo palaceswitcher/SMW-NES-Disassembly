@@ -396,7 +396,7 @@ bra7_828C:
 	STA $36
 	JMP jmp_52_A463
 tbl7_82A2:
-	.word ofs_82BA	;Idle Yoshi Mappings
+	.word ofs_82BA ;Idle Yoshi Mappings
 	.word ofs_82C5
 	.word ofs_82D0
 	.word ofs_82E3
@@ -803,10 +803,10 @@ bra7_84E1:
 	LDA ObjYScreenDistance,X
 	BPL bra7_8512
 	LDA ObjectYDistance,X
-	CLC	;logged as data
-	ADC #$10	;logged as data
-	STA ObjectYDistance,X	;logged as data
-	LDA ObjYScreenDistance,X	;logged as data
+	CLC ;logged as data
+	ADC #$10 ;logged as data
+	STA ObjectYDistance,X ;logged as data
+	LDA ObjYScreenDistance,X ;logged as data
 	ADC #$00
 	STA ObjYScreenDistance,X
 	JMP loc7_8523
@@ -1111,14 +1111,14 @@ loc7_8757:
 	RTS
 bra7_875D:
 	LDA ObjectState,X
-	AND #$1F	;Mask out the upper 3 bits, limiting it to $00 - $1F
+	AND #$1F ;Mask out the upper 3 bits, limiting it to $00 - $1F
 	ASL
-	TAY	;Get pointer for the object's current state
+	TAY ;Get pointer for the object's current state
 	LDA tbl7_8771,Y
 	STA $32
 	LDA tbl7_8771+1,Y
-	STA $33	;Load pointer into memory
-	JMP ($32)	;Jump to pointer location
+	STA $33 ;Load pointer into memory
+	JMP ($32) ;Jump to pointer location
 tbl7_8771:
 	.word ptr_A7BB
 	.word ptr_AA7B
@@ -1262,7 +1262,7 @@ bra7_8873:
 	BEQ bra7_88B5
 	LDA ObjYScreenDistance,X
 	BPL bra7_88A4
-	LDA ObjectYDistance,X	;logged as data
+	LDA ObjectYDistance,X ;logged as data
 	CLC
 	ADC #$10
 	STA ObjectYDistance,X
@@ -1398,12 +1398,12 @@ loc7_899A:
 bra7_89A0:
 	LDA PlayerMovement
 	ORA #$04
-	STA PlayerMovement	;Make player move upwards
-	LDY #$50	;Set speed to $50
+	STA PlayerMovement ;Make player move upwards
+	LDY #$50 ;Set speed to $50
 	LDA ButtonsHeld
 	AND #buttonA
-	BEQ bra7_89B1	;If A isn't held, branch and keep the speed
-	LDY #$70	;If it is held, set the speed to $70 instead
+	BEQ bra7_89B1 ;If A isn't held, branch and keep the speed
+	LDY #$70 ;If it is held, set the speed to $70 instead
 bra7_89B1:
 	STY PlayerYSpeed
 	LDA #$04
@@ -1411,7 +1411,7 @@ bra7_89B1:
 	LDX $A4
 	INC ObjectState,X
 	LDA #sfxSwim
-	STA SFXRegister	;Play bounce sound
+	STA SFXRegister ;Play bounce sound
 	RTS
 ptr5_89C1:
 	LDA FrameCount
@@ -1942,16 +1942,16 @@ bra7_8DE9_RTS:
 	RTS
 sub7_8DEA:
 	LDA #$06
-	STA $25	;Configure Yoshi tongue behavior (instantly swallowed)
+	STA $25 ;Configure Yoshi tongue behavior (instantly swallowed)
 	LDA ObjectState,X
-	AND #%00011111	;Mask out the upper 3 bits
+	AND #%00011111 ;Mask out the upper 3 bits
 	ASL
-	TAY	;Use as pointer index
+	TAY ;Use as pointer index
 	LDA tbl7_8E02,Y
 	STA $32
 	LDA tbl7_8E02+1,Y
-	STA $33	;Load pointer into memory
-	JMP ($32)	;Jump to pointer
+	STA $33 ;Load pointer into memory
+	JMP ($32) ;Jump to pointer
 tbl7_8E02:
 	.word ptr_A7BB
 	.word ptr_AA7B
@@ -1962,9 +1962,9 @@ ptr5_8E0C:
 	JSR jmp_54_A773
 	INC Player1Lives
 	LDA #sfx1up
-	STA SFXRegister	;Play 1UP sound
+	STA SFXRegister ;Play 1UP sound
 	LDA #$00
-	STA ObjectSlot,X	;Despawn 1UP
+	STA ObjectSlot,X ;Despawn 1UP
 	LDA #$03
 	JSR sub3_BCD4
 	RTS
@@ -2350,15 +2350,15 @@ loc7_9128:
 bra7_912E:
 	JSR jmp_54_BD3D
 	JSR sub7_9149
-	LDA ObjectState,X	;Get the current object state
-	AND #%00001111	;Mask the lower 4 bits out
+	LDA ObjectState,X ;Get the current object state
+	AND #%00001111 ;Mask the lower 4 bits out
 	CMP #$04
-	BCS bra7_9148_RTS	;Continue if the result is less than $04
+	BCS bra7_9148_RTS ;Continue if the result is less than $04
 	LDA FrameCount
 	AND #$01
-	BNE bra7_9148_RTS	;Only continue if on an even frame
+	BNE bra7_9148_RTS ;Only continue if on an even frame
 	LDA #$0B
-	JSR GetMovementData	;Get the movement data
+	JSR GetMovementData ;Get the movement data
 bra7_9148_RTS:
 	RTS
 sub7_9149:
@@ -3418,13 +3418,13 @@ bra7_98AC:
 	STA $020F
 	LDA $42
 	STA $0213
-	LDA #$59	;Pop effect upper left tile
+	LDA #$59 ;Pop effect upper left tile
 	STA $0205
-	LDA #$61	;Pop effect upper right tile
+	LDA #$61 ;Pop effect upper right tile
 	STA $0209
-	LDA #$61	;Pop effect lower left tile
+	LDA #$61 ;Pop effect lower left tile
 	STA $020D
-	LDA #$59	;Pop effect lower right tile
+	LDA #$59 ;Pop effect lower right tile
 	STA $0211
 	LDA #$01
 	STA $0206
@@ -4208,36 +4208,36 @@ ptr5_9EB8:
 	LDA ObjXScreenDistance,X
 	BPL bra7_9EE4_RTS
 	LDA #musVictory
-	STA MusicRegister	;Play level complete music
+	STA MusicRegister ;Play level complete music
 	LDA #$06
-	STA Event	;Trigger goal tape event
+	STA Event ;Trigger goal tape event
 	LDA WorldNumber
 	ASL
-	ASL	;Multiply world number by 4
+	ASL ;Multiply world number by 4
 	CLC
-	ADC LevelNumber	;Add it to the level number to get the level index
+	ADC LevelNumber ;Add it to the level number to get the level index
 	TAY
 	LDA CurrentPlayer
-	BEQ bra7_9ED9	;Branch ahead if player one is playing
+	BEQ bra7_9ED9 ;Branch ahead if player one is playing
 	TYA
 	CLC
-	ADC #$1C	;Move
-	TAY	;If player 2 is playing, use their checkpoint index instead
+	ADC #$1C ;Move
+	TAY ;If player 2 is playing, use their checkpoint index instead
 bra7_9ED9:
 	LDA #$00
 	STA CheckpointFlag,Y
 	STA InvincibilityTimer
-	STA PlayerPowerupBuffer	;Clear the player's checkpoint, invincibility, and any powerup buffering
+	STA PlayerPowerupBuffer ;Clear the player's checkpoint, invincibility, and any powerup buffering
 bra7_9EE4_RTS:
 	RTS
 sub7_9EE5:
 	LDA PlayerPowerup
-	BNE bra7_9EF6_RTS	;Only do this if the player is small
-	INC PlayerPowerup	;Make the player big
+	BNE bra7_9EF6_RTS ;Only do this if the player is small
+	INC PlayerPowerup ;Make the player big
 	LDA #$07
-	STA Event	;Update the player's sprite?
+	STA Event ;Update the player's sprite?
 	LDA #$01
-	STA PlayerPowerupBuffer	;Update the player's sprite
+	STA PlayerPowerupBuffer ;Update the player's sprite
 bra7_9EF6_RTS:
 	RTS
 obj_h7C:
