@@ -4357,37 +4357,37 @@ unknownrout1:
 		STA PlayerMovement	;
 rout1done:		RTS
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-;SPEED SCALING AND SPRITE ALIGNMENT (??)
+;SPEED SCALING AND SPRITE ALIGNMENT 
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-sub4_B938:
-	LDA PlayerXSpeed	;
-	CMP #$10	;if player's x speed exceeds 16 (decimal),
-	BCS bra4_B945		;branch
-	LDA FrameCount
-	AND #$01 ;bitmask the frame count
+sub4_B938: ;determine if player is walking or running 
+	LDA PlayerXSpeed	
+	CMP #$10	
+	BCS GetPlayerTrueXSpd ;if player's x speed exceeds #$10 (walking speed), branch
+	LDA FrameCount ;else
+	AND #$01 ;bitmask the frame count and use it as the scaled speed instead 
 	JMP loc4_B94F ;skip ahead to walking section
 	
-bra4_B945: ; this is used when the player is moving faster than #$10, reads from a running speed table
+GetPlayerTrueXSpd: ; this is used when the player is moving faster than #$10, reads from a running speed table
 	ROR
 	ROR
 	ROR
 	ROR ;rotate bits right 4 times to divide speed
-	AND #$0F ;Bitmask
-	TAY ;use modified X speed as index to select speed from table 
-	LDA XSpdTbl,Y
+	AND #$0F ;mask out the upper 4 bits of the result
+	TAY ;move it to Y as an offset
+	LDA PlayerXSpdTbl,Y ;use that to load a movement speed for the player
 	
-loc4_B94F: ;Make player start walking?
-	STA PlayerMetaspriteHAlign ;store scaled speed 
+loc4_B94F: ;Decide if player should start walking
+	STA PlayerMetaspriteHAlign ;store the loaded scaled speed value
 	LDA PlayerXSpeed
 	CMP #$03
-	BCS bra4_B95B ;if player X speed exceeds this value, branch (exits static/standing state)
+	BCS bra4_B95B ;if player X speed exceeds 3, branch (exits static/standing state)
 	LDA #$00
-	STA PlayerMetaspriteHAlign ;else set to 00 (Standing speed)
+	STA PlayerMetaspriteHAlign ;else set scaled speed to 00 (Standing speed)
 	
 bra4_B95B:
 	LDA PlayerMetaspriteHAlign
-	BNE bra4_B96A ;if metasprite horizontal alignment isn't zero, branch
-;if player is static
+	BNE MovePlayerLeft ;if scaled speed isn't zero, branch
+;else if player is static
 	LDA PlayerXScreen
 	STA PlayerXScreenDup ;copy the players X screen
 	LDA PlayerXPos
@@ -4396,50 +4396,51 @@ bra4_B95B:
 ;***************************************************************
 ;Ok, so this next part is for if the player is moving
 ;It handles left and right movements as well as screen positions 
-;It converts the speed to a vector 
+;It converts the speed to a vector
+;If the player positioning sum creates a carry that is used to update the screen ID
 ;***************************************************************
-bra4_B96A: ;If metasprite alignment not 00 (player moving)
+MovePlayerLeft: ;If metasprite alignment not 00 (player moving)
 	LDA PlayerMovement
-	AND #$01 ;if Player movement set to right (assumed this given its behaviour)
-	BEQ bra4_B980 ;go to rightward movement section
+	AND #$01 ;if Player movement set to right (0=right 1=left)
+	BEQ MovePlayerRight ;go to rightward movement section
 ;Move Player Left	
 	LDA PlayerXPos
 	SEC
-	SBC PlayerMetaspriteHAlign ;Subtract Metasprite align from X position
+	SBC PlayerMetaspriteHAlign ;Subtract scaled speed from X position
 	STA PlayerXPosDup ;store it in duplicate X position
-;Move player between X screens if necessary
+;Move player between X screens if necessary (left)
 	LDA PlayerXScreen
 	SBC #$00 ;subtract carry if present
-	STA PlayerXScreenDup
+	STA PlayerXScreenDup ;set as new X screen
 	JMP loc4_B993 ;go to Y speed section
 	
-bra4_B980:
+MovePlayerRight: ;X position check (prevents player from wrapping around from the right side of the screen in scroll locked areas)
 	LDA PlayerSprXPos
 	CMP #$F0
 	BCS bra4_B993 ;If player's X sprite position exceeds #$F0, go to Y speed
 ;Move player Right	
 	LDA PlayerXPos
 	CLC
-	ADC PlayerMetaspriteHAlign ;Add Metasprite align to X position
+	ADC PlayerMetaspriteHAlign ;Add scaled speed to X position
 	STA PlayerXPosDup ;store it in duplicate X position
-;Move player between X screens if necessary
+;Move player between X screens if necessary (right)
 	LDA PlayerXScreen
 	ADC #$00 ;add carry if present
-	STA PlayerXScreenDup
-;coderoll
+	STA PlayerXScreenDup ;set as new X screen
 ;***************************************************************
 ;Now for the Y speed 
 ;***************************************************************	
-bra4_B993:
+bra4_B993: 
 loc4_B993:
 	LDA PlayerYSpeed
-	LSR			;
-	LSR			;
-	LSR			;
-	LSR			;divide speed value by 16,
+	LSR			
+	LSR			
+	LSR			
+	LSR			;divide Y speed value by 16,
 	TAX			;transfer modified Y speed to X reg
-	LDA tbl4_BAE1,X ;Load Y speed from table
-	STA PlayerMetaspriteVAlign ;Store here
+	LDA tbl4_BAE1,X ;Load a Y speed value from table
+	STA PlayerMetaspriteVAlign ;Store the scaled speed
+;decide if player should start moving
 	LDA PlayerYSpeed
 	CMP #$04
 	BCS bra4_B9A9 ;If Y speed exceeds #$04, branch ahead
@@ -4448,37 +4449,37 @@ loc4_B993:
 	
 bra4_B9A9: ;Make player move vertically
 	LDA PlayerMetaspriteVAlign
-	BNE bra4_B9B8 ;If player has Y speed, branch ahead
-	LDA PlayerYScreen ;if they don't
-	STA PlayerYScreenDup ;update Y screen
+	BNE MovePlayerUp ;If player isn't static, branch ahead
+;else if player vertically static
+	LDA PlayerYScreen 
+	STA PlayerYScreenDup ;copy Y screen
 	LDA PlayerYPos
-	STA PlayerYPosDup ;update Y position 
+	STA PlayerYPosDup ;copy Y position 
 	JMP loc4_BA24 ;go to check current event
 	
-bra4_B9B8: ;Go here if player has Y speed 
-	LDA PlayerMovement		;
-	AND #$04		;if player isn't jumping,
-	BEQ CliffDeathCheck		;branch 
+MovePlayerUp: ;Go here if player has Y speed 
+	LDA PlayerMovement		
+	AND #$04		;if player isn't jumping
+	BEQ CliffDeathCheck		;branch to check if they're dying 
 ;If player jumping	
-	LDA PlayerSprYPos		;
-	CMP #$08		;if the player's sprite goes higher than the 8th line,
+	LDA PlayerSprYPos		
+	CMP #$08		;if the player's sprite Y position is less than #$08
 	BCC CliffDeathCheck		;branch
-;If player below 8th line 
+;else if it's higher 
 ;Move player vertically upwards
 	LDA PlayerYPos
 	SEC
-	SBC PlayerMetaspriteVAlign ;subtract metasprite alignment from Y position
+	SBC PlayerMetaspriteVAlign ;subtract scaled Y speed from Y position
 	STA PlayerYPosDup ;store it in the duplicate
-;Move player between vertical screens if necessary 
+;Move player between vertical screens if necessary (upwards)
 	LDA PlayerYScreen
-	SBC #$00
-	STA PlayerYScreenDup
-;again, unsure on exact purpose of this part
+	SBC #$00 ;subtract carry if present 
+	STA PlayerYScreenDup ;set as new Y screen
+;Unsure on exact purpose of this part
 	LDA PlayerYPosDup
-	CMP #$F0 ;if Y position exceeds #$F0
+	CMP #$F0 ;if Y position is < #$F0 (top of the screen)
 	BCC bra4_B9DC ;branch to a jump (go to check current event)
-	
-;Move player vertically?? 
+;else
 ;***************************************************************	
 ;Ok, this seems to be subtracting distance from the player when moving between vertical screens
 ;Not exactly sure why, my guess is that it doesn't like you sitting on screen boarders
@@ -4486,194 +4487,189 @@ bra4_B9B8: ;Go here if player has Y speed
 ;Increasing it largely does nothing unless you overflow the math
 ;***************************************************************	
 	SEC
-	SBC #$10 ;subtract #$10 from duplicate Y position
+	SBC #$10 ;subtract #$10 from new Y position (move player upwards)
 	STA PlayerYPosDup  ;Update duplicate position 
 bra4_B9DC:
 	JMP loc4_BA24 ;go to check current event
-	
-	
 ;*******************************
 ;Check if player dying from pit
 ;*******************************	
 CliffDeathCheck:
-	LDA PlayerSprYPos		;
-	CMP #$E0		;if player's sprite is above this,
-	BCC bra4_BA0A	;branch
-	LDA #musDeath	;
+	LDA PlayerSprYPos		
+	CMP #$E0		;if player's sprite is below this (or above it, basically not going off screen in a pit)
+	BCC MovePlayerDown	;branch to player falling 
+	LDA #musDeath	
 	STA MusicRegister		;play death music
-	LDA #$00		;
+	LDA #$00		
 	STA PlayerPowerup		;clear any powerups
 	STA Player1YoshiStatus	;remove yoshi
-	LDA LevelNumber	;
+	LDA LevelNumber	
 	CMP #$03		;if in a castle,
 	BEQ DeathTrigger		;branch
-	LDA #$00		;
-	STA Player2YoshiStatus	;get remove 2nd player's yoshi
+	LDA #$00	;else
+	STA Player2YoshiStatus	;remove 2nd player's yoshi as well
 DeathTrigger:
-	LDA #$04		;
+	LDA #$04		
 	STA Event		;trigger death event
-	LDA #$02		;
+	LDA #$02		
 	STA EventPart	;set map transition
-	LDA #$07		;
-	STA PlayerAction		;make player duck
+	LDA #$07		
+	STA PlayerAction	;make player duck
 	RTS
 ;************************************************
-bra4_BA0A: ;If player not dying in pit (IE player falling but not dead)
+MovePlayerDown: ;If player not dying in pit (IE player falling but not dead)
 ;Move player vertically downwards
 	LDA PlayerYPos
 	CLC
-	ADC PlayerMetaspriteVAlign ;add metasprite alignment to Y position
+	ADC PlayerMetaspriteVAlign ;add scaled Y speed to Y position
 	STA PlayerYPosDup ;store it in the duplicate
 ;Move between Y screens if necessary (downwards)
 	LDA PlayerYScreen
-	ADC #$00
-	STA PlayerYScreenDup
-;	
-	LDA PlayerYPosDup	;
-	CMP #$F0	;if player's y coords go below this,
-	BCC bra4_BA24		;branch to check current event
-;add some distance when moving between V screens 
+	ADC #$00 ;add carry if present
+	STA PlayerYScreenDup ;set it as new Y screen
+;Again unsure of the exact purpose here	
+	LDA PlayerYPosDup
+	CMP #$F0	;if player's y coords are below this (pit)
+	BCC bra4_BA24	;branch to check current event
+;else add some distance when moving between V screens (seems to prevent player screen wrapping in pits)
 	CLC
 	ADC #$10
-	STA PlayerYPosDup
-;
-	INC PlayerYScreenDup ;increment the duplicate Y screen 
+	STA PlayerYPosDup ;add #$10 to new Y position 
+;Not really sure why it only does this for moving downwards
+	INC PlayerYScreenDup ;increment the new Y screen
 
 ;***************************************************************
 ;Check event	
 ;***************************************************************
-	
 bra4_BA24:
 loc4_BA24:
 	LDA PlayerSprYPos
 	CMP #$D0
-	BCS bra4_BA42 ;if exceed this, branch to 
+	BCS bra4_BA42 ;if exceed this, branch to X positioning
 	LDA Event
 	CMP #$04 ;death 
-	BEQ bra4_BA42 ;if player dying, branch to
+	BEQ bra4_BA42 ;if player dying, branch to X positioning 
 	CMP #$0B ;going down pipe
-	BEQ bra4_BA42 ;else if going down pipe, branch to
+	BEQ bra4_BA42 ;else if going down pipe, branch to X positioning
 	CMP #$0D ;(event range: 0C: walk out pipe, 0D: enter level from pipe)
 	BCC bra4_BA3C ;else if event > 0B but < than or == to #$0D, skip last event check, go to JSRs 
 	CMP #$15 ;(event range: a whole bunch of pipe related things)
-	BCC bra4_BA42 ;else if event > #$0D but < or == to #$15, branch to
+	BCC bra4_BA42 ;else if event > #$0D but < or == to #$15, branch to X Positioning
 bra4_BA3C: ;if event > #$15, jump to these routines 
 	JSR sub4_BAF1
 	JSR sub4_BC50
 ;***************************************************************
-;And now we're back to X speed stuff I think
+;Player Sprite Positioning?
 ;***************************************************************	
 bra4_BA42:
 	LDA PlayerXPosDup
 	SEC
-	SBC PlayerXPos ;Subtract X position from duplicate X position 
-	STA PlayerMetaspriteHAlign
+	SBC PlayerXPos ;Subtract previous X position from new X position
+	STA PlayerMetaspriteHAlign ;store result
 ;
 	LDA PlayerXScreenDup
-	SBC PlayerXScreen ;subtract X screen from it's duplicate 
-	BPL bra4_BA6A ;if result positive, branch 
-;
-	LDA PlayerMetaspriteHAlign
+	SBC PlayerXScreen ;subtract previous screen value from current screen value 
+	BPL bra4_BA6A ;if result positive, branch (moved forward one screen)
+;else player moved back a screen
+	LDA PlayerMetaspriteHAlign ;get result of positioning sum
 	EOR #$FF ;Flip all the bits 
 	SEC ; set carry
 	ADC #$00 ;add the carry
 	CMP #$07
-	BCC bra4_BA67 ;if result less than #$07, branch to jump
-; subtract value from X speed
-	LDA PlayerXPos
+	BCC bra4_BA67 ;if result < #$07, branch to jump (go to Y positioning)
+;if it's > 7
+	LDA PlayerXPos 
 	SEC
-	SBC #$07 ;subtract #$07 from X position
-	STA PlayerXPosDup ;store it in the duplicate
-;move between X screens if necessary?? (assume used for left movement)
+	SBC #$07 ;subtract #$07 from previous X position
+	STA PlayerXPosDup ;set it as new X position
+;move between X screens if necessary (left)
 	LDA PlayerXScreen
-	SBC #$00
-	STA PlayerXScreenDup
+	SBC #$00 ;subtract carry if present  
+	STA PlayerXScreenDup ;Set as new X screen
 bra4_BA67:
-	JMP loc4_BA7D
+	JMP loc4_BA7D ;go to Y positioning 
 ;***************************************************************	
 bra4_BA6A: ;Go here if X screen sum result postive
-	LDA PlayerMetaspriteHAlign
-	CMP #$07 ;If Metasprite align less than #$07
-	BCC bra4_BA7D ;branch
-;else 
+	LDA PlayerMetaspriteHAlign ;get result of positoning sum
+	CMP #$07 ;If < 7
+	BCC bra4_BA7D ;branch to Y positioning 
+;if it's > 7
 	LDA PlayerXPos
 	CLC
-	ADC #$07 ;Add #$07 to X position
-	STA PlayerXPosDup ;store in duplicate
-; Move between X screens if necessary 
+	ADC #$07 ;Add #$07 to previous X position
+	STA PlayerXPosDup ;set it as new X position
+; Move between X screens if necessary (right)
 	LDA PlayerXScreen
 	ADC #$00 ;add carry if present 
-	STA PlayerXScreenDup ;store in duplicate
-;coderoll
+	STA PlayerXScreenDup ;set as new X screen
 ;***************************************************************	
-bra4_BA7D: ;Start here if result negative 
+bra4_BA7D: ;Y positioning
 loc4_BA7D:
-;Unsure
 	LDA PlayerYPosDup
 	SEC
-	SBC PlayerYPos ;subtract Y position from it's duplicate
-	STA PlayerMetaspriteHAlign ;Store it as the Horizontal alignment 
+	SBC PlayerYPos ;subtract old Y position from new Y position
+	STA PlayerMetaspriteHAlign ;Store result 
 ;check if screen is positive
 	LDA PlayerYScreenDup
-	SBC PlayerYScreen ;subtract Y screen from it's duplicate
-	BPL bra4_BAB0 ;if result positive, branch ahead
-;Unsure
-	LDA PlayerMetaspriteHAlign
+	SBC PlayerYScreen ;subtract old Y screen from new Y screen
+	BPL bra4_BAB0 ;if result positive, branch ahead (moved down one screen)
+;else player moved up a screen
+	LDA PlayerMetaspriteHAlign ;get result of positioning sum
 	EOR #$FF ;flip all bits
 	SEC ;set carry
 	ADC #$00 ;apply carry
 	CMP #$07
 	BCC bra4_BAAD ;if result less than #$07, branch to jump (go to RTS)
-;Subtract a value from Y position
+;else, Subtract a value from Y position
 	LDA PlayerYPos
 	SEC
-	SBC #$07 ;subtract #$07 from Y position
-	STA PlayerYPosDup ;store it in the duplicate 
-;Move player between Y screens? (assume used for jumping)
+	SBC #$07 ;subtract #$07 from old Y position
+	STA PlayerYPosDup ;set it as new Y position 
+;Move player between Y screens if necessary (upwards)
 	LDA PlayerYScreen
 	SBC #$00 ;subtract carry if present 
-	STA PlayerYScreenDup
+	STA PlayerYScreenDup ;store result as new Y screen
 ;
 	LDA PlayerYPosDup
-	CMP #$F0 ;If duplicate Y position less than #$F0
+	CMP #$F0 ;If duplicate Y position less than #$F0 (pit)
 	BCC bra4_BAAD ;branch to RTS
-;if greater than #$F0	
+;if greater than #$F0 (in pit)	
 	SEC
 	SBC #$10 ;subtract #$10 from duplicate Y position
-	STA PlayerYPosDup ;update duplicate 
+	STA PlayerYPosDup ;update new position
 bra4_BAAD:
 	JMP loc4_BAD0_RTS ;go to RTS
 ;***************************************************************
 bra4_BAB0: ;Go here if Y screen sum result positive 
-	LDA PlayerMetaspriteHAlign
-	CMP #$07 ;If Horizontal alignment less than #$07 
+	LDA PlayerMetaspriteHAlign ;get result of positioning sum
+	CMP #$07 ;If it's < #$07 
 	BCC bra4_BAD0_RTS ;branch to RTS
-;Else 
+;Else > #$07
 	LDA PlayerYPos
 	CLC
-	ADC #$07 ;Add #$07 to Y position
-	STA PlayerYPosDup ;store in duplicate
-;move between vertical screens if necessary?? (assume used for falling)
+	ADC #$07 ;Add #$07 to old Y position
+	STA PlayerYPosDup ;set it as new Y position
+;move between vertical screens if necessary (downwards)
 	LDA PlayerYScreen
 	ADC #$00 ;add carry if present 
-	STA PlayerYScreenDup ;store in duplicate
+	STA PlayerYScreenDup ;store result as new Y screen
 ;
 	LDA PlayerYPosDup
-	CMP #$F0 ;If Y screen duplicate less than #$F0
+	CMP #$F0 ;If new Y position less than #$F0 (pit)
 	BCC bra4_BAD0_RTS ;end 
-;else 
+;else if player in pit
 	CLC
 	ADC #$10 
-	STA PlayerYPosDup ;add #$10 to duplicate Y position
+	STA PlayerYPosDup ;add #$10 to new Y position
 ;
-	INC PlayerYScreenDup ;increment duplicate Y position
+	INC PlayerYScreenDup ;increment new Y screen
 bra4_BAD0_RTS:
 loc4_BAD0_RTS:
 	RTS ;end
 ;***************************************************************
 ;Tables
 ;***************************************************************
-XSpdTbl: ;X speed table
+PlayerXSpdTbl: ;X speed table
 ;the higher the PlayerXspeed, the further through the table you can move
 	.db $00
 	.db $01
@@ -4718,27 +4714,27 @@ sub4_BAF1:
 	LDX PlayerAction
 	LDA tbl4_BC2F,X	;Load the player's horizontal collision offset based on their current action
 	CLC
-	ADC PlayerXPosDup
-	STA PlayerColXPos
-	LDA PlayerXScreenDup
-	ADC #$00
-	STA PlayerColXScreen	;Set/Add the player's horizontal collision offset
-	LDA PlayerYScreenDup
-	STA PlayerColYScreen
-	LDA PlayerYPosDup
-	STA PlayerColYPos	;Set the player's vertical collision
+	ADC PlayerXPosDup ;add collision offset to new X position
+	STA PlayerColXPos ;set as colision X postion
+	LDA PlayerXScreenDup ;get new X screen
+	ADC #$00 ;if prior sum made a carry, apply it
+	STA PlayerColXScreen	;store as collision X screen
+	LDA PlayerYScreenDup ;get new Y screen
+	STA PlayerColYScreen ;set as collision Y screen
+	LDA PlayerYPosDup ;get new Y position
+	STA PlayerColYPos	;Set the player's vertical collision position
 loc4_BB09:
 	LDA #$00
-	STA $26
-	LDY PlayerColYScreen
-	LDA LevelTopScreenOffset,Y
+	STA $26 ;clear $26
+	LDY PlayerColYScreen ;put collision Y screen into Y
+	LDA LevelTopScreenOffset,Y ;load top or bottom screen offset 
 	CLC
-	ADC PlayerColXScreen
-	TAY
+	ADC PlayerColXScreen ;add collision X screen
+	TAY ;move result to Y
 	LDA DataBank2
-	STA M90_PRG0
-	LDA ($9F),Y
-	STA $9E
+	STA M90_PRG0 ;put data bank 2 into the first PRG slot
+	LDA ($9F),Y ;load UNKNOWN offset by X collision offset
+	STA $9E ;store loaded value
 	LDA (LevelScreenOrderPtr),Y
 	STA PlayerScreenID
 	TAY
