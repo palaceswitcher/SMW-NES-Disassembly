@@ -135,14 +135,14 @@ jmp_58_85BE:
 	BNE bra10_85CE
 bra10_85C4:
 	LDA MusicRegister
-	CMP MusicBackup
-	BEQ bra10_85D5_RTS
-	LDA MusicRegister ;Back up the current music ID if it isn't backed up already
+	CMP MusicBackup ;Check if the BGM has changed
+	BEQ bra10_85D5_RTS ;If not, stop
+	LDA MusicRegister ;If it has, back up the song ID
 	STA MusicBackup
 bra10_85CE:
 	JSR sub10_8E2F
 	LDA #$00
-	STA SFXRegister
+	STA SFXRegister ;Clear SFX register
 bra10_85D5_RTS:
 	RTS
 jmp_58_85D6:
@@ -1223,17 +1223,18 @@ sub_58_8E23:
 	INC $0725,X
 bra10_8E2E_RTS:
 	RTS
+
 sub10_8E2F:
-	TAX
-	LDY #$FF
+	TAX ;Store saved sound ID in X reg
+	LDY #$FF ;Set index to -1
 bra10_8E32:
 	CPY #$07
-	BEQ bra10_8E40_RTS
-	INY
+	BEQ bra10_8E40_RTS ;Stop if the index is out of range
+	INY ;Increment index
 	LDA $0701,Y
-	BPL bra10_8E32
-	TXA
-	STA $0701,Y
+	BPL bra10_8E32 ;Loop only if bit 7 of the sound ID is cleared
+	TXA ;Retrieve backed up sound ID
+	STA $0701,Y ;Store in SFX queue
 bra10_8E40_RTS:
 	RTS
 tbl10_8E41:

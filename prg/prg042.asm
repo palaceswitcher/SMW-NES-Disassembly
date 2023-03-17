@@ -144,7 +144,7 @@ YoshiHouse:
 	.byte $2C
 	.byte $30
 	.byte $60
-sub_42_87AC:
+TilemapDecompSub:
 	LDA #$00
 	STA PPUMask ;Clear PPU mask
 	STA PPUCtrl ;Clear PPU control
@@ -5177,7 +5177,7 @@ tbl2_9D78:
 	.byte $00
 	.byte $00
 	.byte $00
-sub_42_9DF8:
+DrawDestroyedCastle:
 	LDA #$00
 	STA $25 ;Set castle number/index
 bra2_9DFC:

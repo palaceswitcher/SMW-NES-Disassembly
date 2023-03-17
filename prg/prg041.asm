@@ -61,10 +61,10 @@ tbl_A012:
 pnt5_A074:
 	LDA #$2A
 	STA Bank42Backup ;Backup bank value
-	STA M90_PRG0 ;Swap bank 42 into 1st PRG slot
+	STA M90_PRG0 ;Swap the other game state 0 bank (bank 42) into the 1st PRG slot
 	LDA #$00
 	STA WorldNumber
-	STA LevelNumber ;Clear world and level numbers	
+	STA LevelNumber ;Clear world and level numbers
 	LDA #$0F
 	STA Player1Lives
 	STA Player2Lives ;Set life count to 15 for both players
@@ -77,24 +77,24 @@ pnt5_A074:
 	STA BGPalDataSize ;Only update the palette of the first nametable
 	JSR sub_B75D
 pnt5_A09E:
-	INC a:Event ;Go to next event number
+	INC a:Event ;Go to the next event
 	RTS
 pnt5_A0A2:
-	JSR sub_AE96
+	JSR sub_AE96 ;Reset PPU settings
 	LDA #$55
-	STA $0100
+	STA $0100 ;Store #$55 in the first byte of the stack
 	JSR sub_B800
 	LDA #$00
 	STA $3C ;(unknown variable)
 	STA PlayerXSpeed
 	STA PlayerYSpeed
-	STA PlayerMovement
+	STA PlayerMovement ;Reset player's speed and movement
 	STA PlayerSpriteAttributes ;Clear various player variables
 	LDA #$2A
-	STA M90_PRG0 ;Swap bank 42 into 1st PRG slot
+	STA M90_PRG0 ;Swap the other game state 0 bank (bank 42) into the 1st PRG slot
 	LDA #$00
-	STA WorldSelectNum
-	JSR sub_AACB
+	STA WorldSelectNum ;Go to the first world on the world select screen
+	JSR sub_AACB ;Load the title screen logo into VRAM
 	LDA #$00
 	JSR CHRBankSub
 	JSR sub_AE8A
@@ -1377,10 +1377,10 @@ loc_A912:
 	JSR sub_B486
 	LDA #$2A
 	STA M90_PRG0 ;Swap bank 42 into the 1st PRG slot
-	JSR sub_42_9DF8
+	JSR DrawDestroyedCastle
 	RTS
 pnt5_A924:
-	JSR sub_42_9DF8
+	JSR DrawDestroyedCastle
 pnt5_A927:
 	LDA #$05
 	STA PalTransition ;Start palette fadeout
@@ -1557,7 +1557,7 @@ bra_AA38:
 	STA FrameCount+1 ;Synchronize them
 	JSR AnimateMapPlayer
 	JSR ClearOtherSprites ;Clear non-player sprites
-	JSR sub_42_9DF8
+	JSR DrawDestroyedCastle
 	LDA FrameCount
 	AND #$1F
 	BNE bra_AA52
@@ -1625,8 +1625,8 @@ loc_AAB1:
 	RTS
 sub_AACB:
 	LDA #$2A
-	STA M90_PRG0
-	JSR sub_42_87AC
+	STA M90_PRG0 ;Load bank 42 into the 1st PRG slot
+	JSR TilemapDecompSub ;Draw the compressed title screen logo to VRAM
 	RTS
 ClearGS0Sprites:
 	LDX #$00
@@ -2399,7 +2399,7 @@ loc_B001:
 	JSR sub_B486
 	LDA #$2A
 	STA M90_PRG0
-	JSR sub_42_9DF8
+	JSR DrawDestroyedCastle
 	RTS
 pnt5_B013:
 	LDA FrameCount
@@ -2420,7 +2420,7 @@ loc_B02C:
 	JSR sub_B486
 	LDA #$2A
 	STA M90_PRG0
-	JSR sub_42_9DF8
+	JSR DrawDestroyedCastle
 	RTS
 pnt5_B03E:
 	LDA #$00
@@ -3844,16 +3844,16 @@ sub_B75D:
 	RTS
 	RTS
 sub_B800:
-	LDA PPUStatus
-	LDA $00
-	AND #$7F
-	STA PPUCtrl
+	LDA PPUStatus ;Clear PPU address latch
+	LDA PPUControlMirror ;Get PPU control reg from memory
+	AND #%01111111 ;Ignore NMI bit
+	STA PPUCtrl ;Copy to hardware register
 	LDA #$00
-	STA $03
-	LDA $02
+	STA ScrollYPos ;Clear the vertical scroll position
+	LDA ScrollXPos
 	LSR
 	LSR
-	LSR
+	LSR ;Divide the horizontal scroll position by 8 (to align it with a tile)
 	STA $59
 	STA $30
 	LDA #$20

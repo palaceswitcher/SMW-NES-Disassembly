@@ -181,8 +181,8 @@ bra3_E12F:
 	LDA SpriteBank4
 	STA M90_SP_CHR3
 
-	JSR PauseChk
-	JSR JoypadReading
+	JSR PauseChk ;Check if the game is paused
+	JSR JoypadReading ;Update controller input
 	LDA #$3A
 	STA M90_PRG0
 	LDA #$3B
@@ -209,13 +209,13 @@ Reset:
 	STA M90_IRQ_DISABLE ;Disable mapper interrupts
 	STA PPUMask ;Clear the screen
 	STA PPUCtrl
-	LDX #$02 ;Set the amount of frames to wait
+	LDX #$02 ;Set the amount of frames to wait. This is likely done to prevent false negatives
 bra3_E1A5:
 	BIT PPUStatus
-	BPL bra3_E1A5 ;Wait for a frame
+	BPL bra3_E1A5 ;Wait for VBlank
 bra3_E1AA:
 	BIT PPUStatus
-	BMI bra3_E1AA ;Wait for VBlank to end??
+	BMI bra3_E1AA ;Wait for the VBlank flag to clear
 	DEX
 	BNE bra3_E1A5 ;Loop until the set amount of frames have passed
 	LDA #$3E
@@ -319,7 +319,7 @@ loc3_E277:
 	LDX #$04
 bra3_E298:
 	LDA tbl3_EF08,X
-	STA $063B
+	STA NMIJMPOpcode+1
 	LDA ScrollXPos
 	STA XScroll ;Copy horizontal scroll
 	LDA ScrollYPos
@@ -330,7 +330,7 @@ sub3_E2AB:
 	BNE bra3_E317 ;Branch if in a level
 	LDX #$04
 	LDA tbl3_EF08,X
-	STA $063B
+	STA NMIJMPOpcode+1
 	JMP loc3_E2BE ;Jump
 	JMP loc3_E317 ;Jump
 loc3_E2BE:
@@ -339,6 +339,9 @@ loc3_E2BE:
 	STX M90_PRG1 ;Swap bank 41 into 2nd PRG slot
 	JMP jmp_41_A000 ;Jump
 	RTS
+
+;-----UNUSED CODE START-----
+;Seems to be an early routine for loading levels
 	LDA a:Event
 	ASL
 	TAY ;Get the event pointer
@@ -359,11 +362,11 @@ pnt2_E2E5:
 	BEQ bra3_E2FE ;If the A button is pressed,
 	INC LevelNumber ;Increment level number
 	LDA LevelNumber
-	CMP #$04 ;If level number is below 4,
-	BCC bra3_E2FE ;branch. Continue if its above 4
-	LDA #$00
-	STA LevelNumber ;Set level number to 1
-	INC WorldNumber ;Add world number by 1
+	CMP #$04 ;Check if level number is below 4,
+	BCC bra3_E2FE ;If it is, branch
+	LDA #$00 ;If it's above 4, continue
+	STA LevelNumber ;Clear level number
+	INC WorldNumber ;Carry over world number (1-5 would become 2-1)
 bra3_E2FE:
 	LDA ButtonsPressed
 	AND #buttonStart
@@ -378,6 +381,8 @@ bra3_E315:
 	RTS
 pnt2_E316:
 	RTS
+;-----UNUSED CODE END-----
+
 bra3_E317:
 loc3_E317:
 	LDA a:Event
@@ -569,7 +574,7 @@ loc3_E498:
 	JSR sub3_E904 ;Jump
 	LDA #$00
 	STA PauseFlag ;Unpause the game
-	STA a:GameState ;Set game state to 'in map'
+	STA a:GameState ;Set game state for the map
 	STA a:EventPart ;End level transition
 	LDA #$16
 	STA a:Event
@@ -690,7 +695,7 @@ pnt2_E597:
 	JSR sub3_F919
 	JSR sub3_E904
 	LDA #$00
-	STA a:GameState ;Set game state to "not in level"
+	STA a:GameState ;Set game state for map
 	STA a:EventPart ;Go to first part of event
 	LDA #$16
 	STA a:Event ;Trigger map fade-in
@@ -901,9 +906,9 @@ pnt2_E748:
 	STA PlayerXSpeed ;Set walking speed to 10h
 	LDA PlayerSprXPos
 	CMP #$98
-	BCC bra3_E768 ;If player's sprite reaches this point,
+	BCC bra3_E768 ;If player's sprite reaches this point...
 	LDA #$10
-	STA PlayerAction ;Do victory pose
+	STA PlayerAction ;...Do victory pose 
 	LDA #$00
 	STA PlayerXSpeed ;Stop moving horizontally
 	LDA #$01
