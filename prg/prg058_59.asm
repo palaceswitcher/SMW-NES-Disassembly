@@ -145,6 +145,8 @@ bra10_85CE:
 	STA SFXRegister ;Clear SFX register
 bra10_85D5_RTS:
 	RTS
+
+;This is the effective start point for the driver.
 jmp_58_85D6:
 	LDA #$0F
 	STA APUStatus
@@ -1027,7 +1029,7 @@ bra10_8CC0:
 	CLC
 	ADC $FE
 	STA $0741,Y
-	STA $4002
+	STA Sq1Lo
 	LDA $0742,Y
 	STA SoundPointer
 	LDA $073A,Y
@@ -1037,7 +1039,7 @@ bra10_8CC0:
 	BEQ bra10_8CE3_RTS
 	STA $0742,Y
 	ORA #$F8
-	STA $4003
+	STA Sq1Hi
 bra10_8CE3_RTS:
 	RTS
 sub10_8CE4:
@@ -1068,7 +1070,7 @@ bra10_8D12:
 	CLC
 	ADC $FE
 	STA $0741,Y
-	STA $4006
+	STA Sq2Lo
 	LDA $0742,Y
 	STA SoundPointer
 	LDA $073A,Y
@@ -1078,7 +1080,7 @@ bra10_8D12:
 	BEQ bra10_8D35_RTS
 	STA $0742,Y
 	ORA #$F8
-	STA $4007
+	STA Sq2Hi
 bra10_8D35_RTS:
 	RTS
 sub10_8D36:
@@ -1108,7 +1110,7 @@ bra10_8D61:
 	CLC
 	ADC $FE
 	STA $0741,Y
-	STA $400A
+	STA TriLo
 	LDA $0742,Y
 	STA SoundPointer
 	LDA $073A,Y
@@ -1118,7 +1120,7 @@ bra10_8D61:
 	BEQ bra10_8D84_RTS
 	STA $0742,Y
 	ORA #$F8
-	STA $400B
+	STA TriHi
 bra10_8D84_RTS:
 	RTS
 sub10_8D85:
@@ -1138,9 +1140,9 @@ bra10_8D95:
 	LDA Pulse1Pitch,Y
 	CLC
 	ADC $FE
-	STA $400E
+	STA NoiseLo
 	LDA #$F8
-	STA $400F
+	STA NoiseHi
 	RTS
 sub10_8DB1:
 	TYA

@@ -4144,13 +4144,13 @@ bra6_B365:
 	TAX
 	LDA #$27
 	STA M90_PRG3 ;Swap bank 39 into the 4th PRG slot ($E000-$FFFF)
-	LDA tbl_39_EA89,X
+	LDA LevelBGBanks,X
 	STA BGBank1 ;Set BG bank 1
-	LDA tbl_39_EA89+1,X
+	LDA LevelBGBanks+1,X
 	STA BGBank2 ;Set BG bank 2
-	LDA tbl_39_EA89+2,X
+	LDA LevelBGBanks+2,X
 	STA BGBank3 ;Set BG bank 3
-	LDA tbl_39_EA89+3,X
+	LDA LevelBGBanks+3,X
 	STA BGBank4 ;Set BG bank 4 (redundant)
 	LDA #$3F
 	STA M90_PRG3 ;Swap bank 63 back in

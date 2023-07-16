@@ -1811,7 +1811,7 @@ bra_EA79:
 	ADC #$00
 	STA PlayerColXScreen
 	RTS
-tbl_39_EA89:
+LevelBGBanks:
 	.db $47
 	.db $2A
 	.db $13

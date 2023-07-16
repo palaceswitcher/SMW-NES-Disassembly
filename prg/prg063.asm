@@ -182,7 +182,7 @@ bra3_E12F:
 	STA M90_SP_CHR3
 
 	JSR PauseChk ;Check if the game is paused
-	JSR JoypadReading ;Update controller input
+	JSR UpdateJoypad ;Update controller input
 	LDA #$3A
 	STA M90_PRG0
 	LDA #$3B
@@ -275,7 +275,7 @@ ClearMemory:
 	STA M90_PRG0 ;Swap the music bank into 1st PRG slot
 	LDA #$3B
 	STA M90_PRG1 ;Swap the 2nd music bank into 2nd PRG slot
-	JSR jmp_58_85D6
+	JSR jmp_58_85D6 ;Initizialize sound driver
 	LDA #musTitle
 	STA MusicRegister ;Play the title screen music
 	JSR sub_58_8E23+1 ;Jumps inbetween an opcode. Probably an error.
@@ -2296,7 +2296,7 @@ loc3_EF73:
 	STA M90_SP_CHR2 ;Update 3rd sprite bank
 	LDA SpriteBank4
 	STA M90_SP_CHR3 ;Update 4th sprite bank
-	JSR JoypadReading ;Jump
+	JSR UpdateJoypad ;Jump
 	INC SecFrameCount ;Increment second frame counter
 	LDA SecFrameCount
 	CMP #$3C ;If its below 60 frames,
@@ -2583,8 +2583,8 @@ bra3_F195:
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
 ;CONTROLLER READING
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
-JoypadReading:
-	JSR sub3_F1C9
+UpdateJoypad:
+	JSR ReadJoypad
 	LDX #$00 ;Set the X index for the first controller
 	JSR ControllerLogicSub
 	INX ;Set the X index for the second controller
@@ -2597,13 +2597,14 @@ ControllerLogicSub:
 	STA ButtonsMirrored,X ;Copy the button input over
 	AND #$0C ;Mask out the bits for up and down
 	CMP #$0C
-	BNE bra3_F1C8 ;If both up and down are held, continue
+	BNE UpdateJoypadDone ;If both up and down are held, continue
 	LDA ButtonsHeld,X
 	AND #%11111011
 	STA ButtonsHeld,X ;Ignore the down button
-bra3_F1C8:
+UpdateJoypadDone:
 	RTS
-sub3_F1C9:
+	
+ReadJoypad:
 	LDA #$01
 	STA Joy1 ;Strobe controller input
 	LDA #$00
@@ -2661,7 +2662,7 @@ bra3_F222:
 	STA PPUAddr ;Set lower byte of PPU pointer
 bra3_F231:
 	LDA PPUDataBuffer,X
-	STA PPUData ;Store data from the buffer
+	STA PPUData ;Transfer data from the buffer
 	INY
 	INX ;Go to the next byte of the buffer
 	CPY PPUWriteCount
@@ -3642,6 +3643,7 @@ loc3_F7CE:
 	STA M90_IRQ_ENABLE
 	STA M90_IRQ_ENABLE ;Enable interrupts
 	RTS
+
 PauseChk:
 	LDA PauseFlag ;Check if the game is paused
 	BNE BGAnimSubDone ;If so, branch (stop)
