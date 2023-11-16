@@ -2311,9 +2311,9 @@ bra3_EFB4:
 	STA M90_PRG0
 	LDA #$3B
 	STA M90_PRG1
-	LDA a:GameState ;If in a level,
-	BNE bra3_EFD9 ;branch
-	JSR jmp_58_85BE
+	LDA a:GameState
+	BNE bra3_EFD9 ;If in a level, branch
+	JSR jmp_58_85BE ;Otherwise, jump
 	JSR jmp_58_862A
 	LDA $08
 	STA M90_PRG0
@@ -2417,26 +2417,26 @@ bra3_F08C:
 	CPX TileRowCount ;Keep looping until current row count is reached
 	BCC bra3_F08C
 	LDA PPUStatus ;Clear address latch
-	LDA PPUControlMirror ;Load PPU control software reg
-	AND #%11111011 ;Mask bits
-	STA PPUCtrl ;Store in PPU control hardware register
+	LDA PPUControlMirror
+	AND #%11111011
+	STA PPUCtrl ;Set PPUCTRL to increment by 1
 	RTS
 sub3_F0A2:
-	LDA PalAssignPtrHi ;If upper byte of mapping $32 is empty,
-	BEQ bra3_F0CA ;stop
+	LDA PalAssignPtrHi
+	BEQ bra3_F0CA ;Stop if upper byte of mapping pointer is empty
 	LDX #$00
 bra3_F0A9:
 	LDA PPUStatus ;Clear address latch
 	LDA PalAssignPtrHi,X
-	STA PPUAddr ;Load upper byte of PPU palette mapping memory 
+	STA PPUAddr
 	LDA PalAssignPtrLo,X
-	STA PPUAddr ;Load lower byte of PPU palette mapping memory
+	STA PPUAddr ;Load attribute pointer
 	LDA PalAssignData,X
-	STA PPUData ;Store palette mapping data into PPU memory
+	STA PPUData ;Store attributes
 	INX
 	INX
-	INX ;Load next $32 data set
-	CPX BGPalDataSize ;Keep going until $32 count is reached
+	INX ;Load next pointer data set
+	CPX BGAttrRowCount ;Keep going until pointer count is reached
 	BCC bra3_F0A9
 	LDA #$00
 	STA PalAssignPtrHi ;Clear upper byte of pointer

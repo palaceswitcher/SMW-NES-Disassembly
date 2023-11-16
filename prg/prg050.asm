@@ -3359,13 +3359,13 @@ bra6_93E8:
 	LDA tbl6_95FC,X
 	LDX $A4
 	STA ObjectYPos,X
-	LDX tbl6_95DE,Y
+	LDX tbl6_95DD+1,Y
 	LDA tbl6_95F5,X
 	LDX $A4
 	STA ObjectXPos+1,X
 	LDA #$0D
 	STA ObjectXScreen+1,X
-	LDX tbl6_95DE,Y
+	LDX tbl6_95DD+1,Y
 	LDA tbl6_95FC,X
 	LDX $A4
 	STA ObjectYPos+1,X
@@ -3375,13 +3375,13 @@ bra6_93E8:
 	STA ObjectSlot+1,X
 	LDA #$2C
 	STA EnemyAnimFrame+1,X
-	LDX tbl6_95DF,Y
+	LDX tbl6_95DD+2,Y
 	LDA tbl6_95F5,X
 	LDX $A4
 	STA ObjectXPos+2,X
 	LDA #$0D
 	STA ObjectXScreen+2,X
-	LDX tbl6_95DF,Y
+	LDX tbl6_95DD+2,Y
 	LDA tbl6_95FC,X
 	LDX $A4
 	STA ObjectYPos+2,X
@@ -3603,9 +3603,7 @@ tbl6_95CE:
 	.byte $33
 tbl6_95DD:
 	.byte $02
-tbl6_95DE:
 	.byte $04
-tbl6_95DF:
 	.byte $06
 	.byte $01
 	.byte $03

@@ -74,7 +74,7 @@ pnt5_A074:
 	LDA #$1E
 	STA TileRowCount ;Set the 8x8 row count so that only the first nametable is updated
 	LDA #$18
-	STA BGPalDataSize ;Only update the palette of the first nametable
+	STA BGAttrRowCount ;Only update the palette of the first nametable
 	JSR sub_B75D
 pnt5_A09E:
 	INC a:Event ;Go to the next event
@@ -252,11 +252,8 @@ tbl_A155:
 	.byte $00
 tbl_A1AD:
 	.byte $00
-tbl_A1AE:
 	.byte $01
-tbl_A1AF:
 	.byte $03
-tbl_A1B0:
 	.byte $00
 	.byte $00
 	.byte $70
@@ -310,21 +307,21 @@ sub_A1E1:
 	LDA $0360
 	ASL
 	ASL
-	TAX
+	TAX ;4 bytes per sprite position (mult index by 4)
 	LDA tbl_A155,X
 	STA $25
 	LDA tbl_A155+1,X
-	STA $26
+	STA $26 ;Get X position
 	LDA tbl_A155+2,X
-	STA $27
+	STA $27 ;Get sprite frame
 	LDA tbl_A155+3,X
 	STA $28
-	LDA PlayerXScreenDup
+	LDA PlayerXScreenDup ;Get Y position
 	CMP $25
 	BNE bra_A22E_RTS
 	LDA PlayerXPosDup
 	CMP $26
-	BNE bra_A22E_RTS
+	BNE bra_A22E_RTS ;Stop if the X position matches the player's
 	LDX #$03 ;Set GS0 sprite slot to 4
 bra_A209:
 	LDA GS0SpriteFrame,X
@@ -355,11 +352,11 @@ sub_A22F:
 	TAX
 	LDA tbl_A1AD,X
 	STA $25
-	LDA tbl_A1AE,X
+	LDA tbl_A1AD+1,X
 	STA $26
-	LDA tbl_A1AF,X
+	LDA tbl_A1AD+2,X
 	STA $27
-	LDA tbl_A1B0,X
+	LDA tbl_A1AD+3,X
 	STA $28
 	LDA PlayerXScreenDup
 	CMP $25
@@ -884,7 +881,7 @@ sub_A572:
 bra_A578:
 	LDX #$03
 bra_A57A:
-	LDA $B2,X
+	LDA GS0SpriteFrame,X
 	BEQ bra_A581
 	JSR sub2_96DB
 bra_A581:
@@ -912,7 +909,7 @@ bra_A5AB_RTS:
 sub_A5AC:
 	LDX #$03
 bra_A5AE:
-	LDA $B2,X
+	LDA GS0SpriteFrame,X
 	BEQ bra_A5E1
 	JSR sub_A5F9
 	LDX $29
@@ -924,7 +921,7 @@ bra_A5AE:
 	AND #$01
 	BNE bra_A5DF
 bra_A5C5:
-	DEC $41,X
+	DEC GS0SpriteXPos,X
 	LDA GS0SpriteXPos,X
 	CMP #$FF
 	BNE bra_A5D0
@@ -936,7 +933,7 @@ bra_A5D0:
 	CMP #$20
 	BCS bra_A5DF
 	LDA #$00
-	STA $B2,X
+	STA GS0SpriteFrame,X
 bra_A5DF:
 	LDX $29
 bra_A5E1:
@@ -962,10 +959,10 @@ sub_A5F9:
 	BEQ bra_A635_RTS
 	ASL
 	TAX
-	LDA $8A50,X
-	STA $AE
-	LDA $8A51,X
-	STA $AF
+	LDA TitleSpriteAnimations,X
+	STA GS0SpriteAnimPtr
+	LDA TitleSpriteAnimations+1,X
+	STA GS0SpriteAnimPtr+1
 	LDY #$00
 	LDA (GS0SpriteAnimPtr),Y
 	STA $25
@@ -986,12 +983,12 @@ sub_A5F9:
 	BEQ bra_A636
 	BCC bra_A636
 	LDA $25
-	STA $B2,X
+	STA GS0SpriteFrame,X
 bra_A635_RTS:
 	RTS
 bra_A636:
 	LDA $28
-	STA $B2,X
+	STA GS0SpriteFrame,X
 	RTS
 	LDA ButtonsPressed
 	AND #$80
@@ -1274,9 +1271,9 @@ loc_A828:
 	LDA #$01
 	STA LevelNumber
 	LDA #$38
-	STA $B0
+	STA TileRowCount
 	LDA #$30
-	STA $B1
+	STA BGAttrRowCount
 	LDX #$05
 bra_A854:
 	LDA tbl_A869,X
@@ -1553,8 +1550,8 @@ bra_AA25:
 bra_AA38:
 	LDA FrameCount
 	CMP FrameCount+1
-	BEQ bra_AA38 ;Wait for the two frame counters to desync
-	STA FrameCount+1 ;Synchronize them
+	BEQ bra_AA38 ;Branch if the frame counters are synchronized
+	STA FrameCount+1 ;If not, synchronize them
 	JSR AnimateMapPlayer
 	JSR ClearOtherSprites ;Clear non-player sprites
 	JSR DrawDestroyedCastle
@@ -4983,7 +4980,8 @@ bra_BE36:
 	STA CameraXScreen
 	RTS
 	RTS
-sub_BE4D: ;Unused code starts here
+;Unused (possibly duplicate) code starts here
+sub_BE4D:
 	LDA PlayerXScreenDup
 	STA PlayerColXScreen
 	LDA PlayerXPosDup

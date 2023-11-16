@@ -652,14 +652,14 @@ ptr6_8517:
 	LSR
 	AND #$06
 	TAY
-	LDA tbl9_8549,Y
+	LDA tbl9_8548+1,Y
 	STA $05F0
 	LDA tbl9_8548,Y
 	ASL
 	TAX
-	LDA tbl9_8550,X
+	LDA ParachuteGoombaMappings,X
 	STA $32
-	LDA tbl9_8551,X
+	LDA ParachuteGoombaMappings+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -672,52 +672,43 @@ bra9_8542:
 ptr6_8544:
 	JSR jmp_54_A118
 	RTS
+
+;Animation attributes
+;=====Format=====
+;Frame number, attributes
 tbl9_8548:
+;Still
 	.byte $00
-tbl9_8549:
 	.byte $00
+;Tilted left
 	.byte $01
 	.byte $00
+;Still
 	.byte $00
 	.byte $00
+;Titled right
 	.byte $01
 	.byte $40
-tbl9_8550:
-	.byte $54
-tbl9_8551:
-	.byte $85
-	.byte $63
-	.byte $85
+
+ParachuteGoombaMappings:
+	.word ParachuteGoomba1
+	.word ParachuteGoomba2
+ParachuteGoomba1:
 	.byte $03
 	.byte $04
 	.byte $A5
-	.byte $1D
-	.byte $1E
-	.byte $1F
-	.byte $22
-	.byte $23
-	.byte $24
-	.byte $27
-	.byte $28
-	.byte $FF
-	.byte $2C
-	.byte $2D
-	.byte $FF
+	.byte $1D, $1E, $1F
+	.byte $22, $23, $24
+	.byte $27, $28, $FF
+	.byte $2C, $2D, $FF
+ParachuteGoomba2:
 	.byte $03
 	.byte $04
 	.byte $A5
-	.byte $FF
-	.byte $20
-	.byte $21
-	.byte $FF
-	.byte $25
-	.byte $26
-	.byte $29
-	.byte $2A
-	.byte $2B
-	.byte $2E
-	.byte $2F
-	.byte $30
+	.byte $FF, $20, $21
+	.byte $FF, $25, $26
+	.byte $29, $2A, $2B
+	.byte $2E, $2F, $30
 obj_h94:
 	LDX $A4
 	LDA ObjectVariables,X
@@ -1368,9 +1359,9 @@ ptr6_8A5E:
 	LSR
 	LSR
 	LSR
-	AND #$01
+	AND #$01 ;Check if on an 8th frame
 	ASL
-	TAX
+	TAX ;Get pointer index for odd/even frame
 	LDA tbl9_8A8A,X
 	STA $32
 	LDA tbl9_8A8A+1,X
@@ -1392,32 +1383,27 @@ SpinyWalk1:
 	.byte $02
 	.byte $02
 	.byte $A6
-	.byte $14
-	.byte $15
-	.byte $16
-	.byte $17
+	.byte $14, $15
+	.byte $16, $17
 SpinyWalk2:
 	.byte $02
 	.byte $02
 	.byte $A6
-	.byte $14
-	.byte $15
-	.byte $18
-	.byte $19
+	.byte $14, $15
+	.byte $18, $19
+;Unused ball sprites --->
 	.byte $02
 	.byte $02
 	.byte $A6
-	.byte $1A
-	.byte $1B
-	.byte $1E
-	.byte $1F
+	.byte $1A, $1B
+	.byte $1E, $1F
+;-----
 	.byte $02
 	.byte $02
 	.byte $A6
-	.byte $1C
-	.byte $1D
-	.byte $20
-	.byte $21
+	.byte $1C, $1D
+	.byte $20, $21
+;<---
 obj_h80:
 	LDX $A4
 	LDA ObjectVariables,X
@@ -2787,9 +2773,7 @@ bra9_9470:
 	BEQ bra9_9492
 	CMP #$FF
 	BEQ bra9_9492
-	.byte $4C
-	.byte $B5
-	.byte $A6
+	JMP loc3_A6B5 ;unlogged?
 bra9_9492:
 	LDA ObjectYPos,X
 	SEC

@@ -3171,13 +3171,13 @@ bra4_B0FD:
 	STY PlayerState ;Store the player's state
 	LDA Player1YoshiStatus
 	CMP #$07
-	BCC bra4_B113 ;Unused failsafe/check?
-	SEC ;unlogged
-	SBC #$05 ;unlogged
-	STA Player1YoshiStatus ;unlogged
-	JSR sub4_A14A ;unlogged
-	LDA #$00 ;unlogged
-	STA PlayerAnimationFrame ;unlogged
+	BCC bra4_B113 ;Branch if not about to swallow stored item
+	SEC ;If about to swallow item, continue
+	SBC #$05
+	STA Player1YoshiStatus
+	JSR sub4_A14A
+	LDA #$00
+	STA PlayerAnimationFrame
 bra4_B113:
 	LDA Player1YoshiStatus
 	CMP #$04
@@ -3189,7 +3189,7 @@ bra4_B11E:
 	LDY ObjectCount
 	STA ObjectSlot,Y
 	LDA PlayerMovement
-	AND #$40
+	AND #buttonB
 	BNE bra4_B138
 	LDA PlayerXPosDup
 	CLC
@@ -3251,18 +3251,18 @@ loc4_B193:
 	CMP #$09
 	BCS bra4_B1C0_RTS
 	LDA ButtonsPressed
-	AND #$40
+	AND #buttonB
 	BEQ bra4_B1C0_RTS
-	LDA #$19
+	LDA #sfxYoshiTongue
 	STA SFXRegister
 	LDY #$09
 	LDA ButtonsHeld
-	AND #$04
+	AND #dirDown
 	BEQ bra4_B1AF
 	LDY #$0B
 bra4_B1AF:
 	LDA ButtonsHeld
-	AND #$03
+	AND #dirRight+dirLeft
 	BEQ bra4_B1BE
 	LDY #$09
 	LDA PlayerYSpeed
@@ -3275,12 +3275,12 @@ bra4_B1C0_RTS:
 loc4_B1C1:
 	LDY #$0F
 	LDA ButtonsHeld
-	AND #$04
+	AND #dirDown
 	BEQ bra4_B1CC
 	LDY #$11
 bra4_B1CC:
 	LDA ButtonsHeld
-	AND #$03
+	AND #dirRight+dirLeft
 	BEQ bra4_B1DB
 	LDY #$0F
 	LDA PlayerYSpeed
@@ -3306,17 +3306,17 @@ sub4_B1DE:
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
 ;This is unoptimised, it duplicates the code for calculating the exact same offsets for all 3 fireballs 
 SpawnYoshiFire:
-	LDY ObjectCount ;load total object count into Y
-	LDA #$08 ;load middle fireball
-	STA ObjectSlot,Y ;store it
-	LDA #$09 ; load bottom fireball
-	STA ObjectSlot+1,Y ;store it in next OBJ slot
-	LDA #$0A ;load top fireball
-	STA ObjectSlot+2,Y ;store it in next OBJ slot
-	LDA PlayerMovement ;get PlayerMovement
+	LDY ObjectCount ;Get slot index based on object count
+	LDA #$08
+	STA ObjectSlot,Y ;Load middle fireball
+	LDA #$09
+	STA ObjectSlot+1,Y ;Load bottom fireball
+	LDA #$0A
+	STA ObjectSlot+2,Y ;Load top fireball
+	LDA PlayerMovement
 	STA ObjectState,Y
 	STA ObjectState+1,Y
-	STA ObjectState+2,Y ;store it on all 3 fireball slots 
+	STA ObjectState+2,Y ;Set fireballs to the player's direction
 	
 	AND #$40 ;bitmask playermovement 
 	BNE bra4_B225
@@ -3357,7 +3357,7 @@ bra4_B249:
 	ADC #$01 ;unlogged
 	JMP loc4_B26C ;unlogged
 bra4_B258:
-CLC
+	CLC
 	ADC PlayerYPosDup ;add #$E4 to duplicate Y pos
 	STA ObjectYPos,Y ; store it as Y position for middle fireball (final position)
 
@@ -4094,7 +4094,7 @@ sub4_B741:
 	BCC bra4_B769_RTS
 	STY PlayerAction
 	LDY #$01
-	LDA Player1YoshiStatus ;
+	LDA Player1YoshiStatus
 	CMP #$01
 	BNE bra4_B75C ;Branch if the player isn't riding Yoshi
 	LDY YoshiTongueState
@@ -4136,7 +4136,7 @@ ofs_B794:
 	LDX #$0D
 	LDY #$00
 	LDA ButtonsHeld
-	AND #$04
+	AND #dirDown
 	BEQ bra4_B7A7
 	LDY #$07
 bra4_B7A7:
@@ -4385,7 +4385,7 @@ loc4_B94F: ;Decide if player should start walking
 	STA PlayerMetaspriteHAlign ;else set scaled speed to 00 (Standing speed)
 	
 bra4_B95B:
-	LDA PlayerMetaspriteHAlign
+	LDA ScaledPlayerXSpd
 	BNE MovePlayerLeft ;if scaled speed isn't zero, branch
 ;else if player is static
 	LDA PlayerXScreen
@@ -4406,7 +4406,7 @@ MovePlayerLeft: ;If metasprite alignment not 00 (player moving)
 ;Move Player Left	
 	LDA PlayerXPos
 	SEC
-	SBC PlayerMetaspriteHAlign ;Subtract scaled speed from X position
+	SBC ScaledPlayerXSpd ;Subtract scaled speed from X position
 	STA PlayerXPosDup ;store it in duplicate X position
 ;Move player between X screens if necessary (left)
 	LDA PlayerXScreen
@@ -4421,7 +4421,7 @@ MovePlayerRight: ;X position check (prevents player from wrapping around from th
 ;Move player Right	
 	LDA PlayerXPos
 	CLC
-	ADC PlayerMetaspriteHAlign ;Add scaled speed to X position
+	ADC ScaledPlayerXSpd ;Add scaled speed to X position
 	STA PlayerXPosDup ;store it in duplicate X position
 ;Move player between X screens if necessary (right)
 	LDA PlayerXScreen
@@ -4439,16 +4439,16 @@ loc4_B993:
 	LSR ;divide Y speed value by 16,
 	TAX ;transfer modified Y speed to X reg
 	LDA tbl4_BAE1,X ;Load a Y speed value from table
-	STA PlayerMetaspriteVAlign ;Store the scaled speed
+	STA ScaledPlayerYSpd ;Store the scaled speed
 ;decide if player should start moving
 	LDA PlayerYSpeed
 	CMP #$04
 	BCS bra4_B9A9 ;If Y speed exceeds #$04, branch ahead
 	LDA #$00 
-	STA PlayerMetaspriteVAlign ; else set Y speed to #$00 (static)
+	STA ScaledPlayerYSpd ; else set Y speed to #$00 (static)
 	
 bra4_B9A9: ;Make player move vertically
-	LDA PlayerMetaspriteVAlign
+	LDA ScaledPlayerYSpd
 	BNE MovePlayerUp ;If player isn't static, branch ahead
 ;else if player vertically static
 	LDA PlayerYScreen 
@@ -4469,7 +4469,7 @@ MovePlayerUp: ;Go here if player has Y speed
 ;Move player vertically upwards
 	LDA PlayerYPos
 	SEC
-	SBC PlayerMetaspriteVAlign ;subtract scaled Y speed from Y position
+	SBC ScaledPlayerYSpd ;subtract scaled Y speed from Y position
 	STA PlayerYPosDup ;store it in the duplicate
 ;Move player between vertical screens if necessary (upwards)
 	LDA PlayerYScreen

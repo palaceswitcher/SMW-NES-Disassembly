@@ -919,5 +919,4 @@ bra14_97F7:
 	STA $06E1
 	.byte $BD
 	
-	.incbin tilesets/ts_unused6.bin
-	
+.incbin tilesets/ts_unused6.bin

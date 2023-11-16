@@ -136,7 +136,8 @@ bra3_8694:
 	.byte $00
 	.byte $00
 	.byte $00
-	LDA tbl3_86B1,Y ;not sure where this is used (none of the code in this bank seems to be)
+;Everything below here is (probably) duplicate padding garbage, so it can be ignored.
+	LDA tbl3_86B1,Y
 	STA $32
 	LDA tbl3_86B2,Y
 	STA $33

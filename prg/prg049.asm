@@ -56,503 +56,333 @@ tbl5_805E:
 	.word ofs2_82AD
 	.word ofs2_82B4
 	.word ofs2_82BB
-	.word ofs2_821B
-	.word ofs2_8222
-	.word ofs2_8229
-	.word ofs2_8230
-	.word ofs2_8237
-	.word ofs2_823E
-	.word ofs2_8245
-	.word ofs2_824C
-	.word ofs2_8253
-	.word ofs2_825A
-	.word ofs2_8210
-	.word ofs2_81E2
-	.word ofs2_81E2
-	.word ofs2_81F1
-	.word ofs2_81FE
-	.word ofs2_8207
-	.word ofs2_81D4
-	.word ofs2_81DB
-	.word ofs2_80D2
-	.word ofs2_80DF
-	.word ofs2_80EC
-	.word ofs2_8120
-	.word ofs2_8137
-	.word ofs2_814E
-	.word ofs2_8165
-	.word ofs2_818A
-	.word ofs2_81AF
-	.word ofs2_80F9
-	.word ofs2_8106
-	.word ofs2_8113
-	.word ofs2_80D2
-	.word ofs2_80DF
-	.word ofs2_80EC
+	.word SpikeTop_Walk1
+	.word SpikeTop_Walk2
+	.word SpikeTop_SideWalk1
+	.word SpikeTop_SideWalk2
+	.word SpikeTop_Diag
+	.word SpikeTop_Walk1_VMir
+	.word SpikeTop_Walk2_VMir
+	.word SpikeTop_SideWalk1_VMir
+	.word SpikeTop_SideWalk2_VMir
+	.word SpikeTop_Diag_VMir
+	.word FenceKoopa
+	.word RedPlatform
+	.word RedPlatform
+	.word GreenPlatform
+	.word FuzzySpr
+	.word FuzzySpr2
+	.word OnOffSwitch_Off
+	.word OnOffSwitch_On
+	.word Chainsaw1
+	.word Chainsaw2
+	.word Chainsaw3
+	.word Rope1
+	.word Rope2
+	.word Rope3
+	.word LongRope1
+	.word LongRope2
+	.word LongRope3
+;Unused upside-down sprites--->
+	.word Chainsaw_VMir1
+	.word Chainsaw_VMir2
+	.word Chainsaw_VMir3
+;<---
+	.word Chainsaw1
+	.word Chainsaw2
+	.word Chainsaw3
 	.word ofs2_8261
-	.word ofs2_80B4
-	.word ofs2_80C3
-ofs2_80B4:
+	.word PSwitchPlatform
+	.word PSwitchDoor
+PSwitchPlatform:
 	.byte $06
 	.byte $02
 	.byte $A4
-	.byte $32
-	.byte $33
-	.byte $32
-	.byte $33
-	.byte $32
-	.byte $33
-	.byte $34
-	.byte $35
-	.byte $34
-	.byte $35
-	.byte $34
-	.byte $35
-ofs2_80C3:
+	.byte $32, $33, $32, $33, $32, $33
+	.byte $34, $35, $34, $35, $34, $35
+PSwitchDoor:
 	.byte $02
 	.byte $04
 	.byte $AB
-	.byte $38
-	.byte $39
-	.byte $3A
-	.byte $3B
-	.byte $3C
-	.byte $3D
-	.byte $3E
-	.byte $3F
+	.byte $38, $39
+	.byte $3A, $3B
+	.byte $3C, $3D
+	.byte $3E, $3F
 ofs2_80CE:
 	.byte $01
 	.byte $01
 	.byte $95
 	.byte $FF
-ofs2_80D2:
+Chainsaw1:
 	.byte $02
 	.byte $05
 	.byte $95
-	.byte $01
-	.byte $02
-	.byte $05
-	.byte $06
-	.byte $09
-	.byte $0A
-	.byte $0D
-	.byte $0E
-	.byte $13
-	.byte $14
-ofs2_80DF:
+	.byte $01, $02
+	.byte $05, $06
+	.byte $09, $0A
+	.byte $0D, $0E
+	.byte $13, $14
+Chainsaw2:
 	.byte $02
 	.byte $05
 	.byte $95
-	.byte $03
-	.byte $04
-	.byte $07
-	.byte $08
-	.byte $0B
-	.byte $0C
-	.byte $0F
-	.byte $10
-	.byte $15
-	.byte $16
-ofs2_80EC:
+	.byte $03, $04
+	.byte $07, $08
+	.byte $0B, $0C
+	.byte $0F, $10
+	.byte $15, $16
+Chainsaw3:
 	.byte $02
 	.byte $05
 	.byte $95
-	.byte $03
-	.byte $04
-	.byte $07
-	.byte $08
-	.byte $0B
-	.byte $0C
-	.byte $11
-	.byte $12
-	.byte $15
-	.byte $16
-ofs2_80F9:
+	.byte $03, $04
+	.byte $07, $08
+	.byte $0B, $0C
+	.byte $11, $12
+	.byte $15, $16
+
+;These 3 go unused
+Chainsaw_VMir1:
 	.byte $02
 	.byte $05
 	.byte $95
-	.byte $13
-	.byte $14
-	.byte $0D
-	.byte $0E
-	.byte $09
-	.byte $0A
-	.byte $05
-	.byte $06
-	.byte $01
-	.byte $02
-ofs2_8106:
+	.byte $13, $14
+	.byte $0D, $0E
+	.byte $09, $0A
+	.byte $05, $06
+	.byte $01, $02
+Chainsaw_VMir2:
 	.byte $02
 	.byte $05
 	.byte $95
-	.byte $15
-	.byte $16
-	.byte $0F
-	.byte $10
-	.byte $0B
-	.byte $0C
-	.byte $07
-	.byte $08
-	.byte $03
-	.byte $04
-ofs2_8113:
+	.byte $15, $16
+	.byte $0F, $10
+	.byte $0B, $0C
+	.byte $07, $08
+	.byte $03, $04
+Chainsaw_VMir3:
 	.byte $02
 	.byte $05
 	.byte $95
-	.byte $15
-	.byte $16
-	.byte $11
-	.byte $12
-	.byte $0B
-	.byte $0C
-	.byte $07
-	.byte $08
-	.byte $03
-	.byte $04
-ofs2_8120:
+	.byte $15, $16
+	.byte $11, $12
+	.byte $0B, $0C
+	.byte $07, $08
+	.byte $03, $04
+
+Rope1:
 	.byte $02
 	.byte $0A
 	.byte $95
-	.byte $1B
-	.byte $1C
-	.byte $13
-	.byte $14
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1F
-	.byte $FF
-ofs2_8137:
+	.byte $1B, $1C
+	.byte $13, $14
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1F, $FF
+Rope2:
 	.byte $02
 	.byte $0A
 	.byte $95
-	.byte $17
-	.byte $18
-	.byte $15
-	.byte $16
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1F
-	.byte $FF
-ofs2_814E:
+	.byte $17, $18
+	.byte $15, $16
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1F, $FF
+Rope3:
 	.byte $02
 	.byte $0A
 	.byte $95
-	.byte $19
-	.byte $1A
-	.byte $15
-	.byte $16
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1F
-	.byte $FF
-ofs2_8165:
+	.byte $19, $1A
+	.byte $15, $16
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1F, $FF
+LongRope1:
 	.byte $02
 	.byte $11
 	.byte $95
-	.byte $1B
-	.byte $1C
-	.byte $13
-	.byte $14
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1F
-	.byte $FF
-ofs2_818A:
+	.byte $1B, $1C
+	.byte $13, $14
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1F, $FF
+LongRope2:
 	.byte $02
 	.byte $11
 	.byte $95
-	.byte $17
-	.byte $18
-	.byte $15
-	.byte $16
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1F
-	.byte $FF
-ofs2_81AF:
+	.byte $17, $18
+	.byte $15, $16
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1F, $FF
+LongRope3:
 	.byte $02
 	.byte $11
 	.byte $95
-	.byte $19
-	.byte $1A
-	.byte $15
-	.byte $16
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1E
-	.byte $FF
-	.byte $1F
-	.byte $FF
-ofs2_81D4:
+	.byte $19, $1A
+	.byte $15, $16
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1E, $FF
+	.byte $1F, $FF
+OnOffSwitch_Off:
 	.byte $02
 	.byte $02
 	.byte $A4
-	.byte $2E
-	.byte $2F
-	.byte $30
-	.byte $31
-ofs2_81DB:
+	.byte $2E, $2F
+	.byte $30, $31
+OnOffSwitch_On:
 	.byte $02
 	.byte $02
 	.byte $A4
-	.byte $2A
-	.byte $2B
-	.byte $2C
-	.byte $2D
-ofs2_81E2:
+	.byte $2A, $2B
+	.byte $2C, $2D
+RedPlatform:
 	.byte $06
 	.byte $02
 	.byte $A4
-	.byte $39
-	.byte $3A
-	.byte $3A
-	.byte $3A
-	.byte $3A
-	.byte $3B
-	.byte $3C
-	.byte $3D
-	.byte $3D
-	.byte $3D
-	.byte $3D
-	.byte $3E
-ofs2_81F1:
+	.byte $39, $3A, $3A, $3A, $3A, $3B
+	.byte $3C, $3D, $3D, $3D, $3D, $3E
+GreenPlatform:
 	.byte $05
 	.byte $02
 	.byte $A4
-	.byte $24
-	.byte $25
-	.byte $25
-	.byte $25
-	.byte $26
-	.byte $27
-	.byte $28
-	.byte $28
-	.byte $28
-	.byte $29
-ofs2_81FE:
+	.byte $24, $25, $25, $25, $26
+	.byte $27, $28, $28, $28, $29
+FuzzySpr:
 	.byte $03
 	.byte $02
 	.byte $A4
-	.byte $01
-	.byte $02
-	.byte $FF
-	.byte $0B
-	.byte $0C
-	.byte $0D
-ofs2_8207:
+	.byte $01, $02, $FF
+	.byte $0B, $0C, $0D
+FuzzySpr2:
 	.byte $03
 	.byte $02
 	.byte $A4
-	.byte $03
-	.byte $04
-	.byte $FF
-	.byte $0E
-	.byte $0C
-	.byte $0F
-ofs2_8210:
+	.byte $03, $04, $FF
+	.byte $0E, $0C, $0F
+FenceKoopa:
 	.byte $02
 	.byte $04
 	.byte $94
-	.byte $14
-	.byte $15
-	.byte $20
-	.byte $21
-	.byte $2F
-	.byte $30
-	.byte $3B
-	.byte $3C
-ofs2_821B:
+	.byte $14, $15
+	.byte $20, $21
+	.byte $2F, $30
+	.byte $3B, $3C
+SpikeTop_Walk1:
 	.byte $02
 	.byte $02
 	.byte $97
-	.byte $2C
-	.byte $2D
-	.byte $32
-	.byte $33
-ofs2_8222:
+	.byte $2C, $2D
+	.byte $32, $33
+SpikeTop_Walk2:
 	.byte $02
 	.byte $02
 	.byte $97
-	.byte $2E
-	.byte $2F
-	.byte $34
-	.byte $35
-ofs2_8229:
+	.byte $2E, $2F
+	.byte $34, $35
+SpikeTop_SideWalk1:
 	.byte $02
 	.byte $02
 	.byte $97
-	.byte $38
-	.byte $39
-	.byte $3C
-	.byte $3D
-ofs2_8230:
+	.byte $38, $39
+	.byte $3C, $3D
+SpikeTop_SideWalk2:
 	.byte $02
 	.byte $02
 	.byte $97
-	.byte $3A
-	.byte $3B
-	.byte $3E
-	.byte $3F
-ofs2_8237:
+	.byte $3A, $3B
+	.byte $3E, $3F
+;Unused--->
+SpikeTop_Diag:
 	.byte $02
 	.byte $02
 	.byte $97
-	.byte $30
-	.byte $31
-	.byte $36
-	.byte $37
-ofs2_823E:
+	.byte $30, $31
+	.byte $36, $37
+;<---
+SpikeTop_Walk1_VMir:
 	.byte $02
 	.byte $02
 	.byte $97
-	.byte $32
-	.byte $33
-	.byte $2C
-	.byte $2D
-ofs2_8245:
+	.byte $32, $33
+	.byte $2C, $2D
+SpikeTop_Walk2_VMir:
 	.byte $02
 	.byte $02
 	.byte $97
-	.byte $34
-	.byte $35
-	.byte $2E
-	.byte $2F
-ofs2_824C:
+	.byte $34, $35
+	.byte $2E, $2F
+SpikeTop_SideWalk1_VMir:
 	.byte $02
 	.byte $02
 	.byte $97
-	.byte $3C
-	.byte $3D
-	.byte $38
-	.byte $39
-ofs2_8253:
+	.byte $3C, $3D
+	.byte $38, $39
+SpikeTop_SideWalk2_VMir:
 	.byte $02
 	.byte $02
 	.byte $97
-	.byte $3E
-	.byte $3F
-	.byte $3A
-	.byte $3B
-ofs2_825A:
+	.byte $3E, $3F
+	.byte $3A, $3B
+;Unused--->
+SpikeTop_Diag_VMir:
 	.byte $02
 	.byte $02
 	.byte $97
-	.byte $36
-	.byte $37
-	.byte $30
-	.byte $31
+	.byte $36, $37
+	.byte $30, $31
+;<---
 ofs2_8261:
 	.byte $04
 	.byte $05
@@ -3330,42 +3160,18 @@ WallUrchin1:
 	.byte $04
 	.byte $04
 	.byte $A8
-	.byte $09
-	.byte $0A
-	.byte $0B
-	.byte $0C
-	.byte $0D
-	.byte $0E
-	.byte $0F
-	.byte $10
-	.byte $13
-	.byte $14
-	.byte $15
-	.byte $16
-	.byte $19
-	.byte $1A
-	.byte $1B
-	.byte $1C
+	.byte $09, $0A, $0B, $0C
+	.byte $0D, $0E, $0F, $10
+	.byte $13, $14, $15, $16
+	.byte $19, $1A, $1B, $1C
 WallUrchin2:
 	.byte $04
 	.byte $04
 	.byte $A8
-	.byte $09
-	.byte $0A
-	.byte $0B
-	.byte $0C
-	.byte $0D
-	.byte $11
-	.byte $12
-	.byte $10
-	.byte $13
-	.byte $17
-	.byte $18
-	.byte $16
-	.byte $19
-	.byte $1A
-	.byte $1B
-	.byte $1C
+	.byte $09, $0A, $0B, $0C
+	.byte $0D, $11, $12, $10
+	.byte $13, $17, $18, $16
+	.byte $19, $1A, $1B, $1C
 ptr6_96CB:
 	LDX $A4
 	LDA EnemyAnimFrame,X

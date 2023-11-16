@@ -3946,9 +3946,9 @@ jmp_61_B19E:
 bra6_B1C6:
 	LDA CheckpointFlag,Y
 	BEQ bra6_B1FD
-	LDA tbl6_B5EA,X
+	LDA tbl6_B5E8+2,X
 	STA DataBank2
-	LDA tbl6_B5EB,X
+	LDA tbl6_B5E8+3,X
 	STA BGPalette
 	LDA tbl6_B5E8,X
 	AND #$C0
@@ -3962,12 +3962,12 @@ bra6_B1C6:
 	LDA tbl6_B5E8,X
 	AND #$3F
 	STA DataBank1
-	LDA tbl6_B5E9,X
+	LDA tbl6_B5E8+1,X
 	JMP loc6_B22C
 bra6_B1FD:
-	LDA tbl6_B56E,X
+	LDA tbl6_B56C+2,X
 	STA DataBank2
-	LDA tbl6_B56F,X
+	LDA tbl6_B56C+3,X
 	STA BGPalette
 	LDA tbl6_B56C,X
 	AND #$C0
@@ -3981,7 +3981,7 @@ bra6_B1FD:
 	LDA tbl6_B56C,X
 	AND #$3F
 	STA DataBank1
-	LDA tbl6_B56D,X
+	LDA tbl6_B56C+1,X
 loc6_B22C:
 	JSR sub6_B34A
 	LDA #$12 ;Player bottom screen offset (see below)
@@ -4439,11 +4439,8 @@ tbl6_B51C:
 	.byte $00
 tbl6_B56C:
 	.byte $00
-tbl6_B56D:
 	.byte $00
-tbl6_B56E:
 	.byte $1C
-tbl6_B56F:
 	.byte $00
 	.byte $01
 	.byte $01
@@ -4557,6 +4554,10 @@ tbl6_B56F:
 	.byte $3D
 	.byte $23
 	.byte $22
+;$8600
+;$8640
+;$8680
+;$86C0
 LvlScreenOrderPtrLo:
 	.byte $00
 	.byte $40
@@ -4569,11 +4570,8 @@ LvlScreenOrderPtrHi:
 	.byte $86
 tbl6_B5E8:
 	.byte $00
-tbl6_B5E9:
 	.byte $00
-tbl6_B5EA:
 	.byte $1C
-tbl6_B5EB:
 	.byte $00
 	.byte $01
 	.byte $01

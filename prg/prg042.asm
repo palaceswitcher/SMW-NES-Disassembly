@@ -339,73 +339,74 @@ bra2_88E1:
 bra2_88FF_RTS:
 	RTS
 tbl2_8900:
-	.word pnt3_8AB2
-	.word pnt3_8AB2
-	.word pnt3_8AE6
-	.word pnt3_8AEC
-	.word pnt3_8B00
-	.word pnt3_8B0C
-	.word pnt3_8B16
-	.word pnt3_8B20
-	.word pnt3_8B3C
-	.word pnt3_8B4A
-	.word pnt3_8B66
-	.word pnt3_8B74
-	.word pnt3_8B80
-	.word pnt3_8B86
-	.word pnt3_8B96
-	.word pnt3_8B9E
-	.word pnt3_8BC2
-	.word pnt3_8BE6
-	.word pnt3_8BFA
-	.word pnt3_8C04
-	.word pnt3_8C28
-	.word pnt3_8C3A
-	.word pnt3_8C52
-	.word pnt3_8C58
-	.word pnt3_8C5E
-	.word pnt3_8C64
-	.word pnt3_8C6A
-	.word pnt3_8C70
-	.word pnt3_8C76
-	.word pnt3_8C7C
-	.word pnt3_8C82
-	.word pnt3_8C88
-	.word pnt3_8C94
-	.word pnt3_8C9A
-	.word pnt3_8CA0
-	.word pnt3_8CA6
-	.word pnt3_8CAC
-	.word pnt3_8CB2
-	.word pnt3_8CBF
-	.word pnt3_8CC2
-	.word pnt3_8CD6
-	.word pnt3_8CDE
-	.word pnt3_8CF1
-	.word pnt3_8CFC
-	.word pnt3_8D0F
-	.word pnt3_8D17
-	.word pnt3_8D1F
-	.word pnt3_8D27
-	.word pnt3_8D3A
-	.word pnt3_8D45
-	.word pnt3_8D50
-	.word pnt3_8D58
-	.word pnt3_8D60
-	.word pnt3_8D66
-	.word pnt3_8D6E
-	.word pnt3_8D76
-	.word pnt3_8D7E
-	.word pnt3_8D86
-	.word pnt3_8D8C
-	.word pnt3_8D98
-	.word pnt3_8D9E
-	.word pnt3_8DAA
-	.word pnt3_8DB0
-	.word pnt3_8DC1
-	.word pnt3_8DCC
-	.word pnt3_8DE2
-	.word pnt3_8DED
+	.word PlayerText
+	.word PlayerText
+	.word PlayerCursor
+	.word TitleCloud
+	.word TitleEnemyPop
+	.word pnt3_8B0C ;unused 05
+	.word pnt3_8B16 ;unused 06
+	.word TitleKoopa1
+	.word TitleKoopa2
+	.word TitleRex1
+	.word TitleRex2
+	.word pnt3_8B74 ;unused 0B
+	.word pnt3_8B80 ;unused 0C
+	.word TitleSuperKoopa1
+	.word TitleSuperKoopa2
+	.word pnt3_8B9E ;unused 0F
+	.word pnt3_8BC2 ;unused 10
+	.word TitleMario1
+	.word TitleMario2
+	.word TitleYoshi_Walk1
+	.word TitleYoshi_Walk2
+	.word TitleYoshi_Jump
+;Map sprites (starts at hex 16)
+	.word MapPlayer_Down1
+	.word MapPlayer_Down2
+	.word MapPlayer_Down3
+	.word MapPlayer_Left1
+	.word MapPlayer_Left2
+	.word MapPlayer_Climb1
+	.word MapPlayer_Climb2
+	.word MapPlayer_Up1
+	.word MapPlayer_Up2
+	.word MapPlayer_Up3
+	.word MapPlayer_SwimDown1
+	.word MapPlayer_SwimDown2
+	.word MapPlayer_SwimLeft1
+	.word MapPlayer_SwimLeft2 ;unused
+	.word MapPlayer_SwimUp1
+	.word MapPlayer_SwimUp2
+	.word MapBoo ;unused
+	.word MapHalo ;unused
+	.word MapYoshi_Down1
+	.word MapYoshi_Down2
+	.word MapYoshi_Left1
+	.word MapYoshi_Left2
+	.word MapYoshi_Up1
+	.word MapYoshi_Up2
+	.word MapYoshi_SwimDown1
+	.word MapYoshi_SwimDown2
+	.word MapYoshi_SwimLeft1
+	.word MapYoshi_SwimLeft2 ;unused
+	.word MapYoshi_SwimUp1
+	.word MapYoshi_SwimUp2
+	.word MapPlayer_Start
+	.word MapYoshi_Start1
+	.word MapYoshi_Start2
+	.word MapYoshi_SwimStart1
+	.word MapYoshi_SwimStart2
+	.word MapPlayer_SwimStart1
+	.word MapPlayer_SwimStart2
+	.word MapPlayer_Right1
+	.word MapPlayer_Right2
+	.word MapPlayer_SwimRight1 ;unused
+	.word MapPlayer_SwimRight2 ;unused
+	.word MapYoshi_Right1
+	.word MapYoshi_Right2
+	.word MapYoshi_SwimRight1 ;unused
+	.word MapYoshi_SwimRight2 ;unused
 tbl2_8986:
 	.word pnt3_8ACC
 	.word pnt3_8ACC
@@ -544,6 +545,14 @@ TitleSpriteFrameTypes:
 	.byte $0A
 	.byte $01
 	.byte $0A
+
+;=====Animation format=====
+;Sprite1, Sprite2, Bank, Speed, Index
+;	Sprite1 - 1st frame of animation
+;	Sprite2 - 2nd frame of animation 
+;	Bank - 1K CHR bank
+;	Speed - Animation speed in frames
+;	Index - 1K CHR slot used. Can be $00, $40, $80, or $C0 for slots 1 through 4 respectively.
 TitleSpriteAnimations:
 	.word pnt3_8A6C
 	.word TitleKoopaAnim
@@ -553,9 +562,9 @@ TitleSpriteAnimations:
 	.word TitleRexAnim
 	.word pnt3_8A8A ;Unknown
 	.word pnt3_8A8F
-	.word pnt3_8A94
-	.word pnt3_8A99
-	.word pnt3_8A9E
+	.word TitleMarioAnim ;Useless, hardcoded
+	.word TitleYoshi_WalkAnim ;Useless, hardcoded
+	.word pnt3_8A9E ;Yoshi duplicate
 	.word pnt3_8AA3
 	.word pnt3_8AA8
 	.word pnt3_8AAD
@@ -566,23 +575,23 @@ pnt3_8A6C:
 	.byte $00
 	.byte $00
 TitleKoopaAnim:
-	.byte $07 ;1st Frame
-	.byte $08 ;2nd Frame
-	.byte $94 ;1K CHR Bank
-	.byte $0F ;Animation Speed
-	.byte $80 ;Bank Start Tile
+	.byte $07
+	.byte $08
+	.byte $94
+	.byte $0F
+	.byte $80
 TitleSuperKoopaAnim:
-	.byte $0D ;1st Frame
-	.byte $0E ;2nd Frame
-	.byte $96 ;1K CHR Bank
-	.byte $07 ;Animation Speed
-	.byte $C0 ;Bank Start Tile
+	.byte $0D
+	.byte $0E
+	.byte $96
+	.byte $07
+	.byte $C0
 TitlePopEffectAnim:
-	.byte $04 ;1st Frame
-	.byte $04 ;2nd Frame
-	.byte $FF ;1K CHR Bank
-	.byte $0F ;Animation Speed
-	.byte $00 ;Bank Start Tile
+	.byte $04
+	.byte $04
+	.byte $FF
+	.byte $0F
+	.byte $00
 pnt3_8A80:
 	.byte $01
 	.byte $01
@@ -590,11 +599,11 @@ pnt3_8A80:
 	.byte $0F
 	.byte $80
 TitleRexAnim:
-	.byte $09 ;1st Frame
-	.byte $0A ;2nd Frame
-	.byte $95 ;1K CHR Bank
-	.byte $0F ;Animation Speed
-	.byte $80 ;Bank Start Tile
+	.byte $09
+	.byte $0A
+	.byte $95
+	.byte $0F
+	.byte $80
 pnt3_8A8A:
 	.byte $0F
 	.byte $10
@@ -607,13 +616,13 @@ pnt3_8A8F:
 	.byte $94
 	.byte $0F
 	.byte $C0
-pnt3_8A94:
+TitleMarioAnim:
 	.byte $11
 	.byte $12
 	.byte $FF
 	.byte $0F
 	.byte $00
-pnt3_8A99:
+TitleYoshi_WalkAnim:
 	.byte $13
 	.byte $14
 	.byte $FF
@@ -643,7 +652,7 @@ pnt3_8AAD:
 	.byte $94
 	.byte $0F
 	.byte $C0
-pnt3_8AB2:
+PlayerText:
 	.byte $08
 	.byte $03
 	.byte $8F
@@ -697,7 +706,13 @@ pnt3_8ACC:
 	.byte $03
 	.byte $03
 	.byte $03
-pnt3_8AE6:
+
+;=====Mapping Format=====
+;Width, Height, [data]
+;	Width - Width in 8x8 tiles
+;	Height - Height in 8x8 tiles
+;	[data] - Mapping data. Size is height times width.
+PlayerCursor:
 	.byte $01
 	.byte $01
 	.byte $8E
@@ -705,17 +720,11 @@ pnt3_8AE9:
 	.byte $01
 	.byte $01
 	.byte $03
-pnt3_8AEC:
+TitleCloud:
 	.byte $04
 	.byte $02
-	.byte $38
-	.byte $39
-	.byte $3A
-	.byte $3B
-	.byte $3C
-	.byte $3D
-	.byte $3D
-	.byte $3E
+	.byte $38, $39, $3A, $3B
+	.byte $3C, $3D, $3D, $3E
 pnt3_8AF6:
 	.byte $04
 	.byte $02
@@ -727,7 +736,7 @@ pnt3_8AF6:
 	.byte $21
 	.byte $21
 	.byte $21
-pnt3_8B00:
+TitleEnemyPop:
 	.byte $02
 	.byte $02
 	.byte $00
@@ -763,7 +772,7 @@ pnt3_8B16:
 	.byte $18
 	.byte $1B
 	.byte $19
-pnt3_8B20:
+TitleKoopa1:
 	.byte $03
 	.byte $04
 	.byte $0E
@@ -793,7 +802,7 @@ pnt3_8B2E:
 	.byte $00
 	.byte $00
 	.byte $00
-pnt3_8B3C:
+TitleKoopa2:
 	.byte $03
 	.byte $04
 	.byte $10
@@ -808,7 +817,7 @@ pnt3_8B3C:
 	.byte $37
 	.byte $38
 	.byte $2E
-pnt3_8B4A:
+TitleRex1:
 	.byte $03
 	.byte $04
 	.byte $21
@@ -838,7 +847,7 @@ pnt3_8B58:
 	.byte $02
 	.byte $02
 	.byte $02
-pnt3_8B66:
+TitleRex2:
 	.byte $03
 	.byte $04
 	.byte $23
@@ -874,7 +883,7 @@ pnt3_8B80:
 	.byte $3D
 	.byte $3E
 	.byte $3F
-pnt3_8B86:
+TitleSuperKoopa1:
 	.byte $03
 	.byte $02
 	.byte $06
@@ -892,7 +901,7 @@ pnt3_8B8E:
 	.byte $00
 	.byte $00
 	.byte $00
-pnt3_8B96:
+TitleSuperKoopa2:
 	.byte $03
 	.byte $02
 	.byte $06
@@ -977,7 +986,7 @@ pnt3_8BD4:
 	.byte $00
 	.byte $00
 	.byte $00
-pnt3_8BE6:
+TitleMario1:
 	.byte $02
 	.byte $04
 	.byte $21
@@ -999,7 +1008,7 @@ pnt3_8BF0:
 	.byte $41
 	.byte $41
 	.byte $41
-pnt3_8BFA:
+TitleMario2:
 	.byte $02
 	.byte $04
 	.byte $29
@@ -1010,7 +1019,7 @@ pnt3_8BFA:
 	.byte $2C
 	.byte $2F
 	.byte $2E
-pnt3_8C04:
+TitleYoshi_Walk1:
 	.byte $04
 	.byte $04
 	.byte $FF
@@ -1048,7 +1057,7 @@ pnt3_8C16:
 	.byte $43
 	.byte $42
 	.byte $42
-pnt3_8C28:
+TitleYoshi_Walk2:
 	.byte $04
 	.byte $04
 	.byte $FF
@@ -1067,7 +1076,7 @@ pnt3_8C28:
 	.byte $16
 	.byte $FF
 	.byte $FF
-pnt3_8C3A:
+TitleYoshi_Jump:
 	.byte $04
 	.byte $04
 	.byte $FF
@@ -1093,70 +1102,70 @@ pnt3_8C4C:
 	.byte $00
 	.byte $01
 	.byte $01
-pnt3_8C52:
+MapPlayer_Down1:
 	.byte $02
 	.byte $02
 	.byte $05
 	.byte $06
 	.byte $0D
 	.byte $0E
-pnt3_8C58:
+MapPlayer_Down2:
 	.byte $02
 	.byte $02
 	.byte $07
 	.byte $08
 	.byte $0F
 	.byte $10
-pnt3_8C5E:
+MapPlayer_Down3:
 	.byte $02
 	.byte $02
 	.byte $05
 	.byte $06
 	.byte $11
 	.byte $12
-pnt3_8C64:
+MapPlayer_Left1:
 	.byte $02
 	.byte $02
 	.byte $50
 	.byte $51
 	.byte $60
 	.byte $61
-pnt3_8C6A:
+MapPlayer_Left2:
 	.byte $02
 	.byte $02
 	.byte $52
 	.byte $53
 	.byte $62
 	.byte $63
-pnt3_8C70:
+MapPlayer_Climb1:
 	.byte $02
 	.byte $02
 	.byte $2A
 	.byte $2B
 	.byte $36
 	.byte $37
-pnt3_8C76:
+MapPlayer_Climb2:
 	.byte $02
 	.byte $02
 	.byte $2C
 	.byte $2D
 	.byte $38
 	.byte $39
-pnt3_8C7C:
+MapPlayer_Up1:
 	.byte $02
 	.byte $02
 	.byte $44
 	.byte $45
 	.byte $54
 	.byte $55
-pnt3_8C82:
+MapPlayer_Up2:
 	.byte $02
 	.byte $02
 	.byte $46
 	.byte $47
 	.byte $56
 	.byte $57
-pnt3_8C88:
+MapPlayer_Up3:
 	.byte $02
 	.byte $02
 	.byte $48
@@ -1170,42 +1179,42 @@ pnt3_8C8E:
 	.byte $00
 	.byte $02
 	.byte $02
-pnt3_8C94:
+MapPlayer_SwimDown1:
 	.byte $02
 	.byte $02
 	.byte $07
 	.byte $08
 	.byte $13
 	.byte $14
-pnt3_8C9A:
+MapPlayer_SwimDown2:
 	.byte $02
 	.byte $02
 	.byte $05
 	.byte $06
 	.byte $15
 	.byte $16
-pnt3_8CA0:
+MapPlayer_SwimLeft1:
 	.byte $02
 	.byte $02
 	.byte $50
 	.byte $51
 	.byte $64
 	.byte $65
-pnt3_8CA6:
+MapPlayer_SwimLeft2:
 	.byte $02
 	.byte $02
 	.byte $52
 	.byte $53
 	.byte $66
 	.byte $67
-pnt3_8CAC:
+MapPlayer_SwimUp1:
 	.byte $02
 	.byte $02
 	.byte $24
 	.byte $25
 	.byte $13
 	.byte $14
-pnt3_8CB2:
+MapPlayer_SwimUp2:
 	.byte $02
 	.byte $02
 	.byte $22
@@ -1221,11 +1230,11 @@ pnt3_8CBB:
 	.byte $01
 	.byte $03
 	.byte $03
-pnt3_8CBF:
+MapBoo:
 	.byte $01
 	.byte $01
 	.byte $6E
-pnt3_8CC2:
+MapHalo:
 	.byte $02
 	.byte $01
 	.byte $71
@@ -1248,7 +1257,7 @@ pnt3_8CCE:
 	.byte $02
 	.byte $02
 	.byte $02
-pnt3_8CD6:
+MapYoshi_Down1:
 	.byte $02
 	.byte $03
 	.byte $01
@@ -1257,7 +1266,7 @@ pnt3_8CD6:
 	.byte $0A
 	.byte $17
 	.byte $18
-pnt3_8CDE:
+MapYoshi_Down2:
 	.byte $02
 	.byte $03
 	.byte $03
@@ -1278,7 +1287,7 @@ pnt3_8CE6:
 	.byte $01
 	.byte $01
 	.byte $01
-pnt3_8CF1:
+MapYoshi_Left1:
 	.byte $03
 	.byte $03
 	.byte $00
@@ -1290,7 +1299,7 @@ pnt3_8CF1:
 	.byte $5A
 	.byte $5B
 	.byte $5C
-pnt3_8CFC:
+MapYoshi_Left2:
 	.byte $03
 	.byte $03
 	.byte $00
@@ -1311,7 +1320,7 @@ pnt3_8D07:
 	.byte $01
 	.byte $02
 	.byte $02
-pnt3_8D0F:
+MapYoshi_Up1:
 	.byte $02
 	.byte $03
 	.byte $22
@@ -1320,7 +1329,7 @@ pnt3_8D0F:
 	.byte $2F
 	.byte $3A
 	.byte $3B
-pnt3_8D17:
+MapYoshi_Up2:
 	.byte $02
 	.byte $03
 	.byte $24
@@ -1329,7 +1338,7 @@ pnt3_8D17:
 	.byte $31
 	.byte $3C
 	.byte $3D
-pnt3_8D1F:
+MapYoshi_SwimDown1:
 	.byte $02
 	.byte $03
 	.byte $01
@@ -1338,7 +1347,7 @@ pnt3_8D1F:
 	.byte $0A
 	.byte $13
 	.byte $14
-pnt3_8D27:
+MapYoshi_SwimDown2:
 	.byte $02
 	.byte $03
 	.byte $03
@@ -1359,7 +1368,7 @@ pnt3_8D2F:
 	.byte $02
 	.byte $02
 	.byte $02
-pnt3_8D3A:
+MapYoshi_SwimLeft1:
 	.byte $03
 	.byte $03
 	.byte $00
@@ -1371,7 +1380,7 @@ pnt3_8D3A:
 	.byte $68
 	.byte $69
 	.byte $6A
-pnt3_8D45:
+MapYoshi_SwimLeft2:
 	.byte $03
 	.byte $03
 	.byte $00
@@ -1383,7 +1392,7 @@ pnt3_8D45:
 	.byte $6B
 	.byte $6C
 	.byte $6D
-pnt3_8D50:
+MapYoshi_SwimUp1:
 	.byte $02
 	.byte $03
 	.byte $26
@@ -1392,7 +1401,7 @@ pnt3_8D50:
 	.byte $33
 	.byte $13
 	.byte $14
-pnt3_8D58:
+MapYoshi_SwimUp2:
 	.byte $02
 	.byte $03
 	.byte $28
@@ -1401,14 +1410,14 @@ pnt3_8D58:
 	.byte $35
 	.byte $15
 	.byte $16
-pnt3_8D60:
+MapPlayer_Start:
 	.byte $02
 	.byte $02
 	.byte $1D
 	.byte $06
 	.byte $20
 	.byte $21
-pnt3_8D66:
+MapYoshi_Start1:
 	.byte $02
 	.byte $03
 	.byte $1B
@@ -1417,7 +1426,7 @@ pnt3_8D66:
 	.byte $0A
 	.byte $17
 	.byte $18
-pnt3_8D6E:
+MapYoshi_Start2:
 	.byte $02
 	.byte $03
 	.byte $1C
@@ -1426,7 +1435,7 @@ pnt3_8D6E:
 	.byte $0C
 	.byte $19
 	.byte $1A
-pnt3_8D76:
+MapYoshi_SwimStart1:
 	.byte $02
 	.byte $03
 	.byte $1B
@@ -1435,7 +1444,7 @@ pnt3_8D76:
 	.byte $0A
 	.byte $13
 	.byte $14
-pnt3_8D7E:
+MapYoshi_SwimStart2:
 	.byte $02
 	.byte $03
 	.byte $1C
@@ -1444,14 +1453,14 @@ pnt3_8D7E:
 	.byte $0C
 	.byte $15
 	.byte $16
-pnt3_8D86:
+MapPlayer_SwimStart1:
 	.byte $02
 	.byte $02
 	.byte $1F
 	.byte $08
 	.byte $13
 	.byte $14
-pnt3_8D8C:
+MapPlayer_SwimStart2:
 	.byte $02
 	.byte $02
 	.byte $1D
@@ -1465,14 +1474,14 @@ pnt3_8D92:
 	.byte $40
 	.byte $41
 	.byte $41
-pnt3_8D98:
+MapPlayer_Right1:
 	.byte $02
 	.byte $02
 	.byte $51
 	.byte $50
 	.byte $61
 	.byte $60
-pnt3_8D9E:
+MapPlayer_Right2:
 	.byte $02
 	.byte $02
 	.byte $53
@@ -1486,14 +1495,14 @@ pnt3_8DA4:
 	.byte $40
 	.byte $42
 	.byte $42
-pnt3_8DAA:
+MapPlayer_SwimRight1:
 	.byte $02
 	.byte $02
 	.byte $51
 	.byte $50
 	.byte $65
 	.byte $64
-pnt3_8DB0:
+MapPlayer_SwimRight2:
 	.byte $02
 	.byte $02
 	.byte $53
@@ -1512,7 +1521,7 @@ pnt3_8DB6:
 	.byte $42
 	.byte $42
 	.byte $42
-pnt3_8DC1:
+MapYoshi_Right1:
 	.byte $03
 	.byte $03
 	.byte $41
@@ -1524,7 +1533,7 @@ pnt3_8DC1:
 	.byte $5C
 	.byte $5B
 	.byte $5A
-pnt3_8DCC:
+MapYoshi_Right2:
 	.byte $03
 	.byte $03
 	.byte $43
@@ -1548,7 +1557,7 @@ pnt3_8DD7:
 	.byte $42
 	.byte $42
 	.byte $42
-pnt3_8DE2:
+MapYoshi_SwimRight1:
 	.byte $03
 	.byte $03
 	.byte $41
@@ -1560,7 +1569,7 @@ pnt3_8DE2:
 	.byte $6A
 	.byte $69
 	.byte $68
-pnt3_8DED:
+MapYoshi_SwimRight2:
 	.byte $03
 	.byte $03
 	.byte $43
@@ -1587,12 +1596,12 @@ sub_42_8DF8:
 	ASL
 	TAX ;Get pointer for corresponding slot ID
 	LDA TitleSpriteAnimations,X
-	STA GS0SpriteAnimPtr ;Load lower byte of pointer
+	STA GS0SpriteAnimPtr
 	LDA TitleSpriteAnimations+1,X
-	STA GS0SpriteAnimPtr+1 ;Load upper byte of pointer
+	STA GS0SpriteAnimPtr+1 ;Load sprite animation pointer
 	LDY #$02
-	LDA (GS0SpriteAnimPtr),Y ;Load 3rd byte of animation data
-	STA GS0SpriteBankNum ;Set it as the bank number
+	LDA (GS0SpriteAnimPtr),Y
+	STA GS0SpriteBankNum ;Load sprite bank from 3rd byte
 	LDY #$04
 	LDA (GS0SpriteAnimPtr),Y ;Load 5th byte of animation data
 	LSR
@@ -1605,19 +1614,22 @@ sub_42_8DF8:
 	LDA GS0SpriteBankNum
 	STA SpriteBank1,X ;Swap the bank out in the set bank
 	RTS
+
+;Unused code -----
+;Seems to be an earlier, more robust version of the transition screen code, plus a blank HUD. The first screen is identical to the "GAME OVER" tilemap, although the rest are pretty garbled.
 	TAX
 	LDA tbl2_8E62,X
-	STA $32
+	STA $32 ;Get length of each table
 	TXA
 	ASL
 	TAX
 	LDA tbl2_8E67,X
 	STA PPUAddr
-	LDA tbl2_8E68,X
+	LDA tbl2_8E67+1,X
 	STA PPUAddr
 	LDA tbl2_8E71,X
 	STA $2E
-	LDA tbl2_8E72,X
+	LDA tbl2_8E71+1,X
 	STA $2F
 	LDY #$00
 bra2_8E57:
@@ -1634,29 +1646,18 @@ tbl2_8E62:
 	.byte $40
 	.byte $40
 tbl2_8E67:
-	.byte $2B
-tbl2_8E68:
-	.byte $40
-	.byte $21
-	.byte $40
-	.byte $21
-	.byte $40
-	.byte $21
-	.byte $40
-	.byte $21
-	.byte $40
+	.hex 2B40
+	.hex 2140
+	.hex 2140
+	.hex 2140
+	.hex 2140
 tbl2_8E71:
-	.byte $7B
-tbl2_8E72:
-	.byte $8E
-	.byte $FB
-	.byte $8E
-	.byte $3B
-	.byte $8F
-	.byte $7B
-	.byte $8F
-	.byte $BB
-	.byte $8F
+	.word ofs_8E7B
+	.word ofs_8EFB
+	.word ofs_8F3B
+	.word ofs_8F7B
+	.word ofs_8FBB
+ofs_8E7B:
 	.byte $FF
 	.byte $FF
 	.byte $FF
@@ -1785,6 +1786,7 @@ tbl2_8E72:
 	.byte $FF
 	.byte $FF
 	.byte $FF
+ofs_8EFB:
 	.byte $FF
 	.byte $FF
 	.byte $FF
@@ -1849,6 +1851,7 @@ tbl2_8E72:
 	.byte $FF
 	.byte $FF
 	.byte $FF
+ofs_8F3B:
 	.byte $FF
 	.byte $FF
 	.byte $FF
@@ -1913,6 +1916,7 @@ tbl2_8E72:
 	.byte $FF
 	.byte $FF
 	.byte $FF
+ofs_8F7B:
 	.byte $FF
 	.byte $FF
 	.byte $FF
@@ -1977,6 +1981,7 @@ tbl2_8E72:
 	.byte $FF
 	.byte $FF
 	.byte $FF
+ofs_8FBB:
 	.byte $FF
 	.byte $FF
 	.byte $FF
@@ -2047,7 +2052,7 @@ sub_42_8FFB:
 	TAX
 	LDA tbl2_91FD,X
 	STA $2E
-	LDA tbl2_91FE,X
+	LDA tbl2_91FD+1,X
 	STA $2F
 	LDA $0360
 	ASL
@@ -2354,145 +2359,83 @@ loc2_91E9:
 bra2_91FC_RTS:
 	RTS
 tbl2_91FD:
-	.byte $7D
-tbl2_91FE:
-	.byte $92
-	.byte $82
-	.byte $92
-	.byte $87
-	.byte $92
-	.byte $90
-	.byte $92
-	.byte $95
-	.byte $92
-	.byte $9E
-	.byte $92
-	.byte $A7
-	.byte $92
-	.byte $AC
-	.byte $92
-	.byte $B5
-	.byte $92
-	.byte $BA
-	.byte $92
-	.byte $BF
-	.byte $92
-	.byte $C4
-	.byte $92
-	.byte $C9
-	.byte $92
-	.byte $DE
-	.byte $92
-	.byte $E3
-	.byte $92
-	.byte $0C
-	.byte $93
-	.byte $21
-	.byte $93
-	.byte $3E
-	.byte $93
-	.byte $67
-	.byte $93
-	.byte $78
-	.byte $93
-	.byte $95
-	.byte $93
-	.byte $A6
-	.byte $93
-	.byte $B7
-	.byte $93
-	.byte $C8
-	.byte $93
-	.byte $D9
-	.byte $93
-	.byte $EE
-	.byte $93
-	.byte $FF
-	.byte $93
-	.byte $04
-	.byte $94
-	.byte $19
-	.byte $94
-	.byte $36
-	.byte $94
-	.byte $3B
-	.byte $94
-	.byte $58
-	.byte $94
-	.byte $75
-	.byte $94
-	.byte $86
-	.byte $94
-	.byte $A3
-	.byte $94
-	.byte $B4
-	.byte $94
-	.byte $C5
-	.byte $94
-	.byte $DA
-	.byte $94
-	.byte $EB
-	.byte $94
-	.byte $00
-	.byte $95
-	.byte $19
-	.byte $95
-	.byte $32
-	.byte $95
-	.byte $43
-	.byte $95
-	.byte $54
-	.byte $95
-	.byte $6D
-	.byte $95
-	.byte $76
-	.byte $95
-	.byte $87
-	.byte $95
-	.byte $9C
-	.byte $95
-	.byte $A5
-	.byte $95
-	.byte $B6
-	.byte $95
-	.byte $CB
-	.byte $95
-	.byte $E8
-	.byte $95
-	.byte $F9
-	.byte $95
-	.byte $12
-	.byte $96
-	.byte $2F
-	.byte $96
-	.byte $50
-	.byte $96
-	.byte $69
-	.byte $96
-	.byte $86
-	.byte $96
-	.byte $A7
-	.byte $96
-	.byte $B4
-	.byte $96
-	.byte $CC
-	.byte $96
-	.byte $CD
-	.byte $96
-	.byte $DA
-	.byte $96
-	.byte $DA
-	.byte $96
+	.word ofs_927D
+	.word ofs_9282
+	.word ofs_9287
+	.word ofs_9290
+	.word ofs_9295
+	.word ofs_929E
+	.word ofs_92A7
+	.word ofs_92AC
+	.word ofs_92B5
+	.word ofs_92BA
+	.word ofs_92BF
+	.word ofs_92C4
+	.word ofs_92C9
+	.word ofs_92DE
+	.word ofs_92E3
+	.word ofs_930C
+	.word ofs_9321
+	.word ofs_933E
+	.word ofs_9367
+	.word ofs_9378
+	.word ofs_9395
+	.word ofs_93A6
+	.word ofs_93B7
+	.word ofs_93C8
+	.word ofs_93D9
+	.word ofs_93EE
+	.word ofs_93FF
+	.word ofs_9404
+	.word ofs_9419
+	.word ofs_9436
+	.word ofs_943B
+	.word ofs_9458
+	.word ofs_9475
+	.word ofs_9486
+	.word ofs_94A3
+	.word ofs_94B4
+	.word ofs_94C5
+	.word ofs_94DA
+	.word ofs_94EB
+	.word ofs_9500
+	.word ofs_9519
+	.word ofs_9532
+	.word ofs_9543
+	.word ofs_9554
+	.word ofs_956D
+	.word ofs_9576
+	.word ofs_9587
+	.word ofs_959C
+	.word ofs_95A5
+	.word ofs_95B6
+	.word ofs_95CB
+	.word ofs_95E8
+	.word ofs_95F9
+	.word ofs_9612
+	.word ofs_962F
+	.word ofs_9650
+	.word ofs_9669
+	.word ofs_9686
+	.word ofs_96A7
+	.word ofs_96B4
+	.word ofs_96CC
+	.word ofs_96CD
+	.word ofs_96DA
+	.word ofs_96DA
+ofs_927D:
 	.byte $01
 	.byte $04
 	.byte $30
 	.byte $00
 	.byte $FF
+ofs_9282:
 	.byte $01
 	.byte $00
 	.byte $30
 	.byte $03
 	.byte $FF
+ofs_9287:
 	.byte $01
 	.byte $03
 	.byte $10
@@ -2502,11 +2445,13 @@ tbl2_91FE:
 	.byte $20
 	.byte $11
 	.byte $FF
+ofs_9290:
 	.byte $01
 	.byte $00
 	.byte $30
 	.byte $03
 	.byte $FF
+ofs_9295:
 	.byte $01
 	.byte $02
 	.byte $10
@@ -2516,6 +2461,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $11
 	.byte $FF
+ofs_929E:
 	.byte $01
 	.byte $06
 	.byte $20
@@ -2525,11 +2471,13 @@ tbl2_91FE:
 	.byte $10
 	.byte $01
 	.byte $FF
+ofs_92A7:
 	.byte $00
 	.byte $00
 	.byte $30
 	.byte $03
 	.byte $FF
+ofs_92AC:
 	.byte $01
 	.byte $05
 	.byte $10
@@ -2539,26 +2487,31 @@ tbl2_91FE:
 	.byte $10
 	.byte $01
 	.byte $FF
+ofs_92B5:
 	.byte $00
 	.byte $00
 	.byte $70
 	.byte $03
 	.byte $FF
+ofs_92BA:
 	.byte $00
 	.byte $04
 	.byte $30
 	.byte $00
 	.byte $FF
+ofs_92BF:
 	.byte $01
 	.byte $06
 	.byte $40
 	.byte $01
 	.byte $FF
+ofs_92C4:
 	.byte $00
 	.byte $04
 	.byte $70
 	.byte $00
 	.byte $FF
+ofs_92C9:
 	.byte $01
 	.byte $07
 	.byte $10
@@ -2580,11 +2533,13 @@ tbl2_91FE:
 	.byte $10
 	.byte $11
 	.byte $FF
+ofs_92DE:
 	.byte $01
 	.byte $02
 	.byte $40
 	.byte $11
 	.byte $FF
+ofs_92E3:
 	.byte $00
 	.byte $00
 	.byte $4F
@@ -2626,6 +2581,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $11
 	.byte $FF
+ofs_930C:
 	.byte $01
 	.byte $07
 	.byte $10
@@ -2647,6 +2603,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $11
 	.byte $FF
+ofs_9321:
 	.byte $01
 	.byte $04
 	.byte $10
@@ -2676,6 +2633,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $03
 	.byte $FF
+ofs_933E:
 	.byte $00
 	.byte $07
 	.byte $10
@@ -2717,6 +2675,7 @@ tbl2_91FE:
 	.byte $4F
 	.byte $00
 	.byte $FF
+ofs_9367:
 	.byte $00
 	.byte $07
 	.byte $10
@@ -2734,6 +2693,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $03
 	.byte $FF
+ofs_9378:
 	.byte $00
 	.byte $04
 	.byte $10
@@ -2763,6 +2723,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $03
 	.byte $FF
+ofs_9395:
 	.byte $00
 	.byte $01
 	.byte $10
@@ -2780,6 +2741,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $04
 	.byte $FF
+ofs_93A6:
 	.byte $00
 	.byte $04
 	.byte $10
@@ -2797,6 +2759,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $11
 	.byte $FF
+ofs_93B7:
 	.byte $01
 	.byte $01
 	.byte $08
@@ -2814,6 +2777,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $11
 	.byte $FF
+ofs_93C8:
 	.byte $01
 	.byte $04
 	.byte $10
@@ -2831,6 +2795,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $01
 	.byte $FF
+ofs_93D9:
 	.byte $01
 	.byte $04
 	.byte $10
@@ -2852,6 +2817,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $03
 	.byte $FF
+ofs_93EE:
 	.byte $01
 	.byte $07
 	.byte $10
@@ -2869,11 +2835,13 @@ tbl2_91FE:
 	.byte $08
 	.byte $04
 	.byte $FF
+ofs_93FF:
 	.byte $00
 	.byte $02
 	.byte $60
 	.byte $11
 	.byte $FF
+ofs_9404:
 	.byte $01
 	.byte $04
 	.byte $10
@@ -2895,6 +2863,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $03
 	.byte $FF
+ofs_9419:
 	.byte $00
 	.byte $04
 	.byte $10
@@ -2924,11 +2893,13 @@ tbl2_91FE:
 	.byte $20
 	.byte $11
 	.byte $FF
+ofs_9436:
 	.byte $00
 	.byte $06
 	.byte $60
 	.byte $01
 	.byte $FF
+ofs_943B:
 	.byte $00
 	.byte $02
 	.byte $20
@@ -2958,6 +2929,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $11
 	.byte $FF
+ofs_9458:
 	.byte $00
 	.byte $06
 	.byte $20
@@ -2987,6 +2959,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $03
 	.byte $FF
+ofs_9475:
 	.byte $00
 	.byte $02
 	.byte $10
@@ -3004,6 +2977,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $11
 	.byte $FF
+ofs_9486:
 	.byte $00
 	.byte $06
 	.byte $10
@@ -3033,6 +3007,7 @@ tbl2_91FE:
 	.byte $20
 	.byte $01
 	.byte $FF
+ofs_94A3:
 	.byte $00
 	.byte $04
 	.byte $20
@@ -3050,6 +3025,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $00
 	.byte $FF
+ofs_94B4:
 	.byte $00
 	.byte $07
 	.byte $10
@@ -3067,6 +3043,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $01
 	.byte $FF
+ofs_94C5:
 	.byte $01
 	.byte $04
 	.byte $28
@@ -3088,6 +3065,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $01
 	.byte $FF
+ofs_94DA:
 	.byte $00
 	.byte $07
 	.byte $10
@@ -3105,6 +3083,7 @@ tbl2_91FE:
 	.byte $20
 	.byte $03
 	.byte $FF
+ofs_94EB:
 	.byte $01
 	.byte $09
 	.byte $00
@@ -3126,6 +3105,7 @@ tbl2_91FE:
 	.byte $70
 	.byte $11
 	.byte $FF
+ofs_9500:
 	.byte $01
 	.byte $0B
 	.byte $00
@@ -3151,6 +3131,7 @@ tbl2_91FE:
 	.byte $28
 	.byte $03
 	.byte $FF
+ofs_9519:
 	.byte $00
 	.byte $05
 	.byte $10
@@ -3176,6 +3157,7 @@ tbl2_91FE:
 	.byte $08
 	.byte $04
 	.byte $FF
+ofs_9532:
 	.byte $00
 	.byte $06
 	.byte $70
@@ -3193,6 +3175,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $11
 	.byte $FF
+ofs_9543:
 	.byte $00
 	.byte $03
 	.byte $08
@@ -3210,6 +3193,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $11
 	.byte $FF
+ofs_9554:
 	.byte $00
 	.byte $01
 	.byte $08
@@ -3235,6 +3219,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $11
 	.byte $FF
+ofs_956D:
 	.byte $00
 	.byte $04
 	.byte $70
@@ -3244,6 +3229,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $00
 	.byte $FF
+ofs_9576:
 	.byte $00
 	.byte $07
 	.byte $10
@@ -3261,6 +3247,7 @@ tbl2_91FE:
 	.byte $08
 	.byte $04
 	.byte $FF
+ofs_9587:
 	.byte $01
 	.byte $03
 	.byte $10
@@ -3282,6 +3269,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $11
 	.byte $FF
+ofs_959C:
 	.byte $01
 	.byte $00
 	.byte $10
@@ -3291,6 +3279,7 @@ tbl2_91FE:
 	.byte $70
 	.byte $03
 	.byte $FF
+ofs_95A5:
 	.byte $01
 	.byte $05
 	.byte $10
@@ -3308,6 +3297,7 @@ tbl2_91FE:
 	.byte $50
 	.byte $01
 	.byte $FF
+ofs_95B6:
 	.byte $01
 	.byte $07
 	.byte $10
@@ -3329,6 +3319,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $01
 	.byte $FF
+ofs_95CB:
 	.byte $00
 	.byte $06
 	.byte $10
@@ -3358,6 +3349,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $03
 	.byte $FF
+ofs_95E8:
 	.byte $00
 	.byte $02
 	.byte $50
@@ -3375,6 +3367,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $11
 	.byte $FF
+ofs_95F9:
 	.byte $00
 	.byte $07
 	.byte $10
@@ -3400,6 +3393,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $01
 	.byte $FF
+ofs_9612:
 	.byte $01
 	.byte $04
 	.byte $10
@@ -3429,6 +3423,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $11
 	.byte $FF
+ofs_962F:
 	.byte $00
 	.byte $06
 	.byte $10
@@ -3462,6 +3457,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $11
 	.byte $FF
+ofs_9650:
 	.byte $01
 	.byte $01
 	.byte $10
@@ -3487,6 +3483,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $11
 	.byte $FF
+ofs_9669:
 	.byte $00
 	.byte $00
 	.byte $10
@@ -3516,6 +3513,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $11
 	.byte $FF
+ofs_9686:
 	.byte $00
 	.byte $06
 	.byte $10
@@ -3549,6 +3547,7 @@ tbl2_91FE:
 	.byte $10
 	.byte $11
 	.byte $FF
+ofs_96A7:
 	.byte $00
 	.byte $00
 	.byte $30
@@ -3562,6 +3561,7 @@ tbl2_91FE:
 	.byte $08
 	.byte $03
 	.byte $FF
+ofs_96B4:
 	.byte $00
 	.byte $06
 	.byte $30
@@ -3586,7 +3586,9 @@ tbl2_91FE:
 	.byte $04
 	.byte $10
 	.byte $00
+ofs_96CC:
 	.byte $FF
+ofs_96CD:
 	.byte $00
 	.byte $04
 	.byte $08
@@ -3600,17 +3602,18 @@ tbl2_91FE:
 	.byte $30
 	.byte $00
 	.byte $FF
+ofs_96DA:
 	.byte $FF
 sub2_96DB:
-	DEC $41,X
-	LDA $41,X
+	DEC GS0SpriteXPos,X
+	LDA GS0SpriteXPos,X
 	CMP #$FF
 	BNE bra2_96E6
 	DEC $034D,X
 bra2_96E6:
 	LDA $034D,X
 	BNE bra2_96F5_RTS
-	LDA $41,X
+	LDA GS0SpriteXPos,X
 	CMP #$20
 	BCS bra2_96F5_RTS
 	LDA #$00
@@ -4578,17 +4581,17 @@ bra2_9B65:
 	INC $039C,X
 	RTS
 	CLC
-	ADC $41,X
-	STA $41,X
+	ADC GS0SpriteXPos,X
+	STA GS0SpriteXPos,X
 	BCC bra2_9B73_RTS
 	INC $034D,X
 bra2_9B73_RTS:
 	RTS
 	STA $25
 	SEC
-	LDA $41,X
+	LDA GS0SpriteXPos,X
 	SBC $25
-	STA $41,X
+	STA GS0SpriteXPos,X
 	BCS bra2_9B82_RTS
 	DEC $034D,X
 bra2_9B82_RTS:

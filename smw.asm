@@ -36,7 +36,7 @@ NMIJMPOpcode = $063A
 CameraXScreen = $51
 VerticalScrollFlag = $5B
 TileRowCount = $B0
-BGPalDataSize = $B1
+BGAttrRowCount = $B1
 MetaspriteRowAlignment = $B2
 EntitySetPtr = $DC
 GameState = $DE
@@ -108,7 +108,9 @@ PlayerYPosDup = $11
 PlayerSprXPos = $12
 PlayerSprYPos = $13
 PlayerXSpeed = $14
+ScaledPlayerXSpd = $28
 PlayerYSpeed = $15
+ScaledPlayerYSpd = $2B
 
 PlayerAnimation = $16
 PlayerAnimationFrame = $17
@@ -543,7 +545,6 @@ M90_CHR_CTRL1 = $D003
 
 ;--------------------------------------
 ;CHR file
-
 .incbin SMW.chr
 
 ;--------------------------------------

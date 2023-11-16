@@ -105,7 +105,7 @@ VanillaDome_P1TriLoop:
 	.byte $FF
 VanillaDome_P2:
 	.byte Transpose
-	.byte F2
+	.byte $1D
 	.byte DutySet
 	.byte $5B
 	.byte PitchSet

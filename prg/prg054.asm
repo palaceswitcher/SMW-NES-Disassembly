@@ -4786,17 +4786,17 @@ bra3_BD18:
 	STA $4B
 	LDA $4A
 	CMP #$06
-	BCC bra3_BD2C
+	BCC bra3_BD2C ;Branch if <6 enemies have been hit
 	LDX CurrentPlayer
-	INC Player1Lives,X
+	INC Player1Lives,X ;If 7 more have been hit, give the current player a life
 	LDA #$07
-	BNE bra3_BD31
+	BNE bra3_BD31 ;Play 1UP sound
 bra3_BD2C:
-	INC $4A
+	INC $4A ;Increment hit counter
 	CLC
-	ADC #$11
+	ADC #$11 ;Play next hit sound
 bra3_BD31:
-	STA SFXRegister
+	STA SFXRegister ;Play appropriate sound
 	LDY $2B
 	LDX $28
 	LDA #$01
