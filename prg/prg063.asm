@@ -1086,21 +1086,23 @@ sub3_E870:
 	LDA WarpNumber ;Load warp number
 	LSR ;Divide it by 2
 	TAY ;Load pointer based on the result
+;First byte of level settings
 	LDA ($34),Y ;Load byte from 2nd pointer location
 	AND #%00100000
 	STA PlayerAttributes ;Mask out and store BG priority bit
 	STA $06E1
 	LDA ($34),Y
 	AND #%11000000
-	STA UnderwaterFlag ;Mask out and store underwater flag
+	STA UnderwaterFlag ;Mask out and store underwater bit
 	LDA ($34),Y
 	AND #%11011111 ;Clear BG priority bit
 	STA DataBank1 ;Store as level bank/number
 	INY
+;Second byte of level settings
 	LDA ($34),Y ;Load next byte from 2nd pointer location
-	CMP #$32 ;If next level byte isn't for the final boss level,
-	BNE bra3_E8ED ;branch
-	LDA #$04 ;Otherwise, set interrupt for final boss fight
+	CMP #$32
+	BNE bra3_E8ED
+	LDA #$04 ;If the level is the final boss room, set the interrupt mode accordingly
 	STA InterruptMode
 bra3_E8ED:
 	LDA #$3D
@@ -2008,13 +2010,13 @@ sub3_ED14:
 sub3_ED48:
 	LDA #$24
 	STA M90_PRG2 ;Swap bank 36 into 3rd PRG slot
-	LDA lda_36_D03E,Y
+	LDA SpecialWarpCoords,Y
 	STA $32 ;Load lower byte of warp coord pointer
-	LDA lda_36_D03E+1,Y
+	LDA SpecialWarpCoords+1,Y
 	STA $33 ;Load upper byte of warp coord pointer
-	LDA lda_36_D000,Y
+	LDA SpecialWarpSettings,Y
 	STA $34 ;Load lower byte of warp level pointer
-	LDA lda_36_D000+1,Y
+	LDA SpecialWarpSettings+1,Y
 	STA $35 ;Load upper byte of warp level pointer
 	LDA #$00
 	STA WarpNumber ;Set warp number to 0

@@ -3013,7 +3013,9 @@ pnt3_CF14:
 	.byte $00
 	.byte $00
 	.byte $00
-lda_36_D000:
+;SPECIAL WARP DATA
+;This is used for special warps such as the bonus room and cannon pipes.
+SpecialWarpSettings:
 	.word pnt3_D07C
 	.word pnt3_D080
 	.word pnt3_D084
@@ -3042,10 +3044,10 @@ lda_36_D000:
 	.word pnt3_D0E0
 	.word pnt3_D0E4
 	.word pnt3_D0E8
-	.word pnt3_D1E4
-	.word pnt3_D1CC
+	.word SPWarp_BonusRoomSettings
+	.word SPWarp_6_3_CannonSettings
 	.word pnt3_D1D0
-lda_36_D03E:
+SpecialWarpCoords:
 	.word pnt3_D0EC
 	.word pnt3_D0F4
 	.word pnt3_D0FC
@@ -3074,9 +3076,18 @@ lda_36_D03E:
 	.word pnt3_D1B4
 	.word pnt3_D1BC
 	.word pnt3_D1C4
-	.word pnt3_D1E8
-	.word pnt3_D1D4
+	.word SPWarp_BonusRoomPos
+	.word SPWarp_6_3_CannonPos
 	.word pnt3_D1DC
+;Warp Level Settings Format
+;Byte 1: Level flags and ID(?)
+; Format: UUPLLLLL
+; >UU: Underwater bits. Which one is set is irrelevant.
+; >P: BG Priority bit. Player priority seems to be overriden by the level being warped to.
+; >LLLLL: Destination level ID
+;Byte 2: Tileset
+;Byte 3: Second PRG Bank
+;Byte 4: Palette ID
 pnt3_D07C:
 	.byte $00
 	.byte $00
@@ -3469,7 +3480,7 @@ pnt3_D1C4:
 	.byte $00
 	.byte $FF
 	.byte $00
-pnt3_D1CC:
+SPWarp_6_3_CannonSettings:
 	.byte $16
 	.byte $15
 	.byte $21
@@ -3479,7 +3490,7 @@ pnt3_D1D0:
 	.byte $15
 	.byte $21
 	.byte $16
-pnt3_D1D4:
+SPWarp_6_3_CannonPos:
 	.byte $06
 	.byte $01
 	.byte $90
@@ -3497,12 +3508,12 @@ pnt3_D1DC:
 	.byte $11
 	.byte $00
 	.byte $01
-pnt3_D1E4:
+SPWarp_BonusRoomSettings:
 	.byte $23
 	.byte $22
 	.byte $2B
 	.byte $25
-pnt3_D1E8:
+SPWarp_BonusRoomPos:
 	.byte $00
 	.byte $01
 	.byte $10
@@ -3511,6 +3522,7 @@ pnt3_D1E8:
 	.byte $00
 	.byte $FF
 	.byte $01
+;End of special warp data
 	.byte $00
 	.byte $00
 	.byte $00
@@ -6133,4 +6145,4 @@ pnt3_D1E8:
 	.byte $00
 	.byte $00
 	.byte $00
-	.byte $80
+	.byte $80 ;Why the hell is this here? Seriously, why? All this does is prevent me from padding the rest of this bank.

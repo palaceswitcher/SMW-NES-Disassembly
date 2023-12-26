@@ -224,18 +224,18 @@ bra4_A119:
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
 ;PLAYER SPRITES AND ANIMATION
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
-;the following code is poorly commented due to the animation bank having 3 sets of pointers and being extremely hard to follow.
+;The following code is poorly commented due to the animation bank having 3 sets of pointers and being extremely hard to follow.
 sub4_A14A:	
 	LDA Player1YoshiStatus ;
-	ASL ;multiply current yoshi status by 2
-	TAX ;move it to the x offset
+	ASL ;Multiply current yoshi status by 2
+	TAX ;Move it to the x offset
 	LDA #$24
-	STA M90_PRG2 ;load animation bank into 3rd slot
+	STA M90_PRG2 ;Load animation bank into 3rd slot
 ;Pick Animation table
 	LDA lda_36_C000,X
-	STA $32 ;get lower pointer bytes
+	STA $32 ;Get lower pointer bytes
 	LDA lda_36_C000+1,X
-	STA $33 ;get upper pointer bytes
+	STA $33 ;Get upper pointer bytes
 	LDA PlayerPowerup 
 	LDY Player1YoshiStatus
 	BNE MakePlayerAnimPtr ;Branch if the player has Yoshi
@@ -246,18 +246,18 @@ sub4_A14A:
 	
 MakePlayerAnimPtr: ;Select player animation set
 	AND #$0F ;Mask out the lower 4 bits of the Powerup value
-	ASL ;multiply it by 2
-	TAY ;move it to y offset
-	LDA ($32),Y ;load lower byte of 2nd pointer
+	ASL ;Multiply it by 2
+	TAY ;Move it to y offset
+	LDA ($32),Y ;Load lower byte of 2nd pointer
 	STA PlayerAnimationPtr ;store it
 	INY
-	LDA ($32),Y ;load upper byte of 2nd pointer
-	STA PlayerAnimationPtr+1 ;store it
+	LDA ($32),Y ;Load upper byte of 2nd pointer
+	STA PlayerAnimationPtr+1 ;Store it
 	RTS ;End
 ;**********************************************************************************
 DecPlayerFrameLength:
 	LDA $18 ;get the current frame duration
-	BMI AdvNextPlayerFrame ;if it's underflown, branch ahead
+	BMI AdvNextPlayerFrame ;if it's underflown(?), branch ahead
 	DEC $18 ;else decrement frame length 
 	RTS ;end
 ;**********************************************************************************	
@@ -2588,7 +2588,7 @@ tbl4_ACDE:
 	.word ofs_AE4F
 	.word ClimbingRoutines
 	.word ofs_B57C
-	.word ofs_B724
+	.word ofs_B724 ;State 5 (currently unknown)
 	.word ofs_B8DE
 	.word ofs_B8DE
 	.word ofs_B90C
@@ -2743,29 +2743,29 @@ bra4_AE14_RTS:
 	RTS 
 ItemBoxLogicSub: ;X: Itembox, Y: Player Power
 	LDA ButtonsPressed
-	AND #buttonSelect ;If select not pressed
+	AND #buttonSelect ;Continue if select pressed
 	BEQ ItemBoxLogicDone
 	
 	LDA #$07
-	STA Event ;set to event 7 (using lesser powerup from item box)
+	STA Event ;Set to event 7 (using lesser powerup from item box)
 	
-	LDY PlayerPowerup ;load player's powerup into the y register
-	CPY #$04 ;if player's cape isn't moving,
-	BNE bra4_AE27 ;branch
-	LDY #$03 ;load feather item to y register
+	LDY PlayerPowerup ;Load current powerup into Y register
+	CPY #$04
+	BNE bra4_AE27 ;Branch if player doesn't have cape
+	LDY #$03 ;Load feather item to Y register
 	
 bra4_AE27:
-	LDX ItemBox ;load item box contents into x register
-	BEQ ItemBoxLogicDone;if item box is empty, stop
-	CPX #$02 ;if there's a fire flower/feather in it,
-	BCS bra4_AE34 ;branch
-	CPY #$00 ;if its not empty,
-	BNE bra4_AE45 ;branch
+	LDX ItemBox ;Load item box contents into x register
+	BEQ ItemBoxLogicDone ;If item box is empty, stop
+	CPX #$02
+	BCS bra4_AE34 ;Branch if there's a flower in the item box
+	CPY #$00
+	BNE bra4_AE45 ;Branch if not empty nor flower
 	
 bra4_AE34:
-	STY ItemBox ;stores the powerup in the y register in the item box
+	STY ItemBox ;Put powerup from from Y register in item box
 	LDA #$01
-	STX PlayerPowerup ;use item box contents stored in the x register
+	STX PlayerPowerup ;Use item box contents stored in the x register
 	CPX #$03 ;if the player doesn't have a cape,
 	BNE bra4_AE42 ;branch
 	LDA #$81
