@@ -925,9 +925,9 @@ bra_A5C5:
 	LDA GS0SpriteXPos,X
 	CMP #$FF
 	BNE bra_A5D0
-	DEC $034D,X
+	DEC GS0SpriteFlags,X
 bra_A5D0:
-	LDA $034D,X
+	LDA GS0SpriteFlags,X
 	BNE bra_A5DF
 	LDA GS0SpriteXPos,X
 	CMP #$20
@@ -1386,7 +1386,7 @@ pnt5_A927:
 	RTS
 pnt5_A933:
 	JSR sub_B75D
-	LDA $0390
+	LDA OverworldMapScreen
 	ASL
 	ASL
 	TAX
@@ -1394,7 +1394,7 @@ pnt5_A933:
 	STA CameraXScreen
 	STA PlayerColXScreen
 	STA PlayerXScreen
-	LDA tbl_A990,X
+	LDA tbl_A98F+1,X
 	STA $52
 	STA $65
 	STA ScrollXPos
@@ -1414,11 +1414,11 @@ pnt5_A933:
 	STA $11
 	JSR sub_AE96
 	JSR sub_B800
-	LDA $0390
+	LDA OverworldMapScreen
 	ASL
 	ASL
 	TAX
-	LDA tbl_A991,X
+	LDA tbl_A98F+2,X
 	STA $03
 	JSR ClearSprites
 	JSR sub_AE8A
@@ -1430,9 +1430,7 @@ pnt5_A933:
 	RTS
 tbl_A98F:
 	.byte $09
-tbl_A990:
 	.byte $00
-tbl_A991:
 	.byte $EF
 	.byte $00
 	.byte $06
@@ -1726,7 +1724,7 @@ bra_AB79:
 	ASL
 	TAX
 	LDA tbl_AB0D,X
-	STA $034D
+	STA GS0SpriteFlags
 	LDA tbl_AB0E,X
 	STA GS0SpriteXPos
 	LDA #$50
@@ -1878,7 +1876,7 @@ sub_AC1D:
 	ASL
 	TAX
 	LDA $9B83,X
-	STA $034D
+	STA GS0SpriteFlags
 	LDA $9B84,X
 	STA GS0SpriteXPos
 	LDA $9B85,X
@@ -1913,7 +1911,6 @@ bra_AC68:
 	LDA #$04
 	STA $0361
 	RTS
-bra_AC6E:
 CycleFrameCount:
 	LDX #$00
 CycleCountLoop:
@@ -1927,7 +1924,7 @@ CycleCountLoop:
 	DEX
 	BNE CycleCountLoop ;Wait a frame worth of cycles
 	DEY
-	BNE bra_AC6E ;Wait for the set amount of frames
+	BNE CycleFrameCount ;Wait for the set amount of frames
 CycleFrameEnd:
 	RTS
 YoshiHouseIDs:
@@ -3238,16 +3235,16 @@ bra_B3D0:
 	AND #$FB
 	STA PPUCtrl
 	RTS
-	LDA $04C1
+	LDA PalAssignPtrHi
 	BEQ bra_B40E_RTS
 	LDX #$00
 bra_B3ED:
 	LDA PPUStatus
-	LDA $04C1,X
+	LDA PalAssignPtrHi,X
 	STA PPUAddr
-	LDA $04C2,X
+	LDA PalAssignPtrLo,X
 	STA PPUAddr
-	LDA $04C3,X
+	LDA PalAssignData,X
 	STA PPUData
 	INX
 	INX
@@ -3255,7 +3252,7 @@ bra_B3ED:
 	CPX #$30
 	BCC bra_B3ED
 	LDA #$00
-	STA $04C1
+	STA PalAssignPtrHi
 bra_B40E_RTS:
 	RTS
 	LDA ButtonsPressed
@@ -3574,11 +3571,11 @@ bra_B612:
 bra_B61F:
 	LDY $5C
 	LDA TileAttributes,Y
-	STA $04C3,X
+	STA PalAssignData,X
 	TYA
 	AND #$3F
 	ORA #$C0
-	STA $04C2,X
+	STA PalAssignPtrLo,X
 	TYA
 	LDY #$23
 	AND #$40
@@ -3586,7 +3583,7 @@ bra_B61F:
 	LDY #$2B
 bra_B638:
 	TYA
-	STA $04C1,X
+	STA PalAssignPtrHi,X
 	LDA $5C
 	CLC
 	ADC #$08

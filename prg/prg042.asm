@@ -2296,19 +2296,19 @@ tbl2_9163:
 	.word ptr9_9193
 ptr9_917B:
 	LDA #$00
-	STA $0390
+	STA OverworldMapScreen
 	JMP loc2_919B
 ptr9_9183:
 	LDA #$01
-	STA $0390
+	STA OverworldMapScreen
 	JMP loc2_919B
 ptr9_918B:
 	LDA #$02
-	STA $0390
+	STA OverworldMapScreen
 	JMP loc2_919B
 ptr9_9193:
 	LDA #$03
-	STA $0390
+	STA OverworldMapScreen
 	JMP loc2_919B
 loc2_919B:
 	LDA #$0C
@@ -3609,9 +3609,9 @@ sub2_96DB:
 	LDA GS0SpriteXPos,X
 	CMP #$FF
 	BNE bra2_96E6
-	DEC $034D,X
+	DEC GS0SpriteFlags,X
 bra2_96E6:
-	LDA $034D,X
+	LDA GS0SpriteFlags,X
 	BNE bra2_96F5_RTS
 	LDA GS0SpriteXPos,X
 	CMP #$20
@@ -3660,15 +3660,15 @@ AnimateMapPlayer:
 	ASL
 	TAX ;Get pointer for the player's map animation
 	LDA tbl2_9753,X
-	STA ScratchRAM ;Load the lower byte
+	STA ScratchRAM
 	LDA tbl2_9753+1,X
-	STA ScratchRAM+1 ;Load the upper byte
+	STA ScratchRAM+1 ;Load pointer
 	LDY PlayerMapFrame
 bra2_9740:
 	LDA (ScratchRAM),Y
 	CMP #$FF
-	BNE bra2_974D ;Branch if the end byte hasn't been reached
-	LDY #$00 ;If it has, continue
+	BNE bra2_974D ;Continue until terminating byte is reached
+	LDY #$00
 	STY PlayerMapFrame
 	BEQ bra2_9740 ;Loop back to the start of the animation
 bra2_974D:
@@ -4584,7 +4584,7 @@ bra2_9B65:
 	ADC GS0SpriteXPos,X
 	STA GS0SpriteXPos,X
 	BCC bra2_9B73_RTS
-	INC $034D,X
+	INC GS0SpriteFlags,X
 bra2_9B73_RTS:
 	RTS
 	STA $25
@@ -4593,7 +4593,7 @@ bra2_9B73_RTS:
 	SBC $25
 	STA GS0SpriteXPos,X
 	BCS bra2_9B82_RTS
-	DEC $034D,X
+	DEC GS0SpriteFlags,X
 bra2_9B82_RTS:
 	RTS
 	.byte $00

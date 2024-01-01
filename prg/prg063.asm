@@ -401,7 +401,7 @@ tbl3_E329:
 	.word pnt2_E534 ;Death
 	.word pnt2_E610 ;Castle intro
 	.word pnt2_E6ED ;Level complete
-	.word pnt2_E79E ;Event 7
+	.word pnt2_E79E ;Unusable item box use (nothing)
 	.word pnt2_E7A2 ;Event 8
 	.word pnt2_E7D0 ;Event 9
 	.word pnt2_E85F ;JY Easter egg
@@ -422,7 +422,7 @@ pnt2_E353:
 	ORA PalTransition
 	STA PalTransition
 	LDA #$3C
-	STA M90_PRG0 ;Swap bank 60 into 1st PRG slot
+	STA M90_PRG0 ;Swap bank 60 into 1st PRG slot (This bank is useless. Why?)
 	LDA #$3D
 	STA M90_PRG1 ;Swap bank 61 into 2nd PRG slot
 	JSR jmp_61_B19E
@@ -2731,10 +2731,10 @@ tbl3_F29E:
 pnt2_F2A8:
 	JSR sub3_F388
 	INC HUDUpdate
-	LDX #$00 ;Set X index for Player 1
+	LDX #$00 ;Set index for Player 1
 	LDA CurrentPlayer
 	BEQ bra3_F2B7 ;Branch if Player 1 is playing
-	LDX #$01 ;Otherwise, set X index for Player 2
+	LDX #$01 ;Otherwise, set index for Player 2
 bra3_F2B7:
 	LDA Player1Lives,X
 	STA $34 ;Store current player's life count in temporary register
@@ -2744,7 +2744,7 @@ bra3_F2B7:
 	STA $26 ;Temporarily store value $0B
 	JSR sub3_F3BB
 	LDY #$00 ;Clear Y offset
-	LDX #$01 ;Set X index to 1
+	LDX #$01 ;Set index to Player 2
 bra3_F2CB:
 	LDA HUDUpdateTiles,Y ;Load currently updated HUD tile
 	STA PPUDataBuffer,X
@@ -2867,28 +2867,23 @@ sub3_F388:
 	RTS
 tbl3_F3A7:
 ;Life Counter (00)
-	.byte $2B
-	.byte $84 ;PPU Address 
+	.byte $2B, $84 ;PPU Address 
 	.byte $01
 	.byte $02 ;Tile Length
 ;Yoshi Coins (04)
-	.byte $2B
-	.byte $68
+	.byte $2B, $68
 	.byte $01
 	.byte $05
 ;Timer (08)
-	.byte $2B
-	.byte $94
+	.byte $2B, $94
 	.byte $01
 	.byte $03
 ;Score (12)
-	.byte $2B
-	.byte $98
+	.byte $2B, $98
 	.byte $01
 	.byte $05
 ;Coin Counter (16)
-	.byte $2B
-	.byte $7C
+	.byte $2B, $7C
 	.byte $01
 	.byte $02
 sub3_F3BB:
@@ -2896,7 +2891,7 @@ sub3_F3BB:
 	STA $39
 	STA $25
 	LDA #$0A
-	STA $38 ;Set number base?
+	STA $38 ;Set display to base 10 (decimal)
 bra3_F3C5:
 	JSR sub3_F3EC
 	LDA $32

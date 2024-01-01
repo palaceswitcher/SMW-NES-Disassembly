@@ -496,7 +496,7 @@ bra13_9B65:
 	ADC $41,X
 	STA $41,X
 	BCC bra13_9B73_RTS
-	INC $034D,X
+	INC GS0SpriteFlags,X
 bra13_9B73_RTS:
 	RTS
 	STA $25
@@ -505,7 +505,7 @@ bra13_9B73_RTS:
 	SBC $25
 	STA $41,X
 	BCS bra13_9B82_RTS
-	DEC $034D,X
+	DEC GS0SpriteFlags,X
 bra13_9B82_RTS:
 	RTS
 	.byte $00

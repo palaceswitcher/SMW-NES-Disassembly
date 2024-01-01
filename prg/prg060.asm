@@ -1,7 +1,6 @@
 ;Disassembled with BZK 6502 Disassembler
 tbl11_8000:
 	.byte $00 ;logged, not sure what these do
-tbl11_8001:
 	.byte $81 ;
 	.byte $04 ;
 	.byte $81 ;of course, nothing else here is logged unless stated otherwise
@@ -2097,7 +2096,7 @@ bra11_8A85:
 	LDA tbl11_8000,X
 	STA $0751,Y
 	STA $FE
-	LDA tbl11_8001,X
+	LDA tbl11_8000+1,X
 	STA $0752,Y
 	STA $FF
 	LDX $070B
@@ -2121,7 +2120,7 @@ bra11_8AB6:
 	LDA tbl11_8000,X
 	STA $075D,Y
 	STA $FE
-	LDA tbl11_8001,X
+	LDA tbl11_8000+1,X
 	STA $075E,Y
 	STA $FF
 	LDX $070B
@@ -2145,7 +2144,7 @@ bra11_8AE7:
 	LDA tbl11_8000,X
 	STA $0769,Y
 	STA $FE
-	LDA tbl11_8001,X
+	LDA tbl11_8000+1,X
 	STA $076A,Y
 	STA $FF
 	LDX $070B

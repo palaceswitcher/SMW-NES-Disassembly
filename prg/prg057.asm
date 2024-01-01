@@ -145,9 +145,9 @@ bra4_A0DC:
 	LDA EventPart
 	BEQ bra4_A118_RTS
 bra4_A0E0:
-	LDA PlayerState ;
-	CMP #$03 ;if player is climbing,
-	BEQ bra4_A118_RTS ;branch
+	LDA PlayerState
+	CMP #$03
+	BEQ bra4_A118_RTS ;Branch if player is climbing
 	LDA #$03
 	LDX UnderwaterFlag
 	BEQ bra4_A0EF

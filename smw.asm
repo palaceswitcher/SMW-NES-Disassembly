@@ -517,7 +517,7 @@ M90_CHR_CTRL1 = $D003
 .base $8000
 .include prg/prg060.asm
 ;78010 - 7a00f
-;Duplicate of bank 58 (useless)
+;Unknown
 
 .base $A000
 .include prg/prg061.asm

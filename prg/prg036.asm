@@ -2068,37 +2068,37 @@ pnt3_CAD0:
 	.word pnt3_C3EE
 	.word pnt3_C41E
 pnt3_CAF2:
-	.word pnt3_CAFC
-	.word pnt3_CAFC
-	.word pnt3_CAFC
-	.word pnt3_CAFC
-	.word pnt3_CAFC
-pnt3_CAFC:
-	.word pnt3_CB1E
-	.word pnt3_CB26
-	.word pnt3_CB36
-	.word pnt3_CB26
-	.word pnt3_CB82
-	.word pnt3_CB82
-	.word pnt3_CBEA
-	.word pnt3_CB96
-	.word pnt3_CB1E
-	.word pnt3_CB82
-	.word pnt3_CB9E
-	.word pnt3_CB9E
-	.word pnt3_CB8E
-	.word pnt3_CBAE
-	.word pnt3_CC26
-	.word pnt3_CB82
-	.word pnt3_CB1E
-pnt3_CB1E:
+	.word Yoshi_AnimTbl
+	.word Yoshi_AnimTbl
+	.word Yoshi_AnimTbl
+	.word Yoshi_AnimTbl
+	.word Yoshi_AnimTbl
+Yoshi_AnimTbl:
+	.word Anim_YoshiStand ;Standing
+	.word Anim_YoshiWalk ;Walking
+	.word Anim_YoshiRun ;Running
+	.word Anim_YoshiWalk ;The forbidden action
+	.word Anim_YoshiJump ;Jumping
+	.word Anim_YoshiJump ;Spinning. Unseen for obvious reasons
+	.word Anim_YoshiTongueDuck ;Tongue out (Ducking)
+	.word Anim_YoshiDucking ;Ducking
+	.word Anim_YoshiStand ;Looking up
+	.word Anim_YoshiJump ;Running jump
+	.word Anim_YoshiFall ;Falling
+	.word Anim_YoshiFall ;Sinking
+	.word Anim_YoshiSwim ;Swimming
+	.word Anim_YoshiTongue ;Tongue out (Idle)
+	.word Anim_YoshiTongueWalk ;Tongue out (While moving)
+	.word Anim_YoshiJump ;Flying. Technically used, although rarely seen due to a control bug
+	.word Anim_YoshiStand ;Victory pose.
+Anim_YoshiStand:
 	.word Yoshi_Stand
 	.byte $0A
 	.byte $00
 	.word Yoshi_Stand
 	.byte $80
 	.byte $00
-pnt3_CB26:
+Anim_YoshiWalk:
 	.word Yoshi_Walk1
 	.byte $04
 	.byte $00
@@ -2111,7 +2111,7 @@ pnt3_CB26:
 	.word Yoshi_Stand
 	.byte $80
 	.byte $00
-pnt3_CB36:
+Anim_YoshiRun:
 	.word Yoshi_Walk1
 	.byte $01
 	.byte $00
@@ -2169,7 +2169,7 @@ pnt3_CB36:
 	.word Yoshi_Stand
 	.byte $80
 	.byte $00
-pnt3_CB82:
+Anim_YoshiJump:
 	.word Yoshi_Jump
 	.byte $23
 	.byte $00
@@ -2179,21 +2179,21 @@ pnt3_CB82:
 	.word Yoshi_Jump
 	.byte $81
 	.byte $00
-pnt3_CB8E:
+Anim_YoshiSwim:
 	.word Yoshi_Jump
 	.byte $01
 	.byte $00
 	.word Yoshi_Jump
 	.byte $80
 	.byte $00
-pnt3_CB96:
+Anim_YoshiDucking:
 	.word Yoshi_Duck
 	.byte $01
 	.byte $00
 	.word Yoshi_Duck
 	.byte $80
 	.byte $00
-pnt3_CB9E:
+Anim_YoshiFall:
 	.word Yoshi_Walk1
 	.byte $01
 	.byte $00
@@ -2206,7 +2206,7 @@ pnt3_CB9E:
 	.word Yoshi_Stand
 	.byte $80
 	.byte $00
-pnt3_CBAE:
+Anim_YoshiTongue:
 	.word Yoshi_Flinch1
 	.byte $01
 	.byte $00
@@ -2252,7 +2252,7 @@ pnt3_CBAE:
 	.word Yoshi_Flinch1
 	.byte $80
 	.byte $00
-pnt3_CBEA:
+Anim_YoshiTongueDuck:
 	.word Yoshi_Duck
 	.byte $01
 	.byte $00
@@ -2298,7 +2298,7 @@ pnt3_CBEA:
 	.word Yoshi_Flinch1
 	.byte $80
 	.byte $00
-pnt3_CC26:
+Anim_YoshiTongueWalk:
 	.word Yoshi_Flinch1
 	.byte $01
 	.byte $00

@@ -3360,16 +3360,16 @@ bra6_ADD9:
 	AND #$FB
 	STA PPUCtrl
 	RTS
-	LDA $04C1
+	LDA PalAssignPtrHi
 	BEQ bra6_AE17_RTS
 	LDX #$00
 bra6_ADF6:
 	LDA PPUStatus
-	LDA $04C1,X
+	LDA PalAssignPtrHi,X
 	STA PPUAddr
-	LDA $04C2,X
+	LDA PalAssignPtrLo,X
 	STA PPUAddr
-	LDA $04C3,X
+	LDA PalAssignData,X
 	STA PPUData
 	INX
 	INX
@@ -3377,7 +3377,7 @@ bra6_ADF6:
 	CPX #$30
 	BCC bra6_ADF6
 	LDA #$00
-	STA $04C1
+	STA PalAssignPtrHi
 bra6_AE17_RTS:
 	RTS
 	LDA ButtonsPressed
@@ -3676,11 +3676,11 @@ bra6_AFF8:
 bra6_B005:
 	LDY $5C
 	LDA TileAttributes,Y
-	STA $04C3,X
+	STA PalAssignData,X
 	TYA
 	AND #$3F
 	ORA #$C0
-	STA $04C2,X
+	STA PalAssignPtrLo,X
 	TYA
 	LDY #$23
 	AND #$40
@@ -3688,7 +3688,7 @@ bra6_B005:
 	LDY #$2B
 bra6_B01E:
 	TYA
-	STA $04C1,X
+	STA PalAssignPtrHi,X
 	LDA $5C
 	CLC
 	ADC #$08
@@ -3938,7 +3938,7 @@ jmp_61_B19E:
 	ADC LevelNumber ;Add the level number to the previously multiplied world value, getting the ordered level number
 	TAY ;Back it up in the Y register
 	LDA CurrentPlayer
-	BEQ bra6_B1C6 ;Branch ahead if player 1 is playing
+	BEQ bra6_B1C6 ;Branch if player 1 is playing
 	TYA
 	CLC
 	ADC #$1C
