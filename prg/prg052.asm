@@ -1403,12 +1403,13 @@ tbl2_A71F:
 	.byte $95
 	.byte $DF
 	.byte $95
+;Extra (sprite animation?) code for objects $00-7F
 tbl2_A83B:
 	.word ptr6_A005
 	.word obj_u80
 	.word ptr6_9590
 	.word ptr6_9630
-	.word ptr6_9660
+	.word ptr6_9660 ;Koopa shell
 	.word ptr6_96B7
 	.word ptr6_96D5
 	.word ptr6_96D5
@@ -1919,6 +1920,7 @@ tbl2_A93B:
 	.byte $97
 	.byte $2C
 	.byte $97
+;Extra (perhaps sprite handling?) code for objects 80-FF
 tbl2_AABB:
 	.word ptr6_8BF1
 	.word ptr6_8BF1
@@ -2000,7 +2002,7 @@ tbl2_AABB:
 	.word ptr9_843B
 	.word ptr6_8640
 	.word ptr6_8640
-	.word ptr6_8A81
+	.word ptr6_8640
 	.word ptr6_8A81
 	.word ptr6_8D59
 	.word ptr6_8D59

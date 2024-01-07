@@ -30,26 +30,32 @@ bra3_A023:
 	BEQ bra3_A03B
 	RTS
 bra3_A03B:
+;Calculate distance between the player and Yoshi
 	LDA YoshiYPos
 	SEC
-	SBC PlayerYPosDup ;Yoshi Y position - Player Y position =
-	STA YoshiYDistance ;vertical distance between the player and Yoshi
+	SBC PlayerYPosDup
+	STA YoshiYDistance
 	LDA YoshiYScreen
-	SBC PlayerYScreenDup ;Yoshi Y screen - player Y screen =
-	STA YoshiYScreenDist ;vertical screen distance between the player and Yoshi
+	SBC PlayerYScreenDup
+	STA YoshiYScreenDist
+
 	LDA PlayerYScreenDup
 	CMP YoshiYScreen
-	BEQ bra3_A07D_RTS ;If the player and Yoshi are on the same vertical screen, branch
+	BEQ loc3_A07D_RTS ;Stop if the player and Yoshi are on the same vertical screen
 	LDA YoshiYScreenDist
-	BPL bra3_A06C ;Branch if Yoshi is at a higher vertical screen than the player
+	BPL bra3_A06C ;Move Yoshi up if he's at a higher screen than the player
+;Move Yoshi 16 pixels down (If on a lower vertical screen)
 	LDA YoshiYDistance
 	CLC
 	ADC #$10
-	STA YoshiYDistance ;Add 16 to Yoshi's vertical distance
+	STA YoshiYDistance
 	LDA YoshiYScreenDist
 	ADC #$00
-	STA YoshiYScreenDist ;Add (nothing?) to Yoshi's vertical screen distance
+	STA YoshiYScreenDist
+
 	JMP loc3_A07D_RTS ;Jump
+
+;Move Yoshi 16 pixels up
 bra3_A06C:
 	LDA YoshiYDistance
 	SEC
@@ -58,7 +64,6 @@ bra3_A06C:
 	LDA YoshiYScreenDist
 	SBC #$00
 	STA YoshiYScreenDist
-bra3_A07D_RTS:
 loc3_A07D_RTS:
 	RTS
 jmp_54_A07E:

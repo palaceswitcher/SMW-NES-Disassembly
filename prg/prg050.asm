@@ -1462,7 +1462,7 @@ bra6_8A31:
 	LDA #$01
 	STA ScreenShake
 	STA FreezeFlag
-	LDA #$0F
+	LDA #sfxThud
 	STA SFXRegister
 	LDA ObjectYPos,X
 	AND #$F8

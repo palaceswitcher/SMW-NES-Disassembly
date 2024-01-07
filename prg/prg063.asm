@@ -1220,20 +1220,20 @@ sub3_E9C4:
 	RTS
 JYScreenTrigger:
 	LDA ButtonsPressed
-	CMP #buttonStart ;If start is pressed,
-	BEQ JYTriggerDone ;stop
+	CMP #buttonStart
+	BEQ JYTriggerDone ;Stop if the game is unpaused.
 	LDA ButtonsPressed
 	BEQ JYTriggerDone ;If any button is being pressed,
 	LDX JYEasterEggInput ;Load correct input count
 	BMI JYTriggerDone
-	CMP JYScreenInputs,X ;If the next input isn't correct,
-	BNE ClearJYInputs ;clear the input counter
-	INC JYEasterEggInput ;If it is, go to next input
+	CMP JYScreenInputs,X
+	BNE ClearJYInputs ;Start over if the wrong button is pressed
+	INC JYEasterEggInput ;Continue with each correct input
 	LDA JYEasterEggInput
 	CMP #$08
-	BCC JYTriggerDone ;If all 8 inputs have been entered correctly,
+	BCC JYTriggerDone ;Wait for all 8 inputs to be entered correctly
 	LDA #$0A
-	STA a:Event ;display JY Easter egg screen
+	STA a:Event ;Trigger JY Easter egg screen
 JYTriggerDone:
 	RTS
 ClearJYInputs:
