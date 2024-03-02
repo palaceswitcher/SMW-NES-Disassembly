@@ -501,7 +501,7 @@ sub4_83B3:
 	LDA ObjectState,X
 	AND #$20
 	BEQ bra4_83DC
-	LDA $062B ;unlogged
+	LDA ObjFrameCounter ;unlogged
 	AND #$00 ;unlogged
 	BNE bra4_83D9 ;unlogged
 	LDA #$80 ;unlogged
@@ -515,7 +515,7 @@ sub4_83B3:
 bra4_83D9:
 	JMP loc4_83F4 ;unlogged
 bra4_83DC:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$0E
 	BNE bra4_83F4
 	LDA #$80
@@ -550,7 +550,7 @@ loc4_83F4:
 bra4_8421_RTS:
 	RTS
 bra4_8422:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$00
 	BNE bra4_843A_RTS
 	LDA #$80
@@ -573,7 +573,7 @@ bra4_8446:
 	CMP #$08
 	BCS bra4_845D
 	LDY #$00
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$20
 	BEQ bra4_8455
 	LDY #$40
@@ -583,7 +583,7 @@ bra4_8455:
 	JMP loc4_9104
 bra4_845D:
 	LDY #$01
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$04
 	BEQ bra4_8468
 	LDY #$02
@@ -764,7 +764,7 @@ sub4_85B9:
 	LDA #$01
 	STA ObjectVariables,X
 bra4_85CA:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$00
 	BNE bra4_85E2
 	LDA #$81
@@ -799,7 +799,7 @@ bra4_85FD:
 bra4_8610_RTS:
 	RTS
 bra4_8611:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$1E
 	BNE bra4_863F_RTS
 	LDA ObjYScreenDistance,X
@@ -840,7 +840,7 @@ bra4_864B:
 	JMP loc4_8669
 bra4_865E:
 	LDY #$01
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$02
 	BEQ bra4_8669
 	LDY #$02
@@ -980,7 +980,7 @@ sub4_8778:
 	LDA ObjectState,X
 	AND #$20
 	BEQ bra4_879A
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$00
 	BNE bra4_8797
 	LDA #$82
@@ -994,7 +994,7 @@ sub4_8778:
 bra4_8797:
 	JMP loc4_87C7_RTS
 bra4_879A:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$02
 	BNE bra4_87B2
 	LDA #$82
@@ -1039,7 +1039,7 @@ bra4_87DC:
 	JMP loc4_9104
 bra4_87F1:
 	LDY #$00
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$04
 	BEQ bra4_87FC
 	LDY #$40
@@ -1303,7 +1303,7 @@ bra4_89EF:
 	ORA $25
 	STA ObjectState,X
 bra4_8A06:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$04
 	BNE bra4_8A1E
 	LDA #$83
@@ -1479,7 +1479,7 @@ bra4_8B45:
 	LDA #$08
 	JSR sub3_B7A2
 	BNE bra4_8B3A
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$00
 	BNE bra4_8B68
 	LDA #$84
@@ -1489,7 +1489,7 @@ bra4_8B45:
 	STA $32
 	LDA tbl4_9A83+1,Y
 	STA $33
-	JSR sub3_B132
+	JSR GetSpeedData
 bra4_8B68:
 	JSR jmp_54_A6D4
 	JSR jmp_54_BEBC
@@ -1497,7 +1497,7 @@ bra4_8B68:
 ptr6_8B71:
 	LDY #$00
 	LDX $A4
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$10
 	BEQ bra4_8B7E
 	LDY #$40
@@ -1668,7 +1668,7 @@ bra4_8CCC:
 	LDY #$00
 bra4_8CD7:
 	STY $25
-	LDA $062B
+	LDA ObjFrameCounter
 	AND $25
 	BNE bra4_8CF1
 	LDA #$85
@@ -1802,7 +1802,7 @@ sub4_8DEC:
 	BNE bra4_8E0B
 	LDA ObjectVariables,X
 	BNE bra4_8E0B
-	LDA $062B
+	LDA ObjFrameCounter
 	ADC ObjectXDistance+1,X
 	LSR
 	ADC ObjectYDistance,X
@@ -1811,7 +1811,7 @@ sub4_8DEC:
 	LDA tbl4_8E24,Y
 	STA ObjectVariables,X
 bra4_8E0B:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$02
 	BNE bra4_8E23_RTS
 	LDA #$86
@@ -1832,7 +1832,7 @@ tbl4_8E24:
 ptr6_8E28:
 	LDY #$00
 	LDX $A4
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$10
 	BEQ bra4_8E35
 	LDY #$40
@@ -1901,7 +1901,7 @@ bra4_8EAB:
 	AND #$BF
 	ORA $25
 	STA ObjectState,X
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$00
 	BNE bra4_8ED6
 	LDA #$85
@@ -2010,7 +2010,7 @@ ptr9_8F6B:
 	STA ObjectVariables,X
 	RTS
 sub4_8F9D:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$0E
 	BNE bra4_9019_RTS
 	INC ObjectVariables,X
@@ -2093,7 +2093,7 @@ tbl4_9038:
 	.byte $0F
 obj_hB2:
 	LDX $A4
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$02
 	BNE bra4_905A
 	LDA #$87
@@ -2729,7 +2729,7 @@ ptr9_94FD:
 	JSR jmp_54_BC3E
 	JMP jmp_54_BF74
 sub4_9506:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$02
 	BNE bra4_951E
 	LDA #$88
@@ -2739,7 +2739,7 @@ sub4_9506:
 	STA $32
 	LDA tbl4_9A83+1,Y
 	STA $33
-	JSR sub3_B132
+	JSR GetSpeedData
 bra4_951E:
 	LDA ObjectXPos,X
 	SEC
@@ -2916,13 +2916,18 @@ bra4_9671:
 	ORA $25
 	STA ObjectState,X
 	RTS
+
+;----------------------------------------
+;Boo object code
+;----------------------------------------
 obj_hDA:
-	LDX $A4
+	LDX $A4 ;Get object index
 	LDA ObjectVariables,X
 	CMP #$80
-	BEQ bra4_9691
+	BEQ bra4_9691 ;Branch if variable is $80? This never seems to occur in-game
 	JMP loc4_9703
 bra4_9691:
+;Boo X position - player X position = horizontal distance between Boo and player
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
@@ -2930,12 +2935,14 @@ bra4_9691:
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
 	STA ObjXScreenDistance,X
-	STA $28
-	BEQ bra4_96AD
+	STA $28 ;Backup X screen distance?
+
+	BEQ bra4_96AD ;Branch if the player and Boo are on the screen
 	CMP #$FF
-	BEQ bra4_96AD
-	JMP loc3_A6B5
+	BEQ bra4_96AD ;Branch if the Boo is within one screen behind the player
+	JMP loc3_A6B5 ;Otherwise, unload the boo if it's ahead of the player
 bra4_96AD:
+;Boo Y position - player Y position = vertical distance between Boo and player
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
@@ -2943,11 +2950,14 @@ bra4_96AD:
 	LDA ObjectYScreen,X
 	SBC PlayerYScreenDup
 	STA ObjYScreenDistance,X
+
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra4_96EF
+	BEQ loc4_96EF ;Branch if the player and boo are on the same vertical screen
 	LDA ObjYScreenDistance,X
-	BPL bra4_96DE
+	BPL bra4_96DE ;Branch if the Boo is ahead of the player
+
+;Otherwise, if the Boo is behind the player, subtract 16 pixels from the distance between it and the player
 	LDA ObjectYDistance,X
 	CLC
 	ADC #$10
@@ -2955,6 +2965,7 @@ bra4_96AD:
 	LDA ObjYScreenDistance,X
 	ADC #$00
 	STA ObjYScreenDistance,X
+	
 	JMP loc4_96EF
 bra4_96DE:
 	LDA ObjectYDistance,X
@@ -2964,18 +2975,18 @@ bra4_96DE:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra4_96EF:
 loc4_96EF:
 	LDA FreezeFlag
-	BEQ bra4_96F5
-	RTS ;unlogged
+	BEQ bra4_96F5 ;Only continue if the game isn't frozen
+	RTS ;Stop if it is frozen
 bra4_96F5:
 	JSR jmp_54_B5BB
 	LDA $A4
-	AND #$03
+	AND #$03 ;Mask out lower 2 bits of current object index
 	ORA ObjectState,X
 	STA ObjectState,X
 	RTS
+
 loc4_9703:
 	JSR sub4_976B
 	LDA ObjectXPos,X
@@ -3027,9 +3038,9 @@ loc4_9764:
 bra4_976A_RTS:
 	RTS
 sub4_976B:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$04
-	BNE bra4_9783
+	BNE bra4_9783 ;Branch if not on a 4th frame
 	LDA #$89
 	ASL
 	TAY
@@ -3037,56 +3048,56 @@ sub4_976B:
 	STA $32
 	LDA tbl4_9A83+1,Y
 	STA $33
-	JSR sub3_B132
+	JSR GetSpeedData
 bra4_9783:
 	LDA ObjectState,X
 	AND #$40
-	BNE bra4_97A7
+	BNE bra4_97A7 ;Branch if Boo is already facing left
 	LDA ObjXScreenDistance,X
-	BMI bra4_97A4
+	BMI bra4_97A4 ;Branch if Boo is behind the player
 	LDA ObjectXDistance,X
 	CMP #$43
-	BCC bra4_97A4
+	BCC bra4_97A4 ;Branch if the Boo is within 67 ($43) pixels ahead of the player
 	LDA FrameCount
 	AND #$1F
-	BNE bra4_97A4
-	LDA ObjectState,X
+	BNE bra4_97A4 ;Branch if not on a 32nd frame
+	LDA ObjectState,X 
 	EOR #$40
-	STA ObjectState,X
+	STA ObjectState,X ;Turn Boo around
 bra4_97A4:
 	JMP loc4_97C1
 bra4_97A7:
 	LDA ObjXScreenDistance,X
-	BPL bra4_97C1
+	BPL loc4_97C1
 	LDA ObjectXDistance,X
 	CMP #$C6
-	BCS bra4_97C1
+	BCS loc4_97C1
 	LDA FrameCount
 	AND #$7E
-	BNE bra4_97C1
+	BNE loc4_97C1 ;Continue every 2 frames for every 128 frames
 	LDA ObjectState,X
 	EOR #$40
-	STA ObjectState,X
-bra4_97C1:
+	STA ObjectState,X ;Turn Boo around
 loc4_97C1:
 	LDA FrameCount
 	AND #$7F
-	BNE bra4_97E7_RTS
+	BNE bra4_97E7_RTS ;Only continue every 128th frame
 	LDA ObjXScreenDistance,X
 	EOR ObjectState,X
 	AND #$40
-	BEQ bra4_97E7_RTS
+	BEQ bra4_97E7_RTS ;Stop if player is facing left?
 	LDA ObjectSlot,X
 	CLC
 	ADC #$02
-	STA ObjectSlot,X
+	STA ObjectSlot,X ;Turn Boo into Boo Crew Boo
 	LDA #$00
-	STA ObjectVariables,X
+	STA ObjectVariables,X ;Clear variable
 	LDA ObjectState,X
-	AND #$DF
-	STA ObjectState,X
+	AND #%11011111
+	STA ObjectState,X ;Mask out bit 5 of Boo's state
 bra4_97E7_RTS:
 	RTS
+
 obj_hDC:
 	LDX $A4
 	LDA ObjectXPos,X
@@ -3140,7 +3151,7 @@ bra4_984E:
 	JSR jmp_54_BC3E
 	JMP jmp_54_BF74
 sub4_9857:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$02
 	BNE bra4_986F
 	LDA #$8A
@@ -3150,7 +3161,7 @@ sub4_9857:
 	STA $32
 	LDA tbl4_9A83+1,Y
 	STA $33
-	JSR sub3_B132
+	JSR GetSpeedData
 bra4_986F:
 	LDA ObjectState,X
 	AND #$20
@@ -3583,7 +3594,7 @@ tbl4_9A83:
 	.word ofs_9C05
 	.word ofs_9C20
 	.word ofs_9C8E
-	.word ofs_9CB0
+	.word ofs_9CB0 ;Used for normal Boo
 	.word ofs_9CF4
 	.word ofs_9D33
 	.word ofs_9A9B

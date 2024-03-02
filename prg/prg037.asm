@@ -24,7 +24,7 @@ bra_8025:
 	LDA #$20
 	STA $05F0
 	STA $06E1
-	JSR jmp_54_A118
+	JSR jmp_52_A118
 	LDA #$00
 	STA $06E1
 	RTS

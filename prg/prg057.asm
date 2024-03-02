@@ -318,9 +318,9 @@ LoadPlayerSprite: ;loads the player sprite
 	TAX ;double it and move it to X
 	LDA #$2F
 	STA M90_PRG2 ;load palette mapping bank into 3rd PRG slot
-	LDA tbl_47_C000,X
+	LDA CHRSprBankAttrs,X
 	STA PlayerPalMappingLo ;load low byte of palette mapping pointer
-	LDA tbl_47_C000+1,X
+	LDA CHRSprBankAttrs+1,X
 	STA PlayerPalMappingHi ;load high byte of palette mapping pointer
 ;Set base mirroring 
 	LDA #$24
@@ -602,9 +602,9 @@ loc4_A37B:
 	LDA #$2F 
 	STA M90_PRG2 ;load attribute bank into 2nd PRG slot
 ;get attribute pointer	
-	LDA tbl_47_C000,Y
+	LDA CHRSprBankAttrs,Y
 	STA $34 ;get lowbyte
-	LDA tbl_47_C000+1,Y
+	LDA CHRSprBankAttrs+1,Y
 	STA $35 ;get highbyte
 	PLA ;retrieve A from earlier (tile ID)
 	TAY ;move it to Y
@@ -2001,9 +2001,9 @@ loc4_A9F0: ;START HERE for cape OAM manager
 	TAY ;move it to Y
 	LDA #$2F
 	STA M90_PRG2 ;put the attributes bank into the 2nd PRG slot
-	LDA tbl_47_C000,Y
+	LDA CHRSprBankAttrs,Y
 	STA $34 ;lowbyte of attribute pointer
-	LDA tbl_47_C000+1,Y
+	LDA CHRSprBankAttrs+1,Y
 	STA $35 ;highbyte of attribute pointer 
 	PLA ;retrive masked tile ID from stack
 	TAY ;move it to Y
@@ -2143,9 +2143,9 @@ loc4_AAC1: ;START HERE for cape OAM manager
 	TAY ;move it to Y
 	LDA #$2F
 	STA M90_PRG2 ;put the attributes bank into the 2nd PRG slot
-	LDA tbl_47_C000,Y
+	LDA CHRSprBankAttrs,Y
 	STA $34 ;lowbyte of attribute pointer
-	LDA tbl_47_C000+1,Y
+	LDA CHRSprBankAttrs+1,Y
 	STA $35 ;highbyte of attribute pointer 
 	PLA ;retrive masked tile ID from stack
 	TAY ;move it to Y
@@ -3112,9 +3112,9 @@ bra4_B08C:
 	EOR #$01
 	STA UsedFireballSlots
 	RTS
-;-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-==-=-=-=-=-=-=-=-
+;----------------------------------------
 ;END OF FIREBALL SPAWNING
-;-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-==-=-=-=-=-=-=-=-	
+;----------------------------------------
 PAct_Swim: ;0C
 	LDA PlayerMovement
 	AND #$04

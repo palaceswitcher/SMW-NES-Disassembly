@@ -203,7 +203,7 @@ bra13_99CC:
 	TAX
 	LDA tbl13_9A2E,X
 	STA $25
-	LDA tbl13_9A2F,X
+	LDA tbl13_9A2E+1,X
 	STA $26
 	LDY #$00
 	LDA ($25),Y
@@ -228,9 +228,8 @@ bra13_9A22:
 	BCC bra13_9A22
 	RTS
 tbl13_9A2E:
-	.byte $30
-tbl13_9A2F:
-	.byte $9A
+	.word ofs_9A30
+ofs_9A30:
 	.byte $3F
 	.byte $10
 	.byte $01
@@ -255,7 +254,7 @@ tbl13_9A2F:
 	.byte $A8
 	LDA tbl13_9A5D,Y
 	STA $32
-	LDA tbl13_9A5E,Y
+	LDA tbl13_9A5D+1,Y
 	STA $33
 	LDY #$00
 bra13_9A52:
@@ -267,7 +266,6 @@ bra13_9A52:
 	RTS
 tbl13_9A5D:
 	.byte $69
-tbl13_9A5E:
 	.byte $9A
 	.byte $6F
 	.byte $9A

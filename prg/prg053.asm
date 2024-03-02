@@ -894,7 +894,7 @@ tbl7_85AA:
 	.word ptr5_8689
 	.word ptr5_8695
 ptr5_85B8:
-	JSR jmp_54_AB92
+	JSR PositionCarriedObject
 	LDA FrameCount
 	AND #$00
 	BNE bra7_85C6
@@ -923,7 +923,7 @@ bra7_85E2:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra7_8624
+	BEQ loc7_8624
 	LDA ObjYScreenDistance,X
 	BPL bra7_8613
 	LDA ObjectYDistance,X
@@ -942,7 +942,6 @@ bra7_8613:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra7_8624:
 loc7_8624:
 	LDA FreezeFlag
 	BEQ bra7_862A
@@ -950,7 +949,7 @@ loc7_8624:
 bra7_862A:
 	JSR jmp_54_A6D4
 	JSR jmp_54_A773
-	JSR jmp_54_AB6B
+	JSR SetObjectCarryState
 	LDA PlayerYSpeed
 	BEQ bra7_8653
 	LDA PlayerMovement
@@ -1133,7 +1132,7 @@ tbl7_8771:
 	.word ptr5_8931
 	.word ptr5_89C1
 ptr5_8789:
-	JSR jmp_54_AB92
+	JSR PositionCarriedObject
 	LDA FrameCount
 	AND #$00
 	BNE bra7_8797
@@ -1186,10 +1185,11 @@ loc7_87F5:
 	LDA FreezeFlag
 	BEQ bra7_87FB
 	RTS
+
 bra7_87FB:
 	JSR jmp_54_A6D4
 	JSR jmp_54_A773
-	JSR jmp_54_AB6B
+	JSR SetObjectCarryState
 	LDA PlayerYSpeed
 	BEQ bra7_881E
 	LDA PlayerMovement
@@ -1568,7 +1568,7 @@ ptr5_8AFA:
 	JSR jmp_54_AC20
 	JSR jmp_54_A6D4
 	JSR jmp_54_A773
-	JSR jmp_54_AB6B
+	JSR SetObjectCarryState
 	LDA Player1YoshiStatus
 	BEQ bra7_8B3F
 	LDA PlayerYSpeed
@@ -3161,10 +3161,8 @@ HPodoboo:
 	.byte $02
 	.byte $02
 	.byte $90
-	.byte $09
-	.byte $0A
-	.byte $13
-	.byte $14
+	.byte $09, $0A
+	.byte $13, $14
 ptr6_9724:
 	JSR sub7_9792
 ptr6_9727:
@@ -4343,37 +4341,6 @@ bra7_9F8D:
 	.byte $23
 	.byte $23
 	.byte $23
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
 	.byte $00
 	.byte $00
 	.byte $00

@@ -3826,23 +3826,24 @@ sub3_F919:
 	ASL
 	TAY ;Get the pointer index for the BG palette
 	LDA CurrentPlayer
-	BEQ bra3_F939 ;Branch if player 1 is playing
-	LDA tbl3_FA96,Y
+	BEQ bra3_F939 ;Load player 1 palettes if player 1 is playing
+	;Otherwise, load palettes for player 2
+	LDA Player2LevelPalettes+2,Y
 	STA $30 ;Load lower byte of pointer
-	LDA tbl3_FA96+1,Y
+	LDA Player2LevelPalettes+3,Y
 	STA $31 ;Load upper byte of pointer
-	LDA tbl3_FA94,Y
+	LDA Player2LevelPalettes,Y
 	STA $32
-	LDA tbl3_FA94+1,Y
+	LDA Player2LevelPalettes+1,Y
 	JMP loc3_F94B
 bra3_F939:
-	LDA tbl3_F9FE,Y
+	LDA Player1LevelPalettes+2,Y
 	STA $30 ;Load lower byte of pointer
-	LDA tbl3_F9FE+1,Y
+	LDA Player1LevelPalettes+3,Y
 	STA $31 ;Load upper byte of pointer
-	LDA tbl3_F9FC,Y
+	LDA Player1LevelPalettes,Y
 	STA $32
-	LDA tbl3_F9FC+1,Y
+	LDA Player1LevelPalettes+1,Y
 loc3_F94B:
 	STA $33
 	LDA FadeoutMode
@@ -3853,9 +3854,9 @@ loc3_F94B:
 	STA $34
 	LDA tbl3_FE8C+1,Y
 	STA $35
-	LDA tbl3_FE8E,Y
+	LDA tbl3_FE8C+2,Y
 	STA $2E
-	LDA tbl3_FE8E+1,Y
+	LDA tbl3_FE8C+3,Y
 	STA $2F
 	LDA PPUUpdatePtr
 	BNE bra3_F9E7
@@ -3945,1081 +3946,482 @@ tbl3_F9F3:
 	.byte $20
 	.byte $30
 	.byte $40
-tbl3_F9FC:
-	.word ofs_FB2C
-tbl3_F9FE:
-	.word ofs_FD4C
-	.word ofs_FB3C
-	.word ofs_FD4C
-	.word ofs_FB4C
-	.word ofs_FD4C
-	.word ofs_FB5C
-	.word ofs_FD4C
-	.word ofs_FB6C
-	.word ofs_FD4C
-	.word ofs_FB7C
-	.word ofs_FD4C
-	.word ofs_FB8C
-	.word ofs_FD4C
-	.word ofs_FB5C
-	.word ofs_FD4C
-	.word ofs_FB9C
-	.word ofs_FD4C
-	.word ofs_FBAC
-	.word ofs_FD4C
-	.word ofs_FB8C
-	.word ofs_FD4C
+Player1LevelPalettes:
+	.word LvlPalBG_1_1 ;Level 1-1 BG Palette
+	.word LvlPalSprP1_1 ;Level 1-1 Sprite Palette
+	.word LvlPalBG_1_2 ;Level 1-2 BG Palette
+	.word LvlPalSprP1_1 ;Level 1-2 Sprite Palette
+	.word LvlPalBG_1_3 ;Level 1-3 BG Palette
+	.word LvlPalSprP1_1 ;Level 1-3 Sprite Palette
+	.word LvlPalBG_Castle1 ;Level 1-4 BG Palette
+	.word LvlPalSprP1_1 ;Level 1-4 Sprite Palette
+	.word LvlPalBG_2_1 ;Level 2-1 BG Palette
+	.word LvlPalSprP1_1 ;Level 2-1 Sprite Palette
+	.word LvlPalBG_2_2 ;Level 2-2 BG Palette
+	.word LvlPalSprP1_1 ;Level 2-2 Sprite Palette
+	.word LvlPalBG_GhostHouse1 ;Level 2-3 BG Palette
+	.word LvlPalSprP1_1 ;Level 2-3 Sprite Palette
+	.word LvlPalBG_Castle1
+	.word LvlPalSprP1_1
+	.word LvlPalBG_3_1 ;Level 3-1 BG Palette
+	.word LvlPalSprP1_1 ;Level 3-1 Sprite Palette
+	.word LvlPalBG_3_2 ;Level 3-2 BG Palette
+	.word LvlPalSprP1_1 ;Level 3-2 Sprite Paltte
+	.word LvlPalBG_GhostHouse1 ;Level 3-3 BG Palette
+	.word LvlPalSprP1_1 ;Level 3-3 BG Palette
 	.word ofs_FBBC
-	.word ofs_FD4C
-	.word ofs_FBCC
-	.word ofs_FD4C
-	.word ofs_FBCC
-	.word ofs_FD4C
-	.word ofs_FBDC
-	.word ofs_FD4C
-	.word ofs_FBEC
-	.word ofs_FD4C
-	.word ofs_FBFC
-	.word ofs_FD4C
-	.word ofs_FC0C
-	.word ofs_FD4C
-	.word ofs_FC1C
-	.word ofs_FD4C
-	.word ofs_FC2C
-	.word ofs_FD8C
-	.word ofs_FC3C
-	.word ofs_FD4C
-	.word ofs_FC4C
-	.word ofs_FD4C
-	.word ofs_FC5C
-	.word ofs_FD4C
-	.word ofs_FC6C
-	.word ofs_FD8C
-	.word ofs_FC7C
-	.word ofs_FD4C
-	.word ofs_FC8C
-	.word ofs_FD4C
-	.word ofs_FC9C
-	.word ofs_FD4C
-	.word ofs_FCAC
-	.word ofs_FD8C
-	.word ofs_FCBC
-	.word ofs_FD4C
-	.word ofs_FCCC
-	.word ofs_FD4C
-	.word ofs_FCDC
-	.word ofs_FD5C
-	.word ofs_FCEC
-	.word ofs_FD6C
-	.word ofs_FCFC
-	.word ofs_FD7C
-	.word ofs_FD0C
-	.word ofs_FD8C
-	.word ofs_FD1C
-	.word ofs_FD9C
-	.word ofs_FCDC
-	.word ofs_FDAC
-	.word ofs_FD2C
-	.word ofs_FDBC
-	.word ofs_FD3C
-	.word ofs_FDCC
-tbl3_FA94:
-	.word ofs_FB2C
-tbl3_FA96:
-	.word ofs_FDDC
-	.word ofs_FB3C
-	.word ofs_FDDC
-	.word ofs_FB4C
-	.word ofs_FDDC
-	.word ofs_FB5C
-	.word ofs_FDDC
-	.word ofs_FB6C
-	.word ofs_FDDC
-	.word ofs_FB7C
-	.word ofs_FDDC
-	.word ofs_FB8C
-	.word ofs_FDDC
-	.word ofs_FB5C
-	.word ofs_FDDC
-	.word ofs_FB9C
-	.word ofs_FDDC
-	.word ofs_FBAC
-	.word ofs_FDDC
-	.word ofs_FB8C
-	.word ofs_FDDC
+	.word LvlPalSprP1_1
+	.word LvlPalBG_Bridge ;Level 4-1 BG Palette
+	.word LvlPalSprP1_1 ;Level 4-1 Sprite Palette
+	.word LvlPalBG_Bridge ;Level 4-2 BG Palette
+	.word LvlPalSprP1_1 ;Level 4-2 Sprite Palette
+	.word LvlPalBG_4_3 ;Level 4-3 BG Palette
+	.word LvlPalSprP1_1 ;Level 4-3 Sprite Palette
+	.word LvlPalBG_4_4 ;Level 4-4 (Area 2) BG Palette
+	.word LvlPalSprP1_1 ;Level 4-4 (Area 2) BG Palette
+	.word LvlPalBG_5_1 ;Level 5-1 BG Palette
+	.word LvlPalSprP1_1 ;Level 5-1 Sprite Palette
+	.word LvlPalBG_5_2 ;Level 5-2 BG Palette
+	.word LvlPalSprP1_1 ;Level 5-2 Sprite Palette
+	.word LvlPalBG_5_3 ;Level 5-3 BG Palette
+	.word LvlPalSprP1_1 ;Level 5-3 Sprite Palette
+	.word LvlPalBG_5_4 ;Level 5-4 BG Palette
+	.word LvlPalSprP1_Castle3 ;Level 5-4 Sprite Palette
+	.word LvlPalBG_6_1 ;Level 6-1 BG Palette
+	.word LvlPalSprP1_1 ;Level 6-1 Sprite Palette
+	.word LvlPalBG_6_2 ;Level 6-2 BG Palette
+	.word LvlPalSprP1_1 ;Level 6-2 Sprite Palette
+	.word LvlPalBG_6_3 ;Level 6-3 BG Palette
+	.word LvlPalSprP1_1 ;Level 6-3 Sprite Palette
+	.word LvlPalBG_6_4 ;Level 6-4 BG Palette
+	.word LvlPalSprP1_Castle3 ;Level 6-4 Sprite Palette
+	.word LvlPalBG_7_1 ;Level 7-1 BG Palette
+	.word LvlPalSprP1_1 ;Level 7-1 Sprite Palette
+	.word LvlPalBG_7_2 ;Level 7-2 BG Palette
+	.word LvlPalSprP1_1 ;Level 7-2 Sprite Palette
+	.word LvlPalBG_7_3 ;Level 7-3 BG Palette
+	.word LvlPalSprP1_1 ;Level 7-3 Sprite Palette
+	.word LvlPalBG_7_4 ;Level 7-4 BG Palette
+	.word LvlPalSprP1_Castle3 ;Level 7-4 Sprite Palette
+	.word LvlPalBG_GhostHouseIntro ;Ghost House Intro BG Palette
+	.word LvlPalSprP1_1 ;Ghost House Intro Sprite Palette
+	.word LvlPalBG_CastleIntro ;Castle Intro BG Palette
+	.word LvlPalSprP1_1 ;Castle Intro Sprite Palette
+	.word LvlPalBG_MortonBoss ;Morton Boss Room BG Palette
+	.word LvlPalSprP1_MortonBoss ;Morton Boss Room Sprite Palette
+	.word LvlPalBG_LemmyBoss ;Lemmy/Wendy Boss Room BG Palette
+	.word LvlPalSprP1_LemmyBoss ;Lemmy/Wendy Boss Room Sprite Palette
+	.word LvlPalBG_Castle2 ;Reznor Room, Level 2-4 (Areas 1 and 2) BG Palette
+	.word LvlPalSprP1_Castle2 ;Reznor Room, Level 2-4 (Areas 1 and 2) Sprite Palette
+	.word LvlPalBG_Castle3 ;Level 1-4 (Area 2), 2-4 (Area 3), 3-4, 4-4 (Area 1) BG Palette
+	.word LvlPalSprP1_Castle3 ;Level 1-4 (Area 2), 2-4 (Area 3), 3-4, 4-4 (Area 1) Sprite Palette
+	.word LvlPalBG_YoshisHouse ;Yoshi's House BG Palette
+	.word LvlPalSprP1_YoshisHouse ;Yoshi's House Sprite Palette
+	.word LvlPalBG_MortonBoss ;Roy Boss Room BG Palette
+	.word LvlPalSprP1_RoyBoss ;Roy Boss Room Sprite Palette
+	.word LvlPalBG_BowserFight ;Bowser Fight BG Palette
+	.word LvlPalSprP1_BowserFight ;Bowser Fight Sprite Palette
+	.word LvlPalBG_BonusRoom ;Bonus Room BG Palette
+	.word LvlPalSprP1_BonusRoom ;Bonus Room Sprite Palette
+Player2LevelPalettes:
+	.word LvlPalBG_1_1 ;Level 1-1 BG Palette
+	.word LvlPalSprP2_1 ;Level 1-1 Sprite Palette
+	.word LvlPalBG_1_2 ;Level 1-2 BG Palette
+	.word LvlPalSprP2_1 ;Level 1-2 Sprite Palette
+	.word LvlPalBG_1_3 ;Level 1-3 BG Palette
+	.word LvlPalSprP2_1 ;Level 1-3 Sprite Palette
+	.word LvlPalBG_Castle1 ;Level 1-4 BG Palette
+	.word LvlPalSprP2_1 ;Level 1-4 Sprite Palette
+	.word LvlPalBG_2_1 ;Level 2-1 BG Palette
+	.word LvlPalSprP2_1 ;Level 2-1 Sprite Palette
+	.word LvlPalBG_2_2 ;Level 2-2 BG Palette
+	.word LvlPalSprP2_1 ;Level 2-2 Sprite Palette
+	.word LvlPalBG_GhostHouse1 ;Level 2-3 BG Palette
+	.word LvlPalSprP2_1 ;Level 2-3 Sprite Palette
+	.word LvlPalBG_Castle1
+	.word LvlPalSprP2_1
+	.word LvlPalBG_3_1 ;Level 3-1 BG Palette
+	.word LvlPalSprP2_1 ;Level 3-1 Sprite Palette
+	.word LvlPalBG_3_2 ;Level 3-2 BG Palette
+	.word LvlPalSprP2_1 ;Level 3-2 Sprite Paltte
+	.word LvlPalBG_GhostHouse1 ;Level 3-3 BG Palette
+	.word LvlPalSprP2_1 ;Level 3-3 BG Palette
 	.word ofs_FBBC
-	.word ofs_FDDC
-	.word ofs_FBCC
-	.word ofs_FDDC
-	.word ofs_FBCC
-	.word ofs_FDDC
-	.word ofs_FBDC
-	.word ofs_FDDC
-	.word ofs_FBEC
-	.word ofs_FDDC
-	.word ofs_FBFC
-	.word ofs_FDDC
-	.word ofs_FC0C
-	.word ofs_FDDC
-	.word ofs_FC1C
-	.word ofs_FDDC
-	.word ofs_FC2C
-	.word ofs_FE3C
-	.word ofs_FC3C
-	.word ofs_FDDC
-	.word ofs_FC4C
-	.word ofs_FDDC
-	.word ofs_FC5C
-	.word ofs_FDDC
-	.word ofs_FC6C
-	.word ofs_FE3C
-	.word ofs_FC7C
-	.word ofs_FDDC
-	.word ofs_FC8C
-	.word ofs_FDDC
-	.word ofs_FC9C
-	.word ofs_FDDC
-	.word ofs_FCAC
-	.word ofs_FE3C
-	.word ofs_FCBC
-	.word ofs_FDDC
-	.word ofs_FCCC
-	.word ofs_FDDC
-	.word ofs_FCDC
-	.word ofs_FE0C
-	.word ofs_FCEC
-	.word ofs_FE1C
-	.word ofs_FCFC
-	.word ofs_FE2C
-	.word ofs_FD0C
-	.word ofs_FE3C
-	.word ofs_FD1C
-	.word ofs_FE4C
-	.word ofs_FCDC
-	.word ofs_FE5C
-	.word ofs_FD2C
-	.word ofs_FE6C
-	.word ofs_FD3C
-	.word ofs_FE7C
-ofs_FB2C:
-	.byte $11
-	.byte $30
-	.byte $38
-	.byte $3D
-	.byte $11
-	.byte $30
-	.byte $2A
-	.byte $1A
-	.byte $11
-	.byte $37
-	.byte $2A
-	.byte $1A
-	.byte $11
-	.byte $2C
-	.byte $3C
-	.byte $30
-ofs_FB3C:
-	.byte $0A
-	.byte $2C
-	.byte $1C
-	.byte $30
-	.byte $0A
-	.byte $30
-	.byte $38
-	.byte $28
-	.byte $0A
-	.byte $37
-	.byte $2A
-	.byte $1A
-	.byte $0A
-	.byte $29
-	.byte $19
-	.byte $39
-ofs_FB4C:
-	.byte $0E
-	.byte $11
-	.byte $3C
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $37
-	.byte $27
-	.byte $0E
-	.byte $29
-	.byte $38
-	.byte $18
-	.byte $0E
-	.byte $00
-	.byte $10
-	.byte $30
-ofs_FB5C:
-	.byte $0E
-	.byte $11
-	.byte $3C
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $00
-	.byte $10
-	.byte $20
-	.byte $0E
-	.byte $27
-	.byte $17
-	.byte $37
-ofs_FB6C:
-	.byte $11
-	.byte $11
-	.byte $3C
-	.byte $30
-	.byte $11
-	.byte $30
-	.byte $38
-	.byte $28
-	.byte $11
-	.byte $37
-	.byte $2A
-	.byte $1A
-	.byte $11
-	.byte $39
-	.byte $29
-	.byte $1A
-ofs_FB7C:
-	.byte $0A
-	.byte $31
-	.byte $11
-	.byte $30
-	.byte $0A
-	.byte $30
-	.byte $38
-	.byte $28
-	.byte $0A
-	.byte $0E
-	.byte $2A
-	.byte $30
-	.byte $0A
-	.byte $2A
-	.byte $19
-	.byte $39
-ofs_FB8C:
-	.byte $0E
-	.byte $11
-	.byte $3C
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $1C
-	.byte $2C
-	.byte $38
-	.byte $0E
-	.byte $37
-	.byte $27
-	.byte $18
-ofs_FB9C:
-	.byte $0E
-	.byte $21
-	.byte $11
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $37
-	.byte $0C
-	.byte $1C
-	.byte $0E
-	.byte $38
-	.byte $27
-	.byte $17
-ofs_FBAC:
-	.byte $01
-	.byte $2C
-	.byte $1C
-	.byte $3C
-	.byte $01
-	.byte $30
-	.byte $38
-	.byte $28
-	.byte $01
-	.byte $00
-	.byte $10
-	.byte $30
-	.byte $01
-	.byte $38
-	.byte $27
-	.byte $17
+	.word LvlPalSprP2_1
+	.word LvlPalBG_Bridge ;Level 4-1 BG Palette
+	.word LvlPalSprP2_1 ;Level 4-1 Sprite Palette
+	.word LvlPalBG_Bridge ;Level 4-2 BG Palette
+	.word LvlPalSprP2_1 ;Level 4-2 Sprite Palette
+	.word LvlPalBG_4_3 ;Level 4-3 BG Palette
+	.word LvlPalSprP2_1 ;Level 4-3 Sprite Palette
+	.word LvlPalBG_4_4 ;Level 4-4 (Area 2) BG Palette
+	.word LvlPalSprP2_1 ;Level 4-4 (Area 2) BG Palette
+	.word LvlPalBG_5_1 ;Level 5-1 BG Palette
+	.word LvlPalSprP2_1 ;Level 5-1 Sprite Palette
+	.word LvlPalBG_5_2 ;Level 5-2 BG Palette
+	.word LvlPalSprP2_1 ;Level 5-2 Sprite Palette
+	.word LvlPalBG_5_3 ;Level 5-3 BG Palette
+	.word LvlPalSprP2_1 ;Level 5-3 Sprite Palette
+	.word LvlPalBG_5_4 ;Level 5-4 BG Palette
+	.word LvlPalSprP2_Castle3 ;Level 5-4 Sprite Palette
+	.word LvlPalBG_6_1 ;Level 6-1 BG Palette
+	.word LvlPalSprP2_1 ;Level 6-1 Sprite Palette
+	.word LvlPalBG_6_2 ;Level 6-2 BG Palette
+	.word LvlPalSprP2_1 ;Level 6-2 Sprite Palette
+	.word LvlPalBG_6_3 ;Level 6-3 BG Palette
+	.word LvlPalSprP2_1 ;Level 6-3 Sprite Palette
+	.word LvlPalBG_6_4 ;Level 6-4 BG Palette
+	.word LvlPalSprP2_Castle3 ;Level 6-4 Sprite Palette
+	.word LvlPalBG_7_1 ;Level 7-1 BG Palette
+	.word LvlPalSprP2_1 ;Level 7-1 Sprite Palette
+	.word LvlPalBG_7_2 ;Level 7-2 BG Palette
+	.word LvlPalSprP2_1 ;Level 7-2 Sprite Palette
+	.word LvlPalBG_7_3 ;Level 7-3 BG Palette
+	.word LvlPalSprP2_1 ;Level 7-3 Sprite Palette
+	.word LvlPalBG_7_4 ;Level 7-4 BG Palette
+	.word LvlPalSprP2_Castle3 ;Level 7-4 Sprite Palette
+	.word LvlPalBG_GhostHouseIntro ;Ghost House Intro BG Palette
+	.word LvlPalSprP2_1 ;Ghost House Intro Sprite Palette
+	.word LvlPalBG_CastleIntro ;Castle Intro BG Palette
+	.word LvlPalSprP2_1 ;Castle Intro Sprite Palette
+	.word LvlPalBG_MortonBoss ;Morton Boss Room BG Palette
+	.word LvlPalSprP2_MortonBoss ;Morton Boss Room Sprite Palette
+	.word LvlPalBG_LemmyBoss ;Lemmy/Wendy Boss Room BG Palette
+	.word LvlPalSprP2_LemmyBoss ;Lemmy/Wendy Boss Room Sprite Palette
+	.word LvlPalBG_Castle2 ;Reznor Room, Level 2-4 (Areas 1 and 2) BG Palette
+	.word LvlPalSprP2_Castle2 ;Reznor Room, Level 2-4 (Areas 1 and 2) Sprite Palette
+	.word LvlPalBG_Castle3 ;Level 1-4 (Area 2), 2-4 (Area 3), 3-4, 4-4 (Area 1) BG Palette
+	.word LvlPalSprP2_Castle3 ;Level 1-4 (Area 2), 2-4 (Area 3), 3-4, 4-4 (Area 1) Sprite Palette
+	.word LvlPalBG_YoshisHouse ;Yoshi's House BG Palette
+	.word LvlPalSprP2_YoshisHouse ;Yoshi's House Sprite Palette
+	.word LvlPalBG_MortonBoss ;Roy Boss Room BG Palette
+	.word LvlPalSprP2_RoyBoss ;Roy Boss Room Sprite Palette
+	.word LvlPalBG_BowserFight ;Bowser Fight BG Palette
+	.word LvlPalSprP2_BowserFight ;Bowser Fight Sprite Palette
+	.word LvlPalBG_BonusRoom ;Bonus Room BG Palette
+	.word LvlPalSprP2_BonusRoom ;Bonus Room Sprite Palette
+LvlPalBG_1_1:
+	.byte $11, $30, $38, $3D
+	.byte $11, $30, $2A, $1A
+	.byte $11, $37, $2A, $1A
+	.byte $11, $2C, $3C, $30
+
+LvlPalBG_1_2:
+	.byte $0A, $2C, $1C, $30
+	.byte $0A, $30, $38, $28
+	.byte $0A, $37, $2A, $1A
+	.byte $0A, $29, $19, $39
+
+LvlPalBG_1_3:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $37, $27
+	.byte $0E, $29, $38, $18
+	.byte $0E, $00, $10, $30
+
+LvlPalBG_Castle1:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $20
+	.byte $0E, $27, $17, $37
+
+LvlPalBG_2_1:
+	.byte $11, $11, $3C, $30
+	.byte $11, $30, $38, $28
+	.byte $11, $37, $2A, $1A
+	.byte $11, $39, $29, $1A
+
+LvlPalBG_2_2:
+	.byte $0A, $31, $11, $30
+	.byte $0A, $30, $38, $28
+	.byte $0A, $0E, $2A, $30
+	.byte $0A, $2A, $19, $39
+
+LvlPalBG_GhostHouse1:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $1C, $2C, $38
+	.byte $0E, $37, $27, $18
+
+LvlPalBG_3_1:
+	.byte $0E, $21, $11, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $37, $0C, $1C
+	.byte $0E, $38, $27, $17
+
+LvlPalBG_3_2:
+	.byte $01, $2C, $1C, $3C
+	.byte $01, $30, $38, $28
+	.byte $01, $00, $10, $30
+	.byte $01, $38, $27, $17
+
 ofs_FBBC:
-	.byte $0E
-	.byte $11
-	.byte $21
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $00
-	.byte $10
-	.byte $30
-	.byte $0E
-	.byte $27
-	.byte $17
-	.byte $37
-ofs_FBCC:
-	.byte $30
-	.byte $11
-	.byte $2C
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $30
-	.byte $37
-	.byte $31
-	.byte $0E
-	.byte $30
-	.byte $30
-	.byte $2A
-	.byte $0A
-ofs_FBDC:
-	.byte $30
-	.byte $11
-	.byte $21
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $30
-	.byte $37
-	.byte $2A
-	.byte $0A
-	.byte $30
-	.byte $0E
-	.byte $2A
-	.byte $1A
-ofs_FBEC:
-	.byte $0E
-	.byte $11
-	.byte $3C
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $00
-	.byte $10
-	.byte $30
-	.byte $0E
-	.byte $27
-	.byte $17
-	.byte $37
-ofs_FBFC:
-	.byte $0E
-	.byte $2C
-	.byte $1C
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $1A
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $1A
-	.byte $0A
-	.byte $2A
-ofs_FC0C:
-	.byte $0E
-	.byte $11
-	.byte $3C
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $0C
-	.byte $1C
-	.byte $2C
-	.byte $0E
-	.byte $37
-	.byte $27
-	.byte $18
-ofs_FC1C:
-	.byte $01
-	.byte $2C
-	.byte $1C
-	.byte $3C
-	.byte $01
-	.byte $30
-	.byte $38
-	.byte $28
-	.byte $01
-	.byte $00
-	.byte $10
-	.byte $38
-	.byte $01
-	.byte $38
-	.byte $27
-	.byte $17
-ofs_FC2C:
-	.byte $0E
-	.byte $11
-	.byte $3C
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $00
-	.byte $10
-	.byte $20
-	.byte $0E
-	.byte $27
-	.byte $17
-	.byte $37
-ofs_FC3C:
-	.byte $0E
-	.byte $01
-	.byte $21
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $29
-	.byte $38
-	.byte $18
-	.byte $0E
-	.byte $29
-	.byte $30
-	.byte $18
-ofs_FC4C:
-	.byte $0E
-	.byte $11
-	.byte $3C
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $0C
-	.byte $1C
-	.byte $2C
-	.byte $0E
-	.byte $37
-	.byte $27
-	.byte $18
-ofs_FC5C:
-	.byte $01
-	.byte $1C
-	.byte $2C
-	.byte $30
-	.byte $01
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $01
-	.byte $37
-	.byte $2A
-	.byte $1C
-	.byte $01
-	.byte $3C
-	.byte $2C
-	.byte $1C
-ofs_FC6C:
-	.byte $0E
-	.byte $01
-	.byte $31
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $00
-	.byte $10
-	.byte $30
-	.byte $0E
-	.byte $27
-	.byte $17
-	.byte $37
-ofs_FC7C:
-	.byte $0E
-	.byte $21
-	.byte $11
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $38
-	.byte $28
-	.byte $0E
-	.byte $1A
-	.byte $2A
-	.byte $30
-	.byte $0E
-	.byte $00
-	.byte $10
-	.byte $30
-ofs_FC8C:
-	.byte $0E
-	.byte $31
-	.byte $22
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $38
-	.byte $28
-	.byte $0E
-	.byte $1A
-	.byte $2A
-	.byte $30
-	.byte $0E
-	.byte $00
-	.byte $10
-	.byte $30
-ofs_FC9C:
-	.byte $0E
-	.byte $11
-	.byte $3C
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $0C
-	.byte $1C
-	.byte $31
-	.byte $0E
-	.byte $37
-	.byte $27
-	.byte $18
-ofs_FCAC:
-	.byte $0E
-	.byte $15
-	.byte $1A
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $00
-	.byte $10
-	.byte $30
-	.byte $0E
-	.byte $27
-	.byte $16
-	.byte $37
-ofs_FCBC:
-	.byte $0E
-	.byte $30
-	.byte $0C
-	.byte $15
-	.byte $0E
-	.byte $01
-	.byte $31
-	.byte $30
-	.byte $0E
-	.byte $37
-	.byte $2A
-	.byte $1A
-	.byte $0E
-	.byte $10
-	.byte $0C
-	.byte $00
-ofs_FCCC:
-	.byte $0E
-	.byte $21
-	.byte $31
-	.byte $30
-	.byte $0E
-	.byte $31
-	.byte $2A
-	.byte $1A
-	.byte $0E
-	.byte $37
-	.byte $2A
-	.byte $1A
-	.byte $0E
-	.byte $00
-	.byte $10
-	.byte $20
-ofs_FCDC:
-	.byte $0E
-	.byte $11
-	.byte $3C
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $00
-	.byte $10
-	.byte $20
-	.byte $0E
-	.byte $27
-	.byte $17
-	.byte $37
-ofs_FCEC:
-	.byte $0E
-	.byte $11
-	.byte $21
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $00
-	.byte $10
-	.byte $30
-	.byte $0E
-	.byte $27
-	.byte $17
-	.byte $37
-ofs_FCFC:
-	.byte $0E
-	.byte $11
-	.byte $3C
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $00
-	.byte $10
-	.byte $30
-	.byte $0E
-	.byte $27
-	.byte $17
-	.byte $37
-ofs_FD0C:
-	.byte $0E
-	.byte $11
-	.byte $3C
-	.byte $30
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $00
-	.byte $10
-	.byte $30
-	.byte $0E
-	.byte $27
-	.byte $17
-	.byte $37
-ofs_FD1C:
-	.byte $0E
-	.byte $2A
-	.byte $2C
-	.byte $36
-	.byte $0E
-	.byte $37
-	.byte $27
-	.byte $38
-	.byte $0E
-	.byte $2A
-	.byte $37
-	.byte $30
-	.byte $0E
-	.byte $1C
-	.byte $2C
-	.byte $30
-ofs_FD2C:
-	.byte $1E
-	.byte $10
-	.byte $00
-	.byte $0E
-	.byte $1E
-	.byte $27
-	.byte $22
-	.byte $20
-	.byte $1E
-	.byte $2A
-	.byte $1A
-	.byte $20
-	.byte $1E
-	.byte $27
-	.byte $16
-	.byte $20
-ofs_FD3C:
-	.byte $0E
-	.byte $30
-	.byte $2C
-	.byte $0E
-	.byte $0E
-	.byte $30
-	.byte $28
-	.byte $18
-	.byte $0E
-	.byte $30
-	.byte $2A
-	.byte $19
-	.byte $0E
-	.byte $30
-	.byte $21
-	.byte $23
-ofs_FD4C:
-	.byte $11
-	.byte $37
-	.byte $16
-	.byte $0E
-	.byte $10
-	.byte $30
-	.byte $16
-	.byte $02
-	.byte $10
-	.byte $2A
-	.byte $20
-	.byte $0E
-	.byte $10
-	.byte $38
-	.byte $16
-	.byte $0E
-ofs_FD5C:
-	.byte $0E
-	.byte $37
-	.byte $16
-	.byte $0E
-	.byte $0E
-	.byte $30
-	.byte $16
-	.byte $02
-	.byte $0E
-	.byte $28
-	.byte $1A
-	.byte $30
-	.byte $0E
-	.byte $38
-	.byte $16
-	.byte $0E
-ofs_FD6C:
-	.byte $0E
-	.byte $37
-	.byte $16
-	.byte $0E
-	.byte $10
-	.byte $30
-	.byte $16
-	.byte $02
-	.byte $10
-	.byte $28
-	.byte $06
-	.byte $30
-	.byte $10
-	.byte $38
-	.byte $16
-	.byte $0E
-ofs_FD7C:
-	.byte $0E
-	.byte $37
-	.byte $16
-	.byte $0E
-	.byte $00
-	.byte $30
-	.byte $16
-	.byte $02
-	.byte $00
-	.byte $10
-	.byte $20
-	.byte $0E
-	.byte $00
-	.byte $38
-	.byte $16
-	.byte $0E
-ofs_FD8C:
-	.byte $0E
-	.byte $37
-	.byte $16
-	.byte $0E
-	.byte $00
-	.byte $30
-	.byte $16
-	.byte $02
-	.byte $00
-	.byte $10
-	.byte $20
-	.byte $0E
-	.byte $00
-	.byte $38
-	.byte $16
-	.byte $0E
-ofs_FD9C:
-	.byte $0E
-	.byte $37
-	.byte $16
-	.byte $0E
-	.byte $10
-	.byte $30
-	.byte $16
-	.byte $02
-	.byte $10
-	.byte $2A
-	.byte $20
-	.byte $0E
-	.byte $10
-	.byte $38
-	.byte $16
-	.byte $0E
-ofs_FDAC:
-	.byte $1E
-	.byte $37
-	.byte $16
-	.byte $0E
-	.byte $1E
-	.byte $30
-	.byte $16
-	.byte $02
-	.byte $1E
-	.byte $28
-	.byte $1C
-	.byte $30
-	.byte $1E
-	.byte $28
-	.byte $16
-	.byte $0E
-ofs_FDBC:
-	.byte $0E
-	.byte $37
-	.byte $16
-	.byte $0E
-	.byte $0E
-	.byte $30
-	.byte $16
-	.byte $02
-	.byte $0E
-	.byte $28
-	.byte $15
-	.byte $30
-	.byte $0E
-	.byte $28
-	.byte $16
-	.byte $0E
-ofs_FDCC:
-	.byte $3D
-	.byte $37
-	.byte $16
-	.byte $0E
-	.byte $3D
-	.byte $30
-	.byte $16
-	.byte $02
-	.byte $3D
-	.byte $2A
-	.byte $30
-	.byte $0F
-	.byte $3D
-	.byte $28
-	.byte $16
-	.byte $0E
-ofs_FDDC:
-	.byte $11
-	.byte $37
-	.byte $2B
-	.byte $0E
-	.byte $10
-	.byte $30
-	.byte $1B
-	.byte $02
-	.byte $10
-	.byte $2A
-	.byte $20
-	.byte $0E
-	.byte $10
-	.byte $38
-	.byte $16
-	.byte $0E
-	.byte $0E
-	.byte $37
-	.byte $2B
-	.byte $0E
-	.byte $10
-	.byte $30
-	.byte $1B
-	.byte $02
-	.byte $10
-	.byte $2A
-	.byte $20
-	.byte $0E
-	.byte $10
-	.byte $38
-	.byte $16
-	.byte $0E
-	.byte $0E
-	.byte $37
-	.byte $2B
-	.byte $0E
-	.byte $10
-	.byte $30
-	.byte $1B
-	.byte $02
-	.byte $10
-	.byte $2A
-	.byte $20
-	.byte $0E
-	.byte $10
-	.byte $38
-	.byte $16
-	.byte $0E
-ofs_FE0C:
-	.byte $0E
-	.byte $37
-	.byte $2B
-	.byte $0E
-	.byte $0E
-	.byte $30
-	.byte $1B
-	.byte $02
-	.byte $0E
-	.byte $28
-	.byte $1A
-	.byte $30
-	.byte $0E
-	.byte $38
-	.byte $16
-	.byte $0E
-ofs_FE1C:
-	.byte $0E
-	.byte $37
-	.byte $2B
-	.byte $0E
-	.byte $10
-	.byte $30
-	.byte $1B
-	.byte $02
-	.byte $10
-	.byte $28
-	.byte $06
-	.byte $30
-	.byte $10
-	.byte $38
-	.byte $16
-	.byte $0E
-ofs_FE2C:
-	.byte $0E
-	.byte $37
-	.byte $2B
-	.byte $0E
-	.byte $00
-	.byte $30
-	.byte $1B
-	.byte $02
-	.byte $00
-	.byte $10
-	.byte $20
-	.byte $0E
-	.byte $00
-	.byte $38
-	.byte $16
-	.byte $0E
-ofs_FE3C:
-	.byte $0E
-	.byte $37
-	.byte $2B
-	.byte $0E
-	.byte $00
-	.byte $30
-	.byte $1B
-	.byte $02
-	.byte $00
-	.byte $10
-	.byte $20
-	.byte $0E
-	.byte $00
-	.byte $38
-	.byte $16
-	.byte $0E
-ofs_FE4C:
-	.byte $0E
-	.byte $37
-	.byte $2B
-	.byte $0E
-	.byte $10
-	.byte $30
-	.byte $1B
-	.byte $02
-	.byte $10
-	.byte $2A
-	.byte $20
-	.byte $0E
-	.byte $10
-	.byte $38
-	.byte $16
-	.byte $0E
-ofs_FE5C:
-	.byte $1E
-	.byte $37
-	.byte $2B
-	.byte $0E
-	.byte $1E
-	.byte $30
-	.byte $1B
-	.byte $02
-	.byte $1E
-	.byte $28
-	.byte $1C
-	.byte $30
-	.byte $1E
-	.byte $28
-	.byte $16
-	.byte $0E
-ofs_FE6C:
-	.byte $0E
-	.byte $37
-	.byte $2B
-	.byte $0E
-	.byte $0E
-	.byte $30
-	.byte $1B
-	.byte $02
-	.byte $0E
-	.byte $28
-	.byte $15
-	.byte $30
-	.byte $0E
-	.byte $28
-	.byte $16
-	.byte $0E
-ofs_FE7C:
-	.byte $3D
-	.byte $37
-	.byte $2B
-	.byte $0E
-	.byte $3D
-	.byte $30
-	.byte $1B
-	.byte $02
-	.byte $3D
-	.byte $2A
-	.byte $30
-	.byte $0F
-	.byte $3D
-	.byte $28
-	.byte $16
-	.byte $0E
+	.byte $0E, $11, $21, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $30
+	.byte $0E, $27, $17, $37
+
+LvlPalBG_Bridge:
+	.byte $30, $11, $2C, $0E
+	.byte $30, $28, $18, $0E
+	.byte $30, $37, $31, $0E
+	.byte $30, $30, $2A, $0A
+
+LvlPalBG_4_3:
+	.byte $30, $11, $21, $0E
+	.byte $30, $28, $18, $0E
+	.byte $30, $37, $2A, $0A
+	.byte $30, $0E, $2A, $1A
+
+LvlPalBG_4_4:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $30
+	.byte $0E, $27, $17, $37
+
+LvlPalBG_5_1:
+	.byte $0E, $2C, $1C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $1A, $28, $18
+	.byte $0E, $1A, $0A, $2A
+
+LvlPalBG_5_2:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $0C, $1C, $2C
+	.byte $0E, $37, $27, $18
+
+LvlPalBG_5_3:
+	.byte $01, $2C, $1C, $3C
+	.byte $01, $30, $38, $28
+	.byte $01, $00, $10, $38
+	.byte $01, $38, $27, $17
+
+LvlPalBG_5_4:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $20
+	.byte $0E, $27, $17, $37
+
+LvlPalBG_6_1:
+	.byte $0E, $01, $21, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $29, $38, $18
+	.byte $0E, $29, $30, $18
+
+LvlPalBG_6_2:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $0C, $1C, $2C
+	.byte $0E, $37, $27, $18
+
+LvlPalBG_6_3:
+	.byte $01, $1C, $2C, $30
+	.byte $01, $30, $28, $18
+	.byte $01, $37, $2A, $1C
+	.byte $01, $3C, $2C, $1C
+
+LvlPalBG_6_4:
+	.byte $0E, $01, $31, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $30
+	.byte $0E, $27, $17, $37
+
+LvlPalBG_7_1:
+	.byte $0E, $21, $11, $30
+	.byte $0E, $30, $38, $28
+	.byte $0E, $1A, $2A, $30
+	.byte $0E, $00, $10, $30
+
+LvlPalBG_7_2:
+	.byte $0E, $31, $22, $30
+	.byte $0E, $30, $38, $28
+	.byte $0E, $1A, $2A, $30
+	.byte $0E, $00, $10, $30
+
+LvlPalBG_7_3:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $0C, $1C, $31
+	.byte $0E, $37, $27, $18
+
+LvlPalBG_7_4:
+	.byte $0E, $15, $1A, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $30
+	.byte $0E, $27, $16, $37
+
+LvlPalBG_GhostHouseIntro:
+	.byte $0E, $30, $0C, $15
+	.byte $0E, $01, $31, $30
+	.byte $0E, $37, $2A, $1A
+	.byte $0E, $10, $0C, $00
+
+LvlPalBG_CastleIntro:
+	.byte $0E, $21, $31, $30
+	.byte $0E, $31, $2A, $1A
+	.byte $0E, $37, $2A, $1A
+	.byte $0E, $00, $10, $20
+
+LvlPalBG_MortonBoss:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $20
+	.byte $0E, $27, $17, $37
+
+LvlPalBG_LemmyBoss:
+	.byte $0E, $11, $21, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $30
+	.byte $0E, $27, $17, $37
+
+LvlPalBG_Castle2:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $30
+	.byte $0E, $27, $17, $37
+
+LvlPalBG_Castle3:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $30
+	.byte $0E, $27, $17, $37
+
+LvlPalBG_YoshisHouse:
+	.byte $0E, $2A, $2C, $36
+	.byte $0E, $37, $27, $38
+	.byte $0E, $2A, $37, $30
+	.byte $0E, $1C, $2C, $30
+
+LvlPalBG_BowserFight:
+	.byte $1E, $10, $00, $0E
+	.byte $1E, $27, $22, $20
+	.byte $1E, $2A, $1A, $20
+	.byte $1E, $27, $16, $20
+
+LvlPalBG_BonusRoom:
+	.byte $0E, $30, $2C, $0E
+	.byte $0E, $30, $28, $18
+	.byte $0E, $30, $2A, $19
+	.byte $0E, $30, $21, $23
+
+LvlPalSprP1_1:
+	.byte $11, $37, $16, $0E
+	.byte $10, $30, $16, $02
+	.byte $10, $2A, $20, $0E
+	.byte $10, $38, $16, $0E
+
+LvlPalSprP1_MortonBoss:
+	.byte $0E, $37, $16, $0E
+	.byte $0E, $30, $16, $02
+	.byte $0E, $28, $1A, $30
+	.byte $0E, $38, $16, $0E
+
+LvlPalSprP1_LemmyBoss:
+	.byte $0E, $37, $16, $0E
+	.byte $10, $30, $16, $02
+	.byte $10, $28, $06, $30
+	.byte $10, $38, $16, $0E
+
+LvlPalSprP1_Castle2:
+	.byte $0E, $37, $16, $0E
+	.byte $00, $30, $16, $02
+	.byte $00, $10, $20, $0E
+	.byte $00, $38, $16, $0E
+
+LvlPalSprP1_Castle3:
+	.byte $0E, $37, $16, $0E
+	.byte $00, $30, $16, $02
+	.byte $00, $10, $20, $0E
+	.byte $00, $38, $16, $0E
+
+LvlPalSprP1_YoshisHouse:
+	.byte $0E, $37, $16, $0E
+	.byte $10, $30, $16, $02
+	.byte $10, $2A, $20, $0E
+	.byte $10, $38, $16, $0E
+
+LvlPalSprP1_RoyBoss:
+	.byte $1E, $37, $16, $0E
+	.byte $1E, $30, $16, $02
+	.byte $1E, $28, $1C, $30
+	.byte $1E, $28, $16, $0E
+
+LvlPalSprP1_BowserFight:
+	.byte $0E, $37, $16, $0E
+	.byte $0E, $30, $16, $02
+	.byte $0E, $28, $15, $30
+	.byte $0E, $28, $16, $0E
+
+LvlPalSprP1_BonusRoom:
+	.byte $3D, $37, $16, $0E
+	.byte $3D, $30, $16, $02
+	.byte $3D, $2A, $30, $0F
+	.byte $3D, $28, $16, $0E
+
+LvlPalSprP2_1:
+	.byte $11, $37, $2B, $0E
+	.byte $10, $30, $1B, $02
+	.byte $10, $2A, $20, $0E
+	.byte $10, $38, $16, $0E
+	;What are these extras for exactly?
+	.byte $0E, $37, $2B, $0E
+	.byte $10, $30, $1B, $02
+	.byte $10, $2A, $20, $0E
+	.byte $10, $38, $16, $0E
+	.byte $0E, $37, $2B, $0E
+	.byte $10, $30, $1B, $02
+	.byte $10, $2A, $20, $0E
+	.byte $10, $38, $16, $0E
+LvlPalSprP2_MortonBoss:
+	.byte $0E, $37, $2B, $0E
+	.byte $0E, $30, $1B, $02
+	.byte $0E, $28, $1A, $30
+	.byte $0E, $38, $16, $0E
+
+LvlPalSprP2_LemmyBoss:
+	.byte $0E, $37, $2B, $0E
+	.byte $10, $30, $1B, $02
+	.byte $10, $28, $06, $30
+	.byte $10, $38, $16, $0E
+
+LvlPalSprP2_Castle2:
+	.byte $0E, $37, $2B, $0E
+	.byte $00, $30, $1B, $02
+	.byte $00, $10, $20, $0E
+	.byte $00, $38, $16, $0E
+
+LvlPalSprP2_Castle3:
+	.byte $0E, $37, $2B, $0E
+	.byte $00, $30, $1B, $02
+	.byte $00, $10, $20, $0E
+	.byte $00, $38, $16, $0E
+
+LvlPalSprP2_YoshisHouse:
+	.byte $0E, $37, $2B, $0E
+	.byte $10, $30, $1B, $02
+	.byte $10, $2A, $20, $0E
+	.byte $10, $38, $16, $0E
+
+LvlPalSprP2_RoyBoss:
+	.byte $1E, $37, $2B, $0E
+	.byte $1E, $30, $1B, $02
+	.byte $1E, $28, $1C, $30
+	.byte $1E, $28, $16, $0E
+
+LvlPalSprP2_BowserFight:
+	.byte $0E, $37, $2B, $0E
+	.byte $0E, $30, $1B, $02
+	.byte $0E, $28, $15, $30
+	.byte $0E, $28, $16, $0E
+
+LvlPalSprP2_BonusRoom:
+	.byte $3D, $37, $2B, $0E
+	.byte $3D, $30, $1B, $02
+	.byte $3D, $2A, $30, $0F
+	.byte $3D, $28, $16, $0E
+
 tbl3_FE8C:
 	.word ofs_FE94
-tbl3_FE8E:
 	.word ofs_FE94
 	.word ofs_FE94
 	.word ofs_FEA4

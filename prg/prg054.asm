@@ -1251,7 +1251,7 @@ loc3_A6B5:
 	STA ObjectAction,X
 	STA ObjectSlot,X
 	STA ObjectState,X
-	STA ObjectVariables,X ;Wipe object from memory
+	STA ObjectVariables,X ;Wipe the object from memory
 	LDA $058C,X
 	TAY
 	LDX tbl_51_FC80,Y
@@ -1268,14 +1268,14 @@ jmp_54_A6D4:
 bra3_A6E0_RTS:
 	RTS
 bra3_A6E1:
-	LDA $1E
+	LDA PlayerPrevAction
 	CMP #$05
 	BNE bra3_A6E0_RTS
 	LDX $A4
 	LDY ObjectSlot,X
-	LDA tbl3_A87B,Y
+	LDA ObjectXHitBoxSizes,Y
 	STA $36
-	LDA tbl3_A97B,Y
+	LDA ObjectYHitBoxSizes,Y
 	STA $38
 	LDA ObjXScreenDistance,X
 	BPL bra3_A708
@@ -1330,7 +1330,7 @@ bra3_A74C_RTS:
 jmp_54_A74D:
 	LDA Player1YoshiStatus
 	BNE bra3_A758
-	LDA $1E
+	LDA PlayerPrevAction
 	CMP #$05
 	BNE bra3_A772_RTS
 bra3_A758:
@@ -1427,9 +1427,9 @@ bra3_A7E8:
 	STA $32 ;Store pointer based off the player's animation frame
 	LDY $A4 ;Get index for current object
 	LDX ObjectSlot,Y
-	LDA tbl3_A87B,X
+	LDA ObjectXHitBoxSizes,X
 	STA $36 ;Load pointer for object into memory
-	LDA tbl3_A97B,X
+	LDA ObjectYHitBoxSizes,X
 	STA $38
 	LDX $A4
 	LDA ObjXScreenDistance,X
@@ -1514,12 +1514,12 @@ tbl3_A86D:
 	.byte $0B
 	.byte $0C
 	.byte $0D
-tbl3_A87B:
+ObjectXHitBoxSizes:
 	.byte $00
 	.byte $00
 	.byte $10
 	.byte $10
-	.byte $10
+	.byte $10 ;Koopa shell
 	.byte $10
 	.byte $08
 	.byte $08
@@ -1531,7 +1531,7 @@ tbl3_A87B:
 	.byte $10
 	.byte $10
 	.byte $10
-	.byte $10
+	.byte $10 ;Koopa
 	.byte $10
 	.byte $10
 	.byte $10
@@ -1771,12 +1771,12 @@ tbl3_A87B:
 	.byte $20
 	.byte $20
 	.byte $20
-tbl3_A97B:
+ObjectYHitBoxSizes:
 	.byte $00
 	.byte $00
 	.byte $10
 	.byte $10
-	.byte $10
+	.byte $10 ;Koopa shell
 	.byte $10
 	.byte $08
 	.byte $08
@@ -1788,7 +1788,7 @@ tbl3_A97B:
 	.byte $10
 	.byte $10
 	.byte $10
-	.byte $20
+	.byte $20 ;Koopa
 	.byte $20
 	.byte $10
 	.byte $10
@@ -2044,12 +2044,12 @@ bra3_AA8D:
 	LDA tbl3_AB1B,X
 	STA $34
 	LDX ObjectSlot,Y
-	LDA tbl3_A87B,X
+	LDA ObjectXHitBoxSizes,X
 	LSR
 	CLC
 	ADC $37
 	STA $32
-	LDA tbl3_A97B,X
+	LDA ObjectYHitBoxSizes,X
 	CLC
 	ADC #$04
 	EOR #$FF
@@ -2170,34 +2170,43 @@ ptr_AB5D:
 	LDA #$00
 	STA ObjectSlot,X ;Remove object
 	RTS
-jmp_54_AB6B:
+
+;----------------------------------------
+;SUBROUTINE
+;Updates player and object values when an object is picked up.
+;----------------------------------------
+SetObjectCarryState:
 	LDA Player1YoshiStatus
-	BNE bra3_AB91_RTS ;Make sure the player isn't riding Yoshi
+	BNE SetObjectCarryStateDone ;Make sure the player isn't riding Yoshi
 	LDA PlayerHoldFlag
-	BNE bra3_AB91_RTS ;Stop if the player is already carrying something
+	BNE SetObjectCarryStateDone ;Stop if the player is already carrying something
 	LDA PlayerAction+1
 	CMP #$04
-	BCS bra3_AB91_RTS ;Only continue if player is either walking, running, or doing nothing
+	BCS SetObjectCarryStateDone ;Only continue if player is either walking, running, or doing nothing
 	LDA ButtonsHeld
 	AND #buttonB
-	BEQ bra3_AB91_RTS ;Make sure the B button is held
+	BEQ SetObjectCarryStateDone ;Make sure the B button is held
 	STA PlayerHoldFlag
-	LDY $A4
+	LDY $A4 ;Get index for current object
 	LDA ObjectState,Y
 	ORA #$80
 	STA ObjectState,Y ;Set object to "held"
 	PLA
-	PLA
-bra3_AB91_RTS:
+	PLA ;Add 2 to stack pointer? The accumulator is overwritten after every call to this routine, so this is seemingly useless.
+SetObjectCarryStateDone:
 	RTS
 	
-;This routine handles carrying objects
-jmp_54_AB92:
+;----------------------------------------
+;SUBROUTINE
+;Positions carried objects.
+;----------------------------------------
+PositionCarriedObject:
 	LDY $A4
 	LDA ObjectState,Y
 	AND #$80
 	BNE bra3_AB9C ;Branch if the object is being carried
-	RTS ;Otherwise, stop
+	;Otherwise, stop
+		RTS
 bra3_AB9C:
 	LDA ButtonsHeld
 	AND #buttonB
@@ -2206,32 +2215,36 @@ bra3_AB9C:
 	LDA PlayerMovement
 	AND #$40
 	BNE bra3_ABBB ;Branch if the player is facing left
-	LDA PlayerXPosDup
-	CLC
-	ADC #$06
-	STA ObjectXPos,Y ;Offset the object's 
-	LDA PlayerXScreenDup
-	ADC #$00 ;Update the X screen if needed (high byte)
-	JMP loc3_ABC7
+	;Otherwise, offset the carried sprite to the right
+		LDA PlayerXPosDup
+		CLC
+		ADC #$06
+		STA ObjectXPos,Y ;Offset the object 6 pixels right of the player
+		LDA PlayerXScreenDup
+		ADC #$00 ;Update the X screen if needed (high byte)
+		JMP loc3_ABC7
+
 bra3_ABBB:
 	LDA PlayerXPosDup
 	SEC
 	SBC #$16
-	STA ObjectXPos,Y ;Offset the carried object's position by 38 pixels
+	STA ObjectXPos,Y ;Offset the carried object's X position by 22 ($16) pixels
 	LDA PlayerXScreenDup
 	SBC #$00
+
 loc3_ABC7:
-	STA ObjectXScreen,Y ;Update the X screen if needed (high byte)
+	STA ObjectXScreen,Y ;Update the X screen when needed (high byte)
 	LDA PlayerYScreenDup
 	STA ObjectYScreen,Y
-	LDA #$EC
-	BMI bra3_ABEE
+	LDA #$EC ;Offset object -20 pixels vertically, or 20 pixels up from the player's sprite
+	BMI bra3_ABEE ;Always branch
+;This code is skipped due to the branch above
 	CLC
 	ADC PlayerYPosDup
 	STA ObjectYPos,Y
 	BCS bra3_ABDF
 	CMP #$F0
-	BCC bra3_AC05
+	BCC PositionCarriedObjectDone
 bra3_ABDF:
 	CLC
 	ADC #$10
@@ -2240,23 +2253,31 @@ bra3_ABDF:
 	CLC
 	ADC #$01
 	JMP jmp_54_AC02
+
+;Continue here
 bra3_ABEE:
 	CLC
 	ADC PlayerYPosDup
-	STA ObjectYPos,Y
-	BCS bra3_AC05
-	SEC
-	SBC #$10
-	STA ObjectYPos,Y
-	LDA ObjectYScreen,Y
-	SEC
-	SBC #$01
+	STA ObjectYPos,Y ;Offset object 20 pixels above the origin of the player's sprite
+	BCS PositionCarriedObjectDone ;Stop if adding overflows and subtracts 20, which occurs for values 20 ($14) and higher
+	;If it doesn't overflow and subtract properly, subtract 16 ($10) and decrement the upper byte
+		SEC
+		SBC #$10
+		STA ObjectYPos,Y ;Subtract 16
+		LDA ObjectYScreen,Y
+		SEC
+		SBC #$01 ;Decrement upper byte
+;--------------------
+;SUB-SUBROUTINE
+;Sets current object's Y screen.
+;--------------------
 jmp_54_AC02:
 	STA ObjectYScreen,Y
-bra3_AC05:
+PositionCarriedObjectDone:
 	PLA
-	PLA
+	PLA ;Add 2 to stack pointer? Seemingly useless.
 	RTS
+
 bra3_AC08:
 	LDA PlayerMovement
 	AND #$40
@@ -2659,9 +2680,9 @@ bra3_AEBE:
 	PLA
 	RTS
 bra3_AECF:
-	LDA tbl3_A87B,Y
+	LDA ObjectXHitBoxSizes,Y
 	STA $36
-	LDA tbl3_A97B,Y
+	LDA ObjectYHitBoxSizes,Y
 	STA $37
 	LDY $A4
 	STY $32
@@ -2983,7 +3004,7 @@ sub3_B043:
 	LDY ObjectSlot,X
 	LDA #$08
 	STA $36
-	LDA tbl3_A97B,Y
+	LDA ObjectYHitBoxSizes,Y
 	CLC
 	ADC #$04
 	JMP loc3_B08D
@@ -2997,10 +3018,10 @@ sub3_B057:
 	LDA #$00
 	BEQ bra3_B06C
 bra3_B069:
-	LDA tbl3_A87B,Y
+	LDA ObjectXHitBoxSizes,Y
 bra3_B06C:
 	STA $36
-	LDA tbl3_A97B,Y
+	LDA ObjectYHitBoxSizes,Y
 	SEC
 	SBC #$08
 	JMP loc3_B08D
@@ -3011,10 +3032,10 @@ sub3_B077:
 	LDA ObjectState,X
 	AND #$40
 	BEQ bra3_B088
-	LDA tbl3_A87B,Y
+	LDA ObjectXHitBoxSizes,Y
 bra3_B088:
 	STA $36
-	LDA tbl3_A97B,Y
+	LDA ObjectYHitBoxSizes,Y
 loc3_B08D:
 	STA $38
 	LDA ObjectXPos,X
@@ -3101,100 +3122,130 @@ jmp_54_B11D:
 	STA $32
 	LDA tbl_51_E000+1,Y
 	STA $33
-	JSR sub3_B132
+	JSR GetSpeedData
 	LDA ObjectPRGBank
 	STA M90_PRG0
 	RTS
-sub3_B132:
-	LDX $A4
+
+;----------------------------------------
+;SUBROUTINE
+;Loads speed data from a table and updates the object's variable accordingly.
+; Parameters:
+; > $0032: Speed table pointer
+; > Object Variable: Used to determine which speed values to load from the table
+;----------------------------------------
+GetSpeedData:
+	LDX $A4 ;Get index of current object
 	LDA ObjectVariables,X
-	AND #$7F
+	AND #%01111111 ;Clear upper bit of object variable
 	ASL
-	TAY
+	TAY ;Get speed data index
 	LDA ObjectState,X
 	AND #$40
-	BEQ bra3_B14C
-	LDA ($32),Y
-	EOR #$FF
-	CLC
-	ADC #$01
-	JMP loc3_B14E
-bra3_B14C:
-	LDA ($32),Y
-loc3_B14E:
-	STA $06E2
+	BEQ LoadObjSpeedRight ;Branch if object is facing right
+	;If the object is facing left, invert its X speed value
+		LDA ($32),Y
+		EOR #$FF
+		CLC
+		ADC #$01 ;(x XOR 255) + 1 == -x
+		JMP StoreObjSpeedData ;Continue
+	;If object is facing right, load X speed value as normal
+	LoadObjSpeedRight:
+		LDA ($32),Y
+
+StoreObjSpeedData:
+	STA $06E2 ;Store X speed
+
+;Load Y speed from next byte in table
 	INY
 	LDA ($32),Y
 	STA $06E3
+
 	LDA InterruptMode
 	CMP #$04
-	BEQ bra3_B1AB
-	LDA $06E2
-	PHA
-	CLC
-	ADC ObjectXPos,X
-	STA ObjectXPos,X
-	PLA
-	BMI bra3_B173
-	LDA ObjectXScreen,X
-	ADC #$00
-	BPL bra3_B178
-bra3_B173:
-	LDA ObjectXScreen,X
-	SBC #$00
-bra3_B178:
-	STA ObjectXScreen,X
+	BEQ ChangeObjDirection ;Branch if in the bowser fight
+	;Otherwise, add X speed to the object's position
+		LDA $06E2
+		PHA ;Backup object X speed
+		CLC
+		ADC ObjectXPos,X
+		STA ObjectXPos,X ;Add X speed value to object's horizontal position
+		PLA ;Get X speed
+		BMI ObjNegXSpeedCalcHi ;Branch if speed is negative, subtracting upper byte of X position
+		LDA ObjectXScreen,X
+		ADC #$00 ;Otherwise, if speed is positive, add the upper byte of the X position
+		BPL StoreObjXSpeedCalc ;Continue if the position doesn't overflow
+		;Subtract upper byte of object's horizontal position
+		ObjNegXSpeedCalcHi:
+			LDA ObjectXScreen,X
+			SBC #$00
+
+StoreObjXSpeedCalc:
+	STA ObjectXScreen,X ;Store upper byte of object's horizontal position
+
+;Add positive vertical speed
 	LDA $06E3
-	BMI bra3_B199
+	BMI ObjNegYSpeedCalc ;Branch if object's Y speed is negative (moving upwards)
 	CLC
 	ADC ObjectYPos,X
-	STA ObjectYPos,X
-	BCS bra3_B18D
+	STA ObjectYPos,X ;Otherwise, if speed is positive, add to low byte
+	BCS ObjYSpeedCalcHi ;Branch if it carries over (crossing vertical screen boundary)
 	CMP #$F0
-	BCC bra3_B1AB
-bra3_B18D:
-	CLC
-	ADC #$10
-	STA ObjectYPos,X
-	INC ObjectYScreen,X
-	JMP loc3_B1AB
-bra3_B199:
+	BCC ChangeObjDirection ;If adding 10 wouldn't doesn't carry over, branch
+	;Add high byte and move 16 bytes down if addition carries over
+	ObjYSpeedCalcHi:
+		CLC
+		ADC #$10
+		STA ObjectYPos,X
+		INC ObjectYScreen,X ;Carry over addition and add 16 ($10)
+		JMP ChangeObjDirection
+
+;Subtract negative vertical speed (if speed value is negative)
+ObjNegYSpeedCalc:
 	CLC
 	ADC ObjectYPos,X
-	STA ObjectYPos,X
-	BCS bra3_B1AB
-	SEC
-	SBC #$10
-	STA ObjectYPos,X
-	DEC ObjectYScreen,X
-bra3_B1AB:
-loc3_B1AB:
-	INY
+	STA ObjectYPos,X ;Subtract low byte
+	BCS ChangeObjDirection ;Branch if subtraction doesn't carry over to high byte
+	;Otherwise, carry over subtraction and subtract 16 ($10)
+		SEC
+		SBC #$10
+		STA ObjectYPos,X
+		DEC ObjectYScreen,X
+
+;Change object's direction if needed and update X/Y speed table index
+ChangeObjDirection:
+	INY ;Move to next byte
 	LDA ($32),Y
 	CMP #$FF
-	BNE bra3_B1BD
-	LDA ObjectState,X
-	EOR #$40
-	STA ObjectState,X
-	JMP loc3_B1D6
-bra3_B1BD:
-	AND #$F0
-	BEQ bra3_B1D6
-	LDA ($32),Y
-	AND #$3F
-	BNE bra3_B1CB
-	STA ObjectVariables,X
-	RTS
-bra3_B1CB:
-	STA $32
-	LDA ObjectVariables,X
-	SEC
-	SBC $32
-	STA ObjectVariables,X
-bra3_B1D6:
-loc3_B1D6:
+	BNE UpdateObjSpeedDataIndex ;Branch if next byte isn't a direction change
+	;If it does change direction, turn the object around
+		LDA ObjectState,X
+		EOR #%01000000
+		STA ObjectState,X ;Turn object around
+		JMP GetSpeedDataDone
+	;If the next X speed byte doesn't change direction, change object variable accordingly
+	UpdateObjSpeedDataIndex:
+		AND #%11110000
+		BEQ GetSpeedDataDone ;Branch if upper nybble of next byte is clear, moving to the next set of speed values from the table
+		;Otherwise, check if lower 6 bits are clear
+			LDA ($32),Y
+			AND #%00111111
+			BNE SubObjXYSpeedIndex ;Branch if bits 0 - 5 aren't clear
+			STA ObjectVariables,X ;If they are clear, set the X/Y speed index directly
+			RTS
+		;If bits 0 - 5 of the next byte aren't clear, subtract the X/Y speed set index by the lower 6 bits of the next byte
+		SubObjXYSpeedIndex:
+			STA $32 ;Save lower 6 bits of next byte
+			LDA ObjectVariables,X
+			SEC
+			SBC $32
+			STA ObjectVariables,X ;Move back the amount of X/Y speed sets in the lower 6 bits (highest bit of the subtrahend will be cleared)
+
+;Move to next set of X/Y speeds in the table
+GetSpeedDataDone:
 	INC ObjectVariables,X
 	RTS
+
 GetMovementData:
 	ASL
 	TAY ;Get pointer index
@@ -3724,14 +3775,14 @@ bra3_B5BA_RTS:
 	RTS
 jmp_54_B5BB:
 	LDA #$00
-	STA ObjectVariables,X
-	TAY
+	STA ObjectVariables,X ;Clear object variable
+	TAY ;Set object direction to right
 	LDA ObjXScreenDistance,X
-	BMI bra3_B5C8
-	LDY #$40
+	BMI bra3_B5C8 ;Branch if the object is behind the player, setting its direction to right
+	LDY #$40 ;If the object is ahead of the player, set object direction to left
 bra3_B5C8:
 	TYA
-	STA ObjectState,X
+	STA ObjectState,X ;Store object direction
 	RTS
 sub_54_B5CD:
 	ASL
@@ -4529,7 +4580,7 @@ sub_54_BB59:
 	STY $2B
 	LDX $A4
 	LDY ObjectSlot,X
-	LDA tbl3_A97B,Y
+	LDA ObjectYHitBoxSizes,Y
 	CLC
 	ADC ObjectYPos,X
 	STA $AA
@@ -4554,7 +4605,7 @@ sub_54_BB8E:
 	STY $2B
 	LDX $A4
 	LDY ObjectSlot,X
-	LDA tbl3_A87B,Y
+	LDA ObjectXHitBoxSizes,Y
 	CLC
 	ADC ObjectXPos,X
 	STA $A8
@@ -4661,9 +4712,9 @@ tbl3_BC1E:
 jmp_54_BC3E:
 	LDX $A4
 	LDY ObjectSlot,X
-	LDA tbl3_A87B,Y
+	LDA ObjectXHitBoxSizes,Y
 	STA $36
-	LDA tbl3_A97B,Y
+	LDA ObjectYHitBoxSizes,Y
 	STA $38
 	LDY #$10
 	LDA PlayerPowerup
@@ -5014,9 +5065,9 @@ bra3_BEB7:
 jmp_54_BEBC:
 	LDX $A4
 	LDY ObjectSlot,X
-	LDA tbl3_A87B,Y
+	LDA ObjectXHitBoxSizes,Y
 	STA $36
-	LDA tbl3_A97B,Y
+	LDA ObjectYHitBoxSizes,Y
 	STA $38
 	LDY #$10
 	LDA PlayerPowerup
@@ -5142,63 +5193,36 @@ bra3_BF9B:
 	LDA #$00
 	STA PlayerHoldFlag
 	LDA Player1YoshiStatus
-	BEQ bra3_BFAD
-	LDA #$01
-	STA HurtFlag
-	JMP loc3_BFC0
+	BEQ bra3_BFAD ;Branch if player isn't on Yoshi
+	;Otherwise, inflict damage
+		LDA #$01
+		STA HurtFlag
+		JMP loc3_BFC0
 bra3_BFAD:
 	LDA PlayerPowerup
-	BEQ bra3_BFD2
-	LDA #$00
-	STA PlayerPowerup
+	BEQ bra3_BFD2 ;Branch if the player is already small
+	;Otherwise, make the player small
+		LDA #$00
+		STA PlayerPowerup
 	LDA #$01
-	STA PlayerPowerupBuffer
+	STA PlayerPowerupBuffer ;Make the game buffer while the player is taking damage
 	LDA #$07
-	STA Event
+	STA Event ;Pause game to change powerup
 loc3_BFC0:
 	LDA #$D0
-	STA InvincibilityTimer
-	LDA #$0C
-	STA SFXRegister
+	STA InvincibilityTimer ;Give player invulnerability frames
+	LDA #sfxPowerDown
+	STA SFXRegister ;Play hurt sound
 	LDA ObjectState,X
-	AND #$E0
-	STA ObjectState,X
+	AND #%11100000
+	STA ObjectState,X ;Mask out upper 3 bits of object's state
 	RTS
 bra3_BFD2:
-	LDA #$04
-	STA Event
+	LDA #evt1_Death
+	STA Event ;Trigger death event
 	LDA #$00
-	STA EventPart
+	STA EventPart ;Go to first part of event
 	STA PlayerState
 	STA $06DC
-	STA $06DD
+	STA $06DD ;Clear player variables
 	RTS
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00

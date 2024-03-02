@@ -1132,7 +1132,7 @@ bra9_88B6:
 	TAX
 	LDA tbl9_8915,X
 	STA $32
-	LDA tbl9_8916,X
+	LDA tbl9_8915+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -1160,7 +1160,7 @@ bra9_88ED:
 	TAX
 	LDA tbl9_8915,X
 	STA $32
-	LDA tbl9_8916,X
+	LDA tbl9_8915+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -1173,15 +1173,11 @@ bra9_890F:
 	JSR jmp_54_A118
 	RTS
 tbl9_8915:
-	.byte $1D
-tbl9_8916:
-	.byte $89
-	.byte $24
-	.byte $89
-	.byte $2B
-	.byte $89
-	.byte $32
-	.byte $89
+	.word off_891D
+	.word off_8924
+	.word off_892B
+	.word off_8932
+off_891D:
 	.byte $02
 	.byte $02
 	.byte $A5
@@ -1189,6 +1185,7 @@ tbl9_8916:
 	.byte $02
 	.byte $08
 	.byte $09
+off_8924:
 	.byte $02
 	.byte $02
 	.byte $A5
@@ -1196,6 +1193,7 @@ tbl9_8916:
 	.byte $07
 	.byte $0D
 	.byte $0E
+off_892B:
 	.byte $02
 	.byte $02
 	.byte $A5
@@ -1203,6 +1201,7 @@ tbl9_8916:
 	.byte $09
 	.byte $01
 	.byte $02
+off_8932:
 	.byte $02
 	.byte $02
 	.byte $A5
@@ -1544,7 +1543,7 @@ bra9_8BB6:
 	STA $32
 	LDA tbl9_9C5E+1,Y
 	STA $33
-	JSR sub3_B132
+	JSR GetSpeedData
 	JSR jmp_54_A6D4
 	JSR jmp_54_BEBC
 	JSR jmp_54_A74D
@@ -1994,7 +1993,7 @@ bra9_8F03:
 	STA $32
 	LDA tbl9_9C5E+1,Y
 	STA $33
-	JSR sub3_B132
+	JSR GetSpeedData
 	RTS
 ptr6_8F15:
 	LDX $A4
@@ -2203,7 +2202,7 @@ bra9_907C:
 	STA $32
 	LDA tbl9_9C5E+1,Y
 	STA $33
-	JSR sub3_B132
+	JSR GetSpeedData
 	JSR jmp_54_BC3E
 	JMP jmp_54_BF74
 ptr6_9093:
@@ -2638,7 +2637,7 @@ bra9_938C:
 	STA $32
 	LDA tbl9_9C5E+1,Y
 	STA $33
-	JSR sub3_B132
+	JSR GetSpeedData
 	RTS
 sub9_939E:
 	LDA FrameCount
@@ -2841,7 +2840,7 @@ bra9_9507:
 	STA $32
 	LDA tbl9_9C5E+1,Y
 	STA $33
-	JSR sub3_B132
+	JSR GetSpeedData
 	RTS
 ptr6_9519:
 	LDX $A4
@@ -3715,7 +3714,7 @@ bra9_9B62:
 	STA $32
 	LDA tbl9_9C5E+1,Y
 	STA $33
-	JSR sub3_B132
+	JSR GetSpeedData
 	JSR jmp_54_BEBC
 	JMP jmp_54_BF74
 ptr6_9B79:

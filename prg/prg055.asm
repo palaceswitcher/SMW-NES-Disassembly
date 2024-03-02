@@ -1,18 +1,23 @@
 ;disassembled by BZK 6502 Disassembler
+;----------------------------------------
+;Koopa Object Code
+;----------------------------------------
 obj_h10:
-	LDX $A4
+	LDX $A4 ;Get index of current object
+;Koopa X position - player X position = horizontal distance between Koopa and player
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
-	STA ObjectXDistance,X
+	STA ObjectXDistance,X 
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
 	STA ObjXScreenDistance,X
 	STA $28
-	BEQ bra8_801E
+
+	BEQ bra8_801E ;Branch if the player and Koopa are on the same screen
 	CMP #$FF
-	BEQ bra8_801E
-	JMP loc3_A6B5
+	BEQ bra8_801E ;Branch if the Koopa is within one screen behind the player
+	JMP loc3_A6B5 ;Otherwise, if 
 bra8_801E:
 	LDA ObjectYPos,X
 	SEC
@@ -46,7 +51,7 @@ bra8_8060:
 loc8_8060:
 	LDA FreezeFlag
 	BEQ bra8_8066
-	RTS ;unlogged
+	RTS
 bra8_8066:
 	JSR sub8_8096
 	LDY #$03
@@ -153,7 +158,7 @@ ptr_811E:
 	STA ObjectYPos,X
 	BCS bra8_813B
 	CMP #$F0
-	BCC bra8_8159
+	BCC loc8_8159
 bra8_813B:
 	CLC ;unlogged
 	ADC #$10 ;unlogged
@@ -164,12 +169,11 @@ bra8_8147:
 	CLC ;unlogged
 	ADC ObjectYPos,X ;unlogged
 	STA ObjectYPos,X ;unlogged
-	BCS bra8_8159 ;unlogged
+	BCS loc8_8159 ;unlogged
 	SEC ;unlogged
 	SBC #$10 ;unlogged
 	STA ObjectYPos,X ;unlogged
 	DEC ObjectYScreen,X ;unlogged
-bra8_8159:
 loc8_8159:
 	LDA ObjectXPos,X
 	SEC
@@ -272,7 +276,7 @@ bra8_822C:
 	LDA ObjectState,X
 	AND #$40
 	STA $05F0
-	JSR jmp_54_A118
+	JSR jmp_52_A118
 	RTS
 KoopaMappings:
 	.word BeachKoopaWalk1
@@ -2909,7 +2913,7 @@ loc8_9523:
 	RTS
 bra8_9529:
 	JSR jmp_54_A773
-	JSR jmp_54_AB6B
+	JSR SetObjectCarryState
 	LDA $1E
 	CMP #$05
 	BEQ bra8_9541
@@ -3721,37 +3725,6 @@ tbl8_9A9A:
 	.byte $23
 	.byte $23
 	.byte $23
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
 	.byte $00
 	.byte $00
 	.byte $00

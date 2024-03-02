@@ -1640,7 +1640,7 @@ sub11_8707:
 	TAX
 	LDA tbl11_8E41,X
 	STA $FE
-	LDA tbl11_8E42,X
+	LDA tbl11_8E41+1,X
 	STA $FF
 	LDY #$00
 loc11_8716:
@@ -1849,12 +1849,11 @@ loc11_887F:
 	TAX
 	LDA tbl11_8895,X
 	STA $FE
-	LDA tbl11_8896,X
+	LDA tbl11_8895+1,X
 	STA $FF
 	JMP ($FE)
 tbl11_8895:
 	.byte $B5
-tbl11_8896:
 	.byte $88
 	.byte $CC
 	.byte $88
@@ -2582,7 +2581,6 @@ bra11_8E40_RTS:
 	RTS
 tbl11_8E41:
 	.byte $A1
-tbl11_8E42:
 	.byte $8E
 	.byte $BE
 	.byte $8F

@@ -166,38 +166,39 @@ sub2_A10D:
 	STA $2D
 	JSR sub2_A5D0
 	RTS
+jmp_52_A118:
 	LDY #$00
-	LDA ($32),Y
-	STA $2A
+	LDA ($32),Y ;Load from first byte of sprite map
+	STA $2A ;Get width in tiles
 	TAX
-	LDA tbl2_A45B,X
+	LDA tbl2_A45B,X ;Get size in pixels based on width in tiles
 	STA $25
-	INY
+	INY ;Move to next byte
 	LDA ($32),Y
-	STA $2D
-	INY
+	STA $2D ;Get height in tiles
+	INY ;Move to next byte
 	LDA ($32),Y
-	STA $2E
-	AND #$7F
+	STA $2E ;Get CHR bank number
+	AND #$7F ;Ignore highest bit
 	ASL
-	TAX
+	TAX ;Get bank attribute index
 	LDA #$2F
 	STA M90_PRG2
-	LDA tbl_47_C000,X
+	LDA CHRSprBankAttrs,X
 	STA $30
-	LDA tbl_47_C000+1,X
-	STA $31
+	LDA CHRSprBankAttrs+1,X
+	STA $31 ;Get sprite tile attribute pointer for the given bank
 	LDA $05F0
 	AND #$40
-	BEQ bra2_A18C
+	BEQ bra2_A18C ;Branch if sprite tile isn't horizontally flipped
 	LDX #$00
-	LDY $A4
+	LDY $A4 ;Get index for current object
 	LDA ObjectXDistance,Y
 	CLC
 	ADC PlayerSprXPos
-	STA $28
+	STA $28 ;Object X Distance + Player X = Object Position (low byte)
 	LDA ObjXScreenDistance,Y
-	ADC #$00
+	ADC #$00 ;Add high byte if needed
 	BMI bra2_A16E
 	BEQ bra2_A15E
 	RTS
@@ -207,14 +208,15 @@ bra2_A160:
 	STA $41,X
 	INX
 	CPX $2A
-	BCS bra2_A1D7
-	CLC
-	ADC #$08
-	BCC bra2_A160
+	BCS bra2_A1D7 ;Position sprites vertically once the tile width is exceeded
+	;Otherwise, move next sprite a tile over
+		CLC
+		ADC #$08
+	BCC bra2_A160 ;Write every tile until the width is exceeded
 	BCS bra2_A181
 bra2_A16E:
 	LDA $28
-	LDY #$00
+	LDY #$00 ;Set index to first object?
 bra2_A172:
 	STY $41,X
 	INX
@@ -233,7 +235,7 @@ bra2_A183:
 	INX
 	CPX $2A
 	BCC bra2_A183
-	BCS bra2_A1D7
+	BCS bra2_A1D7 ;Position sprites vertically once the tile width is exceeded
 bra2_A18C:
 	LDX #$00
 	STX $41
@@ -447,9 +449,9 @@ sub2_A2DE:
 	TAX
 	LDA #$2F
 	STA M90_PRG2
-	LDA tbl_47_C000,X
+	LDA CHRSprBankAttrs,X
 	STA $30
-	LDA tbl_47_C000+1,X
+	LDA CHRSprBankAttrs+1,X
 	STA $31
 	LDA $05F0
 	AND #$40
@@ -702,9 +704,9 @@ jmp_52_A463:
 	TAX
 	LDA #$2F
 	STA M90_PRG2
-	LDA tbl_47_C000,X
+	LDA CHRSprBankAttrs,X
 	STA $30
-	LDA tbl_47_C000+1,X
+	LDA CHRSprBankAttrs+1,X
 	STA $31
 	LDA YoshiIdleMovement
 	AND #$40
@@ -1405,134 +1407,134 @@ tbl2_A71F:
 	.byte $95
 ;Extra (sprite animation?) code for objects $00-7F
 tbl2_A83B:
-	.word ptr6_A005
-	.word obj_u80
-	.word ptr6_9590
-	.word ptr6_9630
-	.word ptr6_9660 ;Koopa shell
-	.word ptr6_96B7
-	.word ptr6_96D5
-	.word ptr6_96D5
-	.word ptr7_96F8
-	.word ptr7_96F8
-	.word ptr7_96F8
-	.word ptr6_9724
-	.word ptr6_9742
-	.word ptr6_9769
-	.word ptr6_979C
-	.word ptr6_97C3
-	.word ptr6_820E
-	.word ptr6_820E
-	.word ptr6_820E
-	.word ptr6_820E
-	.word ptr6_820E
-	.word ptr6_820E
-	.word ptr6_8657
-	.word ptr6_8657
-	.word ptr6_865B
-	.word ptr6_865B
-	.word ptr6_884B
-	.word ptr6_884B
-	.word ptr6_8912
-	.word ptr6_8912
-	.word ptr6_8AA0
-	.word ptr6_8AA0
-	.word ptr6_8AA0
-	.word ptr6_8AA0
-	.word ptr6_8AA0
-	.word ptr6_8AA0
-	.word ptr6_8CDE
-	.word ptr6_8CDE
-	.word ptr6_8E17
-	.word ptr6_8E17
-	.word ptr6_8E17
-	.word ptr6_8E17
-	.word ptr6_8E17
-	.word ptr6_8E17
-	.word ptr6_8E17
-	.word ptr6_8E17
-	.word ptr6_8F90
-	.word ptr6_8F90
-	.word ptr6_9118
-	.word ptr6_9118
-	.word ptr6_9118
-	.word ptr6_9118
-	.word ptr6_9118
-	.word ptr6_9118
-	.word ptr6_820E
-	.word ptr6_820E
-	.word ptr6_9660
-	.word ptr6_9724
-	.word ptr6_9349
-	.word ptr6_9349
-	.word ptr6_95B5
-	.word ptr6_95B5
-	.word ptr6_95B5
-	.word ptr6_95B5
-	.word ptr6_95B5
-	.word ptr6_95B5
-	.word ptr6_99CD
-	.word ptr6_99CD
-	.word ptr6_9A11
-	.word ptr6_9A11
-	.word ptr6_9A68
-	.word ptr6_9A68
-	.word ptr5_9DA5
-	.word ptr6_96B7
-	.word bra5_8008
-	.word bra5_8008
-	.word ptr6_9BFB
-	.word ptr6_9BFB
-	.word bra5_8008
-	.word bra5_8008
-	.word bra5_8008
-	.word bra5_8008
-	.word ptr6_9118
-	.word ptr6_9118
-	.word ptr6_8039
-	.word ptr6_8039
-	.word ptr6_8039
-	.word ptr6_8039
-	.word ptr6_820E
-	.word ptr6_820E
-	.word bra5_8008
-	.word bra5_8008
-	.word bra5_8008
-	.word bra5_8008
-	.word bra5_8008
-	.word bra5_8008
-	.word bra5_8008
-	.word bra5_8008
-	.word bra5_8008
-	.word bra5_8008
-	.word ptr6_9389
-	.word ptr6_9389
-	.word bra5_8008
-	.word bra5_8008
-	.word bra5_8008
-	.word bra5_8008
-	.word ptr6_958D
-	.word ptr6_9727
-	.word ptr6_99A9
-	.word ptr6_99A9
-	.word ptr6_820E
-	.word ptr6_820E
-	.word ptr6_8CA2
-	.word ptr6_9364
-	.word ptr6_8CDB
-	.word ptr6_8CDB
-	.word ptr6_9BDB
-	.word ptr6_8CDB
-	.word ptr6_8039
-	.word ptr6_8000
-	.word ptr6_8000
-	.word ptr6_8039
-	.word ptr6_820E
-	.word ptr6_820E
-	.word ptr6_A005
-	.word ptr6_A005
-	.word ptr6_9670
-	.word ptr6_9670
+	.word ptr6_A005 ;0
+	.word obj_u80 ;1
+	.word ptr6_9590 ;2
+	.word ptr6_9630 ;3
+	.word ptr6_9660 ;4
+	.word ptr6_96B7 ;5
+	.word ptr6_96D5 ;6
+	.word ptr6_96D5 ;7
+	.word ptr7_96F8 ;8
+	.word ptr7_96F8 ;9
+	.word ptr7_96F8 ;a
+	.word ptr6_9724 ;b
+	.word ptr6_9742 ;c
+	.word ptr6_9769 ;d
+	.word ptr6_979C ;e
+	.word ptr6_97C3 ;f
+	.word ptr6_820E ;10
+	.word ptr6_820E ;11
+	.word ptr6_820E ;12
+	.word ptr6_820E ;13
+	.word ptr6_820E ;14
+	.word ptr6_820E ;15
+	.word ptr6_8657 ;16
+	.word ptr6_8657 ;17
+	.word ptr6_865B ;18
+	.word ptr6_865B ;19
+	.word ptr6_884B ;1a
+	.word ptr6_884B ;1b
+	.word ptr6_8912 ;1c
+	.word ptr6_8912 ;1d
+	.word ptr6_8AA0 ;1e
+	.word ptr6_8AA0 ;1f
+	.word ptr6_8AA0 ;20
+	.word ptr6_8AA0 ;21
+	.word ptr6_8AA0 ;22
+	.word ptr6_8AA0 ;23
+	.word ptr6_8CDE ;24
+	.word ptr6_8CDE ;25
+	.word ptr6_8E17 ;26
+	.word ptr6_8E17 ;27
+	.word ptr6_8E17 ;28
+	.word ptr6_8E17 ;29
+	.word ptr6_8E17 ;2a
+	.word ptr6_8E17 ;2b
+	.word ptr6_8E17 ;2c
+	.word ptr6_8E17 ;2d
+	.word ptr6_8F90 ;2e
+	.word ptr6_8F90 ;2f
+	.word ptr6_9118 ;30
+	.word ptr6_9118 ;31
+	.word ptr6_9118 ;32
+	.word ptr6_9118 ;33
+	.word ptr6_9118 ;34
+	.word ptr6_9118 ;35
+	.word ptr6_820E ;36
+	.word ptr6_820E ;37
+	.word ptr6_9660 ;38
+	.word ptr6_9724 ;39
+	.word ptr6_9349 ;3a
+	.word ptr6_9349 ;3b
+	.word ptr6_95B5 ;3c
+	.word ptr6_95B5 ;3d
+	.word ptr6_95B5 ;3e
+	.word ptr6_95B5 ;3f
+	.word ptr6_95B5 ;40
+	.word ptr6_95B5 ;41
+	.word ptr6_99CD ;42
+	.word ptr6_99CD ;43
+	.word ptr6_9A11 ;44
+	.word ptr6_9A11 ;45
+	.word ptr6_9A68 ;46
+	.word ptr6_9A68 ;47
+	.word ptr5_9DA5 ;48
+	.word ptr6_96B7 ;49
+	.word bra5_8008 ;4a
+	.word bra5_8008 ;4b
+	.word ptr6_9BFB ;4c
+	.word ptr6_9BFB ;4d
+	.word bra5_8008 ;4e
+	.word bra5_8008 ;4f
+	.word bra5_8008 ;50
+	.word bra5_8008 ;51
+	.word ptr6_9118 ;52
+	.word ptr6_9118 ;53
+	.word ptr6_8039 ;54
+	.word ptr6_8039 ;55
+	.word ptr6_8039 ;56
+	.word ptr6_8039 ;57
+	.word ptr6_820E ;58
+	.word ptr6_820E ;59
+	.word bra5_8008 ;5a
+	.word bra5_8008 ;5b
+	.word bra5_8008 ;5c
+	.word bra5_8008 ;5d
+	.word bra5_8008 ;5e
+	.word bra5_8008 ;5f
+	.word bra5_8008 ;60
+	.word bra5_8008 ;61
+	.word bra5_8008 ;62
+	.word bra5_8008 ;63
+	.word ptr6_9389 ;64
+	.word ptr6_9389 ;65
+	.word bra5_8008 ;66
+	.word bra5_8008 ;67
+	.word bra5_8008 ;68
+	.word bra5_8008 ;69
+	.word ptr6_958D ;6a
+	.word ptr6_9727 ;6b
+	.word ptr6_99A9 ;6c
+	.word ptr6_99A9 ;6d
+	.word ptr6_820E ;6e
+	.word ptr6_820E ;6f
+	.word ptr6_8CA2 ;70
+	.word ptr6_9364 ;71
+	.word ptr6_8CDB ;72
+	.word ptr6_8CDB ;73
+	.word ptr6_9BDB ;74
+	.word ptr6_8CDB ;75
+	.word ptr6_8039 ;76
+	.word ptr6_8000 ;77
+	.word ptr6_8000 ;78
+	.word ptr6_8039 ;79
+	.word ptr6_820E ;7a
+	.word ptr6_820E ;7b
+	.word ptr6_A005 ;7c
+	.word ptr6_A005 ;7d
+	.word ptr6_9670 ;7e
+	.word ptr6_9670 ;7f
 tbl2_A93B:
 	.byte $35
 	.byte $35
@@ -1922,134 +1924,134 @@ tbl2_A93B:
 	.byte $97
 ;Extra (perhaps sprite handling?) code for objects 80-FF
 tbl2_AABB:
-	.word ptr6_8BF1
-	.word ptr6_8BF1
-	.word ptr6_9093
-	.word ptr6_9093
-	.word ptr6_83B3
-	.word ptr6_83B3
-	.word ptr6_87FE
-	.word ptr6_87FE
-	.word ptr6_817B
-	.word ptr6_817B
-	.word ptr6_9519
-	.word ptr6_9519
-	.word ptr7_9632
-	.word ptr7_9632
-	.word ptr6_8544
-	.word ptr6_8544
-	.word ptr7_8544
-	.word ptr7_8544
-	.word ptr6_87FE
-	.word ptr6_87FE
-	.word ptr6_88E0
-	.word ptr6_88E0
-	.word ptr6_8897
-	.word ptr6_8897
-	.word ptr6_8517
-	.word ptr6_8517
-	.word ptr6_8A5E
-	.word ptr6_8A5E
-	.word ptr6_8D95
-	.word ptr6_8D95
-	.word ptr6_8F15
-	.word ptr6_8F15
-	.word ptr6_82C7
-	.word ptr6_82C7
-	.word ptr6_9980
-	.word ptr6_9980
-	.word ptr6_9980
-	.word ptr6_9980
-	.word ptr6_9B79
-	.word ptr6_9B79
-	.word ptr7_9A87
-	.word ptr7_9A87
-	.word ptr7_9A87
-	.word ptr7_9A87
-	.word ptr6_9279
-	.word ptr6_9279
-	.word ptr6_93B7
-	.word ptr6_93B7
-	.word ptr6_8B71
-	.word ptr6_8B71
-	.word ptr6_8E28
-	.word ptr6_8E28
-	.word ptr6_90C4
-	.word ptr6_90C4
-	.word ptr6_990E
-	.word ptr6_990E
-	.word ptr6_8ECE
-	.word ptr6_A005
-	.word ptr6_8F2E
-	.word ptr6_A005
-	.word ptr6_8F2E
-	.word ptr6_A005
-	.word ptr6_A005
-	.word ptr6_8349
-	.word ptr9_843B
-	.word ptr9_843B
-	.word ptr6_8640
-	.word ptr6_8640
-	.word ptr6_87C8
-	.word ptr6_87C8
-	.word ptr9_843B
-	.word ptr9_843B
-	.word ptr6_8640
-	.word ptr6_8640
-	.word ptr6_87C8
-	.word ptr6_87C8
-	.word ptr9_843B
-	.word ptr9_843B
-	.word ptr6_8640
-	.word ptr6_8640
-	.word ptr6_8640
-	.word ptr6_8A81
-	.word ptr6_8D59
-	.word ptr6_8D59
-	.word ptr6_901A
-	.word ptr6_901A
-	.word ptr6_A005
-	.word ptr6_A005
-	.word ptr6_9286
-	.word ptr6_9286
-	.word ptr6_98E1
-	.word ptr6_98E1
-	.word ptr6_98B7
-	.word ptr6_98B7
-	.word bra4_98BE
-	.word bra4_98BE
-	.word ptr6_88D1
-	.word ptr6_88F9
-	.word ptr7_8000
-	.word ptr7_8000
-	.word ptr6_8475
-	.word ptr6_8475
-	.word ptr6_8475
-	.word ptr6_8475
-	.word ptr6_9BED
-	.word ptr6_9951
-	.word ptr6_9951
-	.word ptr6_9951
-	.word ptr6_9951
-	.word ptr6_9951
-	.word ptr6_9951
-	.word ptr6_A005
-	.word ptr6_A005
-	.word ptr6_A005
-	.word ptr6_A005
-	.word ptr6_A005
-	.word ptr6_A005
-	.word ptr6_A005
-	.word ptr7_8000
-	.word ptr7_8000
-	.word ptr7_8000
-	.word ptr7_8000
-	.word ptr6_820E
-	.word ptr6_820E
-	.word ptr6_96CB
-	.word ptr6_96CB
-	.word ptr6_96CB
-	.word ptr6_96CB
+	.word ptr6_8BF1 ;80
+	.word ptr6_8BF1 ;81
+	.word ptr6_9093 ;82
+	.word ptr6_9093 ;83
+	.word ptr6_83B3 ;84
+	.word ptr6_83B3 ;85
+	.word ptr6_87FE ;86
+	.word ptr6_87FE ;87
+	.word ptr6_817B ;88
+	.word ptr6_817B ;89
+	.word ptr6_9519 ;8a
+	.word ptr6_9519 ;8b
+	.word ptr7_9632 ;8c
+	.word ptr7_9632 ;8d
+	.word ptr6_8544 ;8e
+	.word ptr6_8544 ;8f
+	.word ptr7_8544 ;90
+	.word ptr7_8544 ;91
+	.word ptr6_87FE ;92
+	.word ptr6_87FE ;93
+	.word ptr6_88E0 ;94
+	.word ptr6_88E0 ;95
+	.word ptr6_8897 ;96
+	.word ptr6_8897 ;97
+	.word ptr6_8517 ;98
+	.word ptr6_8517 ;99
+	.word ptr6_8A5E ;9a
+	.word ptr6_8A5E ;9b
+	.word ptr6_8D95 ;9c
+	.word ptr6_8D95 ;9d
+	.word ptr6_8F15 ;9e
+	.word ptr6_8F15 ;9f
+	.word ptr6_82C7 ;a0
+	.word ptr6_82C7 ;a1
+	.word ptr6_9980 ;a2
+	.word ptr6_9980 ;a3
+	.word ptr6_9980 ;a4
+	.word ptr6_9980 ;a5
+	.word ptr6_9B79 ;a6
+	.word ptr6_9B79 ;a7
+	.word ptr7_9A87 ;a8
+	.word ptr7_9A87 ;a9
+	.word ptr7_9A87 ;aa
+	.word ptr7_9A87 ;ab
+	.word ptr6_9279 ;ac
+	.word ptr6_9279 ;ad
+	.word ptr6_93B7 ;ae
+	.word ptr6_93B7 ;af
+	.word ptr6_8B71 ;b0
+	.word ptr6_8B71 ;b1
+	.word ptr6_8E28 ;b2
+	.word ptr6_8E28 ;b3
+	.word ptr6_90C4 ;b4
+	.word ptr6_90C4 ;b5
+	.word ptr6_990E ;b6
+	.word ptr6_990E ;b7
+	.word ptr6_8ECE ;b8
+	.word ptr6_A005 ;b9
+	.word ptr6_8F2E ;ba
+	.word ptr6_A005 ;bb
+	.word ptr6_8F2E ;bc
+	.word ptr6_A005 ;bd
+	.word ptr6_A005 ;be
+	.word ptr6_8349 ;bf
+	.word ptr9_843B ;c0
+	.word ptr9_843B ;c1
+	.word ptr6_8640 ;c2
+	.word ptr6_8640 ;c3
+	.word ptr6_87C8 ;c4
+	.word ptr6_87C8 ;c5
+	.word ptr9_843B ;c6
+	.word ptr9_843B ;c7
+	.word ptr6_8640 ;c8
+	.word ptr6_8640 ;c9
+	.word ptr6_87C8 ;ca
+	.word ptr6_87C8 ;cb
+	.word ptr9_843B ;cc
+	.word ptr9_843B ;cd
+	.word ptr6_8640 ;ce
+	.word ptr6_8640 ;cf
+	.word ptr6_8A81 ;d0
+	.word ptr6_8A81 ;d1
+	.word ptr6_8D59 ;d2
+	.word ptr6_8D59 ;d3
+	.word ptr6_901A ;d4
+	.word ptr6_901A ;d5
+	.word ptr6_A005 ;d6
+	.word ptr6_A005 ;d7
+	.word ptr6_9286 ;d8
+	.word ptr6_9286 ;d9
+	.word ptr6_98E1 ;da
+	.word ptr6_98E1 ;db
+	.word ptr6_98B7 ;dc
+	.word ptr6_98B7 ;dd
+	.word bra4_98BE ;de
+	.word bra4_98BE ;df
+	.word ptr6_88D1 ;e0
+	.word ptr6_88F9 ;e1
+	.word ptr7_8000 ;e2
+	.word ptr7_8000 ;e3
+	.word ptr6_8475 ;e4
+	.word ptr6_8475 ;e5
+	.word ptr6_8475 ;e6
+	.word ptr6_8475 ;e7
+	.word ptr6_9BED ;e8
+	.word ptr6_9951 ;e9
+	.word ptr6_9951 ;ea
+	.word ptr6_9951 ;eb
+	.word ptr6_9951 ;ec
+	.word ptr6_9951 ;ed
+	.word ptr6_9951 ;ee
+	.word ptr6_A005 ;ef
+	.word ptr6_A005 ;f0
+	.word ptr6_A005 ;f1
+	.word ptr6_A005 ;f2
+	.word ptr6_A005 ;f3
+	.word ptr6_A005 ;f4
+	.word ptr6_A005 ;f5
+	.word ptr7_8000 ;f6
+	.word ptr7_8000 ;f7
+	.word ptr7_8000 ;f8
+	.word ptr7_8000 ;f9
+	.word ptr6_820E ;fa
+	.word ptr6_820E ;fb
+	.word ptr6_96CB ;fc
+	.word ptr6_96CB ;fd
+	.word ptr6_96CB ;fe
+	.word ptr6_96CB ;ff
 tbl2_ABBB:
 	.byte $38
 	.byte $38
@@ -2195,9 +2197,9 @@ jmp_52_AC3B:
 	AND #$7F
 	ASL
 	TAX
-	LDA tbl_47_C000,X
+	LDA CHRSprBankAttrs,X
 	STA $30
-	LDA tbl_47_C000+1,X
+	LDA CHRSprBankAttrs+1,X
 	STA $31
 	LDA $05F0
 	AND #$40
@@ -2417,9 +2419,9 @@ sub_52_ADAF:
 	TAX
 	LDA #$2F
 	STA M90_PRG2
-	LDA tbl_47_C000,X
+	LDA CHRSprBankAttrs,X
 	STA $30
-	LDA tbl_47_C000+1,X
+	LDA CHRSprBankAttrs+1,X
 	STA $31
 	LDA $05F0
 	AND #$40

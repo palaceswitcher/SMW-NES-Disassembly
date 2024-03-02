@@ -222,6 +222,7 @@ ObjectAttributes = $05F0
 ObjectAction = $0669
 ObjActionTimer = $0641
 EnemyAnimFrame = $0655
+ObjFrameCounter = $062B
 
 ;special objects
 BubbleXPos = $0619

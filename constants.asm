@@ -137,3 +137,21 @@ Transpose = $F6
 VolSet = $F8
 DutySet = $F9
 PitchSet = $FA
+
+;Events
+evt1_Default = $02
+evt1_Door = $03
+evt1_Death = $04
+evt1_Cutscene = $05
+evt1_LevelClear = $06
+evt1_Peach = $09
+evt1_EasterEgg = $0A
+evt1_PipeEnterDown = $0B
+evt1_PipeExitSide = $0C
+evt1_PipeLevelEnter = $0D
+evt1_PipeExitUp = $0E
+evt1_PipeCannonEnter = $0F
+evt1_PipeCannonLaunch = $10
+evt1_PipeCannonEnter2 = $11
+evt1_PipeCannonLaunch2 = $12
+evt1_PipeEnterUp = $13
