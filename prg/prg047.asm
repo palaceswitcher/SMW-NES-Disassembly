@@ -1,105 +1,105 @@
 ;Disassembled with BZK 6502 Disassembler
 CHRSprBankAttrs:
-	.word Attr_Bank80
-	.word Attr_Bank81
-	.word Attr_Bank82
-	.word Attr_Bank83
-	.word Attr_Bank84
-	.word Attr_Bank85
-	.word Attr_Bank86
-	.word Attr_Bank87
-	.word Attr_Bank88
-	.word Attr_Bank89
-	.word Attr_Bank8A
-	.word Attr_Bank8B
-	.word Attr_Bank90
-	.word Attr_Bank90
-	.word Attr_Bank90
-	.word Attr_Bank90
-	.word Attr_Bank90
-	.word Attr_Bank91
-	.word Attr_Bank92
-	.word Attr_Bank93
-	.word Attr_Bank94
-	.word Attr_Bank95
-	.word Attr_Bank96
-	.word Attr_Bank97
-	.word Attr_Bank98
-	.word Attr_Bank99
-	.word Attr_Bank9A
-	.word Attr_Bank9B
-	.word Attr_BankA0
-	.word Attr_BankA0
-	.word Attr_BankA0
-	.word Attr_BankA0
-	.word Attr_BankA0
-	.word Attr_BankA1
-	.word Attr_BankA2
-	.word Attr_BankA3
-	.word Attr_BankA4
-	.word Attr_BankA5
-	.word Attr_BankA6
-	.word Attr_BankA7
-	.word Attr_BankA8
-	.word Attr_BankA9
-	.word Attr_BankAA
-	.word Attr_BankAB
-	.word Attr_BankAC
-	.word Attr_BankAD
-	.word Attr_BankAE
-	.word Attr_BankAF
-	.word Attr_BankB0
-	.word Attr_BankB1
-	.word Attr_BankB2
-	.word Attr_BankB3
-	.word Attr_BankB4
-	.word Attr_BankB5
-	.word Attr_BankB6
-	.word Attr_BankB7
-	.word Attr_BankB8
-	.word Attr_BankB9
-	.word Attr_BankBA
-	.word Attr_BankBB
-	.word Attr_BankBC
-	.word Attr_BankBD
-	.word Attr_BankBE
-	.word Attr_BankBF
-	.word Attr_BankCC
-	.word Attr_BankCC
-	.word Attr_BankCC
-	.word Attr_BankCC
-	.word Attr_BankCC
-	.word Attr_BankCC
-	.word Attr_BankCC
-	.word Attr_BankCC
-	.word Attr_BankCC
-	.word Attr_BankCC
-	.word Attr_BankCC
-	.word Attr_BankCC
-	.word Attr_BankCC
-	.word Attr_BankCD
-	.word Attr_BankCE
-	.word Attr_BankCF
-	.word Attr_BankD0
-	.word Attr_BankE0
-	.word Attr_BankE0
-	.word Attr_BankE0
-	.word Attr_BankE0
-	.word Attr_BankE0
-	.word Attr_BankE0
-	.word Attr_BankE0
-	.word Attr_BankE0
-	.word Attr_BankE0
-	.word Attr_BankE0
-	.word Attr_BankE0
-	.word Attr_BankE0
-	.word Attr_BankE0
-	.word Attr_BankE0
-	.word Attr_BankE0
-	.word Attr_BankE0
-	.word Attr_BankE1
-	.word Attr_BankE2
-	.word Attr_BankE3
+	.word Attr_Bank80 ;Fire Mario
+	.word Attr_Bank81 ; |
+	.word Attr_Bank82 ; |
+	.word Attr_Bank83 ; |
+	.word Attr_Bank84 ;Big/Cape Mario + Cape
+	.word Attr_Bank85 ; |
+	.word Attr_Bank86 ; |
+	.word Attr_Bank87 ; |
+	.word Attr_Bank88 ; |
+	.word Attr_Bank89 ; |
+	.word Attr_Bank8A ; |
+	.word Attr_Bank8B ; |
+	.word Attr_Bank90 ;Unused
+	.word Attr_Bank90 ; |
+	.word Attr_Bank90 ; |
+	.word Attr_Bank90 ; |
+	.word Attr_Bank90 ;Universal Objects/Yoshi
+	.word Attr_Bank91 ; |
+	.word Attr_Bank92 ; |
+	.word Attr_Bank93 ; |
+	.word Attr_Bank94 ;Koopas
+	.word Attr_Bank95 ;Chainsaw, Rex
+	.word Attr_Bank96 ;Super Koopa, Swooper
+	.word Attr_Bank97 ;Piranha Plant, Volcano Lotus + Pollen, Buzzy, Spike Top
+	.word Attr_Bank98 ;Small Mario
+	.word Attr_Bank99 ; |
+	.word Attr_Bank9A ;Universal Objects/Yoshi (Continued)
+	.word Attr_Bank9B ; |
+	.word Attr_BankA0 ;Unused
+	.word Attr_BankA0 ; |
+	.word Attr_BankA0 ; |
+	.word Attr_BankA0 ; |
+	.word Attr_BankA0 ;Universal Objects/Yoshi (Continued)
+	.word Attr_BankA1 ; |
+	.word Attr_BankA2 ; |
+	.word Attr_BankA3 ; |
+	.word Attr_BankA4 ;Fuzzy, Alt Spike Top, Platforms, ON/OFF Button
+	.word Attr_BankA5 ;Paragoomba, Parachute Goomba
+	.word Attr_BankA6 ;Blupr, Unused Muncher, Spiny, Ninji, Bullet Bill, Unused Vertical Bullet bill
+	.word Attr_BankA7 ;Alt Vertical Podoboo, Diagonal Podoboo, Unused Lakitu
+	.word Attr_BankA8 ;Alt (Unused?) Horizontal Podoboo, Urchin, Unused Clappin' Chuck
+	.word Attr_BankA9 ;Idle/Stunned Chargin' Chuck
+	.word Attr_BankAA ;Baseball Chuck, Chargin' Chuck, Running Chargin' Chuck
+	.word Attr_BankAB ;Boos, Errie, Thwomp, P-Door
+	.word Attr_BankAC ;Dry Bones + Bone, Spiky Ball
+	.word Attr_BankAD ;Bony Beetle, Platform, Horizontal Podoboo, Alt (Unused? Maybe unique?) Platform
+	.word Attr_BankAE ;Mechakoopa, Unused Platform, Alt (Unused??) Platform
+	.word Attr_BankAF ;Passin' Chuck, Diggin' Chuck
+	.word Attr_BankB0 ;Morton
+	.word Attr_BankB1 ; |
+	.word Attr_BankB2 ; |
+	.word Attr_BankB3 ; |
+	.word Attr_BankB4 ;Lemmy
+	.word Attr_BankB5 ; |
+	.word Attr_BankB6 ;Reznor
+	.word Attr_BankB7 ;Lemmy (Falling)
+	.word Attr_BankB8 ;Wendy
+	.word Attr_BankB9 ; |
+	.word Attr_BankBA ; |
+	.word Attr_BankBB ;Unused
+	.word Attr_BankBC ;Roy
+	.word Attr_BankBD ; |
+	.word Attr_BankBE ; |
+	.word Attr_BankBF ; |
+	.word Attr_BankCC ;Unused
+	.word Attr_BankCC ; |
+	.word Attr_BankCC ; |
+	.word Attr_BankCC ; |
+	.word Attr_BankCC ; |
+	.word Attr_BankCC ; |
+	.word Attr_BankCC ; |
+	.word Attr_BankCC ; |
+	.word Attr_BankCC ; |
+	.word Attr_BankCC ; |
+	.word Attr_BankCC ; |
+	.word Attr_BankCC ; |
+	.word Attr_BankCC ; |
+	.word Attr_BankCD ; |
+	.word Attr_BankCE ;Countdown Platform
+	.word Attr_BankCF ;Wooden Spike
+	.word Attr_BankD0 ;Dino-Torch, Dino Rhino
+	.word Attr_BankE0 ;Unused
+	.word Attr_BankE0 ; |
+	.word Attr_BankE0 ; |
+	.word Attr_BankE0 ; |
+	.word Attr_BankE0 ; |
+	.word Attr_BankE0 ; |
+	.word Attr_BankE0 ; |
+	.word Attr_BankE0 ; |
+	.word Attr_BankE0 ; |
+	.word Attr_BankE0 ; |
+	.word Attr_BankE0 ; |
+	.word Attr_BankE0 ; |
+	.word Attr_BankE0 ; |
+	.word Attr_BankE0 ; |
+	.word Attr_BankE0 ; |
+	.word Attr_BankE0 ;Bowser, Propeller
+	.word Attr_BankE1 ;Damaged Bowser, Propeller
+	.word Attr_BankE2 ;Peach (In-ship), "HELP!" Text, Propeller
+	.word Attr_BankE3 ;Bowser, Descending Peach, Propeller
 Attr_Bank80:
 	.byte $00, $00, $00, $00, $01, $01, $01, $01, $00, $00, $00, $00, $00, $00, $01, $01
 	.byte $03, $03, $03, $03, $03, $03, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01
