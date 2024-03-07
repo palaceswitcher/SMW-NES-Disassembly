@@ -380,9 +380,9 @@ bra9_82E1:
 	TYA
 	ASL
 	TAX
-	LDA ParagoombaMappings,X
+	LDA SprPtrs_Paragoomba,X
 	STA $32
-	LDA ParagoombaMappings+1,X
+	LDA SprPtrs_Paragoomba+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -394,10 +394,10 @@ bra9_8303:
 	STY $36
 	JSR jmp_54_A118
 	RTS
-ParagoombaMappings:
-	.word Paragoomba1
-	.word Paragoomba2
-Paragoomba1:
+SprPtrs_Paragoomba:
+	.word SprMap_Paragoomba1
+	.word SprMap_Paragoomba2
+SprMap_Paragoomba1:
 	.byte $04
 	.byte $04
 	.byte $A5
@@ -405,7 +405,7 @@ Paragoomba1:
 	.byte $FF, $FF, $FF, $FF
 	.byte $03, $04, $05, $FF
 	.byte $0A, $0B, $0C, $FF
-Paragoomba2:
+SprMap_Paragoomba2:
 	.byte $04
 	.byte $04
 	.byte $A5
@@ -657,9 +657,9 @@ ptr6_8517:
 	LDA tbl9_8548,Y
 	ASL
 	TAX
-	LDA ParachuteGoombaMappings,X
+	LDA SprPtrs_ParachuteGoomba,X
 	STA $32
-	LDA ParachuteGoombaMappings+1,X
+	LDA SprPtrs_ParachuteGoomba+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -690,10 +690,10 @@ tbl9_8548:
 	.byte $01
 	.byte $40
 
-ParachuteGoombaMappings:
-	.word ParachuteGoomba1
-	.word ParachuteGoomba2
-ParachuteGoomba1:
+SprPtrs_ParachuteGoomba:
+	.word SprMap_ParachuteGoomba1
+	.word SprMap_ParachuteGoomba2
+SprMap_ParachuteGoomba1:
 	.byte $03
 	.byte $04
 	.byte $A5
@@ -701,7 +701,7 @@ ParachuteGoomba1:
 	.byte $22, $23, $24
 	.byte $27, $28, $FF
 	.byte $2C, $2D, $FF
-ParachuteGoomba2:
+SprMap_ParachuteGoomba2:
 	.byte $03
 	.byte $04
 	.byte $A5
@@ -1571,9 +1571,9 @@ ptr6_8BF1:
 	LDA #$00
 	ASL
 	TAX
-	LDA BulletBillMappings,X
+	LDA SprPtrs_BulletBill,X
 	STA $32
-	LDA BulletBillMappings+1,X
+	LDA SprPtrs_BulletBill+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -1585,9 +1585,9 @@ bra9_8C16:
 	STY $36
 	JSR jmp_54_A118
 	RTS
-BulletBillMappings:
-	.word BulletBill
-BulletBill:
+SprPtrs_BulletBill:
+	.word SprMap_BulletBill
+SprMap_BulletBill:
 	.byte $02 ;Tile Width
 	.byte $02 ;Tile Height
 	.byte $A6 ;1K CHR Bank
@@ -1605,9 +1605,9 @@ bra9_8C38:
 	TYA
 	ASL
 	TAX
-	LDA VerticalBillMappings,X
+	LDA SprPtrs_VBulletBill,X
 	STA $32
-	LDA VerticalBillMappings+1,X
+	LDA SprPtrs_VBulletBill+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -1619,16 +1619,16 @@ bra9_8C52:
 	STY $36
 	JSR jmp_54_A118
 	RTS
-VerticalBillMappings:
-	.word VerticalBill1
-	.word VerticalBill2
-VerticalBill1:
+SprPtrs_VBulletBill:
+	.word SprMap_VBulletBill1
+	.word SprMap_VBulletBill2
+SprMap_VBulletBill1:
 	.byte $02 ;Tile Width
 	.byte $02 ;Tile Height
 	.byte $A6 ;1K CHR Bank
 	.byte $2E, $2F
 	.byte $30, $31
-VerticalBill2:
+SprMap_VBulletBill2:
 	.byte $02 ;Tile Width
 	.byte $02 ;Tile Height
 	.byte $A6 ;1K CHR Bank

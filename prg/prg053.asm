@@ -2895,9 +2895,9 @@ bra7_9573:
 	TYA
 	ASL
 	TAX
-	LDA tbl7_95AB,X
+	LDA SprPtrs_CommonObjects,X
 	STA $32
-	LDA tbl7_95AB+1,X
+	LDA SprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -2911,9 +2911,9 @@ ptr6_9590:
 	LDA #$01
 	ASL
 	TAX
-	LDA tbl7_95AB,X
+	LDA SprPtrs_CommonObjects,X
 	STA $32
-	LDA tbl7_95AB+1,X
+	LDA SprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -2921,7 +2921,7 @@ ptr6_9590:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
-tbl7_95AB:
+SprPtrs_CommonObjects:
 	.word SprMap_Mushroom
 	.word SprMap_PSwitch
 	.word SprMap_KoopaShell1
@@ -2937,8 +2937,8 @@ tbl7_95AB:
 	.word SprMap_KoopaShell2
 	.word ofs_9622
 	.word ofs_9629
-	.word ofs_9BF6
-	.word ofs_9C21
+	.word SprMap_Checkpoint
+	.word SprMap_GoalTape
 SprMap_Mushroom:
 	.byte $02 ;Tile Width
 	.byte $02 ;Tile Height
@@ -3035,9 +3035,9 @@ ptr6_9630:
 	LDA tbl7_9654,X
 	ASL
 	TAX
-	LDA tbl7_95AB,X
+	LDA SprPtrs_CommonObjects,X
 	STA $32
-	LDA tbl7_95AB+1,X
+	LDA SprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -3070,9 +3070,9 @@ bra7_966F:
 	LDA #$0C
 	ASL
 	TAX
-	LDA tbl7_95AB,X
+	LDA SprPtrs_CommonObjects,X
 	STA $32
-	LDA tbl7_95AB+1,X
+	LDA SprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -3084,9 +3084,9 @@ bra7_968A:
 	LDA #$02
 	ASL
 	TAX
-	LDA tbl7_95AB,X
+	LDA SprPtrs_CommonObjects,X
 	STA $32
-	LDA tbl7_95AB+1,X
+	LDA SprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -3108,9 +3108,9 @@ ptr6_96B7:
 	LDA #$09
 	ASL
 	TAX
-	LDA tbl7_95AB,X
+	LDA SprPtrs_CommonObjects,X
 	STA $32
-	LDA tbl7_95AB+1,X
+	LDA SprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -3123,9 +3123,9 @@ ptr6_96D5:
 	LDA #$0B
 	ASL
 	TAX
-	LDA tbl7_95AB,X
+	LDA SprPtrs_CommonObjects,X
 	STA $32
-	LDA tbl7_95AB+1,X
+	LDA SprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$00
 	STA $36
@@ -3146,18 +3146,18 @@ ptr7_96F8:
 	BNE bra7_971A_RTS
 	ASL
 	TAX
-	LDA tbl7_971B,X
+	LDA SprPtrs_HPodoboo,X
 	STA $32
-	LDA tbl7_971B+1,X
+	LDA SprPtrs_HPodoboo+1,X
 	STA $33
 	LDA #$40
 	STA $36
 	JSR jmp_54_A118
 bra7_971A_RTS:
 	RTS
-tbl7_971B:
-	.word HPodoboo
-HPodoboo:
+SprPtrs_HPodoboo:
+	.word SprMap_HPodoboo
+SprMap_HPodoboo:
 	.byte $02
 	.byte $02
 	.byte $90
@@ -3169,9 +3169,9 @@ ptr6_9727:
 	LDA #$00
 	ASL
 	TAX
-	LDA tbl7_95AB,X
+	LDA SprPtrs_CommonObjects,X
 	STA $32
-	LDA tbl7_95AB+1,X
+	LDA SprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -3184,9 +3184,9 @@ ptr6_9742:
 	LDA #$05
 	ASL
 	TAX
-	LDA tbl7_95AB,X
+	LDA SprPtrs_CommonObjects,X
 	STA $32
-	LDA tbl7_95AB+1,X
+	LDA SprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -3204,9 +3204,9 @@ ptr6_9769:
 	LDA #$08
 	ASL
 	TAX
-	LDA tbl7_95AB,X
+	LDA SprPtrs_CommonObjects,X
 	STA $32
-	LDA tbl7_95AB+1,X
+	LDA SprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -3239,9 +3239,9 @@ bra7_97A9:
 	TYA
 	ASL
 	TAX
-	LDA tbl7_95AB,X
+	LDA SprPtrs_CommonObjects,X
 	STA $32
-	LDA tbl7_95AB+1,X
+	LDA SprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -3543,9 +3543,9 @@ bra7_99D7:
 	TYA
 	ASL
 	TAX
-	LDA tbl7_99FF,X
+	LDA SprPtrs_BuzzyBeetle,X
 	STA $32
-	LDA tbl7_99FF+1,X
+	LDA SprPtrs_BuzzyBeetle+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -3560,32 +3560,28 @@ bra7_99F1:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
-tbl7_99FF:
-	.word BuzzyWalk1
-	.word BuzzyWalk2
-BuzzyWalk1:
+SprPtrs_BuzzyBeetle:
+	.word SprMap_BuzzyWalk1
+	.word SprMap_BuzzyWalk2
+SprMap_BuzzyWalk1:
 	.byte $02
 	.byte $02
 	.byte $97
-	.byte $1E
-	.byte $1F
-	.byte $26
-	.byte $27
-BuzzyWalk2:
+	.byte $1E, $1F
+	.byte $26, $27
+SprMap_BuzzyWalk2:
 	.byte $02
 	.byte $02
 	.byte $97
-	.byte $20
-	.byte $21
-	.byte $28
-	.byte $29
+	.byte $20, $21
+	.byte $28, $29
 ptr6_9A11:
 	LDA #$02
 	ASL
 	TAX
-	LDA tbl7_9A99,X
+	LDA SprPtrs_BuzzyShell,X
 	STA $32
-	LDA tbl7_9A99+1,X
+	LDA SprPtrs_BuzzyShell+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -3605,9 +3601,9 @@ bra7_9A3B:
 	LDA #$04
 	ASL
 	TAX
-	LDA tbl7_9A99,X
+	LDA SprPtrs_BuzzyShell,X
 	STA $32
-	LDA tbl7_9A99+1,X
+	LDA SprPtrs_BuzzyShell+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -3639,9 +3635,9 @@ bra7_9A77:
 	STY $05F0
 	ASL
 	TAX
-	LDA tbl7_9A99,X
+	LDA SprPtrs_BuzzyShell,X
 	STA $32
-	LDA tbl7_9A99+1,X
+	LDA SprPtrs_BuzzyShell+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -3653,44 +3649,36 @@ bra7_9A93:
 	STY $36
 	JSR jmp_54_A118
 	RTS
-tbl7_9A99:
-	.word BuzzyShell1
-	.word BuzzyShell2
-	.word BuzzyShell3
-	.word BuzzyShell2
-	.word BuzzyShell4
-BuzzyShell1:
+SprPtrs_BuzzyShell:
+	.word SprMap_BuzzyShell1
+	.word SprMap_BuzzyShell2
+	.word SprMap_BuzzyShell3
+	.word SprMap_BuzzyShell2
+	.word SprMap_BuzzyShell4
+SprMap_BuzzyShell1:
 	.byte $02
 	.byte $02
 	.byte $97
-	.byte $1C
-	.byte $1D
-	.byte $22
-	.byte $23
-BuzzyShell2:
+	.byte $1C, $1D
+	.byte $22, $23
+SprMap_BuzzyShell2:
 	.byte $02
 	.byte $02
 	.byte $97
-	.byte $1C
-	.byte $1D
-	.byte $24
-	.byte $25
-BuzzyShell3:
+	.byte $1C, $1D
+	.byte $24, $25
+SprMap_BuzzyShell3:
 	.byte $02
 	.byte $02
 	.byte $97
-	.byte $1C
-	.byte $1D
-	.byte $2A
-	.byte $2B
-BuzzyShell4:
+	.byte $1C, $1D
+	.byte $2A, $2B
+SprMap_BuzzyShell4:
 	.byte $02
 	.byte $02
 	.byte $97
-	.byte $2A
-	.byte $2B
-	.byte $1C
-	.byte $1D
+	.byte $2A, $2B
+	.byte $1C, $1D
 obj_h74:
 	LDX $A4
 	LDA ObjectXPos,X
@@ -3847,9 +3835,9 @@ ptr6_9BDB:
 	LDA #$0F
 	ASL
 	TAX
-	LDA tbl7_95AB,X
+	LDA SprPtrs_CommonObjects,X
 	STA $32
-	LDA tbl7_95AB+1,X
+	LDA SprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -3857,19 +3845,18 @@ ptr6_9BDB:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
-ofs_9BF6:
+SprMap_Checkpoint:
 	.byte $02
 	.byte $01
 	.byte $90
-	.byte $3E
-	.byte $3E
+	.byte $3E, $3E
 ptr6_9BFB:
 	LDA #$10
 	ASL
 	TAX
-	LDA tbl7_95AB,X
+	LDA SprPtrs_CommonObjects,X
 	STA $32
-	LDA tbl7_95AB+1,X
+	LDA SprPtrs_CommonObjects+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -3883,14 +3870,12 @@ bra7_9C16:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
-ofs_9C21:
+SprMap_GoalTape:
 	.byte $03
 	.byte $01
 	.byte $A6
-	.byte $37
-	.byte $36
-	.byte $36
-	.byte $36
+	.byte $37, $36, $36
+	.byte $36 ;Excess byte, can be removed
 obj_h48:
 	LDX $A4
 	LDA ObjectVariables,X
@@ -4074,9 +4059,9 @@ ptr5_9DA5:
 	LDA #$00
 	ASL
 	TAX
-	LDA tbl7_971B,X
+	LDA SprPtrs_HPodoboo,X
 	STA $32
-	LDA tbl7_971B+1,X
+	LDA SprPtrs_HPodoboo+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -4341,55 +4326,3 @@ bra7_9F8D:
 	.byte $23
 	.byte $23
 	.byte $23
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00

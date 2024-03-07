@@ -9,9 +9,9 @@ bra_8005:
 	AND #$3F
 	ASL
 	TAX
-	LDA WoodenSpikeMappings,X
+	LDA SprPtrs_WoodenSpike,X
 	STA $32
-	LDA WoodenSpikeMappings+1,X
+	LDA SprPtrs_WoodenSpike+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -28,10 +28,10 @@ bra_8025:
 	LDA #$00
 	STA $06E1
 	RTS
-WoodenSpikeMappings:
-	.word WoodenSpikeUp
-	.word WoodenSpikeDown
-WoodenSpikeUp:
+SprPtrs_WoodenSpike:
+	.word SprMap_WoodenSpikeUp
+	.word SprMap_WoodenSpikeDown
+SprMap_WoodenSpikeUp:
 	.byte $02
 	.byte $08
 	.byte $CF
@@ -43,7 +43,7 @@ WoodenSpikeUp:
 	.byte $C6, $C7
 	.byte $C4, $C5
 	.byte $C6, $C7
-WoodenSpikeDown:
+SprMap_WoodenSpikeDown:
 	.byte $02
 	.byte $08
 	.byte $CF
@@ -420,9 +420,9 @@ ptr6_8349:
 	LDA #$00
 	ASL
 	TAX
-	LDA PeachMushroomMappings,X
+	LDA SprPtrs_PeachMushroom,X
 	STA $32
-	LDA PeachMushroomMappings+1,X
+	LDA SprPtrs_PeachMushroom+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -430,16 +430,14 @@ ptr6_8349:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
-PeachMushroomMappings:
-	.word PeachMushroom
-PeachMushroom:
+SprPtrs_PeachMushroom:
+	.word SprMap_PeachMushroom
+SprMap_PeachMushroom:
 	.byte $02
 	.byte $02
 	.byte $90
-	.byte $01
-	.byte $02
-	.byte $0B
-	.byte $0C
+	.byte $01, $02
+	.byte $0B, $0C
 obj_hBD:
 	LDX $A4
 	LDA ObjectVariables,X

@@ -201,9 +201,9 @@ bra6_8196:
 	TYA
 	ASL
 	TAX
-	LDA NinjiMappings,X
+	LDA SprPtrs_Ninji,X
 	STA $32
-	LDA NinjiMappings+1,X
+	LDA SprPtrs_Ninji+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -215,16 +215,16 @@ bra6_81B0:
 	STY $36
 	JSR jmp_54_A118
 	RTS
-NinjiMappings:
-	.word NinjiStand
-	.word NinjiJump
-NinjiStand:
+SprPtrs_Ninji:
+	.word SprMap_Ninji_Idle
+	.word SprMap_Ninji_Jump
+SprMap_Ninji_Idle:
 	.byte $02 ;Tile Width
 	.byte $02 ;Tile Height
 	.byte $A6 ;1K CHR Bank
 	.byte $22, $23
 	.byte $24, $25
-NinjiJump:
+SprMap_Ninji_Jump:
 	.byte $02 ;Tile Width
 	.byte $02 ;Tile Height
 	.byte $A6 ;1K CHR Bank
@@ -490,9 +490,9 @@ ptr6_83B3:
 	AND #$0F
 	ASL
 	TAX
-	LDA ThwompMappings,X
+	LDA SprPtrs_Thwomp,X
 	STA $32
-	LDA ThwompMappings+1,X
+	LDA SprPtrs_Thwomp+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -504,13 +504,13 @@ bra6_83DB:
 	STY $36
 	JSR jmp_54_A118
 	RTS
-ThwompMappings:
-	.word ThwompIdle
-	.word ThwompStare
-	.word ThwompAngry
-	.word ThwompAngry
-	.word ThwompAngry
-ThwompIdle:
+SprPtrs_Thwomp:
+	.word SprMap_Thwomp_Idle
+	.word SprMap_Thwomp_Glance
+	.word SprMap_Thwomp_Attack
+	.word SprMap_Thwomp_Attack
+	.word SprMap_Thwomp_Attack
+SprMap_Thwomp_Idle:
 	.byte $03 ;Tile Width
 	.byte $04 ;Tile Height
 	.byte $AB ;1K CHR Bank
@@ -518,18 +518,18 @@ ThwompIdle:
 	.byte $24, $25, $26
 	.byte $2C, $2D, $2E
 	.byte $35, $36, $37
-ThwompStare:
-	.byte $03 ;Tile Width
-	.byte $04 ;Tile Height
-	.byte $AB ;1K CHR Bank
+SprMap_Thwomp_Glance:
+	.byte $03
+	.byte $04
+	.byte $AB
 	.byte $21, $22, $23
 	.byte $2A, $2B, $26
 	.byte $32, $33, $34
 	.byte $35, $36, $37
-ThwompAngry:
-	.byte $03 ;Tile Width
-	.byte $04 ;Tile Height
-	.byte $AB ;1K CHR Bank
+SprMap_Thwomp_Attack:
+	.byte $03
+	.byte $04
+	.byte $AB
 	.byte $21, $22, $23
 	.byte $27, $28, $29
 	.byte $2F, $30, $31
@@ -1051,9 +1051,9 @@ bra6_880A:
 	TYA
 	ASL
 	TAX
-	LDA UrchinMappings,X
+	LDA SprPtrs_Urchin,X
 	STA $32
-	LDA UrchinMappings+1,X
+	LDA SprPtrs_Urchin+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -1067,10 +1067,10 @@ bra6_8824:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
-UrchinMappings:
-	.word UrchinOpen
-	.word UrchinClose
-UrchinOpen:
+SprPtrs_Urchin:
+	.word SprMap_Urchin_Open
+	.word SprMap_Urchin_Close
+SprMap_Urchin_Open:
 	.byte $04 ;Tile Width
 	.byte $04 ;Tile Height
 	.byte $A8 ;1K CHR Bank
@@ -1078,10 +1078,10 @@ UrchinOpen:
 	.byte $0D, $0E, $0F, $10
 	.byte $13, $14, $15, $16
 	.byte $19, $1A, $1B, $1C
-UrchinClose:
-	.byte $04 ;Tile Width
-	.byte $04 ;Tile Height
-	.byte $A8 ;1K CHR Bank
+SprMap_Urchin_Close:
+	.byte $04
+	.byte $04
+	.byte $A8
 	.byte $09, $0A, $0B, $0C
 	.byte $0D, $11, $12, $10
 	.byte $13, $17, $18, $16
@@ -1965,49 +1965,49 @@ WendyLook1:
 	.byte $22, $26, $27, $25
 	.byte $32, $36, $37, $35
 WendyLook2:
-	.byte $04 ;Tile Width
-	.byte $04 ;Tile Height
-	.byte $B8 ;1K CHR Bank
+	.byte $04
+	.byte $04
+	.byte $B8
 	.byte $FF, $FF, $FF, $FF
 	.byte $FF, $0D, $0E, $FF
 	.byte $22, $23, $24, $25
 	.byte $32, $33, $34, $35
 WendyStare:
-	.byte $04 ;Tile Width
-	.byte $04 ;Tile Height
-	.byte $B8 ;1K CHR Bank
+	.byte $04
+	.byte $04
+	.byte $B8
 	.byte $01, $02, $03, $FF
 	.byte $04, $05, $06, $FF
 	.byte $11, $12, $13, $FF
 	.byte $FF, $28, $29, $FF
 WendySideLook:
-	.byte $04 ;Tile Width
-	.byte $04 ;Tile Height
-	.byte $B8 ;1K CHR Bank
+	.byte $04
+	.byte $04
+	.byte $B8
 	.byte $FF, $FF, $FF, $FF
 	.byte $FF, $07, $08, $FF
 	.byte $14, $15, $16, $FF
 	.byte $FF, $28, $29, $FF
 WendyMouthOpen:
-	.byte $04 ;Tile Width
-	.byte $04 ;Tile Height
-	.byte $B8 ;1K CHR Bank
+	.byte $04
+	.byte $04
+	.byte $B8
 	.byte $FF, $FF, $FF, $FF
 	.byte $09, $0A, $FF, $FF
 	.byte $17, $18, $19, $FF
 	.byte $FF, $28, $29, $FF
 WendyWeirdFace1:
-	.byte $04 ;Tile Width
-	.byte $04 ;Tile Height
-	.byte $B9 ;1K CHR Bank
+	.byte $04
+	.byte $04
+	.byte $B9
 	.byte $FF, $FF, $FF, $FF
 	.byte $FF, $42, $43, $FF
 	.byte $4E, $4F, $50, $51
 	.byte $5C, $5D, $5E, $5F
 WendyWeirdFace2:
-	.byte $04 ;Tile Width
-	.byte $04 ;Tile Height
-	.byte $B9 ;1K CHR Bank
+	.byte $04
+	.byte $04
+	.byte $B9
 	.byte $FF, $FF, $FF, $FF
 	.byte $FF, $44, $45, $FF
 	.byte $4E, $52, $53, $51
@@ -2144,149 +2144,63 @@ ofs_8EE4:
 	.byte $04 ;wendy dummy mappings
 	.byte $03
 	.byte $B9
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $4A
-	.byte $4B
-	.byte $4C
-	.byte $4D
-	.byte $58
-	.byte $59
-	.byte $5A
-	.byte $5B
-	.byte $04 ;unused dummy frame
+	.byte $FF, $FF, $FF, $FF
+	.byte $4A, $4B, $4C, $4D
+	.byte $58, $59, $5A, $5B
+;Unused Wendy dummy frame
+	.byte $04
 	.byte $03
 	.byte $B8
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $38
-	.byte $39
-	.byte $3A
-	.byte $3B
-	.byte $3C
-	.byte $3D
-	.byte $3E
-	.byte $3F
+	.byte $FF, $FF, $FF, $FF
+	.byte $38, $39, $3A, $3B
+	.byte $3C, $3D, $3E, $3F
 ofs_8F02:
 	.byte $04
 	.byte $03
 	.byte $B9
-	.byte $FF
-	.byte $40
-	.byte $41
-	.byte $FF
-	.byte $46
-	.byte $47
-	.byte $48
-	.byte $49
-	.byte $54
-	.byte $55
-	.byte $56
-	.byte $57
+	.byte $FF, $40, $41, $FF
+	.byte $46, $47, $48, $49
+	.byte $54, $55, $56, $57
 ofs_8F11:
 	.byte $04
 	.byte $04
 	.byte $B8
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $0B
-	.byte $0C
-	.byte $FF
-	.byte $1A
-	.byte $1B
-	.byte $1C
-	.byte $1D
-	.byte $FF
-	.byte $2A
-	.byte $2B
-	.byte $FF
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $0B, $0C, $FF
+	.byte $1A, $1B, $1C, $1D
+	.byte $FF, $2A, $2B, $FF
 ofs_8F24:
 	.byte $04
 	.byte $04
 	.byte $BA
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $80
-	.byte $81
-	.byte $82
-	.byte $83
-	.byte $88
-	.byte $89
-	.byte $8A
-	.byte $8B
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $FF, $FF, $FF
+	.byte $80, $81, $82, $83
+	.byte $88, $89, $8A, $8B
 ofs_8F37:
 	.byte $04
 	.byte $04
 	.byte $BA
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $84
-	.byte $85
-	.byte $86
-	.byte $87
-	.byte $FF
-	.byte $8C
-	.byte $8D
-	.byte $FF
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $FF, $FF, $FF
+	.byte $84, $85, $86, $87
+	.byte $FF, $8C, $8D, $FF
 ofs_8F4A:
 	.byte $04
 	.byte $04
 	.byte $B4
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $03
-	.byte $04
-	.byte $FF
-	.byte $0E
-	.byte $0F
-	.byte $10
-	.byte $11
-	.byte $1D
-	.byte $1E
-	.byte $1F
-	.byte $20
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $03, $04, $FF
+	.byte $0E, $0F, $10, $11
+	.byte $1D, $1E, $1F, $20
 ofs_8F5D:
 	.byte $04
 	.byte $04
 	.byte $B4
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $05
-	.byte $06
-	.byte $FF
-	.byte $0E
-	.byte $12
-	.byte $13
-	.byte $11
-	.byte $1D
-	.byte $21
-	.byte $22
-	.byte $20
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $05, $06, $FF
+	.byte $0E, $12, $13, $11
+	.byte $1D, $21, $22, $20
 ofs_8F70:
 	.byte $04
 	.byte $04

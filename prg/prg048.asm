@@ -2162,9 +2162,9 @@ ptr6_90C4:
 loc4_90CE:
 	ASL
 	TAX
-	LDA tbl4_90EC,X
+	LDA SprPtrs_ChuckProjectiles,X
 	STA $32
-	LDA tbl4_90EC+1,X
+	LDA SprPtrs_ChuckProjectiles+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -2175,22 +2175,22 @@ loc4_90CE:
 bra4_90E7:
 	STY $36
 	JMP jmp_52_AC3B
-tbl4_90EC:
-	.word Baseball
-	.word Football
-	.word Rock ;Unused
-Baseball:
+SprPtrs_ChuckProjectiles:
+	.word SprMap_Baseball
+	.word SprMap_Football
+	.word SprMap_Rock ;Unused
+SprMap_Baseball:
 	.byte $01
 	.byte $01
 	.byte $AA
 	.byte $01
-Football:
+SprMap_Football:
 	.byte $02
 	.byte $02
 	.byte $AA
 	.byte $02, $03
 	.byte $06, $07
-Rock:
+SprMap_Rock:
 	.byte $02
 	.byte $02
 	.byte $AF
@@ -2213,34 +2213,34 @@ bra4_911D:
 	STY $36
 	JMP jmp_54_A118
 tbl4_9122:
-	.word ofs_9148
-	.word ofs_9157
-	.word ofs_916A
-	.word ofs_917D
-	.word ofs_9190
-	.word ofs_919F
-	.word ofs_91AE
-	.word ofs_91BD
-	.word ofs_923B
-	.word ofs_924A
-	.word ofs_9259
-	.word ofs_9268
-	.word ofs_9277
-	.word ofs_921B
-	.word ofs_922A
-	.word ofs_91DF
-	.word ofs_91EE
-	.word ofs_91FD
-	.word ofs_920C
-ofs_9148:
-	.byte $03 ;charging chuck mappings
+	.word SprMap_CharginChuck_Idle
+	.word SprMap_CharginChuck_Run1
+	.word SprMap_CharginChuck_Run2
+	.word SprMap_CharginChuck_Jump
+	.word SprMap_CharginChuck_Stun1
+	.word SprMap_CharginChuck_Stun2
+	.word SprMap_CharginChuck_Stun3
+	.word SprMap_CharginChuck_Stun4
+	.word SprMap_BaseballChuck_Idle
+	.word SprMap_BaseballChuck_Hold
+	.word SprMap_BaseballChuck_Throw1
+	.word SprMap_BaseballChuck_JumpHold
+	.word SprMap_BaseballChuck_Throw2
+	.word SprMap_PassinChuck_Idle
+	.word SprMap_PassinChuck_Kick
+	.word SprMap_DigginChuck_Idle
+	.word SprMap_DigginChuck_Dig
+	.word SprMap_DigginChuck_Throw1
+	.word SprMap_DigginChuck_Throw2
+SprMap_CharginChuck_Idle:
+	.byte $03
 	.byte $04
 	.byte $A9
 	.byte $FF, $FF, $FF
 	.byte $14, $15, $16
 	.byte $22, $23, $24
 	.byte $2A, $2B, $2C
-ofs_9157:
+SprMap_CharginChuck_Run1:
 	.byte $04
 	.byte $04
 	.byte $AA
@@ -2248,7 +2248,7 @@ ofs_9157:
 	.byte $0D, $0E, $0F, $10
 	.byte $1A, $1D, $1E, $FF
 	.byte $2C, $2D, $2E, $FF
-ofs_916A:
+SprMap_CharginChuck_Run2:
 	.byte $04
 	.byte $04
 	.byte $AA
@@ -2256,7 +2256,7 @@ ofs_916A:
 	.byte $0D, $0E, $0F, $10
 	.byte $1A, $1B, $1C, $FF
 	.byte $28, $29, $2A, $2B
-ofs_917D:
+SprMap_CharginChuck_Jump:
 	.byte $04
 	.byte $04
 	.byte $A8
@@ -2264,7 +2264,7 @@ ofs_917D:
 	.byte $23, $24, $25, $26
 	.byte $2B, $2C, $2D, $2E
 	.byte $33, $34, $35, $36
-ofs_9190:
+SprMap_CharginChuck_Stun1:
 	.byte $03
 	.byte $04
 	.byte $A9
@@ -2272,7 +2272,7 @@ ofs_9190:
 	.byte $09, $0A, $FF
 	.byte $1A, $0F, $1B
 	.byte $25, $26, $27
-ofs_919F:
+SprMap_CharginChuck_Stun2:
 	.byte $03
 	.byte $04
 	.byte $A9
@@ -2280,7 +2280,7 @@ ofs_919F:
 	.byte $0E, $0F, $10
 	.byte $1C, $1D, $1E
 	.byte $25, $26, $27
-ofs_91AE:
+SprMap_CharginChuck_Stun3:
 	.byte $03
 	.byte $04
 	.byte $A9
@@ -2288,7 +2288,7 @@ ofs_91AE:
 	.byte $0B, $0C, $0D
 	.byte $17, $18, $19
 	.byte $25, $26, $27
-ofs_91BD:
+SprMap_CharginChuck_Stun4:
 	.byte $03
 	.byte $04
 	.byte $A9
@@ -2296,50 +2296,51 @@ ofs_91BD:
 	.byte $11, $12, $13
 	.byte $1F, $20, $21
 	.byte $28, $29, $27
-	.byte $04 ;clapping chuck (unused) mappings
+;Unused Clappin' Chuck Mappings
+	.byte $04
 	.byte $04
 	.byte $A8
 	.byte $FF, $1D, $1E, $FF
 	.byte $FF, $21, $22, $FF
 	.byte $27, $28, $29, $2A
 	.byte $2F, $30, $31, $32
-ofs_91DF:
+SprMap_DigginChuck_Idle:
 	.byte $04 ;digging chuck (unused) mappings
 	.byte $03
 	.byte $AF
 	.byte $FF, $0B, $0C, $0D
 	.byte $FF, $16, $17, $18
 	.byte $23, $24, $25, $26
-ofs_91EE:
+SprMap_DigginChuck_Dig:
 	.byte $04
 	.byte $03
 	.byte $AF
 	.byte $FF, $12, $13, $14
 	.byte $FF, $1D, $1E, $1F
 	.byte $2A, $2B, $2C, $2D
-ofs_91FD:
+SprMap_DigginChuck_Throw1:
 	.byte $04
 	.byte $03
 	.byte $AF
 	.byte $FF, $12, $13, $15
 	.byte $FF, $20, $21, $22
 	.byte $23, $24, $25, $26
-ofs_920C:
+SprMap_DigginChuck_Throw2:
 	.byte $04
 	.byte $03
 	.byte $AF
 	.byte $0E, $0F, $10, $11
 	.byte $19, $1A, $1B, $1C
 	.byte $FF, $27, $28, $29
-ofs_921B:
-	.byte $03 ;football chuck mappings
+SprMap_PassinChuck_Idle:
+	.byte $03
 	.byte $04
 	.byte $A9
 	.byte $FF, $FF, $FF
 	.byte $30, $31, $32
 	.byte $36, $37, $38
 	.byte $3C, $3D, $3E
-ofs_922A:
+SprMap_PassinChuck_Kick:
 	.byte $03
 	.byte $04
 	.byte $AF
@@ -2347,17 +2348,16 @@ ofs_922A:
 	.byte $2F, $30, $31
 	.byte $32, $33, $34
 	.byte $35, $36, $37
-	.byte $37 ;extra unused bytes
-	.byte $38
-ofs_923B:
-	.byte $03 ;baseball chuck mappings
+	.byte $37, $38 ;Excess bytes
+SprMap_BaseballChuck_Idle:
+	.byte $03
 	.byte $04
 	.byte $AA
 	.byte $FF, $FF, $FF
 	.byte $11, $12, $FF
 	.byte $1F, $20, $21
 	.byte $2F, $30, $31
-ofs_924A:
+SprMap_BaseballChuck_Hold:
 	.byte $03
 	.byte $04
 	.byte $AA
@@ -2365,7 +2365,7 @@ ofs_924A:
 	.byte $38, $39, $FF
 	.byte $3A, $3B, $3C
 	.byte $3D, $3E, $3F
-ofs_9259:
+SprMap_BaseballChuck_Throw1:
 	.byte $03
 	.byte $04
 	.byte $AA
@@ -2373,15 +2373,15 @@ ofs_9259:
 	.byte $16, $18, $19
 	.byte $25, $26, $27
 	.byte $35, $36, $37
-ofs_9268:
-	.byte $03 ;unused baseball chuck frame
+SprMap_BaseballChuck_JumpHold:
+	.byte $03
 	.byte $04
 	.byte $AA
 	.byte $0B, $0C, $FF
 	.byte $16, $17, $FF
 	.byte $25, $26, $27
 	.byte $35, $36, $37
-ofs_9277:
+SprMap_BaseballChuck_Throw2:
 	.byte $03
 	.byte $04
 	.byte $AA
@@ -2449,7 +2449,7 @@ bra4_92F4:
 	LDA tbl4_934B,Y
 	STA ObjectVariables,X
 	TAY
-	LDA tbl4_9983,Y
+	LDA BooBuddiesSineTable,Y
 	PHA
 	CLC
 	ADC BooBuddiesXPos
@@ -2469,7 +2469,7 @@ bra4_9318:
 	STA ObjectState,X
 	LDA tbl4_9355,Y
 	TAY
-	LDA tbl4_9983,Y
+	LDA BooBuddiesSineTable,Y
 	PHA
 	CLC
 	ADC BooBuddiesYPos
@@ -2567,7 +2567,7 @@ bra4_93B7:
 	STA ObjectVariables,X
 	LDA ObjectVariables,X
 	TAY
-	LDA tbl4_9983,Y
+	LDA BooBuddiesSineTable,Y
 	PHA
 	CLC
 	ADC BooBuddiesXPos
@@ -2587,7 +2587,7 @@ bra4_93DD:
 	ADC #$20
 	AND #$7F
 	TAY
-	LDA tbl4_9983,Y
+	LDA BooBuddiesSineTable,Y
 	PHA
 	CLC
 	ADC BooBuddiesYPos
@@ -3270,9 +3270,9 @@ bra4_9923:
 loc4_992B:
 	ASL
 	TAX
-	LDA tbl4_9949,X
+	LDA SprPtrs_Boo,X
 	STA $32
-	LDA tbl4_9949+1,X
+	LDA SprPtrs_Boo+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -3283,52 +3283,56 @@ loc4_992B:
 bra4_9944:
 	STY $36
 	JMP jmp_54_A118
-tbl4_9949:
-	.word ofs_9959
-	.word ofs_9960
-	.word ofs_9967
-	.word ofs_996E
-	.word ofs_9975
-	.word ofs_997C
-	.word ofs_9959 ;Unused
-	.word ofs_9960 ;Unused
-ofs_9959:
-	.byte $02 ;boo mappings
+SprPtrs_Boo:
+	.word SprMap_Boo_Tease1
+	.word SprMap_Boo_Tease2
+	.word SprMap_Boo_ChaseAlt ;Only used by Boo Buddies
+	.word SprMap_Boo_Chase
+	.word SprMap_Boo_MouthOpen ;Only used by Boo Buddies
+	.word SprMap_Boo_Hide
+	.word SprMap_Boo_Tease1 ;Unused
+	.word SprMap_Boo_Tease2 ;Unused
+SprMap_Boo_Tease1:
+	.byte $02
 	.byte $02
 	.byte $AB
 	.byte $01, $02
 	.byte $04, $05
-ofs_9960:
+SprMap_Boo_Tease2:
 	.byte $02
 	.byte $02
 	.byte $AB
 	.byte $01, $03
 	.byte $06, $07
-ofs_9967:
+SprMap_Boo_ChaseAlt:
 	.byte $02
-	.byte $02
+	.byte $2
 	.byte $AB
 	.byte $17, $18
 	.byte $1D, $1E
-ofs_996E:
+SprMap_Boo_Chase:
 	.byte $02
 	.byte $02
 	.byte $AB
 	.byte $17, $19
 	.byte $1F, $20
-ofs_9975:
+SprMap_Boo_MouthOpen:
 	.byte $02
 	.byte $02
 	.byte $AB
 	.byte $08, $09
 	.byte $0F, $10
-ofs_997C:
+SprMap_Boo_Hide:
 	.byte $02
 	.byte $02
 	.byte $AB
 	.byte $08, $0A
 	.byte $11, $12
-tbl4_9983:
+	
+;Boo Buddies sine/cosine lookup table
+;Roughly equivalent to 79cos((pi/64)*x) rounded up with a few values being one off.
+;Sine values are obtained by shifting 32 values ahead
+BooBuddiesSineTable:
 	.byte $4F
 	.byte $4F
 	.byte $4F
@@ -3456,7 +3460,7 @@ tbl4_9983:
 	.byte $4F
 	.byte $4F
 	.byte $4F
-	.byte $4F
+	.byte $4F ;end of boo circle movement thing
 	.byte $00
 	.byte $00
 	.byte $00

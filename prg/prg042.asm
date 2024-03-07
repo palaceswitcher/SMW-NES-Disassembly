@@ -339,74 +339,74 @@ bra2_88E1:
 bra2_88FF_RTS:
 	RTS
 tbl2_8900:
-	.word PlayerText
-	.word PlayerText
-	.word PlayerCursor
-	.word TitleCloud
-	.word TitleEnemyPop
+	.word SprMap_PlayerText
+	.word SprMap_PlayerText
+	.word SprMap_PlayerCursor
+	.word SprMap_TitleCloud
+	.word SprMap_TitleEnemyPop
 	.word pnt3_8B0C ;unused 05
 	.word pnt3_8B16 ;unused 06
-	.word TitleKoopa1
-	.word TitleKoopa2
-	.word TitleRex1
-	.word TitleRex2
+	.word SprMap_TitleKoopa1
+	.word SprMap_TitleKoopa2
+	.word SprMap_TitleRex1
+	.word SprMap_TitleRex2
 	.word pnt3_8B74 ;unused 0B
 	.word pnt3_8B80 ;unused 0C
-	.word TitleSuperKoopa1
-	.word TitleSuperKoopa2
+	.word SprMap_TitleSuperKoopa1
+	.word SprMap_TitleSuperKoopa2
 	.word pnt3_8B9E ;unused 0F
 	.word pnt3_8BC2 ;unused 10
-	.word TitleMario1
-	.word TitleMario2
-	.word TitleYoshi_Walk1
-	.word TitleYoshi_Walk2
-	.word TitleYoshi_Jump
+	.word SprMap_TitleMario1
+	.word SprMap_TitleMario2
+	.word SprMap_TitleYoshi_Walk1
+	.word SprMap_TitleYoshi_Walk2
+	.word SprMap_TitleYoshi_Jump
 ;Map sprites (starts at hex 16)
-	.word MapPlayer_Down1
-	.word MapPlayer_Down2
-	.word MapPlayer_Down3
-	.word MapPlayer_Left1
-	.word MapPlayer_Left2
-	.word MapPlayer_Climb1
-	.word MapPlayer_Climb2
-	.word MapPlayer_Up1
-	.word MapPlayer_Up2
-	.word MapPlayer_Up3
-	.word MapPlayer_SwimDown1
-	.word MapPlayer_SwimDown2
-	.word MapPlayer_SwimLeft1
-	.word MapPlayer_SwimLeft2 ;unused
-	.word MapPlayer_SwimUp1
-	.word MapPlayer_SwimUp2
-	.word MapBoo ;unused
-	.word MapHalo ;unused
-	.word MapYoshi_Down1
-	.word MapYoshi_Down2
-	.word MapYoshi_Left1
-	.word MapYoshi_Left2
-	.word MapYoshi_Up1
-	.word MapYoshi_Up2
-	.word MapYoshi_SwimDown1
-	.word MapYoshi_SwimDown2
-	.word MapYoshi_SwimLeft1
-	.word MapYoshi_SwimLeft2 ;unused
-	.word MapYoshi_SwimUp1
-	.word MapYoshi_SwimUp2
-	.word MapPlayer_Start
-	.word MapYoshi_Start1
-	.word MapYoshi_Start2
-	.word MapYoshi_SwimStart1
-	.word MapYoshi_SwimStart2
-	.word MapPlayer_SwimStart1
-	.word MapPlayer_SwimStart2
-	.word MapPlayer_Right1
-	.word MapPlayer_Right2
-	.word MapPlayer_SwimRight1 ;unused
-	.word MapPlayer_SwimRight2 ;unused
-	.word MapYoshi_Right1
-	.word MapYoshi_Right2
-	.word MapYoshi_SwimRight1 ;unused
-	.word MapYoshi_SwimRight2 ;unused
+	.word SprMap_MapPlayer_Down1
+	.word SprMap_MapPlayer_Down2
+	.word SprMap_MapPlayer_Down3
+	.word SprMap_MapPlayer_Left1
+	.word SprMap_MapPlayer_Left2
+	.word SprMap_MapPlayer_Climb1
+	.word SprMap_MapPlayer_Climb2
+	.word SprMap_MapPlayer_Up1
+	.word SprMap_MapPlayer_Up2
+	.word SprMap_MapPlayer_Up3
+	.word SprMap_MapPlayer_SwimDown1
+	.word SprMap_MapPlayer_SwimDown2
+	.word SprMap_MapPlayer_SwimLeft1
+	.word SprMap_MapPlayer_SwimLeft2 ;unused
+	.word SprMap_MapPlayer_SwimUp1
+	.word SprMap_MapPlayer_SwimUp2
+	.word SprMap_MapBoo ;unused
+	.word SprMap_MapHalo ;unused
+	.word SprMap_MapYoshi_Down1
+	.word SprMap_MapYoshi_Down2
+	.word SprMap_MapYoshi_Left1
+	.word SprMap_MapYoshi_Left2
+	.word SprMap_MapYoshi_Up1
+	.word SprMap_MapYoshi_Up2
+	.word SprMap_MapYoshi_SwimDown1
+	.word SprMap_MapYoshi_SwimDown2
+	.word SprMap_MapYoshi_SwimLeft1
+	.word SprMap_MapYoshi_SwimLeft2 ;unused
+	.word SprMap_MapYoshi_SwimUp1
+	.word SprMap_MapYoshi_SwimUp2
+	.word SprMap_MapPlayer_Start
+	.word SprMap_MapYoshi_Start1
+	.word SprMap_MapYoshi_Start2
+	.word SprMap_MapYoshi_SwimStart1
+	.word SprMap_MapYoshi_SwimStart2
+	.word SprMap_MapPlayer_SwimStart1
+	.word SprMap_MapPlayer_SwimStart2
+	.word SprMap_MapPlayer_Right1
+	.word SprMap_MapPlayer_Right2
+	.word SprMap_MapPlayer_SwimRight1 ;unused
+	.word SprMap_MapPlayer_SwimRight2 ;unused
+	.word SprMap_MapYoshi_Right1
+	.word SprMap_MapYoshi_Right2
+	.word SprMap_MapYoshi_SwimRight1 ;unused
+	.word SprMap_MapYoshi_SwimRight2 ;unused
 tbl2_8986:
 	.word pnt3_8ACC
 	.word pnt3_8ACC
@@ -555,15 +555,15 @@ TitleSpriteFrameTypes:
 ;	Index - 1K CHR slot used. Can be $00, $40, $80, or $C0 for slots 1 through 4 respectively.
 TitleSpriteAnimations:
 	.word pnt3_8A6C
-	.word TitleKoopaAnim
-	.word TitleSuperKoopaAnim
+	.word SprMap_TitleKoopaAnim
+	.word SprMap_TitleSuperKoopaAnim
 	.word TitlePopEffectAnim
 	.word pnt3_8A80 ;Unknown
-	.word TitleRexAnim
+	.word SprMap_TitleRexAnim
 	.word pnt3_8A8A ;Unknown
 	.word pnt3_8A8F
-	.word TitleMarioAnim ;Useless, hardcoded
-	.word TitleYoshi_WalkAnim ;Useless, hardcoded
+	.word SprMap_TitleMarioAnim ;Useless, hardcoded
+	.word SprMap_TitleYoshi_WalkAnim ;Useless, hardcoded
 	.word pnt3_8A9E ;Yoshi duplicate
 	.word pnt3_8AA3
 	.word pnt3_8AA8
@@ -574,13 +574,13 @@ pnt3_8A6C:
 	.byte $00
 	.byte $00
 	.byte $00
-TitleKoopaAnim:
+SprMap_TitleKoopaAnim:
 	.byte $07
 	.byte $08
 	.byte $94
 	.byte $0F
 	.byte $80
-TitleSuperKoopaAnim:
+SprMap_TitleSuperKoopaAnim:
 	.byte $0D
 	.byte $0E
 	.byte $96
@@ -598,7 +598,7 @@ pnt3_8A80:
 	.byte $FA
 	.byte $0F
 	.byte $80
-TitleRexAnim:
+SprMap_TitleRexAnim:
 	.byte $09
 	.byte $0A
 	.byte $95
@@ -616,13 +616,13 @@ pnt3_8A8F:
 	.byte $94
 	.byte $0F
 	.byte $C0
-TitleMarioAnim:
+SprMap_TitleMarioAnim:
 	.byte $11
 	.byte $12
 	.byte $FF
 	.byte $0F
 	.byte $00
-TitleYoshi_WalkAnim:
+SprMap_TitleYoshi_WalkAnim:
 	.byte $13
 	.byte $14
 	.byte $FF
@@ -652,7 +652,7 @@ pnt3_8AAD:
 	.byte $94
 	.byte $0F
 	.byte $C0
-PlayerText:
+SprMap_PlayerText:
 	.byte $08
 	.byte $03
 	.byte $8F
@@ -712,7 +712,7 @@ pnt3_8ACC:
 ;	Width - Width in 8x8 tiles
 ;	Height - Height in 8x8 tiles
 ;	[data] - Mapping data. Size is height times width.
-PlayerCursor:
+SprMap_PlayerCursor:
 	.byte $01
 	.byte $01
 	.byte $8E
@@ -720,7 +720,7 @@ pnt3_8AE9:
 	.byte $01
 	.byte $01
 	.byte $03
-TitleCloud:
+SprMap_TitleCloud:
 	.byte $04
 	.byte $02
 	.byte $38, $39, $3A, $3B
@@ -736,7 +736,7 @@ pnt3_8AF6:
 	.byte $21
 	.byte $21
 	.byte $21
-TitleEnemyPop:
+SprMap_TitleEnemyPop:
 	.byte $02
 	.byte $02
 	.byte $00
@@ -772,7 +772,7 @@ pnt3_8B16:
 	.byte $18
 	.byte $1B
 	.byte $19
-TitleKoopa1:
+SprMap_TitleKoopa1:
 	.byte $03
 	.byte $04
 	.byte $0E
@@ -802,7 +802,7 @@ pnt3_8B2E:
 	.byte $00
 	.byte $00
 	.byte $00
-TitleKoopa2:
+SprMap_TitleKoopa2:
 	.byte $03
 	.byte $04
 	.byte $10
@@ -817,7 +817,7 @@ TitleKoopa2:
 	.byte $37
 	.byte $38
 	.byte $2E
-TitleRex1:
+SprMap_TitleRex1:
 	.byte $03
 	.byte $04
 	.byte $21
@@ -847,7 +847,7 @@ pnt3_8B58:
 	.byte $02
 	.byte $02
 	.byte $02
-TitleRex2:
+SprMap_TitleRex2:
 	.byte $03
 	.byte $04
 	.byte $23
@@ -883,7 +883,7 @@ pnt3_8B80:
 	.byte $3D
 	.byte $3E
 	.byte $3F
-TitleSuperKoopa1:
+SprMap_TitleSuperKoopa1:
 	.byte $03
 	.byte $02
 	.byte $06
@@ -901,7 +901,7 @@ pnt3_8B8E:
 	.byte $00
 	.byte $00
 	.byte $00
-TitleSuperKoopa2:
+SprMap_TitleSuperKoopa2:
 	.byte $03
 	.byte $02
 	.byte $06
@@ -986,7 +986,7 @@ pnt3_8BD4:
 	.byte $00
 	.byte $00
 	.byte $00
-TitleMario1:
+SprMap_TitleMario1:
 	.byte $02
 	.byte $04
 	.byte $21
@@ -1008,7 +1008,7 @@ pnt3_8BF0:
 	.byte $41
 	.byte $41
 	.byte $41
-TitleMario2:
+SprMap_TitleMario2:
 	.byte $02
 	.byte $04
 	.byte $29
@@ -1019,7 +1019,7 @@ TitleMario2:
 	.byte $2C
 	.byte $2F
 	.byte $2E
-TitleYoshi_Walk1:
+SprMap_TitleYoshi_Walk1:
 	.byte $04
 	.byte $04
 	.byte $FF
@@ -1057,7 +1057,7 @@ pnt3_8C16:
 	.byte $43
 	.byte $42
 	.byte $42
-TitleYoshi_Walk2:
+SprMap_TitleYoshi_Walk2:
 	.byte $04
 	.byte $04
 	.byte $FF
@@ -1076,7 +1076,7 @@ TitleYoshi_Walk2:
 	.byte $16
 	.byte $FF
 	.byte $FF
-TitleYoshi_Jump:
+SprMap_TitleYoshi_Jump:
 	.byte $04
 	.byte $04
 	.byte $FF
@@ -1102,70 +1102,70 @@ pnt3_8C4C:
 	.byte $00
 	.byte $01
 	.byte $01
-MapPlayer_Down1:
+SprMap_MapPlayer_Down1:
 	.byte $02
 	.byte $02
 	.byte $05
 	.byte $06
 	.byte $0D
 	.byte $0E
-MapPlayer_Down2:
+SprMap_MapPlayer_Down2:
 	.byte $02
 	.byte $02
 	.byte $07
 	.byte $08
 	.byte $0F
 	.byte $10
-MapPlayer_Down3:
+SprMap_MapPlayer_Down3:
 	.byte $02
 	.byte $02
 	.byte $05
 	.byte $06
 	.byte $11
 	.byte $12
-MapPlayer_Left1:
+SprMap_MapPlayer_Left1:
 	.byte $02
 	.byte $02
 	.byte $50
 	.byte $51
 	.byte $60
 	.byte $61
-MapPlayer_Left2:
+SprMap_MapPlayer_Left2:
 	.byte $02
 	.byte $02
 	.byte $52
 	.byte $53
 	.byte $62
 	.byte $63
-MapPlayer_Climb1:
+SprMap_MapPlayer_Climb1:
 	.byte $02
 	.byte $02
 	.byte $2A
 	.byte $2B
 	.byte $36
 	.byte $37
-MapPlayer_Climb2:
+SprMap_MapPlayer_Climb2:
 	.byte $02
 	.byte $02
 	.byte $2C
 	.byte $2D
 	.byte $38
 	.byte $39
-MapPlayer_Up1:
+SprMap_MapPlayer_Up1:
 	.byte $02
 	.byte $02
 	.byte $44
 	.byte $45
 	.byte $54
 	.byte $55
-MapPlayer_Up2:
+SprMap_MapPlayer_Up2:
 	.byte $02
 	.byte $02
 	.byte $46
 	.byte $47
 	.byte $56
 	.byte $57
-MapPlayer_Up3:
+SprMap_MapPlayer_Up3:
 	.byte $02
 	.byte $02
 	.byte $48
@@ -1179,42 +1179,42 @@ pnt3_8C8E:
 	.byte $00
 	.byte $02
 	.byte $02
-MapPlayer_SwimDown1:
+SprMap_MapPlayer_SwimDown1:
 	.byte $02
 	.byte $02
 	.byte $07
 	.byte $08
 	.byte $13
 	.byte $14
-MapPlayer_SwimDown2:
+SprMap_MapPlayer_SwimDown2:
 	.byte $02
 	.byte $02
 	.byte $05
 	.byte $06
 	.byte $15
 	.byte $16
-MapPlayer_SwimLeft1:
+SprMap_MapPlayer_SwimLeft1:
 	.byte $02
 	.byte $02
 	.byte $50
 	.byte $51
 	.byte $64
 	.byte $65
-MapPlayer_SwimLeft2:
+SprMap_MapPlayer_SwimLeft2:
 	.byte $02
 	.byte $02
 	.byte $52
 	.byte $53
 	.byte $66
 	.byte $67
-MapPlayer_SwimUp1:
+SprMap_MapPlayer_SwimUp1:
 	.byte $02
 	.byte $02
 	.byte $24
 	.byte $25
 	.byte $13
 	.byte $14
-MapPlayer_SwimUp2:
+SprMap_MapPlayer_SwimUp2:
 	.byte $02
 	.byte $02
 	.byte $22
@@ -1230,11 +1230,11 @@ pnt3_8CBB:
 	.byte $01
 	.byte $03
 	.byte $03
-MapBoo:
+SprMap_MapBoo:
 	.byte $01
 	.byte $01
 	.byte $6E
-MapHalo:
+SprMap_MapHalo:
 	.byte $02
 	.byte $01
 	.byte $71
@@ -1257,7 +1257,7 @@ pnt3_8CCE:
 	.byte $02
 	.byte $02
 	.byte $02
-MapYoshi_Down1:
+SprMap_MapYoshi_Down1:
 	.byte $02
 	.byte $03
 	.byte $01
@@ -1266,7 +1266,7 @@ MapYoshi_Down1:
 	.byte $0A
 	.byte $17
 	.byte $18
-MapYoshi_Down2:
+SprMap_MapYoshi_Down2:
 	.byte $02
 	.byte $03
 	.byte $03
@@ -1287,7 +1287,7 @@ pnt3_8CE6:
 	.byte $01
 	.byte $01
 	.byte $01
-MapYoshi_Left1:
+SprMap_MapYoshi_Left1:
 	.byte $03
 	.byte $03
 	.byte $00
@@ -1299,7 +1299,7 @@ MapYoshi_Left1:
 	.byte $5A
 	.byte $5B
 	.byte $5C
-MapYoshi_Left2:
+SprMap_MapYoshi_Left2:
 	.byte $03
 	.byte $03
 	.byte $00
@@ -1320,7 +1320,7 @@ pnt3_8D07:
 	.byte $01
 	.byte $02
 	.byte $02
-MapYoshi_Up1:
+SprMap_MapYoshi_Up1:
 	.byte $02
 	.byte $03
 	.byte $22
@@ -1329,7 +1329,7 @@ MapYoshi_Up1:
 	.byte $2F
 	.byte $3A
 	.byte $3B
-MapYoshi_Up2:
+SprMap_MapYoshi_Up2:
 	.byte $02
 	.byte $03
 	.byte $24
@@ -1338,7 +1338,7 @@ MapYoshi_Up2:
 	.byte $31
 	.byte $3C
 	.byte $3D
-MapYoshi_SwimDown1:
+SprMap_MapYoshi_SwimDown1:
 	.byte $02
 	.byte $03
 	.byte $01
@@ -1347,7 +1347,7 @@ MapYoshi_SwimDown1:
 	.byte $0A
 	.byte $13
 	.byte $14
-MapYoshi_SwimDown2:
+SprMap_MapYoshi_SwimDown2:
 	.byte $02
 	.byte $03
 	.byte $03
@@ -1368,7 +1368,7 @@ pnt3_8D2F:
 	.byte $02
 	.byte $02
 	.byte $02
-MapYoshi_SwimLeft1:
+SprMap_MapYoshi_SwimLeft1:
 	.byte $03
 	.byte $03
 	.byte $00
@@ -1380,7 +1380,7 @@ MapYoshi_SwimLeft1:
 	.byte $68
 	.byte $69
 	.byte $6A
-MapYoshi_SwimLeft2:
+SprMap_MapYoshi_SwimLeft2:
 	.byte $03
 	.byte $03
 	.byte $00
@@ -1392,7 +1392,7 @@ MapYoshi_SwimLeft2:
 	.byte $6B
 	.byte $6C
 	.byte $6D
-MapYoshi_SwimUp1:
+SprMap_MapYoshi_SwimUp1:
 	.byte $02
 	.byte $03
 	.byte $26
@@ -1401,7 +1401,7 @@ MapYoshi_SwimUp1:
 	.byte $33
 	.byte $13
 	.byte $14
-MapYoshi_SwimUp2:
+SprMap_MapYoshi_SwimUp2:
 	.byte $02
 	.byte $03
 	.byte $28
@@ -1410,14 +1410,14 @@ MapYoshi_SwimUp2:
 	.byte $35
 	.byte $15
 	.byte $16
-MapPlayer_Start:
+SprMap_MapPlayer_Start:
 	.byte $02
 	.byte $02
 	.byte $1D
 	.byte $06
 	.byte $20
 	.byte $21
-MapYoshi_Start1:
+SprMap_MapYoshi_Start1:
 	.byte $02
 	.byte $03
 	.byte $1B
@@ -1426,7 +1426,7 @@ MapYoshi_Start1:
 	.byte $0A
 	.byte $17
 	.byte $18
-MapYoshi_Start2:
+SprMap_MapYoshi_Start2:
 	.byte $02
 	.byte $03
 	.byte $1C
@@ -1435,7 +1435,7 @@ MapYoshi_Start2:
 	.byte $0C
 	.byte $19
 	.byte $1A
-MapYoshi_SwimStart1:
+SprMap_MapYoshi_SwimStart1:
 	.byte $02
 	.byte $03
 	.byte $1B
@@ -1444,7 +1444,7 @@ MapYoshi_SwimStart1:
 	.byte $0A
 	.byte $13
 	.byte $14
-MapYoshi_SwimStart2:
+SprMap_MapYoshi_SwimStart2:
 	.byte $02
 	.byte $03
 	.byte $1C
@@ -1453,14 +1453,14 @@ MapYoshi_SwimStart2:
 	.byte $0C
 	.byte $15
 	.byte $16
-MapPlayer_SwimStart1:
+SprMap_MapPlayer_SwimStart1:
 	.byte $02
 	.byte $02
 	.byte $1F
 	.byte $08
 	.byte $13
 	.byte $14
-MapPlayer_SwimStart2:
+SprMap_MapPlayer_SwimStart2:
 	.byte $02
 	.byte $02
 	.byte $1D
@@ -1474,14 +1474,14 @@ pnt3_8D92:
 	.byte $40
 	.byte $41
 	.byte $41
-MapPlayer_Right1:
+SprMap_MapPlayer_Right1:
 	.byte $02
 	.byte $02
 	.byte $51
 	.byte $50
 	.byte $61
 	.byte $60
-MapPlayer_Right2:
+SprMap_MapPlayer_Right2:
 	.byte $02
 	.byte $02
 	.byte $53
@@ -1495,14 +1495,14 @@ pnt3_8DA4:
 	.byte $40
 	.byte $42
 	.byte $42
-MapPlayer_SwimRight1:
+SprMap_MapPlayer_SwimRight1:
 	.byte $02
 	.byte $02
 	.byte $51
 	.byte $50
 	.byte $65
 	.byte $64
-MapPlayer_SwimRight2:
+SprMap_MapPlayer_SwimRight2:
 	.byte $02
 	.byte $02
 	.byte $53
@@ -1521,7 +1521,7 @@ pnt3_8DB6:
 	.byte $42
 	.byte $42
 	.byte $42
-MapYoshi_Right1:
+SprMap_MapYoshi_Right1:
 	.byte $03
 	.byte $03
 	.byte $41
@@ -1533,7 +1533,7 @@ MapYoshi_Right1:
 	.byte $5C
 	.byte $5B
 	.byte $5A
-MapYoshi_Right2:
+SprMap_MapYoshi_Right2:
 	.byte $03
 	.byte $03
 	.byte $43
@@ -1557,7 +1557,7 @@ pnt3_8DD7:
 	.byte $42
 	.byte $42
 	.byte $42
-MapYoshi_SwimRight1:
+SprMap_MapYoshi_SwimRight1:
 	.byte $03
 	.byte $03
 	.byte $41
@@ -1569,7 +1569,7 @@ MapYoshi_SwimRight1:
 	.byte $6A
 	.byte $69
 	.byte $68
-MapYoshi_SwimRight2:
+SprMap_MapYoshi_SwimRight2:
 	.byte $03
 	.byte $03
 	.byte $43
