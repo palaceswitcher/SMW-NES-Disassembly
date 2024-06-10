@@ -1322,15 +1322,15 @@ NotePitchTable:
 	.word $0000
 	.word $0000
 	.word $0000
-	.word $07F2
-	.word $0780
-	.word $0714
-	.word $06AE
-	.word $064E
-	.word $05F4
-	.word $059E
-	.word $054D
-	.word $0501
+	.word $07F2 ;A-0
+	.word $0780 ;A#0
+	.word $0714 ;B-0
+	.word $06AE ;C-1
+	.word $064E ;C#1
+	.word $05F4 ;D-1
+	.word $059E ;D#1
+	.word $054D ;E-1
+	.word $0501 ;F-1
 	.word $04B9
 	.word $0475
 	.word $0435

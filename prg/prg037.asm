@@ -1901,7 +1901,7 @@ bra_8C6B:
 	LDX $A4
 	JSR sub_82EA
 	JSR jmp_54_BF74
-	LDA #$13
+	LDA #sfxEnemyHit3
 	STA SFXRegister
 	RTS
 obj_hDE:

@@ -3491,6 +3491,7 @@ tbl6_AED1:
 	.byte $86
 	.byte $00
 	.byte $00
+
 	.byte $00
 	.byte $88
 	.byte $00
@@ -3507,6 +3508,7 @@ tbl6_AED1:
 	.byte $86
 	.byte $00
 	.byte $00
+	
 	.byte $00
 	.byte $90
 	.byte $00
@@ -3523,6 +3525,7 @@ tbl6_AED1:
 	.byte $86
 	.byte $00
 	.byte $00
+	
 	.byte $00
 	.byte $98
 	.byte $00
@@ -3923,7 +3926,7 @@ jmp_61_B19E:
 	LDA WorldNumber
 	ASL
 	ASL ;Multiply the world number by 4
-	STA $34 ;Store it at $32 in scratch RAM
+	STA $34 ;Store it at $34 in scratch RAM
 	ASL
 	ASL ;Multiply it by 4 again, effectively moving the low nybble to the high nybble
 	STA $32 ;Store it at $32 in scratch RAM
@@ -3945,42 +3948,44 @@ jmp_61_B19E:
 	TAY ;Otherwise, move the index 28 spots for player 2
 bra6_B1C6:
 	LDA CheckpointFlag,Y
-	BEQ bra6_B1FD
+	BEQ bra6_B1FD ;Check if the checkpoint has been set for the current level
+	;If it has, continue and load the checkpoint spawn data
 	LDA tbl6_B5E8+2,X
-	STA DataBank2
+	STA DataBank2 ;Get tilemap PRG bank
 	LDA tbl6_B5E8+3,X
-	STA BGPalette
+	STA BGPalette ;Get BG palette
 	LDA tbl6_B5E8,X
-	AND #$C0
-	STA $061D
+	AND #%11000000
+	STA UnderwaterFlag ;Get underwater flag from upper 2 bits
 	LDA #$E8
 	STA BubbleYPos
 	LDA tbl6_B5E8,X
-	AND #$20
+	AND #%00100000
 	STA $06E0
-	STA $06E1
+	STA $06E1 ;Get sprite priority
 	LDA tbl6_B5E8,X
-	AND #$3F
-	STA DataBank1
+	AND #%00111111
+	STA DataBank1 ;Get level data PRG bank from lower 6 bits
 	LDA tbl6_B5E8+1,X
 	JMP loc6_B22C
+;Otherwise, load the default level positions
 bra6_B1FD:
 	LDA tbl6_B56C+2,X
-	STA DataBank2
+	STA DataBank2 ;Get tilemap PRG bank
 	LDA tbl6_B56C+3,X
-	STA BGPalette
+	STA BGPalette ;Get BG palette
 	LDA tbl6_B56C,X
-	AND #$C0
-	STA $061D
+	AND #%11000000
+	STA UnderwaterFlag ;Get underwater flag from upper 2 bits
 	LDA #$E8
 	STA BubbleYPos
 	LDA tbl6_B56C,X
-	AND #$20
+	AND #%00100000
 	STA $06E0
-	STA $06E1
+	STA $06E1 ;Get sprite priority
 	LDA tbl6_B56C,X
-	AND #$3F
-	STA DataBank1
+	AND #%00111111
+	STA DataBank1 ;Get level data PRG bank from lower 6 bits
 	LDA tbl6_B56C+1,X
 loc6_B22C:
 	JSR sub6_B34A
@@ -4109,7 +4114,7 @@ bra6_B317:
 	STA PlayerPowerup
 	LDA P1YoshiBackup
 	STA Player1YoshiStatus
-	STA Player2YoshiStatus
+	STA YoshiExitStatus
 	STA YoshiIdleStorage
 	RTS
 bra6_B337:
@@ -4117,7 +4122,7 @@ bra6_B337:
 	STA PlayerPowerup
 	LDA $0394
 	STA Player1YoshiStatus
-	STA Player2YoshiStatus
+	STA YoshiExitStatus
 	STA YoshiIdleStorage
 	RTS
 sub6_B34A:
@@ -4438,118 +4443,147 @@ tbl6_B51C:
 	.byte $00
 	.byte $00
 tbl6_B56C:
+;1-1
 	.byte $00
 	.byte $00
 	.byte $1C
 	.byte $00
+;1-2
 	.byte $01
 	.byte $01
 	.byte $1C
 	.byte $01
+;1-3
 	.byte $02
 	.byte $02
 	.byte $1C
 	.byte $02
+;1-4
 	.byte $03
 	.byte $23
 	.byte $23
 	.byte $1D
+;2-1
 	.byte $04
 	.byte $04
 	.byte $1D
 	.byte $04
+;2-2
 	.byte $05
 	.byte $05
 	.byte $1D
 	.byte $05
+;2-3
 	.byte $03
 	.byte $27
 	.byte $23
 	.byte $1C
+;2-4
 	.byte $03
 	.byte $23
 	.byte $23
 	.byte $1D
+;3-1
 	.byte $08
 	.byte $08
 	.byte $1E
 	.byte $08
+;3-2
 	.byte $49
 	.byte $09
 	.byte $1E
 	.byte $09
+;3-3
 	.byte $03
 	.byte $27
 	.byte $23
 	.byte $1C
+;3-4
 	.byte $03
 	.byte $23
 	.byte $23
 	.byte $1D
+;4-1
 	.byte $0C
 	.byte $0C
 	.byte $1F
 	.byte $0C
+;4-2
 	.byte $0D
 	.byte $0D
 	.byte $1F
 	.byte $0D
+;4-3
 	.byte $0E
 	.byte $0E
 	.byte $1F
 	.byte $0E
+;4-4
 	.byte $03
 	.byte $23
 	.byte $23
 	.byte $1D
+;5-1
 	.byte $10
 	.byte $10
 	.byte $20
 	.byte $10
+;5-2
 	.byte $03
 	.byte $27
 	.byte $23
 	.byte $1C
+;5-3
 	.byte $52
 	.byte $12
 	.byte $20
 	.byte $12
+;5-4
 	.byte $03
 	.byte $23
 	.byte $23
 	.byte $1D
+;6-1
 	.byte $14
 	.byte $14
 	.byte $21
 	.byte $14
+;6-2
 	.byte $03
 	.byte $27
 	.byte $23
 	.byte $1C
+;6-3
 	.byte $16
 	.byte $15
 	.byte $21
 	.byte $16
+;6-4
 	.byte $03
 	.byte $23
 	.byte $23
 	.byte $1D
+;7-1
 	.byte $18
 	.byte $18
 	.byte $22
 	.byte $18
+;7-2
 	.byte $19
 	.byte $19
 	.byte $22
 	.byte $19
+;7-3
 	.byte $03
 	.byte $27
 	.byte $23
 	.byte $1C
+;7-4
 	.byte $03
 	.byte $23
 	.byte $23
 	.byte $1D
+;Yoshi's House (8-1)
 	.byte $03
 	.byte $3D
 	.byte $23
@@ -4573,110 +4607,137 @@ tbl6_B5E8:
 	.byte $00
 	.byte $1C
 	.byte $00
+	
 	.byte $01
 	.byte $01
 	.byte $1C
 	.byte $01
+	
 	.byte $02
 	.byte $02
 	.byte $1C
 	.byte $02
+	
 	.byte $03
 	.byte $03
 	.byte $1C
 	.byte $03
+	
 	.byte $04
 	.byte $04
 	.byte $1D
 	.byte $04
+	
 	.byte $05
 	.byte $05
 	.byte $1D
 	.byte $05
+	
 	.byte $03
 	.byte $27
 	.byte $23
 	.byte $1C
+	
 	.byte $07
 	.byte $07
 	.byte $1D
 	.byte $1E
+	
 	.byte $08
 	.byte $08
 	.byte $1E
 	.byte $08
+	
 	.byte $49
 	.byte $09
 	.byte $1E
 	.byte $09
+	
 	.byte $03
 	.byte $27
 	.byte $23
 	.byte $1C
+	
 	.byte $03
 	.byte $23
 	.byte $23
 	.byte $1D
+	
 	.byte $0C
 	.byte $0C
 	.byte $1F
 	.byte $0C
+	
 	.byte $0D
 	.byte $0D
 	.byte $1F
 	.byte $0D
+	
 	.byte $0E
 	.byte $0E
 	.byte $1F
 	.byte $0E
+	
 	.byte $03
 	.byte $23
 	.byte $23
 	.byte $1D
+	
 	.byte $10
 	.byte $10
 	.byte $20
 	.byte $10
+	
 	.byte $11
 	.byte $11
 	.byte $20
 	.byte $11
+	
 	.byte $52
 	.byte $12
 	.byte $20
 	.byte $12
+	
 	.byte $03
 	.byte $23
 	.byte $23
 	.byte $1D
+	
 	.byte $14
 	.byte $14
 	.byte $21
 	.byte $14
+	
 	.byte $15
 	.byte $15
 	.byte $21
 	.byte $15
+	
 	.byte $16
 	.byte $15
 	.byte $21
 	.byte $16
+	
 	.byte $17
 	.byte $17
 	.byte $21
 	.byte $17
+	
 	.byte $18
 	.byte $18
 	.byte $22
 	.byte $18
+	
 	.byte $19
 	.byte $19
 	.byte $22
 	.byte $19
+	
 	.byte $1A
 	.byte $1A
 	.byte $22
 	.byte $1A
+	
 	.byte $03
 	.byte $23
 	.byte $23
@@ -6332,15 +6393,10 @@ sub6_BEE7:
 	STA $33
 	RTS
 tbl6_BF01:
-	.byte $00
-tbl6_BF02:
-	.byte $20
-	.byte $00
-	.byte $24
-	.byte $00
-	.byte $28
-	.byte $00
-	.byte $2C
+	.word $2000
+	.word $2400
+	.word $2800
+	.word $2C00
 sub6_BF09:
 	LDA #$00
 	STA PPUCtrl
@@ -6350,7 +6406,7 @@ sub6_BF09:
 	TAX
 	LDY #$00
 	LDA PPUStatus
-	LDA tbl6_BF02,X
+	LDA tbl6_BF01+1,X
 	STA PPUAddr
 	LDA tbl6_BF01,X
 	STA PPUAddr

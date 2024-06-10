@@ -131,8 +131,7 @@ PlayerHeight = $3B
 PlayerPalMappingLo = $C9
 PlayerPalMappingHi = $CA
 MemJMPOpcode = $0600
-MemJMPLoByte = $0601
-MemJMPHiByte = $0602
+MemJMPPtr = $0601
 CapeAction = $062C
 PlayerAttributes = $06E0
 
@@ -168,7 +167,7 @@ SwallowFrameCount = $0613
 YoshiSwallowTimer = $0614
 FlightTakeoffTimer = $061C
 Player1YoshiStatus = $061F
-Player2YoshiStatus = $0620
+YoshiExitStatus = $0620
 YoshiIdleStorage = $0621
 YoshiIdleMovement = $0622
 YoshiTongueState = $0623
@@ -414,12 +413,13 @@ M90_CHR_CTRL1 = $D003
 .include prg/prg041.asm
 .pad $C000
 ;52010 - 5400f
-;Various Game State 0 stuff (Title, map, etc)
+;Various Game Mode 0 stuff (Title, map, etc)
 
 .base $8000
 .include prg/prg042.asm
+.pad $A000
 ;54010 - 5600f
-;8x8 Tilemap and Overworld Data
+;8x8 Tilemaps and Overworld Data
 
 .base $8000
 .include prg/prg043.asm
@@ -431,7 +431,7 @@ M90_CHR_CTRL1 = $D003
 .include prg/prg044.asm
 .pad $A000
 ;58010 - 5a00f
-;Title Screen/Map Tileset Data
+;Title Screen/Map Tilesets
 
 .base $8000
 .include prg/prg045.asm
@@ -467,7 +467,7 @@ M90_CHR_CTRL1 = $D003
 .include prg/prg050.asm
 .pad $A000
 ;64010 - 6600f
-;Object stuff
+;Various objects
 
 .base $E000
 .include prg/prg051.asm
@@ -484,6 +484,7 @@ M90_CHR_CTRL1 = $D003
 .include prg/prg053.asm
 .pad $A000
 ;6a010 - 6c00f
+;Various objects
 
 .base $A000
 .include prg/prg054.asm

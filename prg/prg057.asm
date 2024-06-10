@@ -221,12 +221,12 @@ bra4_A119:
 	.db $01
 	.db $01
 	.db $01
-;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
+;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ;PLAYER SPRITES AND ANIMATION
-;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
+;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ;The following code is poorly commented due to the animation bank having 3 sets of pointers and being extremely hard to follow.
 sub4_A14A:	
-	LDA Player1YoshiStatus ;
+	LDA Player1YoshiStatus
 	ASL ;Multiply current yoshi status by 2
 	TAX ;Move it to the x offset
 	LDA #$24
@@ -260,7 +260,7 @@ DecPlayerFrameLength:
 	BMI AdvNextPlayerFrame ;if it's underflown(?), branch ahead
 	DEC $18 ;else decrement frame length 
 	RTS ;end
-;**********************************************************************************	
+;**********************************************************************************
 AdvNextPlayerFrame: ;if Player frame ended:
 	INC PlayerAnimationFrame ;advance to next frame
 PlayerAnimationSub:
@@ -855,14 +855,14 @@ sub4_A4CE:
 	STA MusicRegister
 	RTS
 LevelMusicQueue:
-	.db $29, $28, $20, $2C ;World 1
-	.db $29, $28, $2B, $2C ;World 2
-	.db $2A, $2D, $2B, $2C ;World 3
-	.db $29, $28, $20, $2C ;World 4
-	.db $29, $2B, $2D, $2C ;World 5
-	.db $29, $2B, $28, $2C ;World 6
-	.db $29, $28, $2B, $2C ;World 7
-	.db $29 ;Yoshi's House
+	.db musOverworld, musForestofIllusion, musTitle, musCastle ;World 1
+	.db musOverworld, musForestofIllusion, musGhostHouse, musCastle ;World 2
+	.db musUnderground, musUnderwater, musGhostHouse, musCastle ;World 3
+	.db musOverworld, musForestofIllusion, musTitle, musCastle ;World 4
+	.db musOverworld, musGhostHouse, musUnderwater, musCastle ;World 5
+	.db musOverworld, musGhostHouse, musForestofIllusion, musCastle ;World 6
+	.db musOverworld, musForestofIllusion, musGhostHouse, musCastle ;World 7
+	.db musOverworld ;Yoshi's House
 	.db $60
 ;-=-=-=-=-=--=-=-=-=-=-=-
 ;END 
@@ -3689,7 +3689,7 @@ DismountYoshiRoutine:
 	STA YoshiIdleStorage ;backup whatever yoshi had in his mouth
 	LDA #$00
 	STA Player1YoshiStatus ;get off yoshi
-	STA Player2YoshiStatus
+	STA YoshiExitStatus
 	JSR sub4_A14A
 	LDA #$04
 	STA YoshiUnmountedState
@@ -4322,7 +4322,7 @@ ofs_B8DE:
 	LDA YoshiIdleStorage
 	STA Player1YoshiStatus
 	LDA #$01
-	STA Player2YoshiStatus
+	STA YoshiExitStatus
 	LDA #$07
 	STA PlayerAction ;set to ducking
 	JSR sub4_A14A
@@ -4496,25 +4496,26 @@ bra4_B9DC:
 ;*******************************	
 CliffDeathCheck:
 	LDA PlayerSprYPos		
-	CMP #$E0 ;if player's sprite is below this (or above it, basically not going off screen in a pit)
-	BCC MovePlayerDown ;branch to player falling 
+	CMP #$E0 ;If player's sprite is below this (or above it, basically not going off screen in a pit)
+	BCC MovePlayerDown ;If above this point, continue falling as normal
+	;Otherwise, kill the player
 	LDA #musDeath	
-	STA MusicRegister ;play death music
+	STA MusicRegister ;Play death music
 	LDA #$00		
-	STA PlayerPowerup ;clear any powerups
-	STA Player1YoshiStatus ;remove yoshi
+	STA PlayerPowerup ;Remove any powerups
+	STA Player1YoshiStatus ;Remove yoshi
 	LDA LevelNumber	
-	CMP #$03 ;if in a castle,
-	BEQ DeathTrigger ;branch
-	LDA #$00 ;else
-	STA Player2YoshiStatus ;remove 2nd player's yoshi as well
+	CMP #$03
+	BEQ DeathTrigger ;Skip ahead and don't kill Yoshi if in a castle
+	LDA #$00
+	STA YoshiExitStatus ;Otherwise, remove him completely
 DeathTrigger:
 	LDA #$04		
-	STA Event ;trigger death event
+	STA Event ;Trigger death event
 	LDA #$02		
-	STA EventPart ;set map transition
+	STA EventPart ;Set map transition
 	LDA #$07		
-	STA PlayerAction ;make player duck
+	STA PlayerAction ;Make player duck
 	RTS
 ;************************************************
 MovePlayerDown: ;If player not dying in pit (IE player falling but not dead)
@@ -4726,26 +4727,26 @@ sub4_BAF1:
 loc4_BB09:
 	LDA #$00
 	STA $26 ;clear $26
-	LDY PlayerColYScreen ;put collision Y screen into Y
-	LDA LevelTopScreenOffset,Y ;load top or bottom screen offset 
+	LDY PlayerColYScreen
+	LDA LevelTopScreenOffset,Y ;Get screen offset for the vertical hitbox screen
 	CLC
-	ADC PlayerColXScreen ;add collision X screen
+	ADC PlayerColXScreen ;Add hitbox X screen to get total screen number (Y screen offset + X screen = total screen)
 	TAY ;move result to Y
 	LDA DataBank2
-	STA M90_PRG0 ;put data bank 2 into the first PRG slot
+	STA M90_PRG0 ;Load tileset bank in
 	LDA ($9F),Y ;load UNKNOWN offset by X collision offset
 	STA $9E ;store loaded value
 	LDA (LevelScreenOrderPtr),Y
-	STA PlayerScreenID
-	TAY
-	AND #$1F
-	ORA #$80
+	STA PlayerScreenID ;Get the ID of the screen the player is on
+	TAY ;Back up in Y register
+	AND #%00011111
+	ORA #%10000000 ;Clear lower 5 bits and add 80 to determine the address
 	STA $33
 	LDA #$00
-	STA $32
-	TYA
-	AND #$20
-	BNE bra4_BB3D
+	STA $32 ;Zero page high byte
+	TYA ;Get screen ID the player is on
+	AND #%00100000
+	BNE bra4_BB3D ;Branch if bit 5 is set for the screen ID (this is seemingly unused)
 	LDA DataBank1
 	STA M90_PRG0
 	JMP loc4_BB43
@@ -4753,19 +4754,19 @@ bra4_BB3D:
 	LDA $04F4
 	STA M90_PRG0 ;Likely an unused function
 loc4_BB43:
-	LDY PlayerColXPos ;Use the player's horizontal collision for the Y index
+	LDY PlayerColXPos ;Get the horizontal hitbox position (will be reused soon)
 	LDA PlayerColYPos
-	AND #%11110000 ;Mask out the lower 4 bits of the player's vertical collision
-	ORA tbl4_BD6D,Y
+	AND #%11110000 ;Get the vertical metatile number of the player's hitbox
+	ORA UpperNybbleShiftTable,Y ;Pack the horizontal and vertical metatile numbers into one byte, with the horizontal metatile being in the lower nybble and the vertical metatile in the upper nybble
 	TAY
 	LDA ($32),Y
 	TAY
 	LDA DataBank2
-	STA M90_PRG0
-	LDA ($DA),Y
+	STA M90_PRG0 ;Swap in tileset PRG bank
+	LDA ($DA),Y ;Get current metatile's behavior
 	STA PlayerBackColl
 	LDA #$27
-	STA M90_PRG3 ;Swap bank 39 into 4th PRG slot
+	STA M90_PRG3 ;Swap the collision bank into the 4th PRG slot
 	JSR jmp_39_E000 ;Jump
 	LDA #$3F	
 	STA M90_PRG3 ;Swap the IRQ bank back in
@@ -4828,7 +4829,7 @@ loc4_BBCF:
 	LDY PlayerColXPos
 	LDA PlayerColYPos
 	AND #$F0
-	ORA tbl4_BD6D,Y
+	ORA UpperNybbleShiftTable,Y
 	TAY
 	LDA ($32),Y
 	TAY
@@ -4968,7 +4969,7 @@ loc4_BCB8:
 	LDY PlayerColXPos
 	LDA PlayerColYPos
 	AND #$F0
-	ORA tbl4_BD6D,Y
+	ORA UpperNybbleShiftTable,Y
 	TAY
 	LDA ($32),Y
 	TAY
@@ -5018,7 +5019,7 @@ loc4_BD1D:
 	LDY PlayerColXPos
 	LDA PlayerColYPos
 	AND #$F0
-	ORA tbl4_BD6D,Y
+	ORA UpperNybbleShiftTable,Y
 	TAY
 	LDA ($32),Y
 	TAY
@@ -5058,263 +5059,24 @@ bra4_BD62:
 	STY PlayerYScreenDup
 bra4_BD6C_RTS:
 	RTS
-tbl4_BD6D:
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $00
-	.db $01
-	.db $01
-	.db $01
-	.db $01
-	.db $01
-	.db $01
-	.db $01
-	.db $01
-	.db $01
-	.db $01
-	.db $01
-	.db $01
-	.db $01
-	.db $01
-	.db $01
-	.db $01
-	.db $02
-	.db $02
-	.db $02
-	.db $02
-	.db $02
-	.db $02
-	.db $02
-	.db $02
-	.db $02
-	.db $02
-	.db $02
-	.db $02
-	.db $02
-	.db $02
-	.db $02
-	.db $02
-	.db $03
-	.db $03
-	.db $03
-	.db $03
-	.db $03
-	.db $03
-	.db $03
-	.db $03
-	.db $03
-	.db $03
-	.db $03
-	.db $03
-	.db $03
-	.db $03
-	.db $03
-	.db $03
-	.db $04
-	.db $04
-	.db $04
-	.db $04
-	.db $04
-	.db $04
-	.db $04
-	.db $04
-	.db $04
-	.db $04
-	.db $04
-	.db $04
-	.db $04
-	.db $04
-	.db $04
-	.db $04
-	.db $05
-	.db $05
-	.db $05
-	.db $05
-	.db $05
-	.db $05
-	.db $05
-	.db $05
-	.db $05
-	.db $05
-	.db $05
-	.db $05
-	.db $05
-	.db $05
-	.db $05
-	.db $05
-	.db $06
-	.db $06
-	.db $06
-	.db $06
-	.db $06
-	.db $06
-	.db $06
-	.db $06
-	.db $06
-	.db $06
-	.db $06
-	.db $06
-	.db $06
-	.db $06
-	.db $06
-	.db $06
-	.db $07
-	.db $07
-	.db $07
-	.db $07
-	.db $07
-	.db $07
-	.db $07
-	.db $07
-	.db $07
-	.db $07
-	.db $07
-	.db $07
-	.db $07
-	.db $07
-	.db $07
-	.db $07
-	.db $08
-	.db $08
-	.db $08
-	.db $08
-	.db $08
-	.db $08
-	.db $08
-	.db $08
-	.db $08
-	.db $08
-	.db $08
-	.db $08
-	.db $08
-	.db $08
-	.db $08
-	.db $08
-	.db $09
-	.db $09
-	.db $09
-	.db $09
-	.db $09
-	.db $09
-	.db $09
-	.db $09
-	.db $09
-	.db $09
-	.db $09
-	.db $09
-	.db $09
-	.db $09
-	.db $09
-	.db $09
-	.db $0A
-	.db $0A
-	.db $0A
-	.db $0A
-	.db $0A
-	.db $0A
-	.db $0A
-	.db $0A
-	.db $0A
-	.db $0A
-	.db $0A
-	.db $0A
-	.db $0A
-	.db $0A
-	.db $0A
-	.db $0A
-	.db $0B
-	.db $0B
-	.db $0B
-	.db $0B
-	.db $0B
-	.db $0B
-	.db $0B
-	.db $0B
-	.db $0B
-	.db $0B
-	.db $0B
-	.db $0B
-	.db $0B
-	.db $0B
-	.db $0B
-	.db $0B
-	.db $0C
-	.db $0C
-	.db $0C
-	.db $0C
-	.db $0C
-	.db $0C
-	.db $0C
-	.db $0C
-	.db $0C
-	.db $0C
-	.db $0C
-	.db $0C
-	.db $0C
-	.db $0C
-	.db $0C
-	.db $0C
-	.db $0D
-	.db $0D
-	.db $0D
-	.db $0D
-	.db $0D
-	.db $0D
-	.db $0D
-	.db $0D
-	.db $0D
-	.db $0D
-	.db $0D
-	.db $0D
-	.db $0D
-	.db $0D
-	.db $0D
-	.db $0D
-	.db $0E
-	.db $0E
-	.db $0E
-	.db $0E
-	.db $0E
-	.db $0E
-	.db $0E
-	.db $0E
-	.db $0E
-	.db $0E
-	.db $0E
-	.db $0E
-	.db $0E
-	.db $0E
-	.db $0E
-	.db $0E
-	.db $0F
-	.db $0F
-	.db $0F
-	.db $0F
-	.db $0F
-	.db $0F
-	.db $0F
-	.db $0F
-	.db $0F
-	.db $0F
-	.db $0F
-	.db $0F
-	.db $0F
-	.db $0F
-	.db $0F
-	.db $0F
+;Contains the high nybble shifted to the low nybble for every possible 8-bit value. This is technically faster than bit shifting right 4 times.
+UpperNybbleShiftTable:
+	.dsb 16, $00
+	.dsb 16, $01
+	.dsb 16, $02
+	.dsb 16, $03
+	.dsb 16, $04
+	.dsb 16, $05
+	.dsb 16, $06
+	.dsb 16, $07
+	.dsb 16, $08
+	.dsb 16, $09
+	.dsb 16, $0A
+	.dsb 16, $0B
+	.dsb 16, $0C
+	.dsb 16, $0D
+	.dsb 16, $0E
+	.dsb 16, $0F
 sub4_BE6D:
 	LDA PlayerBackColl
 	CMP #$70
@@ -5333,7 +5095,7 @@ bra4_BE83:
 	STA M90_PRG3 ;Swap bank 39 into the 4th PRG slot ($E000-$FFFF)
 	JSR jmp_39_E000
 	LDA #$3F
-	STA M90_PRG3 ;Swap bank 63 into the 4th PRG slot($E000-$FFFF)
+	STA M90_PRG3 ;Swap bank 63 into the 4th PRG slot ($E000-$FFFF)
 	RTS
 sub4_BE91:
 	LDA $06DE

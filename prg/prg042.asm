@@ -15,139 +15,51 @@ CopyrightScreen:
 	.incbin screens/CopyrightScreen.bin
 YoshiHouse:
 	.incbin screens/YoshiHouse.bin ;Unused
-	.byte $11
-	.byte $30
-	.byte $2A
-	.byte $0E
-	.byte $11
-	.byte $38
-	.byte $26
-	.byte $0E
-	.byte $11
-	.byte $37
-	.byte $2A
-	.byte $1A
-	.byte $11
-	.byte $39
-	.byte $29
-	.byte $1A
-	.byte $11
-	.byte $30
-	.byte $2A
-	.byte $0E
-	.byte $11
-	.byte $38
-	.byte $26
-	.byte $0E
-	.byte $11
-	.byte $37
-	.byte $2A
-	.byte $1A
-	.byte $11
-	.byte $39
-	.byte $29
-	.byte $1A
-	.byte $0E
-	.byte $20
-	.byte $35
-	.byte $1A
-	.byte $0E
-	.byte $21
-	.byte $11
-	.byte $14
-	.byte $0E
-	.byte $20
-	.byte $35
-	.byte $38
-	.byte $0E
-	.byte $20
-	.byte $24
-	.byte $14
-	.byte $0E
-	.byte $20
-	.byte $35
-	.byte $1A
-	.byte $0E
-	.byte $21
-	.byte $11
-	.byte $14
-	.byte $0E
-	.byte $20
-	.byte $35
-	.byte $38
-	.byte $0E
-	.byte $20
-	.byte $24
-	.byte $14
-	.byte $0E
-	.byte $2A
-	.byte $2C
-	.byte $36
-	.byte $0E
-	.byte $37
-	.byte $27
-	.byte $38
-	.byte $0E
-	.byte $2A
-	.byte $37
-	.byte $30
-	.byte $0E
-	.byte $1C
-	.byte $2C
-	.byte $30
-	.byte $0E
-	.byte $2A
-	.byte $2C
-	.byte $36
-	.byte $0E
-	.byte $37
-	.byte $27
-	.byte $38
-	.byte $0E
-	.byte $2A
-	.byte $37
-	.byte $30
-	.byte $0E
-	.byte $1C
-	.byte $2C
-	.byte $30
-	.byte $0E
-	.byte $11
-	.byte $2C
-	.byte $30
-	.byte $0E
-	.byte $37
-	.byte $27
-	.byte $38
-	.byte $0E
-	.byte $2A
-	.byte $37
-	.byte $30
-	.byte $0E
-	.byte $1C
-	.byte $2C
-	.byte $30
-	.byte $0E
-	.byte $2A
-	.byte $2C
-	.byte $36
-	.byte $0E
-	.byte $37
-	.byte $27
-	.byte $38
-	.byte $0E
-	.byte $2A
-	.byte $37
-	.byte $30
-	.byte $0E
-	.byte $1C
-	.byte $2C
-	.byte $30
+	.byte $11, $30, $2A, $0E
+	.byte $11, $38, $26, $0E
+	.byte $11, $37, $2A, $1A
+	.byte $11, $39, $29, $1A
+	
+	.byte $11, $30, $2A, $0E
+	.byte $11, $38, $26, $0E
+	.byte $11, $37, $2A, $1A
+	.byte $11, $39, $29, $1A
+	
+	.byte $0E, $20, $35, $1A
+	.byte $0E, $21, $11, $14
+	.byte $0E, $20, $35, $38
+	.byte $0E, $20, $24, $14
+	
+	.byte $0E, $20, $35, $1A
+	.byte $0E, $21, $11, $14
+	.byte $0E, $20, $35, $38
+	.byte $0E, $20, $24, $14
+	
+	.byte $0E, $2A, $2C, $36
+	.byte $0E, $37, $27, $38
+	.byte $0E, $2A, $37, $30
+	.byte $0E, $1C, $2C, $30
+	
+	.byte $0E, $2A, $2C, $36
+	.byte $0E, $37, $27, $38
+	.byte $0E, $2A, $37, $30
+	.byte $0E, $1C, $2C, $30
+	
+	.byte $0E, $11, $2C, $30
+	.byte $0E, $37, $27, $38
+	.byte $0E, $2A, $37, $30
+	.byte $0E, $1C, $2C, $30
+	
+	.byte $0E, $2A, $2C, $36
+	.byte $0E, $37, $27, $38
+	.byte $0E, $2A, $37, $30
+	.byte $0E, $1C, $2C, $30
+	
 	.byte $60
 TilemapDecompSub:
 	LDA #$00
-	STA PPUMask ;Clear PPU mask
-	STA PPUCtrl ;Clear PPU control
+	STA PPUMask ;Clear PPU mask, disabling rendering
+	STA PPUCtrl ;Clear PPU control, disabling NMI
 	TAY ;Clear Y register
 	LDA PPUStatus ;Clear PPU address latch
 	LDA Current8x8Tilemap ;Get current tilemap
@@ -194,6 +106,7 @@ GoToNextByte:
 	INC $39 ;Go to next memory page if needed
 NextByteDone:
 	RTS
+
 	LDX #$00 ;Clear X offset
 	LDA #$00
 bra2_880D:
@@ -4596,6 +4509,7 @@ bra2_9B73_RTS:
 	DEC GS0SpriteFlags,X
 bra2_9B82_RTS:
 	RTS
+tbl_9B83:
 	.byte $00
 	.byte $60
 	.byte $30
@@ -5326,289 +5240,3 @@ sub2_9E7A:
 	ADC #$08
 	STA $028F,Y
 	RTS
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00

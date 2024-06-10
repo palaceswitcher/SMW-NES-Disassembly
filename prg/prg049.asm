@@ -542,7 +542,7 @@ bra5_830E:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra5_8350
+	BEQ loc5_8350
 	LDA ObjYScreenDistance,X
 	BPL bra5_833F
 	LDA ObjectYDistance,X
@@ -561,7 +561,6 @@ bra5_833F:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra5_8350:
 loc5_8350:
 	LDA FreezeFlag
 	BEQ bra5_8356

@@ -327,7 +327,7 @@ bra3_E298:
 	JMP loc3_E277 ;Jump
 sub3_E2AB:
 	LDA a:GameState
-	BNE bra3_E317 ;Branch if in a level
+	BNE loc3_E317 ;Branch if in a level
 	LDX #$04
 	LDA tbl3_EF08,X
 	STA NMIJMPOpcode+1
@@ -383,7 +383,6 @@ pnt2_E316:
 	RTS
 ;-----UNUSED CODE END-----
 
-bra3_E317:
 loc3_E317:
 	LDA a:Event
 	ASL
@@ -416,7 +415,7 @@ tbl3_E329:
 	.word pnt2_ED75
 	.word pnt2_EEFD
 pnt2_E353:
-	LDA Player2YoshiStatus
+	LDA YoshiExitStatus
 	STA Player1YoshiStatus ;Copy player 2's yoshi to current yoshi
 	LDA #$80
 	ORA PalTransition
@@ -476,8 +475,9 @@ bra3_E397:
 	JSR sub3_F0CB ;Jump
 	INC a:EventPart ;Go to next part of event
 	RTS
-TimerSetting:
-	.word $012C ;Timer data for levels (300 in decimal)
+
+TimerSetting: .word 300 ;Timer data for levels
+
 pnt2_E3DD:
 	LDA #$00
 	STA FadeoutMode ;Disable "blackout" effect
@@ -488,7 +488,9 @@ pnt2_E3DD:
 	STA a:EventPart ;End level transition
 	LDA DataBank2
 	CMP #$23
-	BNE bra3_E405 ;Make sure the level's data is in PRG bank $23
+	BNE bra3_E405 ;Check if using the tileset PRG bank for the castle or ghost house intro
+
+	;If using an intro level, continue as normal
 	LDA CameraXScreen
 	BNE bra3_E405 ;Make sure the camera is on the first screen
 	LDA LevelNumber
@@ -496,9 +498,10 @@ pnt2_E3DD:
 	LDA #$05
 	STA a:Event ;Trigger castle/ghost house intro
 	RTS
-bra3_E405:
-	INC a:Event
-	RTS
+	;Otherwise, start the level as normal.
+	bra3_E405:
+		INC a:Event
+		RTS
 pnt2_E409:
 	LDA a:EventPart
 	BEQ bra3_E411 ;Branch if at 1st event part
@@ -531,15 +534,14 @@ bra3_E442:
 bra3_E445:
 	JSR sub3_ED14
 	LDA PSwitchTimer
-	BEQ bra3_E45F ;Branch if P-Switch timer is up
+	BEQ loc3_E45F ;Branch if P-Switch timer is up
 	INC PSwitchFrameCount ;Increment frame count
 	LDA PSwitchFrameCount
 	CMP #$3B
-	BCC bra3_E45F ;After 60 frames pass,
+	BCC loc3_E45F ;After 60 frames pass,
 	DEC PSwitchTimer ;Decrease timer
 	LDA #$00
 	STA PSwitchFrameCount ;Clear frame count
-bra3_E45F:
 loc3_E45F:
 	LDA EndingFreezeFlag
 	BNE bra3_E47C ;Skip this check if at the ending cutscene
@@ -584,7 +586,7 @@ sub3_E4BA:
 	LDX CurrentPlayer ;Set index for current player
 	LDA PlayerPowerup
 	STA P1PowerupBackup,X ;Backup player's powerup
-	LDA Player2YoshiStatus
+	LDA YoshiExitStatus
 	STA P1YoshiBackup,X ;Backup the player's Yoshi
 	RTS
 pnt2_E4CA:
@@ -786,7 +788,7 @@ pnt2_E649:
 	BEQ bra3_E681 ;Branch if player doesn't have Yoshi
 	JSR sub3_E965 ;Jump
 	LDA #$01
-	STA Player2YoshiStatus ;Set Yoshi for Player 2
+	STA YoshiExitStatus ;Set Yoshi for Player 2
 	LDA #$50
 	STA PlayerYSpeed ;Set Y speed to 50h
 	LDA PlayerMovement
@@ -1266,7 +1268,7 @@ tbl3_EA10:
 	.word pnt2_EA48
 	.word pnt2_EAD0
 	.word pnt2_EA48
-	.word pnt2_EADC
+	.word pnt2_EADC ;6-2
 	.word pnt2_EA48
 	.word pnt2_EAE8
 	.word pnt2_EA48
@@ -2549,10 +2551,10 @@ bra3_F15B:
 	LDA ($34),Y
 	STA $33
 	JMP ($32)
-;*****************************************************
+;-----------------------------***********************
 ;Clear sprites from screen during gameplay
 ;This must happen before sprites are sent to $0200
-;*****************************************************
+;-----------------------------***********************
 sub3_F176:
 	LDA #$F8 ;Y position (offscreen)
 	LDX #$00 ;storage offset
@@ -2564,7 +2566,7 @@ bra3_F17A: ;In level sprite clearing
 	INX ;increment X until on next Y pos storage byte
 	BNE bra3_F17A ;loop until X overflows to 00  
 	RTS 
-;******************************************************
+;-----------------------------************************
 sub3_F184:
 	ASL
 	ASL
@@ -3482,7 +3484,7 @@ IRQ:
 	PHA
 	TYA
 	PHA
-	JSR MemJMPOpcode ;Execute 'fake' JMP opcode
+	JSR MemJMPOpcode ;Execute JMP opcode from RAM
 	PLA
 	TAY
 	PLA
@@ -3492,44 +3494,47 @@ IRQ:
 	RTI
 	LDA #$4C
 	STA MemJMPOpcode ;Store JMP opcode into RAM
+	;Load pointer for JMP location
 	LDA tbl3_F720
-	STA MemJMPLoByte ;Load lower byte of JMP location
+	STA MemJMPPtr
 	LDA tbl3_F720+1
-	STA MemJMPHiByte ;Load upper byte of JMP location
+	STA MemJMPPtr+1
 	JMP loc3_F6F3
+
 sub3_F6E0:
 	LDA #$4C
-	STA MemJMPOpcode ;Load fake JMP opcode into memory
+	STA MemJMPOpcode ;Load JMP opcode into RAM
+	;Load JMP pointer for current interrupt mode
 	LDA InterruptMode
 	ASL
 	TAX
 	LDA tbl3_F71A,X
-	STA MemJMPLoByte
+	STA MemJMPPtr
 	LDA tbl3_F71A+1,X
 loc3_F6F3:
-	STA MemJMPHiByte
+	STA MemJMPPtr+1
 	LDX InterruptMode
 	LDA PPUStatus ;Clear address latch
 	LDA InterruptLineTable,X
 	STA M90_IRQ_DISABLE
-	STA M90_IRQ_COUNTER ;Disable interrupts and set IRQ counter (and set interrupt scanline? no idea how this works)
+	STA M90_IRQ_COUNTER ;Temporarily disable interrupts and set IRQ counter to the given scanline, causing it to fire an interrupt once the number of scanlines has been reached
 	LDA #$FB
 	STA M90_IRQ_PRESCALER
-	STA M90_IRQ_ENABLE ;Enable interrupts and set prescaler to 8 bits
+	STA M90_IRQ_ENABLE ;Enable interrupts and set prescaler to 251 (unsure of why)
 	RTS
 InterruptLineTable:
-	.byte $08
-	.byte $CC ;Level
-	.byte $80
-	.byte $08
-	.byte $B0 ;Bowser Fight
-	.byte $08
-	.byte $08
-	.byte $08
-	.byte $08
-	.byte $08
-	.byte $64 ;Title Screen
-	.byte $D0 ;Overworld Map
+	.byte 8
+	.byte 204 ;Level
+	.byte 128
+	.byte 8
+	.byte 176 ;Bowser Fight
+	.byte 8
+	.byte 8
+	.byte 8
+	.byte 8
+	.byte 8
+	.byte 100 ;Title Screen
+	.byte 208 ;Overworld Map
 tbl3_F71A:
 	.word pnt2_F152
 	.word bra3_F751
@@ -3545,9 +3550,11 @@ tbl3_F720:
 	.word pnt2_F0F8
 	.word pnt2_F127
 	.word pnt2_F152
-;*******************************
-;HUD MODE CHECKS 
-;*******************************	
+
+;-----------------------------
+;HUD MODE CHECKS
+;(CONDITIONAL NIGHTMARE WARNING!!)
+;-----------------------------
 pnt2_F734:
 	LDA HUDDisplay
 	BNE bra3_F73C ;Branch if HUD BG isn't updated at all (not sure about these)
@@ -3732,20 +3739,23 @@ loc3_F85A:
 	STA M90_IRQ_DISABLE
 	STA M90_IRQ_ENABLE ;Disable then enable interrupts (removing this causes the HUD to flicker, I assume this is an IRQ reset of some sort)
 	STA M90_IRQ_COUNTER ;Set IRQ counter (line?) to $1D
-	LDX #$0C ;Make code loop 12 times
+	LDX #$0C ;Set X for loop count (See below)
 bra3_F867:
 	DEX
-	BNE bra3_F867 ;Loop this code for the set amount of times (waits 59 cycles)
+	BNE bra3_F867 ;Wait 59 (X*5 - 1) cycles before updating registers
+
 	LDX #$2B
 	LDY #$40
 	STX PPUAddr
 	STY PPUAddr ;Set PPU address to $2B40
-	LDA PPUStatus ;clear PPU address data latch 
+
+	LDA PPUStatus ;Clear PPU address data latch 
 	LDA #$00
 	STA PPUScroll ;Set horizontal scroll for HUD (seems to position the item box, not the HUD itself)
 	LDA #$C4
 	STA PPUScroll ;Set vertical scroll for HUD
 	INC HUDDisplay
+
 	LDA #$EC
 	STA M90_BG_CHR0 ;Swap in 1st HUD bank (contains text and icons)
 	LDA #$ED
@@ -3755,14 +3765,15 @@ bra3_F867:
 	LDA #$EF
 	STA M90_BG_CHR3 ;Swap in 4th HUD bank (nothing to do with HUD, just random level tiles)
 	RTS
+
 loc3_F899:
 	STA M90_IRQ_DISABLE
 	LDX #$0C
 bra3_F89E:
 	DEX
-	BNE bra3_F89E 
-	LDA #$10
-	STA PPUMask
+	BNE bra3_F89E ;Wait 59 (X*5 - 1) cycles before updating HUD
+	LDA #%00010000
+	STA PPUMask ;Display sprites only
 	LDA #$00
 	STA HUDDisplay
 	RTS

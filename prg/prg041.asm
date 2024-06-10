@@ -29,24 +29,24 @@ tbl_A012:
 	.word pnt5_AB1D
 	.word pnt5_A927 ;12
 	.word pnt5_AC8D ;13
-	.word pnt5_A927
-	.word pnt5_AD29
-	.word pnt5_AD5C
-	.word pnt5_AD7E
-	.word pnt5_ADC5
-	.word pnt5_A927
-	.word pnt5_AE09
-	.word pnt5_998A
-	.word pnt5_AEB9
-	.word pnt5_AF13
-	.word pnt5_AF13
-	.word pnt5_AF14
-	.word pnt5_A927
-	.word pnt5_AF1F
-	.word pnt5_AF4C
-	.word pnt5_A927
-	.word pnt5_AF93
-	.word pnt5_A7FF
+	.word pnt5_A927 ;14
+	.word pnt5_AD29 ;15
+	.word pnt5_AD5C ;16
+	.word pnt5_AD7E ;17
+	.word pnt5_ADC5 ;18
+	.word pnt5_A927 ;19
+	.word pnt5_AE09 ;1A
+	.word pnt5_998A ;1B
+	.word pnt5_AEB9 ;1C
+	.word pnt5_AF13 ;1D
+	.word pnt5_AF13 ;1E
+	.word pnt5_AF14 ;1F
+	.word pnt5_A927 ;20
+	.word pnt5_AF1F ;21
+	.word pnt5_AF4C ;22
+	.word pnt5_A927 ;23
+	.word pnt5_AF93 ;24
+	.word pnt5_A7FF ;25
 	.word pnt5_A86F
 	.word pnt5_A892
 	.word pnt5_9B28
@@ -1875,11 +1875,11 @@ sub_AC1D:
 	ASL
 	ASL
 	TAX
-	LDA $9B83,X
+	LDA tbl_9B83,X
 	STA GS0SpriteFlags
-	LDA $9B84,X
+	LDA tbl_9B83+1,X
 	STA GS0SpriteXPos
-	LDA $9B85,X
+	LDA tbl_9B83+2,X
 	STA GS0SpriteYPos
 	LDX CurrentPlayer
 	LDA P1YoshiBackup,X
@@ -2203,7 +2203,7 @@ sub_AE96:
 	STA PPUCtrl
 	STA PPUControlMirror
 	STA PPUMask
-	STA PPUMaskMirror ;Clear the PPU mask and control registers
+	STA PPUMaskMirror ;Clear the PPU mask and control registers, disabling rendering and NMI
 	RTS
 sub_AEA3:
 	LDA #$00
@@ -3770,11 +3770,11 @@ sub_B75D:
 	TAX
 	LDA tbl_B997,X
 	STA DataBank1
-	LDA tbl_B998,X
+	LDA tbl_B997+1,X
 	STA $04F4
-	LDA tbl_B999,X
+	LDA tbl_B997+2,X
 	STA DataBank2
-	LDA tbl_B99A,X
+	LDA tbl_B997+3,X
 	STA $6D
 	LDY #$00
 	STY LevelTopScreenOffset
@@ -3839,9 +3839,9 @@ sub_B75D:
 	RTS
 sub_B800:
 	LDA PPUStatus ;Clear PPU address latch
-	LDA PPUControlMirror ;Get PPU control reg from memory
-	AND #%01111111 ;Ignore NMI bit
-	STA PPUCtrl ;Copy to hardware register
+	LDA PPUControlMirror
+	AND #%01111111
+	STA PPUCtrl ;Disable NMI
 	LDA #$00
 	STA ScrollYPos ;Clear the vertical scroll position
 	LDA ScrollXPos
@@ -4114,11 +4114,8 @@ tbl_B917:
 	.byte $3F
 tbl_B997:
 	.byte $2D
-tbl_B998:
 	.byte $00
-tbl_B999:
 	.byte $2C
-tbl_B99A:
 	.byte $12
 	.byte $2E
 	.byte $00
@@ -4272,6 +4269,7 @@ ofs_BA3B:
 	.byte $10
 	.byte $FF
 	.byte $01
+	
 	.byte $01
 	.byte $00
 	.byte $80
@@ -4280,6 +4278,7 @@ ofs_BA3B:
 	.byte $10
 	.byte $FF
 	.byte $01
+
 	.byte $02
 	.byte $00
 	.byte $80
@@ -4289,6 +4288,7 @@ ofs_BA3B:
 	.byte $FF
 	.byte $01
 	.byte $03
+	
 	.byte $00
 	.byte $80
 	.byte $80
@@ -4305,6 +4305,7 @@ ofs_BA5B:
 	.byte $06
 	.byte $FF
 	.byte $01
+	
 	.byte $05
 	.byte $00
 	.byte $80
@@ -4313,6 +4314,7 @@ ofs_BA5B:
 	.byte $10
 	.byte $FF
 	.byte $01
+	
 	.byte $06
 	.byte $01
 	.byte $80
@@ -4321,6 +4323,7 @@ ofs_BA5B:
 	.byte $10
 	.byte $FF
 	.byte $01
+	
 	.byte $07
 	.byte $00
 	.byte $80
@@ -4338,6 +4341,7 @@ ofs_BA7B:
 	.byte $10
 	.byte $FF
 	.byte $01
+	
 	.byte $09
 	.byte $00
 	.byte $80
@@ -4346,6 +4350,7 @@ ofs_BA7B:
 	.byte $10
 	.byte $FF
 	.byte $01
+	
 	.byte $0A
 	.byte $01
 	.byte $80
@@ -4354,6 +4359,7 @@ ofs_BA7B:
 	.byte $04
 	.byte $00
 	.byte $01
+	
 	.byte $0B
 	.byte $00
 	.byte $80
@@ -4371,6 +4377,7 @@ ofs_BA9B:
 	.byte $10
 	.byte $FF
 	.byte $01
+	
 	.byte $00
 	.byte $00
 	.byte $80
@@ -4379,6 +4386,7 @@ ofs_BA9B:
 	.byte $10
 	.byte $FF
 	.byte $01
+	
 	.byte $00
 	.byte $00
 	.byte $80
@@ -4387,6 +4395,7 @@ ofs_BA9B:
 	.byte $10
 	.byte $FF
 	.byte $01
+	
 	.byte $00
 	.byte $00
 	.byte $80
@@ -4404,6 +4413,7 @@ ofs_BABB:
 	.byte $10
 	.byte $FF
 	.byte $01
+	
 	.byte $00
 	.byte $00
 	.byte $80
@@ -4412,6 +4422,7 @@ ofs_BABB:
 	.byte $10
 	.byte $FF
 	.byte $01
+	
 	.byte $00
 	.byte $00
 	.byte $80
@@ -4420,6 +4431,7 @@ ofs_BABB:
 	.byte $10
 	.byte $FF
 	.byte $01
+	
 	.byte $00
 	.byte $00
 	.byte $80
@@ -4437,6 +4449,7 @@ ofs_BADB:
 	.byte $10
 	.byte $FF
 	.byte $01
+	
 	.byte $00
 	.byte $00
 	.byte $80
@@ -4445,6 +4458,7 @@ ofs_BADB:
 	.byte $10
 	.byte $FF
 	.byte $01
+	
 	.byte $00
 	.byte $00
 	.byte $80
@@ -4453,6 +4467,7 @@ ofs_BADB:
 	.byte $10
 	.byte $FF
 	.byte $01
+	
 	.byte $00
 	.byte $00
 	.byte $80
@@ -4470,6 +4485,7 @@ ofs_BAFB:
 	.byte $10
 	.byte $FF
 	.byte $01
+	
 	.byte $00
 	.byte $00
 	.byte $80
@@ -4478,6 +4494,7 @@ ofs_BAFB:
 	.byte $10
 	.byte $FF
 	.byte $01
+	
 	.byte $00
 	.byte $00
 	.byte $80
@@ -4486,6 +4503,7 @@ ofs_BAFB:
 	.byte $10
 	.byte $FF
 	.byte $01
+	
 	.byte $00
 	.byte $00
 	.byte $80

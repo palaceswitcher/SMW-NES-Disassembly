@@ -345,14 +345,14 @@ tbl3_A1B5:
 	.word obj_h72
 	.word obj_h76
 	.word obj_h77
-	.word obj_h78
-	.word obj_h54
+	.word obj_h78 ;Object 0x78 (Reznor Fire)
+	.word obj_h54 ;Object 0x79 (Fuzzy)
 	.word obj_h7A
 	.word obj_h7A
 	.word obj_h7C
 	.word obj_h7D
 	.word obj_h7E
-	.word obj_h7E
+	.word obj_h7E ;Object 0x7F (Urchin)
 	.word ptr4_A0D8 ;Unused excess pointers
 	.byte $62
 	.byte $95
@@ -5063,31 +5063,32 @@ bra3_BEB7:
 	LDX $A4
 	JMP loc3_BDCE
 jmp_54_BEBC:
-	LDX $A4
+	LDX $A4 ;Get current object index
 	LDY ObjectSlot,X
 	LDA ObjectXHitBoxSizes,Y
 	STA $36
 	LDA ObjectYHitBoxSizes,Y
 	STA $38
-	LDY #$10
+	LDY #$10 ;Set default player hitbox to 16 pixels high
 	LDA PlayerPowerup
-	BEQ bra3_BED4
-	LDY #$18
+	BEQ bra3_BED4 ;Branch if the player is small, keeping their hitbox at 16 pixels high
+	LDY #$18 ;Otherwise, if they have a powerup, make their hitbox 24 pixels high
 bra3_BED4:
 	LDA PlayerAction
 	CMP #$07
-	BNE bra3_BEDC
-	LDY #$08
+	BNE bra3_BEDC ;Don't change the player's hitbox size if they aren't ducking
+	LDY #$08 ;If the player is ducking, make their hitbox 8 pixels high
 bra3_BEDC:
 	STY $32
 	LDA ObjXScreenDistance,X
 	BPL bra3_BEF0
+	;Object X Distance + Hitbox X Offset + 5
 	LDA #$05
 	CLC
 	ADC $36
 	CLC
 	ADC ObjectXDistance,X
-	BCS bra3_BEF7
+	BCS bra3_BEF7 ;Branch if the distance 
 	BCC bra3_BF17
 bra3_BEF0:
 	LDA ObjectXDistance,X
@@ -5095,9 +5096,11 @@ bra3_BEF0:
 	BCS bra3_BF17
 bra3_BEF7:
 	LDA ObjYScreenDistance,X
-	BEQ bra3_BF0D
+	BEQ bra3_BF0D ;Branch if the player is on the same vertical screen as the object
 	CMP #$FF
-	BNE bra3_BF17
+	BNE bra3_BF17 ;Branch if the player is on a screen above the object
+	;Otherwise, continue if the player is a screen below the object
+	;Player Vertical Hitbox offset(?) + Hitbox Y offset + Object X offset
 	LDA $32
 	CLC
 	ADC $38
@@ -5168,9 +5171,8 @@ bra3_BF6E:
 	RTS
 jmp_54_BF74:
 	LDA InvincibilityTimer
-	BEQ bra3_BF7A
+	BEQ sub3_BF7A
 	RTS
-bra3_BF7A:
 sub3_BF7A:
 	LDX $A4
 	LDA ObjectSlot,X

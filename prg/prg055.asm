@@ -28,7 +28,7 @@ bra8_801E:
 	STA ObjYScreenDistance,X ;Get object's vertical distance from player
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra8_8060 ;Branch if the object and player are on the same vertical screen
+	BEQ loc8_8060 ;Branch if the object and player are on the same vertical screen
 	LDA ObjYScreenDistance,X
 	BPL bra8_804F ;Branch if the player is on a higher vertical screen than the object
 	LDA ObjectYDistance,X
@@ -47,7 +47,6 @@ bra8_804F:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra8_8060:
 loc8_8060:
 	LDA FreezeFlag
 	BEQ bra8_8066
@@ -148,7 +147,7 @@ tbl8_8114:
 	.word ptr_8201
 ptr_811E:
 	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
+	JSR jmp_54_BEBC ;Player collision check
 	JSR jmp_54_A74D
 	JSR jmp_54_BCBE
 	LDA #$10

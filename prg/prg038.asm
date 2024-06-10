@@ -327,7 +327,7 @@ bra14_87EE:
 bra14_87FF:
 loc14_87FF:
 	.byte $AD
-	.incbin tilesets/ts_unused4.bin
+	.incbin tilesets/ts_bowser.bin
 	.byte $00
 	.byte $00
 	.byte $00

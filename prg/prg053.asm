@@ -4204,7 +4204,7 @@ ptr5_9EB8:
 	BEQ bra7_9ED9 ;Branch ahead if player one is playing
 	TYA
 	CLC
-	ADC #$1C ;Move
+	ADC #$1C
 	TAY ;If player 2 is playing, use their checkpoint index instead
 bra7_9ED9:
 	LDA #$00

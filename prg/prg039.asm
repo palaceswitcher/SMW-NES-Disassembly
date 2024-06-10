@@ -28,10 +28,10 @@ bra_E02C:
 	TAX ;Copy the background tile collision ID into the X register
 	AND #%00001111
 	TAY ;Use the lower nybble of the ID as the Y index
-	LDA tbl_EE19,Y
+	LDA tbl_EE19,Y ;Get the high nybble for the corresponding low byte (Why not just shift it right 4 times?)
 	STA $97 ;Move the low nybble of the back collision to the high nybble of this (most likely the bottom collision)
 	TXA
-	AND #%11111110 ;Make the collision ID an even number it will work as a pointer index
+	AND #%11111110 ;Make the collision ID an even number so it will work as a pointer index
 	TAY ;Get pointer for collision ID
 	LDA tbl_E048,Y
 	STA $34 ;Load lower byte of pointer
