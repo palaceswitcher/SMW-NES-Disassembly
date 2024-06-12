@@ -230,7 +230,7 @@ sub4_A14A:
 	ASL ;Multiply current yoshi status by 2
 	TAX ;Move it to the x offset
 	LDA #$24
-	STA M90_PRG2 ;Load animation bank into 3rd slot
+	STA M90_PRG3 ;Load animation bank into 3rd slot
 ;Pick Animation table
 	LDA lda_36_C000,X
 	STA $32 ;Get lower pointer bytes
@@ -268,7 +268,7 @@ PlayerAnimationSub:
 	ASL ;multiply it by 2
 	TAY ;copy to Y 
 	LDA #$24 	
-	STA M90_PRG2 ;Load the animation bank into the 3rd PRG slot
+	STA M90_PRG3 ;Load the animation bank into the 3rd PRG slot
 ;Unsure exactly what pointer it's making here (pointer is later used to create the PlayerFramePtr									
 	LDA (PlayerAnimationPtr),Y ;Load the low byte 
 	STA $32 ;store it
@@ -300,7 +300,7 @@ LoadPlayerSprite: ;loads the player sprite
 ;Prep 	
 	LDY #$00 ;Clear Y index/set to read first byte of sprite format (sprite width)
 	LDA #$24
-	STA M90_PRG2 ;Load animation bank into 3rd PRG slot
+	STA M90_PRG3 ;Load animation bank into 3rd PRG slot
 ;Get sprite object size
 	LDA (PlayerFramePtr),Y ;get width byte
 	AND #$3F ;Remove attribute bits (%00111111)
@@ -317,14 +317,14 @@ LoadPlayerSprite: ;loads the player sprite
 	ASL 
 	TAX ;double it and move it to X
 	LDA #$2F
-	STA M90_PRG2 ;load palette mapping bank into 3rd PRG slot
+	STA M90_PRG3 ;load palette mapping bank into 3rd PRG slot
 	LDA CHRSprBankAttrs,X
 	STA PlayerPalMappingLo ;load low byte of palette mapping pointer
 	LDA CHRSprBankAttrs+1,X
 	STA PlayerPalMappingHi ;load high byte of palette mapping pointer
 ;Set base mirroring 
 	LDA #$24
-	STA M90_PRG2 ;load player animation bank (bank 36) back into 3rd PRG slot
+	STA M90_PRG3 ;load player animation bank (bank 36) back into 3rd PRG slot
 	LDA PlayerMovement
 	AND #$F0 ;get the direction the player is facing
 	EOR #$40 ;reverse it
@@ -600,7 +600,7 @@ loc4_A37B:
 	ASL ;double value CHR bank in Spritebank1 (Mario bank x 2)
 	TAY ;set as Y offset 
 	LDA #$2F 
-	STA M90_PRG2 ;load attribute bank into 2nd PRG slot
+	STA M90_PRG3 ;load attribute bank into 2nd PRG slot
 ;get attribute pointer	
 	LDA CHRSprBankAttrs,Y
 	STA $34 ;get lowbyte
@@ -615,7 +615,7 @@ loc4_A37B:
 ;********************************************************	
 ;Position Tiles X
 	LDA #$24
-	STA M90_PRG2 ;load player animation bank into 2nd PRG slot
+	STA M90_PRG3 ;load player animation bank into 2nd PRG slot
 	LDY $2E ;set Y offset to $2E (unknown use) Mapping offset?
 	LDA PlayerMetaspriteHAlign
 	CLC
@@ -785,7 +785,7 @@ bra4_A45F: ;load column spacing
 	LDX $3C ;load OAM tracker byte into X
 	LDY $40 ;load $40 (unknown use)
 	LDA #$24
-	STA M90_PRG2 ;load player animation bank into 3rd PRG slot
+	STA M90_PRG3 ;load player animation bank into 3rd PRG slot
 	LDA (PlayerFramePtr),Y ;Load tile ID from mapping
 	CMP #$FF ;if loaded value is #$FF (null tile)
 	BEQ bra4_A4A8 ;branch to increment width loop counter
@@ -800,7 +800,7 @@ PlayerOAMmanager:
 	AND #$3F ;Mask out mirroring bits
 	TAY ;transfer masked tile ID to Y
 	LDA #$2F
-	STA M90_PRG2 ;load attribute bank into 3rd PRG slot
+	STA M90_PRG3 ;load attribute bank into 3rd PRG slot
 	LDA (PlayerPalMappingLo),Y
 	ORA PlayerSpriteMirror ;set mirroring for whole sprite 
 	EOR PlayerSpriteAttributes ;flip mirroring bits against sprite attributes
@@ -830,7 +830,7 @@ loc4_A4B2: ;else $3E >= PlayerWidth
 ;Else
 	LDY #$02 ;Offset for Mario's frame pointer (CHR bank byte)
 	LDA #$24
-	STA M90_PRG2 ;Load player Animation bank 
+	STA M90_PRG3 ;Load player Animation bank 
 	LDA (PlayerFramePtr),Y ;load CHR bank from the mapping
 	LDY Player1YoshiStatus
 	BEQ bra4_A4CA ;if no Yoshi, skip to store bank
@@ -2000,7 +2000,7 @@ loc4_A9F0: ;START HERE for cape OAM manager
 	ASL ;double bank ID
 	TAY ;move it to Y
 	LDA #$2F
-	STA M90_PRG2 ;put the attributes bank into the 2nd PRG slot
+	STA M90_PRG3 ;put the attributes bank into the 2nd PRG slot
 	LDA CHRSprBankAttrs,Y
 	STA $34 ;lowbyte of attribute pointer
 	LDA CHRSprBankAttrs+1,Y
@@ -2014,7 +2014,7 @@ loc4_A9F0: ;START HERE for cape OAM manager
 	STA $0202,X ;store attributes
 	
 	LDA #$24
-	STA M90_PRG2 ;load the player animation bank into the 2nd PRG slot
+	STA M90_PRG3 ;load the player animation bank into the 2nd PRG slot
 	LDY $2E  ;put $2E into Y
 	LDA PlayerMetaspriteHAlign
 	CLC
@@ -2142,7 +2142,7 @@ loc4_AAC1: ;START HERE for cape OAM manager
 	ASL ;double bank ID
 	TAY ;move it to Y
 	LDA #$2F
-	STA M90_PRG2 ;put the attributes bank into the 2nd PRG slot
+	STA M90_PRG3 ;put the attributes bank into the 2nd PRG slot
 	LDA CHRSprBankAttrs,Y
 	STA $34 ;lowbyte of attribute pointer
 	LDA CHRSprBankAttrs+1,Y
@@ -2156,7 +2156,7 @@ loc4_AAC1: ;START HERE for cape OAM manager
 	STA $0202,X ;store attributes
 	
 	LDA #$24
-	STA M90_PRG2 ;load the player animation bank into the 2nd PRG slot
+	STA M90_PRG3 ;load the player animation bank into the 2nd PRG slot
 	LDY $2E  ;put $2E into Y
 	LDA PlayerMetaspriteHAlign
 	CLC

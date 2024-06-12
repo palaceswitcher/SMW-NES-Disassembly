@@ -2011,7 +2011,7 @@ sub3_ED14:
 	RTS
 sub3_ED48:
 	LDA #$24
-	STA M90_PRG2 ;Swap bank 36 into 3rd PRG slot
+	STA M90_PRG3 ;Swap bank 36 into 3rd PRG slot
 	LDA SpecialWarpCoords,Y
 	STA $32 ;Load lower byte of warp coord pointer
 	LDA SpecialWarpCoords+1,Y

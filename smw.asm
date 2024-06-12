@@ -381,9 +381,9 @@ M90_CHR_CTRL1 = $D003
 ;--------------------------------------
 ;PRG banks
 
-.base $C000
+.base $6000
 .include prg/prg036.asm
-.pad $E000
+.pad $8000
 ;48010 - 4a00f
 ;player mapping data
 
@@ -445,9 +445,9 @@ M90_CHR_CTRL1 = $D003
 ;5c010 - 5e00f
 ;Overworld Map Tile Data
 
-.base $C000
+.base $6000
 .include prg/prg047.asm
-.pad $E000
+.pad $8000
 ;5e010 - 6000f
 ;Sprite palette mappings
 

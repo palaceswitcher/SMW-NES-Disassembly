@@ -183,7 +183,7 @@ jmp_52_A118:
 	ASL
 	TAX ;Get bank attribute index
 	LDA #$2F
-	STA M90_PRG2
+	STA M90_PRG3
 	LDA CHRSprBankAttrs,X
 	STA $30
 	LDA CHRSprBankAttrs+1,X
@@ -448,7 +448,7 @@ sub2_A2DE:
 	ASL
 	TAX
 	LDA #$2F
-	STA M90_PRG2
+	STA M90_PRG3
 	LDA CHRSprBankAttrs,X
 	STA $30
 	LDA CHRSprBankAttrs+1,X
@@ -703,7 +703,7 @@ jmp_52_A463:
 	ASL
 	TAX
 	LDA #$2F
-	STA M90_PRG2
+	STA M90_PRG3
 	LDA CHRSprBankAttrs,X
 	STA $30
 	LDA CHRSprBankAttrs+1,X
@@ -2418,7 +2418,7 @@ sub_52_ADAF:
 	ASL
 	TAX
 	LDA #$2F
-	STA M90_PRG2
+	STA M90_PRG3
 	LDA CHRSprBankAttrs,X
 	STA $30
 	LDA CHRSprBankAttrs+1,X
