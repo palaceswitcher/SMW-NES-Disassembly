@@ -219,9 +219,9 @@ bra3_E1AA:
 	DEX
 	BNE bra3_E1A5 ;Loop until the set amount of frames have passed
 	LDA #$3E
-	STA M90_PRG2 ;Swap bank 62 into the 3rd PRG bank
+	STA M90_PRG2 ;Swap bank 62 into the 3rds PRG bank
 	LDA #$3F
-	STA M90_PRG3 ;Swap bank 63 into the 4th PRG bank
+	STA M90_PRG3 ;Swap saved bank into the 4th PRG bank
 	LDA #%10000101
 	STA M90_IRQ_MODE ;Set mapper IRQ mode (Count down, normal prescaler, 3 bit prescaler, PPU A12 source/scanline counter)
 	LDA #%10111010
@@ -420,8 +420,6 @@ pnt2_E353:
 	LDA #$80
 	ORA PalTransition
 	STA PalTransition
-	LDA #$3C
-	STA M90_PRG0 ;Swap bank 60 into 1st PRG slot (This bank is useless. Why?)
 	LDA #$3D
 	STA M90_PRG1 ;Swap bank 61 into 2nd PRG slot
 	JSR jmp_61_B19E
@@ -454,8 +452,6 @@ bra3_E397:
 	BCC bra3_E397 ;Loop until all 20 have been cleared
 	STA YoshiUnmountedState ;Remove Yoshi
 	JSR sub3_E904 ;Jump
-	LDA #$3C
-	STA M90_PRG0 ;Swap bank 60 into 1st PRG slot
 	LDA #$3D
 	STA M90_PRG1 ;Swap bank 61 into 2nd PRG slot
 	JSR jmp_61_B38E

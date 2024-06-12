@@ -4156,7 +4156,7 @@ bra6_B365:
 	LDA LevelBGBanks+2,X
 	STA BGBank3 ;Set BG bank 3
 	LDA LevelBGBanks+3,X
-	STA BGBank4 ;Set BG bank 4 (redundant)
+	STA BGBank4 ;Set BG bank 4 (dummy)
 	LDA #$3F
 	STA M90_PRG3 ;Swap bank 63 back in
 	RTS

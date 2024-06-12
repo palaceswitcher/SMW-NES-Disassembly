@@ -23,6 +23,7 @@ PPUMaskMirror = $01
 ScrollXPos = $02
 ScrollYPos = $03
 FrameCount = $06
+SafeSwap = $08
 Bank42Backup = $08
 Bank41Backup = $09
 ButtonsHeld = $030A
@@ -528,7 +529,7 @@ M90_CHR_CTRL1 = $D003
 ;Level handling
 
 .base $C000
-.include prg/prg062.asm
+;.include prg/prg062.asm
 .pad $E000
 ;7c010 - 7e00f
 ;unknown/unlogged data
