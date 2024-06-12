@@ -1,242 +1,183 @@
 ForestofIllusion_P1:
 ForestofIllusion_P1Loop:
-	.byte $F5
-	.byte $01
-	.byte Transpose
-	.byte $03
-	.byte DutySet
-	.byte $12
-	.byte PitchSet
+	.byte SongSpeed, $01
+	.byte Transpose, $03
+	.byte DutySet, $12
+	.byte PitchSet, 0
+	.byte VolSet, $11
+	.byte SongLoop,2
+	.byte NLen+7
+	.byte A3
+	.byte B3
+	.byte NLen+14
+	.byte A3
+	.byte NLen+7
+	.byte A3
+	.byte B3
+	.byte NLen+14
+	.byte A3
+	.byte A3
+	.byte NLen+28
+	.byte A4
+	.byte NLen+14
+	.byte A4
+	.byte G#4
+	.byte NLen+7
+	.byte B3
 	.byte NRest
-	.byte VolSet
-	.byte $11
-	.byte $88
-	.byte A3
 	.byte B3
-	.byte $90
-	.byte A3
-	.byte $88
-	.byte A3
-	.byte B3
-	.byte $90
-	.byte A3
-	.byte A3
-	.byte $A0
-	.byte $39
-	.byte $90
-	.byte $39
-	.byte $38
-	.byte B3
-	.byte B3
-	.byte $C0
-	.byte B3
-	.byte $90
 	.byte NRest
-	.byte $88
-	.byte A3
 	.byte B3
-	.byte $90
-	.byte A3
-	.byte $88
-	.byte A3
-	.byte B3
-	.byte $90
-	.byte A3
-	.byte A3
-	.byte $A0
-	.byte $39
-	.byte $90
-	.byte $39
-	.byte $38
-	.byte B3
-	.byte B3
-	.byte $C0
-	.byte B3
-	.byte $90
 	.byte NRest
+	.byte NLen+42
+	.byte B3
+	.byte NLen+14
+	.byte NRest
+	.byte SongLoopEnd
+	.byte SegCall
+	.word ForestofIllusion_P1Sub
+	.byte NLen+28
 	.byte D4
-	.byte C4
-	.byte C4
+	.byte Transpose, $02
+	.byte SegCall
+	.word ForestofIllusion_P1Sub
+	.byte NLen+28
 	.byte D4
-	.byte C4
-	.byte C4
-	.byte $A0
+	.byte Transpose, $03
+	.byte SegCall
+	.word ForestofIllusion_P1Sub
+	.byte NLen+14
 	.byte D4
-	.byte $90
-	.byte C#4
-	.byte B3
-	.byte B3
-	.byte C#4
-	.byte B3
-	.byte B3
-	.byte $A0
-	.byte C#4
-	.byte $90
-	.byte D4
-	.byte C4
-	.byte C4
-	.byte D4
-	.byte C4
-	.byte C4
-	.byte $88
-	.byte C4
-	.byte $90
-	.byte $39
-	.byte $C0
-	.byte $38
-	.byte $88
-	.byte NRest
-	.byte $90
-	.byte NRest
-	.byte NRest
-	.byte NRest
+	.byte NLen+28
+	.byte A4
+	.byte NLen+70
+	.byte G#4
+	.byte NLen+28
 	.byte NRest
 	.byte $F4
 	.word ForestofIllusion_P1Loop
 	.byte $FF
+ForestofIllusion_P1Sub:
+	.byte NLen+14
+	.byte D4
+	.byte NLen+7
+	.byte C4
+	.byte NRest
+	.byte C4
+	.byte NRest
+	.byte NLen+14
+	.byte D4
+	.byte NLen+7
+	.byte C4
+	.byte NRest
+	.byte C4
+	.byte NRest
+	.byte SegEnd
 ForestofIllusion_P2:
 ForestofIllusion_P2Loop:
-	.byte Transpose
-	.byte $03
-	.byte DutySet
-	.byte $17
-	.byte PitchSet
-	.byte $16
-	.byte VolSet
-	.byte $14
-	.byte $90
+	.byte Transpose, $00
+	.byte DutySet, $17
+	.byte PitchSet, $16
+	.byte VolSet, $14
+	.byte SongLoop,2
+	.byte NLen+56
+	.byte G#1
+	.byte NLen+14
+	.byte C3
+	.byte NLen+42
+	.byte D#3
+	.byte NLen+56
+	.byte G1
+	.byte NLen+14
+	.byte F#3
+	.byte NLen+42
+	.byte G3
+	.byte SongLoopEnd
+	.byte NLen+14
+	.byte F#3
 	.byte NRest
 	.byte NRest
+	.byte F#3
 	.byte NRest
 	.byte NRest
-	.byte A2
-	.byte NLen+48
+	.byte NLen+28
+	.byte F#3
+	.byte NLen+14
 	.byte F3
-	.byte $90
 	.byte NRest
 	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte D3
-	.byte NLen+48
-	.byte E3
-	.byte $90
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte A2
-	.byte NLen+48
 	.byte F3
-	.byte $90
 	.byte NRest
 	.byte NRest
+	.byte NLen+28
+	.byte F3
+	.byte NLen+14
+	.byte F#3
 	.byte NRest
 	.byte NRest
-	.byte D3
-	.byte NLen+48
-	.byte E3
-	.byte $90
-	.byte D3
+	.byte F#3
 	.byte NRest
 	.byte NRest
-	.byte D3
-	.byte NRest
-	.byte NRest
-	.byte D3
-	.byte NRest
-	.byte $25
-	.byte NRest
-	.byte NRest
-	.byte $25
-	.byte NRest
-	.byte NRest
-	.byte $25
-	.byte NRest
-	.byte D3
-	.byte NRest
-	.byte NRest
-	.byte D3
-	.byte NRest
-	.byte NRest
-	.byte D3
-	.byte NRest
-	.byte $C0
-	.byte $25
-	.byte $90
-	.byte NRest
-	.byte NRest
-	.byte NRest
+	.byte NLen+28
+	.byte F#3
+	.byte NLen+56
+	.byte F3
 	.byte NRest
 	.byte $F4
 	.word ForestofIllusion_P2Loop
 	.byte $FF
 ForestofIllusion_Tri:
 ForestofIllusion_TriLoop:
-	.byte Transpose
-	.byte $03
-	.byte DutySet
-	.byte $5B
-	.byte PitchSet
-	.byte $39
-	.byte VolSet
-	.byte $11
-	.byte $A0
+	.byte Transpose, $00
+	.byte DutySet, $5B
+	.byte PitchSet, $39
+	.byte VolSet, $11
+	.byte SongLoop,2
+	.byte NLen+28
+	.byte G#2
+	.byte D#3
+	.byte NLen+14
+	.byte D#4
+	.byte NLen+42
+	.byte G#4
+	.byte NLen+28
+	.byte G2
+	.byte G3
+	.byte NLen+14
+	.byte A#4
+	.byte NLen+42
+	.byte B4
+	.byte SongLoopEnd
+	.byte Transpose, $0C
+	.byte NLen+14
+	.byte A#3
+	.byte NRest
+	.byte NRest
+	.byte A#3
+	.byte NRest
+	.byte NRest
+	.byte NLen+28
+	.byte A#3
+	.byte NLen+14
 	.byte A3
-	.byte E4
-	.byte $C0
-	.byte $39
-	.byte $A0
-	.byte G#3
-	.byte E4
-	.byte $90
 	.byte NRest
 	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte $A0
 	.byte A3
-	.byte E4
-	.byte $C0
-	.byte $39
-	.byte $A0
-	.byte G#3
-	.byte E4
-	.byte $90
 	.byte NRest
 	.byte NRest
+	.byte NLen+28
+	.byte A3
+	.byte NLen+14
+	.byte A#3
 	.byte NRest
 	.byte NRest
-	.byte D3
+	.byte A#3
 	.byte NRest
 	.byte NRest
-	.byte D3
-	.byte NRest
-	.byte NRest
-	.byte D3
-	.byte NRest
-	.byte $25
-	.byte NRest
-	.byte NRest
-	.byte $25
-	.byte NRest
-	.byte NRest
-	.byte $25
-	.byte NRest
-	.byte D3
-	.byte NRest
-	.byte NRest
-	.byte D3
-	.byte NRest
-	.byte NRest
-	.byte D3
-	.byte NRest
-	.byte $C0
-	.byte $25
-	.byte $90
-	.byte NRest
-	.byte NRest
-	.byte NRest
+	.byte NLen+28
+	.byte A#3
+	.byte NLen+56
+	.byte A3
 	.byte NRest
 	.byte $F4
 	.word ForestofIllusion_TriLoop

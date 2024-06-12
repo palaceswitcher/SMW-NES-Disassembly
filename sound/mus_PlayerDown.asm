@@ -1,92 +1,87 @@
 PlayerDown_P1:
-	.byte $F5
-	.byte $01
-	.byte Transpose
-	.byte $0C
-	.byte DutySet
-	.byte $38
-	.byte PitchSet
-	.byte $39
-	.byte VolSet
-	.byte $41
-	.byte $81
-	.byte G5
+	.byte SongSpeed, $01
+	.byte Transpose, $00
+	.byte DutySet, $38
+	.byte PitchSet, $39
+	.byte VolSet, $41
+	.byte NLen+2
+	.byte E5
+	.byte D5
+	.byte E5
+	.byte NLen+1
 	.byte NRest
-	.byte B5
-	.byte $87
+	.byte NLen+7
 	.byte NRest
 	.byte NRest
 	.byte NRest
-	.byte $81
-	.byte NRest
-	.byte Transpose
-	.byte $0C
-	.byte DutySet
-	.byte NRest
-	.byte PitchSet
-	.byte NRest
-	.byte VolSet
-	.byte $53
-	.byte $87
-	.byte $33
+	.byte Transpose, $0C
+	.byte DutySet, $79
+	.byte PitchSet, 0
+	.byte VolSet, $78
+	.byte D#4
 	.byte E4
-	.byte $33
+	.byte D#4
 	.byte E4
 	.byte C4
-	.byte $2B
-	.byte A3
-	.byte C4
+	.byte G3
 	.byte G#3
 	.byte A3
+	.byte D#3
 	.byte E3
 	.byte C3
-	.byte D3
-	.byte C3
-	.byte D3
-	.byte E3
-	.byte C3
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte DutySet
-	.byte $17
-	.byte PitchSet
-	.byte $16
-	.byte VolSet
-	.byte $14
-	.byte $9C
-	.byte F2
+	.byte G2
+	.byte G#2
+	.byte A2
+	.byte D#2
+	.byte E2
+	.byte NLen+28
+	.byte C2
+	.byte NLen+21
+	.byte C1
 	.byte $FF
 PlayerDown_P2:
-	.byte Transpose
+	.byte Transpose, 0
+	.byte DutySet, $79
+	.byte PitchSet, 0
+	.byte VolSet, $78
+	.byte NLen+28
 	.byte NRest
-	.byte DutySet
-	.byte $12
-	.byte PitchSet
-	.byte NRest
-	.byte VolSet
-	.byte $11
-	.byte $87
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte $8E
+	.byte NLen+14
 	.byte C2
 	.byte C3
-	.byte $16
-	.byte $22
-	.byte $15
+	.byte A#1
+	.byte A#2
+	.byte A1
 	.byte A2
-	.byte $9C
-	.byte $13
-	.byte $87
+	.byte G1
+	.byte G2
+	.byte C1
+	.byte NRest
+	.byte NLen+28
+	.byte C1
+	.byte $FF
+PlayerDown_Tri:
+	.byte Transpose, 12
+	.byte DutySet, $79
+	.byte PitchSet, 0
+	.byte VolSet, $78
+	.byte NLen+28
+	.byte NRest
+	.byte NLen+14
 	.byte C2
+	.byte E3
+	.byte A#1
+	.byte D3
+	.byte A1
+	.byte C3
+	.byte G1
+	.byte B2
+	.byte NLen+7
+	.byte G2
 	.byte NRest
 	.byte NRest
 	.byte NRest
-	.byte $9C
-	.byte F2
+	.byte G1
 	.byte $FF
 PlayerDown_End:
 	.byte $FF
@@ -96,7 +91,7 @@ PlayerDown_Footer:
 	.byte $01
 	.word PlayerDown_P2
 	.byte $02
-	.word PlayerDown_End
+	.word PlayerDown_Tri
 	.byte $03
 	.word PlayerDown_End
 	.byte $04

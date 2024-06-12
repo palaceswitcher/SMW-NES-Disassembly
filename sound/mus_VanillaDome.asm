@@ -1,356 +1,193 @@
 VanillaDome_P1Tri:
-	.byte $F5
-	.byte $01
-	.byte Transpose
-	.byte $05
-	.byte DutySet
-	.byte $12
-	.byte PitchSet
-	.byte NRest
-	.byte VolSet
-	.byte $11
-	.byte $94
-	.byte $15
-	.byte NRest
-	.byte $9E
-	.byte NRest
-	.byte $8A
-	.byte $15
-	.byte $94
-	.byte $15
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte C2
-	.byte NRest
-	.byte $9E
-	.byte NRest
-	.byte $8A
-	.byte C2
-	.byte $94
-	.byte C2
-	.byte NRest
-	.byte NRest
-	.byte NRest
+	.byte SongSpeed, $01
+	.byte DutySet, $12
+	.byte PitchSet, $00
+	.byte VolSet, $11
+	.byte Transpose, $05
+	.byte SegCall
+	.word VanillaDome_P1TriSub
+	.byte Transpose, $08
+	.byte SegCall
+	.word VanillaDome_P1TriSub
 VanillaDome_P1TriLoop:
-	.byte $94
-	.byte $15
-	.byte NRest
-	.byte $9E
-	.byte NRest
-	.byte $8A
-	.byte $15
-	.byte $94
-	.byte $15
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte C2
-	.byte NRest
-	.byte $9E
-	.byte NRest
-	.byte $8A
-	.byte C2
-	.byte $94
-	.byte C2
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte $15
-	.byte NRest
-	.byte $9E
-	.byte NRest
-	.byte $8A
-	.byte $15
-	.byte $94
-	.byte $15
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte C2
-	.byte NRest
-	.byte $9E
-	.byte NRest
-	.byte $8A
-	.byte C2
-	.byte $94
-	.byte C2
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte $1B
-	.byte NRest
-	.byte $9E
-	.byte NRest
-	.byte $8A
-	.byte $1B
-	.byte $94
-	.byte $1B
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte $14
-	.byte NRest
-	.byte $9E
-	.byte NRest
-	.byte $8A
-	.byte $14
-	.byte $94
-	.byte $14
-	.byte NRest
-	.byte NRest
-	.byte NRest
+	.byte SongLoop, 2
+	.byte Transpose, $05
+	.byte SegCall
+	.word VanillaDome_P1TriSub
+	.byte Transpose, $08
+	.byte SegCall
+	.word VanillaDome_P1TriSub
+	.byte SongLoopEnd
+	.byte Transpose, $0B
+	.byte SegCall
+	.word VanillaDome_P1TriSub
+	.byte Transpose, $04
+	.byte SegCall
+	.word VanillaDome_P1TriSub
 	.byte $F4
 	.word VanillaDome_P1TriLoop
 	.byte $FF
+VanillaDome_P1TriSub:
+	.byte NLen+20
+	.byte A1
+	.byte NRest
+	.byte NRest
+	.byte NLen+5
+	.byte A1
+	.byte NRest
+	.byte A1
+	.byte NRest
+	.byte NLen+80
+	.byte NRest
+	.byte SegEnd
 VanillaDome_P2:
-	.byte Transpose
-	.byte $1D
-	.byte DutySet
-	.byte $5B
-	.byte PitchSet
-	.byte $39
-	.byte VolSet
-	.byte $11
-	.byte $94
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
+	.byte DutySet, $5B
+	.byte PitchSet, $39
+	.byte VolSet, $11
+	.byte NLen+80
 	.byte NRest
 	.byte NRest
 	.byte NRest
 	.byte NRest
 VanillaDome_P2Loop:
-	.byte $85
-	.byte F4
-	.byte D4
-	.byte A3
-	.byte $A8
-	.byte F4
-	.byte $85
-	.byte NRest
-	.byte $D0
-	.byte D4
-	.byte $94
-	.byte NRest
-	.byte $85
+	.byte SongLoop, 2
+	.byte Transpose, $1d
+	.byte SegCall
+	.word VanillaDome_P2Sub
+	.byte NLen+5
+	.byte G3
+	.byte NLen+35
 	.byte G4
-	.byte E4
-	.byte C4
-	.byte $A8
+	.byte Transpose, $1c
+	.byte SegCall
+	.word VanillaDome_P2Sub
+	.byte NLen+5
+	.byte G3
+	.byte NLen+35
 	.byte G4
-	.byte $85
+	.byte SongLoopEnd
+	.byte Transpose, $1b
+	.byte SegCall
+	.word VanillaDome_P2Sub
+	.byte NLen+40
 	.byte NRest
-	.byte $D0
-	.byte E4
-	.byte $94
-	.byte NRest
-	.byte $85
-	.byte F4
-	.byte D4
-	.byte A3
-	.byte $A8
-	.byte F4
-	.byte $85
-	.byte NRest
-	.byte $D0
-	.byte D4
-	.byte $94
-	.byte NRest
-	.byte $85
-	.byte G4
-	.byte E4
-	.byte C4
-	.byte $A8
-	.byte G4
-	.byte $85
-	.byte NRest
-	.byte $D0
-	.byte E4
-	.byte $94
-	.byte NRest
-	.byte $85
-	.byte $33
-	.byte C4
-	.byte G#3
-	.byte $BC
-	.byte $33
-	.byte $85
-	.byte NRest
-	.byte $94
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte $85
-	.byte D4
-	.byte B3
-	.byte $2B
-	.byte $BC
-	.byte D4
-	.byte $85
-	.byte NRest
-	.byte $94
-	.byte NRest
-	.byte NRest
-	.byte NRest
+	.byte Transpose, $1a
+	.byte SegCall
+	.word VanillaDome_P2Sub
+	.byte NLen+40
 	.byte NRest
 	.byte $F4
 	.word VanillaDome_P2Loop
 	.byte $FF
+VanillaDome_P2Sub:
+	.byte NLen+5
+	.byte G3
+	.byte C#3
+	.byte G2
+	.byte C#2
+	.byte G2
+	.byte C#3
+	.byte NLen+80
+	.byte G3
+	.byte NLen+10
+	.byte NRest
+	.byte SegEnd
 VanillaDome_Noise:
-	.byte Transpose
-	.byte NRest
-	.byte DutySet
-	.byte NRest
-	.byte PitchSet
-	.byte NRest
-	.byte VolSet
-	.byte $53
-	.byte $94
-	.byte B3
-	.byte $8A
-	.byte C3
-	.byte C3
-	.byte $9E
-	.byte F3
-	.byte $8A
-	.byte C3
-	.byte B3
-	.byte F3
-	.byte C3
-	.byte C3
-	.byte $A8
-	.byte B3
-	.byte $94
-	.byte B3
-	.byte $8A
-	.byte C3
-	.byte C3
-	.byte $9E
-	.byte F3
-	.byte $8A
-	.byte C3
-	.byte B3
-	.byte F3
-	.byte B3
-	.byte B3
-	.byte $A8
-	.byte F3
+	.byte Transpose, $00
+	.byte DutySet, $00
+	.byte PitchSet, $00
+	.byte VolSet, $53
+	.byte SegCall
+	.word VanillaDome_NoiseSub
 VanillaDome_NoiseLoop:
-	.byte $94
-	.byte B3
-	.byte $8A
-	.byte C3
-	.byte C3
-	.byte $9E
-	.byte F3
-	.byte $8A
-	.byte C3
-	.byte B3
-	.byte F3
-	.byte C3
-	.byte C3
-	.byte $A8
-	.byte B3
-	.byte $94
-	.byte B3
-	.byte $8A
-	.byte C3
-	.byte C3
-	.byte $9E
-	.byte F3
-	.byte $8A
-	.byte C3
-	.byte B3
-	.byte F3
-	.byte B3
-	.byte B3
-	.byte $A8
-	.byte F3
-	.byte $94
-	.byte B3
-	.byte $8A
-	.byte C3
-	.byte C3
-	.byte $9E
-	.byte F3
-	.byte $8A
-	.byte C3
-	.byte B3
-	.byte F3
-	.byte C3
-	.byte C3
-	.byte $A8
-	.byte B3
-	.byte $94
-	.byte B3
-	.byte $8A
-	.byte C3
-	.byte C3
-	.byte $9E
-	.byte F3
-	.byte $8A
-	.byte C3
-	.byte B3
-	.byte F3
-	.byte B3
-	.byte B3
-	.byte $A8
-	.byte F3
-	.byte $94
-	.byte B3
-	.byte $8A
-	.byte C3
-	.byte C3
-	.byte $9E
-	.byte F3
-	.byte $8A
-	.byte C3
-	.byte B3
-	.byte F3
-	.byte C3
-	.byte C3
-	.byte $94
-	.byte B3
-	.byte $8A
-	.byte C3
-	.byte C3
-	.byte $94
-	.byte B3
-	.byte $8A
-	.byte C3
-	.byte C3
-	.byte $9E
-	.byte F3
-	.byte $8A
-	.byte C3
-	.byte $85
-	.byte F3
-	.byte F3
-	.byte $8A
-	.byte B3
-	.byte B3
-	.byte $85
-	.byte F3
-	.byte F3
-	.byte $8A
-	.byte B3
-	.byte F3
-	.byte $94
-	.byte F3
+	.byte SegCall
+	.word VanillaDome_NoiseSub
+	.byte SegCall
+	.word VanillaDome_NoiseSub
+	.byte $1e
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $29
+	.byte $20
+	.byte $1e
+	.byte $1e
+	.byte $20
+	.byte $1e
+	.byte $20
+	.byte $1e
+	.byte $29
+	.byte $20
+	.byte $20
+	.byte $1e
+	.byte $1e
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $29
+	.byte $20
+	.byte $1e
+	.byte $1e
+	.byte $20
+	.byte NLen+2
+	.byte $29
+	.byte NLen+8
+	.byte $29
+	.byte NLen+10
+	.byte $1e
+	.byte $1e
+	.byte NLen+2
+	.byte $29
+	.byte NLen+8
+	.byte $29
+	.byte NLen+10
+	.byte $1e
+	.byte NLen+2
+	.byte $29
+	.byte NLen+8
+	.byte $29
+	.byte NLen+2
+	.byte $29
+	.byte NLen+8
+	.byte $29
 	.byte $F4
 	.word VanillaDome_NoiseLoop
 	.byte $FF
+VanillaDome_NoiseSub:
+	.byte NLen+10
+	.byte $1e
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $29
+	.byte $20
+	.byte $1e
+	.byte $1e
+	.byte $20
+	.byte $1e
+	.byte $20
+	.byte $1e
+	.byte $29
+	.byte $20
+	.byte $20
+	.byte $1e
+	.byte $1e
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $29
+	.byte $20
+	.byte $1e
+	.byte $1e
+	.byte $20
+	.byte $1e
+	.byte $1e
+	.byte $1e
+	.byte $29
+	.byte $20
+	.byte $20
+	.byte $1e
+	.byte SegEnd
 VanillaDome_End:
 	.byte $FF
 VanillaDome_Footer:

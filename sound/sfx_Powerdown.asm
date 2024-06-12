@@ -1,14 +1,9 @@
 Powerdown_P1Noise:
-	.byte $F5
-	.byte $01
-	.byte Transpose
-	.byte $07
-	.byte DutySet
-	.byte NRest
-	.byte PitchSet
-	.byte $64
-	.byte VolSet
-	.byte $11
+	.byte SongSpeed, $01
+	.byte Transpose, $07
+	.byte DutySet, $00
+	.byte PitchSet, $64
+	.byte VolSet, $11
 	.byte $85
 	.byte G2
 	.byte NRest

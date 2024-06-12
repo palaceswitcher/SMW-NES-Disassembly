@@ -1,14 +1,10 @@
 Underwater_P1:
-	.byte $F5
-	.byte $01
-	.byte Transpose
-	.byte $05
-	.byte DutySet
-	.byte $07
+	.byte SongSpeed, $01
+	.byte Transpose, $05
+	.byte DutySet, $07
 	.byte PitchSet
 	.byte $05
-	.byte VolSet
-	.byte $02
+	.byte VolSet, $02
 	.byte $AA
 	.byte A3
 	.byte $9C
@@ -47,14 +43,11 @@ Underwater_P1Loop:
 	.byte NRest
 	.byte NRest
 	.byte NRest
-	.byte Transpose
-	.byte $11
-	.byte DutySet
-	.byte $07
+	.byte Transpose, $11
+	.byte DutySet, $07
 	.byte PitchSet
 	.byte $05
-	.byte VolSet
-	.byte $02
+	.byte VolSet, $02
 	.byte $AA
 	.byte E3
 	.byte $9C
@@ -218,14 +211,11 @@ Underwater_P1Loop:
 	.word Underwater_P1Loop
 	.byte $FF
 Underwater_P2:
-	.byte Transpose
-	.byte $05
-	.byte DutySet
-	.byte $07
+	.byte Transpose, $05
+	.byte DutySet, $07
 	.byte PitchSet
 	.byte $05
-	.byte VolSet
-	.byte $02
+	.byte VolSet, $02
 	.byte $AA
 	.byte E3
 	.byte $9C
@@ -239,12 +229,9 @@ Underwater_P2:
 	.byte $AA
 	.byte A2
 Underwater_P2Loop:
-	.byte DutySet
-	.byte $17
-	.byte PitchSet
-	.byte $16
-	.byte VolSet
-	.byte $15
+	.byte DutySet, $17
+	.byte PitchSet, $16
+	.byte VolSet, $15
 	.byte $8E
 	.byte NRest
 	.byte C3
@@ -320,12 +307,10 @@ Underwater_P2Loop:
 	.byte NRest
 	.byte Transpose
 	.byte F2
-	.byte DutySet
-	.byte $5B
+	.byte DutySet, $5B
 	.byte PitchSet
 	.byte $39
-	.byte VolSet
-	.byte $11
+	.byte VolSet, $11
 	.byte $AA
 	.byte E3
 	.byte $9C
@@ -373,14 +358,10 @@ Underwater_P2Loop:
 	.byte NRest
 	.byte NRest
 	.byte NRest
-	.byte Transpose
-	.byte $05
-	.byte DutySet
-	.byte $17
-	.byte PitchSet
-	.byte $16
-	.byte VolSet
-	.byte $15
+	.byte Transpose, $05
+	.byte DutySet, $17
+	.byte PitchSet, $16
+	.byte VolSet, $15
 	.byte NRest
 	.byte F3
 	.byte F3
@@ -457,14 +438,11 @@ Underwater_P2Loop:
 	.word Underwater_P2Loop
 	.byte $FF
 Underwater_Tri:
-	.byte Transpose
-	.byte $05
-	.byte DutySet
-	.byte $5B
+	.byte Transpose, $05
+	.byte DutySet, $5B
 	.byte PitchSet
 	.byte $39
-	.byte VolSet
-	.byte $11
+	.byte VolSet, $11
 	.byte $8E
 	.byte NRest
 	.byte NRest

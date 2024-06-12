@@ -1,14 +1,9 @@
 Victory_P1:
-	.byte $F5
-	.byte $01
-	.byte Transpose
-	.byte $05
-	.byte DutySet
-	.byte $12
-	.byte PitchSet
-	.byte NRest
-	.byte VolSet
-	.byte $11
+	.byte SongSpeed, $01
+	.byte Transpose, $05
+	.byte DutySet, $12
+	.byte PitchSet, $00
+	.byte VolSet, $11
 	.byte NLen+24
 	.byte C4
 	.byte C4
@@ -46,14 +41,10 @@ Victory_P1:
 	.byte NRest
 	.byte $FF
 Victory_P2:
-	.byte Transpose
-	.byte $05
-	.byte DutySet
-	.byte $12
-	.byte PitchSet
-	.byte NRest
-	.byte VolSet
-	.byte $11
+	.byte Transpose, $05
+	.byte DutySet, $12
+	.byte PitchSet, $00
+	.byte VolSet, $11
 	.byte NLen+24
 	.byte C3
 	.byte C3
@@ -79,14 +70,10 @@ Victory_P2:
 	.byte C2
 	.byte $FF
 Victory_Tri:
-	.byte Transpose
-	.byte $05
-	.byte DutySet
-	.byte $12
-	.byte PitchSet
-	.byte NRest
-	.byte VolSet
-	.byte $11
+	.byte Transpose, $05
+	.byte DutySet, $12
+	.byte PitchSet, $00
+	.byte VolSet, $11
 	.byte NLen+24
 	.byte C3
 	.byte C3
@@ -112,14 +99,11 @@ Victory_Tri:
 	.byte C3
 	.byte $FF
 Victory_Noise:
-	.byte Transpose
-	.byte $00
-	.byte DutySet
-	.byte $00
+	.byte Transpose, $00
+	.byte DutySet, $00
 	.byte PitchSet
 	.byte $00
-	.byte VolSet
-	.byte $53
+	.byte VolSet, $53
 	.byte NLen+12
 	.byte NRest
 	.byte NRest

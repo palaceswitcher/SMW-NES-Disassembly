@@ -1,14 +1,10 @@
 Underground_P1:
-	.byte $F5
-	.byte $01
-	.byte Transpose
-	.byte $05
-	.byte DutySet
-	.byte $5B
+	.byte SongSpeed, $01
+	.byte Transpose, $05
+	.byte DutySet, $5B
 	.byte PitchSet
 	.byte $39
-	.byte VolSet
-	.byte $11
+	.byte VolSet, $11
 	.byte NLen+24
 	.byte NRest
 	.byte NRest
@@ -148,14 +144,10 @@ Underground_P1Loop:
 	.byte $FF
 Underground_Tri:
 Underground_TriLoop:
-	.byte Transpose
-	.byte $05
-	.byte DutySet
-	.byte $38
-	.byte PitchSet
-	.byte $39
-	.byte VolSet
-	.byte E5
+	.byte Transpose, $05
+	.byte DutySet, $38
+	.byte PitchSet, $39
+	.byte VolSet, $40
 	.byte $86
 	.byte A2
 	.byte NRest
@@ -178,14 +170,10 @@ Underground_TriLoop:
 	.byte $FF
 Underground_Noise:
 Underground_NoiseLoop:
-	.byte Transpose
-	.byte $01
-	.byte DutySet
-	.byte NRest
-	.byte PitchSet
-	.byte NRest
-	.byte VolSet
-	.byte $53
+	.byte Transpose, $01
+	.byte DutySet, $00
+	.byte PitchSet, $00
+	.byte VolSet, $53
 	.byte NLen+12
 	.byte B3
 	.byte $F4

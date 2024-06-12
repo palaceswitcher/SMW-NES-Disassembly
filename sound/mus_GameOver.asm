@@ -1,35 +1,28 @@
 GameOver_P1:
-	.byte $F5
-	.byte $01
-	.byte Transpose
-	.byte $11
-	.byte DutySet
-	.byte $5B
+	.byte SongSpeed, $01
+	.byte Transpose, $11
+	.byte DutySet, $5B
 	.byte PitchSet
 	.byte $39
-	.byte VolSet
-	.byte $11
+	.byte VolSet, $11
 	.byte $D0
 	.byte D3
 	.byte $A8
 	.byte D3
 	.byte B2
 	.byte B2
-	.byte $94
+	.byte NLen+20
 	.byte D3
 	.byte E3
 	.byte $D0
 	.byte D4
 	.byte $FF
 GameOver_P2:
-	.byte Transpose
-	.byte $11
-	.byte DutySet
-	.byte $5B
+	.byte Transpose, $11
+	.byte DutySet, $5B
 	.byte PitchSet
 	.byte $39
-	.byte VolSet
-	.byte $11
+	.byte VolSet, $11
 	.byte $85
 	.byte NRest
 	.byte $D0
@@ -38,7 +31,7 @@ GameOver_P2:
 	.byte E3
 	.byte D3
 	.byte D3
-	.byte $94
+	.byte NLen+20
 	.byte E3
 	.byte A3
 	.byte $D0

@@ -1,2 +1,2 @@
-asm6 smw.asm smw.nes
+asm6 -l smw.asm smw.nes
 pause

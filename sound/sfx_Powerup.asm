@@ -1,30 +1,50 @@
 Powerup_Tri:
 	.byte SongSpeed, 1
-	.byte Transpose, 0
-	.byte DutySet, $5B
+	.byte Transpose, $0C
 	.byte PitchSet, $39
-	.byte VolSet, $11
-	.byte $82
-	.byte G4
-	.byte NRest
-	.byte G4
-	.byte NRest
-	.byte $84
-	.byte G4
-	.byte $82
-	.byte A4
-	.byte NRest
-	.byte A4
-	.byte NRest
-	.byte $84
-	.byte A4
-	.byte $82
-	.byte B4
-	.byte NRest
-	.byte B4
-	.byte NRest
-	.byte $84
-	.byte B4
+	.byte VolSet, $7f
+	.byte NLen+1
+	.byte Transpose, $04
+	.byte G#4
+	.byte NLen+2
+	.byte D#4
+	.byte G#4
+	.byte C5
+	.byte D#5
+	.byte NLen+1
+	.byte G#5
+	.byte NLen+2
+	.byte D#5
+	.byte Transpose, $0C
+	.byte G#3
+	.byte C4
+	.byte D#4
+	.byte NLen+1
+	.byte G#4
+	.byte NLen+2
+	.byte D#4
+	.byte G#4
+	.byte C5
+	.byte D#5
+	.byte NLen+1
+	.byte G#5
+	.byte NLen+2
+	.byte D#5
+	.byte Transpose, $0E
+	.byte G#3
+	.byte C4
+	.byte D#4
+	.byte NLen+1
+	.byte G#4
+	.byte NLen+2
+	.byte D#4
+	.byte G#4
+	.byte C5
+	.byte D#5
+	.byte NLen+1
+	.byte G#5
+	.byte NLen+2
+	.byte D#5
 	.byte $FF
 Powerup_Footer:
 	.byte $82

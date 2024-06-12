@@ -58,9 +58,9 @@ tbl10_8000:
 	dw ofs_8337
 	dw ofs_833F
 	dw ofs_8343
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
+	dw ofs_PitchVOB3A
+	dw ofs_VolInv3B
+	dw ofs_DutyInv3C
 	dw ofs_8100
 	dw ofs_8100
 	dw ofs_8100
@@ -119,15 +119,15 @@ tbl10_8000:
 	dw ofs_85A0
 	dw ofs_85A8
 	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
+	dw Vol_Hats
+	dw Vol_HonkyTonk
+	dw Duty_HonkyTonk
+	dw SquarePitchSFX_Coin
 	dw ofs_85B3
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
+	dw JumpSFXPitch
+	dw SquareVolSFX_1UP
+	dw SquareVolSFX_Pause
+	dw TriangleSFX
 	.include sound/instruments.asm
 jmp_58_85BE:
 	LDA SFXRegister
@@ -1467,4 +1467,4 @@ NotePitchTable:
 	.include sound/mus_Castle.asm
 	.include sound/mus_Underwater.asm
 	.include sound/mus_Ending.asm
-	.incbin prg/padding/padding058_59.bin
+;	.incbin prg/padding/padding058_59.bin

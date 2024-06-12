@@ -1,22 +1,14 @@
 YoshiFireSpit_Noise:
-	.byte $F5
-	.byte $03
-	.byte Transpose
-	.byte C2
-	.byte DutySet
-	.byte $50
-	.byte PitchSet
-	.byte $51
-	.byte VolSet
-	.byte $52
+	.byte SongSpeed, $03
+	.byte Transpose, $18
+	.byte DutySet, $50
+	.byte PitchSet, $51
+	.byte VolSet, $52
 	.byte $8A
 	.byte C2
-	.byte DutySet
-	.byte $12
-	.byte PitchSet
-	.byte NRest
-	.byte VolSet
-	.byte $11
+	.byte DutySet, $12
+	.byte PitchSet, $00
+	.byte VolSet, $11
 	.byte $8F
 	.byte C3
 	.byte $FF

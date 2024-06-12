@@ -59,6 +59,11 @@ musEnding = $2F
 
 ;Music Note IDs
 NRest = $00
+C1 = $0C
+C#1 = $0D
+D1 = $0E
+D#1 = $0F
+E1 = $10
 F1 = $11
 F#1 = $12
 G1 = $13
@@ -131,6 +136,8 @@ C7 = $54
 NLen = $80
 SegCall = $F0
 SegEnd = $F1
+SongLoop = $f2
+SongLoopEnd = $f3
 SongJump = $F4
 SongSpeed = $F5	;Equivalent to Famitracker speed
 Transpose = $F6

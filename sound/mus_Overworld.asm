@@ -1,14 +1,9 @@
 Overworld_P1:
-	.byte $F5
-	.byte $01
-	.byte Transpose
-	.byte $05
-	.byte DutySet
-	.byte $12
-	.byte PitchSet
-	.byte NRest
-	.byte VolSet
-	.byte $11
+	.byte SongSpeed, $01
+	.byte Transpose, $05
+	.byte DutySet, $12
+	.byte PitchSet, $00
+	.byte VolSet, $11
 	.byte NLen+24
 	.byte A3
 	.byte $92
@@ -21,14 +16,10 @@ Overworld_P1:
 	.byte NLen+24
 	.byte D3
 Overworld_P1Loop:
-	.byte Transpose
-	.byte $11
-	.byte DutySet
-	.byte NRest
-	.byte PitchSet
-	.byte NRest
-	.byte VolSet
-	.byte $33
+	.byte Transpose, $11
+	.byte DutySet, $00
+	.byte PitchSet, $00
+	.byte VolSet, $33
 	.byte $92
 	.byte $1C
 	.byte $86
@@ -60,8 +51,7 @@ Overworld_P1Loop:
 	.byte F2
 	.byte $A4
 	.byte F2
-	.byte Transpose
-	.byte $05
+	.byte Transpose, $05
 	.byte $92
 	.byte E3
 	.byte $86
@@ -330,12 +320,9 @@ Overworld_P1Loop:
 	.byte NRest
 	.byte NRest
 	.byte NRest
-	.byte DutySet
-	.byte NRest
-	.byte PitchSet
-	.byte NRest
-	.byte VolSet
-	.byte $53
+	.byte DutySet, $00
+	.byte PitchSet, $00
+	.byte VolSet, $53
 	.byte C3
 	.byte A2
 	.byte C3
@@ -386,14 +373,11 @@ Overworld_P1Loop:
 	.word Overworld_P1Loop
 	.byte $FF
 Overworld_P2:
-	.byte Transpose
-	.byte $05
-	.byte DutySet
-	.byte $17
+	.byte Transpose, $05
+	.byte DutySet, $17
 	.byte PitchSet
 	.byte $16
-	.byte VolSet
-	.byte $14
+	.byte VolSet, $14
 	.byte NLen+24
 	.byte E3
 	.byte $92
@@ -406,12 +390,10 @@ Overworld_P2:
 	.byte NLen+24
 	.byte A2
 Overworld_P2Loop:
-	.byte DutySet
-	.byte $17
+	.byte DutySet, $17
 	.byte PitchSet
 	.byte $16
-	.byte VolSet
-	.byte $14
+	.byte VolSet, $14
 	.byte NLen+24
 	.byte C2
 	.byte $15
@@ -589,14 +571,11 @@ Overworld_P2Loop:
 	.word Overworld_P2Loop
 	.byte $FF
 Overworld_Tri:
-	.byte Transpose
-	.byte $11
-	.byte DutySet
-	.byte $17
+	.byte Transpose, $11
+	.byte DutySet, $17
 	.byte PitchSet
 	.byte $16
-	.byte VolSet
-	.byte $15
+	.byte VolSet, $15
 	.byte NLen+12
 	.byte NRest
 	.byte NRest

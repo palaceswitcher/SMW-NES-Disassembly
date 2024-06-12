@@ -1,21 +1,34 @@
 Block_Tri:
-	.byte $F5
-	.byte $01
-	.byte Transpose
+	.byte SongSpeed, $01
+	.byte Transpose, $00
+	.byte DutySet, $5B
+	.byte PitchSet, $39
+	.byte VolSet, $7f
+	.byte NLen+2
+	.byte D#4
+	.byte NLen+1
+	.byte A#4
 	.byte NRest
-	.byte DutySet
-	.byte $5B
-	.byte PitchSet
-	.byte $39
-	.byte VolSet
-	.byte $11
-	.byte NLen+3
-	.byte $2B
+	.byte B4
+	.byte E4
 	.byte NRest
-	.byte A3
+	.byte B4
 	.byte NRest
-	.byte B3
+	.byte C5
+	.byte F4
 	.byte NRest
+	.byte C5
+	.byte C#5
+	.byte NRest
+	.byte F#4
+	.byte NRest
+	.byte C#5
+	.byte D5
+	.byte NRest
+	.byte G4
+	.byte D5
+	.byte NRest
+	.byte D#5
 	.byte $FF
 Block_Footer:
 	.byte $82

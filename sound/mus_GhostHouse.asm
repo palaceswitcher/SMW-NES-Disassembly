@@ -1,15 +1,10 @@
 GhostHouse_P1:
 GhostHouse_P1Loop:
-	.byte $F5
-	.byte $01
-	.byte Transpose
-	.byte $1A
-	.byte DutySet
-	.byte NRest
-	.byte PitchSet
-	.byte NRest
-	.byte VolSet
-	.byte $33
+	.byte SongSpeed, $01
+	.byte Transpose, $1A
+	.byte DutySet, $00
+	.byte PitchSet, $00
+	.byte VolSet, $33
 	.byte $F0
 	.word GhostHouse_P1Seq
 	.byte $F0
@@ -76,8 +71,7 @@ GhostHouse_P1Loop:
 	.word GhostHouse_P1Seq2
 	.byte $F0
 	.word GhostHouse_P1Seq2
-	.byte Transpose
-	.byte $16
+	.byte Transpose, $16
 	.byte $F0
 	.word GhostHouse_P1Seq
 	.byte $F0
@@ -139,20 +133,17 @@ GhostHouse_P1Seq2:
 	.byte $FF
 GhostHouse_P2Tri:
 GhostHouse_P2TriLoop:
-	.byte Transpose
-	.byte $0E
+	.byte Transpose, $0E
 	.byte $F0
 	.word GhostHouse_P2Seq
 	.byte $F0
 	.word GhostHouse_P2Seq2
-	.byte Transpose
-	.byte $0C
+	.byte Transpose, $0C
 	.byte $F0
 	.word GhostHouse_P2Seq
 	.byte $F0
 	.word GhostHouse_P2Seq2
-	.byte Transpose
-	.byte $0A
+	.byte Transpose, $0A
 	.byte $F0
 	.word GhostHouse_P2Seq
 	.byte $F0
@@ -161,13 +152,11 @@ GhostHouse_P2TriLoop:
 	.word GhostHouse_P2TriLoop
 	.byte $FF
 GhostHouse_P2Seq:
-	.byte DutySet
-	.byte NRest
+	.byte DutySet, $00
 	.byte PitchSet
 	.byte $62
-	.byte VolSet
-	.byte $02
-	.byte $94
+	.byte VolSet, $02
+	.byte NLen+20
 	.byte NRest
 	.byte NRest
 	.byte NRest
@@ -203,12 +192,9 @@ GhostHouse_P2Seq:
 	.byte $F1
 	.byte $FF
 GhostHouse_P2Seq2:
-	.byte DutySet
-	.byte $12
-	.byte PitchSet
-	.byte NRest
-	.byte VolSet
-	.byte $11
+	.byte DutySet, $12
+	.byte PitchSet, $00
+	.byte VolSet, $11
 	.byte $D0
 	.byte C2
 	.byte $A8
@@ -217,7 +203,7 @@ GhostHouse_P2Seq2:
 	.byte $11
 	.byte $D0
 	.byte $15
-	.byte $94
+	.byte NLen+20
 	.byte NRest
 	.byte NRest
 	.byte $A8
@@ -227,7 +213,7 @@ GhostHouse_P2Seq2:
 	.byte $D0
 	.byte C2
 	.byte $17
-	.byte $94
+	.byte NLen+20
 	.byte NRest
 	.byte NRest
 	.byte $F1

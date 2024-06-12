@@ -2,23 +2,20 @@ Ending_P1:
 Ending_P1Loop:
 	.byte $F5
 	.byte $02
-	.byte Transpose
-	.byte $0C
-	.byte DutySet
-	.byte $5B
+	.byte Transpose, $0C
+	.byte DutySet, $5B
 	.byte PitchSet
 	.byte $39
-	.byte VolSet
-	.byte $11
+	.byte VolSet, $11
 	.byte $A4
 	.byte C3
 	.byte NLen+12
 	.byte C3
-	.byte $86
+	.byte NLen+6
 	.byte E3
 	.byte NLen+12
 	.byte E3
-	.byte $86
+	.byte NLen+6
 	.byte D3
 	.byte NLen+12
 	.byte C3
@@ -26,23 +23,23 @@ Ending_P1Loop:
 	.byte A2
 	.byte NLen+24
 	.byte A2
-	.byte $86
+	.byte NLen+6
 	.byte A2
 	.byte B2
 	.byte $A4
 	.byte G2
-	.byte $86
+	.byte NLen+6
 	.byte A2
 	.byte B2
 	.byte $A4
 	.byte C3
 	.byte NLen+12
 	.byte C3
-	.byte $86
+	.byte NLen+6
 	.byte E3
 	.byte NLen+12
 	.byte E3
-	.byte $86
+	.byte NLen+6
 	.byte D3
 	.byte NLen+12
 	.byte C3
@@ -50,7 +47,7 @@ Ending_P1Loop:
 	.byte A2
 	.byte NLen+24
 	.byte A2
-	.byte $86
+	.byte NLen+6
 	.byte A2
 	.byte B2
 	.byte NLen+48
@@ -58,11 +55,11 @@ Ending_P1Loop:
 	.byte NLen+24
 	.byte E3
 	.byte E3
-	.byte $86
+	.byte NLen+6
 	.byte $2B
 	.byte NLen+12
 	.byte $2B
-	.byte $86
+	.byte NLen+6
 	.byte F3
 	.byte NLen+12
 	.byte E3
@@ -74,11 +71,11 @@ Ending_P1Loop:
 	.byte C3
 	.byte NLen+12
 	.byte C3
-	.byte $86
+	.byte NLen+6
 	.byte E3
 	.byte NLen+12
 	.byte E3
-	.byte $86
+	.byte NLen+6
 	.byte D3
 	.byte NLen+12
 	.byte C3
@@ -86,23 +83,23 @@ Ending_P1Loop:
 	.byte A2
 	.byte NLen+24
 	.byte A2
-	.byte $86
+	.byte NLen+6
 	.byte A2
 	.byte B2
 	.byte $A4
 	.byte G2
-	.byte $86
+	.byte NLen+6
 	.byte A2
 	.byte B2
 	.byte $A4
 	.byte C3
 	.byte NLen+12
 	.byte C3
-	.byte $86
+	.byte NLen+6
 	.byte E3
 	.byte NLen+12
 	.byte E3
-	.byte $86
+	.byte NLen+6
 	.byte D3
 	.byte NLen+12
 	.byte C3
@@ -110,7 +107,7 @@ Ending_P1Loop:
 	.byte A2
 	.byte NLen+24
 	.byte A2
-	.byte $86
+	.byte NLen+6
 	.byte A2
 	.byte B2
 	.byte NLen+48
@@ -118,11 +115,11 @@ Ending_P1Loop:
 	.byte NLen+24
 	.byte E3
 	.byte E3
-	.byte $86
+	.byte NLen+6
 	.byte $2B
 	.byte NLen+12
 	.byte $2B
-	.byte $86
+	.byte NLen+6
 	.byte F3
 	.byte NLen+12
 	.byte E3
@@ -131,7 +128,7 @@ Ending_P1Loop:
 	.byte C3
 	.byte $A4
 	.byte B2
-	.byte $86
+	.byte NLen+6
 	.byte B2
 	.byte B2
 	.byte NLen+48
@@ -156,48 +153,46 @@ Ending_P2:
 Ending_P2Loop:
 	.byte Transpose
 	.byte NRest
-	.byte DutySet
-	.byte $17
+	.byte DutySet, $17
 	.byte PitchSet
 	.byte $16
-	.byte VolSet
-	.byte $14
+	.byte VolSet, $14
 	.byte NLen+12
 	.byte NRest
-	.byte $86
+	.byte NLen+6
 	.byte C3
 	.byte NRest
 	.byte A2
 	.byte NLen+12
 	.byte G2
-	.byte $86
+	.byte NLen+6
 	.byte NRest
-	.byte $89
+	.byte NLen+9
 	.byte $20
 	.byte NLen+3
 	.byte A2
-	.byte $86
+	.byte NLen+6
 	.byte $22
 	.byte NLen+24
 	.byte B2
-	.byte $86
+	.byte NLen+6
 	.byte NRest
 	.byte NLen+12
 	.byte NRest
-	.byte $86
+	.byte NLen+6
 	.byte D3
 	.byte NRest
 	.byte E3
 	.byte NLen+12
 	.byte F3
-	.byte $86
+	.byte NLen+6
 	.byte NRest
 	.byte B2
 	.byte C3
 	.byte D3
 	.byte NLen+12
 	.byte F3
-	.byte $86
+	.byte NLen+6
 	.byte $25
 	.byte NLen+12
 	.byte D3
@@ -206,14 +201,11 @@ Ending_P2Loop:
 	.byte $FF
 Ending_Tri:
 Ending_TriLoop:
-	.byte Transpose
-	.byte $0C
-	.byte DutySet
-	.byte $38
+	.byte Transpose, $0C
+	.byte DutySet, $38
 	.byte PitchSet
 	.byte $39
-	.byte VolSet
-	.byte $41
+	.byte VolSet, $41
 	.byte NLen+12
 	.byte C2
 	.byte C2
@@ -236,54 +228,50 @@ Ending_TriLoop:
 	.byte $FF
 Ending_Noise:
 Ending_NoiseLoop:
-	.byte Transpose
-	.byte $01
-	.byte DutySet
-	.byte NRest
-	.byte PitchSet
-	.byte NRest
-	.byte VolSet
-	.byte $53
+	.byte Transpose, $01
+	.byte DutySet, 0
+	.byte PitchSet, 0
+	.byte VolSet, $53
 	.byte NLen+12
 	.byte B3
-	.byte $86
+	.byte NLen+6
 	.byte C3
 	.byte C3
 	.byte NLen+12
 	.byte B3
-	.byte $86
+	.byte NLen+6
 	.byte C3
 	.byte C3
 	.byte NLen+12
 	.byte B3
-	.byte $86
+	.byte NLen+6
 	.byte C3
 	.byte C3
 	.byte NLen+12
 	.byte B3
-	.byte $86
+	.byte NLen+6
 	.byte C3
 	.byte C3
 	.byte NLen+12
 	.byte B3
-	.byte $86
+	.byte NLen+6
 	.byte C3
 	.byte C3
 	.byte NLen+12
 	.byte B3
-	.byte $86
+	.byte NLen+6
 	.byte C3
 	.byte C3
 	.byte NLen+3
 	.byte B3
 	.byte C3
-	.byte $86
+	.byte NLen+6
 	.byte B3
 	.byte B3
 	.byte NLen+3
 	.byte C3
 	.byte C3
-	.byte $86
+	.byte NLen+6
 	.byte B3
 	.byte C3
 	.byte NLen+12
