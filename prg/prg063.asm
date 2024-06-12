@@ -224,7 +224,7 @@ bra3_E1AA:
 	STA M90_PRG3 ;Swap bank 63 into the 4th PRG bank
 	LDA #%10000101
 	STA M90_IRQ_MODE ;Set mapper IRQ mode (Count down, normal prescaler, 3 bit prescaler, PPU A12 source/scanline counter)
-	LDA #%00111110
+	LDA #%10111010
 	STA M90_BANK_SIZE ;Set mapper bank sizes (8K PRG, 1K CHR)
 	LDA #$00
 	STA M90_NT0

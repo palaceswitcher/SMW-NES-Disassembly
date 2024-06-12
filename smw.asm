@@ -399,9 +399,9 @@ M90_CHR_CTRL1 = $D003
 ;4c010 - 4e00f
 ;unknown/unused tileset data
 
-.base $E000
+.base $6000
 .include prg/prg039.asm
-.pad $E000+8192
+.pad $8000
 ;4e010 - 5000f
 ;Collision code and tile behavior
 
@@ -469,7 +469,7 @@ M90_CHR_CTRL1 = $D003
 ;64010 - 6600f
 ;Various objects
 
-.base $E000
+.base $6000
 .include prg/prg051.asm
 ;66010 - 6800f
 ;Movement data for various objects
