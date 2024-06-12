@@ -41,42 +41,42 @@ bra2_A006:
 	INC $3C
 	RTS
 tbl2_A064:
-	.byte $00
-	.byte $00
-	.byte $04
-	.byte $08
+	db $00
+	db $00
+	db $04
+	db $08
 tbl2_A068:
-	.byte $41
+	db $41
 tbl2_A069:
-	.byte $42
+	db $42
 tbl2_A06A:
-	.byte $4B
+	db $4B
 tbl2_A06B:
-	.byte $4C
-	.byte $57
-	.byte $58
-	.byte $5F
-	.byte $60
-	.byte $5D
-	.byte $5E
-	.byte $65
-	.byte $66
+	db $4C
+	db $57
+	db $58
+	db $5F
+	db $60
+	db $5D
+	db $5E
+	db $65
+	db $66
 tbl2_A074:
-	.byte $03
+	db $03
 tbl2_A075:
-	.byte $03
+	db $03
 tbl2_A076:
-	.byte $03
+	db $03
 tbl2_A077:
-	.byte $03
-	.byte $03
-	.byte $03
-	.byte $02
-	.byte $02
-	.byte $00
-	.byte $03
-	.byte $00
-	.byte $00
+	db $03
+	db $03
+	db $03
+	db $02
+	db $02
+	db $00
+	db $03
+	db $00
+	db $00
 jmp_52_A080:
 	LDA #$35
 	STA M90_PRG0
@@ -576,8 +576,8 @@ bra2_A3A7:
 	ADC #$08
 	STA $2B
 	BCC bra2_A39F
-	.byte $B0
-	.byte $13
+	db $B0
+	db $13
 bra2_A3B7:
 	LDA $2B
 	LDY #$00
@@ -678,14 +678,14 @@ bra2_A455:
 bra2_A45A_RTS:
 	RTS
 tbl2_A45B:
-	.byte $00
-	.byte $00
-	.byte $08
-	.byte $10
-	.byte $18
-	.byte $20
-	.byte $28
-	.byte $30
+	db $00
+	db $00
+	db $08
+	db $10
+	db $18
+	db $20
+	db $28
+	db $30
 jmp_52_A463:
 	LDY #$00
 	LDA ($32),Y
@@ -1121,1066 +1121,1066 @@ loc2_A715:
 	STX $3C
 	RTS
 tbl2_A71F:
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $05
-	.byte $A0
-	.byte $8E
-	.byte $83
-	.byte $2C
-	.byte $85
-	.byte $F3
-	.byte $86
-	.byte $6A
-	.byte $8A
-	.byte $6A
-	.byte $8D
-	.byte $42
-	.byte $8E
-	.byte $8F
-	.byte $8E
-	.byte $DC
-	.byte $8E
-	.byte $B5
-	.byte $8F
-	.byte $3A
-	.byte $90
-	.byte $C8
-	.byte $90
-	.byte $B0
-	.byte $91
-	.byte $CE
-	.byte $92
-	.byte $E1
-	.byte $93
-	.byte $B8
-	.byte $94
-	.byte $00
-	.byte $80
-	.byte $00
-	.byte $80
-	.byte $66
-	.byte $96
-	.byte $66
-	.byte $96
-	.byte $99
-	.byte $82
-	.byte $99
-	.byte $82
-	.byte $88
-	.byte $84
-	.byte $88
-	.byte $84
-	.byte $88
-	.byte $84
-	.byte $88
-	.byte $84
-	.byte $CA
-	.byte $86
-	.byte $CA
-	.byte $86
-	.byte $AB
-	.byte $88
-	.byte $AB
-	.byte $88
-	.byte $13
-	.byte $89
-	.byte $13
-	.byte $89
-	.byte $13
-	.byte $89
-	.byte $13
-	.byte $89
-	.byte $13
-	.byte $89
-	.byte $13
-	.byte $89
-	.byte $8B
-	.byte $8B
-	.byte $8B
-	.byte $8B
-	.byte $52
-	.byte $8D
-	.byte $52
-	.byte $8D
-	.byte $52
-	.byte $8D
-	.byte $52
-	.byte $8D
-	.byte $52
-	.byte $8D
-	.byte $52
-	.byte $8D
-	.byte $52
-	.byte $8D
-	.byte $52
-	.byte $8D
-	.byte $52
-	.byte $8E
-	.byte $52
-	.byte $8E
-	.byte $F4
-	.byte $8F
-	.byte $F4
-	.byte $8F
-	.byte $F4
-	.byte $8F
-	.byte $F4
-	.byte $8F
-	.byte $F4
-	.byte $8F
-	.byte $F4
-	.byte $8F
-	.byte $00
-	.byte $80
-	.byte $00
-	.byte $80
-	.byte $9D
-	.byte $8B
-	.byte $C8
-	.byte $90
-	.byte $7F
-	.byte $91
-	.byte $7F
-	.byte $91
-	.byte $CA
-	.byte $93
-	.byte $CA
-	.byte $93
-	.byte $CA
-	.byte $93
-	.byte $CA
-	.byte $93
-	.byte $CA
-	.byte $93
-	.byte $CA
-	.byte $93
-	.byte $FD
-	.byte $98
-	.byte $FD
-	.byte $98
-	.byte $3D
-	.byte $8A
-	.byte $3D
-	.byte $8A
-	.byte $9D
-	.byte $8B
-	.byte $9D
-	.byte $8B
-	.byte $28
-	.byte $9C
-	.byte $FE
-	.byte $8C
-	.byte $0D
-	.byte $87
-	.byte $0D
-	.byte $87
-	.byte $C7
-	.byte $9D
-	.byte $C7
-	.byte $9D
-	.byte $9F
-	.byte $8A
-	.byte $9F
-	.byte $8A
-	.byte $9F
-	.byte $8A
-	.byte $9F
-	.byte $8A
-	.byte $F4
-	.byte $8F
-	.byte $F4
-	.byte $8F
-	.byte $4F
-	.byte $8E
-	.byte $4F
-	.byte $8E
-	.byte $4F
-	.byte $8E
-	.byte $4F
-	.byte $8E
-	.byte $25
-	.byte $83
-	.byte $25
-	.byte $83
-	.byte $8D
-	.byte $90
-	.byte $8D
-	.byte $90
-	.byte $A9
-	.byte $8F
-	.byte $A9
-	.byte $8F
-	.byte $A9
-	.byte $8F
-	.byte $A9
-	.byte $8F
-	.byte $8D
-	.byte $90
-	.byte $8D
-	.byte $90
-	.byte $8D
-	.byte $90
-	.byte $8D
-	.byte $90
-	.byte $A4
-	.byte $97
-	.byte $A4
-	.byte $97
-	.byte $64
-	.byte $91
-	.byte $64
-	.byte $91
-	.byte $64
-	.byte $91
-	.byte $64
-	.byte $91
-	.byte $C3
-	.byte $84
-	.byte $5E
-	.byte $90
-	.byte $00
-	.byte $9A
-	.byte $00
-	.byte $9A
-	.byte $DF
-	.byte $96
-	.byte $DF
-	.byte $96
-	.byte $66
-	.byte $89
-	.byte $A4
-	.byte $97
-	.byte $B7
-	.byte $93
-	.byte $B7
-	.byte $93
-	.byte $BF
-	.byte $9A
-	.byte $B7
-	.byte $93
-	.byte $E1
-	.byte $8C
-	.byte $79
-	.byte $83
-	.byte $CE
-	.byte $82
-	.byte $4F
-	.byte $8E
-	.byte $8D
-	.byte $98
-	.byte $8D
-	.byte $98
-	.byte $F7
-	.byte $9E
-	.byte $43
-	.byte $99
-	.byte $DF
-	.byte $95
-	.byte $DF
-	.byte $95
+	db $01
+	db $01
+	db $01
+	db $01
+	db $01
+	db $01
+	db $01
+	db $01
+	db $01
+	db $01
+	db $01
+	db $01
+	db $00
+	db $00
+	db $00
+	db $01
+	db $01
+	db $01
+	db $01
+	db $01
+	db $01
+	db $01
+	db $01
+	db $01
+	db $01
+	db $01
+	db $01
+	db $01
+	db $05
+	db $A0
+	db $8E
+	db $83
+	db $2C
+	db $85
+	db $F3
+	db $86
+	db $6A
+	db $8A
+	db $6A
+	db $8D
+	db $42
+	db $8E
+	db $8F
+	db $8E
+	db $DC
+	db $8E
+	db $B5
+	db $8F
+	db $3A
+	db $90
+	db $C8
+	db $90
+	db $B0
+	db $91
+	db $CE
+	db $92
+	db $E1
+	db $93
+	db $B8
+	db $94
+	db $00
+	db $80
+	db $00
+	db $80
+	db $66
+	db $96
+	db $66
+	db $96
+	db $99
+	db $82
+	db $99
+	db $82
+	db $88
+	db $84
+	db $88
+	db $84
+	db $88
+	db $84
+	db $88
+	db $84
+	db $CA
+	db $86
+	db $CA
+	db $86
+	db $AB
+	db $88
+	db $AB
+	db $88
+	db $13
+	db $89
+	db $13
+	db $89
+	db $13
+	db $89
+	db $13
+	db $89
+	db $13
+	db $89
+	db $13
+	db $89
+	db $8B
+	db $8B
+	db $8B
+	db $8B
+	db $52
+	db $8D
+	db $52
+	db $8D
+	db $52
+	db $8D
+	db $52
+	db $8D
+	db $52
+	db $8D
+	db $52
+	db $8D
+	db $52
+	db $8D
+	db $52
+	db $8D
+	db $52
+	db $8E
+	db $52
+	db $8E
+	db $F4
+	db $8F
+	db $F4
+	db $8F
+	db $F4
+	db $8F
+	db $F4
+	db $8F
+	db $F4
+	db $8F
+	db $F4
+	db $8F
+	db $00
+	db $80
+	db $00
+	db $80
+	db $9D
+	db $8B
+	db $C8
+	db $90
+	db $7F
+	db $91
+	db $7F
+	db $91
+	db $CA
+	db $93
+	db $CA
+	db $93
+	db $CA
+	db $93
+	db $CA
+	db $93
+	db $CA
+	db $93
+	db $CA
+	db $93
+	db $FD
+	db $98
+	db $FD
+	db $98
+	db $3D
+	db $8A
+	db $3D
+	db $8A
+	db $9D
+	db $8B
+	db $9D
+	db $8B
+	db $28
+	db $9C
+	db $FE
+	db $8C
+	db $0D
+	db $87
+	db $0D
+	db $87
+	db $C7
+	db $9D
+	db $C7
+	db $9D
+	db $9F
+	db $8A
+	db $9F
+	db $8A
+	db $9F
+	db $8A
+	db $9F
+	db $8A
+	db $F4
+	db $8F
+	db $F4
+	db $8F
+	db $4F
+	db $8E
+	db $4F
+	db $8E
+	db $4F
+	db $8E
+	db $4F
+	db $8E
+	db $25
+	db $83
+	db $25
+	db $83
+	db $8D
+	db $90
+	db $8D
+	db $90
+	db $A9
+	db $8F
+	db $A9
+	db $8F
+	db $A9
+	db $8F
+	db $A9
+	db $8F
+	db $8D
+	db $90
+	db $8D
+	db $90
+	db $8D
+	db $90
+	db $8D
+	db $90
+	db $A4
+	db $97
+	db $A4
+	db $97
+	db $64
+	db $91
+	db $64
+	db $91
+	db $64
+	db $91
+	db $64
+	db $91
+	db $C3
+	db $84
+	db $5E
+	db $90
+	db $00
+	db $9A
+	db $00
+	db $9A
+	db $DF
+	db $96
+	db $DF
+	db $96
+	db $66
+	db $89
+	db $A4
+	db $97
+	db $B7
+	db $93
+	db $B7
+	db $93
+	db $BF
+	db $9A
+	db $B7
+	db $93
+	db $E1
+	db $8C
+	db $79
+	db $83
+	db $CE
+	db $82
+	db $4F
+	db $8E
+	db $8D
+	db $98
+	db $8D
+	db $98
+	db $F7
+	db $9E
+	db $43
+	db $99
+	db $DF
+	db $95
+	db $DF
+	db $95
 ;Extra (sprite animation?) code for objects $00-7F
 tbl2_A83B:
-	.word ptr6_A005 ;0
-	.word obj_u80 ;1
-	.word ptr6_9590 ;2
-	.word ptr6_9630 ;3
-	.word ptr6_9660 ;4
-	.word ptr6_96B7 ;5
-	.word ptr6_96D5 ;6
-	.word ptr6_96D5 ;7
-	.word ptr7_96F8 ;8
-	.word ptr7_96F8 ;9
-	.word ptr7_96F8 ;a
-	.word ptr6_9724 ;b
-	.word ptr6_9742 ;c
-	.word ptr6_9769 ;d
-	.word ptr6_979C ;e
-	.word ptr6_97C3 ;f
-	.word ptr6_820E ;10
-	.word ptr6_820E ;11
-	.word ptr6_820E ;12
-	.word ptr6_820E ;13
-	.word ptr6_820E ;14
-	.word ptr6_820E ;15
-	.word ptr6_8657 ;16
-	.word ptr6_8657 ;17
-	.word ptr6_865B ;18
-	.word ptr6_865B ;19
-	.word ptr6_884B ;1a
-	.word ptr6_884B ;1b
-	.word ptr6_8912 ;1c
-	.word ptr6_8912 ;1d
-	.word ptr6_8AA0 ;1e
-	.word ptr6_8AA0 ;1f
-	.word ptr6_8AA0 ;20
-	.word ptr6_8AA0 ;21
-	.word ptr6_8AA0 ;22
-	.word ptr6_8AA0 ;23
-	.word ptr6_8CDE ;24
-	.word ptr6_8CDE ;25
-	.word ptr6_8E17 ;26
-	.word ptr6_8E17 ;27
-	.word ptr6_8E17 ;28
-	.word ptr6_8E17 ;29
-	.word ptr6_8E17 ;2a
-	.word ptr6_8E17 ;2b
-	.word ptr6_8E17 ;2c
-	.word ptr6_8E17 ;2d
-	.word ptr6_8F90 ;2e
-	.word ptr6_8F90 ;2f
-	.word ptr6_9118 ;30
-	.word ptr6_9118 ;31
-	.word ptr6_9118 ;32
-	.word ptr6_9118 ;33
-	.word ptr6_9118 ;34
-	.word ptr6_9118 ;35
-	.word ptr6_820E ;36
-	.word ptr6_820E ;37
-	.word ptr6_9660 ;38
-	.word ptr6_9724 ;39
-	.word ptr6_9349 ;3a
-	.word ptr6_9349 ;3b
-	.word ptr6_95B5 ;3c
-	.word ptr6_95B5 ;3d
-	.word ptr6_95B5 ;3e
-	.word ptr6_95B5 ;3f
-	.word ptr6_95B5 ;40
-	.word ptr6_95B5 ;41
-	.word ptr6_99CD ;42
-	.word ptr6_99CD ;43
-	.word ptr6_9A11 ;44
-	.word ptr6_9A11 ;45
-	.word ptr6_9A68 ;46
-	.word ptr6_9A68 ;47
-	.word ptr5_9DA5 ;48
-	.word ptr6_96B7 ;49
-	.word bra5_8008 ;4a
-	.word bra5_8008 ;4b
-	.word ptr6_9BFB ;4c
-	.word ptr6_9BFB ;4d
-	.word bra5_8008 ;4e
-	.word bra5_8008 ;4f
-	.word bra5_8008 ;50
-	.word bra5_8008 ;51
-	.word ptr6_9118 ;52
-	.word ptr6_9118 ;53
-	.word ptr6_8039 ;54
-	.word ptr6_8039 ;55
-	.word ptr6_8039 ;56
-	.word ptr6_8039 ;57
-	.word ptr6_820E ;58
-	.word ptr6_820E ;59
-	.word bra5_8008 ;5a
-	.word bra5_8008 ;5b
-	.word bra5_8008 ;5c
-	.word bra5_8008 ;5d
-	.word bra5_8008 ;5e
-	.word bra5_8008 ;5f
-	.word bra5_8008 ;60
-	.word bra5_8008 ;61
-	.word bra5_8008 ;62
-	.word bra5_8008 ;63
-	.word ptr6_9389 ;64
-	.word ptr6_9389 ;65
-	.word bra5_8008 ;66
-	.word bra5_8008 ;67
-	.word bra5_8008 ;68
-	.word bra5_8008 ;69
-	.word ptr6_958D ;6a
-	.word ptr6_9727 ;6b
-	.word ptr6_99A9 ;6c
-	.word ptr6_99A9 ;6d
-	.word ptr6_820E ;6e
-	.word ptr6_820E ;6f
-	.word ptr6_8CA2 ;70
-	.word ptr6_9364 ;71
-	.word ptr6_8CDB ;72
-	.word ptr6_8CDB ;73
-	.word ptr6_9BDB ;74
-	.word ptr6_8CDB ;75
-	.word ptr6_8039 ;76
-	.word ptr6_8000 ;77
-	.word ptr6_8000 ;78
-	.word ptr6_8039 ;79
-	.word ptr6_820E ;7a
-	.word ptr6_820E ;7b
-	.word ptr6_A005 ;7c
-	.word ptr6_A005 ;7d
-	.word ptr6_9670 ;7e
-	.word ptr6_9670 ;7f
+	dw ptr6_A005 ;0
+	dw obj_u80 ;1
+	dw ptr6_9590 ;2
+	dw ptr6_9630 ;3
+	dw ptr6_9660 ;4
+	dw ptr6_96B7 ;5
+	dw ptr6_96D5 ;6
+	dw ptr6_96D5 ;7
+	dw ptr7_96F8 ;8
+	dw ptr7_96F8 ;9
+	dw ptr7_96F8 ;a
+	dw ptr6_9724 ;b
+	dw ptr6_9742 ;c
+	dw ptr6_9769 ;d
+	dw ptr6_979C ;e
+	dw ptr6_97C3 ;f
+	dw ptr6_820E ;10
+	dw ptr6_820E ;11
+	dw ptr6_820E ;12
+	dw ptr6_820E ;13
+	dw ptr6_820E ;14
+	dw ptr6_820E ;15
+	dw ptr6_8657 ;16
+	dw ptr6_8657 ;17
+	dw ptr6_865B ;18
+	dw ptr6_865B ;19
+	dw ptr6_884B ;1a
+	dw ptr6_884B ;1b
+	dw ptr6_8912 ;1c
+	dw ptr6_8912 ;1d
+	dw ptr6_8AA0 ;1e
+	dw ptr6_8AA0 ;1f
+	dw ptr6_8AA0 ;20
+	dw ptr6_8AA0 ;21
+	dw ptr6_8AA0 ;22
+	dw ptr6_8AA0 ;23
+	dw ptr6_8CDE ;24
+	dw ptr6_8CDE ;25
+	dw ptr6_8E17 ;26
+	dw ptr6_8E17 ;27
+	dw ptr6_8E17 ;28
+	dw ptr6_8E17 ;29
+	dw ptr6_8E17 ;2a
+	dw ptr6_8E17 ;2b
+	dw ptr6_8E17 ;2c
+	dw ptr6_8E17 ;2d
+	dw ptr6_8F90 ;2e
+	dw ptr6_8F90 ;2f
+	dw ptr6_9118 ;30
+	dw ptr6_9118 ;31
+	dw ptr6_9118 ;32
+	dw ptr6_9118 ;33
+	dw ptr6_9118 ;34
+	dw ptr6_9118 ;35
+	dw ptr6_820E ;36
+	dw ptr6_820E ;37
+	dw ptr6_9660 ;38
+	dw ptr6_9724 ;39
+	dw ptr6_9349 ;3a
+	dw ptr6_9349 ;3b
+	dw ptr6_95B5 ;3c
+	dw ptr6_95B5 ;3d
+	dw ptr6_95B5 ;3e
+	dw ptr6_95B5 ;3f
+	dw ptr6_95B5 ;40
+	dw ptr6_95B5 ;41
+	dw ptr6_99CD ;42
+	dw ptr6_99CD ;43
+	dw ptr6_9A11 ;44
+	dw ptr6_9A11 ;45
+	dw ptr6_9A68 ;46
+	dw ptr6_9A68 ;47
+	dw ptr5_9DA5 ;48
+	dw ptr6_96B7 ;49
+	dw bra5_8008 ;4a
+	dw bra5_8008 ;4b
+	dw ptr6_9BFB ;4c
+	dw ptr6_9BFB ;4d
+	dw bra5_8008 ;4e
+	dw bra5_8008 ;4f
+	dw bra5_8008 ;50
+	dw bra5_8008 ;51
+	dw ptr6_9118 ;52
+	dw ptr6_9118 ;53
+	dw ptr6_8039 ;54
+	dw ptr6_8039 ;55
+	dw ptr6_8039 ;56
+	dw ptr6_8039 ;57
+	dw ptr6_820E ;58
+	dw ptr6_820E ;59
+	dw bra5_8008 ;5a
+	dw bra5_8008 ;5b
+	dw bra5_8008 ;5c
+	dw bra5_8008 ;5d
+	dw bra5_8008 ;5e
+	dw bra5_8008 ;5f
+	dw bra5_8008 ;60
+	dw bra5_8008 ;61
+	dw bra5_8008 ;62
+	dw bra5_8008 ;63
+	dw ptr6_9389 ;64
+	dw ptr6_9389 ;65
+	dw bra5_8008 ;66
+	dw bra5_8008 ;67
+	dw bra5_8008 ;68
+	dw bra5_8008 ;69
+	dw ptr6_958D ;6a
+	dw ptr6_9727 ;6b
+	dw ptr6_99A9 ;6c
+	dw ptr6_99A9 ;6d
+	dw ptr6_820E ;6e
+	dw ptr6_820E ;6f
+	dw ptr6_8CA2 ;70
+	dw ptr6_9364 ;71
+	dw ptr6_8CDB ;72
+	dw ptr6_8CDB ;73
+	dw ptr6_9BDB ;74
+	dw ptr6_8CDB ;75
+	dw ptr6_8039 ;76
+	dw ptr6_8000 ;77
+	dw ptr6_8000 ;78
+	dw ptr6_8039 ;79
+	dw ptr6_820E ;7a
+	dw ptr6_820E ;7b
+	dw ptr6_A005 ;7c
+	dw ptr6_A005 ;7d
+	dw ptr6_9670 ;7e
+	dw ptr6_9670 ;7f
 tbl2_A93B:
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $35
-	.byte $35
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $31
-	.byte $31
-	.byte $35
-	.byte $35
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $37
-	.byte $37
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $37
-	.byte $37
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $32
-	.byte $32
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $35
-	.byte $35
-	.byte $32
-	.byte $32
-	.byte $37
-	.byte $37
-	.byte $32
-	.byte $32
-	.byte $32
-	.byte $32
-	.byte $35
-	.byte $32
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $37
-	.byte $37
-	.byte $35
-	.byte $37
-	.byte $31
-	.byte $31
+	db $35
+	db $35
+	db $35
+	db $35
+	db $35
+	db $35
+	db $35
+	db $35
+	db $35
+	db $35
+	db $35
+	db $35
+	db $35
+	db $35
+	db $35
+	db $35
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $35
+	db $35
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $37
+	db $35
+	db $35
+	db $35
+	db $35
+	db $35
+	db $35
+	db $35
+	db $35
+	db $31
+	db $31
+	db $35
+	db $35
+	db $31
+	db $31
+	db $31
+	db $31
+	db $37
+	db $37
+	db $31
+	db $31
+	db $31
+	db $31
+	db $37
+	db $37
+	db $31
+	db $31
+	db $31
+	db $31
+	db $31
+	db $31
+	db $31
+	db $31
+	db $31
+	db $31
+	db $32
+	db $32
+	db $31
+	db $31
+	db $31
+	db $31
+	db $35
+	db $35
+	db $32
+	db $32
+	db $37
+	db $37
+	db $32
+	db $32
+	db $32
+	db $32
+	db $35
+	db $32
+	db $31
+	db $31
+	db $31
+	db $31
+	db $37
+	db $37
+	db $35
+	db $37
+	db $31
+	db $31
 
 ;Seemingly unused set of pointers. They don't have banks specified anywhere, but it might help to give these labels.
-	.byte $AA
-	.byte $8A
-	.byte $AA
-	.byte $8A
-	.byte $7D
-	.byte $8F
-	.byte $7D
-	.byte $8F
-	.byte $C8
-	.byte $81
-	.byte $C8
-	.byte $81
-	.byte $86
-	.byte $85
-	.byte $86
-	.byte $85
-	.byte $00
-	.byte $80
-	.byte $00
-	.byte $80
-	.byte $02
-	.byte $94
-	.byte $02
-	.byte $94
-	.byte $77
-	.byte $95
-	.byte $77
-	.byte $95
-	.byte $18
-	.byte $84
-	.byte $18
-	.byte $84
-	.byte $AE
-	.byte $84
-	.byte $AE
-	.byte $84
-	.byte $CF
-	.byte $86
-	.byte $CF
-	.byte $86
-	.byte $72
-	.byte $85
-	.byte $72
-	.byte $85
-	.byte $D4
-	.byte $86
-	.byte $D4
-	.byte $86
-	.byte $33
-	.byte $83
-	.byte $33
-	.byte $83
-	.byte $39
-	.byte $89
-	.byte $39
-	.byte $89
-	.byte $6A
-	.byte $8C
-	.byte $6A
-	.byte $8C
-	.byte $FA
-	.byte $8D
-	.byte $FA
-	.byte $8D
-	.byte $49
-	.byte $81
-	.byte $49
-	.byte $81
-	.byte $A6
-	.byte $97
-	.byte $A6
-	.byte $97
-	.byte $6C
-	.byte $96
-	.byte $6C
-	.byte $96
-	.byte $F5
-	.byte $9A
-	.byte $F5
-	.byte $9A
-	.byte $FD
-	.byte $99
-	.byte $FD
-	.byte $99
-	.byte $FD
-	.byte $99
-	.byte $FD
-	.byte $99
-	.byte $DE
-	.byte $90
-	.byte $DE
-	.byte $90
-	.byte $F4
-	.byte $92
-	.byte $F4
-	.byte $92
-	.byte $CB
-	.byte $8A
-	.byte $CB
-	.byte $8A
-	.byte $7D
-	.byte $8D
-	.byte $7D
-	.byte $8D
-	.byte $40
-	.byte $90
-	.byte $40
-	.byte $90
-	.byte $67
-	.byte $93
-	.byte $67
-	.byte $93
-	.byte $64
-	.byte $97
-	.byte $05
-	.byte $A0
-	.byte $E1
-	.byte $93
-	.byte $05
-	.byte $A0
-	.byte $D6
-	.byte $8F
-	.byte $05
-	.byte $A0
-	.byte $05
-	.byte $A0
-	.byte $6D
-	.byte $83
-	.byte $78
-	.byte $82
-	.byte $78
-	.byte $82
-	.byte $7C
-	.byte $84
-	.byte $7C
-	.byte $84
-	.byte $75
-	.byte $86
-	.byte $75
-	.byte $86
-	.byte $78
-	.byte $82
-	.byte $78
-	.byte $82
-	.byte $7C
-	.byte $84
-	.byte $7C
-	.byte $84
-	.byte $75
-	.byte $86
-	.byte $75
-	.byte $86
-	.byte $78
-	.byte $82
-	.byte $78
-	.byte $82
-	.byte $7C
-	.byte $84
-	.byte $7C
-	.byte $84
-	.byte $14
-	.byte $88
-	.byte $14
-	.byte $88
-	.byte $86
-	.byte $8B
-	.byte $86
-	.byte $8B
-	.byte $3D
-	.byte $8E
-	.byte $3D
-	.byte $8E
-	.byte $62
-	.byte $80
-	.byte $B3
-	.byte $8B
-	.byte $87
-	.byte $92
-	.byte $87
-	.byte $92
-	.byte $02
-	.byte $94
-	.byte $02
-	.byte $94
-	.byte $85
-	.byte $96
-	.byte $85
-	.byte $96
-	.byte $E8
-	.byte $97
-	.byte $E8
-	.byte $97
-	.byte $78
-	.byte $8C
-	.byte $E4
-	.byte $90
-	.byte $E4
-	.byte $80
-	.byte $E4
-	.byte $80
-	.byte $34
-	.byte $86
-	.byte $34
-	.byte $86
-	.byte $E8
-	.byte $84
-	.byte $E8
-	.byte $84
-	.byte $10
-	.byte $9C
-	.byte $AC
-	.byte $99
-	.byte $4B
-	.byte $9A
-	.byte $4B
-	.byte $9A
-	.byte $4B
-	.byte $9A
-	.byte $4B
-	.byte $9A
-	.byte $4B
-	.byte $9A
-	.byte $11
-	.byte $98
-	.byte $11
-	.byte $98
-	.byte $11
-	.byte $98
-	.byte $B6
-	.byte $99
-	.byte $B6
-	.byte $99
-	.byte $11
-	.byte $98
-	.byte $11
-	.byte $98
-	.byte $CE
-	.byte $81
-	.byte $CE
-	.byte $81
-	.byte $CE
-	.byte $81
-	.byte $CE
-	.byte $81
-	.byte $25
-	.byte $83
-	.byte $25
-	.byte $83
-	.byte $2C
-	.byte $97
-	.byte $2C
-	.byte $97
-	.byte $2C
-	.byte $97
-	.byte $2C
-	.byte $97
+	db $AA
+	db $8A
+	db $AA
+	db $8A
+	db $7D
+	db $8F
+	db $7D
+	db $8F
+	db $C8
+	db $81
+	db $C8
+	db $81
+	db $86
+	db $85
+	db $86
+	db $85
+	db $00
+	db $80
+	db $00
+	db $80
+	db $02
+	db $94
+	db $02
+	db $94
+	db $77
+	db $95
+	db $77
+	db $95
+	db $18
+	db $84
+	db $18
+	db $84
+	db $AE
+	db $84
+	db $AE
+	db $84
+	db $CF
+	db $86
+	db $CF
+	db $86
+	db $72
+	db $85
+	db $72
+	db $85
+	db $D4
+	db $86
+	db $D4
+	db $86
+	db $33
+	db $83
+	db $33
+	db $83
+	db $39
+	db $89
+	db $39
+	db $89
+	db $6A
+	db $8C
+	db $6A
+	db $8C
+	db $FA
+	db $8D
+	db $FA
+	db $8D
+	db $49
+	db $81
+	db $49
+	db $81
+	db $A6
+	db $97
+	db $A6
+	db $97
+	db $6C
+	db $96
+	db $6C
+	db $96
+	db $F5
+	db $9A
+	db $F5
+	db $9A
+	db $FD
+	db $99
+	db $FD
+	db $99
+	db $FD
+	db $99
+	db $FD
+	db $99
+	db $DE
+	db $90
+	db $DE
+	db $90
+	db $F4
+	db $92
+	db $F4
+	db $92
+	db $CB
+	db $8A
+	db $CB
+	db $8A
+	db $7D
+	db $8D
+	db $7D
+	db $8D
+	db $40
+	db $90
+	db $40
+	db $90
+	db $67
+	db $93
+	db $67
+	db $93
+	db $64
+	db $97
+	db $05
+	db $A0
+	db $E1
+	db $93
+	db $05
+	db $A0
+	db $D6
+	db $8F
+	db $05
+	db $A0
+	db $05
+	db $A0
+	db $6D
+	db $83
+	db $78
+	db $82
+	db $78
+	db $82
+	db $7C
+	db $84
+	db $7C
+	db $84
+	db $75
+	db $86
+	db $75
+	db $86
+	db $78
+	db $82
+	db $78
+	db $82
+	db $7C
+	db $84
+	db $7C
+	db $84
+	db $75
+	db $86
+	db $75
+	db $86
+	db $78
+	db $82
+	db $78
+	db $82
+	db $7C
+	db $84
+	db $7C
+	db $84
+	db $14
+	db $88
+	db $14
+	db $88
+	db $86
+	db $8B
+	db $86
+	db $8B
+	db $3D
+	db $8E
+	db $3D
+	db $8E
+	db $62
+	db $80
+	db $B3
+	db $8B
+	db $87
+	db $92
+	db $87
+	db $92
+	db $02
+	db $94
+	db $02
+	db $94
+	db $85
+	db $96
+	db $85
+	db $96
+	db $E8
+	db $97
+	db $E8
+	db $97
+	db $78
+	db $8C
+	db $E4
+	db $90
+	db $E4
+	db $80
+	db $E4
+	db $80
+	db $34
+	db $86
+	db $34
+	db $86
+	db $E8
+	db $84
+	db $E8
+	db $84
+	db $10
+	db $9C
+	db $AC
+	db $99
+	db $4B
+	db $9A
+	db $4B
+	db $9A
+	db $4B
+	db $9A
+	db $4B
+	db $9A
+	db $4B
+	db $9A
+	db $11
+	db $98
+	db $11
+	db $98
+	db $11
+	db $98
+	db $B6
+	db $99
+	db $B6
+	db $99
+	db $11
+	db $98
+	db $11
+	db $98
+	db $CE
+	db $81
+	db $CE
+	db $81
+	db $CE
+	db $81
+	db $CE
+	db $81
+	db $25
+	db $83
+	db $25
+	db $83
+	db $2C
+	db $97
+	db $2C
+	db $97
+	db $2C
+	db $97
+	db $2C
+	db $97
 ;Extra (perhaps sprite handling?) code for objects 80-FF
 tbl2_AABB:
-	.word ptr6_8BF1 ;80
-	.word ptr6_8BF1 ;81
-	.word ptr6_9093 ;82
-	.word ptr6_9093 ;83
-	.word ptr6_83B3 ;84
-	.word ptr6_83B3 ;85
-	.word ptr6_87FE ;86
-	.word ptr6_87FE ;87
-	.word ptr6_817B ;88
-	.word ptr6_817B ;89
-	.word ptr6_9519 ;8a
-	.word ptr6_9519 ;8b
-	.word ptr7_9632 ;8c
-	.word ptr7_9632 ;8d
-	.word ptr6_8544 ;8e
-	.word ptr6_8544 ;8f
-	.word ptr7_8544 ;90
-	.word ptr7_8544 ;91
-	.word ptr6_87FE ;92
-	.word ptr6_87FE ;93
-	.word ptr6_88E0 ;94
-	.word ptr6_88E0 ;95
-	.word ptr6_8897 ;96
-	.word ptr6_8897 ;97
-	.word ptr6_8517 ;98
-	.word ptr6_8517 ;99
-	.word ptr6_8A5E ;9a
-	.word ptr6_8A5E ;9b
-	.word ptr6_8D95 ;9c
-	.word ptr6_8D95 ;9d
-	.word ptr6_8F15 ;9e
-	.word ptr6_8F15 ;9f
-	.word ptr6_82C7 ;a0
-	.word ptr6_82C7 ;a1
-	.word ptr6_9980 ;a2
-	.word ptr6_9980 ;a3
-	.word ptr6_9980 ;a4
-	.word ptr6_9980 ;a5
-	.word ptr6_9B79 ;a6
-	.word ptr6_9B79 ;a7
-	.word ptr7_9A87 ;a8
-	.word ptr7_9A87 ;a9
-	.word ptr7_9A87 ;aa
-	.word ptr7_9A87 ;ab
-	.word ptr6_9279 ;ac
-	.word ptr6_9279 ;ad
-	.word ptr6_93B7 ;ae
-	.word ptr6_93B7 ;af
-	.word ptr6_8B71 ;b0
-	.word ptr6_8B71 ;b1
-	.word ptr6_8E28 ;b2
-	.word ptr6_8E28 ;b3
-	.word ptr6_90C4 ;b4
-	.word ptr6_90C4 ;b5
-	.word ptr6_990E ;b6
-	.word ptr6_990E ;b7
-	.word ptr6_8ECE ;b8
-	.word ptr6_A005 ;b9
-	.word ptr6_8F2E ;ba
-	.word ptr6_A005 ;bb
-	.word ptr6_8F2E ;bc
-	.word ptr6_A005 ;bd
-	.word ptr6_A005 ;be
-	.word ptr6_8349 ;bf
-	.word ptr9_843B ;c0
-	.word ptr9_843B ;c1
-	.word ptr6_8640 ;c2
-	.word ptr6_8640 ;c3
-	.word ptr6_87C8 ;c4
-	.word ptr6_87C8 ;c5
-	.word ptr9_843B ;c6
-	.word ptr9_843B ;c7
-	.word ptr6_8640 ;c8
-	.word ptr6_8640 ;c9
-	.word ptr6_87C8 ;ca
-	.word ptr6_87C8 ;cb
-	.word ptr9_843B ;cc
-	.word ptr9_843B ;cd
-	.word ptr6_8640 ;ce
-	.word ptr6_8640 ;cf
-	.word ptr6_8A81 ;d0
-	.word ptr6_8A81 ;d1
-	.word ptr6_8D59 ;d2
-	.word ptr6_8D59 ;d3
-	.word ptr6_901A ;d4
-	.word ptr6_901A ;d5
-	.word ptr6_A005 ;d6
-	.word ptr6_A005 ;d7
-	.word ptr6_9286 ;d8
-	.word ptr6_9286 ;d9
-	.word ptr6_98E1 ;da
-	.word ptr6_98E1 ;db
-	.word ptr6_98B7 ;dc
-	.word ptr6_98B7 ;dd
-	.word bra4_98BE ;de
-	.word bra4_98BE ;df
-	.word ptr6_88D1 ;e0
-	.word ptr6_88F9 ;e1
-	.word ptr7_8000 ;e2
-	.word ptr7_8000 ;e3
-	.word ptr6_8475 ;e4
-	.word ptr6_8475 ;e5
-	.word ptr6_8475 ;e6
-	.word ptr6_8475 ;e7
-	.word ptr6_9BED ;e8
-	.word ptr6_9951 ;e9
-	.word ptr6_9951 ;ea
-	.word ptr6_9951 ;eb
-	.word ptr6_9951 ;ec
-	.word ptr6_9951 ;ed
-	.word ptr6_9951 ;ee
-	.word ptr6_A005 ;ef
-	.word ptr6_A005 ;f0
-	.word ptr6_A005 ;f1
-	.word ptr6_A005 ;f2
-	.word ptr6_A005 ;f3
-	.word ptr6_A005 ;f4
-	.word ptr6_A005 ;f5
-	.word ptr7_8000 ;f6
-	.word ptr7_8000 ;f7
-	.word ptr7_8000 ;f8
-	.word ptr7_8000 ;f9
-	.word ptr6_820E ;fa
-	.word ptr6_820E ;fb
-	.word ptr6_96CB ;fc
-	.word ptr6_96CB ;fd
-	.word ptr6_96CB ;fe
-	.word ptr6_96CB ;ff
+	dw ptr6_8BF1 ;80
+	dw ptr6_8BF1 ;81
+	dw ptr6_9093 ;82
+	dw ptr6_9093 ;83
+	dw ptr6_83B3 ;84
+	dw ptr6_83B3 ;85
+	dw ptr6_87FE ;86
+	dw ptr6_87FE ;87
+	dw ptr6_817B ;88
+	dw ptr6_817B ;89
+	dw ptr6_9519 ;8a
+	dw ptr6_9519 ;8b
+	dw ptr7_9632 ;8c
+	dw ptr7_9632 ;8d
+	dw ptr6_8544 ;8e
+	dw ptr6_8544 ;8f
+	dw ptr7_8544 ;90
+	dw ptr7_8544 ;91
+	dw ptr6_87FE ;92
+	dw ptr6_87FE ;93
+	dw ptr6_88E0 ;94
+	dw ptr6_88E0 ;95
+	dw ptr6_8897 ;96
+	dw ptr6_8897 ;97
+	dw ptr6_8517 ;98
+	dw ptr6_8517 ;99
+	dw ptr6_8A5E ;9a
+	dw ptr6_8A5E ;9b
+	dw ptr6_8D95 ;9c
+	dw ptr6_8D95 ;9d
+	dw ptr6_8F15 ;9e
+	dw ptr6_8F15 ;9f
+	dw ptr6_82C7 ;a0
+	dw ptr6_82C7 ;a1
+	dw ptr6_9980 ;a2
+	dw ptr6_9980 ;a3
+	dw ptr6_9980 ;a4
+	dw ptr6_9980 ;a5
+	dw ptr6_9B79 ;a6
+	dw ptr6_9B79 ;a7
+	dw ptr7_9A87 ;a8
+	dw ptr7_9A87 ;a9
+	dw ptr7_9A87 ;aa
+	dw ptr7_9A87 ;ab
+	dw ptr6_9279 ;ac
+	dw ptr6_9279 ;ad
+	dw ptr6_93B7 ;ae
+	dw ptr6_93B7 ;af
+	dw ptr6_8B71 ;b0
+	dw ptr6_8B71 ;b1
+	dw ptr6_8E28 ;b2
+	dw ptr6_8E28 ;b3
+	dw ptr6_90C4 ;b4
+	dw ptr6_90C4 ;b5
+	dw ptr6_990E ;b6
+	dw ptr6_990E ;b7
+	dw ptr6_8ECE ;b8
+	dw ptr6_A005 ;b9
+	dw ptr6_8F2E ;ba
+	dw ptr6_A005 ;bb
+	dw ptr6_8F2E ;bc
+	dw ptr6_A005 ;bd
+	dw ptr6_A005 ;be
+	dw ptr6_8349 ;bf
+	dw ptr9_843B ;c0
+	dw ptr9_843B ;c1
+	dw ptr6_8640 ;c2
+	dw ptr6_8640 ;c3
+	dw ptr6_87C8 ;c4
+	dw ptr6_87C8 ;c5
+	dw ptr9_843B ;c6
+	dw ptr9_843B ;c7
+	dw ptr6_8640 ;c8
+	dw ptr6_8640 ;c9
+	dw ptr6_87C8 ;ca
+	dw ptr6_87C8 ;cb
+	dw ptr9_843B ;cc
+	dw ptr9_843B ;cd
+	dw ptr6_8640 ;ce
+	dw ptr6_8640 ;cf
+	dw ptr6_8A81 ;d0
+	dw ptr6_8A81 ;d1
+	dw ptr6_8D59 ;d2
+	dw ptr6_8D59 ;d3
+	dw ptr6_901A ;d4
+	dw ptr6_901A ;d5
+	dw ptr6_A005 ;d6
+	dw ptr6_A005 ;d7
+	dw ptr6_9286 ;d8
+	dw ptr6_9286 ;d9
+	dw ptr6_98E1 ;da
+	dw ptr6_98E1 ;db
+	dw ptr6_98B7 ;dc
+	dw ptr6_98B7 ;dd
+	dw bra4_98BE ;de
+	dw bra4_98BE ;df
+	dw ptr6_88D1 ;e0
+	dw ptr6_88F9 ;e1
+	dw ptr7_8000 ;e2
+	dw ptr7_8000 ;e3
+	dw ptr6_8475 ;e4
+	dw ptr6_8475 ;e5
+	dw ptr6_8475 ;e6
+	dw ptr6_8475 ;e7
+	dw ptr6_9BED ;e8
+	dw ptr6_9951 ;e9
+	dw ptr6_9951 ;ea
+	dw ptr6_9951 ;eb
+	dw ptr6_9951 ;ec
+	dw ptr6_9951 ;ed
+	dw ptr6_9951 ;ee
+	dw ptr6_A005 ;ef
+	dw ptr6_A005 ;f0
+	dw ptr6_A005 ;f1
+	dw ptr6_A005 ;f2
+	dw ptr6_A005 ;f3
+	dw ptr6_A005 ;f4
+	dw ptr6_A005 ;f5
+	dw ptr7_8000 ;f6
+	dw ptr7_8000 ;f7
+	dw ptr7_8000 ;f8
+	dw ptr7_8000 ;f9
+	dw ptr6_820E ;fa
+	dw ptr6_820E ;fb
+	dw ptr6_96CB ;fc
+	dw ptr6_96CB ;fd
+	dw ptr6_96CB ;fe
+	dw ptr6_96CB ;ff
 tbl2_ABBB:
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $32
-	.byte $32
-	.byte $32
-	.byte $32
-	.byte $32
-	.byte $32
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $32
-	.byte $32
-	.byte $32
-	.byte $32
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $25
-	.byte $25
-	.byte $25
-	.byte $30
-	.byte $25
-	.byte $30
-	.byte $30
-	.byte $25
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $25
-	.byte $25
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $25
-	.byte $25
-	.byte $25
-	.byte $25
-	.byte $25
-	.byte $25
-	.byte $25
-	.byte $25
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $37
-	.byte $37
-	.byte $31
-	.byte $31
-	.byte $25
-	.byte $25
-	.byte $25
-	.byte $25
-	.byte $37
-	.byte $37
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
+	db $38
+	db $38
+	db $38
+	db $38
+	db $32
+	db $32
+	db $32
+	db $32
+	db $32
+	db $32
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $32
+	db $32
+	db $32
+	db $32
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $38
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $25
+	db $25
+	db $25
+	db $30
+	db $25
+	db $30
+	db $30
+	db $25
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $25
+	db $25
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $30
+	db $25
+	db $25
+	db $25
+	db $25
+	db $25
+	db $25
+	db $25
+	db $25
+	db $31
+	db $31
+	db $31
+	db $31
+	db $31
+	db $31
+	db $31
+	db $31
+	db $31
+	db $31
+	db $37
+	db $37
+	db $31
+	db $31
+	db $25
+	db $25
+	db $25
+	db $25
+	db $37
+	db $37
+	db $31
+	db $31
+	db $31
+	db $31
 jmp_52_AC3B:
 	LDY #$00
 	LDA ($32),Y

@@ -105,7 +105,7 @@ bra8_80B8:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra8_80FA
+	BEQ loc8_80FA
 	LDA ObjYScreenDistance,X
 	BPL bra8_80E9
 	LDA ObjectYDistance,X
@@ -124,7 +124,6 @@ bra8_80E9:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra8_80FA:
 loc8_80FA:
 	LDA FreezeFlag
 	BEQ bra8_8100
@@ -140,11 +139,11 @@ bra8_8100:
 	STA $33
 	JMP ($32)
 tbl8_8114:
-	.word ptr_A7BB
-	.word ptr_AA7B
-	.word ptr_AB29
-	.word ptr_811E
-	.word ptr_8201
+	dw ptr_A7BB
+	dw ptr_AA7B
+	dw ptr_AB29
+	dw ptr_811E
+	dw ptr_8201
 ptr_811E:
 	JSR jmp_54_A6D4
 	JSR jmp_54_BEBC ;Player collision check
@@ -196,7 +195,7 @@ bra8_8175:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra8_81B7
+	BEQ loc8_81B7
 	LDA ObjYScreenDistance,X ;unlogged
 	BPL bra8_81A6 ;unlogged
 	LDA ObjectYDistance,X ;unlogged
@@ -215,7 +214,6 @@ bra8_81A6:
 	LDA ObjYScreenDistance,X ;unlogged
 	SBC #$00 ;unlogged
 	STA ObjYScreenDistance,X ;unlogged
-bra8_81B7:
 loc8_81B7:
 	LDA FreezeFlag
 	BEQ bra8_81BD
@@ -278,63 +276,63 @@ bra8_822C:
 	JSR jmp_52_A118
 	RTS
 KoopaMappings:
-	.word BeachKoopaWalk1
-	.word BeachKoopaWalk2
-	.word BeachKoopaSlide
-	.word KoopaWalk1
-	.word KoopaWalk2
-	.word ParatroopaWalk1
-	.word ParatroopaWalk2
+	dw BeachKoopaWalk1
+	dw BeachKoopaWalk2
+	dw BeachKoopaSlide
+	dw KoopaWalk1
+	dw KoopaWalk2
+	dw ParatroopaWalk1
+	dw ParatroopaWalk2
 BeachKoopaWalk1:
-	.byte $02
-	.byte $02
-	.byte $94
-	.byte $01, $02
-	.byte $06, $07
+	db $02
+	db $02
+	db $94
+	db $01, $02
+	db $06, $07
 BeachKoopaWalk2:
-	.byte $02
-	.byte $02
-	.byte $94
-	.byte $01, $03
-	.byte $08, $09
+	db $02
+	db $02
+	db $94
+	db $01, $03
+	db $08, $09
 BeachKoopaSlide:
-	.byte $02
-	.byte $02
-	.byte $94
-	.byte $04, $05
-	.byte $0A, $0B
+	db $02
+	db $02
+	db $94
+	db $04, $05
+	db $0A, $0B
 KoopaWalk1:
-	.byte $02
-	.byte $04
-	.byte $94
-	.byte $0E, $0F
-	.byte $18, $19
-	.byte $27, $28
-	.byte $35, $36
+	db $02
+	db $04
+	db $94
+	db $0E, $0F
+	db $18, $19
+	db $27, $28
+	db $35, $36
 KoopaWalk2:
-	.byte $02
-	.byte $04
-	.byte $94
-	.byte $10, $11
-	.byte $1A, $1B
-	.byte $29, $2A
-	.byte $37, $38
+	db $02
+	db $04
+	db $94
+	db $10, $11
+	db $1A, $1B
+	db $29, $2A
+	db $37, $38
 ParatroopaWalk1:
-	.byte $04
-	.byte $04
-	.byte $94
-	.byte $FF, $12, $13, $FF
-	.byte $1C, $1D, $1E, $1F
-	.byte $FF, $2C, $2D, $2E
-	.byte $FF, $39, $3A, $FF
+	db $04
+	db $04
+	db $94
+	db $FF, $12, $13, $FF
+	db $1C, $1D, $1E, $1F
+	db $FF, $2C, $2D, $2E
+	db $FF, $39, $3A, $FF
 ParatroopaWalk2:
-	.byte $04
-	.byte $04
-	.byte $94
-	.byte $FF, $16, $17, $FF
-	.byte $23, $24, $25, $26
-	.byte $31, $32, $33, $34
-	.byte $FF, $3E, $3F, $FF
+	db $04
+	db $04
+	db $94
+	db $FF, $16, $17, $FF
+	db $23, $24, $25, $26
+	db $31, $32, $33, $34
+	db $FF, $3E, $3F, $FF
 obj_h14:
 	LDX $A4
 	LDA ObjectXPos,X
@@ -554,11 +552,11 @@ bra8_843A:
 	STA $33
 	JMP ($32)
 tbl8_844E:
-	.word ptr_A7BB
-	.word ptr_AA7B
-	.word ptr_AB29
-	.word ptr3_8458
-	.word ptr3_847B
+	dw ptr_A7BB
+	dw ptr_AA7B
+	dw ptr_AB29
+	dw ptr3_8458
+	dw ptr3_847B
 ptr3_8458:
 	JSR jmp_54_BEBC
 	JSR jmp_54_A74D
@@ -697,11 +695,11 @@ bra8_8561:
 	STA $33
 	JMP ($32)
 tbl8_8575:
-	.word ptr_A7BB
-	.word ptr_AA7B
-	.word ptr_AB29
-	.word ptr3_857F
-	.word ptr_AD88
+	dw ptr_A7BB
+	dw ptr_AA7B
+	dw ptr_AB29
+	dw ptr3_857F
+	dw ptr_AD88
 ptr3_857F:
 	LDY #$13
 	LDA ObjectSlot,X
@@ -841,44 +839,44 @@ bra8_8681:
 	JSR jmp_54_A118
 	RTS
 RexMappings:
-	.word RexWalk1
-	.word RexWalk2
-	.word RexFlattened ;Unused
-	.word RexSquishWalk1
-	.word RexSquishWalk2
+	dw RexWalk1
+	dw RexWalk2
+	dw RexFlattened ;Unused
+	dw RexSquishWalk1
+	dw RexSquishWalk2
 RexWalk1:
-	.byte $03
-	.byte $04
-	.byte $95
-	.byte $21, $22, $FF
-	.byte $25, $26, $FF
-	.byte $29, $2A, $2B
-	.byte $33, $34, $35
+	db $03
+	db $04
+	db $95
+	db $21, $22, $FF
+	db $25, $26, $FF
+	db $29, $2A, $2B
+	db $33, $34, $35
 RexWalk2:
-	.byte $03
-	.byte $04
-	.byte $95
-	.byte $23, $24, $FF
-	.byte $27, $28, $FF
-	.byte $2C, $2D, $2E
-	.byte $36, $37, $38
+	db $03
+	db $04
+	db $95
+	db $23, $24, $FF
+	db $27, $28, $FF
+	db $2C, $2D, $2E
+	db $36, $37, $38
 RexFlattened:
-	.byte $02
-	.byte $01
-	.byte $95
-	.byte $39, $3A
+	db $02
+	db $01
+	db $95
+	db $39, $3A
 RexSquishWalk1:
-	.byte $02
-	.byte $02
-	.byte $95
-	.byte $2F, $30
-	.byte $3B, $3C
+	db $02
+	db $02
+	db $95
+	db $2F, $30
+	db $3B, $3C
 RexSquishWalk2:
-	.byte $02
-	.byte $02
-	.byte $95
-	.byte $31, $32
-	.byte $3D, $3E
+	db $02
+	db $02
+	db $95
+	db $31, $32
+	db $3D, $3E
 obj_h1A:
 	LDX $A4
 	LDA ObjectXPos,X
@@ -1017,11 +1015,11 @@ bra8_87E0:
 	STA $33
 	JMP ($32)
 tbl8_87F4:
-	.word ptr3_87FE
-	.word ptr3_880D
-	.word ptr3_881C
-	.word ptr3_882B
-	.word ptr_AD88
+	dw ptr3_87FE
+	dw ptr3_880D
+	dw ptr3_881C
+	dw ptr3_882B
+	dw ptr_AD88
 ptr3_87FE:
 	LDA FrameCount
 	AND #$03
@@ -1096,50 +1094,50 @@ bra8_8874:
 	JSR jmp_54_A118
 	RTS
 tbl8_887F:
-	.word JumpPiranha1
-	.word JumpPiranha2
-	.word JumpPiranha3
-	.word JumpPiranha4
+	dw JumpPiranha1
+	dw JumpPiranha2
+	dw JumpPiranha3
+	dw JumpPiranha4
 JumpPiranha1:
-	.byte $02
-	.byte $03
-	.byte $97
-	.byte $0D
-	.byte $0E
-	.byte $11
-	.byte $12
-	.byte $15
-	.byte $16
+	db $02
+	db $03
+	db $97
+	db $0D
+	db $0E
+	db $11
+	db $12
+	db $15
+	db $16
 JumpPiranha2:
-	.byte $02
-	.byte $03
-	.byte $97
-	.byte $0F
-	.byte $10
-	.byte $13
-	.byte $14
-	.byte $17
-	.byte $18
+	db $02
+	db $03
+	db $97
+	db $0F
+	db $10
+	db $13
+	db $14
+	db $17
+	db $18
 JumpPiranha3:
-	.byte $02
-	.byte $03
-	.byte $97
-	.byte $0D
-	.byte $0E
-	.byte $11
-	.byte $12
-	.byte $19
-	.byte $1A
+	db $02
+	db $03
+	db $97
+	db $0D
+	db $0E
+	db $11
+	db $12
+	db $19
+	db $1A
 JumpPiranha4:
-	.byte $02
-	.byte $03
-	.byte $97
-	.byte $0F
-	.byte $10
-	.byte $13
-	.byte $14
-	.byte $19
-	.byte $1B
+	db $02
+	db $03
+	db $97
+	db $0F
+	db $10
+	db $13
+	db $14
+	db $19
+	db $1B
 obj_h1C:
 	LDX $A4
 	LDA ObjectXPos,X
@@ -1316,9 +1314,9 @@ sub8_89F6:
 	BEQ bra8_8A18
 	CMP #$FF
 	BEQ bra8_8A18
-	.byte $4C
-	.byte $B5
-	.byte $A6
+	db $4C
+	db $B5
+	db $A6
 bra8_8A18:
 	LDA ObjectYPos,X
 	SEC
@@ -1352,7 +1350,7 @@ bra8_8A5A:
 loc8_8A5A:
 	LDA FreezeFlag
 	BEQ bra8_8A60
-	.byte $60
+	db $60
 bra8_8A60:
 	LDA ObjectState,X
 	AND #$1F
@@ -1364,11 +1362,11 @@ bra8_8A60:
 	STA $33
 	JMP ($32)
 tbl8_8A74:
-	.word ptr_A7BB
-	.word ptr_AA7B
-	.word ptr_AB29
-	.word ptr3_8A7E
-	.word ptr_AD88
+	dw ptr_A7BB
+	dw ptr_AA7B
+	dw ptr_AB29
+	dw ptr3_8A7E
+	dw ptr_AD88
 ptr3_8A7E:
 	JSR jmp_54_A6D4
 	JSR jmp_54_BEBC
@@ -1433,157 +1431,157 @@ bra8_8AE3:
 	JSR jmp_54_A118
 	RTS
 tbl8_8AF1:
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $04
-	.byte $04
-	.byte $04
-	.byte $04
-	.byte $04
-	.byte $04
-	.byte $04
-	.byte $04
-	.byte $04
-	.byte $08
-	.byte $08
-	.byte $08
-	.byte $08
-	.byte $08
-	.byte $08
-	.byte $08
+	db $00
+	db $00
+	db $00
+	db $00
+	db $04
+	db $04
+	db $04
+	db $04
+	db $04
+	db $04
+	db $04
+	db $04
+	db $04
+	db $08
+	db $08
+	db $08
+	db $08
+	db $08
+	db $08
+	db $08
 tbl8_8B05:
-	.word ofs_8B1F
-	.word ofs_8B2B
-	.word ofs_8B1F
-	.word ofs_8B2B
-	.word ofs_8B43
-	.word ofs_8B67
-	.word ofs_8B43
-	.word ofs_8B37
-	.word ofs_8B5B
-	.word ofs_8B73
-	.word ofs_8B5B
-	.word ofs_8B4F
-	.word ofs_8B7F
+	dw ofs_8B1F
+	dw ofs_8B2B
+	dw ofs_8B1F
+	dw ofs_8B2B
+	dw ofs_8B43
+	dw ofs_8B67
+	dw ofs_8B43
+	dw ofs_8B37
+	dw ofs_8B5B
+	dw ofs_8B73
+	dw ofs_8B5B
+	dw ofs_8B4F
+	dw ofs_8B7F
 ofs_8B1F:
-	.byte $03
-	.byte $03
-	.byte $96
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $06
-	.byte $1A
-	.byte $1B
-	.byte $21
-	.byte $22
-	.byte $23
+	db $03
+	db $03
+	db $96
+	db $FF
+	db $FF
+	db $FF
+	db $06
+	db $1A
+	db $1B
+	db $21
+	db $22
+	db $23
 ofs_8B2B:
-	.byte $03
-	.byte $03
-	.byte $96
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $1C
-	.byte $1D
-	.byte $1E
-	.byte $24
-	.byte $25
-	.byte $23
+	db $03
+	db $03
+	db $96
+	db $FF
+	db $FF
+	db $FF
+	db $1C
+	db $1D
+	db $1E
+	db $24
+	db $25
+	db $23
 ofs_8B37:
-	.byte $03
-	.byte $03
-	.byte $96
-	.byte $FF
-	.byte $01
-	.byte $02
-	.byte $06
-	.byte $07
-	.byte $08
-	.byte $10
-	.byte $11
-	.byte $FF
+	db $03
+	db $03
+	db $96
+	db $FF
+	db $01
+	db $02
+	db $06
+	db $07
+	db $08
+	db $10
+	db $11
+	db $FF
 ofs_8B43:
-	.byte $03
-	.byte $03
-	.byte $96
-	.byte $03
-	.byte $04
-	.byte $05
-	.byte $09
-	.byte $0A
-	.byte $0B
-	.byte $12
-	.byte $13
-	.byte $FF
+	db $03
+	db $03
+	db $96
+	db $03
+	db $04
+	db $05
+	db $09
+	db $0A
+	db $0B
+	db $12
+	db $13
+	db $FF
 ofs_8B4F:
-	.byte $03
-	.byte $03
-	.byte $96
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $06
-	.byte $0C
-	.byte $0D
-	.byte $14
-	.byte $15
-	.byte $16
+	db $03
+	db $03
+	db $96
+	db $FF
+	db $FF
+	db $FF
+	db $06
+	db $0C
+	db $0D
+	db $14
+	db $15
+	db $16
 ofs_8B5B:
-	.byte $03
-	.byte $03
-	.byte $96
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $06
-	.byte $0E
-	.byte $0F
-	.byte $14
-	.byte $17
-	.byte $18
+	db $03
+	db $03
+	db $96
+	db $FF
+	db $FF
+	db $FF
+	db $06
+	db $0E
+	db $0F
+	db $14
+	db $17
+	db $18
 ofs_8B67:
-	.byte $03
-	.byte $03
-	.byte $96
-	.byte $FF
-	.byte $01
-	.byte $3A
-	.byte $06
-	.byte $38
-	.byte $39
-	.byte $10
-	.byte $11
-	.byte $FF
+	db $03
+	db $03
+	db $96
+	db $FF
+	db $01
+	db $3A
+	db $06
+	db $38
+	db $39
+	db $10
+	db $11
+	db $FF
 ofs_8B73:
-	.byte $03
-	.byte $03
-	.byte $96
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $06
-	.byte $3B
-	.byte $3C
-	.byte $14
-	.byte $3D
-	.byte $3E
+	db $03
+	db $03
+	db $96
+	db $FF
+	db $FF
+	db $FF
+	db $06
+	db $3B
+	db $3C
+	db $14
+	db $3D
+	db $3E
 ofs_8B7F:
-	.byte $03
-	.byte $03
-	.byte $96
-	.byte $FF
-	.byte $19
-	.byte $FF
-	.byte $1F
-	.byte $20
-	.byte $1E
-	.byte $26
-	.byte $27
-	.byte $28
+	db $03
+	db $03
+	db $96
+	db $FF
+	db $19
+	db $FF
+	db $1F
+	db $20
+	db $1E
+	db $26
+	db $27
+	db $28
 obj_h24:
 	LDX LowerObjSlot ;Get the index for the current object slot
 	LDA ObjectState,X
@@ -1665,11 +1663,11 @@ bra8_8C1D:
 	STA $33
 	JMP ($32)
 tbl8_8C31:
-	.word ptr_A7BB
-	.word ptr_AA7B
-	.word ptr_AB29
-	.word ptr3_8C3B
-	.word ptr3_8C48
+	dw ptr_A7BB
+	dw ptr_AA7B
+	dw ptr_AB29
+	dw ptr3_8C3B
+	dw ptr3_8C48
 ptr3_8C3B:
 	JSR jmp_54_A6D4
 	JSR jmp_54_BC3E
@@ -1769,78 +1767,78 @@ bra8_8D00:
 	JSR jmp_54_A118
 	RTS
 tbl8_8D0B:
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $00
-	.byte $01
-	.byte $00
-	.byte $01
-	.byte $00
-	.byte $01
-	.byte $00
-	.byte $01
-	.byte $00
-	.byte $01
-	.byte $00
-	.byte $01
-	.byte $00
-	.byte $01
-	.byte $00
-	.byte $01
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $02
+	db $02
+	db $02
+	db $02
+	db $02
+	db $02
+	db $02
+	db $02
+	db $00
+	db $01
+	db $00
+	db $01
+	db $00
+	db $01
+	db $00
+	db $01
+	db $00
+	db $01
+	db $00
+	db $01
+	db $00
+	db $01
+	db $00
+	db $01
+	db $00
+	db $00
+	db $00
+	db $00
 tbl8_8D2B:
-	.word ofs_8D31
-	.word ofs_8D3C
-	.word ofs_8D47
+	dw ofs_8D31
+	dw ofs_8D3C
+	dw ofs_8D47
 ofs_8D31:
-	.byte $04
-	.byte $02
-	.byte $97
-	.byte $FF
-	.byte $05
-	.byte $06
-	.byte $FF
-	.byte $09
-	.byte $0A
-	.byte $0B
-	.byte $0C
+	db $04
+	db $02
+	db $97
+	db $FF
+	db $05
+	db $06
+	db $FF
+	db $09
+	db $0A
+	db $0B
+	db $0C
 ofs_8D3C:
-	.byte $04
-	.byte $02
-	.byte $97
-	.byte $FF
-	.byte $03
-	.byte $04
-	.byte $FF
-	.byte $09
-	.byte $0A
-	.byte $0B
-	.byte $0C
+	db $04
+	db $02
+	db $97
+	db $FF
+	db $03
+	db $04
+	db $FF
+	db $09
+	db $0A
+	db $0B
+	db $0C
 ofs_8D47:
-	.byte $04
-	.byte $02
-	.byte $97
-	.byte $FF
-	.byte $01
-	.byte $02
-	.byte $FF
-	.byte $09
-	.byte $0A
-	.byte $0B
-	.byte $0C
+	db $04
+	db $02
+	db $97
+	db $FF
+	db $01
+	db $02
+	db $FF
+	db $09
+	db $0A
+	db $0B
+	db $0C
 obj_h26:
 	LDA #$07
 	STA $25
@@ -1902,11 +1900,11 @@ bra8_8DBC:
 	STA $33
 	JMP ($32)
 tbl8_8DD0:
-	.word ptr3_8DDA
-	.word ptr3_8DDA
-	.word ptr3_8DDA
-	.word ptr3_8DDA
-	.word ptr3_8E0E
+	dw ptr3_8DDA
+	dw ptr3_8DDA
+	dw ptr3_8DDA
+	dw ptr3_8DDA
+	dw ptr3_8E0E
 ptr3_8DDA:
 	LDA ObjectSlot,X
 	SEC
@@ -1966,18 +1964,18 @@ bra8_8E3B:
 	JSR jmp_54_A118
 	RTS
 tbl8_8E46:
-	.word LotusPollen1
-	.word LotusPollen2
+	dw LotusPollen1
+	dw LotusPollen2
 LotusPollen1:
-	.byte $01
-	.byte $01
-	.byte $97
-	.byte $07
+	db $01
+	db $01
+	db $97
+	db $07
 LotusPollen2:
-	.byte $01
-	.byte $01
-	.byte $97
-	.byte $08
+	db $01
+	db $01
+	db $97
+	db $08
 obj_h2E:
 	LDX $A4
 	LDA ObjectVariables,X
@@ -2116,11 +2114,11 @@ bra8_8F53:
 	STA $33
 	JMP ($32)
 tbl8_8F67:
-	.word ptr_A7BB
-	.word ptr_AA7B
-	.word ptr_AB29
-	.word ptr3_8F71
-	.word ptr_AD88
+	dw ptr_A7BB
+	dw ptr_AA7B
+	dw ptr_AB29
+	dw ptr3_8F71
+	dw ptr_AD88
 ptr3_8F71:
 	LDA FrameCount
 	AND #$00
@@ -2173,39 +2171,39 @@ bra8_8FC5:
 	JSR jmp_54_A118
 	RTS
 tbl8_8FD3:
-	.word Swooper1
-	.word Swooper2
-	.word Swooper3
+	dw Swooper1
+	dw Swooper2
+	dw Swooper3
 Swooper1:
-	.byte $03
-	.byte $02
-	.byte $96
-	.byte $FF
-	.byte $2E
-	.byte $2F
-	.byte $FF
-	.byte $36
-	.byte $37
+	db $03
+	db $02
+	db $96
+	db $FF
+	db $2E
+	db $2F
+	db $FF
+	db $36
+	db $37
 Swooper2:
-	.byte $03
-	.byte $02
-	.byte $96
-	.byte $FF
-	.byte $29
-	.byte $2A
-	.byte $30
-	.byte $31
-	.byte $32
+	db $03
+	db $02
+	db $96
+	db $FF
+	db $29
+	db $2A
+	db $30
+	db $31
+	db $32
 Swooper3:
-	.byte $03
-	.byte $02
-	.byte $96
-	.byte $2B
-	.byte $2C
-	.byte $2D
-	.byte $33
-	.byte $34
-	.byte $35
+	db $03
+	db $02
+	db $96
+	db $2B
+	db $2C
+	db $2D
+	db $33
+	db $34
+	db $35
 obj_h30:
 	LDX $A4
 	LDA ObjectVariables,X
@@ -2320,11 +2318,11 @@ bra8_90CD:
 	STA $33
 	JMP ($32)
 tbl8_90E1:
-	.word ptr_A7BB
-	.word ptr_AA7B
-	.word ptr_AB29
-	.word ptr3_90EB
-	.word ptr_AD88
+	dw ptr_A7BB
+	dw ptr_AA7B
+	dw ptr_AB29
+	dw ptr3_90EB
+	dw ptr_AD88
 ptr3_90EB:
 	LDA ObjectSlot,X
 	AND #$FE
@@ -2386,42 +2384,42 @@ bra8_9155:
 	JSR jmp_54_A118
 	RTS
 tbl8_915B:
-	.word Blurp1
-	.word Blurp2
-	.word Blurp3
-	.word Blurp4
+	dw Blurp1
+	dw Blurp2
+	dw Blurp3
+	dw Blurp4
 Blurp1:
-	.byte $02
-	.byte $02
-	.byte $A6
-	.byte $03
-	.byte $04
-	.byte $0D
-	.byte $0E
+	db $02
+	db $02
+	db $A6
+	db $03
+	db $04
+	db $0D
+	db $0E
 Blurp2:
-	.byte $02
-	.byte $02
-	.byte $A6
-	.byte $05
-	.byte $06
-	.byte $0F
-	.byte $0E
+	db $02
+	db $02
+	db $A6
+	db $05
+	db $06
+	db $0F
+	db $0E
 Blurp3:
-	.byte $02
-	.byte $02
-	.byte $A6
-	.byte $0D
-	.byte $0E
-	.byte $03
-	.byte $04
+	db $02
+	db $02
+	db $A6
+	db $0D
+	db $0E
+	db $03
+	db $04
 Blurp4:
-	.byte $02
-	.byte $02
-	.byte $A6
-	.byte $0F
-	.byte $0E
-	.byte $05
-	.byte $06
+	db $02
+	db $02
+	db $A6
+	db $0F
+	db $0E
+	db $05
+	db $06
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra8_9189
@@ -2610,11 +2608,11 @@ bra8_92F1:
 	STA $33
 	JMP ($32)
 tbl8_9305:
-	.word ptr_A7BB
-	.word ptr_AA7B
-	.word ptr_AB29
-	.word ptr3_930F
-	.word ptr_AD88
+	dw ptr_A7BB
+	dw ptr_AA7B
+	dw ptr_AB29
+	dw ptr3_930F
+	dw ptr_AD88
 ptr3_930F:
 	LDA FrameCount
 	AND #$00
@@ -2641,10 +2639,10 @@ bra8_931A:
 	STA ObjectState,X
 	RTS
 tbl8_9345:
-	.byte $02
-	.byte $04
-	.byte $06
-	.byte $04
+	db $02
+	db $04
+	db $06
+	db $04
 ptr6_9349:
 	LDX $A4
 	LDA ObjectVariables,X
@@ -2686,58 +2684,58 @@ bra8_938D:
 	STA $06E1
 	RTS
 tbl8_9395:
-	.word Mechakoopa1
-	.word Mechakoopa2
-	.word Mechakoopa3
-	.word Mechakoopa2
+	dw Mechakoopa1
+	dw Mechakoopa2
+	dw Mechakoopa3
+	dw Mechakoopa2
 Mechakoopa1:
-	.byte $04
-	.byte $03
-	.byte $AE
-	.byte $01
-	.byte $02
-	.byte $03
-	.byte $FF
-	.byte $09
-	.byte $0A
-	.byte $0B
-	.byte $0C
-	.byte $14
-	.byte $15
-	.byte $16
-	.byte $17
+	db $04
+	db $03
+	db $AE
+	db $01
+	db $02
+	db $03
+	db $FF
+	db $09
+	db $0A
+	db $0B
+	db $0C
+	db $14
+	db $15
+	db $16
+	db $17
 Mechakoopa2:
-	.byte $04
-	.byte $03
-	.byte $AE
-	.byte $04
-	.byte $05
-	.byte $06
-	.byte $FF
-	.byte $0D
-	.byte $0E
-	.byte $0F
-	.byte $10
-	.byte $18
-	.byte $19
-	.byte $1A
-	.byte $1B
+	db $04
+	db $03
+	db $AE
+	db $04
+	db $05
+	db $06
+	db $FF
+	db $0D
+	db $0E
+	db $0F
+	db $10
+	db $18
+	db $19
+	db $1A
+	db $1B
 Mechakoopa3:
-	.byte $04
-	.byte $03
-	.byte $AE
-	.byte $01
-	.byte $07
-	.byte $08
-	.byte $FF
-	.byte $09
-	.byte $11
-	.byte $12
-	.byte $13
-	.byte $14
-	.byte $1C
-	.byte $1D
-	.byte $1E
+	db $04
+	db $03
+	db $AE
+	db $01
+	db $07
+	db $08
+	db $FF
+	db $09
+	db $11
+	db $12
+	db $13
+	db $14
+	db $1C
+	db $1D
+	db $1E
 obj_h3C:
 	LDX $A4
 	LDA $0641,X
@@ -2844,14 +2842,14 @@ bra8_948D:
 	STA $33
 	JMP ($32)
 tbl8_94A1:
-	.word ptr_A7BB
-	.word ptr_AA7B
-	.word ptr_AB29
-	.word ptr3_94B1
-	.word ptr_AD88
-	.word ptr3_9564
-	.word ptr_AD79
-	.word ptr3_959C
+	dw ptr_A7BB
+	dw ptr_AA7B
+	dw ptr_AB29
+	dw ptr3_94B1
+	dw ptr_AD88
+	dw ptr3_9564
+	dw ptr_AD79
+	dw ptr3_959C
 ptr3_94B1:
 	JSR jmp_54_ACC3
 	LDA $0636
@@ -3035,90 +3033,90 @@ bra8_960A:
 	STA $05F0
 	JMP loc8_9374
 tbl8_9612:
-	.word StunMechakoopa1
-	.word StunMechakoopa2
-	.word StunMechakoopa3
-	.word StunMechakoopa4
-	.word StunMechakoopa5
-	.word StunMechakoopa6
+	dw StunMechakoopa1
+	dw StunMechakoopa2
+	dw StunMechakoopa3
+	dw StunMechakoopa4
+	dw StunMechakoopa5
+	dw StunMechakoopa6
 StunMechakoopa1:
-	.byte $03
-	.byte $03
-	.byte $AE
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $1F
-	.byte $20
-	.byte $21
-	.byte $24
-	.byte $25
-	.byte $26
+	db $03
+	db $03
+	db $AE
+	db $FF
+	db $FF
+	db $FF
+	db $1F
+	db $20
+	db $21
+	db $24
+	db $25
+	db $26
 StunMechakoopa2:
-	.byte $03
-	.byte $03
-	.byte $AE
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $1F
-	.byte $20
-	.byte $23
-	.byte $24
-	.byte $25
-	.byte $26
+	db $03
+	db $03
+	db $AE
+	db $FF
+	db $FF
+	db $FF
+	db $1F
+	db $20
+	db $23
+	db $24
+	db $25
+	db $26
 StunMechakoopa3:
-	.byte $03
-	.byte $03
-	.byte $AE
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $1F
-	.byte $20
-	.byte $31
-	.byte $24
-	.byte $25
-	.byte $26
+	db $03
+	db $03
+	db $AE
+	db $FF
+	db $FF
+	db $FF
+	db $1F
+	db $20
+	db $31
+	db $24
+	db $25
+	db $26
 StunMechakoopa4:
-	.byte $03
-	.byte $03
-	.byte $AE
-	.byte $27
-	.byte $28
-	.byte $FF
-	.byte $29
-	.byte $2A
-	.byte $2B
-	.byte $2D
-	.byte $2E
-	.byte $2F
+	db $03
+	db $03
+	db $AE
+	db $27
+	db $28
+	db $FF
+	db $29
+	db $2A
+	db $2B
+	db $2D
+	db $2E
+	db $2F
 StunMechakoopa5:
-	.byte $03
-	.byte $03
-	.byte $AE
-	.byte $27
-	.byte $28
-	.byte $FF
-	.byte $29
-	.byte $2A
-	.byte $30
-	.byte $2D
-	.byte $2E
-	.byte $2F
+	db $03
+	db $03
+	db $AE
+	db $27
+	db $28
+	db $FF
+	db $29
+	db $2A
+	db $30
+	db $2D
+	db $2E
+	db $2F
 StunMechakoopa6:
-	.byte $03
-	.byte $03
-	.byte $AE
-	.byte $27
-	.byte $28
-	.byte $FF
-	.byte $29
-	.byte $2A
-	.byte $32
-	.byte $2D
-	.byte $2E
-	.byte $2F
+	db $03
+	db $03
+	db $AE
+	db $27
+	db $28
+	db $FF
+	db $29
+	db $2A
+	db $32
+	db $2D
+	db $2E
+	db $2F
 obj_h12:
 	LDX $A4
 	LDA ObjectXPos,X
@@ -3349,11 +3347,11 @@ bra8_9820:
 	STA $33
 	JMP ($32)
 tbl8_9834:
-	.word ptr_A7BB
-	.word ptr_AA7B
-	.word ptr_AB29
-	.word ptr3_983E
-	.word ptr_AD88
+	dw ptr_A7BB
+	dw ptr_AA7B
+	dw ptr_AB29
+	dw ptr3_983E
+	dw ptr_AD88
 ptr3_983E:
 	JSR jmp_54_A6D4
 	JSR jmp_54_BEBC
@@ -3658,121 +3656,121 @@ bra8_9A93:
 	JSR jmp_54_A118 ;unlogged
 	RTS ;unlogged
 tbl8_9A99:
-	.byte $A3
+	db $A3
 tbl8_9A9A:
-	.byte $9A
-	.byte $AA
-	.byte $9A
-	.byte $B1
-	.byte $9A
-	.byte $AA
-	.byte $9A
-	.byte $B8
-	.byte $9A
-	.byte $02
-	.byte $02
-	.byte $97
-	.byte $1C
-	.byte $1D
-	.byte $22
-	.byte $23
-	.byte $02
-	.byte $02
-	.byte $97
-	.byte $1C
-	.byte $1D
-	.byte $24
-	.byte $25
-	.byte $02
-	.byte $02
-	.byte $97
-	.byte $1C
-	.byte $1D
-	.byte $2A
-	.byte $2B
-	.byte $02
-	.byte $02
-	.byte $97
-	.byte $2A
-	.byte $2B
-	.byte $1C
-	.byte $1D
+	db $9A
+	db $AA
+	db $9A
+	db $B1
+	db $9A
+	db $AA
+	db $9A
+	db $B8
+	db $9A
+	db $02
+	db $02
+	db $97
+	db $1C
+	db $1D
+	db $22
+	db $23
+	db $02
+	db $02
+	db $97
+	db $1C
+	db $1D
+	db $24
+	db $25
+	db $02
+	db $02
+	db $97
+	db $1C
+	db $1D
+	db $2A
+	db $2B
+	db $02
+	db $02
+	db $97
+	db $2A
+	db $2B
+	db $1C
+	db $1D
 .incbin prg/padding/padding055.bin
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $23
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $23
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00
+	db $00

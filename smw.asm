@@ -5,11 +5,11 @@
 ;Assembles with parasyte's fork of ASM6.
 
 ;--------------------------------------
-.db "NES", $1A	;NES Header
-.db 32			;32 x 16k PRG banks
-.db 32			;32 x 8k CHR banks
-.db $A1, $50	;Mapper: 90
-.dsb 8, $00		;Header Tail
+db "NES", $1A	;NES Header
+db 32			;32 x 16k PRG banks
+db 32			;32 x 8k CHR banks
+db $A1, $50		;Mapper: 90
+dsb 8, $00		;Header Tail
 ;--------------------------------------
 
 ; Include constants
