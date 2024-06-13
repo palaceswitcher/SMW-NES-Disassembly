@@ -1798,11 +1798,11 @@ tbl11_8829:
 	db $18
 	db $20
 bra11_8832:
-	db $D0
-	db $07
+	BNE bra11_883B
 	JSR sub11_8E20
 	JMP loc11_8A0A
 	RTS
+bra11_883B:
 	PHA
 	LDA CurrentTrackID
 	AND #$0F

@@ -2641,3 +2641,5 @@ bra2_AF23:
 	STA $03C9,Y
 bra2_AF28_RTS:
 	RTS
+
+.align $40

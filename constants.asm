@@ -169,7 +169,7 @@ G_MIN_UP_FI:	.dsb $12
 G_MIN_UP_FI_END:
 ; $1fc/$200
 .ende
-; DMC Bank 2
+; DMC Bank $3C
 .enum 0
 ; 0/$200
 UD#4:		.dsb $38
@@ -207,7 +207,8 @@ Ab_DIM_DOWN:	.dsb $37
 Ab_DIM_DOWN_END:
 ; $1f7/$200
 .ende
-; DMC Bank 3
+
+; DMC Bank $3e
 .enum 0
 ; $0/$200
 G_SUS_DOWN:	.dsb $37
@@ -249,8 +250,8 @@ A_MIN_UP:	.dsb $12
 A_MIN_UP_END:
 	.dsb 2
 ; $194/$200
-C7_UP:	.dsb $12
-C7_UP_END:
+C_7_UP:	.dsb $12
+C_7_UP_END:
 	.dsb 2
 ; $1a8/$200
 C_MAJ_DOWN:	.dsb $12
@@ -269,6 +270,22 @@ Ab_DIM_UP:	.dsb $12
 Ab_DIM_UP_END:
 	.dsb 2
 ; $1f8/$200
+.ende
+
+; DMC Bank $34
+.enum $f4
+Bb_DIM_UP:	.dsb $11
+Bb_DIM_UP_END:
+	.dsb 3
+Bb_MAJ_UP:	.dsb $11
+Bb_MAJ_UP_END:
+	.dsb 3
+B_DIM_UP:	.dsb $11
+B_DIM_UP_END:
+	.dsb 3
+G_SUS_UP:	.dsb $11
+G_SUS_UP_END:
+	.dsb 3
 .ende
 
 ;Events

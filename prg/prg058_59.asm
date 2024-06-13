@@ -251,14 +251,14 @@ bra10_86A2:
 bra10_86AB:
 	LDX #$00
 	LDY #$00
-	JSR sub10_8DD6
+	JSR FetchDutyCycle
 	LDA SoundPointer
 	AND #$F0
 	ORA #$30
 	STA Sq1Vol
 	LDX #$01
 	LDY #$02
-	JSR sub10_8DD6
+	JSR FetchDutyCycle
 	LDA SoundPointer
 	AND #$F0
 	ORA #$30
@@ -386,7 +386,7 @@ sub10_87A1:
 	BNE bra10_87DC
 	LDA NumSongTicks,X
 	BNE bra10_87C5
-	JSR sub10_87E0
+	JSR GaugeMusicByte
 	LDX CurrentTrackPointerOffset
 	LDY CurrentTrackOffset
 	LDA NoteLengths,Y
@@ -407,8 +407,7 @@ bra10_87DC:
 	DEC RemainingSongTicks,X
 bra10_87DF_RTS:
 	RTS
-sub10_87E0:
-loc10_87E0:
+GaugeMusicByte:
 	LDX CurrentTrackPointerOffset
 	LDA MusicPointer,X
 	STA SoundPointer
@@ -416,20 +415,20 @@ loc10_87E0:
 	STA SoundPointer+1
 	LDY #$00
 	LDA (SoundPointer),Y
-	BPL bra10_8832
+	BPL GaugePitch
 	TAX
 	CPX #$F0
-	BMI bra10_87FB
-	JMP loc10_887F
-bra10_87FB:
+	BMI GaugeNoteLength
+	JMP GaugeMusicCommand
+GaugeNoteLength:
 	AND #$7F
-	BEQ bra10_8805
+	BEQ InvalidNoteLength
 	LDX CurrentTrackOffset
 	STA NoteLengths,X
-bra10_8805:
+InvalidNoteLength:
 	JSR sub10_8E20
-	JMP loc10_87E0
-ofs_880B:
+	JMP GaugeMusicByte
+musDummy:
 	JSR sub10_8E20
 	RTS
 	LDX $060A
@@ -462,7 +461,7 @@ tbl10_8829:
 	db $10
 	db $18
 	db $20
-bra10_8832:
+GaugePitch:
 	BNE bra10_883B
 	JSR sub10_8E20
 	JMP loc10_8A0A
@@ -505,36 +504,36 @@ loc10_8878:
 	JSR sub10_8A65
 	JSR sub10_8E20
 	RTS
-loc10_887F:
+GaugeMusicCommand:
 	AND #$0F
 	ASL
 	TAY
 	JSR sub10_8E20
 	TYA
 	TAX
-	LDA tbl10_8895,X
+	LDA MusicCommandTable,X
 	STA SoundPointer
-	LDA tbl10_8895+1,X
+	LDA MusicCommandTable+1,X
 	STA SoundPointer+1
 	JMP (SoundPointer)
-tbl10_8895:
-	dw ofs_88B5
-	dw ofs_88CC
-	dw ofs_88E6
-	dw ofs_8912
-	dw loc10_893A
-	dw ofs_8957
-	dw ofs_897A
-	dw loc10_87E0
-	dw ofs_89A1
-	dw ofs_89BA
-	dw ofs_89D3
-	dw ofs_8A27
-	dw ofs_880B
-	dw bra10_87FB
-	dw loc10_87E0
-	dw ofs_89EC
-ofs_88B5:
+MusicCommandTable:
+	dw musCall
+	dw musRet
+	dw musLoop
+	dw musLoopEnd
+	dw musJump
+	dw musSpeed
+	dw musTransposition
+	dw GaugeMusicByte
+	dw musVolumeEnv
+	dw musDutyCycle
+	dw musModulation
+	dw musVerboseLoop
+	dw musDummy
+	dw GaugeNoteLength
+	dw GaugeMusicByte
+	dw musEnd
+musCall:
 	LDX CurrentTrackPointerOffset
 	CLC
 	LDA MusicPointer,X
@@ -544,7 +543,7 @@ ofs_88B5:
 	ADC #$00
 	STA SongReturnPointer+1,X
 	JMP loc10_893D
-ofs_88CC:
+musRet:
 	LDX CurrentTrackPointerOffset
 	LDA SongReturnPointer,X
 	STA MusicPointer,X
@@ -553,8 +552,8 @@ ofs_88CC:
 	LDA #$00
 	STA SongReturnPointer,X
 	STA SongReturnPointer+1,X
-	JMP loc10_87E0
-ofs_88E6:
+	JMP GaugeMusicByte
+musLoop:
 	LDX CurrentTrackPointerOffset
 	LDA MusicPointer,X
 	STA SoundPointer
@@ -570,8 +569,8 @@ ofs_88E6:
 	STA SongLoopPointer,X
 	LDA MusicPointer+1,X
 	STA SongLoopPointer+1,X
-	JMP loc10_87E0
-ofs_8912:
+	JMP GaugeMusicByte
+musLoopEnd:
 	LDX CurrentTrackOffset
 	DEC SongLoopCounter,X
 	BEQ bra10_892C
@@ -580,14 +579,14 @@ ofs_8912:
 	STA MusicPointer,X
 	LDA SongLoopPointer+1,X
 	STA MusicPointer+1,X
-	JMP loc10_87E0
+	JMP GaugeMusicByte
 bra10_892C:
 	LDX CurrentTrackPointerOffset
 	LDA #$00
 	STA SongLoopPointer,X
 	STA SongLoopPointer+1,X
-	JMP loc10_87E0
-loc10_893A:
+	JMP GaugeMusicByte
+musJump:
 	LDX CurrentTrackPointerOffset
 loc10_893D:
 	LDA MusicPointer,X
@@ -600,8 +599,8 @@ loc10_893D:
 	INY
 	LDA (SoundPointer),Y
 	STA MusicPointer+1,X
-	JMP loc10_87E0
-ofs_8957:
+	JMP GaugeMusicByte
+musSpeed:
 	LDX CurrentTrackPointerOffset
 	LDA MusicPointer,X
 	STA SoundPointer
@@ -616,8 +615,8 @@ ofs_8957:
 bra10_8971:
 	STA MusicSpeed,Y ;Set Music/SFX speed
 	JSR sub10_8E20
-	JMP loc10_87E0
-ofs_897A:
+	JMP GaugeMusicByte
+musTransposition:
 	LDA CurrentTrackID
 	AND #$0F
 	TAX
@@ -634,44 +633,44 @@ ofs_897A:
 	STA Pulse1Transpose,X
 bra10_899B:
 	JSR sub10_8E20
-	JMP loc10_87E0
-ofs_89A1:
+	JMP GaugeMusicByte
+musVolumeEnv:
 	LDA CurrentTrackID
 	AND #$0F
 	TAX
 	CPX #$04
 	BMI bra10_89B1
 	JSR sub10_8E20
-	JMP loc10_87E0
+	JMP GaugeMusicByte
 bra10_89B1:
 	JSR sub10_8B0D
 	STA Pulse1VolumeEnv,X
-	JMP loc10_87E0
-ofs_89BA:
+	JMP GaugeMusicByte
+musDutyCycle:
 	LDA CurrentTrackID
 	AND #$0F
 	TAX
 	CPX #$02
 	BMI bra10_89CA
 	JSR sub10_8E20
-	JMP loc10_87E0
+	JMP GaugeMusicByte
 bra10_89CA:
 	JSR sub10_8B0D
 	STA Pulse1Duty,X
-	JMP loc10_87E0
-ofs_89D3:
+	JMP GaugeMusicByte
+musModulation:
 	LDA CurrentTrackID
 	AND #$0F
 	TAX
 	CPX #$04
 	BMI bra10_89E3
 	JSR sub10_8E20
-	JMP loc10_87E0
+	JMP GaugeMusicByte
 bra10_89E3:
 	JSR sub10_8B0D
 	STA Pulse1PitchSetting,X
-	JMP loc10_87E0
-ofs_89EC:
+	JMP GaugeMusicByte
+musEnd:
 	LDX CurrentTrackPointerOffset
 	LDA #$00
 	STA MusicPointer,X
@@ -701,7 +700,7 @@ loc10_8A0A:
 	STA Pulse1DutyDelay,Y
 bra10_8A26_RTS:
 	RTS
-ofs_8A27:
+musVerboseLoop:
 	LDX CurrentTrackPointerOffset
 	LDA MusicPointer,X
 	STA SoundPointer
@@ -725,9 +724,9 @@ bra10_8A46:
 	LDA MusicPointer+1,X
 	ADC #$00
 	STA MusicPointer+1,X
-	JMP loc10_87E0
+	JMP GaugeMusicByte
 bra10_8A62:
-	JMP loc10_893A
+	JMP musJump
 sub10_8A65:
 	LDX CurrentTrackPointerOffset
 	LDA Pulse1FinalPitch+1,X
@@ -996,12 +995,12 @@ bra10_8C81:
 bra10_8C84_RTS:
 	RTS
 sub10_8C85:
-	JSR sub10_8C92
-	JSR sub10_8CE4
-	JSR sub10_8D36
-	JSR sub10_8D85
+	JSR UpdateSquare1
+	JSR UpdateSquare2
+	JSR UpdateTriangle
+	JSR UpdateNoise
 	RTS
-sub10_8C92:
+UpdateSquare1:
 	LDX #SOUND_RAM_LENGTH
 	LDY #SOUND_RAM_LENGTH
 	LDA $0788
@@ -1010,20 +1009,20 @@ sub10_8C92:
 	LDX #$00
 	LDY #$00
 bra10_8CA2:
-	JSR sub10_8DB1
+	JSR FetchVolume
 	LDA SoundPointer
 	PHA
-	JSR sub10_8DD6
+	JSR FetchDutyCycle
 	PLA
 	ORA SoundPointer
 	ORA #$30
 	STA Sq1Vol
-	JSR sub10_8DFB
+	JSR FetchModulation
 	LDA #$00
 	STA SoundPointer+1
 	LDA SoundPointer
 	BPL bra10_8CC0
-	DEC $FF
+	DEC SoundPointer+1
 bra10_8CC0:
 	LDA Pulse1Pitch,Y
 	CLC
@@ -1033,7 +1032,7 @@ bra10_8CC0:
 	LDA Pulse1FinalPitch+1,Y
 	STA SoundPointer
 	LDA Pulse1Pitch+1,Y
-	ADC $FF
+	ADC SoundPointer+1
 	TAX
 	CPX $FE
 	BEQ bra10_8CE3_RTS
@@ -1042,7 +1041,7 @@ bra10_8CC0:
 	STA Sq1Hi
 bra10_8CE3_RTS:
 	RTS
-sub10_8CE4:
+UpdateSquare2:
 	LDX #$65
 	LDY #$66
 	LDA $078A
@@ -1051,20 +1050,20 @@ sub10_8CE4:
 	LDX #$01
 	LDY #$02
 bra10_8CF4:
-	JSR sub10_8DB1
+	JSR FetchVolume
 	LDA SoundPointer
 	PHA
-	JSR sub10_8DD6
+	JSR FetchDutyCycle
 	PLA
 	ORA SoundPointer
 	ORA #$30
 	STA Sq2Vol
-	JSR sub10_8DFB
+	JSR FetchModulation
 	LDA #$00
 	STA SoundPointer+1
 	LDA SoundPointer
 	BPL bra10_8D12
-	DEC $FF
+	DEC SoundPointer+1
 bra10_8D12:
 	LDA Pulse1Pitch,Y
 	CLC
@@ -1074,7 +1073,7 @@ bra10_8D12:
 	LDA Pulse1FinalPitch+1,Y
 	STA SoundPointer
 	LDA Pulse1Pitch+1,Y
-	ADC $FF
+	ADC SoundPointer+1
 	TAX
 	CPX $FE
 	BEQ bra10_8D35_RTS
@@ -1083,7 +1082,7 @@ bra10_8D12:
 	STA Sq2Hi
 bra10_8D35_RTS:
 	RTS
-sub10_8D36:
+UpdateTriangle:
 	LDX #$66
 	LDY #$68
 	LDA $078C
@@ -1092,19 +1091,19 @@ sub10_8D36:
 	LDX #$02
 	LDY #$04
 bra10_8D46:
-	JSR sub10_8DB1
+	JSR FetchVolume
 	LDA SoundPointer
 	BEQ bra10_8D4F
 	LDA #$FF
 bra10_8D4F:
 	ORA #$80
 	STA TriLinear
-	JSR sub10_8DFB
+	JSR FetchModulation
 	LDA #$00
 	STA SoundPointer+1
 	LDA SoundPointer
 	BPL bra10_8D61
-	DEC $FF
+	DEC SoundPointer+1
 bra10_8D61:
 	LDA Pulse1Pitch,Y
 	CLC
@@ -1114,7 +1113,7 @@ bra10_8D61:
 	LDA Pulse1FinalPitch+1,Y
 	STA SoundPointer
 	LDA Pulse1Pitch+1,Y
-	ADC $FF
+	ADC SoundPointer+1
 	TAX
 	CPX $FE
 	BEQ bra10_8D84_RTS
@@ -1123,7 +1122,7 @@ bra10_8D61:
 	STA TriHi
 bra10_8D84_RTS:
 	RTS
-sub10_8D85:
+UpdateNoise:
 	LDX #$67
 	LDY #$6A
 	LDA $078E
@@ -1132,11 +1131,11 @@ sub10_8D85:
 	LDX #$03
 	LDY #$06
 bra10_8D95:
-	JSR sub10_8DB1
+	JSR FetchVolume
 	LDA SoundPointer
 	ORA #$30
 	STA NoiseVol
-	JSR sub10_8DFB
+	JSR FetchModulation
 	LDA Pulse1Pitch,Y
 	CLC
 	ADC $FE
@@ -1144,7 +1143,7 @@ bra10_8D95:
 	LDA #$F8
 	STA NoiseHi
 	RTS
-sub10_8DB1:
+FetchVolume:
 	TYA
 	PHA
 	LDA Pulse1VolumeDelay,X
@@ -1168,7 +1167,7 @@ loc10_8DD1:
 	PLA
 	TAY
 	RTS
-sub10_8DD6:
+FetchDutyCycle:
 	TYA
 	PHA
 	LDA Pulse1DutyDelay,X
@@ -1192,7 +1191,7 @@ loc10_8DF6:
 	PLA
 	TAY
 	RTS
-sub10_8DFB:
+FetchModulation:
 	TYA
 	PHA
 	LDA Pulse1PitchDelay,X
@@ -1421,6 +1420,161 @@ NotePitchTable:
 	dw $0004
 	dw $0003
 	dw $0002
+DPCM_BankTable:
+	db $3E ; C0
+REPT 6
+	db $28 ; C#0 - F#0
+ENDR
+REPT 9
+	db $3C ; G0 - D#1
+ENDR
+REPT 15
+	db $3E ; E1 - F#2
+ENDR
+REPT 4
+	db $34 ; G2 - A#2
+ENDR
+	db $3E ; B2
+	db $3E ; C3
+	db $3E ; C#3
+	db $3E ; D3
+	db $3E ; D#3
+	db $3E ; E3
+	db $3E ; F3
+	db $3E ; F#3
+	db $3E ; G3
+	db $28 ; G#3
+	db $28 ; A3
+	db $3C ; A#3
+	db $3E ; B3
+	db $3E ; C4
+	db $28 ; C#4
+	db $28 ; D4
+	db $3C ; D#4
+	db $3E ; E4
+	db $3E ; F4
+	db $3E ; F#4
+	db $3E ; G4
+	db $3E ; G#4
+	db $3E ; A4
+DPCM_AddressTable:
+	db $7F			; C0
+	db Bb_DIM_DOWN >> 2	; C#0
+	db C_5Min7_LD >> 2	; D0
+	db UC#4 >> 2		; D#0
+	db UD4 >> 2		; E0
+	db F_MAJ_DOWN >> 2	; F0
+	db G_MIN_UP_FI >> 2	; F#0
+	db UD#4 >> 2		; G0
+	db G_MIN_DOWN_FI >> 2	; G#0
+	db G_MIN_DOWN_SI >> 2	; A0
+	db Ab_MAJ_DOWN >> 2	; A#0
+	db A_MIN_DOWN >> 2	; B0
+	db Bb_MAJ_DOWN >> 2	; C1
+	db B_DIM_DOWN >> 2	; C#1
+	db Ab_DIM_DOWN >> 2	; D1
+	db C_7_DOWN >> 2	; D#1
+	db G_SUS_DOWN >> 2	; E1
+	db UE4 >> 2		; F1
+	db UF4 >> 2		; F#1
+	db UF#4 >> 2		; G1
+	db UG4 >> 2		; G#1
+	db UG#4 >> 2		; A1
+	db UA4 >> 2		; A#1
+	db G_MIN_UP_SI >> 2	; B1
+	db Ab_MAJ_UP >> 2	; C2
+	db A_MIN_UP >> 2	; C#2
+	db C_7_UP >> 2		; D2
+	db C_MAJ_DOWN >> 2	; D#2
+	db C_MAJ_UP >> 2	; E2
+	db F_MAJ_UP >> 2	; F2
+	db Ab_DIM_UP >> 2	; F#2
+	db Bb_DIM_UP >> 2	; G2
+	db Bb_MAJ_UP >> 2	; G#2
+	db B_DIM_UP >> 2	; A2
+	db G_SUS_UP >> 2	; A#2
+	db $7F			; B2
+	db $7F			; C3
+	db $7F			; C#3
+	db $7F			; D3
+	db $7F			; D#3
+	db $7F			; E3
+	db $7F			; F3
+	db $7F			; F#3
+	db $7F			; G3
+	db UC#4 >> 2		; G#3
+	db UD4 >> 2		; A3
+	db UD#4 >> 2		; A#3
+	db UE4 >> 2		; B3
+	db UF4 >> 2		; C4
+	db UC#4 >> 2		; C#4
+	db UD4 >> 2		; D4
+	db UD#4 >> 2		; D#4
+	db UE4 >> 2		; E4
+	db UF4 >> 2		; F4
+	db UF#4 >> 2		; F#4
+	db UG4 >> 2		; G4
+	db UG#4 >> 2		; G#4
+	db UA4 >> 2		; A4
+DPCM_EndAddressTable:
+	dl $FF			; C0
+	dl Bb_DIM_DOWN_END	; C#0
+	dl C_5Min7_LD_END	; D0
+	dl UC#4_END		; D#0
+	dl UD4_END		; E0
+	dl F_MAJ_DOWN_END	; F0
+	dl G_MIN_UP_FI_END	; F#0
+	dl UD#4_END		; G0
+	dl G_MIN_DOWN_FI_END	; G#0
+	dl G_MIN_DOWN_SI_END	; A0
+	dl Ab_MAJ_DOWN_END	; A#0
+	dl A_MIN_DOWN_END	; B0
+	dl Bb_MAJ_DOWN_END	; C1
+	dl B_DIM_DOWN_END	; C#1
+	dl Ab_DIM_DOWN_END	; D1
+	dl C_7_DOWN_END		; D#1
+	dl G_SUS_DOWN_END	; E1
+	dl UE4_END		; F1
+	dl UF4_END		; F#1
+	dl UF#4_END		; G1
+	dl UG4_END		; G#1
+	dl UG#4_END		; A1
+	dl UA4_END		; A#1
+	dl G_MIN_UP_SI_END	; B1
+	dl Ab_MAJ_UP_END	; C2
+	dl A_MIN_UP_END		; C#2
+	dl C_7_UP_END		; D2
+	dl C_MAJ_DOWN_END	; D#2
+	dl C_MAJ_UP_END		; E2
+	dl F_MAJ_UP_END		; F2
+	dl Ab_DIM_UP_END	; F#2
+	dl Bb_DIM_UP_END	; G2
+	dl Bb_MAJ_UP_END	; G#2
+	dl B_DIM_UP_END		; A2
+	dl G_SUS_UP_END		; A#2
+	dl $FF			; B2
+	dl $FF			; C3
+	dl $FF			; C#3
+	dl $FF			; D3
+	dl $FF			; D#3
+	dl $FF			; E3
+	dl $FF			; F3
+	dl $FF			; F#3
+	dl $FF			; G3
+	dl UC#4_END		; G#3
+	dl UD4_END		; A3
+	dl UD#4_END		; A#3
+	dl UE4_END		; B3
+	dl UF4_END		; C4
+	dl UC#4_END		; C#4
+	dl UD4_END		; D4
+	dl UD#4_END		; D#4
+	dl UE4_END		; E4
+	dl UF4_END		; F4
+	dl UF#4_END		; F#4
+	dl UG4_END		; G4
+	dl UG#4_END		; G#4
+	dl UA4_END		; A4
  ;include sfx data
 	.include sound/sfx_SpinJump.asm
 	.include sound/sfx_Pause.asm
