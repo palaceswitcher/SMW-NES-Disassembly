@@ -265,7 +265,7 @@ ClearMemory:
 	STA $0400,X
 	STA $0500,X
 	STA $0600,X
-	STA $0700,X ;Wipe all pages of memory
+	STA MuteFlag,X ;Wipe all pages of memory
 	DEX
 	BNE ClearMemory ;Keep looping until every page is cleared
 
@@ -357,7 +357,7 @@ tbl3_E2DB:
 	dw pnt2_E316
 	dw pnt2_E316
 pnt2_E2E5:
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #buttonA
 	BEQ bra3_E2FE ;If the A button is pressed,
 	INC LevelNumber ;Increment level number
@@ -368,7 +368,7 @@ pnt2_E2E5:
 	STA LevelNumber ;Clear level number
 	INC WorldNumber ;Carry over world number (1-5 would become 2-1)
 bra3_E2FE:
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #buttonStart
 	BEQ bra3_E315 ;If start is pressed,
 	INC a:GameState ;Set game state to 'in level'
@@ -541,7 +541,7 @@ bra3_E445:
 loc3_E45F:
 	LDA EndingFreezeFlag
 	BNE bra3_E47C ;Skip this check if at the ending cutscene
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #buttonStart
 	BEQ bra3_E47C ;If start pressed
 	LDA #$00
@@ -555,7 +555,7 @@ bra3_E47C:
 	LDA PauseFlag
 	BEQ bra3_E494 ;Branch if game not paused
 	JSR JYScreenTrigger ;Jump
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #buttonSelect
 	BEQ bra3_E494 ;If select pressed,
 	INC a:EventPart ;Start level transition
@@ -743,7 +743,7 @@ sub3_E5D4:
 pnt2_E610:
 	JSR sub3_ED14 ;Jump
 	JSR sub3_F27F ;Jump
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #$C0
 	BEQ bra3_E62F ;If A or B are pressed,
 	LDA #$00
@@ -1217,10 +1217,10 @@ sub3_E9C4:
 	JSR jmp_52_A0F3
 	RTS
 JYScreenTrigger:
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	CMP #buttonStart
 	BEQ JYTriggerDone ;Stop if the game is unpaused.
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	BEQ JYTriggerDone ;If any button is being pressed,
 	LDX JYEasterEggInput ;Load correct input count
 	BMI JYTriggerDone
@@ -2584,63 +2584,104 @@ bra3_F195:
 ;CONTROLLER READING
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
 UpdateJoypad:
+	; Work around DPCM sample bug.
+	; Some inputs are skipped, leading to polling corruption
+	; most noticeable with forged right presses, but also mistaking
+	; certain inputs for others
+
+	; Delection can result in each column below:
+	; Interpreted: A B      SELECT START UP   DOWN LEFT  RIGHT
+	; Reality:     B SELECT START  UP    DOWN LEFT RIGHT NULL
+; STEP 1: Read input twice, stash them one at a time.
 	JSR ReadJoypad
-	LDX #$00 ;Set the X index for the first controller
-	JSR ControllerLogicSub
-	INX ;Set the X index for the second controller
-ControllerLogicSub:
-	LDA ButtonsHeld,X
-	EOR ButtonsMirrored,X
-	AND ButtonsHeld,X ;Try to match the main controller bits with the mirrored bits
-	STA ButtonsPressed,X ;If they match, set the input to pressed. Otherwise, clear the input
-	LDA ButtonsHeld,X
-	STA ButtonsMirrored,X ;Copy the button input over
-	AND #$0C ;Mask out the bits for up and down
-	CMP #$0C
-	BNE UpdateJoypadDone ;If both up and down are held, continue
-	LDA ButtonsHeld,X
-	AND #%11111011
-	STA ButtonsHeld,X ;Ignore the down button
-UpdateJoypadDone:
+	LDA zInputBottleNeck
+	STA iBackupInput
+	JSR ReadJoypad
+	LDA zInputBottleNeck
+	STA iBackupInput + 1
+; STEP 2: EOR the backups together.  0 means the backups match
+	EOR iBackupInput
+	BEQ @Loop
+; Corrupt stash!
+; STEP 3: Stash result.
+	TAX
+
+; STEP 4: Look for the correct input.
+; MEASURE 1: If one of the backups is 0, nothing was pressed.
+	LDA iBackupInput + 1
+	BEQ @CorrectInput
+	LDA iBackupInput
+	BEQ @CorrectInput
+
+; MEASURE 2: Find the correct backup, as output by Y
+	JSR @FindDeletion
+
+	LDA iBackupInput, Y
+
+@CorrectInput:
+; At this point, A is assumed to hold the correct input, which should be used.
+	STA zInputBottleNeck
+
+@Loop:
+	; determine which buttons were newly pressed
+	LDA zInputBottleNeck
+	TAY
+	EOR zInputCurrentState
+	AND zInputBottleNeck
+	STA zInputBottleNeck
+	STY zInputCurrentState
 	RTS
-	
-ReadJoypad:
-	LDA #$01
-	STA Joy1 ;Strobe controller input
-	LDA #$00
-	STA Joy1 ;Reload controller input
-	LDA #$01
-	STA Joy1 ;Strobe controller again
-	NOP
-	NOP ;Wait 2 cycles
-	LDA #$00
-	STA Joy1 ;Read controller input
-	NOP
-	NOP ;Wait 2 cycles
-	LDA #$01
-	LSR ;Set the carry by shifting a bit into it
-	TAX ;Set the X index for the first controller
-	STA Joy1 ;Reload controller input again
-	JSR sub3_F1EC
-	INX ;Set the X index for the second controller
-sub3_F1EC:
-	LDA #$00
-	STA Controller2Input ;Clear input for the 2nd controller
-	LDY #$08 ;Set loop count to 8
-bra3_F1F3:
-	PHA ;Push blank value into the stack
-	LDA Joy1,X ;Read controller input
-	STA $063D ;Store input data
-	LSR
-	LSR ;Shift bit 1 of the control input into the carry (check for left button?)
-	ROL $25 ;Shift the carry bit into memory??
-	LSR $063D ;Shift bit 0 of the control input into the carry
-	PLA ;Pull empty value back from accumulator
-	ROL Controller2Input ;Shift the carry bit into memory (set another controller bit)??
+
+@FindDeletion:
+	; We need the EOR result!
+	; Seperate each bit into where they belong.
+	TXA
+	AND iBackupInput
+	STA iBackupInput + 2
+	TXA
+	AND iBackupInput + 1
+	STA iBackupInput + 3
+	; Y will now determine which backup is the correct input.
+	; Looping may occur during right presses.
+	LDY #0
+@Looking:
+	; iBackupInput(3) trips C --> Y = 0
+	LSR iBackupInput + 3
+	BCS @Found
+	; iBackupInput(3) trips Z --> Y = 1
+	INY
+	LDA iBackupInput + 3
+	BEQ @Found
+	; iBackupInput(2) trips C --> Y = 1
+	LSR iBackupInput + 2
+	BCS @Found
+	; iBackupInput(2) trips Z --> Y = 0
 	DEY
-	BNE bra3_F1F3 ;Loop for the set amount of times
-	ORA Controller2Input
-	STA ButtonsHeld,X
+	LDA iBackupInput + 2
+	BNE @Looking ; loop if nothing was tripped
+@Found:
+	RTS
+
+;
+; Reads joypad pressed input
+;
+ReadJoypad:
+	; send a jolt to the controller
+	LDA #1
+	STA Joy1
+	; send the same jolt to the bottleneck to set C at the end
+	STA zInputBottleNeck
+	; 1 >> 1 = 0, C is not needed right now
+	LSR A
+	STA Joy1
+@Loop:
+	; Read standard controller data
+	LDA Joy1
+	LSR A
+	; are we done?
+	ROL zInputBottleNeck
+	BCC @Loop
+	; we're done
 	RTS
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
 ;END OF CONTROLLER READING

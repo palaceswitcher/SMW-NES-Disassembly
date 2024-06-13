@@ -874,7 +874,7 @@ loc4_A4FC: ;Unsure of purpose
 	LDY #$00 ;clear Y
 	LDA PlayerYSpeed ;if player is moving vertically,
 	BNE bra4_A50B ;branch to jump (LoadRidingSprite)
-	LDA ButtonsHeld ;else
+	LDA zInputCurrentState ;else
 	AND #dirDown ;if down not held,
 	BEQ bra4_A50B ;branch to jump (LoadRidingSprite)
 	LDY #$06 ;else if player isn't moving vertically and down is held set Y to #$06
@@ -899,7 +899,7 @@ loc4_A523: ;Unsure of purpose
 	CMP #$02
 	BCC bra4_A537 ;if Yoshi Status < #$02, branch ahead 
 	LDY #$00 ;else clear Y
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirDown
 	BEQ bra4_A555 ;if down isn't held, branch 
 	LDY #$07 ;if it is, set Y to 07 (adjusts offset for loading CHR bank)
@@ -907,7 +907,7 @@ loc4_A523: ;Unsure of purpose
 	
 bra4_A537: ;if Yoshi Status < #$02
 	LDY $0629 ;load unknown into Y
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirDown
 	BEQ bra4_A547 ;if down isn't held, branch 
 	LDX tbl4_A571,Y ;if it is, load from table (unknown use)
@@ -2742,7 +2742,7 @@ bra4_AE0F:
 bra4_AE14_RTS:
 	RTS 
 ItemBoxLogicSub: ;X: Itembox, Y: Player Power
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #buttonSelect ;Continue if select pressed
 	BEQ ItemBoxLogicDone
 	
@@ -2824,7 +2824,7 @@ PAct_Idle:
 	LDA PlayerMovement
 	AND #$04
 	BNE PAct_IdleDone ;Make sure the player isn't moving up
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	BNE PAct_IdleChecks ;Branch if any button is held
 	STA PlayerAction ;Make the player stand still if none are held
 PAct_IdleChecks:
@@ -2847,7 +2847,7 @@ PAct_Duck:
 	LDA PlayerMovement ;Continue if they aren't
 	AND #$04
 	BNE PAct_DuckDone ;Branch if the player is moving up
-	LDA ButtonsHeld ;Otherwise, continue
+	LDA zInputCurrentState ;Otherwise, continue
 	AND #dirDown
 	BNE bra4_AED0 ;Branch if down is held
 	LDA #$00
@@ -2875,7 +2875,7 @@ bra4_AEEE:
 	JSR PlayerRunRoutine
 	JSR SwimHoldRoutine
 	JSR ShootFireball
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirDown
 	BEQ bra4_AF05_RTS ;Make sure down is held
 	LDA #$07
@@ -2931,7 +2931,7 @@ JumpYSpdRoutine:
 	LDA PlayerMovement
 	AND #$04
 	BEQ JumpYSpdRtDone ;Make sure the player is moving up
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #buttonA
 	BEQ JumpYSpdRtDone ;Make sure the A button is held
 	LDA PlayerYSpeed
@@ -2981,10 +2981,10 @@ ShootFireball:
 	LDA FireballSlot
 	AND FireballSlot2
 	BNE ShootFireballDone ;Make sure there's an open fireball slot
-	LDA ButtonsHeld	
+	LDA zInputCurrentState	
 	AND #dirDown
 	BNE ShootFireballDone ;Stop if down is held
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #buttonB
 	BEQ ShootFireballDone ;Wait until B is pressed
 	LDA #$13 ;norm fireball 
@@ -2999,10 +2999,10 @@ MidAirFireShoot:
 	LDA FireballSlot
 	AND FireballSlot2
 	BNE MidAirFireShootDone ;Stop if there aren't any open fireball slots
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirDown
 	BNE MidAirFireShootDone ;Stop if down is held
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #buttonB
 	BEQ MidAirFireShootDone ;Wait until B is pressed
 	LDY #$11 ;Make the player shoot a mid-air fireball
@@ -3151,19 +3151,19 @@ bra4_B0D6_RTS:
 loc4_B0D7:
 	JSR sub4_B1DE
 bra4_B0DA:
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #buttonB
 	BEQ bra4_B11D_RTS ;Make sure B is pressed
 	LDA #$00
 	STA SwallowFrameCount
 	STA YoshiSwallowTimer ;Clear Yoshi's swallow timer
 	LDY #$0C ;Set player state
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirDown
 	BEQ bra4_B0F4 ;Branch if down isn't held
 	LDY #$0E ;If down is held, set the player's state
 bra4_B0F4:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirRight+dirLeft
 	BEQ bra4_B0FD ;Branch if left or right aren't held
 	LDY #$0D ;If left are right are held, set the player's state
@@ -3250,18 +3250,18 @@ loc4_B193:
 	LDA PlayerState
 	CMP #$09
 	BCS bra4_B1C0_RTS
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #buttonB
 	BEQ bra4_B1C0_RTS
 	LDA #sfxYoshiTongue
 	STA SFXRegister
 	LDY #$09
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirDown
 	BEQ bra4_B1AF
 	LDY #$0B
 bra4_B1AF:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirRight+dirLeft
 	BEQ bra4_B1BE
 	LDY #$09
@@ -3274,12 +3274,12 @@ bra4_B1C0_RTS:
 	RTS
 loc4_B1C1:
 	LDY #$0F
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirDown
 	BEQ bra4_B1CC
 	LDY #$11
 bra4_B1CC:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirRight+dirLeft
 	BEQ bra4_B1DB
 	LDY #$0F
@@ -3501,14 +3501,14 @@ bra4_B33F:
 ;WALKING AND RUNNING
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
 PlayerWalkRoutine:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirRight
 	BEQ PlayerWalkLeft ;Branch if right isn't held
 	LDA PlayerMovement ;If it is, continue
 	AND #$BE ;Make the player face right
 	JMP loc4_B368 ;Jump
 PlayerWalkLeft:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirLeft
 	BEQ PlayerWalkDone ;Make sure left is held
 	LDA PlayerMovement
@@ -3528,14 +3528,14 @@ SetWalking:
 PlayerWalkDone:
 	RTS
 SwimMove:
-	LDA ButtonsHeld	
+	LDA zInputCurrentState	
 	AND #dirRight
 	BEQ SwimLeft ;If right is held,
 	LDA PlayerMovement
 	AND #$BE ;Make the player face right
 	JMP loc4_B395 ;Jump
 SwimLeft:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirLeft
 	BEQ SwimMoveDone ;If left is held,
 	LDA PlayerMovement
@@ -3554,14 +3554,14 @@ SwimMoveDone:
 JumpXSpdRoutine:
 	LDA PlayerMovement
 	STA $26 ;Copy movement value
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirRight
 	BEQ DoLeftJump ;Branch if the player isn't holding right
 	LDA PlayerMovement
 	AND #$BE ;Set player's direction to right
 	JMP JumpDirectnChk ;Jump
 DoLeftJump:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirLeft
 	BNE PlayerSetLeft ;Branch if left is held
 	LDA #$01 ;Set acceleration
@@ -3594,7 +3594,7 @@ SwimHoldRoutine:
 	BEQ SwimChk ;If player isn't carrying anything, branch
 	LDA #$20
 	STA PlayerYSpeed ;Set vertical speed to 32
-	LDA ButtonsHeld	
+	LDA zInputCurrentState	
 	AND #dirDown
 	BEQ HoldFloatUp ;Make the player float if down isn't held
 	LDA PlayerMovement
@@ -3607,10 +3607,10 @@ HoldFloatUp:
 	STA PlayerMovement ;Make player float up
 	RTS
 SwimChk:
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #buttonA
 	BEQ SwimmingDone ;Make sure A is pressed
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirUp
 	BEQ DoSwim ;Dismount Yoshi if up is held 
 	JSR DismountYoshiRoutine
@@ -3627,24 +3627,24 @@ DoSwim:
 SwimmingDone:
 	RTS
 JumpingRoutine:
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #buttonA
 	BEQ SwimmingDone ;Make sure the A button is pressed
 	LDA PlayerYSpeed
 	BNE SwimmingDone ;Make sure that the player has no leftover vertical speed
 	LDA PlayerHoldFlag
 	BNE DoBJump ;Branch if the player is carrying something
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirUp
 	BNE ExecuteSpinJump ;If up is held, do a spin jump instead
 DoBJump:
 	LDY #$48 ;Set vertical speed to $48
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #buttonB
 	BEQ DoLowJump
 	LDY #$58 ;If B is held, set vertical speed to $58
 DoLowJump:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirDown
 	BEQ ExecuteJump
 	LDY #$28 ;If down is held, set vertical speed to $28
@@ -3661,10 +3661,10 @@ ExecuteJump:
 SpinJumpRoutine:
 	LDA Player1YoshiStatus
 	BEQ SpinJumpDone ;Make sure the player isn't riding Yoshi
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #buttonA
 	BEQ SpinJumpDone ;Make sure A is held
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirUp
 	BEQ SpinJumpDone ;Make sure up is held
 ExecuteSpinJump:
@@ -3734,7 +3734,7 @@ LeapRoutine:
 	LDA PlayerAnimationFrame
 	CMP #$10 ;if animation frame is lower than 10,
 	BCC LeapingDone ;branch
-	LDA ButtonsPressed ;
+	LDA zInputBottleNeck ;
 	AND #buttonA ;if A not pressed,
 	BEQ LeapingDone ;branch
 	LDA #$60 ;
@@ -3746,10 +3746,10 @@ LeapingDone:
 PlayerRunRoutine:
 	LDA UnderwaterFlag
 	BNE bra4_B55B_RTS ;Make sure the player isn't underwater
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$03
 	BEQ bra4_B55C ;Make sure either left or right are held. If they aren't, skip ahead.
-	LDA ButtonsHeld ;Otherwise, continue
+	LDA zInputCurrentState ;Otherwise, continue
 	AND #buttonB
 	BNE SetupPlayerRun ;Switch to running if B is held
 	STA $0314 ;Likely an unused or residual opcode. Does nothing.
@@ -3800,13 +3800,13 @@ bra4_B55C:
 ;END OF WALKING AND RUNNING
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
 LookUpDuckRoutine:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirDown
 	BEQ DoLookUp ;If down isn't held, move to the next check
 	LDA #$07
 	STA PlayerAction ;Otherwise, set the player's action to ducking
 DoLookUp:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirUp
 	BEQ LookupDuckDone ;Make sure up is held
 	LDA #$08
@@ -3893,7 +3893,7 @@ SpinCapeRoutine:
 	BNE SpinCapeDone ;Make sure the player isn't riding Yoshi
 	LDA PlayerHoldFlag
 	BNE SpinCapeDone ;Make sure the player isn't carrying anything
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #buttonB
 	BEQ SpinCapeDone ;Make sure B is pressed
 	LDA #$08
@@ -3907,7 +3907,7 @@ sub4_B616:
 	STA PlayerXSpeed
 	RTS
 sub4_B61B:
-	LDA ButtonsHeld ;
+	LDA zInputCurrentState ;
 	AND #buttonB ;if b still held,
 	BNE bra4_B627 ;branch
 	LDA #$0A ;
@@ -3929,7 +3929,7 @@ bra4_B630:
 	LDA PlayerMovement
 	AND #$04
 	BNE bra4_B653
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND $32
 	BEQ bra4_B653
 	INC PlayerYSpeed
@@ -3939,7 +3939,7 @@ bra4_B630:
 	STA PlayerYSpeed
 	RTS
 bra4_B653:
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND $34
 	BEQ bra4_B668_RTS
 	LDA PlayerMovement
@@ -3952,10 +3952,10 @@ bra4_B653:
 bra4_B668_RTS:
 	RTS
 sub4_B669:
-	LDA ButtonsHeld ;
+	LDA zInputCurrentState ;
 	AND #buttonB ;if B not held,
 	BEQ bra4_B67B_RTS ;branch
-	LDA ButtonsHeld ;
+	LDA zInputCurrentState ;
 	AND #buttonA ;if A not held,
 	BEQ bra4_B67B_RTS ;branch
 	LDA #$40 ;
@@ -3966,7 +3966,7 @@ bra4_B67B_RTS:
 ;Climbing 
 ;-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-	
 ClimbingRoutines: ;This section locks the player in place if no directions are held (suspend player in mid air)
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$0F
 	BNE ClimbingActionList ;If a direction is held, branch
 	LDA #$00 ;else
@@ -3980,10 +3980,10 @@ ClimbingActionList:
 	JSR PlayerClimbJump
 	RTS
 PlayerClimbJump: ;Jump from climbing
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #buttonA
 	BEQ PlayerClimbJumpRTS ;If A button not pressed, branch
-	LDA ButtonsHeld ;else
+	LDA zInputCurrentState ;else
 	AND #dirUp
 	BNE PlayerClimbJumpRTS ;Make sure that up isn't being held
 	LDA #$50
@@ -4003,7 +4003,7 @@ PlayerClimbJumpRTS:
 	RTS
 ;********************
 ClimbJoyUpChk:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirUp ;if up isn't held,
 	BEQ ClimbJoyDownChk ;branch ahead to down Dpad check
 ;Else
@@ -4019,7 +4019,7 @@ bra4_B6D1: ;unknown, mirroring related maybe?
 	BNE bra4_B6E7 ;If result non zero, branch
 	
 ClimbJoyDownChk:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirDown ;if down isn't held,
 	BEQ bra4_B6EF ;branch
 	LDA #$00
@@ -4043,7 +4043,7 @@ bra4_B6EF:
 	RTS
 	
 ClimbJoyLeftChk:
-	LDA ButtonsHeld ;
+	LDA zInputCurrentState ;
 	AND #dirLeft ;if left isn't pressed,
 	BEQ ClimbJoyRightChk ;branch to check right
 	LDA PlayerMovement
@@ -4051,7 +4051,7 @@ ClimbJoyLeftChk:
 	BNE bra4_B716
 	
 ClimbJoyRightChk:
-	LDA ButtonsHeld ;
+	LDA zInputCurrentState ;
 	AND #dirRight ;if right isn't pressed,
 	BEQ bra4_B71E_RTS ;branch to RTS
 	LDA PlayerMovement
@@ -4080,7 +4080,7 @@ ofs_B724:
 	BEQ bra4_B734 ;branch
 	LDY #$0A
 bra4_B734:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirDown
 	BEQ bra4_B73D
 	LDY #$07
@@ -4135,7 +4135,7 @@ ofs_B794:
 	JSR TongueSwimChk
 	LDX #$0D
 	LDY #$00
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirDown
 	BEQ bra4_B7A7
 	LDY #$07
@@ -4209,7 +4209,7 @@ ofs_B821:
 	JSR SwimMove
 	JSR TongueSwimChk
 	LDX #$00
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$03
 	BEQ bra4_B835 ;Branch if left/right aren't held
 	LDA PlayerYSpeed
@@ -4227,14 +4227,14 @@ bra4_B835:
 	STA SFXRegister ;Play swallow sound
 	RTS
 TongueSpeedBoost:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirRight ;Make sure right is held
 	BEQ bra4_B859
 	LDA PlayerMovement
 	AND #$FE ;Make the player face right
 	JMP loc4_B864
 bra4_B859:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirLeft ;Make sure left is held
 	BEQ TongueSpdBoostDone
 	LDA PlayerMovement
@@ -4251,7 +4251,7 @@ loc4_B864:
 TongueSpdBoostDone:
 	RTS
 TongueSwimChk:
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #buttonA
 	BEQ TongueSwimChkDone ;Make sure the A button is pressed
 	LDA UnderwaterFlag
@@ -4264,7 +4264,7 @@ bra4_B886:
 	LDA PlayerYSpeed
 	BNE TongueSwimChkDone ;Make sure the player has vertical speed
 	LDY #$60
-	LDA ButtonsHeld	
+	LDA zInputCurrentState	
 	AND #dirDown
 	BEQ bra4_B897 ;Branch if down isn't held
 	LDY #$30
@@ -4347,7 +4347,7 @@ ofs_B90C:
 unknownrout1:
 		LDA PlayerYSpeed ;if player's y speed isn't empty,
 		BNE rout1done ;stop
-		LDA ButtonsPressed ;
+		LDA zInputBottleNeck ;
 		AND #buttonA ;make sure A is pressed
 		BEQ rout1done ;
 		LDA #$60 ;

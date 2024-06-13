@@ -145,6 +145,132 @@ VolSet = $F8
 DutySet = $F9
 PitchSet = $FA
 
+; DMC Bank $28
+.enum 0
+; 0/$200
+Bb_DIM_DOWN:	.dsb $ab
+Bb_DIM_DOWN_END:
+	.dsb $1
+; $ac/$2000
+C_5Min7_LD:	.dsb $88
+C_5Min7_LD_END:
+; $134/$200
+UC#4:		.dsb $3f
+UC#4_END:
+	.dsb $1
+; $174/$200
+UD4:		.dsb $3c
+UD4_END:
+; $1b0/$200
+F_MAJ_DOWN:	.dsb $38
+F_MAJ_DOWN_END:
+; $1e8/$200
+G_MIN_UP_FI:	.dsb $12
+G_MIN_UP_FI_END:
+; $1fc/$200
+.ende
+; DMC Bank 2
+.enum 0
+; 0/$200
+UD#4:		.dsb $38
+UD#4_END:
+; $38/$200
+G_MIN_DOWN_FI:	.dsb $37
+G_MIN_DOWN_FI_END:
+	.dsb 1
+; $70/$200
+G_MIN_DOWN_SI:	.dsb $37
+G_MIN_DOWN_SI_END:
+	.dsb 1
+; $a8/$200
+Ab_MAJ_DOWN:	.dsb $37
+Ab_MAJ_DOWN_END:
+	.dsb 1
+; $e0/$200
+A_MIN_DOWN:	.dsb $37
+A_MIN_DOWN_END:
+	.dsb 1
+; $118/$200
+Bb_MAJ_DOWN:	.dsb $37
+Bb_MAJ_DOWN_END:
+	.dsb 1
+; $150/$200
+B_DIM_DOWN:	.dsb $37
+B_DIM_DOWN_END:
+	.dsb 1
+; $188/$200
+C_7_DOWN:	.dsb $37
+C_7_DOWN_END:
+	.dsb 1
+; $1c0/$200
+Ab_DIM_DOWN:	.dsb $37
+Ab_DIM_DOWN_END:
+; $1f7/$200
+.ende
+; DMC Bank 3
+.enum 0
+; $0/$200
+G_SUS_DOWN:	.dsb $37
+G_SUS_DOWN_END:
+	.dsb 1
+; $38/$200
+UE4:		.dsb $35
+UE4_END:
+	.dsb 3
+; $70/$200
+UF4:		.dsb $32
+UF4_END:
+	.dsb 2
+; $a4/$200
+UF#4:		.dsb $2f
+UF#4_END:
+	.dsb 1
+; $d4/$200
+UG4:		.dsb $2d
+UG4_END:
+	.dsb 3
+; $104/$200
+UG#4:		.dsb $2a
+UG#4_END:
+	.dsb 2
+; $130/$200
+UA4:		.dsb $28
+UA4_END:
+; $158/$200
+G_MIN_UP_SI:	.dsb $12
+G_MIN_UP_SI_END:
+	.dsb 2
+; $16c/$200
+Ab_MAJ_UP:	.dsb $12
+Ab_MAJ_UP_END:
+	.dsb 2
+; $180/$200
+A_MIN_UP:	.dsb $12
+A_MIN_UP_END:
+	.dsb 2
+; $194/$200
+C7_UP:	.dsb $12
+C7_UP_END:
+	.dsb 2
+; $1a8/$200
+C_MAJ_DOWN:	.dsb $12
+C_MAJ_DOWN_END:
+	.dsb 2
+; $1bc/$200
+C_MAJ_UP:	.dsb $12
+C_MAJ_UP_END:
+	.dsb 2
+; $1d0/$200
+F_MAJ_UP:	.dsb $12
+F_MAJ_UP_END:
+	.dsb 2
+; $1e4/$200
+Ab_DIM_UP:	.dsb $12
+Ab_DIM_UP_END:
+	.dsb 2
+; $1f8/$200
+.ende
+
 ;Events
 evt1_Default = $02
 evt1_Door = $03

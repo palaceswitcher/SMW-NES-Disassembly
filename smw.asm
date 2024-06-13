@@ -26,9 +26,10 @@ FrameCount = $06
 SafeSwap = $08
 Bank42Backup = $08
 Bank41Backup = $09
-ButtonsHeld = $030A
-ButtonsPressed = $030C
-ButtonsMirrored = $030E
+zInputCurrentState = $030A
+zInputBottleNeck = $030B
+iBackupInput = $030C
+Controller1Input = $063D
 Controller2Input = $063E
 SecFrameCount = $0313
 ScratchRAM = $2E
@@ -277,27 +278,35 @@ SFXRegister = $8F
 MusicBackup = $90
 SoundPointer = $FE
 MuteFlag = $0700
+SoundQueue = $0701
+CurrentTrackID = $070A
+CurrentTrackOffset = $070B
+CurrentTrackPointerOffset = $070C
 
 Pulse1Transpose = $070D
-Pulse1Pitch = $0739
-Pulse1VolumeEnv = $0749
-Pulse1Duty = $0759
-Pulse1PitchSetting = $0761
-
-Pulse2Transpose = $070E
-Pulse2VolumeEnv = $074A
-Pulse2Duty = $075A
-Pulse2PitchSetting = $0762
-
-TriangleTranspose = $070F
-TriangleVolumeEnv = $074B
-TrianglePitchSetting = $0763
-
-NoiseVolumeEnv = $074C
-NoisePitchSetting = $0764
-
+SongLoopCounter = $0710
+SongLoopPointer = $0714
+SongReturnPointer = $071C
+MusicPointer = $0724
 MusicSpeed = $072C
-TrianglePitchSetting = $0763
+NoteLengths = $072D
+RemainingSongTicks = $0731
+NumSongTicks = $0732
+Pulse1Pitch = $0739
+Pulse1FinalPitch = $0741
+Pulse1VolumeEnv = $0749
+Pulse1VolumeDelay = $074D
+Pulse1VolumePointer = $0751
+Pulse1Duty = $0759
+Pulse1DutyDelay = $075B
+Pulse1DutyPointer = $075D
+Pulse1PitchSetting = $0761
+Pulse1PitchDelay = $0765
+Pulse1PitchPointer = $0769
+
+MUS_RAM_AREA = $070D
+SFX_RAM_AREA = $0771
+SOUND_RAM_LENGTH = SFX_RAM_AREA - MUS_RAM_AREA
 
 ;Hardware registers
 PPUCtrl = $2000

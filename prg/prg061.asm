@@ -3380,7 +3380,7 @@ bra6_ADF6:
 	STA PalAssignPtrHi
 bra6_AE17_RTS:
 	RTS
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #$80
 	BEQ bra6_AE2D
 	INC ScrollSpeed
@@ -3391,7 +3391,7 @@ bra6_AE17_RTS:
 bra6_AE2C_RTS:
 	RTS
 bra6_AE2D:
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #$40
 	BEQ bra6_AE42
 	INC $0327
@@ -3408,28 +3408,28 @@ bra6_AE42:
 	LDA $0327
 	AND #$07
 	STA $0327
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$01
 	BEQ bra6_AE61
 	LDA ScrollSpeed
 	AND #$7F
 	STA ScrollSpeed
 bra6_AE61:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$02
 	BEQ bra6_AE70
 	LDA ScrollSpeed
 	ORA #$80
 	STA ScrollSpeed
 bra6_AE70:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$04
 	BEQ bra6_AE7F
 	LDA $0327
 	AND #$7F
 	STA $0327
 bra6_AE7F:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$08
 	BEQ bra6_AE8E_RTS
 	LDA $0327

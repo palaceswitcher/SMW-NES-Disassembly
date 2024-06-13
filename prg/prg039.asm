@@ -7,7 +7,7 @@ jmp_39_E000:
 	BEQ bra_E01D
 	LDA $06DE
 	BEQ bra_E02C
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirDown ;If down isn't held,
 	BEQ bra_E02C ;branch
 	LDA PlayerBackColl
@@ -218,7 +218,7 @@ ptr8_E196:
 	BEQ bra_E1C2
 	CMP #$0E ;(Check for climbing while moving)
 	BEQ bra_E1C2 ;Branch if the player was already climbing prior
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #dirUp
 	BEQ bra_E1C2 ;Branch if the player is holding up
 	LDA #$00

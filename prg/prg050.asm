@@ -4328,7 +4328,7 @@ bra6_9BB4:
 	BEQ bra6_9BD6_RTS
 	CMP #$0E
 	BEQ bra6_9BD6_RTS
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$08
 	BEQ bra6_9BD6_RTS
 	LDA #$00

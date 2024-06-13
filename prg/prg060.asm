@@ -1499,32 +1499,32 @@ bra11_85D5_RTS:
 	LDA #$00
 	LDY #$D5
 bra11_85F8:
-	STA $0700,Y
+	STA MuteFlag,Y
 	DEY
 	BNE bra11_85F8
 	LDA #$FF
 	LDX #$04
 bra11_8602:
 	DEX
-	STA $074D,X
+	STA Pulse1VolumeDelay,X
 	STA $07B1,X
 	BNE bra11_8602
 	LDX #$04
 bra11_860D:
 	DEX
-	STA $0765,X
+	STA Pulse1PitchDelay,X
 	STA $07C9,X
 	BNE bra11_860D
 	LDX #$02
 bra11_8618:
 	DEX
-	STA $075B,X
+	STA Pulse1DutyDelay,X
 	STA $07BF,X
 	BNE bra11_8618
 	LDX #$08
 bra11_8623:
 	DEX
-	STA $0701,X
+	STA SoundQueue,X
 	BNE bra11_8623
 	RTS
 	LDA PauseFlag
@@ -1543,33 +1543,33 @@ loc11_8647:
 	JSR sub11_8C85
 	JSR sub11_86E8
 	LDA #$00
-	STA $070A
-	STA $070B
-	STA $070C
+	STA CurrentTrackID
+	STA CurrentTrackOffset
+	STA CurrentTrackPointerOffset
 bra11_8658:
 	JSR sub11_87A1
 	JSR sub11_8B25
-	INC $070A
-	INC $070B
-	INC $070C
-	INC $070C
-	LDX $070A
+	INC CurrentTrackID
+	INC CurrentTrackOffset
+	INC CurrentTrackPointerOffset
+	INC CurrentTrackPointerOffset
+	LDX CurrentTrackID
 	CPX #$04
 	BNE bra11_8658
 loc11_8671:
 	LDA #$10
-	STA $070A
-	LDA #$64
-	STA $070B
-	STA $070C
+	STA CurrentTrackID
+	LDA #SOUND_RAM_LENGTH
+	STA CurrentTrackOffset
+	STA CurrentTrackPointerOffset
 bra11_867E:
 	JSR sub11_87A1
 	JSR sub11_8B25
-	INC $070A
-	INC $070B
-	INC $070C
-	INC $070C
-	LDX $070A
+	INC CurrentTrackID
+	INC CurrentTrackOffset
+	INC CurrentTrackPointerOffset
+	INC CurrentTrackPointerOffset
+	LDX CurrentTrackID
 	CPX #$14
 	BNE bra11_867E
 	RTS
@@ -1614,11 +1614,11 @@ bra11_86E0:
 	STA PauseFlag
 	JMP loc11_8647
 sub11_86E8:
-	LDA $0700
+	LDA MuteFlag
 	BEQ bra11_8706_RTS
 	LDY #$00
 bra11_86EF:
-	LDA $0701,Y
+	LDA SoundQueue,Y
 	BMI bra11_8701
 	TAX
 	TYA
@@ -1627,7 +1627,7 @@ bra11_86EF:
 	PLA
 	TAY
 	LDA #$FF
-	STA $0701,Y
+	STA SoundQueue,Y
 bra11_8701:
 	INY
 	CPY #$08
@@ -1645,110 +1645,110 @@ sub11_8707:
 	LDY #$00
 loc11_8716:
 	LDA ($FE),Y
-	STA $070A
+	STA CurrentTrackID
 	TAX
 	CPX #$FF
 	BEQ bra11_86DF_RTS
-	LDA $070A
+	LDA CurrentTrackID
 	BMI bra11_872F
-	STA $070B
+	STA CurrentTrackOffset
 	ASL
-	STA $070C
+	STA CurrentTrackPointerOffset
 	JMP loc11_8741
 bra11_872F:
 	AND #$7F
 	CLC
-	ADC #$64
-	STA $070B
+	ADC #SOUND_RAM_LENGTH
+	STA CurrentTrackOffset
 	TXA
 	AND #$7F
 	ASL
 	CLC
-	ADC #$64
-	STA $070C
+	ADC #SOUND_RAM_LENGTH
+	STA CurrentTrackPointerOffset
 loc11_8741:
-	LDX $070C
+	LDX CurrentTrackPointerOffset
 	INY
 	LDA ($FE),Y
-	STA $0724,X
+	STA MusicPointer,X
 	INY
 	LDA ($FE),Y
-	STA $0725,X
+	STA MusicPointer+1,X
 	INY
 	TYA
 	PHA
 	LDY #$00
-	LDA $070A
+	LDA CurrentTrackID
 	BPL bra11_875C
-	LDY #$64
+	LDY #SOUND_RAM_LENGTH
 bra11_875C:
-	LDA $070A
+	LDA CurrentTrackID
 	AND #$0F
 	TAY
 	LDA #$00
-	STA $0731,X
-	STA $0732,X
-	LDX $070B
+	STA RemainingSongTicks,X
+	STA NumSongTicks,X
+	LDX CurrentTrackOffset
 	LDA #$00
-	STA $0749,X
+	STA Pulse1VolumeEnv,X
 	LDA #$FF
-	STA $074D,X
+	STA Pulse1VolumeDelay,X
 	CPY #$04
 	BPL bra11_879C
 	LDA #$00
-	STA $0761,X
+	STA Pulse1PitchSetting,X
 	LDA #$FF
-	STA $0765,X
+	STA Pulse1PitchDelay,X
 	CPY #$03
 	BPL bra11_879C
 	LDA #$00
-	STA $070D,X
+	STA Pulse1Transpose,X
 	CPY #$02
 	BPL bra11_879C
 	LDA #$00
-	STA $0759,X
+	STA Pulse1Duty,X
 	LDA #$FF
-	STA $075B,X
+	STA Pulse1DutyDelay,X
 bra11_879C:
 	PLA
 	TAY
 	JMP loc11_8716
 sub11_87A1:
-	LDX $070C
-	LDA $0724,X
-	ORA $0725,X
+	LDX CurrentTrackPointerOffset
+	LDA MusicPointer,X
+	ORA MusicPointer+1,X
 	BEQ bra11_87DF_RTS
-	LDA $0731,X
+	LDA RemainingSongTicks,X
 	BNE bra11_87DC
-	LDA $0732,X
+	LDA NumSongTicks,X
 	BNE bra11_87C5
 	JSR sub11_87E0
-	LDX $070C
-	LDY $070B
-	LDA $072D,Y
-	STA $0732,X
+	LDX CurrentTrackPointerOffset
+	LDY CurrentTrackOffset
+	LDA NoteLengths,Y
+	STA NumSongTicks,X
 bra11_87C5:
-	DEC $0732,X
-	LDY $070A
+	DEC NumSongTicks,X
+	LDY CurrentTrackID
 	CPY #$04
 	BMI bra11_87D4
-	LDY #$64
+	LDY #SOUND_RAM_LENGTH
 	JMP loc11_87D6
 bra11_87D4:
 	LDY #$00
 loc11_87D6:
-	LDA $072C,Y
-	STA $0731,X
+	LDA MusicSpeed,Y
+	STA RemainingSongTicks,X
 bra11_87DC:
-	DEC $0731,X
+	DEC RemainingSongTicks,X
 bra11_87DF_RTS:
 	RTS
 sub11_87E0:
 loc11_87E0:
-	LDX $070C
-	LDA $0724,X
+	LDX CurrentTrackPointerOffset
+	LDA MusicPointer,X
 	STA $FE
-	LDA $0725,X
+	LDA MusicPointer+1,X
 	STA $FF
 	LDY #$00
 	LDA ($FE),Y
@@ -1760,8 +1760,8 @@ loc11_87E0:
 bra11_87FB:
 	AND #$7F
 	BEQ bra11_8805
-	LDX $070B
-	STA $072D,X
+	LDX CurrentTrackOffset
+	STA NoteLengths,X
 bra11_8805:
 	JSR sub11_8E20
 	JMP loc11_87E0
@@ -1804,7 +1804,7 @@ bra11_8832:
 	JMP loc11_8A0A
 	RTS
 	PHA
-	LDA $070A
+	LDA CurrentTrackID
 	AND #$0F
 	TAX
 	PLA
@@ -1813,16 +1813,16 @@ bra11_8832:
 	CPX #$04
 	BNE bra11_884B
 bra11_884B:
-	LDX $070B
+	LDX CurrentTrackOffset
 	CLC
-	ADC $070D,X
+	ADC Pulse1Transpose,X
 	ASL
 	TAY
-	LDX $070C
+	LDX CurrentTrackPointerOffset
 	LDA tbl11_8EC0,Y
-	STA $0739,X
+	STA Pulse1Pitch,X
 	LDA tbl11_8EC1,Y
-	STA $073A,X
+	STA Pulse1Pitch+1,X
 	JMP loc11_8878
 bra11_8866:
 	TAX
@@ -1834,8 +1834,8 @@ bra11_8866:
 	TAX
 bra11_8871:
 	TXA
-	LDX $070C
-	STA $0739,X
+	LDX CurrentTrackPointerOffset
+	STA Pulse1Pitch,X
 loc11_8878:
 	JSR sub11_8A65
 	JSR sub11_8E20
@@ -1889,100 +1889,100 @@ tbl11_8895:
 	db $0C
 	db $07
 	db $18
-	LDA $0724,X
+	LDA MusicPointer,X
 	ADC #$02
-	STA $071C,X
-	LDA $0725,X
+	STA SongReturnPointer,X
+	LDA MusicPointer+1,X
 	ADC #$00
-	STA $071D,X
+	STA SongReturnPointer+1,X
 	JMP loc11_893D
-	LDX $070C
-	LDA $071C,X
-	STA $0724,X
-	LDA $071D,X
-	STA $0725,X
+	LDX CurrentTrackPointerOffset
+	LDA SongReturnPointer,X
+	STA MusicPointer,X
+	LDA SongReturnPointer+1,X
+	STA MusicPointer+1,X
 	LDA #$00
-	STA $071C,X
-	STA $071D,X
+	STA SongReturnPointer,X
+	STA SongReturnPointer+1,X
 	JMP loc11_87E0
-	LDX $070C
-	LDA $0724,X
+	LDX CurrentTrackPointerOffset
+	LDA MusicPointer,X
 	STA $FE
-	LDA $0725,X
+	LDA MusicPointer+1,X
 	STA $FF
-	LDX $070B
+	LDX CurrentTrackOffset
 	LDY #$00
 	LDA ($FE),Y
-	STA $0710,X
+	STA SongLoopCounter,X
 	JSR sub11_8E20
-	LDX $070C
-	LDA $0724,X
-	STA $0714,X
-	LDA $0725,X
-	STA $0715,X
+	LDX CurrentTrackPointerOffset
+	LDA MusicPointer,X
+	STA SongLoopPointer,X
+	LDA MusicPointer+1,X
+	STA SongLoopPointer+1,X
 	JMP loc11_87E0
-	LDX $070B
-	DEC $0710,X
+	LDX CurrentTrackOffset
+	DEC SongLoopCounter,X
 	BEQ bra11_892C
-	LDX $070C
-	LDA $0714,X
-	STA $0724,X
-	LDA $0715,X
-	STA $0725,X
+	LDX CurrentTrackPointerOffset
+	LDA SongLoopPointer,X
+	STA MusicPointer,X
+	LDA SongLoopPointer+1,X
+	STA MusicPointer+1,X
 	JMP loc11_87E0
 bra11_892C:
-	LDX $070C
+	LDX CurrentTrackPointerOffset
 	LDA #$00
-	STA $0714,X
-	STA $0715,X
+	STA SongLoopPointer,X
+	STA SongLoopPointer+1,X
 	JMP loc11_87E0
 loc11_893A:
-	LDX $070C
+	LDX CurrentTrackPointerOffset
 loc11_893D:
-	LDA $0724,X
+	LDA MusicPointer,X
 	STA $FE
-	LDA $0725,X
+	LDA MusicPointer+1,X
 	STA $FF
 	LDY #$00
 	LDA ($FE),Y
-	STA $0724,X
+	STA MusicPointer,X
 	INY
 	LDA ($FE),Y
-	STA $0725,X
+	STA MusicPointer+1,X
 	JMP loc11_87E0
-	LDX $070C
-	LDA $0724,X
+	LDX CurrentTrackPointerOffset
+	LDA MusicPointer,X
 	STA $FE
-	LDA $0725,X
+	LDA MusicPointer+1,X
 	STA $FF
 	LDY #$00
 	LDA ($FE),Y
-	LDX $070A
+	LDX CurrentTrackID
 	CPX #$04
 	BMI bra11_8971
-	LDY #$64
+	LDY #SOUND_RAM_LENGTH
 bra11_8971:
-	STA $072C,Y
+	STA MusicSpeed,Y
 	JSR sub11_8E20
 	JMP loc11_87E0
-	LDA $070A
+	LDA CurrentTrackID
 	AND #$0F
 	TAX
 	CPX #$03
 	BPL bra11_899B
-	LDX $070C
-	LDA $0724,X
+	LDX CurrentTrackPointerOffset
+	LDA MusicPointer,X
 	STA $FE
-	LDA $0725,X
+	LDA MusicPointer+1,X
 	STA $FF
 	LDY #$00
 	LDA ($FE),Y
-	LDX $070B
-	STA $070D,X
+	LDX CurrentTrackOffset
+	STA Pulse1Transpose,X
 bra11_899B:
 	JSR sub11_8E20
 	JMP loc11_87E0
-	LDA $070A
+	LDA CurrentTrackID
 	AND #$0F
 	TAX
 	CPX #$04
@@ -1991,9 +1991,9 @@ bra11_899B:
 	JMP loc11_87E0
 bra11_89B1:
 	JSR sub11_8B0D
-	STA $0749,X
+	STA Pulse1VolumeEnv,X
 	JMP loc11_87E0
-	LDA $070A
+	LDA CurrentTrackID
 	AND #$0F
 	TAX
 	CPX #$02
@@ -2002,9 +2002,9 @@ bra11_89B1:
 	JMP loc11_87E0
 bra11_89CA:
 	JSR sub11_8B0D
-	STA $0759,X
+	STA Pulse1Duty,X
 	JMP loc11_87E0
-	LDA $070A
+	LDA CurrentTrackID
 	AND #$0F
 	TAX
 	CPX #$04
@@ -2013,154 +2013,154 @@ bra11_89CA:
 	JMP loc11_87E0
 bra11_89E3:
 	JSR sub11_8B0D
-	STA $0761,X
+	STA Pulse1PitchSetting,X
 	JMP loc11_87E0
-	LDX $070C
+	LDX CurrentTrackPointerOffset
 	LDA #$00
-	STA $0724,X
-	STA $0725,X
-	LDA $070A
+	STA MusicPointer,X
+	STA MusicPointer+1,X
+	LDA CurrentTrackID
 	AND #$0F
 	ASL
 	TAX
 	CLC
-	ADC #$64
+	ADC #SOUND_RAM_LENGTH
 	TAY
 	LDA #$FF
-	STA $0742,X
-	STA $0742,Y
+	STA Pulse1FinalPitch+1,X
+	STA Pulse1FinalPitch+1,Y
 loc11_8A0A:
-	LDY $070B
-	LDA $070A
+	LDY CurrentTrackOffset
+	LDA CurrentTrackID
 	AND #$0F
 	TAX
 	LDA #$FF
 	CPX #$04
 	BPL bra11_8A26_RTS
-	STA $074D,Y
-	STA $0765,Y
+	STA Pulse1VolumeDelay,Y
+	STA Pulse1PitchDelay,Y
 	CPX #$02
 	BPL bra11_8A26_RTS
-	STA $075B,Y
+	STA Pulse1DutyDelay,Y
 bra11_8A26_RTS:
 	RTS
-	LDX $070C
-	LDA $0724,X
+	LDX CurrentTrackPointerOffset
+	LDA MusicPointer,X
 	STA $FE
-	LDA $0725,X
+	LDA MusicPointer+1,X
 	STA $FF
 	JSR sub11_8E20
-	LDX $070B
-	LDA $0710,X
+	LDX CurrentTrackOffset
+	LDA SongLoopCounter,X
 	BNE bra11_8A46
 	LDY #$00
 	LDA ($FE),Y
-	STA $0710,X
+	STA SongLoopCounter,X
 bra11_8A46:
-	DEC $0710,X
+	DEC SongLoopCounter,X
 	BNE bra11_8A62
-	LDX $070C
-	LDA $0724,X
+	LDX CurrentTrackPointerOffset
+	LDA MusicPointer,X
 	CLC
 	ADC #$02
-	STA $0724,X
-	LDA $0725,X
+	STA MusicPointer,X
+	LDA MusicPointer+1,X
 	ADC #$00
-	STA $0725,X
+	STA MusicPointer+1,X
 	JMP loc11_87E0
 bra11_8A62:
 	JMP loc11_893A
 sub11_8A65:
-	LDX $070C
-	LDA $0742,X
+	LDX CurrentTrackPointerOffset
+	LDA Pulse1FinalPitch+1,X
 	ORA #$80
-	STA $0742,X
+	STA Pulse1FinalPitch+1,X
 	JSR sub11_8A7A
 	JSR sub11_8AAB
 	JSR sub11_8ADC
 	RTS
 sub11_8A7A:
-	LDA $070A
+	LDA CurrentTrackID
 	AND #$0F
 	TAX
 	CPX #$04
 	BMI bra11_8A85
 	RTS
 bra11_8A85:
-	LDX $070B
-	LDY $070C
-	LDA $0749,X
+	LDX CurrentTrackOffset
+	LDY CurrentTrackPointerOffset
+	LDA Pulse1VolumeEnv,X
 	ASL
 	TAX
 	LDA tbl11_8000,X
-	STA $0751,Y
+	STA Pulse1VolumePointer,Y
 	STA $FE
 	LDA tbl11_8000+1,X
-	STA $0752,Y
+	STA Pulse1VolumePointer+1,Y
 	STA $FF
-	LDX $070B
+	LDX CurrentTrackOffset
 	LDY #$00
 	LDA ($FE),Y
-	STA $074D,X
+	STA Pulse1VolumeDelay,X
 	RTS
 sub11_8AAB:
-	LDA $070A
+	LDA CurrentTrackID
 	AND #$0F
 	TAX
 	CPX #$02
 	BMI bra11_8AB6
 	RTS
 bra11_8AB6:
-	LDX $070B
-	LDY $070C
-	LDA $0759,X
+	LDX CurrentTrackOffset
+	LDY CurrentTrackPointerOffset
+	LDA Pulse1Duty,X
 	ASL
 	TAX
 	LDA tbl11_8000,X
-	STA $075D,Y
+	STA Pulse1DutyPointer,Y
 	STA $FE
 	LDA tbl11_8000+1,X
-	STA $075E,Y
+	STA Pulse1DutyPointer+1,Y
 	STA $FF
-	LDX $070B
+	LDX CurrentTrackOffset
 	LDY #$00
 	LDA ($FE),Y
-	STA $075B,X
+	STA Pulse1DutyDelay,X
 	RTS
 sub11_8ADC:
-	LDA $070A
+	LDA CurrentTrackID
 	AND #$0F
 	TAX
 	CPX #$04
 	BMI bra11_8AE7
 	RTS
 bra11_8AE7:
-	LDX $070B
-	LDY $070C
-	LDA $0761,X
+	LDX CurrentTrackOffset
+	LDY CurrentTrackPointerOffset
+	LDA Pulse1PitchSetting,X
 	ASL
 	TAX
 	LDA tbl11_8000,X
-	STA $0769,Y
+	STA Pulse1PitchPointer,Y
 	STA $FE
 	LDA tbl11_8000+1,X
-	STA $076A,Y
+	STA Pulse1PitchPointer+1,Y
 	STA $FF
-	LDX $070B
+	LDX CurrentTrackOffset
 	LDY #$00
 	LDA ($FE),Y
-	STA $0765,X
+	STA Pulse1PitchDelay,X
 	RTS
 sub11_8B0D:
-	LDX $070C
-	LDA $0724,X
+	LDX CurrentTrackPointerOffset
+	LDA MusicPointer,X
 	STA $FE
-	LDA $0725,X
+	LDA MusicPointer+1,X
 	STA $FF
 	JSR sub11_8E20
 	LDY #$00
 	LDA ($FE),Y
-	LDX $070B
+	LDX CurrentTrackOffset
 	RTS
 sub11_8B25:
 	JSR sub11_8B2F
@@ -2168,173 +2168,173 @@ sub11_8B25:
 	JSR sub11_8C15
 	RTS
 sub11_8B2F:
-	LDA $070A
+	LDA CurrentTrackID
 	AND #$0F
 	TAX
 	CPX #$04
 	BPL bra11_8BA1_RTS
 bra11_8B39:
 loc11_8B39:
-	LDX $070B
-	LDA $074D,X
+	LDX CurrentTrackOffset
+	LDA Pulse1VolumeDelay,X
 	TAY
 	CPY #$FF
 	BEQ bra11_8BA1_RTS
-	LDX $070B
-	LDA $074D,X
+	LDX CurrentTrackOffset
+	LDA Pulse1VolumeDelay,X
 	BNE bra11_8B9E
-	LDX $070C
+	LDX CurrentTrackPointerOffset
 	LDA #$02
 	CLC
-	ADC $0751,X
-	STA $0751,X
+	ADC Pulse1VolumePointer,X
+	STA Pulse1VolumePointer,X
 	STA $FE
 	LDA #$00
-	ADC $0752,X
-	STA $0752,X
+	ADC Pulse1VolumePointer+1,X
+	STA Pulse1VolumePointer+1,X
 	STA $FF
-	LDX $070B
+	LDX CurrentTrackOffset
 	LDY #$00
 	LDA ($FE),Y
-	STA $074D,X
+	STA Pulse1VolumeDelay,X
 	TAY
 	CPY #$FF
 	BNE bra11_8B39
-	LDX $070C
+	LDX CurrentTrackPointerOffset
 	LDY #$01
 	LDA ($FE),Y
 	AND #$FE
 	BPL bra11_8B91
 	CLC
-	ADC $0751,X
-	STA $0751,X
+	ADC Pulse1VolumePointer,X
+	STA Pulse1VolumePointer,X
 	STA $FE
 	BCS bra11_8B8C
-	DEC $0752,X
+	DEC Pulse1VolumePointer+1,X
 bra11_8B8C:
-	LDA $0752,X
+	LDA Pulse1VolumePointer+1,X
 	STA $FF
 bra11_8B91:
-	LDX $070B
+	LDX CurrentTrackOffset
 	LDY #$00
 	LDA ($FE),Y
-	STA $074D,X
+	STA Pulse1VolumeDelay,X
 	JMP loc11_8B39
 bra11_8B9E:
-	DEC $074D,X
+	DEC Pulse1VolumeDelay,X
 bra11_8BA1_RTS:
 	RTS
 sub11_8BA2:
-	LDA $070A
+	LDA CurrentTrackID
 	AND #$0F
 	TAX
 	CPX #$02
 	BPL bra11_8C14_RTS
 bra11_8BAC:
 loc11_8BAC:
-	LDX $070B
-	LDA $075B,X
+	LDX CurrentTrackOffset
+	LDA Pulse1DutyDelay,X
 	TAY
 	CPY #$FF
 	BEQ bra11_8C14_RTS
-	LDX $070B
-	LDA $075B,X
+	LDX CurrentTrackOffset
+	LDA Pulse1DutyDelay,X
 	BNE bra11_8C11
-	LDX $070C
+	LDX CurrentTrackPointerOffset
 	LDA #$02
 	CLC
-	ADC $075D,X
-	STA $075D,X
+	ADC Pulse1DutyPointer,X
+	STA Pulse1DutyPointer,X
 	STA $FE
 	LDA #$00
-	ADC $075E,X
-	STA $075E,X
+	ADC Pulse1DutyPointer+1,X
+	STA Pulse1DutyPointer+1,X
 	STA $FF
-	LDX $070B
+	LDX CurrentTrackOffset
 	LDY #$00
 	LDA ($FE),Y
-	STA $075B,X
+	STA Pulse1DutyDelay,X
 	TAY
 	CPY #$FF
 	BNE bra11_8BAC
-	LDX $070C
+	LDX CurrentTrackPointerOffset
 	LDY #$01
 	LDA ($FE),Y
 	AND #$FE
 	BPL bra11_8C04
 	CLC
-	ADC $075D,X
-	STA $075D,X
+	ADC Pulse1DutyPointer,X
+	STA Pulse1DutyPointer,X
 	STA $FE
 	BCS bra11_8BFF
-	DEC $075E,X
+	DEC Pulse1DutyPointer+1,X
 bra11_8BFF:
-	LDA $075E,X
+	LDA Pulse1DutyPointer+1,X
 	STA $FF
 bra11_8C04:
-	LDX $070B
+	LDX CurrentTrackOffset
 	LDY #$00
 	LDA ($FE),Y
-	STA $075B,X
+	STA Pulse1DutyDelay,X
 	JMP loc11_8BAC
 bra11_8C11:
-	DEC $075B,X
+	DEC Pulse1DutyDelay,X
 bra11_8C14_RTS:
 	RTS
 sub11_8C15:
-	LDA $070A
+	LDA CurrentTrackID
 	AND #$0F
 	TAX
 	CPX #$04
 	BPL bra11_8C84_RTS
 bra11_8C1F:
 loc11_8C1F:
-	LDX $070B
-	LDA $0765,X
+	LDX CurrentTrackOffset
+	LDA Pulse1PitchDelay,X
 	TAY
 	CPY #$FF
 	BEQ bra11_8C84_RTS
-	LDA $0765,X
+	LDA Pulse1PitchDelay,X
 	BNE bra11_8C81
-	LDX $070C
+	LDX CurrentTrackPointerOffset
 	LDA #$02
 	CLC
-	ADC $0769,X
-	STA $0769,X
+	ADC Pulse1PitchPointer,X
+	STA Pulse1PitchPointer,X
 	STA $FE
 	LDA #$00
-	ADC $076A,X
-	STA $076A,X
+	ADC Pulse1PitchPointer+1,X
+	STA Pulse1PitchPointer+1,X
 	STA $FF
-	LDX $070B
+	LDX CurrentTrackOffset
 	LDY #$00
 	LDA ($FE),Y
-	STA $0765,X
+	STA Pulse1PitchDelay,X
 	TAY
 	CPY #$FF
 	BNE bra11_8C1F
-	LDX $070C
+	LDX CurrentTrackPointerOffset
 	LDY #$01
 	LDA ($FE),Y
 	AND #$FE
 	BPL bra11_8C74
 	CLC
-	ADC $0769,X
-	STA $0769,X
+	ADC Pulse1PitchPointer,X
+	STA Pulse1PitchPointer,X
 	STA $FE
 	BCS bra11_8C6F
-	DEC $076A,X
+	DEC Pulse1PitchPointer+1,X
 bra11_8C6F:
-	LDA $076A,X
+	LDA Pulse1PitchPointer+1,X
 	STA $FF
 bra11_8C74:
-	LDX $070B
+	LDX CurrentTrackOffset
 	LDY #$00
 	LDA ($FE),Y
-	STA $0765,X
+	STA Pulse1PitchDelay,X
 	JMP loc11_8C1F
 bra11_8C81:
-	DEC $0765,X
+	DEC Pulse1PitchDelay,X
 bra11_8C84_RTS:
 	RTS
 sub11_8C85:
@@ -2344,8 +2344,8 @@ sub11_8C85:
 	JSR sub11_8D85
 	RTS
 sub11_8C92:
-	LDX #$64
-	LDY #$64
+	LDX #SOUND_RAM_LENGTH
+	LDY #SOUND_RAM_LENGTH
 	LDA $0788
 	ORA $0789
 	BNE bra11_8CA2
@@ -2367,19 +2367,19 @@ bra11_8CA2:
 	BPL bra11_8CC0
 	DEC $FF
 bra11_8CC0:
-	LDA $0739,Y
+	LDA Pulse1Pitch,Y
 	CLC
 	ADC $FE
-	STA $0741,Y
+	STA Pulse1FinalPitch,Y
 	STA $4002
-	LDA $0742,Y
+	LDA Pulse1FinalPitch+1,Y
 	STA $FE
-	LDA $073A,Y
+	LDA Pulse1Pitch+1,Y
 	ADC $FF
 	TAX
 	CPX $FE
 	BEQ bra11_8CE3_RTS
-	STA $0742,Y
+	STA Pulse1FinalPitch+1,Y
 	ORA #$F8
 	STA $4003
 bra11_8CE3_RTS:
@@ -2408,19 +2408,19 @@ bra11_8CF4:
 	BPL bra11_8D12
 	DEC $FF
 bra11_8D12:
-	LDA $0739,Y
+	LDA Pulse1Pitch,Y
 	CLC
 	ADC $FE
-	STA $0741,Y
+	STA Pulse1FinalPitch,Y
 	STA $4006
-	LDA $0742,Y
+	LDA Pulse1FinalPitch+1,Y
 	STA $FE
-	LDA $073A,Y
+	LDA Pulse1Pitch+1,Y
 	ADC $FF
 	TAX
 	CPX $FE
 	BEQ bra11_8D35_RTS
-	STA $0742,Y
+	STA Pulse1FinalPitch+1,Y
 	ORA #$F8
 	STA $4007
 bra11_8D35_RTS:
@@ -2448,19 +2448,19 @@ bra11_8D4F:
 	BPL bra11_8D61
 	DEC $FF
 bra11_8D61:
-	LDA $0739,Y
+	LDA Pulse1Pitch,Y
 	CLC
 	ADC $FE
-	STA $0741,Y
+	STA Pulse1FinalPitch,Y
 	STA $400A
-	LDA $0742,Y
+	LDA Pulse1FinalPitch+1,Y
 	STA $FE
-	LDA $073A,Y
+	LDA Pulse1Pitch+1,Y
 	ADC $FF
 	TAX
 	CPX $FE
 	BEQ bra11_8D84_RTS
-	STA $0742,Y
+	STA Pulse1FinalPitch+1,Y
 	ORA #$F8
 	STA $400B
 bra11_8D84_RTS:
@@ -2479,7 +2479,7 @@ bra11_8D95:
 	ORA #$30
 	STA $400C
 	JSR sub11_8DFB
-	LDA $0739,Y
+	LDA Pulse1Pitch,Y
 	CLC
 	ADC $FE
 	STA $400E
@@ -2489,7 +2489,7 @@ bra11_8D95:
 sub11_8DB1:
 	TYA
 	PHA
-	LDA $074D,X
+	LDA Pulse1VolumeDelay,X
 	TAY
 	CPY #$FF
 	BNE bra11_8DC0
@@ -2499,9 +2499,9 @@ bra11_8DC0:
 	PLA
 	PHA
 	TAY
-	LDA $0751,Y
+	LDA Pulse1VolumePointer,Y
 	STA $FE
-	LDA $0752,Y
+	LDA Pulse1VolumePointer+1,Y
 	STA $FF
 	LDY #$01
 	LDA ($FE),Y
@@ -2513,7 +2513,7 @@ loc11_8DD1:
 sub11_8DD6:
 	TYA
 	PHA
-	LDA $075B,X
+	LDA Pulse1DutyDelay,X
 	TAY
 	CPY #$FF
 	BNE bra11_8DE5
@@ -2523,9 +2523,9 @@ bra11_8DE5:
 	PLA
 	PHA
 	TAY
-	LDA $075D,Y
+	LDA Pulse1DutyPointer,Y
 	STA $FE
-	LDA $075E,Y
+	LDA Pulse1DutyPointer+1,Y
 	STA $FF
 	LDY #$01
 	LDA ($FE),Y
@@ -2537,7 +2537,7 @@ loc11_8DF6:
 sub11_8DFB:
 	TYA
 	PHA
-	LDA $0765,X
+	LDA Pulse1PitchDelay,X
 	TAY
 	CPY #$FF
 	BNE bra11_8E0A
@@ -2547,9 +2547,9 @@ bra11_8E0A:
 	PLA
 	PHA
 	TAY
-	LDA $0769,Y
+	LDA Pulse1PitchPointer,Y
 	STA $FE
-	LDA $076A,Y
+	LDA Pulse1PitchPointer+1,Y
 	STA $FF
 	LDY #$01
 	LDA ($FE),Y
@@ -2559,11 +2559,11 @@ loc11_8E1B:
 	TAY
 	RTS
 sub11_8E20:
-	LDX $070C
-	INC $0724,X
-	LDA $0724,X
+	LDX CurrentTrackPointerOffset
+	INC MusicPointer,X
+	LDA MusicPointer,X
 	BNE bra11_8E2E_RTS
-	INC $0725,X
+	INC MusicPointer+1,X
 bra11_8E2E_RTS:
 	RTS
 sub11_8E2F:
@@ -2573,10 +2573,10 @@ bra11_8E32:
 	CPY #$07
 	BEQ bra11_8E40_RTS
 	INY
-	LDA $0701,Y
+	LDA SoundQueue,Y
 	BPL bra11_8E32
 	TXA
-	STA $0701,Y
+	STA SoundQueue,Y
 bra11_8E40_RTS:
 	RTS
 tbl11_8E41:

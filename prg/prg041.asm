@@ -889,7 +889,7 @@ bra_A581:
 	CPX #$07
 	BCC bra_A57A
 	RTS
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #$01
 	BEQ bra_A5AB_RTS
 	LDX #$02
@@ -990,7 +990,7 @@ bra_A636:
 	LDA $28
 	STA GS0SpriteFrame,X
 	RTS
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #$80
 	BEQ bra_A64C_RTS
 	LDA #$07
@@ -1048,7 +1048,7 @@ pnt5_A695:
 	JSR sub_A263
 	JSR sub_A5AC
 	JSR ClearOtherSprites
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #$F0
 	BNE bra_A6D3
 	JSR sub_A572
@@ -1103,7 +1103,7 @@ bra_A6FB:
 pnt5_A706:
 	JSR sub_42_99B2
 	JSR ClearOtherSprites
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #$D0
 	BEQ bra_A735
 	LDA #$05
@@ -1122,7 +1122,7 @@ pnt5_A706:
 	STA a:Event
 	RTS
 bra_A735:
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #$08
 	BEQ bra_A74B
 	LDA #$80
@@ -1133,7 +1133,7 @@ bra_A735:
 	STA SFXRegister
 	RTS
 bra_A74B:
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #$04
 	BEQ bra_A760_RTS
 	LDA #$90
@@ -1172,7 +1172,7 @@ pnt5_A761:
 	INC a:Event
 	RTS
 pnt5_A7A6:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	BNE bra_A7BB
 	LDA FrameCount
 	AND #$0F
@@ -1565,7 +1565,7 @@ bra_AA52:
 	STA a:Event ;Otherwise, start fadeout
 	RTS
 sub_AA5F:
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #buttonA+buttonStart ;Check if A or start is pressed
 	BEQ bra_AA6A ;If not, branch
 	JSR PlayLevel ;If they are, jump
@@ -1588,12 +1588,12 @@ bra_AA89:
 	LDA MapLevelID
 	CMP $039B
 	BCS bra_AA99
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND MapDirections,X
 	BNE bra_AAA3
 bra_AA99:
 	INX
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND MapDirections,X
 	BNE bra_AAA9
 	RTS
@@ -1646,7 +1646,7 @@ ClearSpritesLoop:
 WorldSelectCheck:
 	LDA WorldSelectTrigger
 	BEQ bra_AAFA ;Branch if the world select trigger is set to zero
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #buttonSelect ;Check if select is pressed
 	BEQ bra_AB0C_RTS ;If not, stop
 bra_AAFA:
@@ -1678,7 +1678,7 @@ tbl_AB0E:
 	db $01
 	db $40
 pnt5_AB1D:
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #$02
 	BEQ bra_AB30
 	LDA #sfxBeep
@@ -1687,7 +1687,7 @@ pnt5_AB1D:
 	BEQ bra_AB45
 	DEC WorldSelectNum
 bra_AB30:
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #$01
 	BEQ bra_AB45
 	LDA #sfxBeep
@@ -1697,7 +1697,7 @@ bra_AB30:
 	BCS bra_AB45
 	INC WorldSelectNum
 bra_AB45:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$90
 	BEQ bra_AB79
 	LDA #sfxBeep
@@ -3255,7 +3255,7 @@ bra_B3ED:
 	STA PalAssignPtrHi
 bra_B40E_RTS:
 	RTS
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #$80
 	BEQ bra_B424
 	INC ScrollSpeed
@@ -3266,7 +3266,7 @@ bra_B40E_RTS:
 bra_B423_RTS:
 	RTS
 bra_B424:
-	LDA ButtonsPressed
+	LDA zInputBottleNeck
 	AND #$40
 	BEQ bra_B439
 	INC $0327
@@ -3283,28 +3283,28 @@ bra_B439:
 	LDA $0327
 	AND #$07
 	STA $0327
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$01
 	BEQ bra_B458
 	LDA ScrollSpeed
 	AND #$7F
 	STA ScrollSpeed
 bra_B458:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$02
 	BEQ bra_B467
 	LDA ScrollSpeed
 	ORA #$80
 	STA ScrollSpeed
 bra_B467:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$04
 	BEQ bra_B476
 	LDA $0327
 	AND #$7F
 	STA $0327
 bra_B476:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$08
 	BEQ bra_B485_RTS
 	LDA $0327
@@ -3317,23 +3317,23 @@ sub_B486:
 	JSR sub_BDD1
 	JSR sub_BE23
 	JMP loc_B4BB
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$0F
 	BEQ bra_B4BB
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$0C
 	BEQ bra_B4A0
 bra_B4A0:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$03
 	BEQ bra_B4AA
 	JSR sub_BDD1
 bra_B4AA:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$0C
 	BEQ bra_B4B1
 bra_B4B1:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$03
 	BEQ bra_B4BB
 	JSR sub_BE23

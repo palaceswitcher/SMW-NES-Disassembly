@@ -1399,7 +1399,7 @@ bra7_89A0:
 	ORA #$04
 	STA PlayerMovement ;Make player move upwards
 	LDY #$50 ;Set speed to $50
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #buttonA
 	BEQ bra7_89B1 ;If A isn't held, branch and keep the speed
 	LDY #$70 ;If it is held, set the speed to $70 instead

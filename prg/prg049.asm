@@ -2718,7 +2718,7 @@ bra5_9370:
 	BEQ bra5_9394_RTS
 	CMP #$0E
 	BEQ bra5_9394_RTS
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$08
 	BEQ bra5_9394_RTS
 	LDA #$00
@@ -3518,7 +3518,7 @@ bra5_9900:
 	BNE bra5_9921
 	LDA #$01
 	STA $06E9
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$08
 	BNE bra5_992C
 bra5_9920_RTS:

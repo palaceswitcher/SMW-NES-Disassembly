@@ -2190,7 +2190,7 @@ SetObjectCarryState:
 	LDA PlayerAction+1
 	CMP #$04
 	BCS SetObjectCarryStateDone ;Only continue if player is either walking, running, or doing nothing
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #buttonB
 	BEQ SetObjectCarryStateDone ;Make sure the B button is held
 	STA PlayerHoldFlag
@@ -2215,7 +2215,7 @@ PositionCarriedObject:
 	;Otherwise, stop
 		RTS
 bra3_AB9C:
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #buttonB
 	STA PlayerHoldFlag ;Set the player's carrying flag if the B button is held
 	BEQ bra3_AC08 ;Branch if the B button isn't being held
@@ -2290,7 +2290,7 @@ bra3_AC08:
 	AND #$40
 	ORA #$05
 	TAY
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$08
 	BEQ bra3_AC17
 	INY
@@ -2308,7 +2308,7 @@ jmp_54_AC20:
 	LDA ObjectState,Y
 	AND #$80
 	BEQ bra3_ACA1_RTS
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$40
 	STA PlayerHoldFlag
 	BEQ bra3_ACA2
@@ -2374,7 +2374,7 @@ bra3_ACA2:
 	LDA ObjectState,Y
 	AND #$7F
 	STA ObjectState,Y
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$08
 	BEQ bra3_ACC2_RTS
 	LDA ObjectState,Y
@@ -2394,7 +2394,7 @@ jmp_54_ACC3:
 	LDA ObjectState,Y
 	AND #$80
 	BEQ bra3_ACA1_RTS
-	LDA ButtonsHeld
+	LDA zInputCurrentState
 	AND #$40
 	STA PlayerHoldFlag
 	BEQ bra3_ACA2
