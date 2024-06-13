@@ -1798,11 +1798,11 @@ tbl11_8829:
 	db $18
 	db $20
 bra11_8832:
-	db $D0
-	db $07
+	BNE bra11_883B
 	JSR sub11_8E20
 	JMP loc11_8A0A
 	RTS
+bra11_883B:
 	PHA
 	LDA $070A
 	AND #$0F
@@ -2925,7 +2925,7 @@ tbl11_8EC1:
 	db $00
 	db $02
 	db $00
-	db $F5 ;music data is here for some reason
+	db $F5 ;mus_ic data is here for some reason
 	db $01
 	db $F6
 	db $00

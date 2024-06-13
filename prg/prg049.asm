@@ -1479,7 +1479,7 @@ tbl5_8A8B:
 	dw ptr10_8A95
 	dw ptr_AD88
 ptr10_8A95:
-	JSR jmp_54_A6D4
+	JSR CapeHitCheck
 	JSR jmp_54_BC3E
 	JSR jmp_54_BF74
 	RTS
@@ -1746,10 +1746,10 @@ tbl5_8CA5:
 	dw ptr10_8CAF
 	dw ptr_AD88
 ptr10_8CAF:
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
-	JSR jmp_54_A74D
-	LDA #sfxEnemyHit2
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
+	JSR KillOnSpinJump
+	LDA #sfx_EnemyHit2
 	STA SFXRegister
 	LDA #$01
 	JSR RewardPoints
@@ -2348,7 +2348,7 @@ bra5_913D:
 	LDA $062B
 	AND #$07
 	BNE bra5_9148
-	LDA #sfxCutter
+	LDA #sfx_Cutter
 	STA SFXRegister
 bra5_9148:
 	JSR sub5_82EC
@@ -3904,14 +3904,14 @@ ptr10_9B8C:
 	LDA $25
 	CMP #$03
 	BNE bra5_9BDA
-	LDA #sfxBlockRelease
+	LDA #sfx_BlockRelease
 	STA SFXRegister ;Play block release sound
 	LDA #$E8
 	BNE bra5_9BE5 ;Spawn 1UP
 bra5_9BDA:
 	LDA #$00
 	JSR RewardPoints ;Give the player 100 points
-	LDA #sfxCoin
+	LDA #sfx_Coin
 	STA SFXRegister ;Play coin sound
 	LDA #$E9 ;Spawn coin sprite
 bra5_9BE5:

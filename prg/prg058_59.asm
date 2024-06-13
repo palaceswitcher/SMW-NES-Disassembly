@@ -1421,7 +1421,7 @@ NotePitchTable:
 	dw $0004
 	dw $0003
 	dw $0002
- ;include sfx data
+ ;include sfx_ data
 	.include sound/sfx_SpinJump.asm
 	.include sound/sfx_Pause.asm
 	.include sound/sfx_Jump.asm
@@ -1451,7 +1451,7 @@ NotePitchTable:
 	.include sound/sfx_YoshiFireSpit.asm
 	.include sound/sfx_Checkpoint.asm
 	.include sound/sfx_Chainsaw.asm
- ;include music data
+ ;include mus_ic data
 	.include sound/mus_Title.asm
 	.include sound/mus_GameOver.asm
 	.include sound/mus_PlayerDown.asm
