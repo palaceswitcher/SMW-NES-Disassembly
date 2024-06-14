@@ -2453,35 +2453,14 @@ sub3_F0CB:
 	STA MusicRegister ;Load/play music for level
 	RTS
 LevelMusic:
-	db $29 ;1-1 Music
-	db $28 ;1-2 Music
-	db $20 ;1-3 Music
-	db $2C ;1-4 Music
-	db $29 ;2-1 Music
-	db $28 ;2-2 Music
-	db $2B ;2-3 Music
-	db $2C ;2-4 Music
-	db $2A ;3-1 Music
-	db $2D ;3-2 Music
-	db $2B ;3-3 Music
-	db $2C ;3-4 Music
-	db $29 ;4-1 Music
-	db $28 ;4-2 Music
-	db $20 ;4-3 Music
-	db $2C ;4-4 Music
-	db $29 ;5-1 Music
-	db $2B ;5-2 Music
-	db $2D ;5-3 Music
-	db $2C ;5-4 Music
-	db $29 ;6-1 Music
-	db $2B ;6-2 Music
-	db $28 ;6-3 Music
-	db $2C ;6-4 Music
-	db $29 ;7-1 Music
-	db $28 ;7-2 Music
-	db $2B ;7-3 Music
-	db $2C ;7-4 Music
-	db $29 ;Yoshi's House Music
+	db musOverworld, musOverworld, musTitle, musCastle ;World 1
+	db musOverworld, musTitle, musGhostHouse, musCastle ;World 2
+	db musUnderground, musUnderwater, musGhostHouse, musCastle ;World 3
+	db musOverworld, musForestofIllusion, musTitle, musCastle ;World 4
+	db musOverworld, musGhostHouse, musUnderwater, musCastle ;World 5
+	db musOverworld, musGhostHouse, musForestofIllusion, musCastle ;World 6
+	db musOverworld, musForestofIllusion, musGhostHouse, musCastle ;World 7
+	db musOverworld ;Yoshi's House
 pnt2_F0F8:
 	LDX #$F0
 	STX M90_BG_CHR0 ;Set bank F0 to 1st BG bank
