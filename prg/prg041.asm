@@ -1204,38 +1204,38 @@ pnt5_A7D3:
 	NOP
 	NOP
 	RTS
-tbl_A7DF:
-	db $25 ;world select music settings
-	db $25
-	db $25
-	db $25
-	db $25 ;World 1
-	db $24
-	db $24
-	db $24
-	db $24
-	db $24 ;World 2
-	db $24
-	db $24
-	db $24
-	db $24 ;World 3
-	db $24
-	db $24
-	db $24
-	db $24 ;World 4
-	db $28
-	db $28
-	db $28
-	db $28
-	db $28 ;World 5
-	db $27
-	db $27
-	db $27
-	db $27 ;World 6
-	db $27
-	db $27
-	db $26
-	db $26 ;World 7
+WorldMusicTable:
+	db musYoshisIsland ;world select music settings
+	db musYoshisIsland
+	db musYoshisIsland
+	db musYoshisIsland
+	db musYoshisIsland ;World 1
+	db musMainMap
+	db musMainMap
+	db musMainMap
+	db musMainMap
+	db musMainMap      ;World 2
+	db musMainMap
+	db musMainMap
+	db musMainMap
+	db musMainMap      ;World 3
+	db musMainMap
+	db musMainMap
+	db musMainMap
+	db musMainMap      ;World 4
+	db musForestofIllusion
+	db musForestofIllusion
+	db musForestofIllusion
+	db musForestofIllusion
+	db musForestofIllusion ;World 5
+	db musVanillaDome
+	db musVanillaDome
+	db musVanillaDome
+	db musVanillaDome ;World 6
+	db musVanillaDome
+	db musVanillaDome
+	db musValleyofBowser
+	db musValleyofBowser ;World 7
 	db $00
 pnt5_A7FF:
 	LDX #$01
@@ -1246,7 +1246,7 @@ bra_A808:
 	LDA LevelID,X
 	STA MapLevelID
 	TAX
-	LDA tbl_A7DF,X
+	LDA WorldMusicTable,X
 	STA MusicRegister
 	LDA P1LevelsUnlocked,X
 	CMP #$06

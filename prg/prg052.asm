@@ -2642,4 +2642,5 @@ bra2_AF23:
 bra2_AF28_RTS:
 	RTS
 
-.align $40
+.pad $b600
+.incbin "sound/dmc-34.bin"

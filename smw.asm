@@ -285,28 +285,52 @@ CurrentTrackPointerOffset = $070C
 
 Pulse1Transpose = $070D
 SongLoopCounter = $0710
-SongLoopPointer = $0714
-SongReturnPointer = $071C
-MusicPointer = $0724
-MusicSpeed = $072C
-NoteLengths = $072D
-RemainingSongTicks = $0731
-NumSongTicks = $0732
-Pulse1Pitch = $0739
-Pulse1FinalPitch = $0741
-Pulse1VolumeEnv = $0749
-Pulse1VolumeDelay = $074D
-Pulse1VolumePointer = $0751
-Pulse1Duty = $0759
-Pulse1DutyDelay = $075B
-Pulse1DutyPointer = $075D
-Pulse1PitchSetting = $0761
-Pulse1PitchDelay = $0765
-Pulse1PitchPointer = $0769
+SongLoopPointer = $0715
+SongReturnPointer = $071F
+MusicPointer = $0729
+MusicSpeed = $0733
+NoteLengths = $0734
+RemainingSongTicks = $0739
+NumSongTicks = $073A
+Pulse1Pitch = $0743
+Pulse1FinalPitch = $074D
+Pulse1VolumeEnv = $0757
+Pulse1VolumeDelay = $075C
+Pulse1VolumePointer = $0761
+Pulse1Duty = $076B
+Pulse1DutyDelay = $076D
+Pulse1DutyPointer = $076F
+Pulse1PitchSetting = $0773
+Pulse1PitchDelay = $0777
+Pulse1PitchPointer = $077B
 
 MUS_RAM_AREA = $070D
-SFX_RAM_AREA = $0771
+SFX_RAM_AREA = $0783
 SOUND_RAM_LENGTH = SFX_RAM_AREA - MUS_RAM_AREA
+
+SFXTranspose = $070D + SOUND_RAM_LENGTH
+SFXLoopCounter = $0710 + SOUND_RAM_LENGTH
+SFXLoopPointer = $0715 + SOUND_RAM_LENGTH
+SFXReturnPointer = $071F + SOUND_RAM_LENGTH
+SFXPointer = $0729 + SOUND_RAM_LENGTH
+SFXSpeed = $0733 + SOUND_RAM_LENGTH
+SFXNoteLengths = $0734 + SOUND_RAM_LENGTH
+RemainingSFXTicks = $0739 + SOUND_RAM_LENGTH
+NumSFXTicks = $073A + SOUND_RAM_LENGTH
+SFXPitch = $0743 + SOUND_RAM_LENGTH
+SFXFinalPitch = $074D + SOUND_RAM_LENGTH
+SFXVolumeEnv = $0757 + SOUND_RAM_LENGTH
+SFXVolumeDelay = $075C + SOUND_RAM_LENGTH
+SFXVolumePointer = $0761 + SOUND_RAM_LENGTH
+SFXDuty = $076B + SOUND_RAM_LENGTH
+SFXDutyDelay = $076D + SOUND_RAM_LENGTH
+SFXDutyPointer = $076F + SOUND_RAM_LENGTH
+SFXPitchSetting = $0773 + SOUND_RAM_LENGTH
+SFXPitchDelay = $0777 + SOUND_RAM_LENGTH
+SFXPitchPointer = $077B + SOUND_RAM_LENGTH
+
+DPCMFlag = $07f8
+DPCMBackupOffset = $07f9
 
 ;Hardware registers
 PPUCtrl = $2000
@@ -417,7 +441,6 @@ M90_CHR_CTRL1 = $D003
 
 .include prg/prg040.asm
 ;50010 - 5200f
-;Completely empty/unused
 
 .base $A000
 .include prg/prg041.asm
@@ -538,7 +561,7 @@ M90_CHR_CTRL1 = $D003
 ;Level handling
 
 .base $C000
-;.include prg/prg062.asm
+.include prg/prg062.asm
 .pad $E000
 ;7c010 - 7e00f
 ;unknown/unlogged data

@@ -44,8 +44,8 @@ tbl10_8000:
 	dw ofs_8100
 	dw ofs_8100
 	dw ofs_8293
-	dw ofs_8100
-	dw ofs_8100
+	dw ofs_VolOW2C
+	dw ofs_DutyOW2D
 	dw ofs_829D
 	dw ofs_82B5
 	dw ofs_82BF
@@ -61,8 +61,8 @@ tbl10_8000:
 	dw ofs_PitchVOB3A
 	dw ofs_VolInv3B
 	dw ofs_DutyInv3C
-	dw ofs_8100
-	dw ofs_8100
+	dw ofs_DutyOW3D
+	dw ofs_VolOW3E
 	dw ofs_8100
 	dw ofs_834F
 	dw ofs_835F
@@ -170,19 +170,19 @@ bra10_85F8:
 bra10_8602:
 	DEX
 	STA Pulse1VolumeDelay,X
-	STA $07B1,X
+	STA SFXVolumeDelay,X
 	BNE bra10_8602
 	LDX #$04
 bra10_860D:
 	DEX
 	STA Pulse1PitchDelay,X
-	STA $07C9,X
+	STA SFXPitchDelay,X
 	BNE bra10_860D
 	LDX #$02
 bra10_8618:
 	DEX
 	STA Pulse1DutyDelay,X
-	STA $07BF,X
+	STA SFXDutyDelay,X
 	BNE bra10_8618
 	LDX #$08
 bra10_8623:
@@ -193,16 +193,22 @@ bra10_8623:
 jmp_58_862A:
 	LDA PauseFlag
 	BEQ bra10_8642
+	LDA SFXPointer+2
+	ORA SFXPointer+3
+	CMP #1
+	LDA #$02
+	BCS PauseNotDone
 	LDA #$00
+PauseNotDone:
 	STA APUStatus
-	LDA #%00000111
+	LDA #%00001111
 	STA APUStatus ;Disable noise channel
 	JSR sub10_8C85
 	JSR sub10_86E8
 	JMP loc10_8671
 bra10_8642:
-	LDA #$0F
-	STA APUStatus ;Re-enable all channels (excluding DMC)
+;	LDA #$0F
+;	STA APUStatus ;Re-enable all channels (excluding DMC)
 loc10_8647:
 	JSR sub10_8C85
 	JSR sub10_86E8
@@ -218,7 +224,7 @@ bra10_8658:
 	INC CurrentTrackPointerOffset
 	INC CurrentTrackPointerOffset
 	LDX CurrentTrackID
-	CPX #$04
+	CPX #$05
 	BNE bra10_8658
 loc10_8671:
 	LDA #$10
@@ -234,7 +240,7 @@ bra10_867E:
 	INC CurrentTrackPointerOffset
 	INC CurrentTrackPointerOffset
 	LDX CurrentTrackID
-	CPX #$14
+	CPX #$15
 	BNE bra10_867E
 	RTS
 	TAY
@@ -476,6 +482,20 @@ bra10_883B:
 	BEQ bra10_8866
 	CPX #$04
 	BNE bra10_884B
+	LDX CurrentTrackPointerOffset
+	STA Pulse1Pitch, X
+	CPX #SOUND_RAM_LENGTH
+	BCS SetDPCMIndex
+	LDA SFXPointer, X
+	ORA SFXPointer+1, X
+	BNE SkipDPCMSet
+SetDPCMIndex:
+	LDA #0
+	STA Pulse1Pitch+1,X
+	LDA #1
+	STA DPCMFlag
+SkipDPCMSet:
+	JMP loc10_8878
 bra10_884B:
 	LDX CurrentTrackOffset
 	CLC
@@ -999,12 +1019,12 @@ sub10_8C85:
 	JSR UpdateSquare2
 	JSR UpdateTriangle
 	JSR UpdateNoise
-	RTS
+	JMP UpdateDPCM
 UpdateSquare1:
 	LDX #SOUND_RAM_LENGTH
 	LDY #SOUND_RAM_LENGTH
-	LDA $0788
-	ORA $0789
+	LDA SFXPointer+1
+	ORA SFXPointer
 	BNE bra10_8CA2
 	LDX #$00
 	LDY #$00
@@ -1042,10 +1062,10 @@ bra10_8CC0:
 bra10_8CE3_RTS:
 	RTS
 UpdateSquare2:
-	LDX #$65
-	LDY #$66
-	LDA $078A
-	ORA $078B
+	LDX #SOUND_RAM_LENGTH+1
+	LDY #SOUND_RAM_LENGTH+2
+	LDA SFXPointer+3
+	ORA SFXPointer+2
 	BNE bra10_8CF4
 	LDX #$01
 	LDY #$02
@@ -1083,10 +1103,10 @@ bra10_8D12:
 bra10_8D35_RTS:
 	RTS
 UpdateTriangle:
-	LDX #$66
-	LDY #$68
-	LDA $078C
-	ORA $078D
+	LDX #SOUND_RAM_LENGTH+2
+	LDY #SOUND_RAM_LENGTH+4
+	LDA SFXPointer+5
+	ORA SFXPointer+4
 	BNE bra10_8D46
 	LDX #$02
 	LDY #$04
@@ -1123,10 +1143,10 @@ bra10_8D61:
 bra10_8D84_RTS:
 	RTS
 UpdateNoise:
-	LDX #$67
-	LDY #$6A
-	LDA $078E
-	ORA $078F
+	LDX #SOUND_RAM_LENGTH+3
+	LDY #SOUND_RAM_LENGTH+6
+	LDA SFXPointer+7
+	ORA SFXPointer+6
 	BNE bra10_8D95
 	LDX #$03
 	LDY #$06
@@ -1138,10 +1158,48 @@ bra10_8D95:
 	JSR FetchModulation
 	LDA Pulse1Pitch,Y
 	CLC
-	ADC $FE
+	ADC SoundPointer
 	STA NoiseLo
 	LDA #$F8
 	STA NoiseHi
+	RTS
+UpdateDPCM:
+	LDA DPCMFlag
+	BNE DPCMFlagWasSet
+	RTS
+DPCMFlagWasSet:
+	LDX #SOUND_RAM_LENGTH+4
+	LDY #SOUND_RAM_LENGTH+8
+	LDA SFXPointer+9
+	ORA SFXPointer+8
+	BNE SetDPCMPitch
+	LDX #$04
+	LDY #$08
+SetDPCMPitch:
+	LDA #0
+	STA DPCMFlag
+	LDA #$0f
+	STA APUStatus
+	LDA Pulse1Pitch,Y
+	BEQ UpdateDPCM_Quit
+	TAY
+	LDA DPCM_PitchTable, Y
+	STA DMCFreq
+	LDA DPCM_BankTable, Y
+	STA M90_PRG2
+	LDA DPCM_AddressTable, Y
+	ASL A
+	ASL A
+	STA DPCMBackupOffset
+	LDA DPCM_EndAddressTable, Y
+	SEC
+	SBC DPCMBackupOffset
+	STA DMCLength
+	LDA DPCM_AddressTable, Y
+	STA DMCStart
+	LDA #$1f
+	STA APUStatus
+UpdateDPCM_Quit:
 	RTS
 FetchVolume:
 	TYA
@@ -1223,6 +1281,20 @@ sub_58_8E23:
 	BNE bra10_8E2E_RTS
 	INC MusicPointer+1,X
 bra10_8E2E_RTS:
+	LDA CurrentTrackID
+	AND #$0F
+	CMP #$04
+	BCC LeaveAloneMix
+	LDX CurrentTrackPointerOffset
+	CPX #SOUND_RAM_LENGTH
+	BCS UpdateAPUStat
+	LDA SFXPointer, X
+	ORA SFXPointer+1, X
+	BNE LeaveAloneMix
+UpdateAPUStat:
+	LDA #$0F
+	STA APUStatus
+LeaveAloneMix:
 	RTS
 
 sub10_8E2F:
@@ -1431,11 +1503,9 @@ ENDR
 REPT 15
 	db $3E ; E1 - F#2
 ENDR
-REPT 4
-	db $34 ; G2 - A#2
+REPT 6
+	db $34 ; G2 - C3
 ENDR
-	db $3E ; B2
-	db $3E ; C3
 	db $3E ; C#3
 	db $3E ; D3
 	db $3E ; D#3
@@ -1493,8 +1563,8 @@ DPCM_AddressTable:
 	db Bb_MAJ_UP >> 2	; G#2
 	db B_DIM_UP >> 2	; A2
 	db G_SUS_UP >> 2	; A#2
-	db $7F			; B2
-	db $7F			; C3
+	db YOSHI1 >> 2		; B2
+	db YOSHI2 >> 2		; C3
 	db $7F			; C#3
 	db $7F			; D3
 	db $7F			; D#3
@@ -1552,8 +1622,8 @@ DPCM_EndAddressTable:
 	dl Bb_MAJ_UP_END	; G#2
 	dl B_DIM_UP_END		; A2
 	dl G_SUS_UP_END		; A#2
-	dl $FF			; B2
-	dl $FF			; C3
+	dl YOSHI1_END		; B2
+	dl YOSHI2_END		; C3
 	dl $FF			; C#3
 	dl $FF			; D3
 	dl $FF			; D#3
@@ -1575,6 +1645,65 @@ DPCM_EndAddressTable:
 	dl UG4_END		; G4
 	dl UG#4_END		; G#4
 	dl UA4_END		; A4
+DPCM_PitchTable:
+	db $F			; C0
+	db $F			; C#0
+	db $F			; D0
+	db $F			; D#0
+	db $F			; E0
+	db $F			; F0
+	db $F			; F#0
+	db $F			; G0
+	db $F			; G#0
+	db $F			; A0
+	db $F			; A#0
+	db $F			; B0
+	db $F			; C1
+	db $F			; C#1
+	db $F			; D1
+	db $F			; D#1
+	db $F			; E1
+	db $F			; F1
+	db $F			; F#1
+	db $F			; G1
+	db $F			; G#1
+	db $F			; A1
+	db $F			; A#1
+	db $F			; B1
+	db $F			; C2
+	db $F			; C#2
+	db $F			; D2
+	db $F			; D#2
+	db $F			; E2
+	db $F			; F2
+	db $F			; F#2
+	db $F			; G2
+	db $F			; G#2
+	db $F			; A2
+	db $F			; A#2
+	db $F			; B2
+	db $F			; C3
+	db $F			; C#3
+	db $F			; D3
+	db $F			; D#3
+	db $F			; E3
+	db $F			; F3
+	db $F			; F#3
+	db $F			; G3
+	db $E			; G#3
+	db $E			; A3
+	db $E			; A#3
+	db $E			; B3
+	db $E			; C4
+	db $F			; C#4
+	db $F			; D4
+	db $F			; D#4
+	db $F			; E4
+	db $F			; F4
+	db $F			; F#4
+	db $F			; G4
+	db $F			; G#4
+	db $F			; A4
  ;include sfx data
 	.include sound/sfx_SpinJump.asm
 	.include sound/sfx_Pause.asm

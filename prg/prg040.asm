@@ -1,1 +1,2 @@
-	.dsb 8192, $00 ;This bank is completely empty
+.incbin "sound/dmc-28.bin
+.align $2000

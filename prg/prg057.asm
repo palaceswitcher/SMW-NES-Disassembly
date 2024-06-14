@@ -855,8 +855,8 @@ sub4_A4CE:
 	STA MusicRegister
 	RTS
 LevelMusicQueue:
-	db musOverworld, musForestofIllusion, musTitle, musCastle ;World 1
-	db musOverworld, musForestofIllusion, musGhostHouse, musCastle ;World 2
+	db musOverworld, musOverworld, musTitle, musCastle ;World 1
+	db musOverworld, musTitle, musGhostHouse, musCastle ;World 2
 	db musUnderground, musUnderwater, musGhostHouse, musCastle ;World 3
 	db musOverworld, musForestofIllusion, musTitle, musCastle ;World 4
 	db musOverworld, musGhostHouse, musUnderwater, musCastle ;World 5

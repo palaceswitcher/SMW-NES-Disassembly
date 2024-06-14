@@ -11,6 +11,7 @@ YoshiFireSpit_Noise:
 	.byte VolSet, $11
 	.byte $8F
 	.byte C3
+YoshiFireSpit_End:
 	.byte $FF
 YoshiFireSpit_Footer:
 	.byte NLen+3

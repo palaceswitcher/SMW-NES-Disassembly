@@ -273,7 +273,7 @@ Ab_DIM_UP_END:
 .ende
 
 ; DMC Bank $34
-.enum $f4
+.enum $160
 Bb_DIM_UP:	.dsb $11
 Bb_DIM_UP_END:
 	.dsb 3
@@ -286,6 +286,51 @@ B_DIM_UP_END:
 G_SUS_UP:	.dsb $11
 G_SUS_UP_END:
 	.dsb 3
+YOSHI1:		.dsb $1f
+YOSHI1_END:
+	.dsb 1
+YOSHI2:		.dsb $2d
+YOSHI2_END:
+	.dsb 3
+.ende
+
+.enum 1
+BbDiminishedDown:		.dsb 1
+C5Minor7LongDown:		.dsb 1
+UkuCs:				.dsb 1
+UkuD:				.dsb 1
+FMajorDown:			.dsb 1
+GMinorUpFirstInverted:		.dsb 1
+UkuDs:				.dsb 1
+GMinorDownFirstInverted:	.dsb 1
+GMinorDownSecondInverted:	.dsb 1
+AbMajorDown:			.dsb 1
+AMinorDown:			.dsb 1
+BbMajorDown:			.dsb 1
+BDiminishedDown:		.dsb 1
+AbDiminishedDown:		.dsb 1
+C7Down:				.dsb 1
+GSuspendedDown:			.dsb 1
+UkuE:				.dsb 1
+UkuF:				.dsb 1
+UkuFs:				.dsb 1
+UkuG:				.dsb 1
+UkuGs:				.dsb 1
+UkuA:				.dsb 1
+GMinorUpSecondInverted:		.dsb 1
+AbMajorUp:			.dsb 1
+AMinorUp			.dsb 1
+C7Up:				.dsb 1
+CMajorDown:			.dsb 1
+CMajorUp:			.dsb 1
+FMajorUp:			.dsb 1
+AbDiminishedUp:			.dsb 1
+BbDiminishedUp:			.dsb 1
+BbMajorUp:			.dsb 1
+BDiminishedUp:			.dsb 1
+GSuspendedUp:			.dsb 1
+SFXYoshi1:			.dsb 1
+SFXYoshi2:			.dsb 1
 .ende
 
 ;Events

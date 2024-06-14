@@ -3,39 +3,27 @@ ofs_8100:
 	.byte $FF
 	.byte $00
 ofs_8104:
-	.byte $05
-	.byte $0F
-	.byte $02
-	.byte $0C
-	.byte $04
-	.byte $04
-	.byte $08
-	.byte $02
-	.byte $08
-	.byte $01
+	.byte $05, $0F
+	.byte $02, $0C
+	.byte $04, $04
+	.byte $08, $02
+	.byte $08, $01
 	.byte $FF
 	.byte $00
 ofs_8110:
-	.byte $01
-	.byte $06
-	.byte $FE
-	.byte $04
+	.byte $01, $06
+	.byte $FE, $04
 	.byte $FF
 	.byte $FE
 ofs_8116:
-	.byte $01
-	.byte $04
-	.byte $FE
-	.byte $02
+	.byte $01, $04
+	.byte $FE, $02
 	.byte $FF
 	.byte $FE
 ofs_811C:
-	.byte $08
-	.byte $00
-	.byte $08
-	.byte $40
-	.byte $FE
-	.byte $80
+	.byte $08, $00
+	.byte $08, $40
+	.byte $FE, $80
 	.byte $FF
 	.byte $FE
 ofs_8124:
@@ -46,15 +34,12 @@ ofs_8124:
 	.byte $FC
 
 ofs_8140:
-	.byte $06
-	.byte $0F
-	.byte $FE
-	.byte $00
+	.byte $06, $0F
+	.byte $FE, $00
 	.byte $FF
 	.byte $00
 ofs_8146:
-	.byte $FE
-	.byte $80
+	.byte $FE, $80
 	.byte $FF
 	.byte $FE
 ofs_814A:
@@ -67,68 +52,43 @@ ofs_814A:
 	.byte $FF
 	.byte $FE
 ofs_8158:
-	.byte $FE
-	.byte $40
+	.byte $FE, $40
 	.byte $FF
 	.byte $FE
 ofs_815C:
-	.byte $49
-	.byte $10
-	.byte $42
-	.byte $08
-	.byte $04
-	.byte $04
-	.byte $C8
-	.byte $02
-	.byte $01
-	.byte $02
-	.byte $02
-	.byte $04
-	.byte $01
-	.byte $02
-	.byte $02
-	.byte $00
-	.byte $01
-	.byte $FE
-	.byte $02
-	.byte $FC
-	.byte $01
-	.byte $FE
-	.byte $02
-	.byte $00
+	.byte $49, $10
+	.byte $42, $08
+	.byte $04, $04
+	.byte $C8, $02
+	.byte $01, $02
+	.byte $02, $04
+	.byte $01, $02
+	.byte $02, $00
+	.byte $01, $FE
+	.byte $02, $FC
+	.byte $01, $FE
+	.byte $02, $00
 	.byte $FF
 	.byte $F0
 ofs_8176:
-	.byte $06
-	.byte $0F
-	.byte $02
-	.byte $00
-	.byte $03
-	.byte $0F
-	.byte $FE
-	.byte $00
+	.byte $06, $0F
+	.byte $02, $00
+	.byte $03, $0F
+	.byte $FE, $00
 	.byte $FF
 	.byte $00
 ofs_8180:
-	.byte $01
-	.byte $03
-	.byte $01
-	.byte $06
-	.byte $01
-	.byte $03
-	.byte $FE
-	.byte $01
+	.byte $01, $03
+	.byte $01, $06
+	.byte $01, $03
+	.byte $FE, $01
 	.byte $FF
 	.byte $FE
 ofs_818A:
-	.byte $01
-	.byte $02
-	.byte $01
-	.byte $04
-	.byte $01
-	.byte $02
-	.byte $FE
-	.byte $01
+	.byte $01, $02
+	.byte $01, $04
+	.byte $01, $02
+	.byte $FE, $01
 	.byte $FF
 	.byte $FE
 ofs_8194:
@@ -142,33 +102,21 @@ ofs_819C:
 	.byte $FF
 	.byte $FE
 ofs_81A6:
-	.byte $0A
-	.byte $0F
-	.byte $FE
-	.byte $00
+	.byte $0A, $0F
+	.byte $FE, $00
 	.byte $FF
 	.byte $FE
 ofs_81AC:
-	.byte $01
-	.byte $06
-	.byte $11
-	.byte $04
-	.byte $02
-	.byte $01
-	.byte $01
-	.byte $03
-	.byte $11
-	.byte $02
-	.byte $02
-	.byte $01
-	.byte $01
-	.byte $02
-	.byte $11
-	.byte $01
-	.byte $02
-	.byte $01
-	.byte $FE
-	.byte $01
+	.byte $01, $06
+	.byte $11, $04
+	.byte $02, $01
+	.byte $01, $03
+	.byte $11, $02
+	.byte $02, $01
+	.byte $01, $02
+	.byte $11, $01
+	.byte $02, $01
+	.byte $FE, $01
 	.byte $FF
 	.byte $FE
 ofs_81C2:
@@ -177,38 +125,25 @@ ofs_81C2:
 	.byte $FF
 	.byte $FE
 ofs_81CD:
-	.byte $12
-	.byte $0F
-	.byte $FE
-	.byte $00
-	.byte $01
-	.byte $80
-	.byte $01
-	.byte $40
-	.byte $FE
-	.byte $00
+	.byte $12, $0F
+	.byte $FE, $00
+	.byte $01, $80
+	.byte $01, $40
+	.byte $FE, $00
 	.byte $FF
 	.byte $FE
 ofs_81D9:
-	.byte $01
-	.byte $02
-	.byte $01
-	.byte $04
-	.byte $01
-	.byte $08
-	.byte $FE
-	.byte $04
+	.byte $01, $02
+	.byte $01, $04
+	.byte $01, $08
+	.byte $FE, $04
 	.byte $FF
 	.byte $FE
 ofs_81E3:
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $02
-	.byte $01
-	.byte $04
-	.byte $FE
-	.byte $02
+	.byte $01, $01
+	.byte $01, $02
+	.byte $01, $04
+	.byte $FE, $02
 	.byte $FF
 	.byte $FE
 ofs_81ED:
@@ -1321,10 +1256,58 @@ ofs_VolInv3B:
 	.byte $01, $13
 	.byte $01, $16
 	.byte $01, $1C
-	.byte $01, $19
+	.byte $05, $19
+	.byte $05, $18
+	.byte $05, $17
+	.byte $05, $16
+	.byte $05, $15
+	.byte $05, $14
+	.byte $05, $13
+	.byte $05, $12
+	.byte $05, $11
 	.byte $ff
-	.byte $fe
+	.byte $00
 ofs_DutyInv3C:
 	.byte $01, $c0
+	.byte $ff
+	.byte $fe
+ofs_DutyOW3D:
+	.byte $01, $00
+	.byte $ff
+	.byte $fe
+ofs_VolOW3E:
+	.byte $01, $12
+	.byte $01, $14
+	.byte $01, $18
+	.byte $07, $16
+	.byte $07, $15
+	.byte $07, $14
+	.byte $07, $13
+	.byte $07, $12
+	.byte $07, $11
+	.byte $ff
+	.byte $00
+ofs_VolOW2C:
+	.byte $01, $1a
+	.byte $01, $19
+	.byte $01, $18
+	.byte $01, $17
+	.byte $01, $16
+	.byte $01, $17
+	.byte $02, $16
+	.byte $02, $15
+	.byte $02, $14
+	.byte $03, $13
+	.byte $03, $12
+	.byte $04, $11
+	.byte $ff
+	.byte $00
+ofs_DutyOW2D:
+	.byte $01, $80
+	.byte $01, $40
+	.byte $01, $00
+	.byte $01, $40
+	.byte $01, $80
+	.byte $fe, $40
 	.byte $ff
 	.byte $fe
