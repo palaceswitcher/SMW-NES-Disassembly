@@ -329,8 +329,8 @@ SFXPitchSetting = $0773 + SOUND_RAM_LENGTH
 SFXPitchDelay = $0777 + SOUND_RAM_LENGTH
 SFXPitchPointer = $077B + SOUND_RAM_LENGTH
 
-DPCMFlag = $07f8
-DPCMBackupOffset = $07f9
+DPCMFlag = $07FE
+DPCMBackupOffset = $07FF
 
 ;Hardware registers
 PPUCtrl = $2000
