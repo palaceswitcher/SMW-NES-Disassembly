@@ -63,7 +63,7 @@ tbl10_8000:
 	dw ofs_DutyInv3C
 	dw ofs_DutyOW3D
 	dw ofs_VolOW3E
-	dw ofs_8100
+	dw ofs_CheckpointPitch3F
 	dw ofs_834F
 	dw ofs_835F
 	dw ofs_8379
@@ -203,14 +203,14 @@ PauseNotDone:
 	STA APUStatus
 	LDA #%00001111
 	STA APUStatus ;Disable noise channel
-	JSR sub10_8C85
+	JSR UpdateChannels
 	JSR sub10_86E8
 	JMP loc10_8671
 bra10_8642:
 ;	LDA #$0F
 ;	STA APUStatus ;Re-enable all channels (excluding DMC)
 loc10_8647:
-	JSR sub10_8C85
+	JSR UpdateChannels
 	JSR sub10_86E8
 	LDA #$00
 	STA CurrentTrackID
@@ -337,6 +337,13 @@ bra10_872F:
 	ADC #SOUND_RAM_LENGTH
 	STA CurrentTrackPointerOffset
 loc10_8741:
+	LDA CurrentTrackID
+	AND #$0F
+	ASL
+	ASL
+	TAX
+	LDA #$7f
+	STA Sq1Sweep, X
 	LDX CurrentTrackPointerOffset
 	INY
 	LDA (SoundPointer),Y
@@ -400,11 +407,9 @@ sub10_87A1:
 bra10_87C5:
 	DEC NumSongTicks,X
 	LDY CurrentTrackID
-	CPY #$04
-	BMI bra10_87D4
+	CPY #$05
 	LDY #SOUND_RAM_LENGTH
-	JMP loc10_87D6
-bra10_87D4:
+	BCS loc10_87D6
 	LDY #$00
 loc10_87D6:
 	LDA MusicSpeed,Y
@@ -503,6 +508,18 @@ bra10_884B:
 	ASL
 	TAY
 	LDX CurrentTrackPointerOffset
+	BEQ MusicPulse1Flag
+	CPX #SOUND_RAM_LENGTH
+	BEQ SFXPulse1Flag
+MusicPulse1Flag:
+	LDA SFXPointer
+	ORA SFXPointer+1
+	BNE SkipPulse1Flag
+SFXPulse1Flag:
+	TXA
+	STA P1Flag
+SkipPulse1Flag:
+	LDX CurrentTrackPointerOffset
 	LDA NotePitchTable,Y
 	STA Pulse1Pitch,X
 	LDA NotePitchTable+1,Y
@@ -544,7 +561,7 @@ MusicCommandTable:
 	dw musJump
 	dw musSpeed
 	dw musTransposition
-	dw GaugeMusicByte
+	dw musSweep
 	dw musVolumeEnv
 	dw musDutyCycle
 	dw musModulation
@@ -553,6 +570,22 @@ MusicCommandTable:
 	dw GaugeNoteLength
 	dw GaugeMusicByte
 	dw musEnd
+musSweep:
+	LDX CurrentTrackPointerOffset
+	LDA MusicPointer,X
+	STA SoundPointer
+	LDA MusicPointer+1,X
+	STA SoundPointer+1
+	LDA CurrentTrackID
+	AND #$0F
+	ASL A
+	ASL A
+	TAX
+	LDY #$00
+	LDA (SoundPointer),Y
+	STA Sq1Sweep, X ; update sweep
+	JSR sub10_8E20
+	JMP GaugeMusicByte
 musCall:
 	LDX CurrentTrackPointerOffset
 	CLC
@@ -691,6 +724,13 @@ bra10_89E3:
 	STA Pulse1PitchSetting,X
 	JMP GaugeMusicByte
 musEnd:
+	LDA CurrentTrackID
+	AND #$0F
+	ASL
+	ASL
+	TAX
+	LDA #$7f
+	STA Sq1Sweep, X
 	LDX CurrentTrackPointerOffset
 	LDA #$00
 	STA MusicPointer,X
@@ -1014,7 +1054,7 @@ bra10_8C81:
 	DEC Pulse1PitchDelay,X
 bra10_8C84_RTS:
 	RTS
-sub10_8C85:
+UpdateChannels:
 	JSR UpdateSquare1
 	JSR UpdateSquare2
 	JSR UpdateTriangle
@@ -1044,6 +1084,8 @@ bra10_8CA2:
 	BPL bra10_8CC0
 	DEC SoundPointer+1
 bra10_8CC0:
+	LDA P1Flag
+	BMI bra10_8CE3_RTS
 	LDA Pulse1Pitch,Y
 	CLC
 	ADC $FE
@@ -1059,7 +1101,12 @@ bra10_8CC0:
 	STA Pulse1FinalPitch+1,Y
 	ORA #$F8
 	STA Sq1Hi
+	LDA CurrentTrackID
+	AND #$10
+	BEQ bra10_8CE3_RTS
+	LDA #$80
 bra10_8CE3_RTS:
+	STA P1Flag
 	RTS
 UpdateSquare2:
 	LDX #SOUND_RAM_LENGTH+1
@@ -1267,6 +1314,15 @@ bra10_8E0A:
 	LDA Pulse1PitchPointer+1,Y
 	STA SoundPointer+1
 	LDY #$01
+	LDA CurrentTrackID
+	AND #$10
+	BNE loc10_8E16
+	LDA SFXPointer
+	ORA SFXPointer+1
+	BNE loc10_8E19
+loc10_8E16:
+	STA P1Flag
+loc10_8E19:
 	LDA (SoundPointer),Y
 loc10_8E1B:
 	STA SoundPointer

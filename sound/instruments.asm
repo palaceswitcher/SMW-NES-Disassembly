@@ -1311,3 +1311,7 @@ ofs_DutyOW2D:
 	.byte $fe, $40
 	.byte $ff
 	.byte $fe
+ofs_CheckpointPitch3F:
+	.byte $7F, $FF
+	.byte $FF
+	.byte $FE

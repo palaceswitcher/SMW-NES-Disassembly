@@ -142,6 +142,7 @@ SongLoopEnd = $f3
 SongJump = $F4
 SongSpeed = $F5	;Equivalent to Famitracker speed
 Transpose = $F6
+SongSweep = $f7
 VolSet = $F8
 DutySet = $F9
 PitchSet = $FA
