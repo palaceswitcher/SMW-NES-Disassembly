@@ -1205,37 +1205,37 @@ pnt5_A7D3:
 	NOP
 	RTS
 WorldMusicTable:
-	db musYoshisIsland ;world select music settings
-	db musYoshisIsland
-	db musYoshisIsland
-	db musYoshisIsland
-	db musYoshisIsland ;World 1
-	db musMainMap
-	db musMainMap
-	db musMainMap
-	db musMainMap
-	db musMainMap      ;World 2
-	db musMainMap
-	db musMainMap
-	db musMainMap
-	db musMainMap      ;World 3
-	db musMainMap
-	db musMainMap
-	db musMainMap
-	db musMainMap      ;World 4
-	db musForestofIllusion
-	db musForestofIllusion
-	db musForestofIllusion
-	db musForestofIllusion
-	db musForestofIllusion ;World 5
-	db musVanillaDome
-	db musVanillaDome
-	db musVanillaDome
-	db musVanillaDome ;World 6
-	db musVanillaDome
-	db musVanillaDome
-	db musValleyofBowser
-	db musValleyofBowser ;World 7
+	db mus_YoshisIsland ;world select music settings
+	db mus_YoshisIsland
+	db mus_YoshisIsland
+	db mus_YoshisIsland
+	db mus_YoshisIsland ;World 1
+	db mus_MainMap
+	db mus_MainMap
+	db mus_MainMap
+	db mus_MainMap
+	db mus_MainMap      ;World 2
+	db mus_MainMap
+	db mus_MainMap
+	db mus_MainMap
+	db mus_MainMap      ;World 3
+	db mus_MainMap
+	db mus_MainMap
+	db mus_MainMap
+	db mus_MainMap      ;World 4
+	db mus_ForestofIllusion
+	db mus_ForestofIllusion
+	db mus_ForestofIllusion
+	db mus_ForestofIllusion
+	db mus_ForestofIllusion ;World 5
+	db mus_VanillaDome
+	db mus_VanillaDome
+	db mus_VanillaDome
+	db mus_VanillaDome ;World 6
+	db mus_VanillaDome
+	db mus_VanillaDome
+	db mus_ValleyofBowser
+	db mus_ValleyofBowser ;World 7
 	db $00
 pnt5_A7FF:
 	LDX #$01

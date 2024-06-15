@@ -855,14 +855,14 @@ sub4_A4CE:
 	STA MusicRegister
 	RTS
 LevelMusicQueue:
-	db musOverworld, musOverworld, musTitle, musCastle ;World 1
-	db musOverworld, musTitle, musGhostHouse, musCastle ;World 2
-	db musUnderground, musUnderwater, musGhostHouse, musCastle ;World 3
-	db musOverworld, musForestofIllusion, musTitle, musCastle ;World 4
-	db musOverworld, musGhostHouse, musUnderwater, musCastle ;World 5
-	db musOverworld, musGhostHouse, musForestofIllusion, musCastle ;World 6
-	db musOverworld, musForestofIllusion, musGhostHouse, musCastle ;World 7
-	db musOverworld ;Yoshi's House
+	db mus_Overworld, mus_Overworld, mus_Title, mus_Castle ;World 1
+	db mus_Overworld, mus_Title, mus_GhostHouse, mus_Castle ;World 2
+	db mus_Underground, mus_Underwater, mus_GhostHouse, mus_Castle ;World 3
+	db mus_Overworld, mus_ForestofIllusion, mus_Title, mus_Castle ;World 4
+	db mus_Overworld, mus_GhostHouse, mus_Underwater, mus_Castle ;World 5
+	db mus_Overworld, mus_GhostHouse, mus_ForestofIllusion, mus_Castle ;World 6
+	db mus_Overworld, mus_ForestofIllusion, mus_GhostHouse, mus_Castle ;World 7
+	db mus_Overworld ;Yoshi's House
 	db $60
 ;-=-=-=-=-=--=-=-=-=-=-=-
 ;END 
@@ -2731,7 +2731,7 @@ bra4_ADF0:
 	BNE bra4_AE03
 	LDX #musInvincibleStar
 	STX MusicRegister ;Play the Valley of Bowser theme
-	LDX #sfxPowerup
+	LDX #sfx_Powerup
 	STX SFXRegister
 bra4_AE03:
 	CPY #$F8
@@ -2825,9 +2825,9 @@ PActIdle:
 	BNE PlayerIdleFallChk ;Branch if player is moving vertically
 	LDA PlayerMovement
 	AND #$04
-	BNE PAct_IdleDone ;Make sure the player isn't moving up
+	BNE PActIdleDone ;Make sure the player isn't moving up
 	LDA zInputCurrentState
-	BNE PAct_IdleChecks ;Branch if any button is held
+	BNE PActIdleChecks ;Branch if any button is held
 	STA PlayerAction ;Make the player stand still if none are held
 PActIdleChecks:
 	JSR LookUpDuckRoutine ;Check for ducking and looking up
@@ -2848,7 +2848,7 @@ PActDuck:
 	BNE PlayerDuckFallChk ;Branch if the player is moving vertically
 	LDA PlayerMovement ;Continue if they aren't
 	AND #$04
-	BNE PAct_DuckDone ;Branch if the player is moving up
+	BNE PActDuckDone ;Branch if the player is moving up
 	LDA zInputCurrentState ;Otherwise, continue
 	AND #dirDown
 	BNE bra4_AED0 ;Branch if down is held
