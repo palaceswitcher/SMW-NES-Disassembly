@@ -4180,13 +4180,13 @@ tbl7_9EB0:
 	dw ptr_A7BB
 	dw ptr_AA7B
 	dw ptr_AB29
-	dw ptr5_9EB8
-ptr5_9EB8:
+	dw LevelCleared
+LevelCleared:
 	LDA ObjXScreenDistance,X
 	BPL bra7_9EE4_RTS
 	LDA #mus_Victory
-	STA MusicRegister ;Play level complete mus_ic
-	LDA #$06
+	STA MusicRegister ;Play level complete music
+	LDA #evt1_LevelClear
 	STA Event ;Trigger goal tape event
 	LDA WorldNumber
 	ASL

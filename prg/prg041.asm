@@ -105,7 +105,7 @@ pnt5_A0A2:
 	ADC LevelNumber ;Then add it to the level number to get the level ID
 	STA BGPalette ;Use palette for corresponding level ID
 	LDA #mus_Title
-	STA MusicRegister ;Play title screen mus_ic
+	STA MusicRegister ;Play title screen music
 	LDA #$00
 	STA FadeoutMode ;Set fadeout mode
 	STA $0312
@@ -1963,7 +1963,7 @@ loc_ACB3:
 	STA PPUMaskMirror ;Clear PPU registers
 	JSR ClearNametable ;Clear the screen
 	LDA #$2E
-	STA MusicRegister ;Stop playing mus_ic
+	STA MusicRegister ;Stop playing music
 	LDA CurrentPlayer
 	BNE P2TransitionSet ;Branch if player #2 is playing
 	LDA #$01

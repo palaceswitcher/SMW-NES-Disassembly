@@ -1311,7 +1311,44 @@ ofs_DutyOW2D:
 	.byte $fe, $40
 	.byte $ff
 	.byte $fe
+ofs_CheckpointVolume29:
+	.byte $7f, $37
+	.byte $FF
+	.byte $FE
 ofs_CheckpointPitch3F:
 	.byte $7F, $FF
+	.byte $FF
+	.byte $FE
+ofs_CheckpointPitch2A:
+	.byte $01, $80
+	.byte $01, $85
+	.byte $01, $8A
+	.byte $01, $8F
+	.byte $01, $14
+	.byte $01, $19
+	.byte $01, $1E
+	.byte $01, $23
+	.byte $01, $28
+	.byte $01, $2D
+	.byte $01, $32
+	.byte $01, $37
+	.byte $01, $3C
+	.byte $01, $41
+	.byte $01, $46
+	.byte $01, $4B
+	.byte $01, $50
+	.byte $01, $55
+	.byte $01, $5A
+	.byte $01, $5F
+	.byte $01, $64
+	.byte $01, $69
+	.byte $01, $6E
+	.byte $01, $73
+	.byte $01, $78
+	.byte $01, $7D
+	.byte $FF
+	.byte $00
+ofs_CourseClearVolume28:
+	.byte $7f, $13
 	.byte $FF
 	.byte $FE

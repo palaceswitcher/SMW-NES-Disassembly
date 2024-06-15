@@ -4502,7 +4502,7 @@ CliffDeathCheck:
 	BCC MovePlayerDown ;If above this point, continue falling as normal
 	;Otherwise, kill the player
 	LDA #mus_Death	
-	STA MusicRegister ;Play death mus_ic
+	STA MusicRegister ;Play death music
 	LDA #$00		
 	STA PlayerPowerup ;Remove any powerups
 	STA Player1YoshiStatus ;Remove yoshi

@@ -40,9 +40,9 @@ tbl10_8000:
 	dw ofs_8291
 	dw ofs_8100
 	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
+	dw ofs_CourseClearVolume28
+	dw ofs_CheckpointVolume29
+	dw ofs_CheckpointPitch2A
 	dw ofs_8293
 	dw ofs_VolOW2C
 	dw ofs_DutyOW2D
@@ -507,18 +507,6 @@ bra10_884B:
 	ADC Pulse1Transpose,X
 	ASL
 	TAY
-	LDX CurrentTrackPointerOffset
-	BEQ MusicPulse1Flag
-	CPX #SOUND_RAM_LENGTH
-	BEQ SFXPulse1Flag
-MusicPulse1Flag:
-	LDA SFXPointer
-	ORA SFXPointer+1
-	BNE SkipPulse1Flag
-SFXPulse1Flag:
-	TXA
-	STA P1Flag
-SkipPulse1Flag:
 	LDX CurrentTrackPointerOffset
 	LDA NotePitchTable,Y
 	STA Pulse1Pitch,X
@@ -1084,8 +1072,6 @@ bra10_8CA2:
 	BPL bra10_8CC0
 	DEC SoundPointer+1
 bra10_8CC0:
-	LDA P1Flag
-	BMI bra10_8CE3_RTS
 	LDA Pulse1Pitch,Y
 	CLC
 	ADC $FE
@@ -1101,12 +1087,7 @@ bra10_8CC0:
 	STA Pulse1FinalPitch+1,Y
 	ORA #$F8
 	STA Sq1Hi
-	LDA CurrentTrackID
-	AND #$10
-	BEQ bra10_8CE3_RTS
-	LDA #$80
 bra10_8CE3_RTS:
-	STA P1Flag
 	RTS
 UpdateSquare2:
 	LDX #SOUND_RAM_LENGTH+1
@@ -1314,15 +1295,6 @@ bra10_8E0A:
 	LDA Pulse1PitchPointer+1,Y
 	STA SoundPointer+1
 	LDY #$01
-	LDA CurrentTrackID
-	AND #$10
-	BNE loc10_8E16
-	LDA SFXPointer
-	ORA SFXPointer+1
-	BNE loc10_8E19
-loc10_8E16:
-	STA P1Flag
-loc10_8E19:
 	LDA (SoundPointer),Y
 loc10_8E1B:
 	STA SoundPointer
@@ -1791,7 +1763,7 @@ DPCM_PitchTable:
 	.include sound/sfx_YoshiFireSpit.asm
 	.include sound/sfx_Checkpoint.asm
 	.include sound/sfx_Chainsaw.asm
- ;include mus_ic data
+ ;include music data
 	.include sound/mus_Title.asm
 	.include sound/mus_GameOver.asm
 	.include sound/mus_PlayerDown.asm

@@ -2019,7 +2019,7 @@ bra2_905B:
 	STA MusicRegister
 	RTS
 tbl2_9071:
-	db $25 ;overworld map mus_ic settings
+	db $25 ;overworld map music settings
 	db $25
 	db $25
 	db $25

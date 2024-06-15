@@ -186,7 +186,7 @@ bra3_E12F:
 	LDA #$3A
 	STA M90_PRG0
 	LDA #$3B
-	STA M90_PRG1 ;Load mus_ic banks 58 and 59 into $8000 and $A000 respectively
+	STA M90_PRG1 ;Load music banks 58 and 59 into $8000 and $A000 respectively
 	JSR jmp_58_85BE
 	JSR jmp_58_862A
 	LDA #$00
@@ -272,12 +272,12 @@ ClearMemory:
 	LDA #$00 ;Clear the accumulator
 	JSR MapperProtection ;Make sure the game is on Mapper 90
 	LDA #$3A
-	STA M90_PRG0 ;Swap the mus_ic bank into 1st PRG slot
+	STA M90_PRG0 ;Swap the music bank into 1st PRG slot
 	LDA #$3B
-	STA M90_PRG1 ;Swap the 2nd mus_ic bank into 2nd PRG slot
+	STA M90_PRG1 ;Swap the 2nd music bank into 2nd PRG slot
 	JSR jmp_58_85D6 ;Initizialize sound driver
 	LDA #mus_Title
-	STA MusicRegister ;Play the title screen mus_ic
+	STA MusicRegister ;Play the title screen music
 	JSR sub_58_8E23+1 ;Jumps inbetween an opcode. Probably an error.
 	INC MuteFlag ;Enable audio
 	LDA #$00
@@ -659,7 +659,7 @@ pnt2_E54E:
 	STA PlayerYSpeed ;Clear player's Y speed
 	JSR sub3_E5D4 ;Jump
 	LDA #mus_Death
-	STA MusicRegister ;Play death mus_ic
+	STA MusicRegister ;Play death music
 	LDX #$00 ;Set action tick count to 1
 	LDY #$28 ;Set tick length to 40 frames
 	JSR sub3_E5B6 ;Jump
@@ -900,7 +900,7 @@ pnt2_E727:
 bra3_E747:
 	RTS
 pnt2_E748:
-	LDA #$10
+	LDA #$0B
 	STA PlayerXSpeed ;Set walking speed to 10h
 	LDA PlayerSprXPos
 	CMP #$98
@@ -2450,7 +2450,7 @@ sub3_F0CB:
 	ADC LevelNumber ;Add it to level count
 	TAX ;Copy to X reg
 	LDA LevelMusic,X
-	STA MusicRegister ;Load/play mus_ic for level
+	STA MusicRegister ;Load/play music for level
 	RTS
 LevelMusic:
 	db mus_Overworld, mus_Overworld, mus_Title, mus_Castle ;World 1

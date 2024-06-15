@@ -2810,7 +2810,7 @@ bra_EE3F:
 	CMP #$8E
 	BCC bra_EE78 ;Branch if not touching a yoshi coin tile
 	LDA Player1YoshiCoins,X
-	CMP #$05
+	CMP #$04
 	BCS bra_EE62 ;Branch if the player has more than 5 yoshi coins
 	INC Player1YoshiCoins,X
 	LDA #$06 ;Load the yoshi coin sound effect
@@ -2827,7 +2827,7 @@ bra_EE62:
 	JMP loc_EE99
 bra_EE78:
 	LDA Player1Coins,X
-	CMP #$64
+	CMP #$63
 	BCS bra_EE86 ;Branch if the player has 100 or more coins
 	INC Player1Coins,X ;Otherwise, add to the coin counter
 	LDA #$08 ;Load the coin sound effect
