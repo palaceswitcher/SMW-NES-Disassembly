@@ -499,7 +499,7 @@ ofs2_82BB:
 	db $A8
 	db $A9
 	db $AA
-obj_h78:
+ObjID_h78:
 	JSR sub5_82EC
 	LDA FrameCount
 	AND #$00
@@ -531,7 +531,7 @@ sub5_82EC:
 	BEQ bra5_830E
 	CMP #$FF
 	BEQ bra5_830E
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_830E:
 	LDA ObjectYPos,X
 	SEC
@@ -576,7 +576,7 @@ bra5_8356:
 	STA $33
 	JMP ($32)
 tbl5_836A:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr10_8372
@@ -584,7 +584,7 @@ ptr10_8372:
 	JSR jmp_54_BC3E
 	JSR jmp_54_BF74
 	RTS
-obj_h77:
+ObjID_h77:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -597,7 +597,7 @@ obj_h77:
 	BEQ bra5_8397
 	CMP #$FF
 	BEQ bra5_8397
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_8397:
 	LDA ObjectYPos,X
 	SEC
@@ -880,7 +880,7 @@ sub5_85C6:
 	BEQ bra5_85E8
 	CMP #$FF
 	BEQ bra5_85E8
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_85E8:
 	LDA ObjectYPos,X
 	SEC
@@ -926,7 +926,7 @@ bra5_8630:
 	STA $33
 	JMP ($32)
 tbl5_8644:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr10_864E
@@ -1029,7 +1029,7 @@ bra5_8700:
 	PLA
 bra5_870C_RTS:
 	RTS
-obj_h4A:
+ObjID_h4A:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra5_8786
@@ -1044,7 +1044,7 @@ obj_h4A:
 	BEQ bra5_8730
 	CMP #$FF
 	BEQ bra5_8730
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_8730:
 	LDA ObjectYPos,X
 	SEC
@@ -1427,7 +1427,7 @@ sub5_8A0D:
 	BEQ bra5_8A2F
 	CMP #$FF
 	BEQ bra5_8A2F
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_8A2F:
 	LDA ObjectYPos,X
 	SEC
@@ -1473,17 +1473,17 @@ bra5_8A77:
 	STA $33
 	JMP ($32)
 tbl5_8A8B:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr10_8A95
 	dw ptr_AD88
 ptr10_8A95:
-	JSR CapeHitCheck
+	JSR Obj_CapeHitCheck
 	JSR jmp_54_BC3E
 	JSR jmp_54_BF74
 	RTS
-obj_h4E:
+ObjID_h4E:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra5_8AA9
@@ -1500,7 +1500,7 @@ bra5_8AA9:
 	BEQ bra5_8AC5
 	CMP #$FF
 	BEQ bra5_8AC5
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_8AC5:
 	LDA ObjectYPos,X
 	SEC
@@ -1694,7 +1694,7 @@ sub5_8C27:
 	BEQ bra5_8C49
 	CMP #$FF
 	BEQ bra5_8C49
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_8C49:
 	LDA ObjectYPos,X
 	SEC
@@ -1740,15 +1740,15 @@ bra5_8C91:
 	STA $33
 	JMP ($32)
 tbl5_8CA5:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr10_8CAF
 	dw ptr_AD88
 ptr10_8CAF:
-	JSR CapeHitCheck
-	JSR PlayerHitCheck
-	JSR KillOnSpinJump
+	JSR Obj_CapeHitCheck
+	JSR Obj_PlayerHitCheck
+	JSR Obj_KillOnSpinJump
 	LDA #sfx_EnemyHit2
 	STA SFXRegister
 	LDA #$01
@@ -1771,7 +1771,7 @@ bra5_8CDE:
 	PLA
 	PLA
 	RTS
-obj_h76:
+ObjID_h76:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -1784,7 +1784,7 @@ obj_h76:
 	BEQ bra5_8CFF
 	CMP #$FF
 	BEQ bra5_8CFF
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_8CFF:
 	LDA ObjectYPos,X
 	SEC
@@ -1850,7 +1850,7 @@ sub5_8D67:
 	BEQ bra5_8D89
 	CMP #$FF
 	BEQ bra5_8D89
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_8D89:
 	LDA ObjectYPos,X
 	SEC
@@ -1896,7 +1896,7 @@ bra5_8DD1:
 	STA $33
 	JMP ($32)
 tbl5_8DE5:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr10_8DED
@@ -1957,7 +1957,7 @@ bra5_8E32:
 	STA SFXRegister
 bra5_8E4E_RTS:
 	RTS
-obj_h54:
+ObjID_h54:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -1970,7 +1970,7 @@ obj_h54:
 	BEQ bra5_8E6D
 	CMP #$FF
 	BEQ bra5_8E6D
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_8E6D:
 	LDA ObjectYPos,X
 	SEC
@@ -2142,7 +2142,7 @@ tbl5_8FA5:
 	db $CA
 	db $D6
 	db $CA
-obj_h5C:
+ObjID_h5C:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -2155,7 +2155,7 @@ obj_h5C:
 	BEQ bra5_8FC7
 	CMP #$FF
 	BEQ bra5_8FC7
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_8FC7:
 	LDA ObjectYPos,X
 	SEC
@@ -2263,7 +2263,7 @@ tbl5_9089:
 	db $01
 	db $00
 	db $02
-obj_h5A:
+ObjID_h5A:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -2276,7 +2276,7 @@ obj_h5A:
 	BEQ bra5_90AB
 	CMP #$FF
 	BEQ bra5_90AB
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_90AB:
 	LDA ObjectYPos,X
 	SEC
@@ -2367,7 +2367,7 @@ bra5_915B:
 	JSR jmp_54_B896
 	JSR sub5_9056
 	RTS
-obj_h66:
+ObjID_h66:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -2380,7 +2380,7 @@ obj_h66:
 	BEQ bra5_9182
 	CMP #$FF
 	BEQ bra5_9182
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_9182:
 	LDA ObjectYPos,X
 	SEC
@@ -2807,7 +2807,7 @@ loc5_93FF:
 	BEQ bra5_941B
 	CMP #$FF
 	BEQ bra5_941B
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_941B:
 	LDA ObjectYPos,X
 	SEC
@@ -3009,7 +3009,7 @@ loc5_957A:
 	BEQ bra5_9596
 	CMP #$FF
 	BEQ bra5_9596
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_9596:
 	LDA ObjectYPos,X
 	SEC
@@ -3046,7 +3046,7 @@ loc5_95D8:
 	RTS
 bra5_95DE_RTS:
 	RTS
-obj_h7E:
+ObjID_h7E:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3059,7 +3059,7 @@ obj_h7E:
 	BEQ bra5_95FD
 	CMP #$FF
 	BEQ bra5_95FD
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_95FD:
 	LDA ObjectYPos,X
 	SEC
@@ -3253,7 +3253,7 @@ GrassPlatform5:
 	db $B7
 	db $B8
 	db $A1
-obj_hFA:
+ObjID_hFA:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3266,7 +3266,7 @@ obj_hFA:
 	BEQ bra5_974A
 	CMP #$FF
 	BEQ bra5_974A
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_974A:
 	LDA ObjectYPos,X
 	SEC
@@ -3384,7 +3384,7 @@ tbl5_97F0:
 	db $40
 	db $40
 	db $40
-obj_hED:
+ObjID_hED:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3397,7 +3397,7 @@ obj_hED:
 	BEQ bra5_982F
 	CMP #$FF
 	BEQ bra5_982F
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_982F:
 	LDA ObjectYPos,X
 	SEC
@@ -3622,7 +3622,7 @@ ofs_99A5:
 	db $28
 	db $29
 	db $2A
-obj_hE7:
+ObjID_hE7:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3635,7 +3635,7 @@ obj_hE7:
 	BEQ bra5_99CA
 	CMP #$FF
 	BEQ bra5_99CA
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_99CA:
 	LDA ObjectYPos,X
 	SEC
@@ -3702,7 +3702,7 @@ ptr10_9A45:
 	LDA #$00
 	STA ObjectSlot,X
 	RTS
-obj_hE8:
+ObjID_hE8:
 	LDX $A4 ;Get index for current object?
 	LDA ObjectXPos,X
 	SEC
@@ -3715,7 +3715,7 @@ obj_hE8:
 	BEQ bra5_9A69
 	CMP #$FF
 	BEQ bra5_9A69
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_9A69:
 	LDA ObjectYPos,X
 	SEC
@@ -3937,7 +3937,7 @@ ptr6_9BED:
 	LDA #$00
 	STA $06E1
 	RTS
-obj_hE6:
+ObjID_hE6:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3950,7 +3950,7 @@ obj_hE6:
 	BEQ bra5_9C2E
 	CMP #$FF
 	BEQ bra5_9C2E
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra5_9C2E:
 	LDA ObjectYPos,X
 	SEC

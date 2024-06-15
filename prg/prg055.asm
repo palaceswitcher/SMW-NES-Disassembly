@@ -1,10 +1,9 @@
-;disassembled by BZK 6502 Disassembler
 ;----------------------------------------
-;Koopa OBJECT CODE
+;KOOPA OBJECT CODE ($8000)
 ;----------------------------------------
-obj_h10:
+ObjID_h10:
 	LDX $A4 ;Get index of current object
-;Koopa X position - player X position = horizontal distance between Koopa and player
+;Calculate horizontal distance between player and object
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
@@ -14,11 +13,12 @@ obj_h10:
 	STA ObjXScreenDistance,X
 	STA $28
 
-	BEQ bra8_801E ;Branch if the player and Koopa are on the same screen
+	BEQ @Continue ;Branch if the player is to the left of the Koopa (within one screen)
 	CMP #$FF
-	BEQ bra8_801E ;Branch if the Koopa is within one screen behind the player
-	JMP loc3_A6B5 ;Otherwise, if 
-bra8_801E:
+	BEQ @Continue ;Branch if the player is to the right of the Koopa (within one screne)
+	JMP Obj_RemoveObject ;Otherwise, remove the off-screen Koopa
+
+@Continue:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
@@ -39,6 +39,7 @@ bra8_801E:
 	ADC #$00
 	STA ObjYScreenDistance,X ;Increase the vertical screen distance if needed
 	JMP loc8_8060
+
 bra8_804F:
 	LDA ObjectYDistance,X
 	SEC
@@ -79,6 +80,11 @@ bra8_808A:
 	JSR sub_54_B3B4
 bra8_8096_RTS:
 	RTS
+
+;----------------------------------------
+;SUBROUTINE ($8096)
+;Runs the Koopa's object code.
+;----------------------------------------
 sub8_8096:
 	LDA #$04
 	STA $25
@@ -94,7 +100,7 @@ sub8_8096:
 	BEQ bra8_80B8
 	CMP #$FF
 	BEQ bra8_80B8
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra8_80B8:
 	LDA ObjectYPos,X
 	SEC
@@ -139,16 +145,17 @@ bra8_8100:
 	STA $33
 	JMP ($32)
 tbl8_8114:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr_811E
 	dw ptr_8201
+
 ptr_811E:
-	JSR CapeHitCheck ;Cape hit check
-	JSR PlayerHitCheck ;Check for collision
-	JSR KillOnSpinJump ;If the player is touching the Koopa and not hurt, kill it if spin jumped on
-	JSR ObjectStompKnockback ;The player must be jumping on it like normal if it's reached this point, so knock them back
+	JSR Obj_CapeHitCheck ;Cape hit check
+	JSR Obj_PlayerHitCheck ;Check for collision
+	JSR Obj_KillOnSpinJump ;If the player is touching the Koopa and not hurt, kill it if spin jumped on
+	JSR Obj_StompKnockback ;The player must be jumping on it like normal if it's reached this point, so knock them back
 	LDA #16
 	BMI bra8_8147 ;Redundant branch (16 isn't negative)
 	CLC
@@ -184,7 +191,7 @@ loc8_8159:
 	BEQ bra8_8175
 	CMP #$FF
 	BEQ bra8_8175
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra8_8175:
 	LDA ObjectYPos,X
 	SEC
@@ -338,7 +345,7 @@ ParatroopaWalk2:
 	db $23, $24, $25, $26
 	db $31, $32, $33, $34
 	db $FF, $3E, $3F, $FF
-obj_h14:
+ObjID_h14:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -351,7 +358,7 @@ obj_h14:
 	BEQ bra8_82B7
 	CMP #$FF
 	BEQ bra8_82B7
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra8_82B7:
 	LDA ObjectYPos,X
 	SEC
@@ -407,7 +414,7 @@ bra8_8320:
 	TYA
 	STA EnemyAnimFrame,X
 	RTS
-obj_h58:
+ObjID_h58:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -420,7 +427,7 @@ obj_h58:
 	BEQ bra8_8343
 	CMP #$FF
 	BEQ bra8_8343
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra8_8343:
 	LDA ObjectYPos,X
 	SEC
@@ -509,7 +516,7 @@ sub8_83D0:
 	BEQ bra8_83F2
 	CMP #$FF
 	BEQ bra8_83F2
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra8_83F2:
 	LDA ObjectYPos,X
 	SEC
@@ -554,14 +561,14 @@ bra8_843A:
 	STA $33
 	JMP ($32)
 tbl8_844E:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr3_8458
 	dw ptr3_847B
 ptr3_8458:
-	JSR PlayerHitCheck
-	JSR KillOnSpinJump
+	JSR Obj_PlayerHitCheck
+	JSR Obj_KillOnSpinJump
 	LDA InvincibilityTimer
 	CMP #$F7
 	BCS bra8_847A_RTS
@@ -583,7 +590,7 @@ ptr3_847B:
 	LDA #$00
 	STA ObjectVariables,X
 	RTS
-obj_h16:
+ObjID_h16:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra8_84F7
@@ -598,7 +605,7 @@ obj_h16:
 	BEQ bra8_84AB
 	CMP #$FF
 	BEQ bra8_84AB
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra8_84AB:
 	LDA ObjectYPos,X
 	SEC
@@ -651,7 +658,7 @@ bra8_84F7:
 	BEQ bra8_8519
 	CMP #$FF
 	BEQ bra8_8519
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra8_8519:
 	LDA ObjectYPos,X
 	SEC
@@ -697,7 +704,7 @@ bra8_8561:
 	STA $33
 	JMP ($32)
 tbl8_8575:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr3_857F
@@ -716,9 +723,9 @@ bra8_8589:
 	LDA $25
 	JSR GetMovementData
 bra8_8596:
-	JSR CapeHitCheck
-	JSR PlayerHitCheck
-	JSR KillOnSpinJump
+	JSR Obj_CapeHitCheck
+	JSR Obj_PlayerHitCheck
+	JSR Obj_KillOnSpinJump
 	LDA ObjectSlot,X
 	LSR
 	CMP #$0C
@@ -766,7 +773,7 @@ loc8_85E4:
 	BEQ bra8_8600
 	CMP #$FF
 	BEQ bra8_8600
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra8_8600:
 	LDA ObjectYPos,X
 	SEC
@@ -806,7 +813,7 @@ bra8_8648:
 	INC ObjectSlot,X
 	LDA #$00
 	STA ObjectState,X
-	JSR ObjectStompKnockback
+	JSR Obj_StompKnockback
 	RTS
 ptr6_8657:
 	LDY #$00
@@ -879,7 +886,7 @@ RexSquishWalk2:
 	db $95
 	db $31, $32
 	db $3D, $3E
-obj_h1A:
+ObjID_h1A:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -892,7 +899,7 @@ obj_h1A:
 	BEQ bra8_86E8
 	CMP #$FF
 	BEQ bra8_86E8
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra8_86E8:
 	LDA ObjectYPos,X
 	SEC
@@ -970,7 +977,7 @@ bra8_8776:
 	BEQ bra8_8798
 	CMP #$FF
 	BEQ bra8_8798
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra8_8798:
 	LDA ObjectYPos,X
 	SEC
@@ -1027,7 +1034,7 @@ ptr3_87FE:
 	LDA #$15
 	JSR jmp_54_B11D ;Use movement data string #$15 (21 in decimal), which is used for the piranha plant
 bra8_8809:
-	JSR ptr_A7BB ;Handle edibility
+	JSR Obj_YoshiTongueCheck ;Handle edibility
 	RTS
 ptr3_880D:
 	LDA FrameCount
@@ -1059,7 +1066,7 @@ bra8_8836:
 	BCC bra8_884A_RTS
 	CMP #$35
 	BCS bra8_884A_RTS
-	JSR CapeHitCheck
+	JSR Obj_CapeHitCheck
 	JSR jmp_54_BC3E
 	JSR jmp_54_BF74
 bra8_884A_RTS:
@@ -1138,7 +1145,7 @@ JumpPiranha4:
 	db $14
 	db $19
 	db $1B
-obj_h1C:
+ObjID_h1C:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -1151,7 +1158,7 @@ obj_h1C:
 	BEQ bra8_88C9
 	CMP #$FF
 	BEQ bra8_88C9
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra8_88C9:
 	LDA ObjectYPos,X
 	SEC
@@ -1190,7 +1197,7 @@ bra8_8911_RTS:
 	RTS
 ptr6_8912:
 	RTS
-obj_h1E:
+ObjID_h1E:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -1203,7 +1210,7 @@ obj_h1E:
 	BEQ bra8_8931
 	CMP #$FF
 	BEQ bra8_8931
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra8_8931:
 	LDA ObjectYPos,X
 	SEC
@@ -1314,7 +1321,7 @@ sub8_89F6:
 	BEQ bra8_8A18
 	CMP #$FF
 	BEQ bra8_8A18
-	JMP loc3_A6B5 ;Unlogged
+	JMP Obj_RemoveObject ;Unlogged
 bra8_8A18:
 	LDA ObjectYPos,X
 	SEC
@@ -1359,16 +1366,16 @@ bra8_8A60:
 	STA $33
 	JMP ($32)
 tbl8_8A74:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr3_8A7E
 	dw ptr_AD88
 ptr3_8A7E:
-	JSR CapeHitCheck
-	JSR PlayerHitCheck
-	JSR KillOnSpinJump
-	JSR ObjectStompKnockback
+	JSR Obj_CapeHitCheck
+	JSR Obj_PlayerHitCheck
+	JSR Obj_KillOnSpinJump
+	JSR Obj_StompKnockback
 	LDX $A4
 	LDY #$01
 	LDA ObjectSlot,X
@@ -1579,7 +1586,7 @@ ofs_8B7F:
 	db $26
 	db $27
 	db $28
-obj_h24:
+ObjID_h24:
 	LDX LowerObjSlot ;Get the index for the current object slot
 	LDA ObjectState,X
 	CMP #$04
@@ -1614,7 +1621,7 @@ bra8_8BB3:
 	BEQ bra8_8BD5
 	CMP #$FF
 	BEQ bra8_8BD5
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra8_8BD5:
 	LDA ObjectYPos,X
 	SEC
@@ -1660,15 +1667,15 @@ bra8_8C1D:
 	STA $33
 	JMP ($32)
 tbl8_8C31:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr3_8C3B
 	dw ptr3_8C48
 ptr3_8C3B:
-	JSR CapeHitCheck
+	JSR Obj_CapeHitCheck
 	JSR jmp_54_BC3E
-	JSR KillOnSpinJump
+	JSR Obj_KillOnSpinJump
 	JSR jmp_54_BF74
 	RTS
 ptr3_8C48:
@@ -1836,7 +1843,7 @@ ofs_8D47:
 	db $0A
 	db $0B
 	db $0C
-obj_h26:
+ObjID_h26:
 	LDA #$07
 	STA $25
 	LDX $A4
@@ -1851,7 +1858,7 @@ obj_h26:
 	BEQ bra8_8D74
 	CMP #$FF
 	BEQ bra8_8D74
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra8_8D74:
 	LDA ObjectYPos,X
 	SEC
@@ -1925,7 +1932,7 @@ bra8_8DF1:
 	STA ObjectVariables,X
 	RTS
 bra8_8E04:
-	JSR CapeHitCheck
+	JSR Obj_CapeHitCheck
 	JSR jmp_54_BC3E
 	JSR jmp_54_BF74
 	RTS
@@ -1973,7 +1980,7 @@ LotusPollen2:
 	db $01
 	db $97
 	db $08
-obj_h2E:
+ObjID_h2E:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra8_8E5C
@@ -1990,7 +1997,7 @@ bra8_8E5C:
 	BEQ bra8_8E78
 	CMP #$FF
 	BEQ bra8_8E78
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra8_8E78:
 	LDA ObjectYPos,X
 	SEC
@@ -2065,7 +2072,7 @@ loc8_8EE9:
 	BEQ bra8_8F0B
 	CMP #$FF
 	BEQ bra8_8F0B
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra8_8F0B:
 	LDA ObjectYPos,X
 	SEC
@@ -2111,7 +2118,7 @@ bra8_8F53:
 	STA $33
 	JMP ($32)
 tbl8_8F67:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr3_8F71
@@ -2123,10 +2130,10 @@ ptr3_8F71:
 	LDA #$1F
 	JSR jmp_54_B11D
 bra8_8F7C:
-	JSR CapeHitCheck
-	JSR PlayerHitCheck
-	JSR KillOnSpinJump
-	JSR ObjectStompKnockback
+	JSR Obj_CapeHitCheck
+	JSR Obj_PlayerHitCheck
+	JSR Obj_KillOnSpinJump
+	JSR Obj_StompKnockback
 	LDX $A4
 	LDA #$82
 	STA ObjectVariables,X
@@ -2201,7 +2208,7 @@ Swooper3:
 	db $33
 	db $34
 	db $35
-obj_h30:
+ObjID_h30:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra8_9063
@@ -2216,7 +2223,7 @@ obj_h30:
 	BEQ bra8_9017
 	CMP #$FF
 	BEQ bra8_9017
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra8_9017:
 	LDA ObjectYPos,X
 	SEC
@@ -2269,7 +2276,7 @@ bra8_9063:
 	BEQ bra8_9085
 	CMP #$FF
 	BEQ bra8_9085
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra8_9085:
 	LDA ObjectYPos,X
 	SEC
@@ -2315,7 +2322,7 @@ bra8_90CD:
 	STA $33
 	JMP ($32)
 tbl8_90E1:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr3_90EB
@@ -2338,9 +2345,9 @@ ptr3_90EB:
 	LDA $25
 	JSR jmp_54_B11D
 bra8_910B:
-	JSR CapeHitCheck
+	JSR Obj_CapeHitCheck
 	JSR jmp_54_BC3E
-	JSR KillOnSpinJump
+	JSR Obj_KillOnSpinJump
 	JSR jmp_54_BF74
 	RTS
 ptr6_9118:
@@ -2440,7 +2447,7 @@ bra8_9189:
 	BEQ bra8_91B6
 	CMP #$FF
 	BEQ bra8_91B6
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra8_91B6:
 	LDA ObjectYPos,X
 	SEC
@@ -2507,7 +2514,7 @@ bra8_9222:
 	BEQ bra8_923E
 	CMP #$FF
 	BEQ bra8_923E
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra8_923E:
 	LDA ObjectYPos,X
 	SEC
@@ -2559,7 +2566,7 @@ loc8_9287:
 	BEQ bra8_92A9
 	CMP #$FF
 	BEQ bra8_92A9
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra8_92A9:
 	LDA ObjectYPos,X
 	SEC
@@ -2605,7 +2612,7 @@ bra8_92F1:
 	STA $33
 	JMP ($32)
 tbl8_9305:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr3_930F
@@ -2617,9 +2624,9 @@ ptr3_930F:
 	LDA #$13
 	JSR GetMovementData
 bra8_931A:
-	JSR PlayerHitCheck
-	JSR KillOnSpinJump
-	JSR ObjectStompKnockback
+	JSR Obj_PlayerHitCheck
+	JSR Obj_KillOnSpinJump
+	JSR Obj_StompKnockback
 	LDA ObjectVariables,X
 	AND #$06
 	LSR
@@ -2733,7 +2740,7 @@ Mechakoopa3:
 	db $1C
 	db $1D
 	db $1E
-obj_h3C:
+ObjID_h3C:
 	LDX $A4
 	LDA $0641,X
 	CMP #$F0
@@ -2793,7 +2800,7 @@ bra8_9423:
 	BEQ bra8_9445
 	CMP #$FF
 	BEQ bra8_9445
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra8_9445:
 	LDA ObjectYPos,X
 	SEC
@@ -2839,7 +2846,7 @@ bra8_948D:
 	STA $33
 	JMP ($32)
 tbl8_94A1:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr3_94B1
@@ -2870,7 +2877,7 @@ bra8_94C5:
 	BEQ bra8_94E1
 	CMP #$FF
 	BEQ bra8_94E1
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra8_94E1:
 	LDA ObjectYPos,X
 	SEC
@@ -3114,7 +3121,7 @@ StunMechakoopa6:
 	db $2D
 	db $2E
 	db $2F
-obj_h12:
+ObjID_h12:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3127,7 +3134,7 @@ obj_h12:
 	BEQ bra8_9684
 	CMP #$FF
 	BEQ bra8_9684
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra8_9684:
 	LDA ObjectYPos,X
 	SEC
@@ -3171,7 +3178,7 @@ bra8_96D6:
 	LDA #$00
 	STA EnemyAnimFrame,X
 	RTS
-obj_h6E:
+ObjID_h6E:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3184,7 +3191,7 @@ obj_h6E:
 	BEQ bra8_96FD
 	CMP #$FF
 	BEQ bra8_96FD
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra8_96FD:
 	LDA ObjectYPos,X
 	SEC
@@ -3295,7 +3302,7 @@ sub8_97B6:
 	BEQ bra8_97D8
 	CMP #$FF
 	BEQ bra8_97D8
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra8_97D8:
 	LDA ObjectYPos,X
 	SEC
@@ -3340,14 +3347,14 @@ bra8_9820:
 	STA $33
 	JMP ($32)
 tbl8_9834:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr3_983E
 	dw ptr_AD88
 ptr3_983E:
-	JSR CapeHitCheck
-	JSR PlayerHitCheck
+	JSR Obj_CapeHitCheck
+	JSR Obj_PlayerHitCheck
 	JSR jmp_54_BCC2
 	LDA #$04
 	STA PlayerAction
@@ -3386,7 +3393,7 @@ bra8_9880:
 	PLA
 	PLA
 	RTS
-obj_h7A:
+ObjID_h7A:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3399,7 +3406,7 @@ obj_h7A:
 	BEQ bra8_98AB
 	CMP #$FF
 	BEQ bra8_98AB
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra8_98AB:
 	LDA ObjectYPos,X
 	SEC
@@ -3475,7 +3482,7 @@ bra8_993F_RTS:
 	RTS
 bra8_9940:
 	JMP loc8_976C
-obj_h7D:
+ObjID_h7D:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3488,7 +3495,7 @@ obj_h7D:
 	BEQ bra8_9961
 	CMP #$FF
 	BEQ bra8_9961
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra8_9961:
 	LDA ObjectYPos,X
 	SEC
@@ -3531,7 +3538,7 @@ bra8_99A9:
 bra8_99B2:
 	STY $06E0
 	RTS
-obj_hF0:
+ObjID_hF0:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3544,7 +3551,7 @@ obj_hF0:
 	BEQ bra8_99D4
 	CMP #$FF
 	BEQ bra8_99D4
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra8_99D4:
 	LDA ObjectYPos,X
 	SEC

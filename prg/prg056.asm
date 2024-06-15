@@ -176,7 +176,7 @@ bra9_8145:
 loc9_8145:
 	INC ObjectVariables,X
 	RTS
-obj_hA0:
+ObjID_hA0:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_8153
@@ -196,7 +196,7 @@ bra9_8153:
 	BEQ bra9_8175
 	CMP #$FF
 	BEQ bra9_8175
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_8175:
 	LDA ObjectYPos,X
 	SEC
@@ -242,7 +242,7 @@ bra9_81BD:
 	STA $33
 	JMP ($32)
 tbl9_81D1:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr2_81D1
@@ -265,8 +265,8 @@ bra9_81EB:
 	STA ObjectVariables,X
 bra9_81FC:
 	JSR sub9_82AE
-	JSR PlayerHitCheck
-	JSR KillOnSpinJump
+	JSR Obj_PlayerHitCheck
+	JSR Obj_KillOnSpinJump
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -308,7 +308,7 @@ bra9_81FC:
 	BEQ bra9_8265
 	CMP #$FF
 	BEQ bra9_8265
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_8265:
 	LDA ObjectYPos,X
 	SEC
@@ -413,7 +413,7 @@ SprMap_Paragoomba2:
 	db $12, $13, $14, $15
 	db $16, $17, $18, $19
 	db $1A, $1B, $1C, $FF
-obj_h98:
+ObjID_h98:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_83A4
@@ -428,7 +428,7 @@ obj_h98:
 	BEQ bra9_8356
 	CMP #$FF
 	BEQ bra9_8356
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_8356:
 	LDA ObjectYPos,X
 	SEC
@@ -482,7 +482,7 @@ bra9_83A4:
 	BEQ bra9_83C6
 	CMP #$FF
 	BEQ bra9_83C6
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_83C6:
 	LDA ObjectYPos,X
 	SEC
@@ -523,13 +523,13 @@ bra9_840E:
 	ASL
 	TAY
 	LDA tbl9_8422,Y
-obj_h8E:
+ObjID_h8E:
 	STA $32
 	LDA tbl9_8422+1,Y
 	STA $33
 	JMP ($32)
 tbl9_8422:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr2_842C
@@ -547,9 +547,9 @@ ptr2_842C:
 	BEQ bra9_8448
 	JMP loc9_846E
 bra9_8448:
-	JSR CapeHitCheck
-	JSR PlayerHitCheck
-	JSR KillOnSpinJump
+	JSR Obj_CapeHitCheck
+	JSR Obj_PlayerHitCheck
+	JSR Obj_KillOnSpinJump
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -594,7 +594,7 @@ loc9_846E:
 	BEQ bra9_84B5
 	CMP #$FF
 	BEQ bra9_84B5
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_84B5:
 	LDA ObjectYPos,X
 	SEC
@@ -709,7 +709,7 @@ SprMap_ParachuteGoomba2:
 	db $FF, $25, $26
 	db $29, $2A, $2B
 	db $2E, $2F, $30
-obj_h94:
+ObjID_h94:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_85E0
@@ -724,7 +724,7 @@ obj_h94:
 	BEQ bra9_8595
 	CMP #$FF
 	BEQ bra9_8595
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_8595:
 	LDA ObjectYPos,X
 	SEC
@@ -776,7 +776,7 @@ bra9_85E0:
 	BEQ bra9_8602
 	CMP #$FF
 	BEQ bra9_8602
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_8602:
 	LDA ObjectYPos,X
 	SEC
@@ -822,15 +822,15 @@ bra9_864A:
 	STA $33
 	JMP ($32)
 tbl9_865E:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr2_8668
 	dw ptr_AD88
 ptr2_8668:
 	JSR sub9_8698
-	JSR PlayerHitCheck
-	JSR KillOnSpinJump
+	JSR Obj_PlayerHitCheck
+	JSR Obj_KillOnSpinJump
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -882,7 +882,7 @@ loc9_86BB:
 	JSR sub9_8000
 bra9_86D3_RTS:
 	RTS
-obj_h96:
+ObjID_h96:
 	LDX $A4
 	LDA #$06
 	STA $25
@@ -898,7 +898,7 @@ obj_h96:
 	BEQ bra9_86F8
 	CMP #$FF
 	BEQ bra9_86F8
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_86F8:
 	LDA ObjectYPos,X
 	SEC
@@ -944,7 +944,7 @@ bra9_8740:
 	STA $33
 	JMP ($32)
 tbl9_8754:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr2_875E
@@ -969,7 +969,7 @@ ptr2_875E:
 	BEQ bra9_878E
 	CMP #$FF
 	BEQ bra9_878E
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_878E:
 	LDA ObjectYPos,X
 	SEC
@@ -1017,7 +1017,7 @@ bra9_87E5:
 	JSR sub9_8865
 loc9_87E8:
 	JSR jmp_54_BC3E
-	JSR KillOnSpinJump
+	JSR Obj_KillOnSpinJump
 	LDX $A4
 	LDA ObjectVariables,X
 	BEQ bra9_880B_RTS
@@ -1038,7 +1038,7 @@ bra9_880C:
 	JSR jmp_54_B5BB
 	LDA #$03
 	STA ObjectVariables,X
-	JMP obj_h94
+	JMP ObjID_h94
 sub9_881D:
 	LDA ObjectState,X
 	AND #$20
@@ -1209,7 +1209,7 @@ off_8932:
 	db $0E
 	db $06
 	db $07
-obj_h9A:
+ObjID_h9A:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_89AE
@@ -1226,7 +1226,7 @@ obj_h9A:
 	BEQ bra9_8960
 	CMP #$FF
 	BEQ bra9_8960
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_8960:
 	LDA ObjectYPos,X
 	SEC
@@ -1280,7 +1280,7 @@ bra9_89AE:
 	BEQ bra9_89D0
 	CMP #$FF
 	BEQ bra9_89D0
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_89D0:
 	LDA ObjectYPos,X
 	SEC
@@ -1326,16 +1326,16 @@ bra9_8A18:
 	STA $33
 	JMP ($32)
 tbl9_8A2C:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr2_8A36
 	dw ptr_AD88
 ptr2_8A36:
 	JSR sub9_8A45
-	JSR CapeHitCheck
+	JSR Obj_CapeHitCheck
 	JSR jmp_54_BC3E
-	JSR KillOnSpinJump
+	JSR Obj_KillOnSpinJump
 	JMP jmp_54_BF74
 sub9_8A45:
 	LDA $062B
@@ -1403,7 +1403,7 @@ SpinyWalk2:
 	db $1C, $1D
 	db $20, $21
 ;<---
-obj_h80:
+ObjID_h80:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra9_8AB4
@@ -1420,7 +1420,7 @@ bra9_8AB4:
 	BEQ bra9_8AD0
 	CMP #$FF
 	BEQ bra9_8AD0
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_8AD0:
 	LDA ObjectYPos,X
 	SEC
@@ -1479,7 +1479,7 @@ loc9_8B27:
 	BEQ bra9_8B49
 	CMP #$FF
 	BEQ bra9_8B49
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_8B49:
 	LDA ObjectYPos,X
 	SEC
@@ -1525,7 +1525,7 @@ bra9_8B91:
 	STA $33
 	JMP ($32)
 tbl9_8BA5:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr2_8B8F
@@ -1544,9 +1544,9 @@ bra9_8BB6:
 	LDA tbl9_9C5E+1,Y
 	STA $33
 	JSR GetSpeedData
-	JSR CapeHitCheck
-	JSR PlayerHitCheck
-	JSR KillOnSpinJump
+	JSR Obj_CapeHitCheck
+	JSR Obj_PlayerHitCheck
+	JSR Obj_KillOnSpinJump
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -1634,7 +1634,7 @@ SprMap_VBulletBill2:
 	db $A6 ;1K CHR Bank
 	db $30, $31
 	db $2E, $2F
-obj_h9C:
+ObjID_h9C:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_8C76
@@ -1655,7 +1655,7 @@ bra9_8C76:
 	BEQ bra9_8C98
 	CMP #$FF
 	BEQ bra9_8C98
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_8C98:
 	LDA ObjectYPos,X
 	SEC
@@ -1701,7 +1701,7 @@ bra9_8CE0:
 	STA $33
 	JMP ($32)
 tbl9_8CF4:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr2_8CFE
@@ -1726,7 +1726,7 @@ bra9_8D0E:
 	BEQ bra9_8D2A
 	CMP #$FF
 	BEQ bra9_8D2A
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_8D2A:
 	LDA ObjectYPos,X
 	SEC
@@ -1856,7 +1856,7 @@ VPodoboo4:
 	db $31
 	db $2C
 	db $2D
-obj_h9E:
+ObjID_h9E:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra9_8E04
@@ -1873,7 +1873,7 @@ bra9_8E04:
 	BEQ bra9_8E20
 	CMP #$FF
 	BEQ bra9_8E20
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_8E20:
 	LDA ObjectYPos,X
 	SEC
@@ -1925,7 +1925,7 @@ loc9_8E6B:
 	BEQ bra9_8E8D
 	CMP #$FF
 	BEQ bra9_8E8D
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_8E8D:
 	LDA ObjectYPos,X
 	SEC
@@ -1971,7 +1971,7 @@ bra9_8ED5:
 	STA $33
 	JMP ($32)
 tbl9_8EE9:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr2_8EF3
@@ -2069,7 +2069,7 @@ tbl9_8F5A:
 	db $39
 	db $2D
 	db $2E
-obj_h82:
+ObjID_h82:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra9_8F87
@@ -2086,7 +2086,7 @@ bra9_8F87:
 	BEQ bra9_8FA3
 	CMP #$FF
 	BEQ bra9_8FA3
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_8FA3:
 	LDA ObjectYPos,X
 	SEC
@@ -2139,7 +2139,7 @@ loc9_8FEF:
 	BEQ bra9_9011
 	CMP #$FF
 	BEQ bra9_9011
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_9011:
 	LDA ObjectYPos,X
 	SEC
@@ -2185,7 +2185,7 @@ bra9_9059:
 	STA $33
 	JMP ($32)
 tbl9_906D:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr2_9075
@@ -2256,7 +2256,7 @@ Eerie2:
 	db $16
 	db $1A
 	db $1C
-obj_hAA:
+ObjID_hAA:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra9_90E8
@@ -2273,7 +2273,7 @@ bra9_90E8:
 	BEQ bra9_9104
 	CMP #$FF
 	BEQ bra9_9104
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_9104:
 	LDA ObjectYPos,X
 	SEC
@@ -2325,7 +2325,7 @@ loc9_914F:
 	BEQ bra9_9171
 	CMP #$FF
 	BEQ bra9_9171
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_9171:
 	LDA ObjectYPos,X
 	SEC
@@ -2371,7 +2371,7 @@ bra9_91B9:
 	STA $33
 	JMP ($32)
 tbl9_91CD:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr2_91D7
@@ -2385,9 +2385,9 @@ ptr2_91D7:
 bra9_91E4:
 	JSR sub9_9260
 loc9_91E7:
-	JSR CapeHitCheck
-	JSR PlayerHitCheck
-	JSR KillOnSpinJump
+	JSR Obj_CapeHitCheck
+	JSR Obj_PlayerHitCheck
+	JSR Obj_KillOnSpinJump
 	LDA ObjectVariables,X
 	CMP #$40
 	BCS bra9_9221
@@ -2554,7 +2554,7 @@ BonyBeetle4:
 	db $06
 	db $0D
 	db $0E
-obj_hAC:
+ObjID_hAC:
 	LDX $A4
 	LDA ObjectVariables,X
 	CMP #$05
@@ -2575,7 +2575,7 @@ loc9_9306:
 	BEQ bra9_9322
 	CMP #$FF
 	BEQ bra9_9322
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_9322:
 	LDA ObjectYPos,X
 	SEC
@@ -2705,7 +2705,7 @@ StunBonyBeetle2:
 	db $18
 	db $19
 	db $1A
-obj_h8A:
+ObjID_h8A:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_9470
@@ -2720,7 +2720,7 @@ obj_h8A:
 	BEQ bra9_9425
 	CMP #$FF
 	BEQ bra9_9425
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_9425:
 	LDA ObjectYPos,X
 	SEC
@@ -2772,7 +2772,7 @@ bra9_9470:
 	BEQ bra9_9492
 	CMP #$FF
 	BEQ bra9_9492
-	JMP loc3_A6B5 ;unlogged?
+	JMP Obj_RemoveObject ;unlogged?
 bra9_9492:
 	LDA ObjectYPos,X
 	SEC
@@ -2818,13 +2818,13 @@ bra9_94DA:
 	STA $33
 	JMP ($32)
 tbl9_94EE:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr2_94F6
 ptr2_94F6:
 	JSR sub9_9500
-	JSR PlayerHitCheck
+	JSR Obj_PlayerHitCheck
 	JSR jmp_54_BF74
 	RTS
 sub9_9500:
@@ -2896,7 +2896,7 @@ FishBones3:
 	db $AD
 	db $1B, $1C, $22
 	db $1E, $1F, $23
-obj_h8C:
+ObjID_h8C:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -2909,7 +2909,7 @@ obj_h8C:
 	BEQ bra9_9595
 	CMP #$FF
 	BEQ bra9_9595
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_9595:
 	LDA ObjectYPos,X
 	SEC
@@ -2982,7 +2982,7 @@ bra9_9621:
 	BNE bra9_962B
 	JSR jmp_54_BBC3
 bra9_962B:
-	JSR PlayerHitCheck
+	JSR Obj_PlayerHitCheck
 	JSR jmp_54_BF74
 	RTS
 ptr7_9632:
@@ -3027,7 +3027,7 @@ SpikeBall:
 	db $0E
 	db $0F
 	db $10
-obj_hA4:
+ObjID_hA4:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra9_9676
@@ -3044,7 +3044,7 @@ bra9_9676:
 	BEQ bra9_9692
 	CMP #$FF
 	BEQ bra9_9692
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_9692:
 	LDA ObjectYPos,X
 	SEC
@@ -3096,7 +3096,7 @@ loc9_96DD:
 	BEQ bra9_96FF
 	CMP #$FF
 	BEQ bra9_96FF
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_96FF:
 	LDA ObjectYPos,X
 	SEC
@@ -3142,16 +3142,16 @@ bra9_9747:
 	STA $33
 	JMP ($32)
 tbl9_975B:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr2_9765
 	dw ptr_AD88
 ptr2_9765:
 	JSR sub9_978D
-	JSR CapeHitCheck
-	JSR PlayerHitCheck
-	JSR KillOnSpinJump
+	JSR Obj_CapeHitCheck
+	JSR Obj_PlayerHitCheck
+	JSR Obj_KillOnSpinJump
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -3180,7 +3180,7 @@ bra9_9794:
 	STA $33
 	JSR jmp_54_B39B
 	RTS
-obj_hA2:
+ObjID_hA2:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra9_97B0
@@ -3197,7 +3197,7 @@ bra9_97B0:
 	BEQ bra9_97CC
 	CMP #$FF
 	BEQ bra9_97CC
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_97CC:
 	LDA ObjectYPos,X
 	SEC
@@ -3249,7 +3249,7 @@ loc9_9817:
 	BEQ bra9_9839
 	CMP #$FF
 	BEQ bra9_9839
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_9839:
 	LDA ObjectYPos,X
 	SEC
@@ -3295,7 +3295,7 @@ bra9_9881:
 	STA $33
 	JMP ($32)
 tbl9_9895:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr2_989F
@@ -3309,9 +3309,9 @@ ptr2_989F:
 bra9_98AC:
 	JSR sub9_991E
 loc9_98AF:
-	JSR CapeHitCheck
-	JSR PlayerHitCheck
-	JSR KillOnSpinJump
+	JSR Obj_CapeHitCheck
+	JSR Obj_PlayerHitCheck
+	JSR Obj_KillOnSpinJump
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -3504,7 +3504,7 @@ DryBones3:
 	db $FF
 	db $2D
 	db $2C
-obj_hA8:
+ObjID_hA8:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3517,7 +3517,7 @@ obj_hA8:
 	BEQ bra9_9A1B
 	CMP #$FF
 	BEQ bra9_9A1B
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_9A1B:
 	LDA ObjectYPos,X
 	SEC
@@ -3653,7 +3653,7 @@ StunDryBones3:
 	db $25
 	db $26
 	db $27
-obj_hA6:
+ObjID_hA6:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3666,7 +3666,7 @@ obj_hA6:
 	BEQ bra9_9B13
 	CMP #$FF
 	BEQ bra9_9B13
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_9B13:
 	LDA ObjectYPos,X
 	SEC
@@ -3715,7 +3715,7 @@ bra9_9B62:
 	LDA tbl9_9C5E+1,Y
 	STA $33
 	JSR GetSpeedData
-	JSR PlayerHitCheck
+	JSR Obj_PlayerHitCheck
 	JMP jmp_54_BF74
 ptr6_9B79:
 	LDY #$00
@@ -4570,7 +4570,7 @@ bra9_9EF6_RTS:
 	BEQ bra9_9F15
 	CMP #$FF
 	BEQ bra9_9F15
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra9_9F15:
 	LDA ObjectYPos,X
 	SEC

@@ -13,7 +13,7 @@ bra3_A006:
 	STA M90_PRG0 ;Swap the current object bank in
 	LDA #$33
 	STA M90_PRG3 ;Swap bank 51 into the 4th PRG slot
-	JSR obj_h36 ;Jump
+	JSR ObjID_h36 ;Jump
 	LDA #$3F
 	STA M90_PRG3 ;Swap bank 63 back in
 	RTS
@@ -135,7 +135,7 @@ bra3_A0DB:
 	BEQ bra3_A100
 	CMP #$FF
 	BEQ bra3_A100
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra3_A100:
 	LDA ObjectYPos,X
 	SEC
@@ -226,133 +226,133 @@ bra3_A1AD:
 	RTS
 tbl3_A1B5:
 	dw ptr4_A0D8
-	dw obj_h01
-	dw obj_h02
-	dw obj_h03
-	dw obj_h04
-	dw obj_h05
-	dw obj_h06
-	dw obj_h07
-	dw obj_h08
-	dw obj_h09
-	dw obj_h0A
-	dw obj_h0B
-	dw obj_h0C
-	dw obj_h0D
-	dw obj_h0E
-	dw obj_h0F
-	dw obj_h10
-	dw obj_h10
-	dw obj_h12
-	dw obj_h12
-	dw obj_h14
-	dw obj_h14
-	dw obj_h16
-	dw obj_h16
-	dw obj_h16
-	dw obj_h16
-	dw obj_h1A
-	dw obj_h1A
-	dw obj_h1C
-	dw obj_h1C
-	dw obj_h1E
-	dw obj_h1E
-	dw obj_h1E
-	dw obj_h1E
-	dw obj_h1E
-	dw obj_h1E
-	dw obj_h24
-	dw obj_h24
-	dw obj_h26
-	dw obj_h26
-	dw obj_h26
-	dw obj_h26
-	dw obj_h26
-	dw obj_h26
-	dw obj_h26
-	dw obj_h26
-	dw obj_h2E
-	dw obj_h2E
-	dw obj_h30
-	dw obj_h30
-	dw obj_h30
-	dw obj_h30
-	dw obj_h30
-	dw obj_h30
-	dw obj_h36
-	dw obj_h36
-	dw obj_h38
-	dw obj_h0B
-	dw obj_h3A
-	dw obj_h3A
-	dw obj_h3C
-	dw obj_h3C
-	dw obj_h3C
-	dw obj_h3C
-	dw obj_h3C
-	dw obj_h3C
-	dw obj_h42
-	dw obj_h42
-	dw obj_h44
-	dw obj_h44
-	dw obj_h38
-	dw obj_h38
-	dw obj_h48
-	dw obj_h49
-	dw obj_h4A
-	dw obj_h4A
-	dw obj_h4C
-	dw obj_h4C
-	dw obj_h4E
-	dw obj_h4E
-	dw obj_h4E
-	dw obj_h4E
-	dw obj_h30
-	dw obj_h30
-	dw obj_h54
-	dw obj_h54
-	dw obj_h54
-	dw obj_h54
-	dw obj_h58
-	dw obj_h58
-	dw obj_h5A
-	dw obj_h5A
-	dw obj_h5C
-	dw obj_h5C
-	dw obj_h5C
-	dw obj_h5C
-	dw obj_h5A
-	dw obj_h5A
-	dw obj_h5A
-	dw obj_h5A
-	dw obj_h64
-	dw obj_h64
-	dw obj_h66
-	dw obj_h66
-	dw obj_h66
-	dw obj_h66
-	dw obj_h6A
-	dw obj_h6B
-	dw obj_h6C
-	dw obj_h6C
-	dw obj_h6E
-	dw obj_h6E
-	dw obj_h70
-	dw obj_h64
-	dw obj_h72
-	dw obj_h72
-	dw obj_h74
-	dw obj_h72
-	dw obj_h76
-	dw obj_h77
-	dw obj_h78 ;Object 0x78 (Reznor Fire)
-	dw obj_h54 ;Object 0x79 (Fuzzy)
-	dw obj_h7A
-	dw obj_h7A
-	dw obj_h7C
-	dw obj_h7D
-	dw obj_h7E
-	dw obj_h7E ;Object 0x7F (Urchin)
+	dw ObjID_h01
+	dw ObjID_h02
+	dw ObjID_h03
+	dw ObjID_h04
+	dw ObjID_h05
+	dw ObjID_h06
+	dw ObjID_h07
+	dw ObjID_h08
+	dw ObjID_h09
+	dw ObjID_h0A
+	dw ObjID_h0B
+	dw ObjID_h0C
+	dw ObjID_h0D
+	dw ObjID_h0E
+	dw ObjID_h0F
+	dw ObjID_h10
+	dw ObjID_h10
+	dw ObjID_h12
+	dw ObjID_h12
+	dw ObjID_h14
+	dw ObjID_h14
+	dw ObjID_h16
+	dw ObjID_h16
+	dw ObjID_h16
+	dw ObjID_h16
+	dw ObjID_h1A
+	dw ObjID_h1A
+	dw ObjID_h1C
+	dw ObjID_h1C
+	dw ObjID_h1E
+	dw ObjID_h1E
+	dw ObjID_h1E
+	dw ObjID_h1E
+	dw ObjID_h1E
+	dw ObjID_h1E
+	dw ObjID_h24
+	dw ObjID_h24
+	dw ObjID_h26
+	dw ObjID_h26
+	dw ObjID_h26
+	dw ObjID_h26
+	dw ObjID_h26
+	dw ObjID_h26
+	dw ObjID_h26
+	dw ObjID_h26
+	dw ObjID_h2E
+	dw ObjID_h2E
+	dw ObjID_h30
+	dw ObjID_h30
+	dw ObjID_h30
+	dw ObjID_h30
+	dw ObjID_h30
+	dw ObjID_h30
+	dw ObjID_h36
+	dw ObjID_h36
+	dw ObjID_h38
+	dw ObjID_h0B
+	dw ObjID_h3A
+	dw ObjID_h3A
+	dw ObjID_h3C
+	dw ObjID_h3C
+	dw ObjID_h3C
+	dw ObjID_h3C
+	dw ObjID_h3C
+	dw ObjID_h3C
+	dw ObjID_h42
+	dw ObjID_h42
+	dw ObjID_h44
+	dw ObjID_h44
+	dw ObjID_h38
+	dw ObjID_h38
+	dw ObjID_h48
+	dw ObjID_h49
+	dw ObjID_h4A
+	dw ObjID_h4A
+	dw ObjID_h4C
+	dw ObjID_h4C
+	dw ObjID_h4E
+	dw ObjID_h4E
+	dw ObjID_h4E
+	dw ObjID_h4E
+	dw ObjID_h30
+	dw ObjID_h30
+	dw ObjID_h54
+	dw ObjID_h54
+	dw ObjID_h54
+	dw ObjID_h54
+	dw ObjID_h58
+	dw ObjID_h58
+	dw ObjID_h5A
+	dw ObjID_h5A
+	dw ObjID_h5C
+	dw ObjID_h5C
+	dw ObjID_h5C
+	dw ObjID_h5C
+	dw ObjID_h5A
+	dw ObjID_h5A
+	dw ObjID_h5A
+	dw ObjID_h5A
+	dw ObjID_h64
+	dw ObjID_h64
+	dw ObjID_h66
+	dw ObjID_h66
+	dw ObjID_h66
+	dw ObjID_h66
+	dw ObjID_h6A
+	dw ObjID_h6B
+	dw ObjID_h6C
+	dw ObjID_h6C
+	dw ObjID_h6E
+	dw ObjID_h6E
+	dw ObjID_h70
+	dw ObjID_h64
+	dw ObjID_h72
+	dw ObjID_h72
+	dw ObjID_h74
+	dw ObjID_h72
+	dw ObjID_h76
+	dw ObjID_h77
+	dw ObjID_h78 ;Object 0x78 (Reznor Fire)
+	dw ObjID_h54 ;Object 0x79 (Fuzzy)
+	dw ObjID_h7A
+	dw ObjID_h7A
+	dw ObjID_h7C
+	dw ObjID_h7D
+	dw ObjID_h7E
+	dw ObjID_h7E ;Object 0x7F (Urchin)
 	dw ptr4_A0D8 ;Unused excess pointers
 	db $62
 	db $95
@@ -737,134 +737,134 @@ tbl3_A3B5:
 	db $31
 	db $31
 tbl3_A435:
-	dw obj_h80
-	dw obj_h80
-	dw obj_h82
-	dw obj_h82
-	dw obj_h84
-	dw obj_h84
-	dw obj_h86
-	dw obj_h86
-	dw obj_h88
-	dw obj_h88
-	dw obj_h8A
-	dw obj_h8A
-	dw obj_h8C
-	dw obj_h8C
-	dw obj_h8E
-	dw obj_h8E
-	dw obj_h90
-	dw obj_h90
-	dw obj_h92
-	dw obj_h92
-	dw obj_h94
-	dw obj_h94
-	dw obj_h96
-	dw obj_h96
-	dw obj_h98
-	dw obj_h98
-	dw obj_h9A
-	dw obj_h9A
-	dw obj_h9C
-	dw obj_h9C
-	dw obj_h9E
-	dw obj_h9E
-	dw obj_hA0
-	dw obj_hA0
-	dw obj_hA2
-	dw obj_hA2
-	dw obj_hA4
-	dw obj_hA4
-	dw obj_hA6
-	dw obj_hA6
-	dw obj_hA8
-	dw obj_hA8
-	dw obj_hA8
-	dw obj_hA8
-	dw obj_hAA
-	dw obj_hAA
-	dw obj_hAC
-	dw obj_hAC
-	dw obj_hAE
-	dw obj_hAE
-	dw obj_hB0
-	dw obj_hB0
-	dw obj_hB2
-	dw obj_hB2
-	dw obj_hB4
-	dw obj_hB4
-	dw obj_hB6
+	dw ObjID_h80
+	dw ObjID_h80
+	dw ObjID_h82
+	dw ObjID_h82
+	dw ObjID_h84
+	dw ObjID_h84
+	dw ObjID_h86
+	dw ObjID_h86
+	dw ObjID_h88
+	dw ObjID_h88
+	dw ObjID_h8A
+	dw ObjID_h8A
+	dw ObjID_h8C
+	dw ObjID_h8C
+	dw ObjID_h8E
+	dw ObjID_h8E
+	dw ObjID_h90
+	dw ObjID_h90
+	dw ObjID_h92
+	dw ObjID_h92
+	dw ObjID_h94
+	dw ObjID_h94
+	dw ObjID_h96
+	dw ObjID_h96
+	dw ObjID_h98
+	dw ObjID_h98
+	dw ObjID_h9A
+	dw ObjID_h9A
+	dw ObjID_h9C
+	dw ObjID_h9C
+	dw ObjID_h9E
+	dw ObjID_h9E
+	dw ObjID_hA0
+	dw ObjID_hA0
+	dw ObjID_hA2
+	dw ObjID_hA2
+	dw ObjID_hA4
+	dw ObjID_hA4
+	dw ObjID_hA6
+	dw ObjID_hA6
+	dw ObjID_hA8
+	dw ObjID_hA8
+	dw ObjID_hA8
+	dw ObjID_hA8
+	dw ObjID_hAA
+	dw ObjID_hAA
+	dw ObjID_hAC
+	dw ObjID_hAC
+	dw ObjID_hAE
+	dw ObjID_hAE
+	dw ObjID_hB0
+	dw ObjID_hB0
+	dw ObjID_hB2
+	dw ObjID_hB2
+	dw ObjID_hB4
+	dw ObjID_hB4
+	dw ObjID_hB6
 	dw ptr4_A0D8
-	dw obj_hB8
+	dw ObjID_hB8
 	dw ptr4_A0D8
-	dw obj_hBA
+	dw ObjID_hBA
 	dw ptr4_A0D8
 	dw ptr4_A0D8
-	dw obj_hBD
-	dw obj_hBE
-	dw obj_hBE
-	dw obj_hC0
-	dw obj_hC0
-	dw obj_hC2
-	dw obj_hC2
-	dw obj_hBE
-	dw obj_hBE
-	dw obj_hC0
-	dw obj_hC0
-	dw obj_hC2
-	dw obj_hC2
-	dw obj_hBE
-	dw obj_hBE
-	dw obj_hC0
-	dw obj_hC0
-	dw obj_hCE
-	dw obj_hCE
-	dw obj_hD0
-	dw obj_hD0
-	dw obj_hD2
-	dw obj_hD2
-	dw obj_hD4
-	dw obj_hD5
-	dw obj_hD6
-	dw obj_hD6
-	dw obj_hD8
-	dw obj_hD8
-	dw obj_hDA
-	dw obj_hDA
-	dw obj_hDC
-	dw obj_hDC
-	dw obj_hDE
-	dw obj_hDF
-	dw obj_hE0
-	dw obj_hE0
-	dw obj_hE2
-	dw obj_hE2
-	dw obj_hE4
-	dw obj_hE4
-	dw obj_hE6
-	dw obj_hE7
-	dw obj_hE8
-	dw obj_hE8
-	dw obj_hE8 ;1st bonus block
-	dw obj_hE8
-	dw obj_hE8 ;2nd bonus block
-	dw obj_hED
-	dw obj_hED ;3rd bonus block
-	dw obj_hED
-	dw obj_hF0
-	dw obj_hF0
-	dw obj_hED
-	dw obj_hED
-	dw obj_hF4
-	dw obj_hF4
-	dw obj_hF4
-	dw obj_hF4
-	dw obj_h58
-	dw obj_h58
-	dw obj_hFA
-	dw obj_hFA
-	dw obj_hFA
-	dw obj_hFA
+	dw ObjID_hBD
+	dw ObjID_hBE
+	dw ObjID_hBE
+	dw ObjID_hC0
+	dw ObjID_hC0
+	dw ObjID_hC2
+	dw ObjID_hC2
+	dw ObjID_hBE
+	dw ObjID_hBE
+	dw ObjID_hC0
+	dw ObjID_hC0
+	dw ObjID_hC2
+	dw ObjID_hC2
+	dw ObjID_hBE
+	dw ObjID_hBE
+	dw ObjID_hC0
+	dw ObjID_hC0
+	dw ObjID_hCE
+	dw ObjID_hCE
+	dw ObjID_hD0
+	dw ObjID_hD0
+	dw ObjID_hD2
+	dw ObjID_hD2
+	dw ObjID_hD4
+	dw ObjID_hD5
+	dw ObjID_hD6
+	dw ObjID_hD6
+	dw ObjID_hD8
+	dw ObjID_hD8
+	dw ObjID_hDA
+	dw ObjID_hDA
+	dw ObjID_hDC
+	dw ObjID_hDC
+	dw ObjID_hDE
+	dw ObjID_hDF
+	dw ObjID_hE0
+	dw ObjID_hE0
+	dw ObjID_hE2
+	dw ObjID_hE2
+	dw ObjID_hE4
+	dw ObjID_hE4
+	dw ObjID_hE6
+	dw ObjID_hE7
+	dw ObjID_hE8
+	dw ObjID_hE8
+	dw ObjID_hE8 ;1st bonus block
+	dw ObjID_hE8
+	dw ObjID_hE8 ;2nd bonus block
+	dw ObjID_hED
+	dw ObjID_hED ;3rd bonus block
+	dw ObjID_hED
+	dw ObjID_hF0
+	dw ObjID_hF0
+	dw ObjID_hED
+	dw ObjID_hED
+	dw ObjID_hF4
+	dw ObjID_hF4
+	dw ObjID_hF4
+	dw ObjID_hF4
+	dw ObjID_h58
+	dw ObjID_h58
+	dw ObjID_hFA
+	dw ObjID_hFA
+	dw ObjID_hFA
+	dw ObjID_hFA
 	db $F1
 	db $8B
 	db $F1
@@ -1246,7 +1246,12 @@ tbl3_A635:
 	db $31
 	db $31
 	db $31
-loc3_A6B5:
+
+;----------------------------------------
+;ROUTINE ($A6B5)
+;Removes the object of the X index from memory.
+;----------------------------------------
+Obj_RemoveObject:
 	LDA #$00
 	STA ObjectAction,X
 	STA ObjectSlot,X
@@ -1264,65 +1269,75 @@ loc3_A6B5:
 ;SUBROUTINE ($A6D4)
 ;Checks if an object is being hit by a cape and kills it accordingly.
 ;----------------------------------------
-CapeHitCheck:
+Obj_CapeHitCheck:
 	LDA Player1YoshiStatus
-	BNE --- ;Stop if the player is riding Yoshi
+	BNE @Stop ;Stop if the player is riding Yoshi
 		LDA PlayerPowerup
 		CMP #$03
-		BCS + ;Only continue if the player has a cape
----	RTS
+		BCS @Continue ;Only continue if the player has a cape
+@Stop:
+	RTS
 
-+	LDA PlayerPrevAction
+@Continue:
+	LDA PlayerPrevAction
 	CMP #$05
-	BNE --- ;Branch if the player wasn't spinning
-	LDX $A4
+	BNE @Stop ;Branch if the player isn't spinning
+;Get object hitbox size
+	LDX $A4 ;Get index of current object
 	LDY ObjectSlot,X
 	LDA ObjectXHitBoxSizes,Y
 	STA $36
 	LDA ObjectYHitBoxSizes,Y
 	STA $38
+
+;Check if the player is within the object's hitbox horizontally
 	LDA ObjXScreenDistance,X
-	BPL ++ ;Branch if the player is to the left of the object
+	BPL @HorizHitboxCheckLeft ;Branch if the player is to the left of the object
 	;If player is to the right of the object:
 		LDA #16
 		CLC
 		ADC $36
 		CLC
 		ADC ObjectXDistance,X ;X Hitbox + 16 + X Distance > 255
-		BCS + ;Branch if the player is within 16 pixels of the object's hitbox (cape distance)
+		BCS @VertHitboxCheck ;Branch if the player is within 16 pixels of the object's hitbox (cape distance)
 		BCC SkipCapeKill ;Otherwise, set carry and stop
 
 	;If player is to the left of the object:
-	++	LDA ObjectXDistance,X
+	@HorizHitboxCheckLeft:
+		LDA ObjectXDistance,X
 		CMP #16
-		BCS SkipCapeKill ;Don't kill the object if the player is more than 15 pixels away from it
+		BCS SkipCapeKill ;Don't kill the object if the player is more than 16 pixels away from it
 
-;Otherwise, if the player is within the horizontal hitbox, move to the vertical hitbox check
-+	LDA ObjYScreenDistance,X
-	BEQ ++ ;Skip these checks if the player's origin is already above or at the object's origin
+;Otherwise, if the player is within the hitbox horizontally, check if they're in the hitbox vertically
+@VertHitboxCheck:
+	LDA ObjYScreenDistance,X
+	BEQ @VertHitboxCheckAbove ;Branch if the player's origin is already above or at the object's origin
 	CMP #$FF
 	BNE SkipCapeKill ;Don't kill the object if it's off-screen?
-	;If neither conditions are met, the player's origin mus_t be below the object's
+	;If the player is at the same level as the object:
 		LDA #24
 		CLC
 		ADC $38
 		CLC
 		ADC ObjectYDistance,X ;Y hitbox + 24 + Y Distance > 255
-		BCS + ;Kill the object if the player is within 24 vertical pixels of the object's hitbox (origin at its foot?)
+		BCS @KillObject ;Kill the object if the player is within 24 vertical pixels of the object's hitbox (origin at its foot?)
 		BCC SkipCapeKill ;Otherwise, don't kill it and stop
 
 	;If the player's origin is above or at the object's:
-	++	LDA ObjectYDistance,X
+	@VertHitboxCheckAbove:
+		LDA ObjectYDistance,X
 		CMP #$00
 		BCS SkipCapeKill ;Don't kill the object if the player is above the object
-	;Otherwise, continue and kill the object 
-	+	CLC
-		BCC + ;Clear the carry and continue
+	;Otherwise, continue and kill the object
+	@KillObject:
+		CLC
+		BCC CheckIfCapeKill ;Clear the carry and continue
 
 SkipCapeKill:
 	SEC
-
-+	BCS +++ ;Stop if the carry flag was set
+	
+CheckIfCapeKill:
+	BCS @Stop ;Stop if the carry flag was set
 		LDA ObjectState,X
 		AND #%11100000
 		ORA #%00000100 ;Enable collision check
@@ -1335,20 +1350,22 @@ SkipCapeKill:
 		STA SFXRegister ;Play hit sound
 		PLA
 		PLA ;Go back two calls and stop running code for this object
-+++	RTS
+@Stop:
+	RTS
 
 ;----------------------------------------
 ;SUBROUTINE ($A74D)
 ;Destroys an object if spin jumped on. Stops running the object completely if they player doesn't
 ;----------------------------------------
-KillOnSpinJump:
+Obj_KillOnSpinJump:
 	LDA Player1YoshiStatus
-	BNE +
+	BNE @Continue ;Continue if player has Yoshi
 	LDA PlayerPrevAction
 	CMP #$05
-	BNE +++
+	BNE @Stop ;If the player doesn't have Yoshi, make sure they're spin jumping
 
-+	LDA #$20
+@Continue:
+	LDA #$20
 	STA PlayerYSpeed ;Set player's vertical speed
 	LDA PlayerMovement
 	ORA #$04
@@ -1360,8 +1377,9 @@ KillOnSpinJump:
 	LDA #$00
 	STA ObjectState,X ;Remove object
 	PLA
-	PLA
-+++	RTS ;Go back two calls and stop running code for this object
+	PLA ;Go back two calls and stop running code for this object
+@Stop:
+	RTS
 
 jmp_54_A773:
 	LDA ObjXScreenDistance,X
@@ -1409,57 +1427,80 @@ bra3_A7AD:
 bra3_A7BA_RTS:
 	RTS
 
-ptr_A7BB:
+;----------------------------------------
+;ROUTINE ($A7BB)
+;Checks if Yoshi's tongue is able to eat an object.
+;Takes the object's tongue behavior $25 as a parameter.
+;Values:
+; > 00 - 06 = Copy to Yoshi State
+; > 02 = P-Switch
+; > 03 = Spring
+; > 04 = Fire breath
+; > 06 = Swallow
+; > 07 = Inedible
+;----------------------------------------
+Obj_YoshiTongueCheck:
 	LDA $25
 	CMP #$07
 	BNE bra3_A7C4 ;Branch if the object is completely inedible
-	JMP loc3_A852 ;Otherwise, jump
+	JMP YoshiEatStop ;Otherwise, jump
+
 bra3_A7C4:
 	LDA YoshiTongueState
 	CMP #$01
 	BEQ bra3_A7CE ;Branch if there's nothing on Yoshi's tongue already
-bra3_A7CB:
-	JMP loc3_A852 ;If there is, jump
+
+@Stop:
+	JMP YoshiEatStop ;If there is, jump
+
 bra3_A7CE:
 	LDX $A4 ;Get index for current object
 	LDA PlayerState
 	CMP #$09
-	BCC bra3_A7CB ;Branch (to a jump) if Yoshi's tongue isn't out
+	BCC @Stop ;Stop if Yoshi's tongue isn't out
 	LDA PlayerMovement
 	AND #$40
-	BNE bra3_A7E3 ;Branch if the player is facing left
-	LDA ObjXScreenDistance,X
-	BMI bra3_A7CB ;Branch (to a jump) if the player is right of the object
-	BPL bra3_A7E8 ;Branch if the player is left of the object
-bra3_A7E3:
-	LDA ObjXScreenDistance,X
-	BPL bra3_A7CB ;Branch if the player is left of the object
+	BNE @IsFacingObjectLeft ;Branch if the player is facing left
+	;If the player is facing right:
+		LDA ObjXScreenDistance,X
+		BMI @Stop ;Stop if the player is facing away from the object (facing right and to the left of it)
+		BPL bra3_A7E8 ;Branch if the player is to the left of the object
+
+	;If the player is facing left:
+	@IsFacingObjectLeft:
+		LDA ObjXScreenDistance,X
+		BPL @Stop ;Stop if the player is facing away from the object (facing left and to the right of it)
+
 bra3_A7E8:
 	LDX PlayerAnimationFrame
 	CPX #$06
-	BCC loc3_A852 ;Make sure the player is on the 6th or less frame of their current animation?
+	BCC YoshiEatStop ;Make sure Yoshi's mouth is open
 	LDA tbl3_A85F,X
-	STA $32 ;Store pointer based off the player's animation frame
+	STA $32 ;Get the width of Yoshi's tongue hitbox
 	LDY $A4 ;Get index for current object
 	LDX ObjectSlot,Y
 	LDA ObjectXHitBoxSizes,X
-	STA $36 ;Load pointer for object into memory
+	STA $36 ;Get object hitbox width
 	LDA ObjectYHitBoxSizes,X
-	STA $38
+	STA $38 ;Get object hitbox height
 	LDX $A4
 	LDA ObjXScreenDistance,X
-	BPL bra3_A816
-	LDA $32
-	CLC
-	ADC $36 ;Add [unknown1] to [unknown2]
-	CLC
-	ADC ObjectXDistance,X
-	BCS bra3_A81D
-	BCC bra3_A83D
-bra3_A816:
-	LDA ObjectXDistance,X
-	CMP $32
-	BCS bra3_A83D
+	BPL bra3_A816 ;Branch if the player is to the left of the object
+	;If the player is to the right of the object:
+		LDA $32
+		CLC
+		ADC $36
+		CLC
+		ADC ObjectXDistance,X
+		BCS bra3_A81D
+		BCC bra3_A83D
+
+	;If the player is to the left of the object:
+	bra3_A816:
+		LDA ObjectXDistance,X
+		CMP $32
+		BCS bra3_A83D
+
 bra3_A81D:
 	LDA ObjYScreenDistance,X
 	BEQ bra3_A833
@@ -1472,17 +1513,20 @@ bra3_A81D:
 	ADC ObjectYDistance,X
 	BCS bra3_A83A
 	BCC bra3_A83D
+
 bra3_A833:
 	LDA ObjectYDistance,X
 	CMP #$00
 	BCS bra3_A83D
+
 bra3_A83A:
 	CLC
 	BCC bra3_A83E
+
 bra3_A83D:
 	SEC
 bra3_A83E:
-	BCS loc3_A852
+	BCS YoshiEatStop
 	LDX PlayerAnimationFrame
 	LDA tbl3_A86D,X
 	STA PlayerAnimationFrame
@@ -1491,12 +1535,13 @@ bra3_A83E:
 	LDA $25
 	STA YoshiTongueState
 	RTS
-loc3_A852:
+
+YoshiEatStop:
 	LDX $A4
 	LDA ObjectState,X
 	AND #$E0 ;Mask out the lower 5 bits
 	ORA #$03
-	STA ObjectState,X ;Set the lower 2 bits, changing the collision state to make the object vulnerable to Yoshi's tongue(?)
+	STA ObjectState,X ;Run main collision code
 	RTS
 tbl3_A85F:
 	db $00
@@ -3752,7 +3797,7 @@ bra3_B556:
 	BEQ bra3_B572
 	CMP #$FF
 	BEQ bra3_B572
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra3_B572:
 	LDA ObjectYPos,X
 	SEC
@@ -4801,7 +4846,7 @@ sub_54_BCA7:
 ;SUBROUTINES ($BCBE, $BCC2)
 ;Bounces the player back and gives them points while playing a sound effect. Calling the routine below it doesn't play the sound effect.
 ;----------------------------------------
-ObjectStompKnockback:
+Obj_StompKnockback:
 	LDA #sfx_EnemyHit2
 	STA SFXRegister ;Play hit sound effect
 jmp_54_BCC2:
@@ -5091,7 +5136,7 @@ bra3_BEB7:
 ;SUBROUTINE ($BEBC)
 ;Checks if the player hit's the object's hitbox. If the player takes damage or isn't touching the object, it will stop the object's code.
 ;----------------------------------------
-PlayerHitCheck:
+Obj_PlayerHitCheck:
 	LDX $A4 ;Get current object index
 	LDY ObjectSlot,X
 	LDA ObjectXHitBoxSizes,Y
@@ -5100,57 +5145,64 @@ PlayerHitCheck:
 	STA $38
 	LDY #$10 ;Set default player hitbox to 16 pixels high
 	LDA PlayerPowerup
-	BEQ + ;Branch if the player is small, keeping their hitbox at 16 pixels high
+	BEQ @SetPlayerDuckingHeight ;Branch if the player is small, keeping their hitbox at 16 pixels high
 	LDY #$18 ;Otherwise, if they have a powerup, make their hitbox 24 pixels high
 
-+	LDA PlayerAction
+@SetPlayerDuckingHeight:
+	LDA PlayerAction
 	CMP #$07
-	BNE + ;Don't change the player's hitbox size if they aren't ducking
+	BNE @HorizHitboxCheck ;Don't change the player's hitbox size if they aren't ducking
 	LDY #$08 ;If the player is ducking, make their hitbox 8 pixels high
 
-+	STY $32 ;Store player's hitbox height
+@HorizHitboxCheck:
+	STY $32 ;Store player's hitbox height
 	LDA ObjXScreenDistance,X
-	BPL ++ ;Skip this check the player is to the left of this object
+	BPL @HorizHitboxCheckLeft ;Branch if the player is to the left of the object
 	;If player is to the right of the object:
 		LDA #5
 		CLC
 		ADC $36
 		CLC
 		ADC ObjectXDistance,X ;5 + X Hitbox + X Distance > 255
-		BCS + ;Move to the next check if player is within 5 pixels of the object's hitbox
+		BCS @VertHitboxCheck ;Move to the next check if player is within 5 pixels of the object's hitbox
 		BCC SkipPlayerObjectColl ;Otherwise, stop
 
 	;If player is to the left of the object:
-	++	LDA ObjectXDistance,X
+	@HorizHitboxCheckLeft:
+		LDA ObjectXDistance,X
 		CMP #5
 		BCS SkipPlayerObjectColl ;Stop if the player is more than 5 pixels away from the object
 
 ;Otherwise, if the player is within the horizontal hitbox, move to the vertical hitbox check
-+	LDA ObjYScreenDistance,X
-	BEQ ++ ;Skip these checks if the player's origin is already above or at the object's origin
+@VertHitboxCheck:
+	LDA ObjYScreenDistance,X
+	BEQ @VertHitboxCheckAbove ;Skip these checks if the player's origin is already above or at the object's origin
 	CMP #$FF
 	BNE SkipPlayerObjectColl ;Stop if the object is off-screen
-	;If neither conditions are met, the player's origin must be below the object's:
+	;If the player is at the same level as the object:
 		LDA $32
 		CLC
 		ADC $38
 		CLC
 		ADC ObjectYDistance,X ;Player Hitbox Height + Object Hitbox Height > 255
-		BCS + ;Handle collision with the player if they're within the object's vertical hitbox
+		BCS @HandleCollision ;Handle collision with the player if they're within the object's vertical hitbox
 		BCC SkipPlayerObjectColl ;Otherwise, stop
 
 	;If the player's origin is above or at the object's:
-	++	LDA ObjectYDistance,X
+	@VertHitboxCheckAbove:
+		LDA ObjectYDistance,X
 		CMP #$00
 		BCS SkipPlayerObjectColl ;Stop if the player is above the object
 	;Otherwise, continue and handle collision with player
-	+	CLC
-		BCC + ;Handle collision
+	@HandleCollision:
+		CLC
+		BCC CheckIfCollided ;Handle collision
 
 SkipPlayerObjectColl:
 	SEC ;If set, the branch below will fail and collision with the player won't be handled
 
-+	BCC ObjHandlePlayerColl ;If not set, handle collision accordingly
+CheckIfCollided:
+	BCC ObjHandlePlayerColl ;If not set, handle collision accordingly
 bra3_BF1A:
 	LDA ObjectState,X
 	AND #%11100000
@@ -5162,45 +5214,48 @@ bra3_BF1A:
 ;Check if the player can take damage
 ObjHandlePlayerColl:
 	LDA ObjYScreenDistance,X
-	BPL ++ ;Skip invincibility check if the player is above the object
+	BPL @InvincibilityCheck ;Skip these checks if the player is above the object
 	LDA ObjectYDistance,X
 	CMP #-14
-	BCC ++ ;Skip invincibility check if the player is within 14 pixels of the object
+	BCC @InvincibilityCheck ;Skip these checks if the player is within 14 pixels of the object vertically
 	LDA PlayerAction
 	CMP #$0D
-	BEQ +
+	BEQ @GivePoints
 	CMP #$0E
-	BEQ +
+	BEQ @GivePoints
 	LDA PlayerMovement
 	AND #$04
-	BNE ++ ;Branch if the player is moving up
+	BNE @InvincibilityCheck ;Branch if the player is moving up
 
-+	LDA InvincibilityTimer
-	BNE + ;Reward points immediately the player hits the object with invincibility
+@GivePoints:
+	LDA InvincibilityTimer
+	BNE @GivePointsContinue ;Reward points immediately if the player already has invulnerability frames
 	LDA #$F6
 	STA InvincibilityTimer ;Otherwise, give them 12 frames of invulnerability without flickering
-
-+	LDA #$01
+@GivePointsContinue:
+	LDA #$01
 	JSR RewardPoints ;Give the player 200 points
 	RTS
 
-++	LDA InvincibilityTimer
-	BEQ + ;Deal damage if the player isn't invincible
+@InvincibilityCheck:
+	LDA InvincibilityTimer
+	BEQ @DamagePlayer ;Deal damage if the player isn't invincible
 	CMP #$D0
 	BCS bra3_BF1A ;Stop collision check if the player has invulnerability frames
 	;Otherwise, if player has star power:
-	LDX $A4
-	LDA ObjectState,X
-	AND #%11100000
-	ORA #%00000100 ;Kill object
-	STA ObjectState,X
-	LDA #$00
-	STA ObjectVariables,X ;Clear object variables
-	PLA
-	PLA
-	RTS ;Go back two calls and stop running code for this object
+		LDX $A4
+		LDA ObjectState,X
+		AND #%11100000
+		ORA #%00000100 ;Kill object
+		STA ObjectState,X
+		LDA #$00
+		STA ObjectVariables,X ;Clear object variables
+		PLA
+		PLA
+		RTS ;Go back two calls and stop running code for this object
 
-+	JSR DealDamage ;Deal damage
+@DamagePlayer:
+	JSR DealDamage ;Deal damage
 	PLA
 	PLA
 	RTS ;Go back two calls and stop running code for this object
@@ -5218,30 +5273,39 @@ DealDamage:
 	LDX $A4
 	LDA ObjectSlot,X
 	CMP #$48
-	BCC +
+	BCC @TurnObject
 	CMP #$4C
-	BCC bra3_BF9B
+	BCC @DamagePlayer ;Don't turn objects $48 - $4C around when they damage the player
 
-+	LDA ObjXScreenDistance,X
-	BMI ++ ;Turn the object in the direction of the player
+;Turn the object in the direction of the player when it damages them
+@TurnObject:
+	LDA ObjXScreenDistance,X
+	BMI @TurnObjectRight ;Turn object right if the player is damaged from the right
 	LDA ObjectState,X
-	ORA #%01000000 ;Turn object left
-	BNE +
-++	LDA ObjectState,X
+	ORA #%01000000 ;Turn object left if the player is damaged from the left 
+	BNE @SetObjectDirection
+
+@TurnObjectRight:
+	LDA ObjectState,X
 	AND #%10111111
-+	STA ObjectState,X ;Turn object right
-bra3_BF9B:
+
+@SetObjectDirection:
+	STA ObjectState,X ;Turn object right
+
+@DamagePlayer:
 	LDA #$00
 	STA PlayerHoldFlag
 	LDA Player1YoshiStatus
-	BEQ bra3_BFAD ;Branch if player isn't on Yoshi
-	;Otherwise, inflict damage
+	BEQ @DamageNoYoshi ;Branch if player isn't on Yoshi
+	;Otherwise, inflict damage to Yoshi
 		LDA #$01
 		STA HurtFlag
-		JMP loc3_BFC0
-bra3_BFAD:
+		JMP @GiveIFrames ;Hurt player and give them invulnerability frames
+
+;Handle damage if the player isn't riding Yoshi
+@DamageNoYoshi:
 	LDA PlayerPowerup
-	BEQ bra3_BFD2 ;Branch if the player is already small
+	BEQ @KillPlayer ;Kill the player if they're already small
 	;Otherwise, make the player small
 		LDA #$00
 		STA PlayerPowerup
@@ -5249,17 +5313,18 @@ bra3_BFAD:
 	STA PlayerPowerupBuffer ;Make the game buffer while the player is taking damage
 	LDA #$07
 	STA Event ;Pause game to change powerup
-loc3_BFC0:
+
+@GiveIFrames:
 	LDA #$D0
-	STA InvincibilityTimer ;Give player invulnerability frames
+	STA InvincibilityTimer ;Give player (128) invulnerability frames
 	LDA #sfx_PowerDown
 	STA SFXRegister ;Play hurt sound
 	LDA ObjectState,X
 	AND #%11100000
-	STA ObjectState,X ;End collision check for this frame?
+	STA ObjectState,X ;End collision check for this frame
 	RTS
 
-bra3_BFD2:
+@KillPlayer:
 	LDA #evt1_Death
 	STA Event ;Trigger death event
 	LDA #$00

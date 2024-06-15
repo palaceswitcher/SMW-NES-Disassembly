@@ -300,7 +300,7 @@ bra3_8790:
 	BEQ bra3_87BD
 	CMP #$FF
 	BEQ bra3_87BD
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra3_87BD:
 	LDA ObjectYPos,X
 	SEC
@@ -681,7 +681,7 @@ tbl3_8F67:
 	BEQ bra3_8FF4
 	CMP #$FF
 	BEQ bra3_8FF4
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra3_8FF4:
 	LDA ObjectYPos,X
 	SEC
@@ -2391,7 +2391,7 @@ bra3_9762_RTS:
 	BEQ bra3_9782
 	CMP #$FF
 	BEQ bra3_9782
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra3_9782:
 	LDA ObjectYPos,X
 	SEC
