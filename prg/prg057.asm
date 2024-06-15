@@ -2729,7 +2729,7 @@ bra4_ADF0:
 	BNE bra4_AE14_RTS ;Only do this every 4 frames
 	CPY #$01
 	BNE bra4_AE03
-	LDX #musInvincibleStar
+	LDX #mus_InvincibleStar
 	STX MusicRegister ;Play the Valley of Bowser theme
 	LDX #sfx_Powerup
 	STX SFXRegister

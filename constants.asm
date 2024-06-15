@@ -56,7 +56,7 @@ mus_Castle = $2C
 mus_Underwater = $2D
 mus_Silence = $2E
 mus_Ending = $2F
-musInvincibleStar = $30
+mus_InvincibleStar = $30
 
 ;Music Note IDs
 NRest = $00
