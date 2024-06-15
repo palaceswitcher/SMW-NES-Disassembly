@@ -1,6 +1,6 @@
 ;disassembled by BZK 6502 Disassembler
 ;----------------------------------------
-;Koopa Object Code
+;Koopa OBJECT CODE
 ;----------------------------------------
 obj_h10:
 	LDX $A4 ;Get index of current object
@@ -145,18 +145,18 @@ tbl8_8114:
 	dw ptr_811E
 	dw ptr_8201
 ptr_811E:
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC ;Player collision check
-	JSR jmp_54_A74D
-	JSR jmp_54_BCBE
-	LDA #$10
-	BMI bra8_8147
+	JSR CapeHitCheck ;Cape hit check
+	JSR PlayerHitCheck ;Check for collision
+	JSR KillOnSpinJump ;If the player is touching the Koopa and not hurt, kill it if spin jumped on
+	JSR ObjectStompKnockback ;The player must be jumping on it like normal if it's reached this point, so knock them back
+	LDA #16
+	BMI bra8_8147 ;Redundant branch (16 isn't negative)
 	CLC
 	ADC ObjectYPos,X
-	STA ObjectYPos,X
-	BCS bra8_813B
+	STA ObjectYPos,X ;Position the new object 16 pixels lower
+	BCS bra8_813B ;Branch if the new object spawns crossing a vertical screen boundary
 	CMP #$F0
-	BCC loc8_8159
+	BCC loc8_8159 ;Branch if the object spawns more than 16 pixels below the screen boundary
 bra8_813B:
 	CLC ;unlogged
 	ADC #$10 ;unlogged
@@ -179,7 +179,7 @@ loc8_8159:
 	STA ObjectXDistance,X
 	LDA ObjectXScreen,X
 	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	STA ObjXScreenDistance,X ;Calculate horizontal distance between the koopa and player
 	STA $28
 	BEQ bra8_8175
 	CMP #$FF
@@ -220,7 +220,8 @@ loc8_81B7:
 	RTS ;unlogged
 bra8_81BD:
 	LDY ObjectCount ;Set index for current object
-	INC ObjectCount ;Add it to the total amount of object
+	INC ObjectCount ;Add it to the total amount of objects
+	;Copy coordinates to new object
 	LDA ObjectXPos,X
 	STA ObjectXPos,Y
 	LDA ObjectXScreen,X
@@ -228,31 +229,34 @@ bra8_81BD:
 	LDA ObjectYPos,X
 	STA ObjectYPos,Y
 	LDA ObjectYScreen,X
-	STA ObjectYScreen,Y ;Make sure the coordinate values are correct?
+	STA ObjectYScreen,Y
+	
 	LDA ObjectState,X
-	AND #$40
-	ORA #$80
+	AND #%01000000 ;Ignore everything but the object direction
+	ORA #%10000000 ;Make shell-less koopa slide
 	STA ObjectState,Y
 	LDA #$80
 	STA ObjectVariables,Y ;Set speed to 128?
-	STA ObjectAction,Y ;Set action to sliding
+	STA ObjectAction,Y ;Spawn shell-less koopa sliding
 	LDA ObjectSlot,X
 	AND #$01
 	CLC
 	ADC #$12
-	STA ObjectSlot,Y ;Spawn shell-less koopa
+	STA ObjectSlot,Y ;Spawn the appropriate shell-less Koopa for the Koopa variant(?)
 	LDA #$04
-	STA ObjectSlot,X ;Spawn shell in lower object slot
+	STA ObjectSlot,X ;Spawn a shell in place of the Koopa
 	LDA #$08
 	STA ObjectState,X ;Make shell bounce off
 	RTS
+
 ptr_8201:
 	LDX $A4 ;Set index for previous object?
 	LDA #$04
-	STA ObjectSlot,X ;Spawn shell
+	STA ObjectSlot,X ;Spawn shell in place of Koopa.
 	LDA #$00
-	STA ObjectVariables,X ;Clear speed variables?
+	STA ObjectVariables,X ;Clear speed?
 	RTS
+
 ptr6_820E:
 	LDX $A4
 	LDA EnemyAnimFrame,X
@@ -275,6 +279,7 @@ bra8_822C:
 	STA $05F0
 	JSR jmp_52_A118
 	RTS
+
 KoopaMappings:
 	dw BeachKoopaWalk1
 	dw BeachKoopaWalk2
@@ -357,7 +362,7 @@ bra8_82B7:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra8_82F9
+	BEQ loc8_82F9
 	LDA ObjYScreenDistance,X
 	BPL bra8_82E8
 	LDA ObjectYDistance,X
@@ -376,7 +381,6 @@ bra8_82E8:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra8_82F9:
 loc8_82F9:
 	LDA FreezeFlag
 	BEQ bra8_82FF
@@ -427,7 +431,7 @@ bra8_8343:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra8_8385
+	BEQ loc8_8385
 	LDA ObjYScreenDistance,X
 	BPL bra8_8374
 	LDA ObjectYDistance,X
@@ -446,7 +450,6 @@ bra8_8374:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra8_8385:
 loc8_8385:
 	LDA FreezeFlag
 	BEQ bra8_838B
@@ -517,7 +520,7 @@ bra8_83F2:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra8_8434
+	BEQ loc8_8434
 	LDA ObjYScreenDistance,X
 	BPL bra8_8423
 	LDA ObjectYDistance,X
@@ -536,7 +539,6 @@ bra8_8423:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra8_8434:
 loc8_8434:
 	LDA FreezeFlag
 	BEQ bra8_843A
@@ -558,8 +560,8 @@ tbl8_844E:
 	dw ptr3_8458
 	dw ptr3_847B
 ptr3_8458:
-	JSR jmp_54_BEBC
-	JSR jmp_54_A74D
+	JSR PlayerHitCheck
+	JSR KillOnSpinJump
 	LDA InvincibilityTimer
 	CMP #$F7
 	BCS bra8_847A_RTS
@@ -714,9 +716,9 @@ bra8_8589:
 	LDA $25
 	JSR GetMovementData
 bra8_8596:
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
-	JSR jmp_54_A74D
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
+	JSR KillOnSpinJump
 	LDA ObjectSlot,X
 	LSR
 	CMP #$0C
@@ -804,7 +806,7 @@ bra8_8648:
 	INC ObjectSlot,X
 	LDA #$00
 	STA ObjectState,X
-	JSR jmp_54_BCBE
+	JSR ObjectStompKnockback
 	RTS
 ptr6_8657:
 	LDY #$00
@@ -901,7 +903,7 @@ bra8_86E8:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra8_872A
+	BEQ loc8_872A
 	LDA ObjYScreenDistance,X
 	BPL bra8_8719
 	LDA ObjectYDistance,X ;unlogged
@@ -920,7 +922,6 @@ bra8_8719:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra8_872A:
 loc8_872A:
 	LDA FreezeFlag
 	BEQ bra8_8730
@@ -990,7 +991,7 @@ bra8_8798:
 	LDA ObjYScreenDistance,X ;unlogged
 	ADC #$00 ;unlogged
 	STA ObjYScreenDistance,X ;unlogged
-	JMP loc8_87DA ;unlogged
+	JMP bra8_87DA ;unlogged
 bra8_87C9:
 	LDA ObjectYDistance,X
 	SEC
@@ -1000,7 +1001,6 @@ bra8_87C9:
 	SBC #$00
 	STA ObjYScreenDistance,X
 bra8_87DA:
-loc8_87DA:
 	LDA FreezeFlag
 	BEQ bra8_87E0
 	RTS
@@ -1059,7 +1059,7 @@ bra8_8836:
 	BCC bra8_884A_RTS
 	CMP #$35
 	BCS bra8_884A_RTS
-	JSR jmp_54_A6D4
+	JSR CapeHitCheck
 	JSR jmp_54_BC3E
 	JSR jmp_54_BF74
 bra8_884A_RTS:
@@ -1314,9 +1314,7 @@ sub8_89F6:
 	BEQ bra8_8A18
 	CMP #$FF
 	BEQ bra8_8A18
-	db $4C
-	db $B5
-	db $A6
+	JMP loc3_A6B5 ;Unlogged
 bra8_8A18:
 	LDA ObjectYPos,X
 	SEC
@@ -1327,7 +1325,7 @@ bra8_8A18:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra8_8A5A
+	BEQ loc8_8A5A
 	LDA ObjYScreenDistance,X
 	BPL bra8_8A49
 	LDA ObjectYDistance,X
@@ -1346,7 +1344,6 @@ bra8_8A49:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra8_8A5A:
 loc8_8A5A:
 	LDA FreezeFlag
 	BEQ bra8_8A60
@@ -1368,10 +1365,10 @@ tbl8_8A74:
 	dw ptr3_8A7E
 	dw ptr_AD88
 ptr3_8A7E:
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
-	JSR jmp_54_A74D
-	JSR jmp_54_BCBE
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
+	JSR KillOnSpinJump
+	JSR ObjectStompKnockback
 	LDX $A4
 	LDY #$01
 	LDA ObjectSlot,X
@@ -1669,9 +1666,9 @@ tbl8_8C31:
 	dw ptr3_8C3B
 	dw ptr3_8C48
 ptr3_8C3B:
-	JSR jmp_54_A6D4
+	JSR CapeHitCheck
 	JSR jmp_54_BC3E
-	JSR jmp_54_A74D
+	JSR KillOnSpinJump
 	JSR jmp_54_BF74
 	RTS
 ptr3_8C48:
@@ -1928,7 +1925,7 @@ bra8_8DF1:
 	STA ObjectVariables,X
 	RTS
 bra8_8E04:
-	JSR jmp_54_A6D4
+	JSR CapeHitCheck
 	JSR jmp_54_BC3E
 	JSR jmp_54_BF74
 	RTS
@@ -2126,10 +2123,10 @@ ptr3_8F71:
 	LDA #$1F
 	JSR jmp_54_B11D
 bra8_8F7C:
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
-	JSR jmp_54_A74D
-	JSR jmp_54_BCBE
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
+	JSR KillOnSpinJump
+	JSR ObjectStompKnockback
 	LDX $A4
 	LDA #$82
 	STA ObjectVariables,X
@@ -2341,9 +2338,9 @@ ptr3_90EB:
 	LDA $25
 	JSR jmp_54_B11D
 bra8_910B:
-	JSR jmp_54_A6D4
+	JSR CapeHitCheck
 	JSR jmp_54_BC3E
-	JSR jmp_54_A74D
+	JSR KillOnSpinJump
 	JSR jmp_54_BF74
 	RTS
 ptr6_9118:
@@ -2620,9 +2617,9 @@ ptr3_930F:
 	LDA #$13
 	JSR GetMovementData
 bra8_931A:
-	JSR jmp_54_BEBC
-	JSR jmp_54_A74D
-	JSR jmp_54_BCBE
+	JSR PlayerHitCheck
+	JSR KillOnSpinJump
+	JSR ObjectStompKnockback
 	LDA ObjectVariables,X
 	AND #$06
 	LSR
@@ -3141,7 +3138,7 @@ bra8_9684:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra8_96C6
+	BEQ loc8_96C6
 	LDA ObjYScreenDistance,X
 	BPL bra8_96B5
 	LDA ObjectYDistance,X
@@ -3160,7 +3157,6 @@ bra8_96B5:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra8_96C6:
 loc8_96C6:
 	LDA FreezeFlag
 	BEQ bra8_96CC
@@ -3199,7 +3195,7 @@ bra8_96FD:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra8_973F
+	BEQ loc8_973F
 	LDA ObjYScreenDistance,X
 	BPL bra8_972E
 	LDA ObjectYDistance,X ;unlogged
@@ -3218,7 +3214,6 @@ bra8_972E:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra8_973F:
 loc8_973F:
 	LDA FreezeFlag
 	BEQ bra8_9745
@@ -3226,14 +3221,13 @@ loc8_973F:
 bra8_9745:
 	LDA ObjectVariables,X
 	CMP #$F0
-	BNE bra8_975A
+	BNE loc8_975A
 	LDA #$40
 	STA ObjectState,X
 	LDA #$00
 	STA EnemyAnimFrame,X
 	STA ObjectVariables,X
 	RTS
-bra8_975A:
 loc8_975A:
 	JSR sub8_97B6
 	LDX $A4
@@ -3312,7 +3306,7 @@ bra8_97D8:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra8_981A
+	BEQ loc8_981A
 	LDA ObjYScreenDistance,X
 	BPL bra8_9809
 	LDA ObjectYDistance,X
@@ -3331,7 +3325,6 @@ bra8_9809:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra8_981A:
 loc8_981A:
 	LDA FreezeFlag
 	BEQ bra8_9820
@@ -3353,8 +3346,8 @@ tbl8_9834:
 	dw ptr3_983E
 	dw ptr_AD88
 ptr3_983E:
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
 	JSR jmp_54_BCC2
 	LDA #$04
 	STA PlayerAction

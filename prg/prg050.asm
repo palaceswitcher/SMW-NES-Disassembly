@@ -165,9 +165,9 @@ bra6_8140:
 	STA $33
 	JSR sub3_B485
 bra6_8151:
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
-	JSR jmp_54_A74D
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
+	JSR KillOnSpinJump
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -178,7 +178,7 @@ bra6_8151:
 	STA PlayerXSpeed
 	LDA #$01
 	JSR RewardPoints
-	LDA #sfxEnemyHit2
+	LDA #sfx_EnemyHit2
 	STA SFXRegister
 	LDX $A4
 	LDA #$81
@@ -298,7 +298,7 @@ tbl6_8246:
 	dw ptr_AD88
 ptr6_8250:
 	JSR sub6_825A
-	JSR jmp_54_BEBC
+	JSR PlayerHitCheck
 	JSR jmp_54_BF74
 	RTS
 sub6_825A:
@@ -423,7 +423,7 @@ loc6_8324:
 bra6_833F:
 	LDA #$01
 	STA ScreenShake
-	LDA #sfxThud
+	LDA #sfx_Thud
 	STA SFXRegister
 bra6_8348:
 	INC ObjectVariables,X
@@ -602,7 +602,7 @@ bra6_849D:
 	BNE bra6_84A7
 	JSR jmp_54_BBC3
 bra6_84A7:
-	JSR jmp_54_BEBC
+	JSR PlayerHitCheck
 	JSR jmp_54_BF74
 	RTS
 obj_h90:
@@ -674,7 +674,7 @@ bra6_8533:
 	BNE bra6_853D
 	JSR jmp_54_BBC3
 bra6_853D:
-	JSR jmp_54_BEBC
+	JSR PlayerHitCheck
 	JSR jmp_54_BF74
 	RTS
 ptr7_8544:
@@ -792,7 +792,7 @@ tbl6_8604:
 	dw ptr6_860C
 ptr6_860C:
 	JSR sub6_8616
-	JSR jmp_54_BEBC
+	JSR PlayerHitCheck
 	JSR jmp_54_BF74
 	RTS
 sub6_8616:
@@ -954,7 +954,7 @@ tbl6_874D:
 	dw ptr6_8755
 ptr6_8755:
 	JSR sub6_875F
-	JSR jmp_54_BEBC
+	JSR PlayerHitCheck
 	JSR jmp_54_BF74 ;unlogged
 	RTS ;unlogged
 sub6_875F:
@@ -1462,7 +1462,7 @@ bra6_8A31:
 	LDA #$01
 	STA ScreenShake
 	STA FreezeFlag
-	LDA #sfxThud
+	LDA #sfx_Thud
 	STA SFXRegister
 	LDA ObjectYPos,X
 	AND #$F8
@@ -1590,7 +1590,7 @@ bra6_8B13:
 	INC ObjActionTimer,X
 	RTS
 bra6_8B17:
-	LDA #musVictory
+	LDA #mus_Victory
 	STA MusicRegister
 	LDA #$09
 	STA Event
@@ -1754,7 +1754,7 @@ ptr6_8C52:
 	LDA ObjectAction,X
 	CMP #$04
 	BCS bra6_8CA1_RTS
-	JSR jmp_54_BEBC
+	JSR PlayerHitCheck
 	LDA InvincibilityTimer
 	CMP #$F7
 	BCS bra6_8CA1_RTS
@@ -1777,7 +1777,7 @@ bra6_8C78:
 	ORA #$45
 	BNE bra6_8C9B
 bra6_8C86:
-	LDA #sfxFeather
+	LDA #sfx_Feather
 	STA SFXRegister
 	LDA #$06
 	STA ObjectAction,X
@@ -3731,7 +3731,7 @@ loc6_9747:
 	SBC #$0C
 	CMP ObjectYPos,X
 	BCC bra6_97A3_RTS
-	JSR jmp_54_BEBC
+	JSR PlayerHitCheck
 	LDA PlayerMovement
 	AND #$04
 	BNE bra6_9763
@@ -3751,7 +3751,7 @@ bra6_9767:
 	STA PlayerMovement ;Make player move upwards
 	LDA #$04
 	STA PlayerAction ;Make player jump off
-	LDA #sfxFeather
+	LDA #sfx_Feather
 	STA SFXRegister ;Play feather/hit sound
 	LDY #$04 ;Load "hit" action into Y register
 	LDA ObjectSlot,X

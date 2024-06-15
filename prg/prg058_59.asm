@@ -1761,7 +1761,7 @@ DPCM_PitchTable:
 	db $F			; G4
 	db $F			; G#4
 	db $F			; A4
- ;include sfx data
+ ;include sfx_ data
 	.include sound/sfx_SpinJump.asm
 	.include sound/sfx_Pause.asm
 	.include sound/sfx_Jump.asm
@@ -1791,7 +1791,7 @@ DPCM_PitchTable:
 	.include sound/sfx_YoshiFireSpit.asm
 	.include sound/sfx_Checkpoint.asm
 	.include sound/sfx_Chainsaw.asm
- ;include music data
+ ;include mus_ic data
 	.include sound/mus_Title.asm
 	.include sound/mus_GameOver.asm
 	.include sound/mus_PlayerDown.asm

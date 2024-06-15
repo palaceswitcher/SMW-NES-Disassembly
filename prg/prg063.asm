@@ -186,7 +186,7 @@ bra3_E12F:
 	LDA #$3A
 	STA M90_PRG0
 	LDA #$3B
-	STA M90_PRG1 ;Load music banks 58 and 59 into $8000 and $A000 respectively
+	STA M90_PRG1 ;Load mus_ic banks 58 and 59 into $8000 and $A000 respectively
 	JSR jmp_58_85BE
 	JSR jmp_58_862A
 	LDA #$00
@@ -272,12 +272,12 @@ ClearMemory:
 	LDA #$00 ;Clear the accumulator
 	JSR MapperProtection ;Make sure the game is on Mapper 90
 	LDA #$3A
-	STA M90_PRG0 ;Swap the music bank into 1st PRG slot
+	STA M90_PRG0 ;Swap the mus_ic bank into 1st PRG slot
 	LDA #$3B
-	STA M90_PRG1 ;Swap the 2nd music bank into 2nd PRG slot
+	STA M90_PRG1 ;Swap the 2nd mus_ic bank into 2nd PRG slot
 	JSR jmp_58_85D6 ;Initizialize sound driver
-	LDA #musTitle
-	STA MusicRegister ;Play the title screen music
+	LDA #mus_Title
+	STA MusicRegister ;Play the title screen mus_ic
 	JSR sub_58_8E23+1 ;Jumps inbetween an opcode. Probably an error.
 	INC MuteFlag ;Enable audio
 	LDA #$00
@@ -549,7 +549,7 @@ loc3_E45F:
 	LDA PauseFlag
 	EOR #$01
 	STA PauseFlag ;Enable/disable pause
-	LDA #sfxPause
+	LDA #sfx_Pause
 	STA SFXRegister ;Play pause sound
 bra3_E47C:
 	LDA PauseFlag
@@ -600,7 +600,7 @@ tbl3_E4DC:
 	dw pnt2_E4F7
 	dw pnt2_E509
 pnt2_E4E4:
-	LDA #sfxWarp
+	LDA #sfx_Warp
 	STA SFXRegister ;Play warp sound
 	INC a:EventPart
 	RTS
@@ -658,8 +658,8 @@ pnt2_E54E:
 	STA PlayerXSpeed ;Clear player's X speed
 	STA PlayerYSpeed ;Clear player's Y speed
 	JSR sub3_E5D4 ;Jump
-	LDA #musDeath
-	STA MusicRegister ;Play death music
+	LDA #mus_Death
+	STA MusicRegister ;Play death mus_ic
 	LDX #$00 ;Set action tick count to 1
 	LDY #$28 ;Set tick length to 40 frames
 	JSR sub3_E5B6 ;Jump
@@ -792,7 +792,7 @@ pnt2_E649:
 	STA PlayerMovement ;Set movement to 'moving up'
 	LDA #$05
 	STA PlayerAction ;Do spin jump
-	LDA #sfxSpinJump
+	LDA #sfx_SpinJump
 	STA SFXRegister ;Play spin jump sound
 	RTS
 bra3_E681:
@@ -2046,7 +2046,7 @@ pnt2_ED93:
 	LDA #$00
 	STA PlayerAction ;Make player stand still
 	JSR sub3_E5D4 ;Jump
-	LDA #sfxWarp
+	LDA #sfx_Warp
 	STA SFXRegister ;Play warp sound
 	JSR sub3_F27F ;Jump
 	INC a:EventPart ;Go to next part of event
@@ -2156,7 +2156,7 @@ bra3_EE72:
 	LDA ActionFrameCount
 	CMP #$02
 	BNE bra3_EE84
-	LDA #sfxWarp
+	LDA #sfx_Warp
 	STA SFXRegister
 bra3_EE84:
 	LDX #$00
@@ -2450,7 +2450,7 @@ sub3_F0CB:
 	ADC LevelNumber ;Add it to level count
 	TAX ;Copy to X reg
 	LDA LevelMusic,X
-	STA MusicRegister ;Load/play music for level
+	STA MusicRegister ;Load/play mus_ic for level
 	RTS
 LevelMusic:
 	db musOverworld, musOverworld, musTitle, musCastle ;World 1
@@ -2528,7 +2528,7 @@ bra3_F15B:
 	JMP ($32)
 ;-----------------------------***********************
 ;Clear sprites from screen during gameplay
-;This must happen before sprites are sent to $0200
+;This mus_t happen before sprites are sent to $0200
 ;-----------------------------***********************
 sub3_F176:
 	LDA #$F8 ;Y position (offscreen)
