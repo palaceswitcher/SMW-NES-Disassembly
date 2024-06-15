@@ -770,7 +770,7 @@ loc7_84B3:
 	LDA ObjectYScreen,X
 	SBC #$00
 	STA YoshiYScreen
-	LDA #sfxYoshiMount
+	LDA #sfx_YoshiMount
 	STA SFXRegister
 bra7_84C2_RTS:
 	RTS
@@ -798,7 +798,7 @@ bra7_84E1:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra7_8523
+	BEQ loc7_8523
 	LDA ObjYScreenDistance,X
 	BPL bra7_8512
 	LDA ObjectYDistance,X
@@ -817,7 +817,6 @@ bra7_8512:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra7_8523:
 loc7_8523:
 	LDA FreezeFlag
 	BEQ bra7_8529
@@ -850,7 +849,7 @@ bra7_854E:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra7_8590
+	BEQ loc7_8590
 	LDA ObjYScreenDistance,X
 	BPL bra7_857F
 	LDA ObjectYDistance,X
@@ -869,7 +868,6 @@ bra7_857F:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra7_8590:
 loc7_8590:
 	LDA FreezeFlag
 	BEQ bra7_8596 ;Branch if the game isn't freezed
@@ -946,7 +944,7 @@ loc7_8624:
 	BEQ bra7_862A
 	RTS
 bra7_862A:
-	JSR jmp_54_A6D4
+	JSR CapeHitCheck
 	JSR jmp_54_A773
 	JSR SetObjectCarryState
 	LDA PlayerYSpeed
@@ -983,16 +981,15 @@ bra7_866B:
 	AND #$01
 	BNE bra7_867E
 	LDA ObjXScreenDistance,X
-	BMI bra7_8688_RTS
+	BMI loc7_8688_RTS
 	LDA #$01
 	STA $06EF
 	JMP loc7_8688_RTS
 bra7_867E:
 	LDA ObjXScreenDistance,X
-	BPL bra7_8688_RTS
+	BPL loc7_8688_RTS
 	LDA #$01
 	STA $06EF
-bra7_8688_RTS:
 loc7_8688_RTS:
 	RTS
 ptr5_8689:
@@ -1186,7 +1183,7 @@ loc7_87F5:
 	RTS
 
 bra7_87FB:
-	JSR jmp_54_A6D4
+	JSR CapeHitCheck
 	JSR jmp_54_A773
 	JSR SetObjectCarryState
 	LDA PlayerYSpeed
@@ -1409,7 +1406,7 @@ bra7_89B1:
 	STA PlayerAction
 	LDX $A4
 	INC ObjectState,X
-	LDA #sfxSwim
+	LDA #sfx_Swim
 	STA SFXRegister ;Play bounce sound
 	RTS
 ptr5_89C1:
@@ -1565,7 +1562,7 @@ tbl7_8AE8:
 	dw ptr5_8B91
 ptr5_8AFA:
 	JSR jmp_54_AC20
-	JSR jmp_54_A6D4
+	JSR CapeHitCheck
 	JSR jmp_54_A773
 	JSR SetObjectCarryState
 	LDA Player1YoshiStatus
@@ -1800,9 +1797,9 @@ tbl7_8CC0:
 	dw ptr5_8CCA
 	dw ptr_AD88
 ptr5_8CCA:
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
-	JSR jmp_54_A74D
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
+	JSR KillOnSpinJump
 	LDA #$30
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -1960,7 +1957,7 @@ tbl7_8E02:
 ptr5_8E0C:
 	JSR jmp_54_A773
 	INC Player1Lives
-	LDA #sfx1up
+	LDA #sfx_1up
 	STA SFXRegister ;Play 1UP sound
 	LDA #$00
 	STA ObjectSlot,X ;Despawn 1UP
@@ -2483,9 +2480,7 @@ bra7_9224:
 	BEQ bra7_9240
 	CMP #$FF
 	BEQ bra7_9240
-	db $4C
-	db $B5
-	db $A6
+	JMP loc3_A6B5
 bra7_9240:
 	LDA ObjectYPos,X
 	SEC
@@ -3511,10 +3506,10 @@ ptr5_9990:
 	LDA #$29
 	JSR GetMovementData
 bra7_999B:
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
-	JSR jmp_54_A74D
-	JSR jmp_54_BCBE
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
+	JSR KillOnSpinJump
+	JSR ObjectStompKnockback
 	INC ObjectSlot,X
 	INC ObjectSlot,X
 	LDA #$00
@@ -4189,8 +4184,8 @@ tbl7_9EB0:
 ptr5_9EB8:
 	LDA ObjXScreenDistance,X
 	BPL bra7_9EE4_RTS
-	LDA #musVictory
-	STA MusicRegister ;Play level complete music
+	LDA #mus_Victory
+	STA MusicRegister ;Play level complete mus_ic
 	LDA #$06
 	STA Event ;Trigger goal tape event
 	LDA WorldNumber

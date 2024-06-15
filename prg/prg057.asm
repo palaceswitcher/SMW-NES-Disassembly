@@ -2705,7 +2705,7 @@ sub4_ADB3:
 	LDA PlayerMovement
 	ORA #$04
 	STA PlayerMovement ;Set vertical movement upwards
-	LDA #sfxPowerDown
+	LDA #sfx_PowerDown
 	STA SFXRegister ;Play damage sound
 	LDA #$03
 	STA PlayerAction ;Knock the player off Yoshi
@@ -2781,9 +2781,9 @@ ItemBoxLogicDone:
 	RTS
 ItemBoxSFX:
 	db $00 ;Empty
-	db sfxPowerup ;Mushroom
-	db sfxPowerup ;Flower
-	db sfxFeather ;Feather
+	db sfx_Powerup ;Mushroom
+	db sfx_Powerup ;Flower
+	db sfx_Feather ;Feather
 ofs_AE4F:
 	LDA PlayerPowerup
 	CMP #$03
@@ -2799,28 +2799,28 @@ bra4_AE59:
 	STA $33 ;Load high byte of pointer
 	JMP ($32) ;Jump to loaded pointer location
 tbl4_AE6A:
-	dw PAct_Idle ;Idle
-	dw PAct_Walk ;Walking
-	dw PAct_Run ;Running
-	dw PAct_Walk ;Unused
-	dw PAct_Jump ;Jumping
-	dw PAct_Spin ;Spinning/Spin Jump
-	dw PAct_Idle ;Unused, likely meant for turning around
-	dw PAct_Duck ;Ducking
-	dw PAct_Idle ;Looking up
-	dw PAct_Jump ;Leaping (Run Jump)
-	dw PAct_Jump ;Falling
-	dw PAct_Swim ;Sinking
-	dw PAct_Swim ;Swimming up
-	dw PAct_Run ;Climbing/Yoshi Tongue (Idle)
-	dw PAct_Jump ;Climbing/Yoshi Tongue (Moving)
-	dw PAct_Jump ;Flying
-	dw PAct_Jump ;Victory Pose
+	dw PActIdle ;Idle
+	dw PActWalk ;Walking
+	dw PActRun ;Running
+	dw PActWalk ;Unused
+	dw PActJump ;Jumping
+	dw PActSpin ;Spinning/Spin Jump
+	dw PActIdle ;Unused, likely meant for turning around
+	dw PActDuck ;Ducking
+	dw PActIdle ;Looking up
+	dw PActJump ;Leaping (Run Jump)
+	dw PActJump ;Falling
+	dw PActSwim ;Sinking
+	dw PActSwim ;Swimming up
+	dw PActRun ;Climbing/Yoshi Tongue (Idle)
+	dw PActJump ;Climbing/Yoshi Tongue (Moving)
+	dw PActJump ;Flying
+	dw PActJump ;Victory Pose
 	dw pnt_AF86
-	dw PAct_Swim
+	dw PActSwim
 	dw pnt_AF92
 	
-PAct_Idle:
+PActIdle:
 	LDA PlayerYSpeed
 	BNE PlayerIdleFallChk ;Branch if player is moving vertically
 	LDA PlayerMovement
@@ -2829,21 +2829,21 @@ PAct_Idle:
 	LDA zInputCurrentState
 	BNE PAct_IdleChecks ;Branch if any button is held
 	STA PlayerAction ;Make the player stand still if none are held
-PAct_IdleChecks:
+PActIdleChecks:
 	JSR LookUpDuckRoutine ;Check for ducking and looking up
 	JSR PlayerWalkRoutine ;Check for walking
 	JSR SwimHoldRoutine ;Check for swimming
 	JSR ShootFireball ;Check for shooting fireballs
-PAct_IdleDone:
+PActIdleDone:
 	RTS
 PlayerIdleFallChk:
 	LDA PlayerMovement
 	AND #$04
-	BNE PAct_IdleDone ;Branch if the player is already moving up
+	BNE PActIdleDone ;Branch if the player is already moving up
 	LDA #$0A
 	STA PlayerAction ;Trigger the "falling" action
 	RTS
-PAct_Duck:
+PActDuck:
 	LDA PlayerYSpeed
 	BNE PlayerDuckFallChk ;Branch if the player is moving vertically
 	LDA PlayerMovement ;Continue if they aren't
@@ -2858,16 +2858,16 @@ bra4_AED0:
 	JSR LookUpDuckRoutine
 	JSR SwimHoldRoutine
 	JSR ShootFireball
-PAct_DuckDone:
+PActDuckDone:
 	RTS
 PlayerDuckFallChk:
 	LDA PlayerMovement
 	AND #$04
-	BNE PAct_DuckDone ;If player not moving up,
+	BNE PActDuckDone ;If player not moving up,
 	LDA #$0A
 	STA PlayerAction ;Set action to falling
 	RTS
-PAct_Walk:
+PActWalk:
 	JSR PlayerWalkFallRout ;Make sure player is on solid ground
 	LDA PlayerXSpeed
 	BNE bra4_AEEE
@@ -2884,7 +2884,7 @@ bra4_AEEE:
 	STA PlayerAction ;Set action to ducking
 bra4_AF05_RTS:
 	RTS
-PAct_Run:
+PActRun:
 	JSR PlayerWalkFallRout ;Make sure the player is on solid ground
 	LDA PlayerXSpeed
 	BNE bra4_AF0F
@@ -2910,7 +2910,7 @@ SetPlayerFallingAct:
 	PLA
 FallingChkDone:
 	RTS
-PAct_Jump:
+PActJump:
 	LDA PlayerYSpeed
 	BNE bra4_AF41 ;Branch if the player is already moving vertically
 	LDA PlayerMovement
@@ -2942,7 +2942,7 @@ JumpYSpdRoutine:
 	STA PlayerYSpeed ;Increase the player's vertical speed by 1
 JumpYSpdRtDone:
 	RTS
-PAct_Spin:
+PActSpin:
 	LDA PlayerYSpeed
 	BNE bra4_AF78 ;Branch if the player is already moving vertically
 	LDA PlayerMovement
@@ -3117,7 +3117,7 @@ bra4_B08C:
 ;----------------------------------------
 ;END OF FIREBALL SPAWNING
 ;----------------------------------------
-PAct_Swim: ;0C
+PActSwim: ;0C
 	LDA PlayerMovement
 	AND #$04
 	BNE bra4_B0B2 ;Branch if the player is moving up
@@ -3255,7 +3255,7 @@ loc4_B193:
 	LDA zInputBottleNeck
 	AND #buttonB
 	BEQ bra4_B1C0_RTS
-	LDA #sfxYoshiTongue
+	LDA #sfx_YoshiTongue
 	STA SFXRegister
 	LDY #$09
 	LDA zInputCurrentState
@@ -3492,7 +3492,7 @@ bra4_B33F:
 	STA ObjectAction,Y
 	INY ;increment Y
 	STY ObjectCount ;Update object count
-	LDA #sfxYoshiFireSpit
+	LDA #sfx_YoshiFireSpit
 	STA SFXRegister ;Play Yoshi fire sound
 	RTS ;end
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -3622,7 +3622,7 @@ DoSwim:
 	LDA PlayerMovement
 	ORA #$04
 	STA PlayerMovement ;Set movement to moving up
-	LDA #sfxSwim
+	LDA #sfx_Swim
 	STA SFXRegister ;Play swim sound
 	LDA #$0C
 	STA PlayerAction ;Set action to swimming up
@@ -3657,7 +3657,7 @@ ExecuteJump:
 	STA PlayerMovement ;Set vertical movement upwards
 	LDA #$04
 	STA PlayerAction ;Trigger jumping animation/action
-	LDA #sfxJump
+	LDA #sfx_Jump
 	STA SFXRegister ;Play the jump sound
 	RTS
 SpinJumpRoutine:
@@ -3678,7 +3678,7 @@ ExecuteSpinJump:
 	STA PlayerMovement ;Set vertical movement upwards
 	LDA #$05
 	STA PlayerAction ;Trigger spinning action
-	LDA #sfxSpinJump
+	LDA #sfx_SpinJump
 	STA SFXRegister ;Play the spin sound
 SpinJumpDone:
 	RTS
@@ -3826,21 +3826,21 @@ ofs_B57C:
 	STA $33 ;Load upper byte of pointer
 	JMP ($32) ;Jump to loaded pointer
 tbl4_B590:
-	dw PAct_Idle
-	dw PAct_Walk
-	dw PAct_Run
-	dw PAct_Walk
-	dw PAct_Jump
-	dw PAct_Jump
-	dw PAct_Idle
-	dw PAct_Idle
-	dw PAct_Idle
+	dw PActIdle
+	dw PActWalk
+	dw PActRun
+	dw PActWalk
+	dw PActJump
+	dw PActJump
+	dw PActIdle
+	dw PActIdle
+	dw PActIdle
 	dw PSpeedTimer
-	dw PAct_Jump
-	dw PAct_Swim
-	dw PAct_Swim
-	dw PAct_Run
-	dw PAct_Jump
+	dw PActJump
+	dw PActSwim
+	dw PActSwim
+	dw PActRun
+	dw PActJump
 	dw pnt_B5DC
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ;P SPEED ROUTINE
@@ -3900,7 +3900,7 @@ SpinCapeRoutine:
 	BEQ SpinCapeDone ;Make sure B is pressed
 	LDA #$08
 	STA PlayerState ;Set player state
-	LDA #sfxSpinJump
+	LDA #sfx_SpinJump
 	STA SFXRegister ;Play spin sound
 SpinCapeDone:
 	RTS
@@ -3995,7 +3995,7 @@ PlayerClimbJump: ;Jump from climbing
 	STA PlayerMovement ;Set vertical movement to up
 	LDA #$04
 	STA PlayerAction ;Make the player jump
-	LDA #sfxJump
+	LDA #sfx_Jump
 	STA SFXRegister ;Play the jump sound
 	LDA #$00
 	STA PlayerState ;Make the player stop climbing
@@ -4225,7 +4225,7 @@ bra4_B835:
 	LDA #$06
 	STA Player1YoshiStatus ;Make Yoshi swallow
 	JSR sub4_A14A
-	LDA #sfxYoshiSwallow
+	LDA #sfx_YoshiSwallow
 	STA SFXRegister ;Play swallow sound
 	RTS
 TongueSpeedBoost:
@@ -4258,11 +4258,11 @@ TongueSwimChk:
 	BEQ TongueSwimChkDone ;Make sure the A button is pressed
 	LDA UnderwaterFlag
 	BEQ bra4_B886 ;Branch if not underwater
-	LDX #sfxSwim ;Load swim sound in x reg
+	LDX #sfx_Swim ;Load swim sound in x reg
 	LDY #$20
 	BNE bra4_B897 ;Branch
 bra4_B886:	
-	LDX #sfxJump ;Load jump sound into X reg
+	LDX #sfx_Jump ;Load jump sound into X reg
 	LDA PlayerYSpeed
 	BNE TongueSwimChkDone ;Make sure the player has vertical speed
 	LDY #$60
@@ -4501,8 +4501,8 @@ CliffDeathCheck:
 	CMP #$E0 ;If player's sprite is below this (or above it, basically not going off screen in a pit)
 	BCC MovePlayerDown ;If above this point, continue falling as normal
 	;Otherwise, kill the player
-	LDA #musDeath	
-	STA MusicRegister ;Play death music
+	LDA #mus_Death	
+	STA MusicRegister ;Play death mus_ic
 	LDA #$00		
 	STA PlayerPowerup ;Remove any powerups
 	STA Player1YoshiStatus ;Remove yoshi
@@ -5159,7 +5159,7 @@ loc4_BED5: ;Player bumped head on ceiling
 	LDA PlayerState
 	CMP #$03 ;if player is climbing,
 	BEQ bra4_BEF1 ;branch
-	LDA #sfxThud
+	LDA #sfx_Thud
 	STA SFXRegister ;play "thud" sound
 bra4_BEF1: ;If player bumps head whilst climbing
 	LDA PlayerColYPos
@@ -5281,7 +5281,7 @@ bra4_BFAD:
 loc4_BFC0:
 	LDA #$D0
 	STA InvincibilityTimer
-	LDA #sfxPowerDown
+	LDA #sfx_PowerDown
 	STA SFXRegister
 	LDA ObjectState,X
 	AND #$E0

@@ -104,8 +104,8 @@ pnt5_A0A2:
 	CLC
 	ADC LevelNumber ;Then add it to the level number to get the level ID
 	STA BGPalette ;Use palette for corresponding level ID
-	LDA #musTitle
-	STA MusicRegister ;Play title screen music
+	LDA #mus_Title
+	STA MusicRegister ;Play title screen mus_ic
 	LDA #$00
 	STA FadeoutMode ;Set fadeout mode
 	STA $0312
@@ -1129,7 +1129,7 @@ bra_A735:
 	STA GS0SpriteYPos+1
 	LDA #$00
 	STA GameType
-	LDA #sfxBeep
+	LDA #sfx_Beep
 	STA SFXRegister
 	RTS
 bra_A74B:
@@ -1538,7 +1538,7 @@ bra_AA23:
 	LDA #$0D ;Use normal "start" animation
 bra_AA25:
 	STA PlayerMapAnim
-	LDA #sfxBeep
+	LDA #sfx_Beep
 	STA SFXRegister ;Play "beep" sound
 	LDA #$00
 	STA OverworldMapTimer ;Clear overworld timer
@@ -1681,7 +1681,7 @@ pnt5_AB1D:
 	LDA zInputBottleNeck
 	AND #$02
 	BEQ bra_AB30
-	LDA #sfxBeep
+	LDA #sfx_Beep
 	STA SFXRegister
 	LDA WorldSelectNum
 	BEQ bra_AB45
@@ -1690,7 +1690,7 @@ bra_AB30:
 	LDA zInputBottleNeck
 	AND #$01
 	BEQ bra_AB45
-	LDA #sfxBeep
+	LDA #sfx_Beep
 	STA SFXRegister
 	LDA WorldSelectNum
 	CMP #$06
@@ -1700,7 +1700,7 @@ bra_AB45:
 	LDA zInputCurrentState
 	AND #$90
 	BEQ bra_AB79
-	LDA #sfxBeep
+	LDA #sfx_Beep
 	STA SFXRegister
 	LDX WorldSelectNum
 	LDA tbl_AB95,X
@@ -1963,7 +1963,7 @@ loc_ACB3:
 	STA PPUMaskMirror ;Clear PPU registers
 	JSR ClearNametable ;Clear the screen
 	LDA #$2E
-	STA MusicRegister ;Stop playing music
+	STA MusicRegister ;Stop playing mus_ic
 	LDA CurrentPlayer
 	BNE P2TransitionSet ;Branch if player #2 is playing
 	LDA #$01
@@ -2118,7 +2118,7 @@ bra_ADBF:
 	RTS
 pnt5_ADC5:
 	JSR sub_AE96
-	LDA #musEnding
+	LDA #mus_Ending
 	STA MusicRegister
 	LDA #$2A
 	STA M90_PRG0
@@ -2306,7 +2306,7 @@ pnt5_AF4C:
 	JSR sub_AEA3
 	LDA #$00
 	JSR TransitionScreenSub
-	LDA #musGameOver
+	LDA #mus_GameOver
 	STA MusicRegister
 	JSR ClearGS0Sprites
 	JSR ClearSprites

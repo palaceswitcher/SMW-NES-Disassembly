@@ -1260,100 +1260,109 @@ loc3_A6B5:
 	STA $03CE,X
 	RTS
 
-;-----OBJECT FUNCTION-----
-;Address: $A6D4
-;-------------------------
-jmp_54_A6D4:
+;----------------------------------------
+;SUBROUTINE ($A6D4)
+;Checks if an object is being hit by a cape and kills it accordingly.
+;----------------------------------------
+CapeHitCheck:
 	LDA Player1YoshiStatus
 	BNE --- ;Stop if the player is riding Yoshi
 		LDA PlayerPowerup
 		CMP #$03
-		BCS ++ ;Only continue if the player has a cape
+		BCS + ;Only continue if the player has a cape
 ---	RTS
 
-++	LDA PlayerPrevAction
++	LDA PlayerPrevAction
 	CMP #$05
 	BNE --- ;Branch if the player wasn't spinning
-		LDX $A4
-		LDY ObjectSlot,X
-		LDA ObjectXHitBoxSizes,Y
-		STA $36
-		LDA ObjectYHitBoxSizes,Y
-		STA $38
-		LDA ObjXScreenDistance,X
-		BPL bra3_A708 ;Branch if the player is to the left of the object
-		;If player is to the right of the object:
-			LDA #16
-			CLC
-			ADC $36
-			CLC
-			ADC ObjectXDistance,X ;X Hitbox + 16 + X Distance > 255
-			BCS bra3_A70F ;Branch if the player is within 16 pixels of the object's hitbox (cape distance)
-			BCC bra3_A72F ;Otherwise, set carry and stop
+	LDX $A4
+	LDY ObjectSlot,X
+	LDA ObjectXHitBoxSizes,Y
+	STA $36
+	LDA ObjectYHitBoxSizes,Y
+	STA $38
+	LDA ObjXScreenDistance,X
+	BPL ++ ;Branch if the player is to the left of the object
+	;If player is to the right of the object:
+		LDA #16
+		CLC
+		ADC $36
+		CLC
+		ADC ObjectXDistance,X ;X Hitbox + 16 + X Distance > 255
+		BCS + ;Branch if the player is within 16 pixels of the object's hitbox (cape distance)
+		BCC SkipCapeKill ;Otherwise, set carry and stop
 
-bra3_A708:
-	LDA ObjectXDistance,X
-	CMP #$10
-	BCS bra3_A72F
-bra3_A70F:
-	LDA ObjYScreenDistance,X
-	BEQ bra3_A725 ;Skip these checks if the player's origin is already above or at the object's origin
+	;If player is to the left of the object:
+	++	LDA ObjectXDistance,X
+		CMP #16
+		BCS SkipCapeKill ;Don't kill the object if the player is more than 15 pixels away from it
+
+;Otherwise, if the player is within the horizontal hitbox, move to the vertical hitbox check
++	LDA ObjYScreenDistance,X
+	BEQ ++ ;Skip these checks if the player's origin is already above or at the object's origin
 	CMP #$FF
-	;If neither conditions are met, the player's origin must be below the object's
-	BNE bra3_A72F ;Don't kill the object if it's off screen?
+	BNE SkipCapeKill ;Don't kill the object if it's off-screen?
+	;If neither conditions are met, the player's origin mus_t be below the object's
 		LDA #24
 		CLC
 		ADC $38
 		CLC
 		ADC ObjectYDistance,X ;Y hitbox + 24 + Y Distance > 255
-		BCS + ;Kill the object if the player is within 24 vertical pixels of the object's hitbox
-		BCC bra3_A72F ;Otherwise, don't kill it and stop
-bra3_A725:
-	LDA ObjectYDistance,X
-	CMP #$00
-	BCS bra3_A72F ;Don't kill the object if the player is above its hitbox
-;Otherwise, continue and kill the object 
-+	CLC
-	BCC + ;Clear the carry and continue
-bra3_A72F:
+		BCS + ;Kill the object if the player is within 24 vertical pixels of the object's hitbox (origin at its foot?)
+		BCC SkipCapeKill ;Otherwise, don't kill it and stop
+
+	;If the player's origin is above or at the object's:
+	++	LDA ObjectYDistance,X
+		CMP #$00
+		BCS SkipCapeKill ;Don't kill the object if the player is above the object
+	;Otherwise, continue and kill the object 
+	+	CLC
+		BCC + ;Clear the carry and continue
+
+SkipCapeKill:
 	SEC
+
 +	BCS +++ ;Stop if the carry flag was set
 		LDA ObjectState,X
-		AND #%11100000 ;Clear lower 5 bits of object's status
+		AND #%11100000
 		ORA #%00000100 ;Enable collision check
 		STA ObjectState,X
 		LDA #$00
 		STA ObjectVariables,X ;Reset object animation(?)
 		LDA #$01
 		JSR RewardPoints ;Give 200 points
-		LDA #sfxEnemyHit2
+		LDA #sfx_EnemyHit2
 		STA SFXRegister ;Play hit sound
 		PLA
-		PLA ;Discard previous return address go back two calls, since this object is no longer active.
+		PLA ;Go back two calls and stop running code for this object
 +++	RTS
 
-jmp_54_A74D:
+;----------------------------------------
+;SUBROUTINE ($A74D)
+;Destroys an object if spin jumped on. Stops running the object completely if they player doesn't
+;----------------------------------------
+KillOnSpinJump:
 	LDA Player1YoshiStatus
-	BNE bra3_A758
+	BNE +
 	LDA PlayerPrevAction
 	CMP #$05
-	BNE bra3_A772_RTS
-bra3_A758:
-	LDA #$20
-	STA PlayerYSpeed
+	BNE +++
+
++	LDA #$20
+	STA PlayerYSpeed ;Set player's vertical speed
 	LDA PlayerMovement
 	ORA #$04
-	STA PlayerMovement
+	STA PlayerMovement ;Make player face up
 	LDA #$04
-	STA PlayerAction
+	STA PlayerAction ;Make player jump
 	LDA #$0F
-	STA ObjectSlot,X
+	STA ObjectSlot,X ;Make object pop
 	LDA #$00
-	STA ObjectState,X
+	STA ObjectState,X ;Remove object
 	PLA
 	PLA
-bra3_A772_RTS:
-	RTS
++++	RTS ;Go back two calls and stop running code for this object
+
 jmp_54_A773:
 	LDA ObjXScreenDistance,X
 	BPL bra3_A785 ;Branch if the player is a screen ahead of the object
@@ -1399,6 +1408,7 @@ bra3_A7AD:
 	RTS
 bra3_A7BA_RTS:
 	RTS
+
 ptr_A7BB:
 	LDA $25
 	CMP #$07
@@ -1427,7 +1437,7 @@ bra3_A7E3:
 bra3_A7E8:
 	LDX PlayerAnimationFrame
 	CPX #$06
-	BCC bra3_A852 ;Make sure the player is on the 6th or less frame of their current animation?
+	BCC loc3_A852 ;Make sure the player is on the 6th or less frame of their current animation?
 	LDA tbl3_A85F,X
 	STA $32 ;Store pointer based off the player's animation frame
 	LDY $A4 ;Get index for current object
@@ -1472,7 +1482,7 @@ bra3_A83A:
 bra3_A83D:
 	SEC
 bra3_A83E:
-	BCS bra3_A852
+	BCS loc3_A852
 	LDX PlayerAnimationFrame
 	LDA tbl3_A86D,X
 	STA PlayerAnimationFrame
@@ -1481,7 +1491,6 @@ bra3_A83E:
 	LDA $25
 	STA YoshiTongueState
 	RTS
-bra3_A852:
 loc3_A852:
 	LDX $A4
 	LDA ObjectState,X
@@ -2146,7 +2155,7 @@ ptr_AB29:
 	LDA $25
 	CMP #$06
 	BNE bra3_AB33
-	LDA #sfxYoshiSwallow
+	LDA #sfx_YoshiSwallow
 	STA SFXRegister
 bra3_AB33:
 	JSR sub3_AE37
@@ -2627,7 +2636,7 @@ bra3_AE74:
 bra3_AE7B:
 	STA ItemBox
 bra3_AE7E:
-	LDA #sfxPowerup
+	LDA #sfx_Powerup
 	STA SFXRegister
 	LDA #$01
 	CPX #$0D
@@ -3946,7 +3955,7 @@ bra3_B6DC:
 	STA YoshiYPos
 	BCS bra3_B6F1
 	CMP #$F0
-	BCC bra3_B70F
+	BCC loc3_B70F
 bra3_B6F1:
 	CLC
 	ADC #$10
@@ -3957,12 +3966,11 @@ bra3_B6FD:
 	CLC
 	ADC YoshiYPos
 	STA YoshiYPos
-	BCS bra3_B70F
+	BCS loc3_B70F
 	SEC
 	SBC #$10
 	STA YoshiYPos
 	DEC YoshiYScreen
-bra3_B70F:
 loc3_B70F:
 	INY
 	LDA ($32),Y
@@ -4777,7 +4785,7 @@ bra3_BC9A:
 bra3_BCA6_RTS:
 	RTS
 sub_54_BCA7:
-	LDA #sfxEnemyHit2
+	LDA #sfx_EnemyHit2
 	STA SFXRegister
 	LDA #$30
 	STA PlayerYSpeed
@@ -4788,23 +4796,28 @@ sub_54_BCA7:
 	STA PlayerMovement
 	LDA #$01
 	JMP RewardPoints
-jmp_54_BCBE:
-	LDA #sfxEnemyHit2
-	STA SFXRegister
+
+;----------------------------------------
+;SUBROUTINES ($BCBE, $BCC2)
+;Bounces the player back and gives them points while playing a sound effect. Calling the routine below it doesn't play the sound effect.
+;----------------------------------------
+ObjectStompKnockback:
+	LDA #sfx_EnemyHit2
+	STA SFXRegister ;Play hit sound effect
 jmp_54_BCC2:
 	LDA #$08
-	STA PlayerYSpeed
+	STA PlayerYSpeed ;Set vertical rebound speed
 	LDA PlayerMovement
-	ORA #$04
+	ORA #$04 ;Make player move up
 	EOR #$01
-	STA PlayerMovement
+	STA PlayerMovement ;Reverse the player's direction
 	LDA #$08
-	STA PlayerXSpeed
-	LDA #$01
+	STA PlayerXSpeed ;Set horizontal rebound speed
+	LDA #$01 ;Give player 200 points
 
 ;----------------------------------------
 ;SUBROUTINE ($BCD4)
-;Rewards one of 4 score values from a table on the value of the accumulator.
+;Rewards one of 4 score values to the current player from a table based on the value of the accumulator.
 ;----------------------------------------
 RewardPoints:
 	ASL ;Get score data index
@@ -4963,9 +4976,9 @@ loc3_BDCE:
 	BNE bra3_BDE6
 bra3_BDE1:
 	LDA #$0B
-	STA ObjectSlot,X ;Spawn a mushroom in
+	STA ObjectSlot,X ;Spawn a mus_hroom in
 bra3_BDE6:
-	LDA #sfxBlockRelease
+	LDA #sfx_BlockRelease
 	STA SFXRegister ;Play the block release sound
 	LDY ObjectCount
 	INC ObjectCount ;Set the index for the new object
@@ -4976,9 +4989,9 @@ bra3_BDE6:
 	LDA ObjectYPos,X
 	STA ObjectYPos,Y
 	LDA ObjectYScreen,X
-	STA ObjectYScreen,Y ;Copy the coordinate data over to the spawned mushroom
+	STA ObjectYScreen,Y ;Copy the coordinate data over to the spawned mus_hroom
 	LDA ObjectSlot,X
-	STA ObjectSlot,Y ;Copy the slot value to the mushroom
+	STA ObjectSlot,Y ;Copy the slot value to the mus_hroom
 	LDA #$00
 	STA ObjectVariables,Y
 	STA ObjectAction,Y
@@ -5073,7 +5086,12 @@ bra3_BEAE:
 bra3_BEB7:
 	LDX $A4
 	JMP loc3_BDCE
-jmp_54_BEBC:
+
+;----------------------------------------
+;SUBROUTINE ($BEBC)
+;Checks if the player hit's the object's hitbox. If the player takes damage or isn't touching the object, it will stop the object's code.
+;----------------------------------------
+PlayerHitCheck:
 	LDX $A4 ;Get current object index
 	LDY ObjectSlot,X
 	LDA ObjectXHitBoxSizes,Y
@@ -5082,126 +5100,136 @@ jmp_54_BEBC:
 	STA $38
 	LDY #$10 ;Set default player hitbox to 16 pixels high
 	LDA PlayerPowerup
-	BEQ bra3_BED4 ;Branch if the player is small, keeping their hitbox at 16 pixels high
+	BEQ + ;Branch if the player is small, keeping their hitbox at 16 pixels high
 	LDY #$18 ;Otherwise, if they have a powerup, make their hitbox 24 pixels high
-bra3_BED4:
-	LDA PlayerAction
+
++	LDA PlayerAction
 	CMP #$07
-	BNE bra3_BEDC ;Don't change the player's hitbox size if they aren't ducking
+	BNE + ;Don't change the player's hitbox size if they aren't ducking
 	LDY #$08 ;If the player is ducking, make their hitbox 8 pixels high
-bra3_BEDC:
-	STY $32
+
++	STY $32 ;Store player's hitbox height
 	LDA ObjXScreenDistance,X
-	BPL bra3_BEF0
-	;Object X Distance + Hitbox X Offset + 5
-	LDA #$05
-	CLC
-	ADC $36
-	CLC
-	ADC ObjectXDistance,X
-	BCS bra3_BEF7 ;Branch if the distance 
-	BCC bra3_BF17
-bra3_BEF0:
-	LDA ObjectXDistance,X
-	CMP #$05
-	BCS bra3_BF17
-bra3_BEF7:
-	LDA ObjYScreenDistance,X
-	BEQ bra3_BF0D ;Branch if the player is on the same vertical screen as the object
+	BPL ++ ;Skip this check the player is to the left of this object
+	;If player is to the right of the object:
+		LDA #5
+		CLC
+		ADC $36
+		CLC
+		ADC ObjectXDistance,X ;5 + X Hitbox + X Distance > 255
+		BCS + ;Move to the next check if player is within 5 pixels of the object's hitbox
+		BCC SkipPlayerObjectColl ;Otherwise, stop
+
+	;If player is to the left of the object:
+	++	LDA ObjectXDistance,X
+		CMP #5
+		BCS SkipPlayerObjectColl ;Stop if the player is more than 5 pixels away from the object
+
+;Otherwise, if the player is within the horizontal hitbox, move to the vertical hitbox check
++	LDA ObjYScreenDistance,X
+	BEQ ++ ;Skip these checks if the player's origin is already above or at the object's origin
 	CMP #$FF
-	BNE bra3_BF17 ;Branch if the player is on a screen above the object
-	;Otherwise, continue if the player is a screen below the object
-	;Player Vertical Hitbox offset(?) + Hitbox Y offset + Object X offset
-	LDA $32
-	CLC
-	ADC $38
-	CLC
-	ADC ObjectYDistance,X
-	BCS bra3_BF14
-	BCC bra3_BF17
-bra3_BF0D:
-	LDA ObjectYDistance,X
-	CMP #$00
-	BCS bra3_BF17
-bra3_BF14:
-	CLC
-	BCC bra3_BF18
-bra3_BF17:
-	SEC
-bra3_BF18:
-	BCC bra3_BF25
+	BNE SkipPlayerObjectColl ;Stop if the object is off-screen
+	;If neither conditions are met, the player's origin must be below the object's:
+		LDA $32
+		CLC
+		ADC $38
+		CLC
+		ADC ObjectYDistance,X ;Player Hitbox Height + Object Hitbox Height > 255
+		BCS + ;Handle collision with the player if they're within the object's vertical hitbox
+		BCC SkipPlayerObjectColl ;Otherwise, stop
+
+	;If the player's origin is above or at the object's:
+	++	LDA ObjectYDistance,X
+		CMP #$00
+		BCS SkipPlayerObjectColl ;Stop if the player is above the object
+	;Otherwise, continue and handle collision with player
+	+	CLC
+		BCC + ;Handle collision
+
+SkipPlayerObjectColl:
+	SEC ;If set, the branch below will fail and collision with the player won't be handled
+
++	BCC ObjHandlePlayerColl ;If not set, handle collision accordingly
 bra3_BF1A:
 	LDA ObjectState,X
-	AND #$E0
-	STA ObjectState,X
+	AND #%11100000
+	STA ObjectState,X ;Stop checking for collision
 	PLA
 	PLA
-	RTS
-bra3_BF25:
+	RTS ;Go back two calls and stop running code for this object.
+
+;Check if the player can take damage
+ObjHandlePlayerColl:
 	LDA ObjYScreenDistance,X
-	BPL bra3_BF51
+	BPL ++ ;Skip invincibility check if the player is above the object
 	LDA ObjectYDistance,X
-	CMP #$F2
-	BCC bra3_BF51
+	CMP #-14
+	BCC ++ ;Skip invincibility check if the player is within 14 pixels of the object
 	LDA PlayerAction
 	CMP #$0D
-	BEQ bra3_BF41
+	BEQ +
 	CMP #$0E
-	BEQ bra3_BF41
+	BEQ +
 	LDA PlayerMovement
 	AND #$04
-	BNE bra3_BF51
-bra3_BF41:
-	LDA InvincibilityTimer
-	BNE bra3_BF4B
+	BNE ++ ;Branch if the player is moving up
+
++	LDA InvincibilityTimer
+	BNE + ;Reward points immediately the player hits the object with invincibility
 	LDA #$F6
-	STA InvincibilityTimer
-bra3_BF4B:
-	LDA #$01
-	JSR RewardPoints
+	STA InvincibilityTimer ;Otherwise, give them 12 frames of invulnerability without flickering
+
++	LDA #$01
+	JSR RewardPoints ;Give the player 200 points
 	RTS
-bra3_BF51:
-	LDA InvincibilityTimer
-	BEQ bra3_BF6E
+
+++	LDA InvincibilityTimer
+	BEQ + ;Deal damage if the player isn't invincible
 	CMP #$D0
-	BCS bra3_BF1A
+	BCS bra3_BF1A ;Stop collision check if the player has invulnerability frames
+	;Otherwise, if player has star power:
 	LDX $A4
 	LDA ObjectState,X
-	AND #$E0
-	ORA #$04
+	AND #%11100000
+	ORA #%00000100 ;Kill object
 	STA ObjectState,X
 	LDA #$00
-	STA ObjectVariables,X
+	STA ObjectVariables,X ;Clear object variables
 	PLA
 	PLA
-	RTS
-bra3_BF6E:
-	JSR sub3_BF7A
+	RTS ;Go back two calls and stop running code for this object
+
++	JSR DealDamage ;Deal damage
 	PLA
 	PLA
-	RTS
+	RTS ;Go back two calls and stop running code for this object
+
 jmp_54_BF74:
 	LDA InvincibilityTimer
-	BEQ sub3_BF7A
+	BEQ DealDamage
 	RTS
-sub3_BF7A:
+
+;----------------------------------------
+;SUBROUTINE ($BF7A)
+;Deals damage to the player. This is only used within this bank
+;----------------------------------------
+DealDamage:
 	LDX $A4
 	LDA ObjectSlot,X
 	CMP #$48
-	BCC bra3_BF87
+	BCC +
 	CMP #$4C
 	BCC bra3_BF9B
-bra3_BF87:
-	LDA ObjXScreenDistance,X
-	BMI bra3_BF93
+
++	LDA ObjXScreenDistance,X
+	BMI ++ ;Turn the object in the direction of the player
 	LDA ObjectState,X
-	ORA #$40
-	BNE bra3_BF98
-bra3_BF93:
-	LDA ObjectState,X
-	AND #$BF
-bra3_BF98:
-	STA ObjectState,X
+	ORA #%01000000 ;Turn object left
+	BNE +
+++	LDA ObjectState,X
+	AND #%10111111
++	STA ObjectState,X ;Turn object right
 bra3_BF9B:
 	LDA #$00
 	STA PlayerHoldFlag
@@ -5224,12 +5252,13 @@ bra3_BFAD:
 loc3_BFC0:
 	LDA #$D0
 	STA InvincibilityTimer ;Give player invulnerability frames
-	LDA #sfxPowerDown
+	LDA #sfx_PowerDown
 	STA SFXRegister ;Play hurt sound
 	LDA ObjectState,X
 	AND #%11100000
-	STA ObjectState,X ;Mask out upper 3 bits of object's state
+	STA ObjectState,X ;End collision check for this frame?
 	RTS
+
 bra3_BFD2:
 	LDA #evt1_Death
 	STA Event ;Trigger death event

@@ -566,7 +566,7 @@ M90_CHR_CTRL1 = $D003
 .include prg/prg062.asm
 .pad $E000
 ;7c010 - 7e00f
-;unknown/unlogged data
+;Bank 47 clone
 
 .base $E000
 .include prg/prg063.asm

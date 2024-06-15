@@ -1791,7 +1791,7 @@ DPCM_PitchTable:
 	.include sound/sfx_YoshiFireSpit.asm
 	.include sound/sfx_Checkpoint.asm
 	.include sound/sfx_Chainsaw.asm
- ;include music data
+ ;include mus_ic data
 	.include sound/mus_Title.asm
 	.include sound/mus_GameOver.asm
 	.include sound/mus_PlayerDown.asm

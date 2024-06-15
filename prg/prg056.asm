@@ -265,8 +265,8 @@ bra9_81EB:
 	STA ObjectVariables,X
 bra9_81FC:
 	JSR sub9_82AE
-	JSR jmp_54_BEBC
-	JSR jmp_54_A74D
+	JSR PlayerHitCheck
+	JSR KillOnSpinJump
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -547,9 +547,9 @@ ptr2_842C:
 	BEQ bra9_8448
 	JMP loc9_846E
 bra9_8448:
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
-	JSR jmp_54_A74D
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
+	JSR KillOnSpinJump
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -829,8 +829,8 @@ tbl9_865E:
 	dw ptr_AD88
 ptr2_8668:
 	JSR sub9_8698
-	JSR jmp_54_BEBC
-	JSR jmp_54_A74D
+	JSR PlayerHitCheck
+	JSR KillOnSpinJump
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -1017,7 +1017,7 @@ bra9_87E5:
 	JSR sub9_8865
 loc9_87E8:
 	JSR jmp_54_BC3E
-	JSR jmp_54_A74D
+	JSR KillOnSpinJump
 	LDX $A4
 	LDA ObjectVariables,X
 	BEQ bra9_880B_RTS
@@ -1333,9 +1333,9 @@ tbl9_8A2C:
 	dw ptr_AD88
 ptr2_8A36:
 	JSR sub9_8A45
-	JSR jmp_54_A6D4
+	JSR CapeHitCheck
 	JSR jmp_54_BC3E
-	JSR jmp_54_A74D
+	JSR KillOnSpinJump
 	JMP jmp_54_BF74
 sub9_8A45:
 	LDA $062B
@@ -1544,9 +1544,9 @@ bra9_8BB6:
 	LDA tbl9_9C5E+1,Y
 	STA $33
 	JSR GetSpeedData
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
-	JSR jmp_54_A74D
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
+	JSR KillOnSpinJump
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -2385,9 +2385,9 @@ ptr2_91D7:
 bra9_91E4:
 	JSR sub9_9260
 loc9_91E7:
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
-	JSR jmp_54_A74D
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
+	JSR KillOnSpinJump
 	LDA ObjectVariables,X
 	CMP #$40
 	BCS bra9_9221
@@ -2824,7 +2824,7 @@ tbl9_94EE:
 	dw ptr2_94F6
 ptr2_94F6:
 	JSR sub9_9500
-	JSR jmp_54_BEBC
+	JSR PlayerHitCheck
 	JSR jmp_54_BF74
 	RTS
 sub9_9500:
@@ -2982,7 +2982,7 @@ bra9_9621:
 	BNE bra9_962B
 	JSR jmp_54_BBC3
 bra9_962B:
-	JSR jmp_54_BEBC
+	JSR PlayerHitCheck
 	JSR jmp_54_BF74
 	RTS
 ptr7_9632:
@@ -3149,9 +3149,9 @@ tbl9_975B:
 	dw ptr_AD88
 ptr2_9765:
 	JSR sub9_978D
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
-	JSR jmp_54_A74D
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
+	JSR KillOnSpinJump
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -3309,9 +3309,9 @@ ptr2_989F:
 bra9_98AC:
 	JSR sub9_991E
 loc9_98AF:
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
-	JSR jmp_54_A74D
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
+	JSR KillOnSpinJump
 	LDA #$10
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -3715,7 +3715,7 @@ bra9_9B62:
 	LDA tbl9_9C5E+1,Y
 	STA $33
 	JSR GetSpeedData
-	JSR jmp_54_BEBC
+	JSR PlayerHitCheck
 	JMP jmp_54_BF74
 ptr6_9B79:
 	LDY #$00

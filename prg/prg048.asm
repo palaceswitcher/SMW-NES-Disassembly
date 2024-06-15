@@ -467,8 +467,8 @@ tbl4_836E:
 	dw ptr_AD88
 ptr9_8378:
 	JSR sub4_83B3
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
 	LDA #$30
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -728,8 +728,8 @@ tbl4_8574:
 	dw ptr_AD88
 ptr9_857E:
 	JSR sub4_85B9
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
 	LDA #$30
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -973,7 +973,7 @@ tbl4_8764:
 	dw ptr_AD88
 ptr9_876E:
 	JSR sub4_8778
-	JSR jmp_54_A6D4
+	JSR CapeHitCheck
 	JSR jmp_54_BC3E
 	RTS
 sub4_8778:
@@ -1260,8 +1260,8 @@ tbl4_899E:
 	dw ptr_AD88
 ptr9_89A8:
 	JSR sub4_89DA
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
 	LDA #$30
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -1491,8 +1491,8 @@ bra4_8B45:
 	STA $33
 	JSR GetSpeedData
 bra4_8B68:
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
 	JMP jmp_54_BF74
 ptr6_8B71:
 	LDY #$00
@@ -1627,8 +1627,8 @@ tbl4_8C75:
 	dw ptr_AD88
 ptr9_8C7F:
 	JSR sub4_8CB1
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
 	LDA #$30
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -1988,8 +1988,8 @@ tbl4_8F61:
 	dw ptr_AD88
 ptr9_8F6B:
 	JSR sub4_8F9D
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
 	LDA #$30
 	STA PlayerYSpeed
 	LDA PlayerMovement

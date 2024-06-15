@@ -79,7 +79,7 @@ bra_8080:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra_80C2
+	BEQ loc_80C2
 	LDA ObjYScreenDistance,X
 	BPL bra_80B1
 	LDA ObjectYDistance,X
@@ -98,7 +98,6 @@ bra_80B1:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra_80C2:
 loc_80C2:
 	LDA FreezeFlag
 	BEQ bra_80C8
@@ -143,7 +142,7 @@ bra_8102:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra_8144
+	BEQ loc_8144
 	LDA ObjYScreenDistance,X
 	BPL bra_8133
 	LDA ObjectYDistance,X
@@ -162,7 +161,6 @@ bra_8133:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra_8144:
 loc_8144:
 	LDA FreezeFlag
 	BEQ bra_814A
@@ -247,7 +245,7 @@ bra_81EC:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra_822E
+	BEQ loc_822E
 	LDA ObjYScreenDistance,X
 	BPL bra_821D
 	LDA ObjectYDistance,X
@@ -266,14 +264,13 @@ bra_821D:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra_822E:
 loc_822E:
 	LDA FreezeFlag
 	BEQ bra_8234
 	RTS
 bra_8234:
 	LDA ObjectVariables,X
-	BPL bra_82A7
+	BPL loc_82A7
 	LDA #$00
 	STA ObjectVariables,X
 	LDY ObjectCount
@@ -320,7 +317,6 @@ bra_8234:
 	STA ObjectYScreen,Y
 bra_82A6_RTS:
 	RTS
-bra_82A7:
 loc_82A7:
 	JSR sub_82C9
 	LDY #$00
@@ -779,10 +775,10 @@ tbl_8610:
 	dw ptr7_861A
 	dw ptr_AD88
 ptr7_861A:
-	JSR jmp_54_A6D4
-	JSR jmp_54_BEBC
-	JSR jmp_54_A74D
-	JSR jmp_54_BCBE
+	JSR CapeHitCheck
+	JSR PlayerHitCheck
+	JSR KillOnSpinJump
+	JSR ObjectStompKnockback
 	LDA #$00
 	STA ObjectState,X
 	STA ObjectVariables,X
@@ -1038,8 +1034,8 @@ tbl_8819:
 	dw ptr7_8823
 	dw ptr_AD88
 ptr7_8823:
-	JSR jmp_54_BEBC
-	JSR jmp_54_A74D
+	JSR PlayerHitCheck
+	JSR KillOnSpinJump
 	LDA #$10
 	BMI bra_8846
 	CLC
@@ -1118,7 +1114,7 @@ bra_88BC:
 	STA ObjectState,X
 	STA ObjectVariables,X
 	STA ObjectAction,X
-	JSR jmp_54_BCBE
+	JSR ObjectStompKnockback
 	RTS
 ptr6_88D1:
 	LDX $A4
@@ -1817,7 +1813,7 @@ obj_hD5:
 	STA ObjectYPos,X
 	BCS bra_8BCC
 	CMP #$F0
-	BCC bra_8BEA
+	BCC loc_8BEA
 bra_8BCC:
 	CLC
 	ADC #$10
@@ -1828,12 +1824,11 @@ bra_8BD8:
 	CLC
 	ADC ObjectYPos,X
 	STA ObjectYPos,X
-	BCS bra_8BEA
+	BCS loc_8BEA
 	SEC
 	SBC #$10
 	STA ObjectYPos,X
 	DEC ObjectYScreen,X
-bra_8BEA:
 loc_8BEA:
 	LDA $06E2
 	PHA
@@ -1872,7 +1867,7 @@ bra_8C23:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra_8C65
+	BEQ loc_8C65
 	LDA ObjYScreenDistance,X
 	BPL bra_8C54
 	LDA ObjectYDistance,X
@@ -1891,7 +1886,6 @@ bra_8C54:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra_8C65:
 loc_8C65:
 	LDA FreezeFlag
 	BEQ bra_8C6B
@@ -1900,7 +1894,7 @@ bra_8C6B:
 	LDX $A4
 	JSR sub_82EA
 	JSR jmp_54_BF74
-	LDA #sfxEnemyHit3
+	LDA #sfx_EnemyHit3
 	STA SFXRegister
 	RTS
 obj_hDE:
@@ -3348,7 +3342,7 @@ ptr7_970C:
 	LDY #$00
 bra_975B:
 	STY PlayerMovement
-	LDA #musEnding
+	LDA #mus_Ending
 	STA MusicRegister
 	RTS
 bra_9762_RTS:

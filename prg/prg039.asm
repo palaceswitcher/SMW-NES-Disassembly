@@ -191,7 +191,7 @@ bra_E160:
 loc_E173:
 	LDA #$D0
 	STA InvincibilityTimer
-	LDA #sfxPowerDown
+	LDA #sfx_PowerDown
 	STA SFXRegister
 	LDA ObjectState,X
 	AND #$E0

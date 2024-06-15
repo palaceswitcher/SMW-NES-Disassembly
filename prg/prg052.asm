@@ -11,17 +11,17 @@ bra2_A006:
 	STA $0201,Y
 	LDA tbl2_A074,X
 	STA $0202,Y
-	LDA tbl2_A069,X
+	LDA tbl2_A068+1,X
 	STA $0205,Y
-	LDA tbl2_A075,X
+	LDA tbl2_A074+1,X
 	STA $0206,Y
-	LDA tbl2_A06A,X
+	LDA tbl2_A068+2,X
 	STA $0209,Y
-	LDA tbl2_A076,X
+	LDA tbl2_A074+2,X
 	STA $020A,Y
-	LDA tbl2_A06B,X
+	LDA tbl2_A068+3,X
 	STA $020D,Y
-	LDA tbl2_A077,X
+	LDA tbl2_A074+3,X
 	STA $020E,Y
 	LDA #$D3
 	STA SpriteMem,Y
@@ -47,11 +47,8 @@ tbl2_A064:
 	db $08
 tbl2_A068:
 	db $41
-tbl2_A069:
 	db $42
-tbl2_A06A:
 	db $4B
-tbl2_A06B:
 	db $4C
 	db $57
 	db $58
@@ -63,11 +60,8 @@ tbl2_A06B:
 	db $66
 tbl2_A074:
 	db $03
-tbl2_A075:
 	db $03
-tbl2_A076:
 	db $03
-tbl2_A077:
 	db $03
 	db $03
 	db $03
