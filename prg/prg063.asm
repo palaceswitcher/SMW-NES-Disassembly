@@ -2453,14 +2453,14 @@ sub3_F0CB:
 	STA MusicRegister ;Load/play mus_ic for level
 	RTS
 LevelMusic:
-	db musOverworld, musOverworld, musTitle, musCastle ;World 1
-	db musOverworld, musTitle, musGhostHouse, musCastle ;World 2
-	db musUnderground, musUnderwater, musGhostHouse, musCastle ;World 3
-	db musOverworld, musForestofIllusion, musTitle, musCastle ;World 4
-	db musOverworld, musGhostHouse, musUnderwater, musCastle ;World 5
-	db musOverworld, musGhostHouse, musForestofIllusion, musCastle ;World 6
-	db musOverworld, musForestofIllusion, musGhostHouse, musCastle ;World 7
-	db musOverworld ;Yoshi's House
+	db mus_Overworld, mus_Overworld, mus_Title, mus_Castle ;World 1
+	db mus_Overworld, mus_Title, mus_GhostHouse, mus_Castle ;World 2
+	db mus_Underground, mus_Underwater, mus_GhostHouse, mus_Castle ;World 3
+	db mus_Overworld, mus_ForestofIllusion, mus_Title, mus_Castle ;World 4
+	db mus_Overworld, mus_GhostHouse, mus_Underwater, mus_Castle ;World 5
+	db mus_Overworld, mus_GhostHouse, mus_ForestofIllusion, mus_Castle ;World 6
+	db mus_Overworld, mus_ForestofIllusion, mus_GhostHouse, mus_Castle ;World 7
+	db mus_Overworld ;Yoshi's House
 pnt2_F0F8:
 	LDX #$F0
 	STX M90_BG_CHR0 ;Set bank F0 to 1st BG bank
