@@ -1448,12 +1448,12 @@ Obj_YoshiTongueCheck:
 bra3_A7C4:
 	LDA YoshiTongueState
 	CMP #$01
-	BEQ bra3_A7CE ;Branch if there's nothing on Yoshi's tongue already
+	BEQ @Continue ;Branch if there's nothing on Yoshi's tongue already
 
 @Stop:
 	JMP YoshiEatStop ;If there is, jump
 
-bra3_A7CE:
+@Continue:
 	LDX $A4 ;Get index for current object
 	LDA PlayerState
 	CMP #$09
