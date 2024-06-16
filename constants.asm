@@ -38,6 +38,8 @@ sfx_YoshiSwallow = $1A
 sfx_YoshiFireSpit = $1B
 sfx_Checkpoint = $1C
 sfx_Cutter = $1D
+sfx_HitBlock = $1E
+sfx_FireBall = $1F
 
 ;Music IDs
 mus_Title = $40

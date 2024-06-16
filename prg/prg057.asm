@@ -3113,7 +3113,7 @@ bra4_B08C:
 	LDA UsedFireballSlots
 	EOR #$01
 	STA UsedFireballSlots
-	LDA #$05 
+	LDA #sfx_FireBall
 	STA SFXRegister; Play fireball throw sound
 	RTS
 ;----------------------------------------
@@ -5138,7 +5138,7 @@ loc4_BED5: ;Player bumped head on ceiling
 	LDA PlayerState
 	CMP #$03 ;if player is climbing,
 	BEQ bra4_BEF1 ;branch
-	LDA #sfx_Thud
+	LDA #sfx_HitBlock
 	STA SFXRegister ;play "thud" sound
 bra4_BEF1: ;If player bumps head whilst climbing
 	LDA PlayerColYPos

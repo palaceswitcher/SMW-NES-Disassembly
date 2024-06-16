@@ -1369,8 +1369,8 @@ tbl10_8E41:
 	dw YoshiFireSpit_Footer
 	dw Checkpoint_Footer
 	dw Chainsaw_Footer
-	dw Empty_Footer
-	dw Empty_Footer
+	dw HitBlock_Footer
+	dw FireBall_Footer
 	dw Empty_Footer
 	dw Empty_Footer
 	dw Empty_Footer
@@ -1794,6 +1794,8 @@ DPCM_PitchTable:
 	.include sound/sfx_YoshiFireSpit.asm
 	.include sound/sfx_Checkpoint.asm
 	.include sound/sfx_Chainsaw.asm
+	.include sound/sfx_HitBlock.asm
+	.include sound/sfx_FireBall.asm
  ;include music data
 	.include sound/mus_Title.asm
 	.include sound/mus_GameOver.asm

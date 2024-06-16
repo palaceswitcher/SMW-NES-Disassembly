@@ -12,7 +12,7 @@ Checkpoint_P1:
 	.byte D#5
 	.byte PitchSet, $2A
 	.byte SongSweep, $A4
-	.byte NLen+25
+	.byte NLen+39
 	.byte G#5
 	.byte $FF
 Checkpoint_Footer:
