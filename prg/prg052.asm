@@ -2636,5 +2636,5 @@ bra2_AF23:
 bra2_AF28_RTS:
 	RTS
 
-.pad $b600
+.pad $Af40
 .incbin "sound/dmc-34.bin"

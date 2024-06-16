@@ -275,7 +275,7 @@ Ab_DIM_UP_END:
 .ende
 
 ; DMC Bank $34
-.enum $160
+.enum $F4
 Bb_DIM_UP:	.dsb $11
 Bb_DIM_UP_END:
 	.dsb 3
@@ -294,6 +294,9 @@ YOSHI1_END:
 YOSHI2:		.dsb $2d
 YOSHI2_END:
 	.dsb 3
+SWIM:		.dsb $4a
+SWIM_END:
+	.dsb 2
 .ende
 
 .enum 1
@@ -333,6 +336,7 @@ BDiminishedUp:			.dsb 1
 GSuspendedUp:			.dsb 1
 SFXYoshi1:			.dsb 1
 SFXYoshi2:			.dsb 1
+SFXSwim:
 .ende
 
 ;Player action
