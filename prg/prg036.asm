@@ -1,72 +1,72 @@
 ; 0x048010-0x04A00F
-lda_36_C000:
-	dw pnt3_C014
-	dw pnt3_CAF2
-	dw pnt3_CD2C
-	dw pnt3_CD2C
-	dw pnt3_CD2C
-	dw pnt3_CD2C
-	dw pnt3_CE54
-	dw pnt3_CE54
-	dw pnt3_CE54
-	dw pnt3_CE54
-pnt3_C014:
+lda_36_C000: 
+	dw MarioAnimTablesTbl   ;00 No Yoshi
+	dw YoshiAnimTablesTbl_1 ;01 if Yoshi present (all entries on this table point to the same thing)
+	dw YoshiAnimTablesTbl_2 ;02 
+	dw YoshiAnimTablesTbl_2 ;03 Because Yoshi Status is doubled for use as an index this table is long
+	dw YoshiAnimTablesTbl_2 ;04  
+	dw YoshiAnimTablesTbl_2 ;05
+	dw YoshiAnimTablesTbl_3 ;06 used when Mario has a powerup (?)
+	dw YoshiAnimTablesTbl_3 ;07
+	dw YoshiAnimTablesTbl_3 ;08
+	dw YoshiAnimTablesTbl_3 ;09 as far as I can tell these are all identical unique copies, but this hasn't been fully investigated
+MarioAnimTablesTbl:
 	dw PlayerSmall_AnimTbl
 	dw PlayerBig_AnimTbl
 	dw PlayerFire_AnimTbl
-	dw PlayerCape_AnimTbl
-	dw pnt3_CAAE
-	dw PlayerSmall_AnimTbl2
-	dw PlayerBig_AnimTbl2
-	dw PlayerFire_AnimTbl2
-	dw PlayerCape_AnimTbl2
-	dw pnt3_CAD0
-PlayerSmall_AnimTbl:
-	dw pnt3_C070
-	dw pnt3_C078
-	dw pnt3_C084
-	dw pnt3_C078
-	dw pnt3_C0D8
-	dw pnt3_C0EC
-	dw pnt3_C100
-	dw pnt3_C108
-	dw pnt3_C110
-	dw pnt3_C0E4
-	dw pnt3_C118
-	dw pnt3_C120
-	dw pnt3_C128
-	dw pnt3_C134
-	dw pnt3_C13C
-	dw pnt3_C0E4
-	dw pnt3_C148
-	dw pnt3_C150
-PlayerSmall_AnimTbl2:
-	dw pnt3_C160
-	dw pnt3_C168
-	dw pnt3_C174
-	dw pnt3_C168
-	dw pnt3_C1C8
-	dw pnt3_C0EC
-	dw pnt3_C100
-	dw pnt3_C1D4
-	dw pnt3_C110
-	dw pnt3_C1C8
-	dw pnt3_C1E4
-	dw pnt3_C1EC
-	dw pnt3_C1F4
-	dw pnt3_C134
-	dw pnt3_C13C
-	dw pnt3_C1C8
-	dw pnt3_C148
-	dw pnt3_C150
-pnt3_C070:
+	dw PlayerCapeStatic_AnimTbl
+	dw PlayerCapeMove_AnimTbl
+	dw PlayerSmallHold_AnimTbl
+	dw PlayerBigHold_AnimTbl
+	dw PlayerFireHold_AnimTbl
+	dw PlayerCapeStaticHold_AnimTbl
+	dw PlayerCapeMoveHold_AnimTbl
+PlayerSmall_AnimTbl:	;Player Action (associated with animation)
+	dw MsmallStand		;nothing 	00
+	dw MsmallWalk		;walking 	01
+	dw MsmallRun		;running 	02
+	dw MsmallWalk		;unused  	03
+	dw MsmallJump		;jumping 	04
+	dw MsmallSpin		;spin    	05
+	dw MsmallTurn		;skid    	06
+	dw MsmallDuck		;duck    	07
+	dw MsmallUp			;look up 	08
+	dw MsmallLeap		;run jump   09
+	dw MsmallFall		;Falling 	0A note that this is specifically for falling from a ledge, not a jump
+	dw MsmallSink		;sink    	0B
+	dw MsmallSwim		;swim    	0C
+	dw MsmallClimbIdle	;climb   	0D
+	dw MsmallClimb		;climb move	0E
+	dw MsmallLeap		;flying		0F
+	dw MsmallWin		;victory	10
+	dw MsmallDie		;dead		11
+PlayerSmallHold_AnimTbl:
+	dw MsmallHold
+	dw MsmallHoldWalk
+	dw MsmallHoldRun
+	dw MsmallHoldWalk
+	dw MsmallHoldJump
+	dw MsmallSpin
+	dw MsmallTurn
+	dw MsmallHoldDuck
+	dw MsmallUp
+	dw MsmallHoldJump
+	dw MsmallHoldFall
+	dw MsmallHoldSink
+	dw MsmallHoldSwim
+	dw MsmallClimbIdle
+	dw MsmallClimb
+	dw MsmallHoldJump
+	dw MsmallWin
+	dw MsmallDie
+MsmallStand:
 	dw PlayerSmall_Stand
 	db $0A
 	db $00
 	dw PlayerSmall_Stand
 	db $80
 	db $00
-pnt3_C078:
+MsmallWalk:
 	dw PlayerSmall_Stand
 	db $04
 	db $00
@@ -76,7 +76,7 @@ pnt3_C078:
 	dw PlayerSmall_Stand
 	db $80
 	db $00
-pnt3_C084:
+MsmallRun:
 	dw PlayerSmall_Stand
 	db $02
 	db $00
@@ -140,7 +140,7 @@ pnt3_C084:
 	dw PlayerSmall_Run1
 	db $90
 	db $00
-pnt3_C0D8:
+MsmallJump:
 	dw PlayerSmall_Jump
 	db $23
 	db $00
@@ -150,14 +150,14 @@ pnt3_C0D8:
 	dw PlayerSmall_Fall
 	db $81
 	db $00
-pnt3_C0E4:
+MsmallLeap:
 	dw PlayerSmall_RunJump
 	db $0A
 	db $00
 	dw PlayerSmall_RunJump
 	db $80
 	db $00
-pnt3_C0EC:
+MsmallSpin:
 	dw PlayerSmall_Stand
 	db $01
 	db $00
@@ -173,42 +173,42 @@ pnt3_C0EC:
 	dw PlayerSmall_Stand
 	db $80
 	db $00
-pnt3_C100:
+MsmallTurn:
 	dw PlayerSmall_Turn
 	db $0A
 	db $00
 	dw PlayerSmall_Turn
 	db $80
 	db $00
-pnt3_C108:
+MsmallDuck:
 	dw PlayerSmall_Duck
 	db $08
 	db $00
 	dw PlayerSmall_Duck
 	db $80
 	db $00
-pnt3_C110:
+MsmallUp:
 	dw PlayerSmall_LookUp
 	db $02
 	db $00
 	dw PlayerSmall_LookUp
 	db $80
 	db $00
-pnt3_C118:
+MsmallFall:
 	dw PlayerSmall_Fall
 	db $02
 	db $00
 	dw PlayerSmall_Fall
 	db $80
 	db $00
-pnt3_C120:
+MsmallSink:
 	dw PlayerSmall_Swim1
 	db $01
 	db $00
 	dw PlayerSmall_Swim1
 	db $80
 	db $00
-pnt3_C128:
+MsmallSwim:
 	dw PlayerSmall_RunJump
 	db $03
 	db $00
@@ -218,14 +218,14 @@ pnt3_C128:
 	dw PlayerSmall_RunJump
 	db $80
 	db $00
-pnt3_C134:
+MsmallClimbIdle:
 	dw PlayerSmall_Climb1
 	db $08
 	db $00
 	dw PlayerSmall_Climb1
 	db $80
 	db $00
-pnt3_C13C:
+MsmallClimb:
 	dw PlayerSmall_Climb1
 	db $08
 	db $00
@@ -235,14 +235,14 @@ pnt3_C13C:
 	dw PlayerSmall_Climb1
 	db $80
 	db $00
-pnt3_C148:
+MsmallWin:
 	dw PlayerSmall_Victory
 	db $0A
 	db $00
 	dw PlayerSmall_Victory
 	db $80
 	db $00
-pnt3_C150:
+MsmallDie:
 	dw PlayerSmall_Death1
 	db $28
 	db $00
@@ -255,14 +255,14 @@ pnt3_C150:
 	dw PlayerSmall_Death1
 	db $81
 	db $00
-pnt3_C160:
+MsmallHold:
 	dw PlayerSmall_Hold
 	db $0A
 	db $00
 	dw PlayerSmall_Hold
 	db $80
 	db $00
-pnt3_C168:
+MsmallHoldWalk:
 	dw PlayerSmall_Hold
 	db $04
 	db $00
@@ -272,7 +272,7 @@ pnt3_C168:
 	dw PlayerSmall_Hold
 	db $80
 	db $00
-pnt3_C174:
+MsmallHoldRun:
 	dw PlayerSmall_Hold
 	db $02
 	db $00
@@ -336,7 +336,7 @@ pnt3_C174:
 	dw PlayerSmall_Hold
 	db $90
 	db $00
-pnt3_C1C8:
+MsmallHoldJump:
 	dw PlayerSmall_HoldWalk
 	db $23
 	db $00
@@ -346,7 +346,7 @@ pnt3_C1C8:
 	dw PlayerSmall_HoldWalk
 	db $81
 	db $00
-pnt3_C1D4:
+MsmallHoldDuck:
 	dw PlayerSmall_DuckHold
 	db $08
 	db $00
@@ -359,21 +359,21 @@ pnt3_C1D4:
 	dw PlayerSmall_Hold
 	db $80
 	db $00
-pnt3_C1E4:
+MsmallHoldFall:
 	dw PlayerSmall_HoldWalk
 	db $02
 	db $00
 	dw PlayerSmall_HoldWalk
 	db $80
 	db $00
-pnt3_C1EC:
+MsmallHoldSink:
 	dw pnt3_C2D8
 	db $01
 	db $00
 	dw pnt3_C2D8
 	db $80
 	db $00
-pnt3_C1F4:
+MsmallHoldSwim:
 	dw pnt3_C2D8
 	db $03
 	db $00
@@ -566,49 +566,49 @@ pnt3_C2D8:
 	db $66, $7F
 	db $62, $63
 PlayerBig_AnimTbl:
-	dw pnt3_C326
-	dw pnt3_C32E
-	dw pnt3_C352
-	dw pnt3_C32E
-	dw pnt3_C3A6
-	dw pnt3_C3BA
-	dw pnt3_C3CE
-	dw pnt3_C3D6
-	dw pnt3_C3DE
-	dw pnt3_C3B2
-	dw pnt3_C3E6
-	dw pnt3_C3EE
-	dw pnt3_C3F6
-	dw pnt3_C40A
-	dw pnt3_C412
-	dw pnt3_C3B2
-	dw pnt3_C41E
-PlayerBig_AnimTbl2:
-	dw pnt3_C426
-	dw pnt3_C42E
-	dw pnt3_C452
-	dw pnt3_C42E
-	dw pnt3_C4A6
-	dw pnt3_C3BA
-	dw pnt3_C3CE
-	dw pnt3_C4B2
-	dw pnt3_C3DE
-	dw pnt3_C3EE
-	dw pnt3_C4C2
-	dw pnt3_C3EE
-	dw pnt3_C4CA
-	dw pnt3_C40A
-	dw pnt3_C412
-	dw pnt3_C3EE
-	dw pnt3_C41E
-pnt3_C326:
+	dw MbigStand
+	dw MbigWalk
+	dw MbigRun
+	dw MbigWalk
+	dw MbigJump
+	dw MbigSpin
+	dw MbigTurn
+	dw MbigDuck
+	dw MbigLookUp
+	dw MbigLeap
+	dw MbigFall
+	dw MbigSink
+	dw MbigSwim
+	dw MbigClimb
+	dw MbigClimbMove
+	dw MbigLeap
+	dw MbigWin
+PlayerBigHold_AnimTbl:
+	dw MbigHold
+	dw MbigHoldWalk
+	dw MbigHoldRun
+	dw MbigHoldWalk
+	dw MbigHoldJump
+	dw MbigSpin
+	dw MbigTurn
+	dw MbigHoldDuck
+	dw MbigLookUp
+	dw MbigSink
+	dw MbigHoldFall
+	dw MbigSink
+	dw MbigHoldSwim
+	dw MbigClimb
+	dw MbigClimbMove
+	dw MbigSink
+	dw MbigWin
+MbigStand:
 	dw PlayerBig_Stand
 	db $0A
 	db $00
 	dw PlayerBig_Stand
 	db $80
 	db $00
-pnt3_C32E:
+MbigWalk:
 	dw PlayerBig_Walk1
 	db $04
 	db $00
@@ -636,7 +636,7 @@ pnt3_C32E:
 	dw PlayerBig_Walk1
 	db $80
 	db $00
-pnt3_C352:
+MbigRun:
 	dw PlayerBig_Walk1
 	db $02
 	db $00
@@ -700,7 +700,7 @@ pnt3_C352:
 	dw PlayerBig_Run1
 	db $90
 	db $00
-pnt3_C3A6:
+MbigJump:
 	dw PlayerBig_Jump
 	db $23
 	db $00
@@ -710,14 +710,14 @@ pnt3_C3A6:
 	dw PlayerBig_Fall
 	db $81
 	db $00
-pnt3_C3B2:
+MbigLeap:
 	dw PlayerBig_RunJump
 	db $0A
 	db $00
 	dw PlayerBig_RunJump
 	db $80
 	db $00
-pnt3_C3BA:
+MbigSpin:
 	dw PlayerBig_Front
 	db $01
 	db $00
@@ -733,42 +733,42 @@ pnt3_C3BA:
 	dw PlayerBig_Front
 	db $80
 	db $00
-pnt3_C3CE:
+MbigTurn:
 	dw PlayerBig_Turn
 	db $0A
 	db $00
 	dw PlayerBig_Turn
 	db $80
 	db $00
-pnt3_C3D6:
+MbigDuck:
 	dw PlayerBig_Duck
 	db $08
 	db $00
 	dw PlayerBig_Duck
 	db $80
 	db $00
-pnt3_C3DE:
+MbigLookUp:
 	dw PlayerBig_LookUp
 	db $02
 	db $00
 	dw PlayerBig_LookUp
 	db $80
 	db $00
-pnt3_C3E6:
+MbigFall:
 	dw PlayerBig_Fall
 	db $02
 	db $00
 	dw PlayerBig_Fall
 	db $80
 	db $00
-pnt3_C3EE:
+MbigSink:
 	dw PlayerBig_Swim1
 	db $01
 	db $00
 	dw PlayerBig_Swim1
 	db $80
 	db $00
-pnt3_C3F6:
+MbigSwim:
 	dw PlayerBig_RunJump
 	db $03
 	db $00
@@ -784,14 +784,14 @@ pnt3_C3F6:
 	dw PlayerBig_Fall
 	db $80
 	db $00
-pnt3_C40A:
+MbigClimb:
 	dw PlayerBig_Climb1
 	db $08
 	db $00
 	dw PlayerBig_Climb1
 	db $80
 	db $00
-pnt3_C412:
+MbigClimbMove:
 	dw PlayerBig_Climb1
 	db $08
 	db $00
@@ -801,21 +801,21 @@ pnt3_C412:
 	dw PlayerBig_Climb1
 	db $80
 	db $00
-pnt3_C41E:
+MbigWin:
 	dw PlayerBig_Victory
 	db $0A
 	db $00
 	dw PlayerBig_Victory
 	db $80
 	db $00
-pnt3_C426:
+MbigHold:
 	dw PlayerBig_Hold
 	db $0A
 	db $00
 	dw PlayerBig_Hold
 	db $80
 	db $00
-pnt3_C42E:
+MbigHoldWalk:
 	dw PlayerBig_HoldWalk1
 	db $04
 	db $00
@@ -843,7 +843,7 @@ pnt3_C42E:
 	dw PlayerBig_HoldWalk1
 	db $80
 	db $00
-pnt3_C452:
+MbigHoldRun:
 	dw PlayerBig_HoldWalk1
 	db $02
 	db $00
@@ -907,7 +907,7 @@ pnt3_C452:
 	dw PlayerBig_HoldWalk1
 	db $90
 	db $00
-pnt3_C4A6:
+MbigHoldJump:
 	dw PlayerBig_HoldWalk1
 	db $23
 	db $00
@@ -917,7 +917,7 @@ pnt3_C4A6:
 	dw PlayerBig_HoldWalk1
 	db $81
 	db $00
-pnt3_C4B2:
+MbigHoldDuck:
 	dw PlayerBig_DuckHold
 	db $08
 	db $00
@@ -930,14 +930,14 @@ pnt3_C4B2:
 	dw PlayerBig_LookUp
 	db $80
 	db $00
-pnt3_C4C2:
+MbigHoldFall:
 	dw PlayerBig_HoldWalk2
 	db $02
 	db $00
 	dw PlayerBig_HoldWalk2
 	db $80
 	db $00
-pnt3_C4CA:
+MbigHoldSwim:
 	dw PlayerBig_Swim1
 	db $03
 	db $00
@@ -1177,55 +1177,55 @@ PlayerBig_DuckHold:
 	db $B6, $B7
 	db $B8, $B9
 PlayerFire_AnimTbl:
-	dw pnt3_C66E
-	dw pnt3_C676
-	dw pnt3_C69A
-	dw pnt3_C676
-	dw pnt3_C6EE
-	dw pnt3_C702
-	dw pnt3_C716
-	dw pnt3_C71E
-	dw pnt3_C726
-	dw pnt3_C6FA
-	dw pnt3_C72E
-	dw pnt3_C736
-	dw pnt3_C73E
-	dw pnt3_C752
-	dw pnt3_C75A
-	dw pnt3_C6FA
-	dw pnt3_C766
-	dw pnt3_C76E
-	dw pnt3_C776
-	dw pnt3_C782
-PlayerFire_AnimTbl2:
-	dw pnt3_C78A
-	dw pnt3_C792
-	dw pnt3_C7B6
-	dw pnt3_C792
-	dw pnt3_C80A
-	dw pnt3_C702
-	dw pnt3_C716
-	dw pnt3_C816
-	dw pnt3_C726
-	dw pnt3_C736
-	dw pnt3_C81E
-	dw pnt3_C736
-	dw pnt3_C73E
-	dw pnt3_C752
-	dw pnt3_C75A
-	dw pnt3_C736
-	dw pnt3_C766
-	dw pnt3_C76E
-	dw pnt3_C776
-	dw pnt3_C782
-pnt3_C66E:
+	dw MfireStand
+	dw MfireWalk
+	dw MfireRun
+	dw MfireWalk
+	dw MfireJump
+	dw MfireSpin
+	dw MfireTurn
+	dw MfireDuck
+	dw MfireLookup
+	dw MfireLeap
+	dw MfireFall
+	dw MfireSink
+	dw MfireSwim
+	dw MfireClimb
+	dw MfireClimbMove
+	dw MfireLeap ;unused
+	dw MfireWin
+	dw MfireShootAir
+	dw MfireShootSwim
+	dw MfireShoot
+PlayerFireHold_AnimTbl:
+	dw MfireHold
+	dw MfireHoldWalk
+	dw MfireHoldRun
+	dw MfireHoldWalk
+	dw MfireHoldJump
+	dw MfireSpin
+	dw MfireTurn
+	dw MfireHoldDuck
+	dw MfireLookup
+	dw MfireSink
+	dw MfireHoldSwim ;unused but fully implemented
+	dw MfireSink
+	dw MfireSwim
+	dw MfireClimb
+	dw MfireClimbMove
+	dw MfireSink
+	dw MfireWin
+	dw MfireShootAir
+	dw MfireShootSwim
+	dw MfireShoot
+MfireStand:
 	dw PlayerFire_Stand
 	db $0A
 	db $00
 	dw PlayerFire_Stand
 	db $80
 	db $00
-pnt3_C676:
+MfireWalk:
 	dw PlayerFire_Walk1
 	db $04
 	db $00
@@ -1253,7 +1253,7 @@ pnt3_C676:
 	dw PlayerFire_Walk1
 	db $80
 	db $00
-pnt3_C69A:
+MfireRun:
 	dw PlayerFire_Walk1
 	db $02
 	db $00
@@ -1317,7 +1317,7 @@ pnt3_C69A:
 	dw PlayerFire_Run1
 	db $90
 	db $00
-pnt3_C6EE:
+MfireJump:
 	dw PlayerFire_Jump
 	db $23
 	db $00
@@ -1327,14 +1327,14 @@ pnt3_C6EE:
 	dw PlayerFire_Fall
 	db $81
 	db $00
-pnt3_C6FA:
+MfireLeap:
 	dw PlayerFire_RunJump
 	db $0A
 	db $00
 	dw PlayerFire_RunJump
 	db $80
 	db $00
-pnt3_C702:
+MfireSpin:
 	dw PlayerFire_Front
 	db $01
 	db $00
@@ -1350,42 +1350,42 @@ pnt3_C702:
 	dw PlayerFire_Front
 	db $80
 	db $00
-pnt3_C716:
+MfireTurn:
 	dw PlayerFire_Turn
 	db $0A
 	db $00
 	dw PlayerFire_Turn
 	db $80
 	db $00
-pnt3_C71E:
+MfireDuck:
 	dw PlayerFire_Duck
 	db $08
 	db $00
 	dw PlayerFire_Duck
 	db $80
 	db $00
-pnt3_C726:
+MfireLookup:
 	dw PlayerFire_LookUp
 	db $02
 	db $00
 	dw PlayerFire_LookUp
 	db $80
 	db $00
-pnt3_C72E:
+MfireFall:
 	dw PlayerFire_Fall
 	db $02
 	db $00
 	dw PlayerFire_Fall
 	db $80
 	db $00
-pnt3_C736:
+MfireSink:
 	dw PlayerFire_Swim1
 	db $01
 	db $00
 	dw PlayerFire_Swim1
 	db $80
 	db $00
-pnt3_C73E:
+MfireSwim:
 	dw PlayerFire_RunJump
 	db $03
 	db $00
@@ -1401,14 +1401,14 @@ pnt3_C73E:
 	dw PlayerFire_Fall
 	db $80
 	db $00
-pnt3_C752:
+MfireClimb:
 	dw PlayerFire_Climb1
 	db $08
 	db $00
 	dw PlayerFire_Climb1
 	db $80
 	db $00
-pnt3_C75A:
+MfireClimbMove:
 	dw PlayerFire_Climb1
 	db $08
 	db $00
@@ -1418,21 +1418,21 @@ pnt3_C75A:
 	dw PlayerFire_Climb1
 	db $80
 	db $00
-pnt3_C766:
+MfireWin:
 	dw PlayerFire_Victory
 	db $0A
 	db $00
 	dw PlayerFire_Victory
 	db $80
 	db $00
-pnt3_C76E:
+MfireShootAir:
 	dw PlayerFire_Swim1
 	db $03
 	db $00
 	dw PlayerFire_Swim1
 	db $80
 	db $00
-pnt3_C776:
+MfireShootSwim:
 	dw PlayerFire_Swim2
 	db $03
 	db $00
@@ -1442,21 +1442,21 @@ pnt3_C776:
 	dw PlayerFire_Swim1
 	db $80
 	db $00
-pnt3_C782:
+MfireShoot:
 	dw PlayerFire_Shoot
 	db $03
 	db $00
 	dw PlayerFire_Shoot
 	db $80
 	db $00
-pnt3_C78A:
+MfireHold:
 	dw PlayerFire_Hold
 	db $0A
 	db $00
 	dw PlayerFire_Hold
 	db $80
 	db $00
-pnt3_C792:
+MfireHoldWalk:
 	dw PlayerFire_HoldWalk1
 	db $04
 	db $00
@@ -1484,7 +1484,7 @@ pnt3_C792:
 	dw PlayerFire_HoldWalk1
 	db $80
 	db $00
-pnt3_C7B6:
+MfireHoldRun:
 	dw PlayerFire_HoldWalk1
 	db $02
 	db $00
@@ -1548,7 +1548,7 @@ pnt3_C7B6:
 	dw PlayerFire_HoldWalk1
 	db $90
 	db $00
-pnt3_C80A:
+MfireHoldJump:
 	dw PlayerFire_HoldWalk1
 	db $23
 	db $00
@@ -1558,14 +1558,14 @@ pnt3_C80A:
 	dw PlayerFire_HoldWalk1
 	db $81
 	db $00
-pnt3_C816:
+MfireHoldDuck:
 	dw PlayerFire_DuckHold
 	db $08
 	db $00
 	dw PlayerFire_DuckHold
 	db $80
 	db $00
-pnt3_C81E:
+MfireHoldSwim:
 	dw PlayerFire_HoldWalk2
 	db $02
 	db $00
@@ -1795,50 +1795,50 @@ PlayerFire_HoldWalk2:
 	db $81, $83
 	db $A0, $A2
 	db $8B, $8D
-PlayerCape_AnimTbl:
-	dw pnt3_C9AA
-	dw pnt3_C9B2
-	dw pnt3_C9D6
-	dw pnt3_C32E
-	dw pnt3_C3A6
-	dw pnt3_CA2A
-	dw pnt3_C3CE
-	dw pnt3_C3D6
-	dw pnt3_CA3E
-	dw pnt3_C3B2
-	dw pnt3_C3E6
-	dw pnt3_C3EE
-	dw pnt3_C3F6
-	dw pnt3_CA46
-	dw pnt3_CA4E
-	dw pnt3_C3B2
-	dw pnt3_C41E
-PlayerCape_AnimTbl2:
-	dw pnt3_CA5A
-	dw pnt3_C42E
-	dw pnt3_C9D6
-	dw pnt3_C42E
-	dw pnt3_C4A6
-	dw pnt3_CA2A
-	dw pnt3_C3CE
-	dw pnt3_C4B2
-	dw pnt3_CA3E
-	dw pnt3_C3EE
-	dw pnt3_C4C2
-	dw pnt3_C3EE
-	dw pnt3_C4CA
-	dw pnt3_CA46
-	dw pnt3_CA4E
-	dw pnt3_C3EE
-	dw pnt3_C41E
-pnt3_C9AA:
+PlayerCapeStatic_AnimTbl: ;player animations for when the cape isn't animating
+	dw McapeStand ;unique from normal sprite 
+	dw McapeWalk  ;larger mapping but otherwise identical
+	dw McapeRun	  ;this suggests that the cape may have originally been part of the player sprite
+	dw MbigWalk	  ;in game the cape is mostly a separate sprite bar a few frames
+	dw MbigJump
+	dw McapeSpin
+	dw MbigTurn
+	dw MbigDuck
+	dw McapeLookUp
+	dw MbigLeap
+	dw MbigFall
+	dw MbigSink
+	dw MbigSwim
+	dw McapeClimb
+	dw McapeClimbMove
+	dw MbigLeap
+	dw MbigWin
+PlayerCapeStaticHold_AnimTbl: 
+	dw McapeHoldStand
+	dw MbigHoldWalk
+	dw McapeRun
+	dw MbigHoldWalk
+	dw MbigHoldJump
+	dw McapeSpin
+	dw MbigTurn
+	dw MbigHoldDuck
+	dw McapeLookUp
+	dw MbigSink
+	dw MbigHoldFall
+	dw MbigSink
+	dw MbigHoldSwim
+	dw McapeClimb
+	dw McapeClimbMove
+	dw MbigSink
+	dw MbigWin
+McapeStand:
 	dw PlayerCape_Stand
 	db $0A
 	db $00
 	dw PlayerCape_Stand
 	db $80
 	db $00
-pnt3_C9B2:
+McapeWalk:
 	dw PlayerBig_Walk1
 	db $04
 	db $00
@@ -1866,7 +1866,7 @@ pnt3_C9B2:
 	dw PlayerBig_Walk1
 	db $80
 	db $00
-pnt3_C9D6:
+McapeRun:
 	dw PlayerBig_Walk1
 	db $02
 	db $00
@@ -1930,7 +1930,7 @@ pnt3_C9D6:
 	dw PlayerBig_Run1
 	db $90
 	db $00
-pnt3_CA2A:
+McapeSpin:
 	dw PlayerBig_Front
 	db $01
 	db $00
@@ -1946,21 +1946,21 @@ pnt3_CA2A:
 	dw PlayerBig_Front
 	db $80
 	db $00
-pnt3_CA3E:
+McapeLookUp:
 	dw PlayerCape_LookUp
 	db $02
 	db $00
 	dw PlayerCape_LookUp
 	db $80
 	db $00
-pnt3_CA46:
+McapeClimb:
 	dw PlayerCape_Climb1
 	db $08
 	db $00
 	dw PlayerCape_Climb1
 	db $80
 	db $00
-pnt3_CA4E:
+McapeClimbMove:
 	dw PlayerCape_Climb1
 	db $08
 	db $00
@@ -1970,7 +1970,7 @@ pnt3_CA4E:
 	dw PlayerCape_Climb1
 	db $80
 	db $00
-pnt3_CA5A:
+McapeHoldStand:
 	dw PlayerCape_Hold
 	db $0A
 	db $00
@@ -2031,43 +2031,43 @@ PlayerCape_Hold:
 	db $A1, $A3
 	db $B0, $B2
 	db $B1, $BB
-pnt3_CAAE:
-	dw pnt3_C326
-	dw pnt3_C32E
-	dw pnt3_C352
-	dw pnt3_C32E
-	dw pnt3_C4A6
-	dw pnt3_C3BA
-	dw pnt3_C3CE
-	dw pnt3_C3D6
-	dw pnt3_C3DE
-	dw pnt3_C3B2
-	dw pnt3_C3E6
-	dw pnt3_C3EE
-	dw pnt3_C3F6
-	dw pnt3_CA46
-	dw pnt3_CA4E
-	dw pnt3_C3B2
-	dw pnt3_C41E
-pnt3_CAD0:
-	dw pnt3_C426
-	dw pnt3_C42E
-	dw pnt3_C452
-	dw pnt3_C42E
-	dw pnt3_C4A6
-	dw pnt3_C3BA
-	dw pnt3_C3CE
-	dw pnt3_C4B2
-	dw pnt3_C3DE
-	dw pnt3_C3EE
-	dw pnt3_C4C2
-	dw pnt3_C3EE
-	dw pnt3_C4CA
-	dw pnt3_CA46
-	dw pnt3_CA4E
-	dw pnt3_C3EE
-	dw pnt3_C41E
-pnt3_CAF2:
+PlayerCapeMove_AnimTbl:
+	dw MbigStand
+	dw MbigWalk
+	dw MbigRun
+	dw MbigWalk
+	dw MbigJump 
+	dw MbigSpin
+	dw MbigTurn
+	dw MbigDuck
+	dw MbigLookUp
+	dw MbigLeap
+	dw MbigFall
+	dw MbigSink
+	dw MbigSwim
+	dw McapeClimb
+	dw McapeClimbMove
+	dw MbigLeap
+	dw MbigWin
+PlayerCapeMoveHold_AnimTbl:
+	dw MbigHold
+	dw MbigHoldWalk
+	dw MbigHoldRun
+	dw MbigHoldWalk
+	dw MbigHoldJump
+	dw MbigSpin
+	dw MbigTurn
+	dw MbigHoldDuck
+	dw MbigLookUp
+	dw MbigSink
+	dw MbigHoldFall
+	dw MbigSink
+	dw MbigHoldSwim
+	dw McapeClimb
+	dw McapeClimbMove
+	dw MbigSink
+	dw MbigWin
+YoshiAnimTablesTbl_1:
 	dw Yoshi_AnimTbl
 	dw Yoshi_AnimTbl
 	dw Yoshi_AnimTbl
@@ -2430,7 +2430,7 @@ Yoshi_Duck:
 	db $BA, $BB, $AB, $FF
 	db $FF, $AC, $AD, $AE
 	db $FF, $FF, $AF, $B0
-pnt3_CD2C:
+YoshiAnimTablesTbl_2:
 	dw pnt3_CD36
 	dw pnt3_CD36
 	dw pnt3_CD36
@@ -2618,7 +2618,7 @@ YoshiSpit_Duck:
 	db $2D, $2E, $2F, $FF
 	db $FF, $30, $31, $32
 	db $FF, $FF, $33, $34
-pnt3_CE54:
+YoshiAnimTablesTbl_3:
 	dw pnt3_CE5E
 	dw pnt3_CE5E
 	dw pnt3_CE5E
@@ -3044,8 +3044,7 @@ SpecialWarpSettings:
 	dw pnt3_D0E0
 	dw pnt3_D0E4
 	dw pnt3_D0E8
-;	dw SPWarp_BonusRoomSettings
-	dw SPWarp_6_3_CannonSettings
+	dw SPWarp_BonusRoomSettings
 	dw SPWarp_6_3_CannonSettings
 	dw pnt3_D1D0
 SpecialWarpCoords:
