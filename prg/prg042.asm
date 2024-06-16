@@ -2011,45 +2011,45 @@ bra2_905B:
 	LDA #$00
 	STA $0379
 	JSR sub2_90D3
-	LDA #$05
+	LDA #sfx_Beep
 	STA SFXRegister
 	LDA $037F
 	TAX
-	LDA tbl2_9071,X
+	LDA WorldMusicUpdateTable,X
 	STA MusicRegister
 	RTS
-tbl2_9071:
-	db $25 ;overworld map music settings
-	db $25
-	db $25
-	db $25
-	db $25
-	db $24
-	db $24
-	db $24
-	db $24
-	db $24
-	db $24
-	db $24
-	db $24
-	db $24
-	db $24
-	db $24
-	db $24
-	db $24
-	db $28
-	db $28
-	db $28
-	db $28
-	db $28
-	db $27
-	db $27
-	db $27
-	db $27
-	db $27
-	db $27
-	db $26
-	db $26
+WorldMusicUpdateTable:
+	db mus_YoshisIsland ;world select music settings
+	db mus_YoshisIsland
+	db mus_YoshisIsland
+	db mus_YoshisIsland
+	db mus_YoshisIsland ;World 1
+	db mus_MainMap
+	db mus_MainMap
+	db mus_MainMap
+	db mus_MainMap
+	db mus_MainMap      ;World 2
+	db mus_MainMap
+	db mus_MainMap
+	db mus_MainMap
+	db mus_MainMap      ;World 3
+	db mus_MainMap
+	db mus_MainMap
+	db mus_MainMap
+	db mus_MainMap      ;World 4
+	db mus_ForestofIllusion
+	db mus_ForestofIllusion
+	db mus_ForestofIllusion
+	db mus_ForestofIllusion
+	db mus_ForestofIllusion ;World 5
+	db mus_VanillaDome
+	db mus_VanillaDome
+	db mus_VanillaDome
+	db mus_VanillaDome ;World 6
+	db mus_VanillaDome
+	db mus_VanillaDome
+	db mus_ValleyofBowser
+	db mus_ValleyofBowser ;World 7
 	db $00
 tbl2_9091:
 	db $07

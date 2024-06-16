@@ -6499,7 +6499,7 @@ bra6_BFAD:
 loc6_BFC0:
 	LDA #$D0
 	STA InvincibilityTimer
-	LDA #$0C
+	LDA #sfx_PowerDown
 	STA SFXRegister
 	LDA ObjectState,X
 	AND #$E0

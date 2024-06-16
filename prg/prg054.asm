@@ -2211,7 +2211,7 @@ bra3_AB33:
 	CLC
 	ADC #$01
 	STA Player1Lives,Y
-	LDA #$07
+	LDA #sfx_1up
 	STA SFXRegister
 	BNE bra3_AB55
 bra3_AB4C:
@@ -2686,7 +2686,7 @@ bra3_AE7E:
 	LDA #$01
 	CPX #$0D
 	BNE bra3_AE8E
-	LDA #$0E
+	LDA #sfx_Feather
 	STA SFXRegister
 	LDA #$81
 bra3_AE8E:
@@ -4919,7 +4919,7 @@ bra3_BD18:
 bra3_BD2C:
 	INC $4A ;Increment hit counter
 	CLC
-	ADC #$11 ;Play next hit sound
+	ADC #sfx_EnemyHit1 ;Play next hit sound
 bra3_BD31:
 	STA SFXRegister ;Play appropriate sound
 	LDY $2B

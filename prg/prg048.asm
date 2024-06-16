@@ -479,7 +479,7 @@ ptr9_8378:
 	STA PlayerXSpeed
 	LDA #$01
 	JSR RewardPoints
-	LDA #$12
+	LDA #sfx_EnemyHit2
 	STA SFXRegister
 	LDA ObjectSlot,X
 	CLC
@@ -740,7 +740,7 @@ ptr9_857E:
 	STA PlayerXSpeed
 	LDA #$01
 	JSR RewardPoints
-	LDA #$12
+	LDA #sfx_EnemyHit2
 	STA SFXRegister
 	LDA ObjectSlot,X
 	CLC
@@ -1272,7 +1272,7 @@ ptr9_89A8:
 	STA PlayerXSpeed
 	LDA #$01
 	JSR RewardPoints
-	LDA #$12
+	LDA #sfx_EnemyHit2
 	STA SFXRegister
 	LDA ObjectSlot,X
 	AND #$01
@@ -1639,7 +1639,7 @@ ptr9_8C7F:
 	STA PlayerXSpeed
 	LDA #$01
 	JSR RewardPoints
-	LDA #$12
+	LDA #sfx_EnemyHit2
 	STA SFXRegister
 	LDA ObjectSlot,X
 	AND #$01
@@ -2000,7 +2000,7 @@ ptr9_8F6B:
 	STA PlayerXSpeed
 	LDA #$01
 	JSR RewardPoints
-	LDA #$12
+	LDA #sfx_EnemyHit2
 	STA SFXRegister
 	LDA ObjectSlot,X
 	AND #$01

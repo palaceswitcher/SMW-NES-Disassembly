@@ -277,7 +277,7 @@ bra9_81FC:
 	STA PlayerXSpeed
 	LDA #$01
 	JSR RewardPoints
-	LDA #$12
+	LDA #sfx_EnemyHit2
 	STA SFXRegister
 	LDX $A4
 	LDA ObjectSlot,X
@@ -560,7 +560,7 @@ bra9_8448:
 	STA PlayerXSpeed
 	LDA #$01
 	JSR RewardPoints
-	LDA #$12
+	LDA #sfx_EnemyHit2
 	STA SFXRegister
 	JMP loc9_846E
 	RTS
@@ -841,7 +841,7 @@ ptr2_8668:
 	STA PlayerXSpeed
 	LDA #$01
 	JSR RewardPoints
-	LDA #$12
+	LDA #sfx_EnemyHit2
 	STA SFXRegister
 	LDX $A4
 	INC ObjectSlot,X
@@ -1557,7 +1557,7 @@ bra9_8BB6:
 	STA PlayerXSpeed
 	LDA #$01
 	JSR RewardPoints
-	LDA #$12
+	LDA #sfx_EnemyHit2
 	STA SFXRegister
 	LDX $A4
 	LDA #$81
@@ -2401,7 +2401,7 @@ loc9_91E7:
 	STA PlayerXSpeed
 	LDA #$01
 	JSR RewardPoints
-	LDA #$12
+	LDA #sfx_EnemyHit2
 	STA SFXRegister
 	LDX $A4
 	LDA ObjectSlot,X
@@ -3162,7 +3162,7 @@ ptr2_9765:
 	STA PlayerXSpeed
 	LDA #$01
 	JSR RewardPoints
-	LDA #$12
+	LDA #sfx_EnemyHit2
 	STA SFXRegister
 	JMP loc9_98D1
 sub9_978D:
@@ -3322,7 +3322,7 @@ loc9_98AF:
 	STA PlayerXSpeed
 	LDA #$01
 	JSR RewardPoints
-	LDA #$12
+	LDA #sfx_EnemyHit2
 	STA SFXRegister
 loc9_98D1:
 	LDX $A4
@@ -4526,7 +4526,7 @@ ofs_9E87:
 	db $9E
 	LDA ObjXScreenDistance,X ;The rest of the code in this is unused
 	BPL bra9_9EE4_RTS
-	LDA #$23
+	LDA #mus_Victory
 	STA MusicRegister
 	LDA #$06
 	STA Event

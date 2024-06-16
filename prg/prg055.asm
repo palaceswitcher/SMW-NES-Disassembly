@@ -2050,7 +2050,7 @@ bra8_8ED8_RTS:
 bra8_8ED9:
 	CMP #$81
 	BNE bra8_8EE5
-	LDA #$10
+	LDA #sfx_Thunder?
 	STA SFXRegister
 	JSR jmp_54_B5BB
 	RTS
@@ -2934,7 +2934,7 @@ bra8_9541:
 	STA PlayerMovement
 	LDA #$04
 	STA PlayerAction
-	LDA #$0F
+	LDA #sfx_Thud
 	STA SFXRegister
 	LDX $A4
 	LDA #$0F

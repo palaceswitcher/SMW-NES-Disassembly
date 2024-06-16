@@ -2844,7 +2844,7 @@ bra_EE86:
 loc_EE99:
 	STA P1Score+1,Y ;Store added high byte
 	INC Player1Lives,X
-	LDA #$07 ;Load 1up sound effect
+	LDA #sfx_1up ;Load 1up sound effect
 bra_EEA1:
 	STA SFXRegister ;Play the loaded sound effect
 	LDA PlayerColXPos

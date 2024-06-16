@@ -141,7 +141,7 @@ bra10_85C4:
 	STA MusicBackup
 bra10_85CE:
 	JSR sub10_8E2F
-	LDA #$00
+	LDA #0
 	STA SFXRegister ;Clear SFX register
 bra10_85D5_RTS:
 	RTS
@@ -1369,6 +1369,38 @@ tbl10_8E41:
 	dw YoshiFireSpit_Footer
 	dw Checkpoint_Footer
 	dw Chainsaw_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
+	dw Empty_Footer
 	dw Empty_Footer
 	dw Empty_Footer
 ;Music pointers

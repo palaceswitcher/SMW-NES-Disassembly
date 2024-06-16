@@ -1108,7 +1108,7 @@ pnt5_A706:
 	BEQ bra_A735
 	LDA #$05
 	STA $0312
-	LDA #$0A
+	LDA #sfx_Warp
 	STA SFXRegister
 	JSR sub_B068
 	LDA #$00
@@ -1140,7 +1140,7 @@ bra_A74B:
 	STA GS0SpriteYPos+1
 	LDA #$01
 	STA GameType
-	LDA #$05
+	LDA #sfx_Beep
 	STA SFXRegister
 bra_A760_RTS:
 	RTS
@@ -1962,7 +1962,7 @@ loc_ACB3:
 	STA PPUMask
 	STA PPUMaskMirror ;Clear PPU registers
 	JSR ClearNametable ;Clear the screen
-	LDA #$2E
+	LDA #mus_Silence
 	STA MusicRegister ;Stop playing music
 	LDA CurrentPlayer
 	BNE P2TransitionSet ;Branch if player #2 is playing

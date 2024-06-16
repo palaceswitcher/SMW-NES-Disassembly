@@ -1557,7 +1557,7 @@ ptr6_8ADB:
 	CMP #$30
 	BCC bra6_8B13
 	BNE bra6_8AEA
-	LDA #$10
+	LDA #sfx_Thunder?
 	STA SFXRegister
 	BNE bra6_8B13
 bra6_8AEA:
@@ -3564,7 +3564,7 @@ ptr6_9603:
 	CMP #$50
 	BCC bra6_961A
 bra6_9611:
-	LDA #$23
+	LDA #mus_Victory
 	STA MusicRegister
 	LDA #$09
 	STA Event

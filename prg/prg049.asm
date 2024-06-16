@@ -829,7 +829,7 @@ ptr10_8564:
 	LDA ObjectYPos,X
 	CMP #$B0
 	BCC bra5_857F_RTS
-	LDA #$23
+	LDA #mus_Victory
 	STA MusicRegister
 	LDA #$09
 	STA Event
@@ -948,7 +948,7 @@ ptr10_864E:
 	STA PlayerMovement
 	LDA #$30
 	STA PlayerYSpeed
-	LDA #$0F
+	LDA #sfx_Thud
 	STA SFXRegister
 	LDA #$05
 	STA ObjectAction,X
@@ -1210,7 +1210,7 @@ bra5_8871:
 	LDA #$01
 	JSR sub3_B7A2
 	BEQ bra5_8886
-	LDA #$0E
+	LDA #sfx_Feather
 	STA SFXRegister
 	LDA #$02
 	STA ObjectAction,X
@@ -1953,7 +1953,7 @@ bra5_8E32:
 	STA PlayerMovement
 	LDA #$20
 	STA PlayerYSpeed
-	LDA #$16
+	LDA #sfx_EnemyHit6
 	STA SFXRegister
 bra5_8E4E_RTS:
 	RTS
@@ -2207,7 +2207,7 @@ bra5_902C:
 	LDA $062B
 	AND #$07
 	BNE bra5_9037
-	LDA #$1D
+	LDA #sfx_Cutter
 	STA SFXRegister
 bra5_9037:
 	JSR sub5_92D7
@@ -4048,7 +4048,7 @@ bra5_9CDF:
 bra5_9CE0:
 	BCS bra5_9CF3_RTS
 	INC Player1Lives
-	LDA #$07
+	LDA #sfx_1up
 	STA SFXRegister
 	LDA #$00
 	STA ObjectSlot,X

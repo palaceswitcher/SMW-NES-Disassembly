@@ -701,7 +701,7 @@ bra14_960D:
 	BEQ bra14_9619
 	JMP loc14_970B_RTS
 bra14_9619:
-	LDA #$10
+	LDA #sfx_Thunder?
 	STA SFXRegister
 	INC $05F6
 	LDY ObjectCount

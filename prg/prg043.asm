@@ -2239,7 +2239,7 @@ bra3_960D:
 	BEQ bra3_9619
 	JMP loc3_970B_RTS
 bra3_9619:
-	LDA #$10
+	LDA #sfx_Thunder?
 	STA SFXRegister
 	INC $05F6
 	LDY ObjectCount
@@ -2373,7 +2373,7 @@ loc3_970B_RTS:
 	LDY #$00
 bra3_975B:
 	STY PlayerMovement
-	LDA #$2F
+	LDA #mus_Ending
 	STA MusicRegister
 	RTS
 bra3_9762_RTS:

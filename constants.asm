@@ -40,23 +40,23 @@ sfx_Checkpoint = $1C
 sfx_Cutter = $1D
 
 ;Music IDs
-mus_Title = $20
-mus_GameOver = $21
-mus_Death = $22
-mus_Victory = $23
-mus_MainMap = $24
-mus_YoshisIsland = $25
-mus_ValleyofBowser = $26
-mus_VanillaDome = $27
-mus_ForestofIllusion = $28
-mus_Overworld = $29
-mus_Underground = $2A
-mus_GhostHouse = $2B
-mus_Castle = $2C
-mus_Underwater = $2D
-mus_Silence = $2E
-mus_Ending = $2F
-mus_InvincibleStar = $30
+mus_Title = $40
+mus_GameOver = $41
+mus_Death = $42
+mus_Victory = $43
+mus_MainMap = $44
+mus_YoshisIsland = $45
+mus_ValleyofBowser = $46
+mus_VanillaDome = $47
+mus_ForestofIllusion = $48
+mus_Overworld = $49
+mus_Underground = $4A
+mus_GhostHouse = $4B
+mus_Castle = $4C
+mus_Underwater = $4D
+mus_Silence = $4E
+mus_Ending = $4F
+mus_InvincibleStar = $50
 
 ;Music Note IDs
 NRest = $00

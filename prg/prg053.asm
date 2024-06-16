@@ -369,7 +369,7 @@ bra7_826C:
 	BNE bra7_827B_RTS
 	LDA #$00
 	STA YoshiUnmountedState
-	LDA #$0D
+	LDA #sfx_YoshiMount
 	STA SFXRegister
 bra7_827B_RTS:
 	RTS
@@ -956,7 +956,7 @@ bra7_862A:
 	STA $0633
 	LDA #$1E
 	STA $0635
-	LDA #$0F
+	LDA #sfx_Thud
 	STA SFXRegister
 	LDA #$00
 	LDX $A4
@@ -973,7 +973,7 @@ bra7_8653:
 	STA PlayerMovement
 	LDA #$04
 	STA PlayerAction
-	LDA #$03
+	LDA #sfx_Jump
 	STA SFXRegister
 	RTS
 bra7_866B:
@@ -1580,7 +1580,7 @@ bra7_8B15:
 	STA PlayerMovement
 	LDA #$04
 	STA PlayerAction
-	LDA #$0F
+	LDA #sfx_Thud
 	STA SFXRegister
 	LDX $A4
 	LDA #$0F
@@ -1604,7 +1604,7 @@ bra7_8B3F:
 	INC ObjectState,X
 	LDA PlayerHoldFlag
 	BNE bra7_8B33_RTS
-	LDA #$15
+	LDA #sfx_EnemyHit5
 	STA SFXRegister
 	RTS
 ptr5_8B55:
@@ -2843,7 +2843,7 @@ loc7_9518:
 bra7_951E:
 	LDA ObjectState,X
 	BNE bra7_9527
-	LDY #$0F
+	LDY #sfx_Thud
 	STY SFXRegister
 bra7_9527:
 	CMP #$10
@@ -3517,7 +3517,7 @@ bra7_999B:
 	STA ObjectVariables,X
 	LDA #$28
 	STA ObjectState,X
-	LDA #$18
+	LDA #sfx_EnemyHit8
 	STA SFXRegister
 	RTS
 ptr5_99BF:
@@ -3805,7 +3805,7 @@ bra7_9BA8:
 bra7_9BB3:
 	JSR sub7_9EE5
 	LDX $A4
-	LDA #$1C
+	LDA #sfx_Checkpoint
 	STA SFXRegister
 	LDA #$00
 	STA ObjectSlot,X
