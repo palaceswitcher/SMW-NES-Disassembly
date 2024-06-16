@@ -1812,7 +1812,7 @@ PlayerCapeStatic_AnimTbl: ;player animations for when the cape isn't animating
 	dw McapeClimb
 	dw McapeClimbMove
 	dw MbigLeap
-	dw MbigWin  
+	dw MbigWin
 PlayerCapeStaticHold_AnimTbl: 
 	dw McapeHoldStand
 	dw MbigHoldWalk
@@ -2036,7 +2036,7 @@ PlayerCapeMove_AnimTbl:
 	dw MbigWalk
 	dw MbigRun
 	dw MbigWalk
-	dw MbigHoldJump
+	dw MbigJump 
 	dw MbigSpin
 	dw MbigTurn
 	dw MbigDuck
@@ -3044,8 +3044,7 @@ SpecialWarpSettings:
 	dw pnt3_D0E0
 	dw pnt3_D0E4
 	dw pnt3_D0E8
-;	dw SPWarp_BonusRoomSettings
-	dw SPWarp_6_3_CannonSettings
+	dw SPWarp_BonusRoomSettings
 	dw SPWarp_6_3_CannonSettings
 	dw pnt3_D1D0
 SpecialWarpCoords:
