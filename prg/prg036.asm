@@ -3044,7 +3044,8 @@ SpecialWarpSettings:
 	dw pnt3_D0E0
 	dw pnt3_D0E4
 	dw pnt3_D0E8
-	dw SPWarp_BonusRoomSettings
+;	dw SPWarp_BonusRoomSettings
+	dw SPWarp_6_3_CannonSettings
 	dw SPWarp_6_3_CannonSettings
 	dw pnt3_D1D0
 SpecialWarpCoords:
