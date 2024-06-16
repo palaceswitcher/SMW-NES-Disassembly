@@ -267,7 +267,7 @@ Overworld_P2:
 	.byte NLen+21
 	.byte D3
 	.byte NLen+6
-	.byte A2
+	.byte A#2
 	.byte G2
 	.byte NLen+7
 	.byte NRest

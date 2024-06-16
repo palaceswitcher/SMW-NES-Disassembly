@@ -14,11 +14,11 @@ Title_P1:
 	.byte G3
 	.byte NRest
 	.byte NRest
-	.byte Transpose, $13
-	.byte DutySet, $12
-	.byte PitchSet, $7A
+	.byte Transpose, $1F
 	.byte DutySet, $38
-	.byte G3
+	.byte PitchSet, $7A
+	.byte VolSet, $11
+	.byte G2
 Title_P1Loop:
 	.byte Transpose, $13
 	.byte DutySet, $38
@@ -581,7 +581,10 @@ Title_P2Loop:
 	.byte B1
 	.byte NLen+12
 	.byte NRest
-	.byte Transpose, $13
+	.byte Transpose, $1F
+	.byte DutySet, $38
+	.byte PitchSet, $7A
+	.byte VolSet, $11
 	.byte G2
 	.byte SongJump
 	.word Title_P2Loop

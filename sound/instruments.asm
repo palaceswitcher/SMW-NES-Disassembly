@@ -1320,10 +1320,10 @@ ofs_CheckpointPitch3F:
 	.byte $FF
 	.byte $FE
 ofs_CheckpointPitch2A:
-	.byte $01, $80
-	.byte $01, $85
-	.byte $01, $8A
-	.byte $01, $8F
+	.byte $01, $00
+	.byte $01, $05
+	.byte $01, $0A
+	.byte $01, $0F
 	.byte $01, $14
 	.byte $01, $19
 	.byte $01, $1E
