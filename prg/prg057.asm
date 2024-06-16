@@ -2743,47 +2743,46 @@ bra4_AE0F:
 	INC InvincibilityTimer ;Increment timer
 bra4_AE14_RTS:
 	RTS 
+;-=-=-=-=-=-=-=-=-=-=-=-
 ItemBoxLogicSub: ;X: Itembox, Y: Player Power
 	LDA zInputBottleNeck
-	AND #buttonSelect ;Continue if select pressed
-	BEQ ItemBoxLogicDone
-	
-	LDA #$07
-	STA Event ;Set to event 7 (using lesser powerup from item box)
-	
-	LDY PlayerPowerup ;Load current powerup into Y register
-	CPY #$04
-	BNE bra4_AE27 ;Branch if player doesn't have cape
-	LDY #$03 ;Load feather item to Y register
-	
-bra4_AE27:
-	LDX ItemBox ;Load item box contents into x register
-	BEQ ItemBoxLogicDone ;If item box is empty, stop
-	CPX #$02
-	BCS bra4_AE34 ;Branch if there's a flower in the item box
-	CPY #$00
-	BNE bra4_AE45 ;Branch if not empty nor flower
-	
-bra4_AE34:
-	STY ItemBox ;Put powerup from from Y register in item box
-	LDA #$01
-	STX PlayerPowerup ;Use item box contents stored in the x register
-	CPX #$03 ;if the player doesn't have a cape,
-	BNE bra4_AE42 ;branch
-	LDA #$81
-	
+	AND #buttonSelect	
+	BNE DoItemboxLogic ;if select is pressed, branch
+ItemBoxLogicDone:
+	RTS
+DoItemboxLogic:
+	LDX ItemBox
+	BEQ ItemBoxLogicDone ;if itembox empty, end
+	LDY PlayerPowerup	;load player's powerup into the y register
+	CPY ItemBox
+	BEQ ItemBoxLogicDone ;if itembox matches current player power, end
+	BCC SetItemChange ;if player power < itembox, branch ahead
+	CPX #$01
+	BEQ ItemBoxLogicDone ;if itembox contains a mushroom, end
+SetItemChange:
+	LDA #$07 ;else
+	STA Event	;set to event 7, Powerup Change Event
+	CPY #$04 
+	BCC bra4_AE34 ;if the players cape isn't moving then branch ahead
+	DEY ;else make the cape static 
+bra4_AE34: ;Swap powerups 
+	STY ItemBox	;stores the powerup in the y register in the item box
+	STX PlayerPowerup ;use item box contents stored in the x register
+	CPX #$03	
+	BNE bra4_AE42 ;if the player doesn't have a cape now, branch
+	LDA #$81	
 bra4_AE42:
-	STA PlayerPowerupBuffer
+	STA PlayerPowerupBuffer 	
 bra4_AE45:
 	LDA ItemBoxSFX,X
-	STA SFXRegister ;Play the corresponding sound effect for the item
-ItemBoxLogicDone:
+	STA SFXRegister		;Play the corresponding sound effect for the item
 	RTS
 ItemBoxSFX:
 	db $00 ;Empty
 	db sfx_Powerup ;Mushroom
 	db sfx_Powerup ;Flower
 	db sfx_Feather ;Feather
+;-=-=-=-=-=-=-=-=-=-=-=-
 ofs_AE4F:
 	LDA PlayerPowerup
 	CMP #$03
@@ -2993,6 +2992,7 @@ ShootFireball:
 	STA PlayerAction ;Set PAct to throwing fireball
 	JSR SetFireballDir ;Jump to set fireball direction
 ShootFireballDone:
+
 	RTS		
 MidAirFireShoot:
 	LDA PlayerPowerup
@@ -3113,6 +3113,8 @@ bra4_B08C:
 	LDA UsedFireballSlots
 	EOR #$01
 	STA UsedFireballSlots
+	LDA #$05 
+	STA SFXRegister; Play fireball throw sound
 	RTS
 ;----------------------------------------
 ;END OF FIREBALL SPAWNING
@@ -3969,25 +3971,17 @@ bra4_B67B_RTS:
 ;-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-	
 ClimbingRoutines: ;This section locks the player in place if no directions are held (suspend player in mid air)
 	LDA zInputCurrentState
-	AND #$0F
-	BNE ClimbingActionList ;If a direction is held, branch
+	TAX ;backup inputs in X for faster access later
+	AND #$8F
+	BNE ClimbJoyUpChk ;If A or the Dpad are pressed, branch straight to fence movement sub
 	LDA #$00 ;else
 	STA PlayerYSpeed
 	STA PlayerXSpeed ;Stop the player's movement
 	LDA #$0D
-	STA PlayerAction ;Make the player climb
-;************************************************************
-ClimbingActionList:
-	JSR ClimbJoyUpChk
-	JSR PlayerClimbJump
+	STA PlayerAction ;Make the player idle climb
 	RTS
-PlayerClimbJump: ;Jump from climbing
-	LDA zInputBottleNeck
-	AND #buttonA
-	BEQ PlayerClimbJumpRTS ;If A button not pressed, branch
-	LDA zInputCurrentState ;else
-	AND #dirUp
-	BNE PlayerClimbJumpRTS ;Make sure that up isn't being held
+;************************************************************	
+PlayerClimbJump:
 	LDA #$50
 	STA PlayerYSpeed ;Set Y speed to $50
 	LDA PlayerMovement
@@ -3999,78 +3993,63 @@ PlayerClimbJump: ;Jump from climbing
 	STA SFXRegister ;Play the jump sound
 	LDA #$00
 	STA PlayerState ;Make the player stop climbing
-	STA $06DC ;Clear Unknown 1
-	STA $06DD ;Clear Unknown 2
+;	STA $06DC ;Clear Unknown 1
+;	STA $06DD ;Clear Unknown 2
 PlayerClimbJumpRTS:
 	RTS
-;********************
-ClimbJoyUpChk:
-	LDA zInputCurrentState
-	AND #dirUp ;if up isn't held,
-	BEQ ClimbJoyDownChk ;branch ahead to down Dpad check
-;Else
-	LDA $06DD; load Unknown 2
-	BEQ bra4_B6D1 ;if Unknown2 empty, branch ahead
-	LDA #$00 ;else
-	STA PlayerYSpeed;clear y speed
-	BEQ ClimbJoyDownChk ;branch ahead, always
-	
-bra4_B6D1: ;unknown, mirroring related maybe?
+;******************** ;Fixed climbing directional bug
+;Note, some variable calls of unknown function have been removed
+;these are for $06DD, $06DE and $06DC
+;if these turn out to be necessary, reference older code and re-add
+;**************
+ClimbJoyUpChk: 
+	TXA
+	AND #dirUp
+	BEQ ClimbJumpChk	;if up isn't held, branch ahead to jump check
+ClimbSetMovUp:  ;else
 	LDA PlayerMovement
-	ORA #$04 ;flip some bits
-	BNE bra4_B6E7 ;If result non zero, branch
-	
-ClimbJoyDownChk:
-	LDA zInputCurrentState
-	AND #dirDown ;if down isn't held,
-	BEQ bra4_B6EF ;branch
-	LDA #$00
-	STA $06DD ;Clear Unknown 2
-	LDA PlayerMovement
-	AND #$7B
-	
-bra4_B6E7: ;Move player Up/Down
-	STA PlayerMovement
+	ORA #$04 ;set player movement to upwards 
+	BNE ClimbVMove ;branch ahead, always (pretty sure it is anyway)
+ClimbJumpChk:
+	TXA ;retrive inputs
+	AND #buttonA
+	BNE PlayerClimbJump	;if A is pressed, branch back to fence jump routine
+ClimbJoyDownChk: 
+	LDA #$00	
+	STA PlayerYSpeed ;clear Y speed if up wasn't held
+	TXA ;retrive inputs
+	AND #dirDown	
+	BEQ ClimbJoyLeftChk ;if down wasn't held, branch
+	LDA PlayerMovement 
+	AND #$7B ;else set Player movement to down
+ClimbVMove: ;Move player U/D
+	STA PlayerMovement ;store loaded movement direction
+	LDA #$0E
+	STA PlayerAction ;set action to climb moving 
 	LDA #$10
 	STA PlayerYSpeed ;set Y speed to #$10
-	BNE PlayerClimbDone
-	
-bra4_B6EF:
-	LDA $06DE
-	BNE ClimbJoyLeftChk
-	LDA $06DC
-	BEQ ClimbJoyLeftChk
-	LDA #$00
-	STA PlayerXSpeed
-	RTS
-	
 ClimbJoyLeftChk:
-	LDA zInputCurrentState ;
-	AND #dirLeft ;if left isn't pressed,
-	BEQ ClimbJoyRightChk ;branch to check right
+	TXA ;retrive inputs
+	AND #dirLeft ;if left isn't pressed
+	BEQ ClimbJoyRightChk ;branch
 	LDA PlayerMovement
-	ORA #$41
-	BNE bra4_B716
-	
+	ORA #$41 ;else set player movement left 
+	BNE ClimbHMove
 ClimbJoyRightChk:
-	LDA zInputCurrentState ;
-	AND #dirRight ;if right isn't pressed,
-	BEQ bra4_B71E_RTS ;branch to RTS
-	LDA PlayerMovement
-	AND #$BE
-	
-bra4_B716: ;Move player Left/Right
-	STA PlayerMovement  ;Store it
+	LDA #$00	
+	STA PlayerXSpeed ;Clear X speed if left wasn't pressed 
+	TXA ;retrive inputs	
+	AND #dirRight		;if right isn't pressed
+	BEQ PlayerClimbDone	;branch to RTS
+	LDA PlayerMovement  
+	AND #$BE		;Else, set player movement right
+ClimbHMove: ;Move player L/R
+	STA PlayerMovement  ;Store loaded player movement direction
 	LDA #$10
 	STA PlayerXSpeed ;set Player X speed to #$10
-	BNE PlayerClimbDone
-	
-bra4_B71E_RTS:
-	RTS
-	
-PlayerClimbDone:
 	LDA #$0E
-	STA PlayerAction
+	STA PlayerAction ;set player action to climb move
+PlayerClimbDone:
 	RTS
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-		
 ofs_B724:
@@ -4502,7 +4481,7 @@ CliffDeathCheck:
 	BCC MovePlayerDown ;If above this point, continue falling as normal
 	;Otherwise, kill the player
 	LDA #mus_Death	
-	STA MusicRegister ;Play death music
+	STA MusicRegister ;Play death mus_ic
 	LDA #$00		
 	STA PlayerPowerup ;Remove any powerups
 	STA Player1YoshiStatus ;Remove yoshi
