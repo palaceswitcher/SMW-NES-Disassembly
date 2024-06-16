@@ -3,8 +3,7 @@
 - Jumps, branches, tables, and RAM addresses should always be written in TitleCase and should not be too verbose.
 - Shortening longer words in a label is highly encouraged.
 - What type of memory it is should not be specified unless it's a table. Do not put things like "RAM" in a RAM label or "branch" in a branch label.
-- Only tables should separate words with underscores. See below for data labeling conventions.
-- Please use local labels like "+" or "-" for forward and backward branches respectively when possible. If there are multiple near each other, you can put up to two more plus or minus signs. Local labels may also use an @ sign, such as `@Stop`.
+- Use local labels with a "@" at the start of them to reduce overly long names when possible. For example, the routine that checks calculates the player's horizontal jump speed and the routine that caluclates the horizontal jump speed for the Chargin' Chuck could both use `@CalcJumpXSpeed` within the routine instead of using `CalcPlayerJumpXSpeed` and `CalcChuckJumpXSpeed` respectively.
 ## Constants
 - Constant values should be written in camelCase, with an underscore separating the first word.
 - Constants should have their names abbreviated, if possible.
@@ -39,9 +38,10 @@ Description blocks refer to a comment "block" that marks the start of something 
 - Note that subroutines do not have to state that they are subroutines in their name.
 	- Examples: `RewardPoints`, `SkipCapeKill`
 
-## Data Label Names
-Below are naming schemes for types of tables. The word "Object" should be replaced with whatever is using the table. If you find something that doesn't fit into any of these, you can give it your own naming scheme, provided that it follows the convention for labels stated above.
-
-`AnimTbl_Object`: Animation Table\
-`SprMap_ObjectAnim<frame number>`: Sprite Mappings\
-`Object_SprMapPtrs`: Sprite Pointers
+## Special Label Names
+Specific formatting should be used for code that serves a specific and common purpose or for tables of a certain function. The naming scheme for these can be found below, with words like "Purpose" being replaced by the purpose of the code or data the label represents.
+### Objects
+`Obj_Purpose`: Routine or subroutine used by multiple objects\
+`Object_AnimTbl`: Animation table\
+`SprMap_ObjectAnim<frame number>`: Sprite mappings\
+`Object_SprMapPtrs`: Sprite mapping pointers

@@ -341,7 +341,7 @@ bra4_8274:
 loc4_8274:
 	INC ObjectVariables,X
 	RTS
-obj_hBE:
+ObjID_hBE:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra4_8282
@@ -362,7 +362,7 @@ bra4_8289:
 	BEQ bra4_82A5 ;unlogged
 	CMP #$FF ;unlogged
 	BEQ bra4_82A5 ;unlogged
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra4_82A5:
 	LDA ObjectYPos,X ;unlogged
 	SEC ;unlogged
@@ -414,7 +414,7 @@ loc4_82F0:
 	BEQ bra4_8312
 	CMP #$FF
 	BEQ bra4_8312
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra4_8312:
 	LDA ObjectYPos,X
 	SEC
@@ -460,15 +460,15 @@ bra4_835A:
 	STA $33
 	JMP ($32)
 tbl4_836E:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr9_8378
 	dw ptr_AD88
 ptr9_8378:
 	JSR sub4_83B3
-	JSR CapeHitCheck
-	JSR PlayerHitCheck
+	JSR Obj_CapeHitCheck
+	JSR Obj_PlayerHitCheck
 	LDA #$30
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -601,7 +601,7 @@ bra4_8468:
 	db $40
 	db $01
 	db $00
-obj_hC0:
+ObjID_hC0:
 	LDX $A4
 	LDA ObjectVariables,X
 	CMP #$80
@@ -623,7 +623,7 @@ bra4_848F:
 	BEQ bra4_84AB
 	CMP #$FF
 	BEQ bra4_84AB
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra4_84AB:
 	LDA ObjectYPos,X
 	SEC
@@ -675,7 +675,7 @@ loc4_84F6:
 	BEQ bra4_8518
 	CMP #$FF
 	BEQ bra4_8518
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra4_8518:
 	LDA ObjectYPos,X
 	SEC
@@ -721,15 +721,15 @@ bra4_8560:
 	STA $33
 	JMP ($32)
 tbl4_8574:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr9_857E
 	dw ptr_AD88
 ptr9_857E:
 	JSR sub4_85B9
-	JSR CapeHitCheck
-	JSR PlayerHitCheck
+	JSR Obj_CapeHitCheck
+	JSR Obj_PlayerHitCheck
 	LDA #$30
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -851,7 +851,7 @@ loc4_8669:
 	STA $05F0
 	TYA
 	JMP loc4_9104
-obj_hC2:
+ObjID_hC2:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra4_867F
@@ -868,7 +868,7 @@ bra4_867F:
 	BEQ bra4_869B ;unlogged
 	CMP #$FF ;unlogged
 	BEQ bra4_869B ;unlogged
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra4_869B:
 	LDA ObjectYPos,X ;unlogged
 	SEC ;unlogged
@@ -920,7 +920,7 @@ loc4_86E6:
 	BEQ bra4_8708
 	CMP #$FF
 	BEQ bra4_8708
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra4_8708:
 	LDA ObjectYPos,X
 	SEC
@@ -966,14 +966,14 @@ bra4_8750:
 	STA $33
 	JMP ($32)
 tbl4_8764:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr9_876E
 	dw ptr_AD88
 ptr9_876E:
 	JSR sub4_8778
-	JSR CapeHitCheck
+	JSR Obj_CapeHitCheck
 	JSR jmp_54_BC3E
 	RTS
 sub4_8778:
@@ -1064,7 +1064,7 @@ tbl4_8804:
 	db $07
 	db $07
 	db $07
-obj_hCE:
+ObjID_hCE:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra4_881E
@@ -1081,7 +1081,7 @@ bra4_881E:
 	BEQ bra4_883A
 	CMP #$FF
 	BEQ bra4_883A
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra4_883A:
 	LDA ObjectYPos,X
 	SEC
@@ -1150,7 +1150,7 @@ loc4_88AB:
 	BEQ bra4_88CA
 	CMP #$FF
 	BEQ bra4_88CA
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra4_88CA:
 	LDA ObjectYPos,X
 	SEC
@@ -1207,7 +1207,7 @@ loc4_8920:
 	BEQ bra4_8942
 	CMP #$FF
 	BEQ bra4_8942
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra4_8942:
 	LDA ObjectYPos,X
 	SEC
@@ -1253,15 +1253,15 @@ bra4_898A:
 	STA $33
 	JMP ($32)
 tbl4_899E:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr9_89A8
 	dw ptr_AD88
 ptr9_89A8:
 	JSR sub4_89DA
-	JSR CapeHitCheck
-	JSR PlayerHitCheck
+	JSR Obj_CapeHitCheck
+	JSR Obj_PlayerHitCheck
 	LDA #$30
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -1414,7 +1414,7 @@ tbl4_8AAB:
 	db $08
 	db $08
 	db $08
-obj_hAE:
+ObjID_hAE:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -1427,7 +1427,7 @@ obj_hAE:
 	BEQ bra4_8AE9
 	CMP #$FF
 	BEQ bra4_8AE9
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra4_8AE9:
 	LDA ObjectYPos,X
 	SEC
@@ -1491,8 +1491,8 @@ bra4_8B45:
 	STA $33
 	JSR GetSpeedData
 bra4_8B68:
-	JSR CapeHitCheck
-	JSR PlayerHitCheck
+	JSR Obj_CapeHitCheck
+	JSR Obj_PlayerHitCheck
 	JMP jmp_54_BF74
 ptr6_8B71:
 	LDY #$00
@@ -1505,7 +1505,7 @@ bra4_8B7E:
 	STY $05F0
 	LDA #$00
 	JMP loc4_90CE
-obj_hD0:
+ObjID_hD0:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra4_8B90
@@ -1522,7 +1522,7 @@ bra4_8B90:
 	BEQ bra4_8BAC
 	CMP #$FF ;unlogged
 	BEQ bra4_8BAC ;unlogged
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra4_8BAC:
 	LDA ObjectYPos,X
 	SEC
@@ -1574,7 +1574,7 @@ loc4_8BF7:
 	BEQ bra4_8C19
 	CMP #$FF
 	BEQ bra4_8C19
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra4_8C19:
 	LDA ObjectYPos,X
 	SEC
@@ -1620,15 +1620,15 @@ bra4_8C61:
 	STA $33
 	JMP ($32)
 tbl4_8C75:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr9_8C7F
 	dw ptr_AD88
 ptr9_8C7F:
 	JSR sub4_8CB1
-	JSR CapeHitCheck
-	JSR PlayerHitCheck
+	JSR Obj_CapeHitCheck
+	JSR Obj_PlayerHitCheck
 	LDA #$30
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -1744,7 +1744,7 @@ bra4_8D71:
 	STA $05F0
 	TYA
 	JMP loc4_9104
-obj_hB0:
+ObjID_hB0:
 	LDX $A4
 	JSR sub4_8DEC
 	LDA ObjectXPos,X
@@ -1758,7 +1758,7 @@ obj_hB0:
 	BEQ bra4_8D9E
 	CMP #$FF
 	BEQ bra4_8D9E
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra4_8D9E:
 	LDA ObjectYPos,X
 	SEC
@@ -1840,7 +1840,7 @@ bra4_8E35:
 	STY $05F0
 	LDA #$01
 	JMP loc4_90CE
-obj_hD2:
+ObjID_hD2:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra4_8E47
@@ -1857,7 +1857,7 @@ bra4_8E47:
 	BEQ bra4_8E63
 	CMP #$FF
 	BEQ bra4_8E63
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra4_8E63:
 	LDA ObjectYPos,X
 	SEC
@@ -1935,7 +1935,7 @@ loc4_8EE3:
 	BEQ bra4_8F05
 	CMP #$FF
 	BEQ bra4_8F05
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra4_8F05:
 	LDA ObjectYPos,X
 	SEC
@@ -1981,15 +1981,15 @@ bra4_8F4D:
 	STA $33
 	JMP ($32)
 tbl4_8F61:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr9_8F6B
 	dw ptr_AD88
 ptr9_8F6B:
 	JSR sub4_8F9D
-	JSR CapeHitCheck
-	JSR PlayerHitCheck
+	JSR Obj_CapeHitCheck
+	JSR Obj_PlayerHitCheck
 	LDA #$30
 	STA PlayerYSpeed
 	LDA PlayerMovement
@@ -2091,7 +2091,7 @@ tbl4_9038:
 	db $0F
 	db $0F
 	db $0F
-obj_hB2:
+ObjID_hB2:
 	LDX $A4
 	LDA ObjFrameCounter
 	AND #$02
@@ -2116,7 +2116,7 @@ bra4_905A:
 	BEQ bra4_9076
 	CMP #$FF
 	BEQ bra4_9076
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra4_9076:
 	LDA ObjectYPos,X
 	SEC
@@ -2391,7 +2391,7 @@ SprMap_BaseballChuck_Throw2:
 	db $32, $33, $34
 ptr6_9286:
 	RTS
-obj_hD6:
+ObjID_hD6:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra4_92C1
@@ -2415,14 +2415,14 @@ obj_hD6:
 	BEQ bra4_92C0_RTS
 	LDA #$00
 	STA BooBuddiesFlag
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra4_92C0_RTS:
 	RTS
 bra4_92C1:
 	LDA BooBuddiesFlag
 	CMP #$FF
 	BNE bra4_92CA
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra4_92CA:
 	LDA #$FF
 	STA BooBuddiesFlag
@@ -2520,7 +2520,7 @@ tbl4_935F:
 	db $80
 	db $00
 	db $40
-obj_hB4:
+ObjID_hB4:
 	LDX $A4
 	LDA BooBuddiesFlag
 	CMP #$FF
@@ -2603,7 +2603,7 @@ bra4_93FA:
 bra4_93FE:
 	STA ObjectYScreen,X
 	RTS
-obj_hD8:
+ObjID_hD8:
 	LDX $A4
 	LDA ObjectVariables,X
 	CMP #$80
@@ -2621,7 +2621,7 @@ bra4_940E:
 	BEQ bra4_942A
 	CMP #$FF
 	BEQ bra4_942A
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra4_942A:
 	LDA ObjectYPos,X
 	SEC
@@ -2673,7 +2673,7 @@ loc4_9475:
 	BEQ bra4_9497
 	CMP #$FF
 	BEQ bra4_9497
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra4_9497:
 	LDA ObjectYPos,X
 	SEC
@@ -2719,7 +2719,7 @@ bra4_94DF:
 	STA $33
 	JMP ($32)
 tbl4_94F3:
-	dw ptr_A7BB
+	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw ptr_AB29
 	dw ptr9_94FD
@@ -2752,7 +2752,7 @@ bra4_951E:
 	BEQ bra4_953A
 	CMP #$FF
 	BEQ bra4_953A
-	JMP loc3_A6B5 ;unlogged
+	JMP Obj_RemoveObject ;unlogged
 bra4_953A:
 	LDA ObjectYPos,X
 	SEC
@@ -2920,7 +2920,7 @@ bra4_9671:
 ;----------------------------------------
 ;Boo object code
 ;----------------------------------------
-obj_hDA:
+ObjID_hDA:
 	LDX $A4 ;Get object index
 	LDA ObjectVariables,X
 	CMP #$80
@@ -2940,7 +2940,7 @@ bra4_9691:
 	BEQ bra4_96AD ;Branch if the player and Boo are on the screen
 	CMP #$FF
 	BEQ bra4_96AD ;Branch if the Boo is within one screen behind the player
-	JMP loc3_A6B5 ;Otherwise, unload the boo if it's ahead of the player
+	JMP Obj_RemoveObject ;Otherwise, unload the boo if it's ahead of the player
 bra4_96AD:
 ;Boo Y position - player Y position = vertical distance between Boo and player
 	LDA ObjectYPos,X
@@ -3000,7 +3000,7 @@ loc4_9703:
 	BEQ bra4_9722
 	CMP #$FF
 	BEQ bra4_9722
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra4_9722:
 	LDA ObjectYPos,X
 	SEC
@@ -3098,7 +3098,7 @@ loc4_97C1:
 bra4_97E7_RTS:
 	RTS
 
-obj_hDC:
+ObjID_hDC:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3111,7 +3111,7 @@ obj_hDC:
 	BEQ bra4_9806
 	CMP #$FF
 	BEQ bra4_9806
-	JMP loc3_A6B5
+	JMP Obj_RemoveObject
 bra4_9806:
 	LDA ObjectYPos,X
 	SEC
