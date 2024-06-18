@@ -1,19 +1,19 @@
 YoshiSwallow_P2:
-	.byte $F5
-	.byte $01
-	.byte Transpose
-	.byte $0D
-	.byte DutySet
-	.byte $60
-	.byte PitchSet
-	.byte $5E
-	.byte VolSet
-	.byte $61
-	.byte NLen+12
-	.byte C2
-	.byte $0C
-	.byte $FF
+	db $F5
+	db $01
+	db Transpose
+	db $0D
+	db DutySet
+	db $60
+	db PitchSet
+	db $5E
+	db VolSet
+	db $61
+	notelen 12
+	db C2
+	db $0C
+	db $FF
 YoshiSwallow_Footer:
-	.byte $81
+	db $81
 	.word YoshiSwallow_P2
-	.byte $FF
+	db $FF

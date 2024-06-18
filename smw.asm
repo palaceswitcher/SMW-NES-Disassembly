@@ -4,18 +4,21 @@
 
 ;Assembles with parasyte's fork of ASM6.
 
-;--------------------------------------
+;----------------------------------------
 db "NES", $1A	;NES Header
 db 32			;32 x 16k PRG banks
 db 32			;32 x 8k CHR banks
 db $A1, $50		;Mapper: 90
 dsb 8, $00		;Header Tail
-;--------------------------------------
+;----------------------------------------
 
-; Include constants
-.include constants.asm
+;Constants
+include constants.asm
 
-; General RAM defines
+;Macros
+include macros.asm
+
+;General RAM defines
 
 ;game engine
 PPUControlMirror = $00
@@ -373,169 +376,169 @@ M90_PPU_CFG = $D002
 M90_CHR_CTRL1 = $D003
 
 ;--------------------------------------
-;data chunks---
-;use a hex editor if you want to edit
-;these
-.incbin levels/levels.bin
-.incbin tilesets/ts_levels.bin
+;Level Data
+
+incbin levels/levels.bin
+incbin tilesets/ts_levels.bin
 ;--------------------------------------
 ;PRG banks
 
-.base $C000
-.include prg/prg036.asm
-.pad $E000
+base $C000
+include prg/prg036.asm
+pad $E000
 ;48010 - 4a00f
 ;player mapping data
 
-.base $8000
-.include prg/prg037.asm
-.pad $A000, $00
+base $8000
+include prg/prg037.asm
+pad $A000, $00
 ;4a010 - 4c00f
 ;Code for various objects
 
-.base $8000
-.include prg/prg038.asm
-.pad $A000
+base $8000
+include prg/prg038.asm
+pad $A000
 ;4c010 - 4e00f
 ;unknown/unused tileset data
 
-.base $E000
-.include prg/prg039.asm
-.pad $E000+8192
+base $E000
+include prg/prg039.asm
+pad $E000+8192
 ;4e010 - 5000f
 ;Collision code and tile behavior
 
-.include prg/prg040.asm
+include prg/prg040.asm
 ;50010 - 5200f
 ;Completely empty/unused
 
-.base $A000
-.include prg/prg041.asm
-.pad $C000
+base $A000
+include prg/prg041.asm
+pad $C000
 ;52010 - 5400f
 ;Various Game Mode 0 stuff (Title, map, etc)
 
-.base $8000
-.include prg/prg042.asm
-.pad $A000
+base $8000
+include prg/prg042.asm
+pad $A000
 ;54010 - 5600f
 ;8x8 Tilemaps and Overworld Data
 
-.base $8000
-.include prg/prg043.asm
-.pad $A000
+base $8000
+include prg/prg043.asm
+pad $A000
 ;56010 - 5800f
 ;Bonus level tileset
 
-.base $8000
-.include prg/prg044.asm
-.pad $A000
+base $8000
+include prg/prg044.asm
+pad $A000
 ;58010 - 5a00f
 ;Title Screen/Map Tilesets
 
-.base $8000
-.include prg/prg045.asm
-.pad $A000
+base $8000
+include prg/prg045.asm
+pad $A000
 ;5a010 - 5c00f
 ;title screen level data
 
-.base $8000
-.include prg/prg046.asm
-.pad $A000
+base $8000
+include prg/prg046.asm
+pad $A000
 ;5c010 - 5e00f
 ;Overworld Map Tile Data
 
-.base $C000
-.include prg/prg047.asm
-.pad $E000
+base $C000
+include prg/prg047.asm
+pad $E000
 ;5e010 - 6000f
 ;Sprite palette mappings
 
-.base $8000
-.include prg/prg048.asm
-.pad $A000
+base $8000
+include prg/prg048.asm
+pad $A000
 ;60010 - 6200f
 ;more object code
 
-.base $8000
-.include prg/prg049.asm
-.pad $A000
+base $8000
+include prg/prg049.asm
+pad $A000
 ;62010 - 6400f
 ;Code for platforms and other objects
 
-.base $8000
-.include prg/prg050.asm
-.pad $A000
+base $8000
+include prg/prg050.asm
+pad $A000
 ;64010 - 6600f
 ;Various objects
 
-.base $E000
-.include prg/prg051.asm
+base $E000
+include prg/prg051.asm
+pad $E000+8192
 ;66010 - 6800f
 ;Movement data for various objects
 
-.base $A000
-.include prg/prg052.asm
-.pad $C000
+base $A000
+include prg/prg052.asm
+pad $C000
 ;68010 - 6a00f
 ;sprite manager?
 
-.base $8000
-.include prg/prg053.asm
-.pad $A000
+base $8000
+include prg/prg053.asm
+pad $A000
 ;6a010 - 6c00f
 ;Various objects
 
-.base $A000
-.include prg/prg054.asm
-.pad $C000
+base $A000
+include prg/prg054.asm
+pad $C000
 ;6c010 - 6e00f
 ;Object handler
 
-.base $8000
-.include prg/prg055.asm
-.pad $A000
+base $8000
+include prg/prg055.asm
+pad $A000
 ;6e010 - 7000f
 ;More code for objects
 
-.base $8000
-.include prg/prg056.asm
-.pad $A000
+base $8000
+include prg/prg056.asm
+pad $A000
 ;70010 - 7200f
 ;Even more object code
 
-.base $A000
-.include prg/prg057.asm
-.pad $C000
+base $A000
+include prg/prg057.asm
+pad $C000
 ;72010 - 7400f
 ;Player control code
 
-.base $8000
-.include prg/prg058_59.asm
-.pad $C000
+base $8000
+include prg/prg058_59.asm
+pad $C000
 ;74010 - 7800f
 ;Music data and sound driver
 
-.base $8000
-.include prg/prg060.asm
+base $8000
+include prg/prg060.asm
 ;78010 - 7a00f
 ;Unknown
 
-.base $A000
-.include prg/prg061.asm
-.pad $C000
+base $A000
+include prg/prg061.asm
+pad $C000
 ;7a010 - 7c00f
 ;Level handling
 
-.base $C000
-.include prg/prg062.asm
-.pad $E000
+base $C000
+include prg/prg062.asm
+pad $E000
 ;7c010 - 7e00f
 ;Bank 47 clone
 
-.base $E000
-.include prg/prg063.asm
-.pad $FFFA
+base $E000
+include prg/prg063.asm
+pad $FFFA
 ;7e010 - 8000f
 ;IRQ, game engine, etc.
 
@@ -547,6 +550,6 @@ M90_CHR_CTRL1 = $D003
 
 ;--------------------------------------
 ;CHR file
-.incbin SMW.chr
+incbin SMW.chr
 
 ;--------------------------------------

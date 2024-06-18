@@ -1,15 +1,15 @@
 Feather_P1Noise:
-	.byte SongSpeed, 1
-	.byte Transpose, 7
-	.byte DutySet, $00
-	.byte PitchSet, $64
-	.byte VolSet, $11
-	.byte NLen+44
-	.byte G3
-	.byte $FF
+	sndspeed 1
+	transpose 7
+	duty $00
+	pitch $64
+	volenv $11
+	notelen 44
+	db G3
+	db $FF
 Feather_Footer:
-	.byte $80
+	db $80
 	.word Feather_P1Noise
-	.byte $83
+	db $83
 	.word Feather_P1Noise
-	.byte $FF
+	db $FF

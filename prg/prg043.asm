@@ -1,5 +1,5 @@
 ;disassembled by BZK 6502 Disassembler
-.incbin tilesets/ts_bonus.bin
+incbin tilesets/ts_bonus.bin
 	db $18
 	db $00
 	db $00
@@ -333,7 +333,7 @@ bra3_87EE:
 bra3_87FF:
 loc3_87FF:
 	db $AD
-	.incbin tilesets/ts_bonus.bin
+	incbin tilesets/ts_bonus.bin
 	db $00
 	db $00
 	db $00
@@ -2458,7 +2458,7 @@ bra3_97F7:
 	LDA #$20
 	STA $06E1
 	db $BD
-	.incbin tilesets/ts_bonus.bin
+	incbin tilesets/ts_bonus.bin
 	db $00
 	db $00
 	db $00

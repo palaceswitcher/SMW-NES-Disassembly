@@ -1,19 +1,19 @@
 EnemyHit7_P1:
-	.byte $F5
-	.byte $01
-	.byte Transpose
-	.byte $09
-	.byte DutySet
-	.byte $38
-	.byte PitchSet
-	.byte $39
-	.byte VolSet
-	.byte $41
-	.byte $84
-	.byte B4
-	.byte C5
-	.byte $FF
+	db $F5
+	db $01
+	db Transpose
+	db $09
+	db DutySet
+	db $38
+	db PitchSet
+	db $39
+	db VolSet
+	db $41
+	db $84
+	db B4
+	db C5
+	db $FF
 EnemyHit7_Footer:
-	.byte $80
+	db $80
 	.word EnemyHit7_P1
-	.byte $FF
+	db $FF

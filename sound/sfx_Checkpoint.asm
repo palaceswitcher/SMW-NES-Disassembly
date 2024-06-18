@@ -1,14 +1,14 @@
 Checkpoint_P1:
-	.byte SongSpeed, 1
-	.byte Transpose, 18
-	.byte DutySet, $38
-	.byte PitchSet, $39
-	.byte VolSet, $40
-	.byte NLen+3
-	.byte B5, A5, G5, F5, E5, D5, C5
-	.byte B4, A4, G4, F4, E4, D4, C4
-	.byte $FF
+	sndspeed 1
+	transpose 18
+	duty $38
+	pitch $39
+	volenv $40
+	notelen 3
+	db B5, A5, G5, F5, E5, D5, C5
+	db B4, A4, G4, F4, E4, D4, C4
+	db $FF
 Checkpoint_Footer:
-	.byte $80
+	db $80
 	.word Checkpoint_P1
-	.byte $FF
+	db $FF

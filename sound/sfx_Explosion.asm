@@ -1,18 +1,18 @@
 Explosion_Noise:
-	.byte $F5
-	.byte $03
-	.byte Transpose
-	.byte $01
-	.byte DutySet
-	.byte E4
-	.byte PitchSet
-	.byte $39
-	.byte VolSet
-	.byte $46
-	.byte NLen+24
-	.byte A3
-	.byte $FF
+	db $F5
+	db $03
+	db Transpose
+	db $01
+	db DutySet
+	db E4
+	db PitchSet
+	db $39
+	db VolSet
+	db $46
+	notelen 24
+	db A3
+	db $FF
 Explosion_Footer:
-	.byte NLen+3
+	notelen 3
 	.word Explosion_Noise
-	.byte $FF
+	db $FF

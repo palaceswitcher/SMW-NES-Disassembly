@@ -1,5 +1,5 @@
 ;disassembled by BZK 6502 Disassembler
-	.incbin tilesets/ts_unused3.bin
+	incbin tilesets/ts_unused3.bin
 	
 	db $17
 	db $00
@@ -329,7 +329,7 @@ bra14_87EE:
 bra14_87FF:
 loc14_87FF:
 	db $AD
-	.incbin tilesets/ts_bowser.bin
+	incbin tilesets/ts_bowser.bin
 	db $00
 	db $00
 	db $00
@@ -685,7 +685,7 @@ bra14_8FF4:
 	STA ObjectYDistance,X
 	LDA ObjectYScreen,X
 	
-	.incbin tilesets/ts_unused5.bin
+	incbin tilesets/ts_unused5.bin
 	
 	db $42
 	BCS bra14_960D
@@ -921,4 +921,4 @@ bra14_97F7:
 	STA $06E1
 	db $BD
 	
-.incbin tilesets/ts_unused6.bin
+incbin tilesets/ts_unused6.bin

@@ -1,12 +1,13 @@
 Jump_P1:
-	.byte SongSpeed, 1
-	.byte Transpose, 0
-	.byte DutySet, $38
-	.byte PitchSet, $63
-	.byte VolSet, $11
-	.byte NLen+8, A3
-	.byte $FF	;End
+	sndspeed 1
+	transpose 0
+	duty $38
+	pitch $63
+	volenv $11
+	notelen 8,
+	db A3
+	db $FF
 Jump_Footer:
-	.byte $80
+	db $80
 	.word Jump_P1
-	.byte $FF
+	db $FF

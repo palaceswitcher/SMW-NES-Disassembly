@@ -1,5 +1,5 @@
 ;disassembled by BZK 6502 Disassembler
-	.incbin levels/overworld_map.bin ;include tilemap data for the overworld map
+	incbin levels/overworld_map.bin ;include tilemap data for the overworld map
 	
 	db $2D
 	db $00

@@ -1,25 +1,25 @@
 Powerdown_P1Noise:
-	.byte $F5
-	.byte $01
-	.byte Transpose
-	.byte $07
-	.byte DutySet
-	.byte NRest
-	.byte PitchSet
-	.byte $64
-	.byte VolSet
-	.byte $11
-	.byte $85
-	.byte G2
-	.byte NRest
-	.byte G2
-	.byte NRest
-	.byte $8B
-	.byte G2
-	.byte $FF
+	db $F5
+	db $01
+	db Transpose
+	db $07
+	db DutySet
+	db NRest
+	db PitchSet
+	db $64
+	db VolSet
+	db $11
+	db $85
+	db G2
+	db NRest
+	db G2
+	db NRest
+	db $8B
+	db G2
+	db $FF
 Powerdown_Footer:
-	.byte $80
+	db $80
 	.word Powerdown_P1Noise
-	.byte NLen+3
+	notelen 3
 	.word Powerdown_P1Noise
-	.byte $FF
+	db $FF

@@ -3,7 +3,7 @@
 ;----------------------------------------
 ObjID_h10:
 	LDX $A4 ;Get index of current object
-;Calculate horizontal distance between player and object
+;Calculate horizontal distance between player and Koopa
 	LDA ObjectXPos,X
 	SEC
 	SBC PlayerXPosDup
@@ -13,12 +13,13 @@ ObjID_h10:
 	STA ObjXScreenDistance,X
 	STA $28
 
-	BEQ @Continue ;Branch if the player is to the left of the Koopa (within one screen)
+	BEQ @CalcVertDist ;Continue if the player is to the left of the Koopa (within one screen)
 	CMP #$FF
-	BEQ @Continue ;Branch if the player is to the right of the Koopa (within one screne)
-	JMP Obj_RemoveObject ;Otherwise, remove the off-screen Koopa
+	BEQ @CalcVertDist ;Continue if the player is to the right of the Koopa (within one screne)
+		JMP Obj_RemoveObject ;Otherwise, remove the off-screen Koopa
 
-@Continue:
+;Calculate vertical distance between the player and Koopa
+@CalcVertDist:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
@@ -28,56 +29,64 @@ ObjID_h10:
 	STA ObjYScreenDistance,X ;Get object's vertical distance from player
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ loc8_8060 ;Branch if the object and player are on the same vertical screen
+	BEQ @CheckIfFrozen ;Branch if the object and player are on the same vertical screen
 	LDA ObjYScreenDistance,X
-	BPL bra8_804F ;Branch if the player is on a higher vertical screen than the object
-	LDA ObjectYDistance,X
-	CLC
-	ADC #$10
-	STA ObjectYDistance,X ;Increase the vertical distance value by 16
-	LDA ObjYScreenDistance,X
-	ADC #$00
-	STA ObjYScreenDistance,X ;Increase the vertical screen distance if needed
-	JMP loc8_8060
+	BPL @OffsetObjDistance ;Branch if the player is on a higher vertical screen than the object
+	;Add 10 to the Koopa's vertical distance if they're below the object
+		LDA ObjectYDistance,X
+		CLC
+		ADC #$10
+		STA ObjectYDistance,X ;Increase the vertical distance value by 16
+		LDA ObjYScreenDistance,X
+		ADC #$00
+		STA ObjYScreenDistance,X ;Increase the vertical screen distance if needed
+		JMP @CheckIfFrozen
 
-bra8_804F:
-	LDA ObjectYDistance,X
-	SEC
-	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	SBC #$00
-	STA ObjYScreenDistance,X
-loc8_8060:
+	;Subtract the Koopa's vertical distance by 10 if they're above the object
+	@OffsetObjDistance:
+		LDA ObjectYDistance,X
+		SEC
+		SBC #$10
+		STA ObjectYDistance,X
+		LDA ObjYScreenDistance,X
+		SBC #$00
+		STA ObjYScreenDistance,X
+
+@CheckIfFrozen:
 	LDA FreezeFlag
 	BEQ bra8_8066
 	RTS
+
+;Animate the Koopa
 bra8_8066:
 	JSR sub8_8096
 	LDY #$03
 	LDA $062B
 	AND #$08
-	BEQ bra8_8073
+	BEQ bra8_8073 ;Alternate between animation frames 3 and 4 every 8 frames
 	INY
+
 bra8_8073:
 	TYA
-	STA EnemyAnimFrame,X
+	STA EnemyAnimFrame,X ;Set animation frame
 	LDA ObjectSlot,X
 	CMP #$36
-	BCC bra8_808A
-	LDA FrameCount
-	AND #$01
-	BNE bra8_8089_RTS
-	LDA #$10
-	JSR GetMovementData
-bra8_8089_RTS:
-	RTS
+	BCC bra8_808A ;Run different code if Koopa isn't green (walks off ledges)
+	;This seems redundant as the green Koopa has it's own code
+		LDA FrameCount
+		AND #$01
+		BNE @Stop ;Only continue every even frame
+		LDA #$10
+		JSR GetMovementData ;Get animation data for Koopa
+	@Stop:
+		RTS
+
 bra8_808A:
 	LDA FrameCount
 	AND #$01
-	BNE bra8_8096_RTS
+	BNE bra8_8096_RTS ;Only continue every even frame
 	LDA #$10
-	JSR sub_54_B3B4
+	JSR sub_54_B3B4 ;Load animation data for Koopa
 bra8_8096_RTS:
 	RTS
 
@@ -3695,7 +3704,7 @@ tbl8_9A9A:
 	db $2B
 	db $1C
 	db $1D
-.incbin prg/padding/padding055.bin
+incbin prg/padding/padding055.bin
 	db $23
 	db $23
 	db $23

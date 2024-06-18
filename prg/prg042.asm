@@ -6,15 +6,15 @@ TilemapPointers:
 	dw CopyrightScreen
 	dw YoshiHouse ;Unused
 TitleLogo:
-	.incbin screens/TitleLogo.bin
+	incbin screens/TitleLogo.bin
 EndingScreen:
-	.incbin screens/EndingScreen.bin
+	incbin screens/EndingScreen.bin
 ThankYouScreen:
-	.incbin screens/ThankYouScreen.bin
+	incbin screens/ThankYouScreen.bin
 CopyrightScreen:
-	.incbin screens/CopyrightScreen.bin
+	incbin screens/CopyrightScreen.bin
 YoshiHouse:
-	.incbin screens/YoshiHouse.bin ;Unused
+	incbin screens/YoshiHouse.bin ;Unused
 	db $11, $30, $2A, $0E
 	db $11, $38, $26, $0E
 	db $11, $37, $2A, $1A

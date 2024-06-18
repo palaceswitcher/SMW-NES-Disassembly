@@ -1,15 +1,15 @@
 Warp_Tri:
-	.byte SongSpeed, 1
-	.byte Transpose, 24
-	.byte DutySet, $38
-	.byte PitchSet, $63
-	.byte VolSet, $11
-	.byte NLen+3
-	.byte G4, NRest, G4, NRest, G4, NRest
-	.byte A4, NRest, A4, NRest, A4, NRest
-	.byte B4, NRest, B4, NRest, B4, NRest
-	.byte $FF
+	sndspeed 1
+	transpose 24
+	duty $38
+	pitch $63
+	volenv $11
+	notelen 3
+	db G4, NRest, G4, NRest, G4, NRest
+	db A4, NRest, A4, NRest, A4, NRest
+	db B4, NRest, B4, NRest, B4, NRest
+	db $FF
 Warp_Footer:
-	.byte $82
+	db $82
 	.word Warp_Tri
-	.byte $FF
+	db $FF

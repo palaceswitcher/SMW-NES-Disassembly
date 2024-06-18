@@ -1,18 +1,18 @@
 Thud_P1:
-	.byte $F5
-	.byte $01
-	.byte Transpose
-	.byte NRest
-	.byte DutySet
-	.byte E4
-	.byte PitchSet
-	.byte $39
-	.byte VolSet
-	.byte $41
-	.byte $9C
-	.byte $15
-	.byte $FF
+	db $F5
+	db $01
+	db Transpose
+	db NRest
+	db DutySet
+	db E4
+	db PitchSet
+	db $39
+	db VolSet
+	db $41
+	db $9C
+	db $15
+	db $FF
 Thud_Footer:
-	.byte $80
+	db $80
 	.word Thud_P1
-	.byte $FF
+	db $FF

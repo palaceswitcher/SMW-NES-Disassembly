@@ -3059,16 +3059,28 @@ tbl3_AFC3:
 	db $00
 	db $00
 	db $00
+
+;----------------------------------------
+;SUBROUTINE ($B043)
+;$A8 = X Pos Hi
+;$A9 = X Pos Lo
+;$AA = Y Pos Hi
+;$AB = Y Pos Lo
+;$36 = X hitbox?
+;$38 = Y hitbox?
+;$32 = d
+;----------------------------------------
 sub3_B043:
-	STY $2B
-	LDX $A4
+	STY $2B ;Backup Y register
+	LDX $A4 ;Get index for current object
 	LDY ObjectSlot,X
 	LDA #$08
 	STA $36
 	LDA ObjectYHitBoxSizes,Y
 	CLC
-	ADC #$04
+	ADC #$04 ;Object's vertical hitbox + 4
 	JMP loc3_B08D
+
 sub3_B057:
 	STY $2B
 	LDX $A4
@@ -3078,14 +3090,17 @@ sub3_B057:
 	BEQ bra3_B069
 	LDA #$00
 	BEQ bra3_B06C
+
 bra3_B069:
 	LDA ObjectXHitBoxSizes,Y
+
 bra3_B06C:
 	STA $36
 	LDA ObjectYHitBoxSizes,Y
 	SEC
 	SBC #$08
 	JMP loc3_B08D
+
 sub3_B077:
 	STY $2B
 	LDX $A4
@@ -3094,37 +3109,46 @@ sub3_B077:
 	AND #$40
 	BEQ bra3_B088
 	LDA ObjectXHitBoxSizes,Y
+
 bra3_B088:
 	STA $36
 	LDA ObjectYHitBoxSizes,Y
+
 loc3_B08D:
-	STA $38
+	STA $38 ;Store added hitbox
+	;Calulate object X position?
 	LDA ObjectXPos,X
 	CLC
 	ADC $36
-	STA $A8
+	STA $A8 ;Add object position by pre-set value
 	LDA ObjectXScreen,X
 	ADC #$00
 	STA $A9
+	
+	;Copy object Y position?
 	LDA ObjectYPos,X
 	STA $AA
 	LDA ObjectYScreen,X
 	STA $AB
+
 loc3_B0A8:
+	;Add post-calculated object hitbox height to object's vertical position?
 	LDA $38
-	BMI bra3_B0C1
+	BMI bra3_B0C1 ;Branch if post-calculated object hitbox is over 127 pixels high?
 	CLC
 	ADC $AA
 	STA $AA
-	BCS bra3_B0B7
+	BCS bra3_B0B7 ;Add 16 if the screen boundary is crossed
 	CMP #$F0
-	BCC loc3_B0CF
+	BCC loc3_B0CF ;Add high byte when object is 16 pixels below vertical screen boundary
+
 bra3_B0B7:
 	CLC
-	ADC #$10
+	ADC #16
 	STA $AA
-	INC $AB
+	INC $AB ;Add 16 to vertical position (assuming overflow)
 	JMP loc3_B0CF
+
 bra3_B0C1:
 	CLC
 	ADC $AA
@@ -3134,12 +3158,14 @@ bra3_B0C1:
 	SBC #$10
 	STA $AA
 	DEC $AB
+
 loc3_B0CF:
 	LDA $AA
 	CMP #$D8
 	BCC bra3_B0D8
 	LDA #$00
 	RTS
+
 bra3_B0D8:
 	LDY $AB
 	LDA LevelTopScreenOffset,Y
@@ -3175,6 +3201,7 @@ bra3_B0D8:
 	LDY $2B
 	PLA
 	RTS
+
 jmp_54_B11D:
 	ASL
 	TAY
@@ -3312,7 +3339,7 @@ GetMovementData:
 	LDA tbl_51_E000,Y
 	STA $32
 	LDA tbl_51_E000+1,Y
-	STA $33 ;Store movement data pointer in memory
+	STA $33 ;Load movement data pointer
 	JSR sub3_B1EF
 	LDA ObjectPRGBank
 	STA M90_PRG0
@@ -3560,6 +3587,11 @@ bra3_B3AE:
 	JMP loc3_B3DC
 bra3_B3B1:
 	JMP loc3_B3E4
+
+;----------------------------------------
+;SUBROUTINE ($B3B4)
+;
+;----------------------------------------
 sub_54_B3B4:
 	ASL
 	TAY
@@ -3571,6 +3603,7 @@ sub_54_B3B4:
 	LDA ObjectPRGBank
 	STA M90_PRG0 ;Swap PRG bank out for current object
 	RTS
+
 sub3_B3C9:
 	LDX $A4
 	LDA ObjectVariables,X
@@ -3578,15 +3611,15 @@ sub3_B3C9:
 	ASL
 	TAY
 	JSR sub3_B043
-	BEQ bra3_B3DC
+	BEQ loc3_B3DC
 	JSR sub3_B057
-	BEQ bra3_B3E4
-bra3_B3DC:
+	BEQ loc3_B3E4
+
 loc3_B3DC:
 	LDA ObjectState,X
 	EOR #$40
 	STA ObjectState,X ;Flip the object horizontally
-bra3_B3E4:
+
 loc3_B3E4:
 	LDA ObjectState,X
 	AND #%01000000

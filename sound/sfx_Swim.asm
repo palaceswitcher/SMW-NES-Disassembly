@@ -1,13 +1,15 @@
 Swim_Tri:
-	.byte SongSpeed, 1
-	.byte Transpose, 0
-	.byte DutySet, $38
-	.byte PitchSet, $63
-	.byte VolSet, $11
-	.byte NLen+4, C4
-	.byte NLen+8, D5
-	.byte $FF
+	sndspeed 1
+	transpose 0
+	duty $38
+	pitch $63
+	volenv $11
+	notelen 4
+	db C4
+	notelen 8
+	db D5
+	db $FF
 Swim_Footer:
-	.byte $82
+	db $82
 	.word Swim_Tri
-	.byte $FF
+	db $FF

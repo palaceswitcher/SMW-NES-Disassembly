@@ -1,248 +1,248 @@
 GhostHouse_P1:
 GhostHouse_P1Loop:
-	.byte $F5
-	.byte $01
-	.byte Transpose
-	.byte $1A
-	.byte DutySet
-	.byte NRest
-	.byte PitchSet
-	.byte NRest
-	.byte VolSet
-	.byte $33
-	.byte $F0
+	db $F5
+	db $01
+	db Transpose
+	db $1A
+	db DutySet
+	db NRest
+	db PitchSet
+	db NRest
+	db VolSet
+	db $33
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte Transpose
-	.byte C2
-	.byte $F0
+	db Transpose
+	db C2
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte Transpose
-	.byte $16
-	.byte $F0
+	db Transpose
+	db $16
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F0
+	db $F0
 	.word GhostHouse_P1Seq2
-	.byte $F4
+	db $F4
 	.word GhostHouse_P1Loop
-	.byte $FF
+	db $FF
 GhostHouse_P1Seq:
-	.byte $8A
-	.byte A3
-	.byte B3
-	.byte $2B
-	.byte A3
-	.byte A3
-	.byte B3
-	.byte $2B
-	.byte A3
-	.byte $F1
-	.byte $FF
+	db $8A
+	db A3
+	db B3
+	db $2B
+	db A3
+	db A3
+	db B3
+	db $2B
+	db A3
+	db $F1
+	db $FF
 GhostHouse_P1Seq2:
-	.byte $8A
-	.byte A3
-	.byte B3
-	.byte $2B
-	.byte B3
-	.byte A3
-	.byte B3
-	.byte $2B
-	.byte B3
-	.byte $F1
-	.byte $FF
+	db $8A
+	db A3
+	db B3
+	db $2B
+	db B3
+	db A3
+	db B3
+	db $2B
+	db B3
+	db $F1
+	db $FF
 GhostHouse_P2Tri:
 GhostHouse_P2TriLoop:
-	.byte Transpose
-	.byte $0E
-	.byte $F0
+	db Transpose
+	db $0E
+	db $F0
 	.word GhostHouse_P2Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P2Seq2
-	.byte Transpose
-	.byte $0C
-	.byte $F0
+	db Transpose
+	db $0C
+	db $F0
 	.word GhostHouse_P2Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P2Seq2
-	.byte Transpose
-	.byte $0A
-	.byte $F0
+	db Transpose
+	db $0A
+	db $F0
 	.word GhostHouse_P2Seq
-	.byte $F0
+	db $F0
 	.word GhostHouse_P2Seq2
-	.byte $F4
+	db $F4
 	.word GhostHouse_P2TriLoop
-	.byte $FF
+	db $FF
 GhostHouse_P2Seq:
-	.byte DutySet
-	.byte NRest
-	.byte PitchSet
-	.byte $62
-	.byte VolSet
-	.byte $02
-	.byte $94
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte NRest
-	.byte $F1
-	.byte $FF
+	db DutySet
+	db NRest
+	db PitchSet
+	db $62
+	db VolSet
+	db $02
+	db $94
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db NRest
+	db $F1
+	db $FF
 GhostHouse_P2Seq2:
-	.byte DutySet
-	.byte $12
-	.byte PitchSet
-	.byte NRest
-	.byte VolSet
-	.byte $11
-	.byte $D0
-	.byte C2
-	.byte $A8
-	.byte $15
-	.byte $10
-	.byte $11
-	.byte $D0
-	.byte $15
-	.byte $94
-	.byte NRest
-	.byte NRest
-	.byte $A8
-	.byte $10
-	.byte $15
-	.byte $1C
-	.byte $D0
-	.byte C2
-	.byte $17
-	.byte $94
-	.byte NRest
-	.byte NRest
-	.byte $F1
-	.byte $FF
+	db DutySet
+	db $12
+	db PitchSet
+	db NRest
+	db VolSet
+	db $11
+	db $D0
+	db C2
+	db $A8
+	db $15
+	db $10
+	db $11
+	db $D0
+	db $15
+	db $94
+	db NRest
+	db NRest
+	db $A8
+	db $10
+	db $15
+	db $1C
+	db $D0
+	db C2
+	db $17
+	db $94
+	db NRest
+	db NRest
+	db $F1
+	db $FF
 GhostHouse_End:
-	.byte $FF
+	db $FF
 GhostHouse_Footer:
-	.byte NRest
+	db NRest
 	.word GhostHouse_P1
-	.byte $01
+	db $01
 	.word GhostHouse_P2Tri
-	.byte $02
+	db $02
 	.word GhostHouse_P2Tri
-	.byte $03
+	db $03
 	.word GhostHouse_End
-	.byte $04
+	db $04
 	.word GhostHouse_End
-	.byte $FF
+	db $FF

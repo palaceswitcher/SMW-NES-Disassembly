@@ -65,7 +65,7 @@ tbl10_8000:
 	dw ofs_8100
 	dw ofs_8100
 	dw ofs_834F
-	dw ofs_835F
+	dw ofs_835F ;0x41
 	dw ofs_8379
 	dw ofs_8381
 	dw ofs_8397
@@ -128,7 +128,7 @@ tbl10_8000:
 	dw ofs_8100
 	dw ofs_8100
 	dw ofs_8100
-	.include sound/instruments.asm
+	include sound/instruments.asm
 jmp_58_85BE:
 	LDA SFXRegister
 	BMI bra10_85C4
@@ -1422,49 +1422,49 @@ NotePitchTable:
 	dw $0003
 	dw $0002
  ;include sfx_ data
-	.include sound/sfx_SpinJump.asm
-	.include sound/sfx_Pause.asm
-	.include sound/sfx_Jump.asm
-	.include sound/sfx_Swim.asm
-	.include sound/sfx_Beep.asm
-	.include sound/sfx_YoshiCoin.asm
-	.include sound/sfx_1up.asm
-	.include sound/sfx_Coin.asm
-	.include sound/sfx_Powerup.asm
-	.include sound/sfx_Warp.asm
-	.include sound/sfx_Block.asm
-	.include sound/sfx_Powerdown.asm
-	.include sound/sfx_YoshiMount.asm
-	.include sound/sfx_Feather.asm
-	.include sound/sfx_Thud.asm
-	.include sound/sfx_Explosion.asm
-	.include sound/sfx_EnemyHit1.asm
-	.include sound/sfx_EnemyHit2.asm
-	.include sound/sfx_EnemyHit3.asm
-	.include sound/sfx_EnemyHit4.asm
-	.include sound/sfx_EnemyHit5.asm
-	.include sound/sfx_EnemyHit6.asm
-	.include sound/sfx_EnemyHit7.asm
-	.include sound/sfx_EnemyHit8.asm
-	.include sound/sfx_YoshiTongue.asm
-	.include sound/sfx_YoshiSwallow.asm
-	.include sound/sfx_YoshiFireSpit.asm
-	.include sound/sfx_Checkpoint.asm
-	.include sound/sfx_Chainsaw.asm
+	include sound/sfx_SpinJump.asm
+	include sound/sfx_Pause.asm
+	include sound/sfx_Jump.asm
+	include sound/sfx_Swim.asm
+	include sound/sfx_Beep.asm
+	include sound/sfx_YoshiCoin.asm
+	include sound/sfx_1up.asm
+	include sound/sfx_Coin.asm
+	include sound/sfx_Powerup.asm
+	include sound/sfx_Warp.asm
+	include sound/sfx_Block.asm
+	include sound/sfx_Powerdown.asm
+	include sound/sfx_YoshiMount.asm
+	include sound/sfx_Feather.asm
+	include sound/sfx_Thud.asm
+	include sound/sfx_Explosion.asm
+	include sound/sfx_EnemyHit1.asm
+	include sound/sfx_EnemyHit2.asm
+	include sound/sfx_EnemyHit3.asm
+	include sound/sfx_EnemyHit4.asm
+	include sound/sfx_EnemyHit5.asm
+	include sound/sfx_EnemyHit6.asm
+	include sound/sfx_EnemyHit7.asm
+	include sound/sfx_EnemyHit8.asm
+	include sound/sfx_YoshiTongue.asm
+	include sound/sfx_YoshiSwallow.asm
+	include sound/sfx_YoshiFireSpit.asm
+	include sound/sfx_Checkpoint.asm
+	include sound/sfx_Chainsaw.asm
  ;include mus_ic data
-	.include sound/mus_Title.asm
-	.include sound/mus_GameOver.asm
-	.include sound/mus_PlayerDown.asm
-	.include sound/mus_Victory.asm
-	.include sound/mus_DonutPlains.asm
-	.include sound/mus_YoshisIsland.asm
-	.include sound/mus_ValleyofBowser.asm
-	.include sound/mus_VanillaDome.asm
-	.include sound/mus_ForestofIllusion.asm
-	.include sound/mus_Overworld.asm
-	.include sound/mus_Underground.asm
-	.include sound/mus_GhostHouse.asm
-	.include sound/mus_Castle.asm
-	.include sound/mus_Underwater.asm
-	.include sound/mus_Ending.asm
-	.incbin prg/padding/padding058_59.bin
+	include sound/mus_Title.asm
+	include sound/mus_GameOver.asm
+	include sound/mus_PlayerDown.asm
+	include sound/mus_Victory.asm
+	include sound/mus_DonutPlains.asm
+	include sound/mus_YoshisIsland.asm
+	include sound/mus_ValleyofBowser.asm
+	include sound/mus_VanillaDome.asm
+	include sound/mus_ForestofIllusion.asm
+	include sound/mus_Overworld.asm
+	include sound/mus_Underground.asm
+	include sound/mus_GhostHouse.asm
+	include sound/mus_Castle.asm
+	include sound/mus_Underwater.asm
+	include sound/mus_Ending.asm
+	incbin prg/padding/padding058_59.bin

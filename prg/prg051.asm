@@ -16,10 +16,10 @@ tbl_51_E000:
 	dw ofs_E8D4
 	dw ofs_E915
 	dw ofs_E924
-	dw ofs_E943
-	dw ofs_E943
+	dw Move_HLine ;Koopa movement data
+	dw Move_HLine
 	dw ofs_E924
-	dw ofs_E943
+	dw Move_HLine
 	dw ofs_E984
 	dw ofs_E9C5
 	dw ofs_EA36
@@ -2344,71 +2344,41 @@ ofs_E924:
 	db $00
 	db $00
 	db $80
-ofs_E943:
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
+
+;Move in a stright, horizontal line
+Move_HLine:
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
+	movedata 1,0
 	db $80
 ofs_E984:
 	db $02
@@ -3612,7 +3582,7 @@ ofs_ED5A:
 	db $D0
 	db $E0
 	db $F0
-.incbin prg/padding/padding051.bin
+incbin prg/padding/padding051.bin
 	db $00
 	db $00
 	db $00

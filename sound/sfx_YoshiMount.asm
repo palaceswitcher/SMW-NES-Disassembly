@@ -1,41 +1,41 @@
 YoshiMount_P1:
-	.byte SongSpeed, 1
-	.byte Transpose, 7
-	.byte DutySet, $00
-	.byte PitchSet, $63
-	.byte VolSet, $11
-	.byte NLen+14
-	.byte G3
-	.byte DutySet, $00
-	.byte PitchSet, $64
-	.byte VolSet, $11
-	.byte C3
-	.byte $FF
+	sndspeed 1
+	transpose 7
+	duty $00
+	pitch $63
+	volenv $11
+	notelen 14
+	db G3
+	duty $00
+	pitch $64
+	volenv $11
+	db C3
+	db $FF
 YoshiMount_P2:
-	.byte Transpose, 7
-	.byte DutySet, $34
-	.byte PitchSet, $39
-	.byte VolSet, $41
-	.byte NLen+3
-	.byte A1
-	.byte NLen+10
-	.byte NRest
-	.byte NLen+3
-	.byte A1
-	.byte $FF
+	transpose 7
+	duty $34
+	pitch $39
+	volenv $41
+	notelen 3
+	db A1
+	notelen 10
+	db NRest
+	notelen 3
+	db A1
+	db $FF
 YoshiMount_Noise:
-	.byte Transpose, 7
-	.byte DutySet, $5B
-	.byte PitchSet, $39
-	.byte VolSet, $11
-	.byte NLen+14
-	.byte G3, C3
-	.byte $FF
+	transpose 7
+	duty $5B
+	pitch $39
+	volenv $11
+	notelen 14
+	db G3, C3
+	db $FF
 YoshiMount_Footer:
-	.byte $80
+	db $80
 	.word YoshiMount_P1
-	.byte $81
+	db $81
 	.word YoshiMount_P2
-	.byte $83
+	db $83
 	.word YoshiMount_Noise
-	.byte $FF
+	db $FF
