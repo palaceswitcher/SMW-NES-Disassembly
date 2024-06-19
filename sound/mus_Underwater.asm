@@ -2,8 +2,7 @@ Underwater_P1:
 	.byte SongSpeed, $01
 	.byte Transpose, $05
 	.byte DutySet, $07
-	.byte PitchSet
-	.byte $05
+	.byte PitchSet, $05
 	.byte VolSet, $02
 	.byte $AA
 	.byte A3
@@ -45,8 +44,7 @@ Underwater_P1Loop:
 	.byte NRest
 	.byte Transpose, $11
 	.byte DutySet, $07
-	.byte PitchSet
-	.byte $05
+	.byte PitchSet, $05
 	.byte VolSet, $02
 	.byte $AA
 	.byte E3
@@ -213,8 +211,7 @@ Underwater_P1Loop:
 Underwater_P2:
 	.byte Transpose, $05
 	.byte DutySet, $07
-	.byte PitchSet
-	.byte $05
+	.byte PitchSet, $05
 	.byte VolSet, $02
 	.byte $AA
 	.byte E3
@@ -308,8 +305,7 @@ Underwater_P2Loop:
 	.byte Transpose
 	.byte F2
 	.byte DutySet, $5B
-	.byte PitchSet
-	.byte $39
+	.byte PitchSet, $39
 	.byte VolSet, $11
 	.byte $AA
 	.byte E3
@@ -440,8 +436,7 @@ Underwater_P2Loop:
 Underwater_Tri:
 	.byte Transpose, $05
 	.byte DutySet, $5B
-	.byte PitchSet
-	.byte $39
+	.byte PitchSet, $39
 	.byte VolSet, $11
 	.byte $8E
 	.byte NRest

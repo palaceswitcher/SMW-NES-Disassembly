@@ -1,133 +1,133 @@
 ;Disassembled by BZK 6502 Disassembler
 tbl10_8000:
-	dw ofs_8100
-	dw ofs_8104
-	dw ofs_8110
-	dw ofs_8116
-	dw ofs_811C
-	dw ofs_8124
-	dw ofs_8140
-	dw ofs_8146
-	dw ofs_814A
-	dw ofs_8158
-	dw ofs_815C
-	dw ofs_8176
-	dw ofs_8180
-	dw ofs_818A
-	dw ofs_8194
-	dw ofs_819C
-	dw ofs_81A6
-	dw ofs_81AC
-	dw ofs_81C2
-	dw ofs_81CD
-	dw ofs_81D9
-	dw ofs_81E3
-	dw ofs_81ED
-	dw ofs_81F7
-	dw ofs_81FF
-	dw ofs_8203
-	dw ofs_821F
-	dw ofs_822B
-	dw ofs_823B
-	dw ofs_8241
-	dw ofs_8245
-	dw ofs_8249
-	dw ofs_824F
-	dw ofs_826F
-	dw ofs_8275
-	dw ofs_827D
-	dw ofs_828D
-	dw ofs_8291
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_CourseClearVolume28
-	dw ofs_CheckpointVolume29
-	dw ofs_CheckpointPitch2A
-	dw ofs_8293
-	dw ofs_VolOW2C
-	dw ofs_DutyOW2D
-	dw ofs_829D
-	dw ofs_82B5
-	dw ofs_82BF
-	dw ofs_82C9
-	dw ofs_82D1
-	dw ofs_82FD
-	dw ofs_831B
-	dw ofs_8100
-	dw ofs_8327
-	dw ofs_8337
-	dw ofs_833F
-	dw ofs_8343
-	dw ofs_PitchVOB3A
-	dw ofs_VolInv3B
-	dw ofs_DutyInv3C
-	dw ofs_DutyOW3D
-	dw ofs_VolOW3E
-	dw ofs_CheckpointPitch3F
-	dw ofs_834F
-	dw ofs_835F
-	dw ofs_8379
-	dw ofs_8381
-	dw ofs_8397
-	dw ofs_83A1
-	dw ofs_83B3
-	dw ofs_83C7
-	dw ofs_840B
-	dw ofs_840F
-	dw ofs_8413
-	dw ofs_8425
-	dw ofs_842B
-	dw ofs_8431
-	dw ofs_8437
-	dw ofs_8100
-	dw ofs_843D
-	dw ofs_844E
-	dw ofs_845E
-	dw ofs_8462
-	dw ofs_846E
-	dw ofs_8472
-	dw ofs_8486
-	dw ofs_84B0
-	dw ofs_84B4
-	dw ofs_84C0
-	dw ofs_8100
-	dw ofs_84CC
-	dw ofs_84D0
-	dw ofs_84DE
-	dw ofs_84EE
-	dw ofs_8508
-	dw ofs_8520
-	dw ofs_8528
-	dw ofs_853E
-	dw ofs_8554
-	dw ofs_8576
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8598
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_859A
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_85A0
-	dw ofs_85A8
-	dw ofs_8100
-	dw Vol_Hats
-	dw Vol_HonkyTonk
-	dw Duty_HonkyTonk
-	dw SquarePitchSFX_Coin
-	dw ofs_85B3
-	dw JumpSFXPitch
-	dw SquareVolSFX_1UP
-	dw SquareVolSFX_Pause
-	dw TriangleSFX
+	dw ofs_NA
+	dw ofs_Vol01
+	dw ofs_Vol02
+	dw ofs_Vol03
+	dw ofs_Pitch04
+	dw ofs_Pitch05
+	dw ofs_Pitch06
+	dw ofs_Duty07 ; 50%
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_Duty0E ; 12.5%-25%-50% x1
+	dw ofs_Pitch0F
+	dw ofs_NA
+	dw ofs_Vol11
+	dw ofs_Duty12 ; 12.5%-25% x1
+	dw ofs_NA
+	dw ofs_Vol14
+	dw ofs_Vol15
+	dw ofs_Pitch16
+	dw ofs_Duty17 ; 50%-25% x1
+	dw ofs_Vol28 ; castle flat dynamics
+	dw ofs_Vol19
+	dw ofs_Vol1A
+	dw ofs_Vol1B
+	dw ofs_Vol29
+	dw ofs_Vol1D
+	dw ofs_Vol1E
+	dw ofs_Vol1F
+	dw ofs_Vol20
+	dw ofs_Vol21
+	dw ofs_Vol22
+	dw ofs_Vol23
+	dw ofs_Vol24
+	dw ofs_Vol25
+	dw ofs_Vol26
+	dw ofs_Vol27
+	dw ofs_Vol28
+	dw ofs_Vol29
+	dw ofs_Pitch2A
+	dw ofs_Vol2B
+	dw ofs_Vol2C
+	dw ofs_Duty2D ; 210121 x1
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_Vol33
+	dw ofs_Duty34 ; 3|2101 x1
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_Duty38 ; 50%
+	dw ofs_Pitch39
+	dw ofs_Pitch3A
+	dw ofs_Vol3B
+	dw ofs_Duty3C ; 75%
+	dw ofs_Duty3D ; 12.5%
+	dw ofs_Vol3E
+	dw ofs_Pitch3F
+	dw ofs_Vol40
+	dw ofs_Vol41
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_Vol46
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_Pitch51
+	dw ofs_Vol52
+	dw ofs_Vol53
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_Duty60 ; 75%-12.5% x5
+	dw ofs_Vol61
+	dw ofs_Pitch62
+	dw ofs_Pitch63
+	dw ofs_Pitch64
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_NA
+	dw ofs_Vol77
+	dw ofs_Vol78
+	dw ofs_Duty79 ; 75%-25% x1
+	dw ofs_Pitch7A
+	dw ofs_Duty7B
+	dw ofs_Pitch7C
+	dw ofs_Vol7D
+	dw ofs_Vol7E
+	dw ofs_Vol7F
 	.include sound/instruments.asm
 jmp_58_85BE:
 	LDA SFXRegister
@@ -1371,7 +1371,7 @@ tbl10_8E41:
 	dw Chainsaw_Footer
 	dw HitBlock_Footer
 	dw FireBall_Footer
-	dw Empty_Footer
+	dw Switch_Footer
 	dw Empty_Footer
 	dw Empty_Footer
 	dw Empty_Footer
@@ -1796,6 +1796,7 @@ DPCM_PitchTable:
 	.include sound/sfx_Chainsaw.asm
 	.include sound/sfx_HitBlock.asm
 	.include sound/sfx_FireBall.asm
+	.include sound/sfx_Switch.asm
  ;include music data
 	.include sound/mus_Title.asm
 	.include sound/mus_GameOver.asm

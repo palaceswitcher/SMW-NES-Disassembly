@@ -3,8 +3,7 @@ Chainsaw_Noise:
 	.byte $03
 	.byte Transpose, $01
 	.byte DutySet, $38
-	.byte PitchSet
-	.byte $39
+	.byte PitchSet, $39
 	.byte VolSet, $41
 	.byte $45
 	.byte $FF

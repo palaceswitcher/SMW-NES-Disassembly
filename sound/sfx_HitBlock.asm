@@ -1,7 +1,7 @@
 HitBlock_Noise:
 	.byte SongSpeed, $01
 	.byte Transpose, 0
-	.byte DutySet, $50
+	.byte DutySet, 0
 	.byte PitchSet, $05
 	.byte VolSet, $52
 	.byte NLen+2

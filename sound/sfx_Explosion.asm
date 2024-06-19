@@ -3,8 +3,7 @@ Explosion_Noise:
 	.byte $03
 	.byte Transpose, $01
 	.byte DutySet, $34
-	.byte PitchSet
-	.byte $39
+	.byte PitchSet, $39
 	.byte VolSet, $46
 	.byte NLen+24
 	.byte A3

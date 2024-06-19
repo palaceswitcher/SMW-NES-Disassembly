@@ -230,7 +230,7 @@ DonutPlains_TriSub1:
 	.byte SegEnd
 DonutPlains_Noise:
 	.byte Transpose, $00
-	.byte DutySet, 0
+	.byte DutySet, $00
 	.byte PitchSet, 0
 	.byte VolSet, $77
 DonutPlains_NoiseLoop:

@@ -2,8 +2,7 @@ Underground_P1:
 	.byte SongSpeed, $01
 	.byte Transpose, $05
 	.byte DutySet, $5B
-	.byte PitchSet
-	.byte $39
+	.byte PitchSet, $39
 	.byte VolSet, $11
 	.byte NLen+24
 	.byte NRest

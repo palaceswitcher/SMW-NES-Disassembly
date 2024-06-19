@@ -153,8 +153,7 @@ GhostHouse_P2TriLoop:
 	.byte $FF
 GhostHouse_P2Seq:
 	.byte DutySet, $00
-	.byte PitchSet
-	.byte $62
+	.byte PitchSet, $62
 	.byte VolSet, $02
 	.byte NLen+20
 	.byte NRest

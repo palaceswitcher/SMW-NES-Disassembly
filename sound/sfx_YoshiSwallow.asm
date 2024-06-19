@@ -10,6 +10,6 @@ YoshiSwallow_P2:
 	.byte C1-3
 	.byte $FF
 YoshiSwallow_Footer:
-	.byte $81
+	.byte $80
 	.word YoshiSwallow_P2
 	.byte $FF

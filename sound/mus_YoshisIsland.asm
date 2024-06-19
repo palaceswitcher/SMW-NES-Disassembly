@@ -227,7 +227,7 @@ YoshisIsland_TriLoop:
 YoshisIsland_Noise:
 YoshisIsland_NoiseLoop:
 	.byte Transpose, $00
-	.byte DutySet, 0
+	.byte DutySet, $00
 	.byte PitchSet, 0
 	.byte VolSet, $77
 	.byte SongLoop,2

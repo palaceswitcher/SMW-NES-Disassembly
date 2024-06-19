@@ -40,6 +40,7 @@ sfx_Checkpoint = $1C
 sfx_Cutter = $1D
 sfx_HitBlock = $1E
 sfx_FireBall = $1F
+sfx_Switch = $20
 
 ;Music IDs
 mus_Title = $40

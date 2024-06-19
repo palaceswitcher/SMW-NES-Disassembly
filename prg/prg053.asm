@@ -956,7 +956,7 @@ bra7_862A:
 	STA $0633
 	LDA #$1E
 	STA $0635
-	LDA #sfx_Thud
+	LDA #sfx_Switch
 	STA SFXRegister
 	LDA #$00
 	LDX $A4

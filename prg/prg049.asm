@@ -1953,7 +1953,7 @@ bra5_8E32:
 	STA PlayerMovement
 	LDA #$20
 	STA PlayerYSpeed
-	LDA #sfx_EnemyHit6
+	LDA #sfx_Switch
 	STA SFXRegister
 bra5_8E4E_RTS:
 	RTS

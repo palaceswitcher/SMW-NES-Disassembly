@@ -1,7 +1,7 @@
 YoshiFireSpit_Noise:
 	.byte SongSpeed, $03
 	.byte Transpose, $18
-	.byte DutySet, $50
+	.byte DutySet, 0
 	.byte PitchSet, $51
 	.byte VolSet, $52
 	.byte NLen+10

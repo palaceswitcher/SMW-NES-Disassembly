@@ -101,7 +101,7 @@ ValleyofBowser_TriLoop:
 ValleyofBowser_Noise:
 ValleyofBowser_NoiseLoop:
 	.byte Transpose, $01
-	.byte DutySet, 0
+	.byte DutySet, $00
 	.byte PitchSet, 0
 	.byte VolSet, $53
 	.byte NLen+7

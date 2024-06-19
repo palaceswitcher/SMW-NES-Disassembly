@@ -1,5 +1,4 @@
 InvincibleStar_P1:
-	.byte SongSpeed, $01
 InvincibleStar_P1Loop:
 	.byte DutySet, $3C
 	.byte PitchSet, $05
@@ -47,6 +46,7 @@ InvincibleStar_P1Loop:
 	.word InvincibleStar_P1Loop
 	.byte $FF
 InvincibleStar_P2:
+	.byte SongSpeed, $01
 InvincibleStar_P2Loop:
 	.byte DutySet, $3C
 	.byte PitchSet, $05
@@ -120,7 +120,7 @@ InvincibleStar_TriSub:
 InvincibleStar_Noise:
 InvincibleStar_NoiseLoop:
 	.byte Transpose, $00
-	.byte DutySet, 0
+	.byte DutySet, $00
 	.byte PitchSet, 0
 	.byte VolSet, $77
 	.byte NLen+6
@@ -139,9 +139,9 @@ InvincibleStar_End:
 	.byte $FF
 InvincibleStar_Footer:
 	.byte $00
-	.word InvincibleStar_P1
-	.byte $01
 	.word InvincibleStar_P2
+	.byte $01
+	.word InvincibleStar_P1
 	.byte $02
 	.word InvincibleStar_Tri
 	.byte $03
