@@ -57,7 +57,7 @@ mus_Underwater = $2D
 mus_Silence = $2E
 mus_Ending = $2F
 
-;Music Note IDs
+;Music notes
 NRest = $00
 F1 = $11
 F#1 = $12
@@ -127,6 +127,12 @@ A6 = $51
 A#6 = $52
 B6 = $53
 C7 = $54
+C#7 = $55
+D7 = $56
+D#7 = $57
+E7 = $58
+F7 = $59
+
 ;Music Commands
 NLen = $80
 SegCall = $F0

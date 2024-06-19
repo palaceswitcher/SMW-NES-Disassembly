@@ -4,10 +4,9 @@ Jump_P1:
 	duty $38
 	pitch $63
 	volenv $11
-	notelen 8,
+	notelen 8
 	db A3
 	db $FF
 Jump_Footer:
-	db $80
-	.word Jump_P1
+	sfxsq1 Jump_P1
 	db $FF

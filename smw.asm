@@ -273,18 +273,21 @@ EndingFreezeFlag = $06E6
 ClownCarFace = $06E8
 PauseFlag = $0709
 
-;music ram defines
+;Sound Driver RAM Defines
 MusicRegister = $8E
 SFXRegister = $8F
 MusicBackup = $90
 SoundPointer = $FE
 MuteFlag = $0700
+ChannelPtrs = $0724
+VolMacroPtrs = $0751
+DutyMacroPtrs = $075D
 
 Pulse1Transpose = $070D
-Pulse1Pitch = $0739
+ChannelPitch = $0739
 Pulse1VolumeEnv = $0749
 Pulse1Duty = $0759
-Pulse1PitchSetting = $0761
+ChannelPitchSetting = $0761
 
 Pulse2Transpose = $070E
 Pulse2VolumeEnv = $074A

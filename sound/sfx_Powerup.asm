@@ -4,29 +4,21 @@ Powerup_Tri:
 	duty $5B
 	pitch $39
 	volenv $11
-	db $82
+	notelen 2
+	db G4, NRest, G4, NRest
+	notelen 4
 	db G4
-	db NRest
-	db G4
-	db NRest
-	db $84
-	db G4
-	db $82
+	
+	notelen 2
+	db A4, NRest, A4, NRest
+	notelen 4
 	db A4
-	db NRest
-	db A4
-	db NRest
-	db $84
-	db A4
-	db $82
-	db B4
-	db NRest
-	db B4
-	db NRest
-	db $84
+
+	notelen 2
+	db B4, NRest, B4, NRest
+	notelen 4
 	db B4
 	db $FF
 Powerup_Footer:
-	db $82
-	.word Powerup_Tri
+	sfxtri Powerup_Tri
 	db $FF

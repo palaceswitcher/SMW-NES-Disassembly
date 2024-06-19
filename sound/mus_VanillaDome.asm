@@ -1,118 +1,108 @@
 VanillaDome_P1Tri:
-	db $F5
-	db $01
-	db Transpose
-	db $05
-	db DutySet
-	db $12
-	db PitchSet
-	db NRest
-	db VolSet
-	db $11
-	db $94
+	sndspeed 1
+	transpose 5
+	duty $12
+	pitch 0
+	volenv $11
+	notelen 20
 	db $15
 	db NRest
-	db $9E
+	notelen 30
 	db NRest
-	db $8A
+	notelen 10
 	db $15
-	db $94
+	notelen 20
 	db $15
 	db NRest
 	db NRest
 	db NRest
 	db C2
 	db NRest
-	db $9E
+	notelen 30
 	db NRest
-	db $8A
+	notelen 10
 	db C2
-	db $94
+	notelen 20
 	db C2
 	db NRest
 	db NRest
 	db NRest
 VanillaDome_P1TriLoop:
-	db $94
+	notelen 20
 	db $15
 	db NRest
-	db $9E
+	notelen 30
+	db NRest
+	notelen 10
+	db $15
+	notelen 20
+	db $15
+	db NRest
+	db NRest
+	db NRest
+	db C2
+	db NRest
+	notelen 30
+	db NRest
+	notelen 10
+	db C2
+	notelen 20
+	db C2
+	db NRest
+	db NRest
+	db NRest
+	db $15
+	db NRest
+	notelen 30
 	db NRest
 	db $8A
 	db $15
-	db $94
+	notelen 20
 	db $15
 	db NRest
 	db NRest
 	db NRest
 	db C2
 	db NRest
-	db $9E
+	notelen 30
 	db NRest
-	db $8A
+	notelen 10
 	db C2
-	db $94
-	db C2
-	db NRest
-	db NRest
-	db NRest
-	db $15
-	db NRest
-	db $9E
-	db NRest
-	db $8A
-	db $15
-	db $94
-	db $15
-	db NRest
-	db NRest
-	db NRest
-	db C2
-	db NRest
-	db $9E
-	db NRest
-	db $8A
-	db C2
-	db $94
+	notelen 20
 	db C2
 	db NRest
 	db NRest
 	db NRest
 	db $1B
 	db NRest
-	db $9E
+	notelen 30
 	db NRest
-	db $8A
+	notelen 10
 	db $1B
-	db $94
+	notelen 20
 	db $1B
 	db NRest
 	db NRest
 	db NRest
 	db $14
 	db NRest
-	db $9E
+	notelen 30
 	db NRest
-	db $8A
+	notelen 10
 	db $14
-	db $94
+	notelen 20
 	db $14
 	db NRest
 	db NRest
 	db NRest
-	db $F4
-	.word VanillaDome_P1TriLoop
+	sndjump VanillaDome_P1TriLoop
 	db $FF
 VanillaDome_P2:
-	db Transpose
-	db $1D
-	db DutySet
-	db $5B
-	db PitchSet
-	db $39
-	db VolSet
-	db $11
-	db $94
+	transpose 29
+	duty $5B
+	pitch $39
+	volenv $11
+	notelen 20
 	db NRest
 	db NRest
 	db NRest
@@ -130,37 +120,37 @@ VanillaDome_P2:
 	db NRest
 	db NRest
 VanillaDome_P2Loop:
-	db $85
+	notelen 5
 	db F4
 	db D4
 	db A3
-	db $A8
+	notelen 40
 	db F4
-	db $85
+	notelen 5
 	db NRest
-	db $D0
+	notelen 80
 	db D4
-	db $94
+	notelen 20
 	db NRest
-	db $85
+	notelen 5
 	db G4
 	db E4
 	db C4
-	db $A8
+	notelen 40
 	db G4
-	db $85
+	notelen 5
 	db NRest
-	db $D0
+	notelen 80
 	db E4
-	db $94
+	notelen 20
 	db NRest
-	db $85
+	notelen 5
 	db F4
 	db D4
 	db A3
-	db $A8
+	notelen 40
 	db F4
-	db $85
+	notelen 5
 	db NRest
 	db $D0
 	db D4
@@ -348,8 +338,7 @@ VanillaDome_NoiseLoop:
 	db F3
 	db $94
 	db F3
-	db $F4
-	.word VanillaDome_NoiseLoop
+	sndjump VanillaDome_NoiseLoop
 	db $FF
 VanillaDome_End:
 	db $FF

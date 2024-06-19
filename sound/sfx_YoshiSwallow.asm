@@ -1,19 +1,13 @@
 YoshiSwallow_P2:
-	db $F5
-	db $01
-	db Transpose
-	db $0D
-	db DutySet
-	db $60
-	db PitchSet
-	db $5E
-	db VolSet
-	db $61
+	sndspeed 1
+	transpose 13
+	duty $60
+	pitch $5E
+	volenv $61
 	notelen 12
-	db C2
-	db $0C
+	db C#3-13
+	db C#2-13
 	db $FF
 YoshiSwallow_Footer:
-	db $81
-	.word YoshiSwallow_P2
+	sfxsq2 YoshiSwallow_P2
 	db $FF

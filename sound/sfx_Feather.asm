@@ -5,11 +5,9 @@ Feather_P1Noise:
 	pitch $64
 	volenv $11
 	notelen 44
-	db G3
+	db D4-7
 	db $FF
 Feather_Footer:
-	db $80
-	.word Feather_P1Noise
-	db $83
-	.word Feather_P1Noise
+	sfxsq1 Feather_P1Noise
+	sfxnoise Feather_P1Noise
 	db $FF

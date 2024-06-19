@@ -5,10 +5,9 @@ Checkpoint_P1:
 	pitch $39
 	volenv $40
 	notelen 3
-	db B5, A5, G5, F5, E5, D5, C5
-	db B4, A4, G4, F4, E4, D4, C4
+	db F7-18, D#7-18, C#7-18, B6-18, A#6-18, G#6-18, F#6-18
+	db F6-18, D#6-18, C#6-18, B5-18, A#5-18, G#5-18, F#5-18
 	db $FF
 Checkpoint_Footer:
-	db $80
-	.word Checkpoint_P1
+	sfxsq1 Checkpoint_P1
 	db $FF

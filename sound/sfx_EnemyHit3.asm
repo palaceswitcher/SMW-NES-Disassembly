@@ -1,19 +1,12 @@
 EnemyHit3_P1:
-	db $F5
-	db $01
-	db Transpose
-	db $09
-	db DutySet
-	db $38
-	db PitchSet
-	db $39
-	db VolSet
-	db $41
-	db $84
-	db E4
-	db F4
+	sndspeed 1
+	transpose 9
+	duty $38
+	pitch $39
+	volenv $41
+	notelen 4
+	db C#5-9, D5-9
 	db $FF
 EnemyHit3_Footer:
-	db $80
-	.word EnemyHit3_P1
+	sfxsq1 EnemyHit3_P1
 	db $FF

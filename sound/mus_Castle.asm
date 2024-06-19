@@ -5,13 +5,13 @@ Castle_P1:
 	pitch $00
 	volenv $33
 
-	callsegment Castle_P1Seg
+	playsegment Castle_P1Seg
 
-	callsegment Castle_P1Seg
+	playsegment Castle_P1Seg
 
-	callsegment Castle_P1Seg
+	playsegment Castle_P1Seg
 
-	callsegment Castle_P1Seg
+	playsegment Castle_P1Seg
 
 	notelen 6
 	db A3
@@ -178,8 +178,7 @@ Castle_P1Loop:
 	notelen 48
 	db A3
 	db G#3
-	db $F4
-	.word Castle_P1Loop
+	sndjump Castle_P1Loop
 	db $FF
 Castle_P1Seg:
 	notelen 6
@@ -360,7 +359,7 @@ Castle_P2:
 	db $0F
 	db $C8
 	db $10
-	transpose $0F
+	transpose 15
 	db DutySet
 	db $07
 	db PitchSet
@@ -413,122 +412,94 @@ Castle_P2:
 	db B4
 	db G4
 	db F4
-	transpose $0F
-	db SegCall
-	db $9C
-	db $A3
-	transpose $15
-	db SegCall
-	db $9C
-	db $A3
-	transpose $14
-	db SegCall
-	db $9C
-	db $A3
-	transpose $16
-	db SegCall
-	db $9C
-	db $A3
+	transpose 15
+	playsegment Castle_P2Part2
+
+	transpose 21
+	playsegment Castle_P2Part2
+
+	transpose 20
+	playsegment Castle_P2Part2
+
+	transpose 22
+	playsegment Castle_P2Part2
+
 Castle_P2Loop:
-	transpose $0F
-	db SegCall
-	db $9C
-	db $A3
-	transpose $15
-	db SegCall
-	db $9C
-	db $A3
-	transpose $14
-	db SegCall
-	db $9C
-	db $A3
-	transpose $16
-	db SegCall
-	db $9C
-	db $A3
-	transpose $0F
-	db SegCall
-	db $9C
-	db $A3
-	transpose $15
-	db SegCall
-	db $9C
-	db $A3
-	transpose $14
-	db SegCall
-	db $9C
-	db $A3
-	transpose $16
-	db SegCall
-	db $9C
-	db $A3
-	transpose $0F
-	db SegCall
-	db $9C
-	db $A3
-	transpose $15
-	db SegCall
-	db $9C
-	db $A3
-	transpose $14
-	db SegCall
-	db $9C
-	db $A3
-	transpose $16
-	db SegCall
-	db $9C
-	db $A3
-	transpose $0F
-	db SegCall
-	db $9C
-	db $A3
-	transpose $15
-	db SegCall
-	db $9C
-	db $A3
-	transpose $14
-	db SegCall
-	db $9C
-	db $A3
-	transpose $16
-	db SegCall
-	db $9C
-	db $A3
-	transpose $17
-	db SegCall
-	db $9C
-	db $A3
-	transpose $1A
-	db SegCall
-	db $9C
-	db $A3
-	transpose $16
-	db SegCall
-	db $9C
-	db $A3
-	transpose $1B
-	db SegCall
-	db $9C
-	db $A3
-	transpose $17
-	db SegCall
-	db $9C
-	db $A3
-	transpose $16
-	db SegCall
-	db $9C
-	db $A3
-	transpose $11
-	db SegCall
-	db $9C
-	db $A3
-	transpose $16
-	db SegCall
-	db $9C
-	db $A3
-	db $F4
-	.word Castle_P2Loop
+	transpose 15
+	playsegment Castle_P2Part2
+
+	transpose 21
+	playsegment Castle_P2Part2
+
+	transpose 20
+	playsegment Castle_P2Part2
+
+	transpose 22
+	playsegment Castle_P2Part2
+
+	transpose 15
+	playsegment Castle_P2Part2
+
+	transpose 21
+	playsegment Castle_P2Part2
+
+	transpose 20
+	playsegment Castle_P2Part2
+
+	transpose 22
+	playsegment Castle_P2Part2
+
+	transpose 15
+	playsegment Castle_P2Part2
+
+	transpose 21
+	playsegment Castle_P2Part2
+
+	transpose 20
+	playsegment Castle_P2Part2
+
+	transpose 22
+	playsegment Castle_P2Part2
+
+	transpose 15
+	playsegment Castle_P2Part2
+
+	transpose 21
+	playsegment Castle_P2Part2
+
+	transpose 20
+	playsegment Castle_P2Part2
+
+	transpose 22
+	playsegment Castle_P2Part2
+
+	transpose 23
+	playsegment Castle_P2Part2
+
+	transpose 26
+	playsegment Castle_P2Part2
+
+	transpose 22
+	playsegment Castle_P2Part2
+
+	transpose 27
+	playsegment Castle_P2Part2
+
+	transpose 23
+	playsegment Castle_P2Part2
+
+	transpose 22
+	playsegment Castle_P2Part2
+
+	transpose 17
+	playsegment Castle_P2Part2
+
+	transpose 22
+	playsegment Castle_P2Part2
+
+	sndjump Castle_P2Loop
 	db $FF
+Castle_P2Part2:
 	db DutySet
 	db NRest
 	db PitchSet
@@ -552,10 +523,10 @@ Castle_P2Loop:
 	db $1C
 	db B2
 	db $20
-	db $F1
-	db $FF
+	endsegment
+	
 Castle_Tri:
-	transpose $1B
+	transpose 27
 	db DutySet
 	db $07
 	db PitchSet
@@ -666,7 +637,7 @@ Castle_Tri:
 	db NRest
 	db NRest
 	db NRest
-	transpose $0F
+	transpose 15
 	db DutySet
 	db $38
 	db PitchSet
@@ -700,54 +671,54 @@ Castle_Tri:
 	db $1C
 	db $1C
 Castle_TriLoop:
-	transpose $0F
-	callsegment Castle_TriPart2
-	transpose $15
-	callsegment Castle_TriPart2
-	transpose $14
-	callsegment Castle_TriPart2
-	transpose $16
-	callsegment Castle_TriPart2
-	transpose $0F
-	callsegment Castle_TriPart2
-	transpose $15
-	callsegment Castle_TriPart2
-	transpose $14
-	callsegment Castle_TriPart2
-	transpose $16
-	callsegment Castle_TriPart2
-	transpose $0F
-	callsegment Castle_TriPart2
-	transpose $15
-	callsegment Castle_TriPart2
-	transpose $14
-	callsegment Castle_TriPart2
-	transpose $16
-	callsegment Castle_TriPart2
-	transpose $17
-	callsegment Castle_TriPart2
-	transpose $1A
-	callsegment Castle_TriPart2
-	transpose $16
-	callsegment Castle_TriPart2
-	transpose $1B
-	callsegment Castle_TriPart2
-	transpose $17
-	callsegment Castle_TriPart2
-	transpose $16
-	callsegment Castle_TriPart2
-	transpose $11
-	callsegment Castle_TriPart2
-	transpose $16
-	callsegment Castle_TriPart2
-	transpose $0F
-	callsegment Castle_TriPart2
-	transpose $15
-	callsegment Castle_TriPart2
-	transpose $14
-	callsegment Castle_TriPart2
-	transpose $16
-	callsegment Castle_TriPart2
+	transpose 15
+	playsegment Castle_TriPart2
+	transpose 21
+	playsegment Castle_TriPart2
+	transpose 20
+	playsegment Castle_TriPart2
+	transpose 22
+	playsegment Castle_TriPart2
+	transpose 15
+	playsegment Castle_TriPart2
+	transpose 21
+	playsegment Castle_TriPart2
+	transpose 20
+	playsegment Castle_TriPart2
+	transpose 22
+	playsegment Castle_TriPart2
+	transpose 15
+	playsegment Castle_TriPart2
+	transpose 21
+	playsegment Castle_TriPart2
+	transpose 20
+	playsegment Castle_TriPart2
+	transpose 22
+	playsegment Castle_TriPart2
+	transpose 23
+	playsegment Castle_TriPart2
+	transpose 26
+	playsegment Castle_TriPart2
+	transpose 22
+	playsegment Castle_TriPart2
+	transpose 27
+	playsegment Castle_TriPart2
+	transpose 23
+	playsegment Castle_TriPart2
+	transpose 22
+	playsegment Castle_TriPart2
+	transpose 17
+	playsegment Castle_TriPart2
+	transpose 22
+	playsegment Castle_TriPart2
+	transpose 15
+	playsegment Castle_TriPart2
+	transpose 21
+	playsegment Castle_TriPart2
+	transpose 20
+	playsegment Castle_TriPart2
+	transpose 22
+	playsegment Castle_TriPart2
 	sndjump Castle_TriLoop
 	db $FF
 Castle_TriPart2:

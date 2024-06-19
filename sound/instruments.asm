@@ -1,8 +1,7 @@
 ofs_8100:
-	db $00
-	db $00
-	db $FF
-	db $00
+	db 0, 0
+	ofs_8100Loop:
+	instjump ofs_8100Loop
 ofs_8104:
 	db $05
 	db $0F
@@ -181,54 +180,36 @@ ofs_81A6:
 	db $00
 	db $FF
 	db $FE
-ofs_81AC:
-	db $01
-	db $06
-	db $11
-	db $04
-	db $02
-	db $01
-	db $01
-	db $03
-	db $11
-	db $02
-	db $02
-	db $01
-	db $01
-	db $02
-	db $11
-	db $01
-	db $02
-	db $01
-	db $FE
-	db $01
-	db $FF
-	db $FE
+Vol_LongEcho1:
+	instrle 6, 1
+	instrle 4, 17
+	instrle 1, 2
+	instrle 3, 1
+	instrle 2, 17
+	instrle 1, 2
+	instrle 2, 1
+	instrle 1, 17
+	instrle 1, 2
+	Vol_LongEcho1Loop:
+	instrle 1, 254
+	instjump Vol_LongEcho1Loop ;Repeat previous RLE command
+
+;This was likely encoded wrong
 ofs_81C2:
-	db $00
-	db $01
-	db $40
-	db $01
-	db $80
-	db $01
-	db $40
-	db $10
-	db $00
-	db $FF
-	db $F6
+	db $00 ;This probably shouldn't be here
+	dutyrle 1, 1
+	dutyrle 2, 1
+	dutyrle 1, 1
+	db $10, $00
+	db $FF, -10
+
 ofs_81CD:
-	db $12
-	db $0F
-	db $FE
-	db $00
-	db $01
-	db $80
-	db $01
-	db $40
-	db $FE
-	db $00
-	db $FF
-	db $FE
+	db $12, $0F
+	db $FE, $00
+	db $01, $80
+	db $01, $40
+	db $FE, $00
+	db $FF, $FE
 ofs_81D9:
 	db $01
 	db $02
@@ -577,18 +558,13 @@ ofs_82FD:
 	db $FF
 	db $00
 ofs_831B:
-	db $01
-	db $C0
-	db $01
-	db $80
-	db $01
-	db $40
-	db $01
-	db $00
-	db $01
-	db $40
-	db $FF
-	db $F6
+	ofs_831BLoop:
+	dutyrle 3, 1
+	dutyrle 2, 1
+	dutyrle 1, 1
+	dutyrle 0 ,1
+	dutyrle 1, 1
+	instjump ofs_831BLoop ;Loop at start
 ofs_8327:
 	db $01
 	db $0E
@@ -621,18 +597,12 @@ ofs_833F:
 	db $FF
 	db $00
 ofs_8343:
-	db $01
-	db $00
-	db $01
-	db $FE
-	db $01
-	db $FE
-	db $01
-	db $FD
-	db $01
-	db $FC
-	db $FF
-	db $F6
+	db $01, $00
+	db $01, $FE
+	db $01, $FE
+	db $01, $FD
+	db $01, $FC
+	db $FF, $F6
 ofs_834F:
 	db $02
 	db $04
@@ -650,7 +620,7 @@ ofs_834F:
 	db $01
 	db $FF
 	db $00
-ofs_835F:
+Vol_PlinkEcho:
 	db $01, $0F
 	db $02, $08
 	db $02, $04
@@ -876,45 +846,31 @@ ofs_8437:
 	db $FF
 	db $FC
 ofs_843D:
-	db $08
-	db $23
-	db $07
-	db $19
-	db $06
-	db $0F
-	db $05
-	db $0F
-	db $04
-	db $0F
-	db $03
-	db $0F
-	db $02
-	db $0F
-	db $01
-	db $FF
+	instrle 35, 8
+	instrle 25, 7
+	instrle 15, 6
+	instrle 15, 5
+	instrle 15, 4
+	instrle 15, 3
+	instrle 15, 2
+	instrle -1, 1
 	db $FE
 ofs_844E:
-	db $23
-	db $07
-	db $19
-	db $06
-	db $0F
-	db $05
-	db $0F
-	db $04
-	db $0F
-	db $03
-	db $0F
-	db $02
-	db $0F
-	db $01
-	db $FF
-	db $FE
+	instrle 7, 35
+	instrle 6, 25
+	instrle 5, 15
+	instrle 4, 15
+	instrle 3, 15
+	instrle 2, 15
+	ofs_844ELoop:
+	instrle 1, 15
+	instjump ofs_844ELoop
+
+;volume
 ofs_845E:
-	db $FE
-	db $0F
-	db $FF
-	db $00
+	instrle 15, 254
+	ofs_845ELoop:
+	instjump ofs_845ELoop
 ofs_8462:
 	db $01, $0F
 	db $02, $08
@@ -1024,10 +980,9 @@ ofs_84C0:
 	db $FF
 	db $00
 ofs_84CC:
-	db $FE
-	db $80
-	db $FF
-	db $00
+	dutyrle 2, 254
+	ofs_84CCLoop:
+	instjump ofs_84CCLoop
 ofs_84D0:
 	db $04
 	db $10
@@ -1061,32 +1016,20 @@ ofs_84DE:
 	db $FF
 	db $FA
 ofs_84EE:
-	db $02
-	db $40
-	db $02
-	db $20
-	db $02
-	db $10
-	db $02
-	db $08
-	db $02
-	db $04
-	db $02
-	db $02
-	db $02
-	db $FE
-	db $02
-	db $FC
-	db $02
-	db $F8
-	db $02
-	db $F0
-	db $02
-	db $E0
-	db $02
-	db $C0
-	db $FF
-	db $00
+	instrle 64, 2
+	instrle 32, 2
+	instrle 16, 2
+	instrle 8, 2
+	instrle 4, 2
+	instrle 2, 2
+	instrle -2, 2
+	instrle -4, 2
+	instrle -8, 2
+	instrle -16, 2
+	instrle -32, 2
+	instrle -64, 2
+	ofs_84EELoop:
+	instjump ofs_84EELoop
 ofs_8508:
 	db $04
 	db $10
@@ -1113,37 +1056,24 @@ ofs_8508:
 	db $FF
 	db $F8
 ofs_8520:
-	db $05
-	db $C0
-	db $04
-	db $00
-	db $03
-	db $00
-	db $FF
-	db $FD
+	dutyrle 3, 5
+	ofs_8520Loop:
+	dutyrle 0, 4
+	dutyrle 0, 3
+	instjump ofs_8520Loop,1 ;This seems to be encoded wrong
 ofs_8528:
-	db $03
-	db $08
-	db $03
-	db $07
-	db $03
-	db $05
-	db $03
-	db $03
-	db $03
-	db $02
-	db $02
-	db $00
-	db $03
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $FF
-	db $00
+	instrle 8, 3
+	instrle 7, 3
+	instrle 5, 3
+	instrle 3, 3
+	instrle 2, 3
+	instrle 0, 2
+	instrle 0, 3
+	instrle 0, 2
+	instrle 0, 2
+	instrle 0, 2
+	ofs_8528Loop:
+	instjump ofs_8528Loop
 ofs_853E:
 	db $40
 	db $14

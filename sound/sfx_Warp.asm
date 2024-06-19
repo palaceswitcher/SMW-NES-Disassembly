@@ -5,11 +5,10 @@ Warp_Tri:
 	pitch $63
 	volenv $11
 	notelen 3
-	db G4, NRest, G4, NRest, G4, NRest
-	db A4, NRest, A4, NRest, A4, NRest
-	db B4, NRest, B4, NRest, B4, NRest
+	db G6-24, NRest, G6-24, NRest, G6-24, NRest
+	db A6-24, NRest, A6-24, NRest, A6-24, NRest
+	db B6-24, NRest, B6-24, NRest, B6-24, NRest
 	db $FF
 Warp_Footer:
-	db $82
-	.word Warp_Tri
+	sfxtri Warp_Tri
 	db $FF

@@ -6,6 +6,7 @@ Chainsaw_Noise:
 	volenv $41
 	db $46-1
 	db $FF
+
 Chainsaw_Footer:
 	sfxnoise Chainsaw_Noise
 	db $FF

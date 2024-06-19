@@ -2,23 +2,55 @@ macro movedata x,y
 	db x, y
 endm
 
-;Sound stuff
+;Instrument RLE commands
+macro instrle vol,len
+	db len, vol
+endm
+macro dutyrle duty,len
+	db len, duty<<6
+endm
+macro instjump loc,ofs
+	ifndef ofs
+		ofs = 0 ;Default offset
+	endif
+	d = loc-$ ;Distance
+	db $FF
+	db <d+ofs
+endm
+
+;Sound commands
 macro notelen x
 	db $80+x
 endm
-
 macro sndjump x
 	db $F4
 	dw x
 endm
-
-macro callsegment x
+macro playsegment x
 	db $F0
 	dw x
 endm
-
 macro endsegment
 	db $F1, $FF
+endm
+macro sndspeed x
+	db $F5, x
+endm
+
+macro transpose x
+	db $F6, x
+endm
+
+macro volenv x
+	db $F8, x
+endm
+
+macro duty x
+	db $F9, x
+endm
+
+macro pitch x
+	db $FA, x
 endm
 
 ;Channel pointers
@@ -61,25 +93,4 @@ endm
 macro sfxdpcm x
 	db $84
 	dw x
-endm
-
-
-macro sndspeed x
-	db $F5, x
-endm
-
-macro transpose x
-	db $F6, x
-endm
-
-macro volenv x
-	db $F8, x
-endm
-
-macro duty x
-	db $F9, x
-endm
-
-macro pitch x
-	db $FA, x
 endm

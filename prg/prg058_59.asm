@@ -17,9 +17,9 @@ tbl10_8000:
 	dw ofs_8194
 	dw ofs_819C
 	dw ofs_81A6
-	dw ofs_81AC
-	dw ofs_81C2
-	dw ofs_81CD
+	dw Vol_LongEcho1 ;0x11
+	dw ofs_81C2 ;0x12
+	dw ofs_81CD ;0x13
 	dw ofs_81D9
 	dw ofs_81E3
 	dw ofs_81ED
@@ -52,12 +52,12 @@ tbl10_8000:
 	dw ofs_82C9
 	dw ofs_82D1
 	dw ofs_82FD
-	dw ofs_831B
+	dw ofs_831B ;0x34
 	dw ofs_8100
 	dw ofs_8327
 	dw ofs_8337
 	dw ofs_833F
-	dw ofs_8343
+	dw ofs_8343 ;0x39
 	dw ofs_8100
 	dw ofs_8100
 	dw ofs_8100
@@ -65,7 +65,7 @@ tbl10_8000:
 	dw ofs_8100
 	dw ofs_8100
 	dw ofs_834F
-	dw ofs_835F ;0x41
+	dw Vol_PlinkEcho ;0x41
 	dw ofs_8379
 	dw ofs_8381
 	dw ofs_8397
@@ -80,9 +80,9 @@ tbl10_8000:
 	dw ofs_8431
 	dw ofs_8437
 	dw ofs_8100
-	dw ofs_843D
-	dw ofs_844E
-	dw ofs_845E
+	dw ofs_843D ;0x50
+	dw ofs_844E ;0x51
+	dw ofs_845E ;0x52
 	dw ofs_8462
 	dw ofs_846E
 	dw ofs_8472
@@ -91,16 +91,16 @@ tbl10_8000:
 	dw ofs_84B4
 	dw ofs_84C0
 	dw ofs_8100
-	dw ofs_84CC
+	dw ofs_84CC ;0x5B
 	dw ofs_84D0
 	dw ofs_84DE
-	dw ofs_84EE
+	dw ofs_84EE ;0x5E
 	dw ofs_8508
-	dw ofs_8520
-	dw ofs_8528
+	dw ofs_8520 ;0x60
+	dw ofs_8528 ;0x61
 	dw ofs_853E
 	dw ofs_8554
-	dw ofs_8576
+	dw ofs_8576 ;0x64
 	dw ofs_8100
 	dw ofs_8100
 	dw ofs_8100
@@ -334,10 +334,10 @@ loc10_8741:
 	LDX $070C
 	INY
 	LDA (SoundPointer),Y
-	STA $0724,X
+	STA ChannelPtrs,X
 	INY
 	LDA (SoundPointer),Y
-	STA $0725,X
+	STA ChannelPtrs+1,X
 	INY
 	TYA
 	PHA
@@ -360,7 +360,7 @@ bra10_875C:
 	CPY #$04
 	BPL bra10_879C
 	LDA #$00
-	STA Pulse1PitchSetting,X
+	STA ChannelPitchSetting,X
 	LDA #$FF
 	STA $0765,X
 	CPY #$03
@@ -379,8 +379,8 @@ bra10_879C:
 	JMP loc10_8716
 sub10_87A1:
 	LDX $070C
-	LDA $0724,X
-	ORA $0725,X
+	LDA ChannelPtrs,X
+	ORA ChannelPtrs+1,X
 	BEQ bra10_87DF_RTS
 	LDA $0731,X
 	BNE bra10_87DC
@@ -410,9 +410,9 @@ bra10_87DF_RTS:
 sub10_87E0:
 loc10_87E0:
 	LDX $070C
-	LDA $0724,X
+	LDA ChannelPtrs,X
 	STA SoundPointer
-	LDA $0725,X
+	LDA ChannelPtrs+1,X
 	STA SoundPointer+1
 	LDY #$00
 	LDA (SoundPointer),Y
@@ -485,9 +485,9 @@ bra10_884B:
 	TAY
 	LDX $070C
 	LDA NotePitchTable,Y
-	STA Pulse1Pitch,X
+	STA ChannelPitch,X
 	LDA NotePitchTable+1,Y
-	STA Pulse1Pitch+1,X
+	STA ChannelPitch+1,X
 	JMP loc10_8878
 bra10_8866:
 	TAX
@@ -500,7 +500,7 @@ bra10_8866:
 bra10_8871:
 	TXA
 	LDX $070C
-	STA Pulse1Pitch,X
+	STA ChannelPitch,X
 loc10_8878:
 	JSR sub10_8A65
 	JSR sub10_8E20
@@ -537,28 +537,28 @@ tbl10_8895:
 ofs_88B5:
 	LDX $070C
 	CLC
-	LDA $0724,X
+	LDA ChannelPtrs,X
 	ADC #$02
 	STA $071C,X
-	LDA $0725,X
+	LDA ChannelPtrs+1,X
 	ADC #$00
 	STA $071D,X
 	JMP loc10_893D
 ofs_88CC:
 	LDX $070C
 	LDA $071C,X
-	STA $0724,X
+	STA ChannelPtrs,X
 	LDA $071D,X
-	STA $0725,X
+	STA ChannelPtrs+1,X
 	LDA #$00
 	STA $071C,X
 	STA $071D,X
 	JMP loc10_87E0
 ofs_88E6:
 	LDX $070C
-	LDA $0724,X
+	LDA ChannelPtrs,X
 	STA SoundPointer
-	LDA $0725,X
+	LDA ChannelPtrs+1,X
 	STA SoundPointer+1
 	LDX $070B
 	LDY #$00
@@ -566,9 +566,9 @@ ofs_88E6:
 	STA $0710,X
 	JSR sub10_8E20
 	LDX $070C
-	LDA $0724,X
+	LDA ChannelPtrs,X
 	STA $0714,X
-	LDA $0725,X
+	LDA ChannelPtrs+1,X
 	STA $0715,X
 	JMP loc10_87E0
 ofs_8912:
@@ -577,9 +577,9 @@ ofs_8912:
 	BEQ bra10_892C
 	LDX $070C
 	LDA $0714,X
-	STA $0724,X
+	STA ChannelPtrs,X
 	LDA $0715,X
-	STA $0725,X
+	STA ChannelPtrs+1,X
 	JMP loc10_87E0
 bra10_892C:
 	LDX $070C
@@ -590,22 +590,22 @@ bra10_892C:
 loc10_893A:
 	LDX $070C
 loc10_893D:
-	LDA $0724,X
+	LDA ChannelPtrs,X
 	STA SoundPointer
-	LDA $0725,X
+	LDA ChannelPtrs+1,X
 	STA SoundPointer+1
 	LDY #$00
 	LDA (SoundPointer),Y
-	STA $0724,X
+	STA ChannelPtrs,X
 	INY
 	LDA (SoundPointer),Y
-	STA $0725,X
+	STA ChannelPtrs+1,X
 	JMP loc10_87E0
 ofs_8957:
 	LDX $070C
-	LDA $0724,X
+	LDA ChannelPtrs,X
 	STA SoundPointer
-	LDA $0725,X
+	LDA ChannelPtrs+1,X
 	STA SoundPointer+1
 	LDY #$00
 	LDA (SoundPointer),Y
@@ -624,9 +624,9 @@ ofs_897A:
 	CPX #$03
 	BPL bra10_899B
 	LDX $070C
-	LDA $0724,X
+	LDA ChannelPtrs,X
 	STA SoundPointer
-	LDA $0725,X
+	LDA ChannelPtrs+1,X
 	STA SoundPointer+1
 	LDY #$00
 	LDA (SoundPointer),Y
@@ -669,13 +669,13 @@ ofs_89D3:
 	JMP loc10_87E0
 bra10_89E3:
 	JSR sub10_8B0D
-	STA Pulse1PitchSetting,X
+	STA ChannelPitchSetting,X
 	JMP loc10_87E0
 ofs_89EC:
 	LDX $070C
 	LDA #$00
-	STA $0724,X
-	STA $0725,X
+	STA ChannelPtrs,X
+	STA ChannelPtrs+1,X
 	LDA $070A
 	AND #$0F
 	ASL
@@ -703,9 +703,9 @@ bra10_8A26_RTS:
 	RTS
 ofs_8A27:
 	LDX $070C
-	LDA $0724,X
+	LDA ChannelPtrs,X
 	STA SoundPointer
-	LDA $0725,X
+	LDA ChannelPtrs+1,X
 	STA SoundPointer+1
 	JSR sub10_8E20
 	LDX $070B
@@ -718,13 +718,13 @@ bra10_8A46:
 	DEC $0710,X
 	BNE bra10_8A62
 	LDX $070C
-	LDA $0724,X
+	LDA ChannelPtrs,X
 	CLC
 	ADC #$02
-	STA $0724,X
-	LDA $0725,X
+	STA ChannelPtrs,X
+	LDA ChannelPtrs+1,X
 	ADC #$00
-	STA $0725,X
+	STA ChannelPtrs+1,X
 	JMP loc10_87E0
 bra10_8A62:
 	JMP loc10_893A
@@ -737,13 +737,15 @@ sub10_8A65:
 	JSR sub10_8AAB
 	JSR sub10_8ADC
 	RTS
+
 sub10_8A7A:
 	LDA $070A
-	AND #$0F
+	AND #%1111 ;Mask out lower nybble
 	TAX
 	CPX #$04
-	BMI bra10_8A85
+	BMI bra10_8A85 ;Branch if it's commands F0 to F3
 	RTS
+
 bra10_8A85:
 	LDX $070B
 	LDY $070C
@@ -751,16 +753,17 @@ bra10_8A85:
 	ASL
 	TAX
 	LDA tbl10_8000,X
-	STA $0751,Y
+	STA VolMacroPtrs,Y
 	STA SoundPointer
 	LDA tbl10_8000+1,X
-	STA $0752,Y
+	STA VolMacroPtrs+1,Y
 	STA SoundPointer+1
 	LDX $070B
 	LDY #$00
 	LDA (SoundPointer),Y
 	STA $074D,X
 	RTS
+
 sub10_8AAB:
 	LDA $070A
 	AND #$0F
@@ -775,10 +778,10 @@ bra10_8AB6:
 	ASL
 	TAX
 	LDA tbl10_8000,X
-	STA $075D,Y
+	STA DutyMacroPtrs,Y
 	STA SoundPointer
 	LDA tbl10_8000+1,X
-	STA $075E,Y
+	STA DutyMacroPtrs+1,Y
 	STA SoundPointer+1
 	LDX $070B
 	LDY #$00
@@ -795,7 +798,7 @@ sub10_8ADC:
 bra10_8AE7:
 	LDX $070B
 	LDY $070C
-	LDA Pulse1PitchSetting,X
+	LDA ChannelPitchSetting,X
 	ASL
 	TAX
 	LDA tbl10_8000,X
@@ -809,29 +812,34 @@ bra10_8AE7:
 	LDA (SoundPointer),Y
 	STA $0765,X
 	RTS
+
 sub10_8B0D:
+	;Load pointer for current channel
 	LDX $070C
-	LDA $0724,X
+	LDA ChannelPtrs,X
 	STA SoundPointer
-	LDA $0725,X
+	LDA ChannelPtrs+1,X
 	STA SoundPointer+1
-	JSR sub10_8E20
+	
+	JSR sub10_8E20 ;Move to next byte
 	LDY #$00
 	LDA (SoundPointer),Y
 	LDX $070B
 	RTS
+
 sub10_8B25:
 	JSR sub10_8B2F
 	JSR sub10_8BA2
 	JSR sub10_8C15
 	RTS
+
 sub10_8B2F:
 	LDA $070A
 	AND #$0F
 	TAX
 	CPX #$04
 	BPL bra10_8BA1_RTS
-bra10_8B39:
+
 loc10_8B39:
 	LDX $070B
 	LDA $074D,X
@@ -841,36 +849,39 @@ loc10_8B39:
 	LDX $070B
 	LDA $074D,X
 	BNE bra10_8B9E
+	
+	;Move to next RLE tag
 	LDX $070C
 	LDA #$02
 	CLC
-	ADC $0751,X
-	STA $0751,X
+	ADC VolMacroPtrs,X
+	STA VolMacroPtrs,X
 	STA SoundPointer
 	LDA #$00
-	ADC $0752,X
-	STA $0752,X
+	ADC VolMacroPtrs+1,X
+	STA VolMacroPtrs+1,X
 	STA SoundPointer+1
+	
 	LDX $070B
 	LDY #$00
 	LDA (SoundPointer),Y
 	STA $074D,X
 	TAY
 	CPY #$FF
-	BNE bra10_8B39
+	BNE loc10_8B39
 	LDX $070C
 	LDY #$01
 	LDA (SoundPointer),Y
 	AND #$FE
 	BPL bra10_8B91
 	CLC
-	ADC $0751,X
-	STA $0751,X
+	ADC VolMacroPtrs,X
+	STA VolMacroPtrs,X
 	STA SoundPointer
 	BCS bra10_8B8C
-	DEC $0752,X
+	DEC VolMacroPtrs+1,X
 bra10_8B8C:
-	LDA $0752,X
+	LDA VolMacroPtrs+1,X
 	STA SoundPointer+1
 bra10_8B91:
 	LDX $070B
@@ -882,13 +893,14 @@ bra10_8B9E:
 	DEC $074D,X
 bra10_8BA1_RTS:
 	RTS
+
 sub10_8BA2:
 	LDA $070A
 	AND #$0F
 	TAX
 	CPX #$02
 	BPL bra10_8C14_RTS
-bra10_8BAC:
+
 loc10_8BAC:
 	LDX $070B
 	LDA $075B,X
@@ -901,12 +913,12 @@ loc10_8BAC:
 	LDX $070C
 	LDA #$02
 	CLC
-	ADC $075D,X
-	STA $075D,X
+	ADC DutyMacroPtrs,X
+	STA DutyMacroPtrs,X
 	STA SoundPointer
 	LDA #$00
-	ADC $075E,X
-	STA $075E,X
+	ADC DutyMacroPtrs+1,X
+	STA DutyMacroPtrs+1,X
 	STA SoundPointer+1
 	LDX $070B
 	LDY #$00
@@ -914,20 +926,20 @@ loc10_8BAC:
 	STA $075B,X
 	TAY
 	CPY #$FF
-	BNE bra10_8BAC
+	BNE loc10_8BAC
 	LDX $070C
 	LDY #$01
 	LDA (SoundPointer),Y
 	AND #$FE
 	BPL bra10_8C04
 	CLC
-	ADC $075D,X
-	STA $075D,X
+	ADC DutyMacroPtrs,X
+	STA DutyMacroPtrs,X
 	STA SoundPointer
 	BCS bra10_8BFF
-	DEC $075E,X
+	DEC DutyMacroPtrs+1,X
 bra10_8BFF:
-	LDA $075E,X
+	LDA DutyMacroPtrs+1,X
 	STA SoundPointer+1
 bra10_8C04:
 	LDX $070B
@@ -1025,7 +1037,7 @@ bra10_8CA2:
 	BPL bra10_8CC0
 	DEC $FF
 bra10_8CC0:
-	LDA Pulse1Pitch,Y
+	LDA ChannelPitch,Y
 	CLC
 	ADC $FE
 	STA $0741,Y
@@ -1066,7 +1078,7 @@ bra10_8CF4:
 	BPL bra10_8D12
 	DEC $FF
 bra10_8D12:
-	LDA Pulse1Pitch,Y
+	LDA ChannelPitch,Y
 	CLC
 	ADC $FE
 	STA $0741,Y
@@ -1106,7 +1118,7 @@ bra10_8D4F:
 	BPL bra10_8D61
 	DEC $FF
 bra10_8D61:
-	LDA Pulse1Pitch,Y
+	LDA ChannelPitch,Y
 	CLC
 	ADC $FE
 	STA $0741,Y
@@ -1137,7 +1149,7 @@ bra10_8D95:
 	ORA #$30
 	STA NoiseVol
 	JSR sub10_8DFB
-	LDA Pulse1Pitch,Y
+	LDA ChannelPitch,Y
 	CLC
 	ADC $FE
 	STA NoiseLo
@@ -1157,9 +1169,9 @@ bra10_8DC0:
 	PLA
 	PHA
 	TAY
-	LDA $0751,Y
+	LDA VolMacroPtrs,Y
 	STA SoundPointer
-	LDA $0752,Y
+	LDA VolMacroPtrs+1,Y
 	STA SoundPointer+1
 	LDY #$01
 	LDA (SoundPointer),Y
@@ -1181,9 +1193,9 @@ bra10_8DE5:
 	PLA
 	PHA
 	TAY
-	LDA $075D,Y
+	LDA DutyMacroPtrs,Y
 	STA SoundPointer
-	LDA $075E,Y
+	LDA DutyMacroPtrs+1,Y
 	STA SoundPointer+1
 	LDY #$01
 	LDA (SoundPointer),Y
@@ -1216,13 +1228,18 @@ loc10_8E1B:
 	PLA
 	TAY
 	RTS
+
+;----------------------------------------
+;SUBROUTINES ($8E20, $8E23)
+;Increments the pointer for channel data, optionally ignoring the index for the current channel if the second subroutine is called.
+;----------------------------------------
 sub10_8E20:
-	LDX $070C
+	LDX $070C ;Get current channel
 sub_58_8E23:
-	INC $0724,X
-	LDA $0724,X
-	BNE bra10_8E2E_RTS
-	INC $0725,X
+	INC ChannelPtrs,X
+	LDA ChannelPtrs,X
+	BNE bra10_8E2E_RTS ;Don't increment high byte if no overflow
+		INC ChannelPtrs+1,X
 bra10_8E2E_RTS:
 	RTS
 
@@ -1239,6 +1256,7 @@ bra10_8E32:
 	STA $0701,Y ;Store in SFX queue
 bra10_8E40_RTS:
 	RTS
+
 tbl10_8E41:
 	dw Empty_Footer
 	dw SpinJump_Footer

@@ -5,9 +5,8 @@ Pause_P2:
 	pitch $39
 	volenv $40
 	notelen 3
-	db E3, NRest, C3, NRest, E3, NRest, C3
+	db E5-24, NRest, C5-24, NRest, E5-24, NRest, C5-24
 	db $FF
 Pause_Footer:
-	db $81
-	.word Pause_P2
+	sfxsq2 Pause_P2
 	db $FF

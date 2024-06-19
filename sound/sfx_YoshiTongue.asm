@@ -1,28 +1,21 @@
 YoshiTongue_P1:
-	db $F5
-	db $01
-	db Transpose
-	db $09
-	db DutySet
-	db $12
-	db PitchSet
+	sndspeed 1
+	transpose 9
+	duty $12
+	pitch 0
+	volenv $13
+	notelen 8
 	db NRest
-	db VolSet
-	db $13
-	db $88
-	db NRest
-	db $84
-	db $3A
-	db DutySet
-	db $38
-	db PitchSet
-	db $39
-	db VolSet
-	db $41
-	db $90
-	db $45
+	
+	notelen 4
+	db G5-9
+
+	duty $38
+	pitch $39
+	volenv $41
+	notelen 16
+	db F#6-9
 	db $FF
 YoshiTongue_Footer:
-	db $80
-	.word YoshiTongue_P1
+	sfxsq1 YoshiTongue_P1
 	db $FF
