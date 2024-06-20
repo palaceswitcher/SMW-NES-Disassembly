@@ -41,6 +41,8 @@ sfx_Cutter = $1D
 sfx_HitBlock = $1E
 sfx_FireBall = $1F
 sfx_Switch = $20
+sfx_DryBones = $21
+sfx_Spring = $22
 
 ;Music IDs
 mus_Title = $40

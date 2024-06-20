@@ -2,7 +2,7 @@ DonutPlains_P1:
 DonutPlains_P1Loop:
 	.byte SongSpeed, $01
 	.byte Transpose, $0C
-	.byte DutySet, $5B
+	.byte DutySet, $07
 	.byte PitchSet, $39
 	.byte VolSet, $11
 	.byte SegCall
@@ -63,7 +63,7 @@ DonutPlains_P1Sub:
 DonutPlains_P2:
 DonutPlains_P2Loop:
 	.byte Transpose, $0C
-	.byte DutySet, $5B
+	.byte DutySet, $07
 	.byte PitchSet, $39
 	.byte VolSet, $11
 	.byte SegCall

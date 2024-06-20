@@ -3,7 +3,7 @@ Ending_P1Loop:
 	.byte $F5
 	.byte $02
 	.byte Transpose, $0C
-	.byte DutySet, $5B
+	.byte DutySet, $07
 	.byte PitchSet, $39
 	.byte VolSet, $11
 	.byte $A4

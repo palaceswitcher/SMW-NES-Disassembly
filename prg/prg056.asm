@@ -2401,7 +2401,7 @@ loc9_91E7:
 	STA PlayerXSpeed
 	LDA #$01
 	JSR RewardPoints
-	LDA #sfx_EnemyHit2
+	LDA #sfx_DryBones
 	STA SFXRegister
 	LDX $A4
 	LDA ObjectSlot,X
@@ -3162,7 +3162,7 @@ ptr2_9765:
 	STA PlayerXSpeed
 	LDA #$01
 	JSR RewardPoints
-	LDA #sfx_EnemyHit2
+	LDA #sfx_DryBones
 	STA SFXRegister
 	JMP loc9_98D1
 sub9_978D:
@@ -3322,7 +3322,7 @@ loc9_98AF:
 	STA PlayerXSpeed
 	LDA #$01
 	JSR RewardPoints
-	LDA #sfx_EnemyHit2
+	LDA #sfx_DryBones
 	STA SFXRegister
 loc9_98D1:
 	LDX $A4

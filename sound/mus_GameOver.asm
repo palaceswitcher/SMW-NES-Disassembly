@@ -1,7 +1,7 @@
 GameOver_P1:
 	.byte SongSpeed, $01
 	.byte Transpose, $11
-	.byte DutySet, $5B
+	.byte DutySet, $07
 	.byte PitchSet, $39
 	.byte VolSet, $11
 	.byte $D0
@@ -18,7 +18,7 @@ GameOver_P1:
 	.byte $FF
 GameOver_P2:
 	.byte Transpose, $11
-	.byte DutySet, $5B
+	.byte DutySet, $07
 	.byte PitchSet, $39
 	.byte VolSet, $11
 	.byte $85

@@ -1,7 +1,7 @@
 YoshiTongue_P1:
 	.byte SongSpeed, $01
 	.byte Transpose, $18
-	.byte DutySet, $5B
+	.byte DutySet, $07
 	.byte PitchSet, $00
 	.byte VolSet, $11
 	.byte NLen+1

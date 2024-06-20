@@ -304,7 +304,7 @@ Underwater_P2Loop:
 	.byte NRest
 	.byte Transpose
 	.byte F2
-	.byte DutySet, $5B
+	.byte DutySet, $07
 	.byte PitchSet, $39
 	.byte VolSet, $11
 	.byte $AA
@@ -435,7 +435,7 @@ Underwater_P2Loop:
 	.byte $FF
 Underwater_Tri:
 	.byte Transpose, $05
-	.byte DutySet, $5B
+	.byte DutySet, $07
 	.byte PitchSet, $39
 	.byte VolSet, $11
 	.byte $8E

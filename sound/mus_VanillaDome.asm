@@ -41,7 +41,7 @@ VanillaDome_P1TriSub:
 	.byte NRest
 	.byte SegEnd
 VanillaDome_P2:
-	.byte DutySet, $5B
+	.byte DutySet, $07
 	.byte PitchSet, $39
 	.byte VolSet, $11
 	.byte NLen+80

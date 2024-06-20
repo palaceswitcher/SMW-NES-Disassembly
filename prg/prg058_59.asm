@@ -116,9 +116,9 @@ tbl10_8000:
 	dw ofs_NA
 	dw ofs_NA
 	dw ofs_NA
-	dw ofs_NA
-	dw ofs_NA
-	dw ofs_NA
+	dw ofs_Pitch74
+	dw ofs_Vol75
+	dw ofs_Vol76
 	dw ofs_Vol77
 	dw ofs_Vol78
 	dw ofs_Duty79 ; 75%-25% x1
@@ -1372,8 +1372,8 @@ tbl10_8E41:
 	dw HitBlock_Footer
 	dw FireBall_Footer
 	dw Switch_Footer
-	dw Empty_Footer
-	dw Empty_Footer
+	dw DryBones_Footer
+	dw Spring_Footer
 	dw Empty_Footer
 	dw Empty_Footer
 	dw Empty_Footer
@@ -1797,6 +1797,8 @@ DPCM_PitchTable:
 	.include sound/sfx_HitBlock.asm
 	.include sound/sfx_FireBall.asm
 	.include sound/sfx_Switch.asm
+	.include sound/sfx_DryBones.asm
+	.include sound/sfx_Spring.asm
  ;include music data
 	.include sound/mus_Title.asm
 	.include sound/mus_GameOver.asm

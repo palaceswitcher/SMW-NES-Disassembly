@@ -1,7 +1,7 @@
 Block_Tri:
 	.byte SongSpeed, $01
 	.byte Transpose, $00
-	.byte DutySet, $5B
+	.byte DutySet, $07
 	.byte PitchSet, $39
 	.byte VolSet, $7f
 	.byte NLen+2

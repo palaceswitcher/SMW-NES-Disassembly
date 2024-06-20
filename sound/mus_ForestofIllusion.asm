@@ -129,7 +129,7 @@ ForestofIllusion_P2Loop:
 ForestofIllusion_Tri:
 ForestofIllusion_TriLoop:
 	.byte Transpose, $00
-	.byte DutySet, $5B
+	.byte DutySet, $07
 	.byte PitchSet, $39
 	.byte VolSet, $11
 	.byte SongLoop,2

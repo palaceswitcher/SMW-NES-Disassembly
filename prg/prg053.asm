@@ -1406,7 +1406,7 @@ bra7_89B1:
 	STA PlayerAction
 	LDX $A4
 	INC ObjectState,X
-	LDA #sfx_Swim
+	LDA #sfx_Spring
 	STA SFXRegister ;Play bounce sound
 	RTS
 ptr5_89C1:
