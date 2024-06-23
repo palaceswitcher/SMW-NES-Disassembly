@@ -8,15 +8,15 @@ tbl10_8000:
 	dw ofs_Pitch05
 	dw ofs_Pitch06
 	dw ofs_Duty07 ; 50%
-	dw ofs_NA
-	dw ofs_NA
-	dw ofs_NA
-	dw ofs_NA
-	dw ofs_NA
-	dw ofs_NA
+	dw ofs_Vol08
+	dw ofs_Vol09
+	dw ofs_Vol0A
+	dw ofs_Pitch0B
+	dw ofs_Vol0C
+	dw ofs_Pitch0D
 	dw ofs_Duty0E ; 12.5%-25%-50% x1
 	dw ofs_Pitch0F
-	dw ofs_NA
+	dw ofs_Vol10
 	dw ofs_Vol11
 	dw ofs_Duty12 ; 12.5%-25% x1
 	dw ofs_NA
@@ -123,7 +123,7 @@ tbl10_8000:
 	dw ofs_Vol78
 	dw ofs_Duty79 ; 75%-25% x1
 	dw ofs_Pitch7A
-	dw ofs_Duty7B
+	dw ofs_Duty7B ; 25%
 	dw ofs_Pitch7C
 	dw ofs_Vol7D
 	dw ofs_Vol7E
@@ -1374,7 +1374,7 @@ tbl10_8E41:
 	dw Switch_Footer
 	dw DryBones_Footer
 	dw Spring_Footer
-	dw Empty_Footer
+	dw Thwomp_Footer
 	dw Empty_Footer
 	dw Empty_Footer
 	dw Empty_Footer
@@ -1799,6 +1799,7 @@ DPCM_PitchTable:
 	.include sound/sfx_Switch.asm
 	.include sound/sfx_DryBones.asm
 	.include sound/sfx_Spring.asm
+	.include sound/sfx_Thwomp.asm
  ;include music data
 	.include sound/mus_Title.asm
 	.include sound/mus_GameOver.asm

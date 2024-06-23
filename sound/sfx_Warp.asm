@@ -1,15 +1,35 @@
-Warp_Tri:
+Warp_Noise:
 	.byte SongSpeed, 1
-	.byte Transpose, 24
-	.byte DutySet, $38
-	.byte PitchSet, $63
-	.byte VolSet, $11
-	.byte NLen+3
-	.byte G4, NRest, G4, NRest, G4, NRest
-	.byte A4, NRest, A4, NRest, A4, NRest
-	.byte B4, NRest, B4, NRest, B4, NRest
+	.byte Transpose, 0
+	.byte DutySet, 0
+	.byte PitchSet, 0
+	.byte VolSet, $08
+	.byte NLen+2
+	.byte $2E
+	.byte $2D
+	.byte $2C
+	.byte $2B
+	.byte NLen+10
+	.byte $2A
+	.byte NLen+2
+	.byte $2F
+	.byte $2E
+	.byte $2D
+	.byte NLen+8
+	.byte $2C
+	.byte NLen+2
+	.byte $2E
+	.byte $2D
+	.byte $2C
+	.byte NLen+8
+	.byte $2B
+	.byte NLen+2
+	.byte $2D
+	.byte $2C
+	.byte $2B
+	.byte $2A
 	.byte $FF
 Warp_Footer:
-	.byte $82
-	.word Warp_Tri
+	.byte $83
+	.word Warp_Noise
 	.byte $FF

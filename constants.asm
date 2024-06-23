@@ -43,6 +43,7 @@ sfx_FireBall = $1F
 sfx_Switch = $20
 sfx_DryBones = $21
 sfx_Spring = $22
+sfx_Thwomp = $23
 
 ;Music IDs
 mus_Title = $40

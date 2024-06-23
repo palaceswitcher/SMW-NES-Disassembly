@@ -423,7 +423,7 @@ loc6_8324:
 bra6_833F:
 	LDA #$01
 	STA ScreenShake
-	LDA #sfx_Thud
+	LDA #sfx_Thwomp
 	STA SFXRegister
 bra6_8348:
 	INC ObjectVariables,X
@@ -1462,7 +1462,7 @@ bra6_8A31:
 	LDA #$01
 	STA ScreenShake
 	STA FreezeFlag
-	LDA #sfx_Thud
+	LDA #sfx_Thwomp ; morton/roy landing
 	STA SFXRegister
 	LDA ObjectYPos,X
 	AND #$F8

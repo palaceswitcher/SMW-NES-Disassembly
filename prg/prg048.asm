@@ -18,6 +18,10 @@ bra4_8013:
 	BCS bra4_8024
 	INC ObjectVariables,X
 bra4_8024:
+; NOTE This routine has a deceptively useless branch
+; the contents of a have the 7th bit masked away, meaning the branch
+; will always fail.
+; Even still, A gets overwritten without using its restored contents
 	PHA
 	CLC
 	ADC ObjectYPos,X

@@ -10,6 +10,4 @@ Feather_P1Noise:
 Feather_Footer:
 	.byte $80
 	.word Feather_P1Noise
-	.byte $83
-	.word Feather_P1Noise
 	.byte $FF

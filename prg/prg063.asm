@@ -2046,7 +2046,7 @@ pnt2_ED93:
 	LDA #$00
 	STA PlayerAction ;Make player stand still
 	JSR sub3_E5D4 ;Jump
-	LDA #sfx_Warp
+	LDA #sfx_PowerDown
 	STA SFXRegister ;Play warp sound
 	JSR sub3_F27F ;Jump
 	INC a:EventPart ;Go to next part of event
