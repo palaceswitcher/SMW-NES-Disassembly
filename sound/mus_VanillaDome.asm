@@ -97,99 +97,93 @@ VanillaDome_Noise:
 	.byte DutySet, $00
 	.byte PitchSet, $00
 	.byte VolSet, $53
-	.byte SegCall
-	.word VanillaDome_NoiseSub
 VanillaDome_NoiseLoop:
-	.byte SegCall
-	.word VanillaDome_NoiseSub
-	.byte SegCall
-	.word VanillaDome_NoiseSub
-	.byte $1e
-	.byte $20
-	.byte $20
-	.byte $20
-	.byte $29
-	.byte $20
-	.byte $1e
-	.byte $1e
-	.byte $20
-	.byte $1e
-	.byte $20
-	.byte $1e
-	.byte $29
-	.byte $20
-	.byte $20
-	.byte $1e
-	.byte $1e
-	.byte $20
-	.byte $20
-	.byte $20
-	.byte $29
-	.byte $20
-	.byte $1e
-	.byte $1e
-	.byte $20
-	.byte NLen+2
-	.byte $29
-	.byte NLen+8
-	.byte $29
 	.byte NLen+10
-	.byte $1e
-	.byte $1e
-	.byte NLen+2
-	.byte $29
-	.byte NLen+8
-	.byte $29
-	.byte NLen+10
-	.byte $1e
-	.byte NLen+2
-	.byte $29
-	.byte NLen+8
-	.byte $29
-	.byte NLen+2
-	.byte $29
-	.byte NLen+8
-	.byte $29
+	.byte $20
 	.byte $F4
 	.word VanillaDome_NoiseLoop
 	.byte $FF
-VanillaDome_NoiseSub:
+VanillaDome_DPCM:
+	.byte Transpose, $00
+	.byte SegCall
+	.word VanillaDome_DPCMSub
+VanillaDome_DPCMLoop:
+	.byte SegCall
+	.word VanillaDome_DPCMSub
+	.byte SegCall
+	.word VanillaDome_DPCMSub
+	.byte NLen+40
+	.byte KickDrum
+	.byte NLen+30
+	.byte PowerSnare
+	.byte NLen+20
+	.byte KickDrum
+	.byte KickDrum
 	.byte NLen+10
-	.byte $1e
-	.byte $20
-	.byte $20
-	.byte $20
-	.byte $29
-	.byte $20
-	.byte $1e
-	.byte $1e
-	.byte $20
-	.byte $1e
-	.byte $20
-	.byte $1e
-	.byte $29
-	.byte $20
-	.byte $20
-	.byte $1e
-	.byte $1e
-	.byte $20
-	.byte $20
-	.byte $20
-	.byte $29
-	.byte $20
-	.byte $1e
-	.byte $1e
-	.byte $20
-	.byte $1e
-	.byte $1e
-	.byte $1e
-	.byte $29
-	.byte $20
-	.byte $20
-	.byte $1e
-	.byte SegEnd
-VanillaDome_End:
+	.byte KickDrum
+	.byte NLen+30
+	.byte PowerSnare
+	.byte NLen+10
+	.byte KickDrum
+	.byte NLen+40
+	.byte KickDrum
+	.byte NLen+30
+	.byte PowerSnare
+	.byte NLen+20
+	.byte KickDrum
+	.byte NLen+2
+	.byte PowerSnare
+	.byte NLen+8
+	.byte PowerSnare
+	.byte NLen+10
+	.byte KickDrum
+	.byte KickDrum
+	.byte NLen+2
+	.byte PowerSnare
+	.byte NLen+8
+	.byte PowerSnare
+	.byte NLen+10
+	.byte KickDrum
+	.byte NLen+2
+	.byte PowerSnare
+	.byte NLen+8
+	.byte PowerSnare
+	.byte NLen+2
+	.byte PowerSnare
+	.byte NLen+8
+	.byte PowerSnare
+	.byte $F4
+	.word VanillaDome_DPCMLoop
 	.byte $FF
+VanillaDome_DPCMSub:
+	.byte NLen+40
+	.byte KickDrum
+	.byte NLen+30
+	.byte PowerSnare
+	.byte NLen+20
+	.byte KickDrum
+	.byte KickDrum
+	.byte NLen+10
+	.byte KickDrum
+	.byte NLen+30
+	.byte PowerSnare
+	.byte NLen+10
+	.byte KickDrum
+	.byte NLen+40
+	.byte KickDrum
+	.byte NLen+30
+	.byte PowerSnare
+	.byte NLen+20
+	.byte KickDrum
+	.byte NLen+10
+	.byte KickDrum
+	.byte KickDrum
+	.byte KickDrum
+	.byte NLen+30
+	.byte PowerSnare
+	.byte NLen+10
+	.byte KickDrum
+	.byte SegEnd
 VanillaDome_Footer:
 	.byte NRest
 	.word VanillaDome_P1Tri
@@ -200,5 +194,5 @@ VanillaDome_Footer:
 	.byte $03
 	.word VanillaDome_Noise
 	.byte $04
-	.word VanillaDome_End
+	.word VanillaDome_DPCM
 	.byte $FF

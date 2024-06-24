@@ -105,41 +105,25 @@ ValleyofBowser_NoiseLoop:
 	.byte PitchSet, 0
 	.byte VolSet, $53
 	.byte NLen+7
-	.byte $1e
-	.byte NLen+8
-	.byte $20
-	.byte NLen+7
-	.byte $20
-	.byte NLen+8
-	.byte $20
-	.byte NLen+7
-	.byte $28
-	.byte NLen+8
-	.byte $20
-	.byte NLen+7
-	.byte $20
-	.byte NLen+8
-	.byte $20
-	.byte NLen+7
-	.byte $20
-	.byte NLen+8
-	.byte $20
-	.byte NLen+7
-	.byte $1e
-	.byte NLen+8
-	.byte $20
-	.byte NLen+7
-	.byte $28
-	.byte NLen+8
-	.byte $20
-	.byte NLen+7
 	.byte $20
 	.byte NLen+8
 	.byte $20
 	.byte $F4
 	.word ValleyofBowser_NoiseLoop
 	.byte $FF
-ValleyofBowser_End:
+ValleyofBowser_DPCM:
+	.byte Transpose, $00
+ValleyofBowser_DPCMLoop:
+	.byte NLen+30
+	.byte KickDrum
+	.byte NLen+45
+	.byte PowerSnare
+	.byte NLen+15
+	.byte KickDrum
+	.byte NLen+30
+	.byte PowerSnare
+	.byte SongJump
+	.word ValleyofBowser_DPCMLoop
 	.byte $FF
 ValleyofBowser_Footer:
 	.byte NRest
@@ -151,5 +135,5 @@ ValleyofBowser_Footer:
 	.byte $03
 	.word ValleyofBowser_Noise
 	.byte $04
-	.word ValleyofBowser_End
+	.word ValleyofBowser_DPCM
 	.byte $FF

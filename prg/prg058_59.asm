@@ -1564,11 +1564,10 @@ ENDR
 REPT 15
 	db $3E ; E1 - F#2
 ENDR
-REPT 7
-	db $34 ; G2 - C#3
+REPT 8
+	db $34 ; G2 - D3
 ENDR
-	db $3E ; D3
-	db $3E ; D#3
+	db $2d ; D#3
 	db $3E ; E3
 	db $3E ; F3
 	db $3E ; F#3
@@ -1626,8 +1625,8 @@ DPCM_AddressTable:
 	db YOSHI1 >> 2		; B2
 	db YOSHI2 >> 2		; C3
 	db SWIM >> 2		; C#3
-	db $7F			; D3
-	db $7F			; D#3
+	db KICK_DRUM >> 2	; D3
+	db POWER_SNARE >> 2	; D#3
 	db $7F			; E3
 	db $7F			; F3
 	db $7F			; F#3
@@ -1685,8 +1684,8 @@ DPCM_EndAddressTable:
 	dl YOSHI1_END		; B2
 	dl YOSHI2_END		; C3
 	dl SWIM_END		; C#3
-	dl $FF			; D3
-	dl $FF			; D#3
+	dl KICK_DRUM_END	; D3
+	dl POWER_SNARE_END	; D#3
 	dl $FF			; E3
 	dl $FF			; F3
 	dl $FF			; F#3

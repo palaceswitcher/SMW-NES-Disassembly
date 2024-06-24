@@ -147,5 +147,5 @@ InvincibleStar_Footer:
 	.byte $03
 	.word InvincibleStar_Noise
 	.byte $04
-	.word ValleyofBowser_End
+	.word ValleyofBowser_DPCM
 	.byte $FF

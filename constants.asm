@@ -303,6 +303,16 @@ YOSHI2_END:
 SWIM:		.dsb $4a
 SWIM_END:
 	.dsb 2
+KICK_DRUM:	.dsb $d
+KICK_DRUM_END:
+	.dsb 3
+.ende
+
+; DMC Bank $2D
+.enum $e0
+POWER_SNARE:		.dsb $4b
+POWER_SNARE_END:
+	.dsb 1
 .ende
 
 .enum 1
@@ -342,7 +352,9 @@ BDiminishedUp:			.dsb 1
 GSuspendedUp:			.dsb 1
 SFXYoshi1:			.dsb 1
 SFXYoshi2:			.dsb 1
-SFXSwim:
+SFXSwim:			.dsb 1
+KickDrum:			.dsb 1
+PowerSnare:
 .ende
 
 ;Player action
