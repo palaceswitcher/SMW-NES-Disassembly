@@ -1,5 +1,5 @@
 VanillaDome_P1Tri:
-	.byte SongSpeed, $01
+	.byte SongSpeed, 1
 	.byte DutySet, $12
 	.byte PitchSet, $00
 	.byte VolSet, $11

@@ -1,5 +1,5 @@
 Thud_P1:
-	.byte SongSpeed, $01
+	.byte SongSpeed, 1
 	.byte Transpose, 0
 	.byte DutySet, $34
 	.byte PitchSet, $39

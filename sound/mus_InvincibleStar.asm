@@ -46,7 +46,7 @@ InvincibleStar_P1Loop:
 	.word InvincibleStar_P1Loop
 	.byte $FF
 InvincibleStar_P2:
-	.byte SongSpeed, $01
+	.byte SongSpeed, 1
 InvincibleStar_P2Loop:
 	.byte DutySet, $3C
 	.byte PitchSet, $05

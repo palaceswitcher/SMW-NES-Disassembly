@@ -1,11 +1,10 @@
 Explosion_Noise:
-	.byte $F5
-	.byte $03
+	.byte SongSpeed, 1
 	.byte Transpose, $01
 	.byte DutySet, $34
 	.byte PitchSet, $39
 	.byte VolSet, $46
-	.byte NLen+24
+	.byte NLen+72
 	.byte A3
 	.byte $FF
 Explosion_Footer:

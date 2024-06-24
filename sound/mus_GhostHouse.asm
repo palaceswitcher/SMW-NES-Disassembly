@@ -1,6 +1,6 @@
 GhostHouse_P1:
 GhostHouse_P1Loop:
-	.byte SongSpeed, $01
+	.byte SongSpeed, 1
 	.byte Transpose, $1A
 	.byte DutySet, $00
 	.byte PitchSet, $00

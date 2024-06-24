@@ -1,6 +1,6 @@
 DonutPlains_P1:
 DonutPlains_P1Loop:
-	.byte SongSpeed, $01
+	.byte SongSpeed, 1
 	.byte Transpose, $0C
 	.byte DutySet, $07
 	.byte PitchSet, $39

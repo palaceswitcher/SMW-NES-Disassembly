@@ -1,5 +1,5 @@
 Underwater_P1:
-	.byte SongSpeed, $01
+	.byte SongSpeed, 1
 	.byte Transpose, $00
 	.byte DutySet, $7B
 	.byte PitchSet, $0F

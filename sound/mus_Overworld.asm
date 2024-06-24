@@ -1,5 +1,5 @@
 Overworld_P1:
-	.byte SongSpeed, $01
+	.byte SongSpeed, 1
 	.byte Transpose, $11
 	.byte DutySet, $3C
 	.byte PitchSet, $00

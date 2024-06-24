@@ -1,7 +1,7 @@
 EnemyHit1_P1:
 	.byte Transpose, $00
 EnemyHitTemplate:
-	.byte SongSpeed, $01
+	.byte SongSpeed, 1
 	.byte DutySet, $00
 	.byte PitchSet, $05
 	.byte VolSet, $11

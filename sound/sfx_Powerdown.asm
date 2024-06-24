@@ -1,5 +1,5 @@
 Powerdown_P1Noise:
-	.byte SongSpeed, $01
+	.byte SongSpeed, 1
 	.byte Transpose, $0
 	.byte DutySet, $00
 	.byte PitchSet, $05

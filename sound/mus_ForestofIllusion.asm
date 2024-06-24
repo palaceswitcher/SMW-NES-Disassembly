@@ -73,7 +73,7 @@ ForestofIllusion_P1Sub:
 	.byte NRest
 	.byte SegEnd
 ForestofIllusion_P2:
-	.byte SongSpeed, $01
+	.byte SongSpeed, 1
 ForestofIllusion_P2Loop:
 	.byte Transpose, $00
 	.byte DutySet, $17

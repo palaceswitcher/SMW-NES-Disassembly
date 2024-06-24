@@ -1,10 +1,10 @@
 Chainsaw_Noise:
-	.byte $F5
-	.byte $03
+	.byte SongSpeed, 1
 	.byte Transpose, $01
 	.byte DutySet, $38
 	.byte PitchSet, $39
 	.byte VolSet, $41
+	.byte NLen+3
 	.byte $45
 	.byte $FF
 Chainsaw_Footer:

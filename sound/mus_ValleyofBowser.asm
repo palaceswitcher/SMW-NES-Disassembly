@@ -1,5 +1,5 @@
 ValleyofBowser_P1:
-	.byte SongSpeed, $01
+	.byte SongSpeed, 1
 	.byte Transpose, $02
 	.byte DutySet, $3B
 	.byte PitchSet, $05

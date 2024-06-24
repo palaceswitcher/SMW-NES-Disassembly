@@ -1,5 +1,5 @@
 HitBlock_Noise:
-	.byte SongSpeed, $01
+	.byte SongSpeed, 1
 	.byte Transpose, 0
 	.byte DutySet, 0
 	.byte PitchSet, 0

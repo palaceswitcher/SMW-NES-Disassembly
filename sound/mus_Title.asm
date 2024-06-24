@@ -1,5 +1,5 @@
 Title_P1:
-	.byte SongSpeed, $01
+	.byte SongSpeed, 1
 	.byte Transpose, $1f
 	.byte DutySet, $38
 	.byte PitchSet, $05
