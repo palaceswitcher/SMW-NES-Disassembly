@@ -1,3 +1,27 @@
+;Big endian word
+macro dwb x
+	db >x, <x
+endm
+
+macro sprmap w,h,bank
+	db w>>3, h>>3
+	ifdef bank
+		db bank
+	endif
+endm
+
+;Player title action trigger
+macro titleact x,action,dur
+	dwb x
+	db action, dur
+endm
+;Title screen sprite animation data
+macro titlespr x,y,frame
+	dwb x
+	db frame, y
+endm
+
+;Movement data
 macro movedata x,y
 	db x, y
 endm

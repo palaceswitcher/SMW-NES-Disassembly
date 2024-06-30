@@ -724,14 +724,9 @@ Title_TriLoop:
 Title_End:
 	db $FF
 Title_Footer:
-	db NRest
-	.word Title_P1
-	db $01
-	.word Title_P2
-	db $02
-	.word Title_Tri
-	db $03
-	.word Title_End
-	db $04
-	.word Title_End
+	mussq1 Title_P1
+	mussq2 Title_P2
+	mustri Title_Tri
+	musnoise Title_End
+	musdpcm Title_End
 	db $FF

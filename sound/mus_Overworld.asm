@@ -382,8 +382,7 @@ Overworld_P1Loop:
 	db C3
 	db $86
 	db NRest
-	db $F4
-	.word Overworld_P1Loop
+	sndjump Overworld_P1Loop
 	db $FF
 Overworld_P2:
 	db Transpose
@@ -585,8 +584,7 @@ Overworld_P2Loop:
 	db $13
 	db C2
 	db NRest
-	db $F4
-	.word Overworld_P2Loop
+	sndjump Overworld_P2Loop
 	db $FF
 Overworld_Tri:
 	db Transpose
@@ -836,20 +834,14 @@ Overworld_TriLoop:
 	db NRest
 	db NRest
 	db NRest
-	db $F4
-	.word Overworld_TriLoop
+	sndjump Overworld_TriLoop
 	db $FF
 Overworld_End:
 	db $FF
 Overworld_Footer:
-	db NRest
-	.word Overworld_P1
-	db $01
-	.word Overworld_P2
-	db $02
-	.word Overworld_Tri
-	db $03
-	.word Overworld_End
-	db $04
-	.word Overworld_End
+	mussq1 Overworld_P1
+	mussq2 Overworld_P2
+	mustri Overworld_Tri
+	musnoise Overworld_End
+	musdpcm Overworld_End
 	db $FF

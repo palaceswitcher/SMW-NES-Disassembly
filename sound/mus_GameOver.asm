@@ -47,14 +47,9 @@ GameOver_P2:
 GameOver_End:
 	db $FF
 GameOver_Footer:
-	db NRest
-	.word GameOver_P1
-	db $01
-	.word GameOver_P2
-	db $02
-	.word GameOver_End
-	db $03
-	.word GameOver_End
-	db $04
-	.word GameOver_End
+	mussq1 GameOver_P1
+	mussq2 GameOver_P2
+	mustri GameOver_End
+	musnoise GameOver_End
+	musdpcm GameOver_End
 	db $FF

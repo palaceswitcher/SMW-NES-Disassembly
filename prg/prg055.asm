@@ -96,7 +96,8 @@ bra8_8096_RTS:
 ;----------------------------------------
 sub8_8096:
 	LDA #$04
-	STA $25
+	STA $25 ;Spit fire when eaten
+;Calculate horizontal distance between player and Koopa
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC

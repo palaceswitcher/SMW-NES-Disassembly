@@ -1397,7 +1397,7 @@ bra7_89A0:
 	STA PlayerMovement ;Make player move upwards
 	LDY #$50 ;Set speed to $50
 	LDA ButtonsHeld
-	AND #buttonA
+	AND #btnA
 	BEQ bra7_89B1 ;If A isn't held, branch and keep the speed
 	LDY #$70 ;If it is held, set the speed to $70 instead
 bra7_89B1:
@@ -2876,7 +2876,7 @@ bra7_9550:
 loc7_955E:
 	STA ObjectXScreen,X
 	RTS
-obj_u80:
+ptr6_9562:
 	JSR sub7_9792
 	LDY #$0D
 	LDX $A4
@@ -3395,35 +3395,35 @@ bra7_98A5:
 	BCC bra7_98A5
 bra7_98AC:
 	LDA $B2
-	STA $0204
+	STA SpriteMem+4
 	LDA $B2
-	STA $0208
+	STA SpriteMem+8
 	LDA $B3
-	STA $020C
+	STA SpriteMem+12
 	LDA $B3
 	STA $0210
 	LDA $41
-	STA $0207
+	STA SpriteMem+7
 	LDA $42
-	STA $020B
+	STA SpriteMem+11
 	LDA $41
-	STA $020F
+	STA SpriteMem+15
 	LDA $42
 	STA $0213
 	LDA #$59 ;Pop effect upper left tile
-	STA $0205
+	STA SpriteMem+5
 	LDA #$61 ;Pop effect upper right tile
-	STA $0209
+	STA SpriteMem+9
 	LDA #$61 ;Pop effect lower left tile
-	STA $020D
+	STA SpriteMem+13
 	LDA #$59 ;Pop effect lower right tile
 	STA $0211
 	LDA #$01
-	STA $0206
+	STA SpriteMem+6
 	LDA #$C1
-	STA $020A
+	STA SpriteMem+10
 	LDA #$01
-	STA $020E
+	STA SpriteMem+14
 	LDA #$C1
 	STA $0212
 	RTS

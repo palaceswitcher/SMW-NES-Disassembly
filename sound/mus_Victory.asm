@@ -166,14 +166,9 @@ Victory_Noise:
 Victory_End:
 	db $FF
 Victory_Footer:
-	db NRest
-	.word Victory_P1
-	db $01
-	.word Victory_P2
-	db $02
-	.word Victory_Tri
-	db $03
-	.word Victory_Noise
-	db $04
-	.word Victory_End
+	mussq1 Victory_P1
+	mussq2 Victory_P2
+	mustri Victory_Tri
+	musnoise Victory_Noise
+	musdpcm Victory_End
 	db $FF

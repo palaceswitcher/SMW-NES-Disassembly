@@ -143,8 +143,7 @@ Underground_P1Loop:
 	db D3
 	db $A4
 	db NRest
-	db $F4
-	.word Underground_P1Loop
+	sndjump Underground_P1Loop
 	db $FF
 Underground_Tri:
 Underground_TriLoop:
@@ -173,8 +172,7 @@ Underground_TriLoop:
 	db NRest
 	db $20
 	db NRest
-	db $F4
-	.word Underground_TriLoop
+	sndjump Underground_TriLoop
 	db $FF
 Underground_Noise:
 Underground_NoiseLoop:
@@ -188,20 +186,14 @@ Underground_NoiseLoop:
 	db $53
 	notelen 12
 	db B3
-	db $F4
-	.word Underground_NoiseLoop
+	sndjump Underground_NoiseLoop
 	db $FF
 Underground_End:
 	db $FF
 Underground_Footer:
-	db NRest
-	.word Underground_P1
-	db $01
-	.word Underground_End
-	db $02
-	.word Underground_Tri
-	db $03
-	.word Underground_Noise
-	db $04
-	.word Underground_End
+	mussq1 Underground_P1
+	mussq2 Underground_End
+	mustri Underground_Tri
+	musnoise Underground_Noise
+	musdpcm Underground_End
 	db $FF

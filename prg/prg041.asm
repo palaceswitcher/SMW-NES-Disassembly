@@ -161,148 +161,49 @@ TitleYoshiXOfs:
 	db $02
 TitleYoshiYOfs:
 	db $0B
+
 tbl_A155:
-	db $01
-	db $00
-	db $07
-	db $A9
-	db $01
-	db $90
-	db $0D
-	db $70
-	db $02
-	db $30
-	db $07
-	db $A9
-	db $02
-	db $A0
-	db $0D
-	db $70
-	db $03
-	db $30
-	db $0D
-	db $80
-	db $04
-	db $00
-	db $09
-	db $A9
-	db $04
-	db $B0
-	db $09
-	db $A9
-	db $05
-	db $30
-	db $0D
-	db $50
-	db $05
-	db $C0
-	db $07
-	db $A9
-	db $06
-	db $30
-	db $0D
-	db $58
-	db $06
-	db $60
-	db $07
-	db $A9
-	db $08
-	db $30
-	db $0D
-	db $80
-	db $08
-	db $F0
-	db $0D
-	db $60
-	db $0A
-	db $30
-	db $0D
-	db $60
-	db $0A
-	db $60
-	db $0D
-	db $A9
-	db $0B
-	db $45
-	db $09
-	db $A9
-	db $0B
-	db $80
-	db $09
-	db $A9
-	db $0C
-	db $30
-	db $0D
-	db $80
-	db $0C
-	db $80
-	db $0D
-	db $60
-	db $0D
-	db $A0
-	db $0D
-	db $60
-	db $0D
-	db $E0
-	db $0D
-	db $60
-	db $FF
-	db $FF
-	db $00
-	db $00
+	titlespr 256, 169, 7
+	titlespr 400, 112, 13
+	titlespr 560, 169, 7
+	titlespr 672, 112, 13
+	titlespr 816, 128, 13
+	titlespr 1024, 169, 9
+	titlespr 1200, 169, 9
+	titlespr 1328, 80, 13
+	titlespr 1472, 169, 7
+	titlespr 1584, 88, 13
+	titlespr 1632, 169, 7
+	titlespr 2096, 128, 13
+	titlespr 2288, 96, 13
+	titlespr 2608, 96, 13
+	titlespr 2656, 169, 13
+	titlespr 2885, 169, 9
+	titlespr 2944, 169, 9
+	titlespr 3120, 128, 13
+	titlespr 3200, 96, 13
+	titlespr 3488, 96, 13
+	titlespr 3552, 96, 13
+	db $FF, $FF, $00, $00 ;End of data
+
 tbl_A1AD:
-	db $00
-	db $01
-	db $03
-	db $00
-	db $00
-	db $70
-	db $04
-	db $00
-	db $01
-	db $40
-	db $02
-	db $01
-	db $02
-	db $30
-	db $05
-	db $01
-	db $02
-	db $A0
-	db $06
-	db $0E
-	db $03
-	db $A0
-	db $01
-	db $01
-	db $04
-	db $2E
-	db $07
-	db $01
-	db $04
-	db $F0
-	db $05
-	db $01
-	db $05
-	db $B0
-	db $06
-	db $0E
-	db $05
-	db $EE
-	db $07
-	db $01
-	db $06
-	db $70
-	db $01
-	db $01
-	db $06
-	db $A0
-	db $01
-	db $01
-	db $FF
-	db $FF
-	db $02
-	db $00
+	db $00, $01, $03, $00
+	db $00, $70, $04, $00
+	db $01, $40, $02, $01
+	db $02, $30, $05, $01
+	db $02, $A0, $06, $0E
+	db $03, $A0, $01, $01
+	db $04, $2E, $07, $01
+	db $04, $F0, $05, $01
+	db $05, $B0, $06, $0E
+	db $05, $EE, $07, $01
+	db $06, $70, $01, $01
+	db $06, $A0, $01, $01
+	db $FF, $FF, $02, $00 ;End of data
+
+;----------------------------------------
+;SUBROUTINE ($A1E1)
+;----------------------------------------
 sub_A1E1:
 	LDA $0360
 	ASL
@@ -334,7 +235,7 @@ bra_A214:
 	STX GS0SpriteCount
 	LDA $27
 	JSR sub_42_8DF8
-	LDX $30
+	LDX GS0SpriteCount
 	LDA $28
 	STA GS0SpriteYPos,X
 	LDA #$01
@@ -345,11 +246,15 @@ bra_A22B:
 	INC $0360
 bra_A22E_RTS:
 	RTS
+
+;----------------------------------------
+;SUBROUTINE ($A22F)
+;----------------------------------------
 sub_A22F:
 	LDA $0361
 	ASL
 	ASL
-	TAX
+	TAX ;Get index for current action
 	LDA tbl_A1AD,X
 	STA $25
 	LDA tbl_A1AD+1,X
@@ -357,20 +262,21 @@ sub_A22F:
 	LDA tbl_A1AD+2,X
 	STA $27
 	LDA tbl_A1AD+3,X
-	STA $28
+	STA $28 ;Copy action data to memory
 	LDA PlayerXScreenDup
 	CMP $25
-	BNE bra_A262_RTS
+	BNE @Stop
 	LDA PlayerXPosDup
 	CMP $26
-	BNE bra_A262_RTS
+	BNE @Stop ;Don't change action until player reaches the X position
 	LDA $27
 	STA TitleDemoAction
 	LDA $28
-	STA TitleJumpTimer
+	STA TitleJumpTimer ;Load wait time before jumping
 	INC $0361
-bra_A262_RTS:
+@Stop:
 	RTS
+
 sub_A263:
 	LDA TitleDemoAction
 	ASL
@@ -906,6 +812,10 @@ bra_A581:
 	STA GS0SpriteXPos,X
 bra_A5AB_RTS:
 	RTS
+	
+;----------------------------------------
+;SUBROUTINE ($A5AC)
+;----------------------------------------
 sub_A5AC:
 	LDX #$03
 bra_A5AE:
@@ -952,6 +862,10 @@ bra_A5F5:
 	JSR sub2_96DB
 bra_A5F8_RTS:
 	RTS
+
+;----------------------------------------
+;SUBROUTINE ($A5F9)
+;----------------------------------------
 sub_A5F9:
 	STA $28
 	STX $29
@@ -999,6 +913,10 @@ bra_A636:
 	STA TitleJumpTimer
 bra_A64C_RTS:
 	RTS
+
+;----------------------------------------
+;SUBROUTINE ($A64D)
+;----------------------------------------
 sub_A64D:
 	LDA PlayerXScreenDup
 	BEQ bra_A677
@@ -1041,6 +959,10 @@ tbl_A691:
 	db $30
 	db $20
 	db $30
+
+;----------------------------------------
+;TITLE SCREEN CODE ($A695)
+;----------------------------------------
 pnt5_A695:
 	JSR sub_A1E1
 	JSR sub_A22F
@@ -1205,7 +1127,7 @@ pnt5_A7D3:
 	NOP
 	RTS
 tbl_A7DF:
-	db $25 ;world select mus_ic settings
+	db $25 ;world select music settings
 	db $25
 	db $25
 	db $25
@@ -1566,7 +1488,7 @@ bra_AA52:
 	RTS
 sub_AA5F:
 	LDA ButtonsPressed
-	AND #buttonA+buttonStart ;Check if A or start is pressed
+	AND #btnA+btnStart ;Check if A or start is pressed
 	BEQ bra_AA6A ;If not, branch
 	JSR PlayLevel ;If they are, jump
 	RTS
@@ -1647,7 +1569,7 @@ WorldSelectCheck:
 	LDA WorldSelectTrigger
 	BEQ bra_AAFA ;Branch if the world select trigger is set to zero
 	LDA ButtonsPressed
-	AND #buttonSelect ;Check if select is pressed
+	AND #btnSelect ;Check if select is pressed
 	BEQ bra_AB0C_RTS ;If not, stop
 bra_AAFA:
 	LDA #$04

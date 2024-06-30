@@ -10,108 +10,58 @@ GhostHouse_P1Loop:
 	db NRest
 	db VolSet
 	db $33
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db Transpose
-	db C2
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	transpose 24
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
 	db Transpose
 	db $16
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F0
-	.word GhostHouse_P1Seq2
-	db $F4
-	.word GhostHouse_P1Loop
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	playsegment GhostHouse_P1Seq2
+	sndjump GhostHouse_P1Loop
 	db $FF
 GhostHouse_P1Seq:
 	db $8A
@@ -123,8 +73,8 @@ GhostHouse_P1Seq:
 	db B3
 	db $2B
 	db A3
-	db $F1
-	db $FF
+	endsegment
+
 GhostHouse_P1Seq2:
 	db $8A
 	db A3
@@ -135,30 +85,23 @@ GhostHouse_P1Seq2:
 	db B3
 	db $2B
 	db B3
-	db $F1
-	db $FF
+	endsegment
+
 GhostHouse_P2Tri:
 GhostHouse_P2TriLoop:
 	db Transpose
 	db $0E
-	db $F0
-	.word GhostHouse_P2Seq
-	db $F0
-	.word GhostHouse_P2Seq2
+	playsegment GhostHouse_P2Seq
+	playsegment GhostHouse_P2Seq2
 	db Transpose
 	db $0C
-	db $F0
-	.word GhostHouse_P2Seq
-	db $F0
-	.word GhostHouse_P2Seq2
+	playsegment GhostHouse_P2Seq
+	playsegment GhostHouse_P2Seq2
 	db Transpose
 	db $0A
-	db $F0
-	.word GhostHouse_P2Seq
-	db $F0
-	.word GhostHouse_P2Seq2
-	db $F4
-	.word GhostHouse_P2TriLoop
+	playsegment GhostHouse_P2Seq
+	playsegment GhostHouse_P2Seq2
+	sndjump GhostHouse_P2TriLoop
 	db $FF
 GhostHouse_P2Seq:
 	db DutySet
@@ -200,8 +143,8 @@ GhostHouse_P2Seq:
 	db NRest
 	db NRest
 	db NRest
-	db $F1
-	db $FF
+	endsegment
+
 GhostHouse_P2Seq2:
 	db DutySet
 	db $12
@@ -230,19 +173,14 @@ GhostHouse_P2Seq2:
 	db $94
 	db NRest
 	db NRest
-	db $F1
-	db $FF
+	endsegment
+
 GhostHouse_End:
 	db $FF
 GhostHouse_Footer:
-	db NRest
-	.word GhostHouse_P1
-	db $01
-	.word GhostHouse_P2Tri
-	db $02
-	.word GhostHouse_P2Tri
-	db $03
-	.word GhostHouse_End
-	db $04
-	.word GhostHouse_End
+	mussq1 GhostHouse_P1
+	mussq2 GhostHouse_P2Tri
+	mustri GhostHouse_P2Tri
+	musnoise GhostHouse_End
+	musdpcm GhostHouse_End
 	db $FF

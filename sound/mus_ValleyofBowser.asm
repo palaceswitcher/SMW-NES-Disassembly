@@ -57,8 +57,7 @@ ValleyofBowser_P1Loop:
 	db NRest
 	db NRest
 	db G#3
-	db $F4
-	.word ValleyofBowser_P1Loop
+	sndjump ValleyofBowser_P1Loop
 	db $FF
 ValleyofBowser_P2:
 ValleyofBowser_P2Loop:
@@ -100,8 +99,7 @@ ValleyofBowser_P2Loop:
 	db NRest
 	db NRest
 	db NRest
-	db $F4
-	.word ValleyofBowser_P2Loop
+	sndjump ValleyofBowser_P2Loop
 	db $FF
 ValleyofBowser_Tri:
 	db Transpose
@@ -160,8 +158,7 @@ ValleyofBowser_TriLoop:
 	db NRest
 	db NRest
 	db G#3
-	db $F4
-	.word ValleyofBowser_TriLoop
+	sndjump ValleyofBowser_TriLoop
 	db $FF
 ValleyofBowser_Noise:
 ValleyofBowser_NoiseLoop:
@@ -182,20 +179,14 @@ ValleyofBowser_NoiseLoop:
 	db C3
 	db C3
 	db C3
-	db $F4
-	.word ValleyofBowser_NoiseLoop
+	sndjump ValleyofBowser_NoiseLoop
 	db $FF
 ValleyofBowser_End:
 	db $FF
 ValleyofBowser_Footer:
-	db NRest
-	.word ValleyofBowser_P1
-	db $01
-	.word ValleyofBowser_P2
-	db $02
-	.word ValleyofBowser_Tri
-	db $03
-	.word ValleyofBowser_Noise
-	db $04
-	.word ValleyofBowser_End
+	mussq1 ValleyofBowser_P1
+	mussq2 ValleyofBowser_P2
+	mustri ValleyofBowser_Tri
+	musnoise ValleyofBowser_Noise
+	musdpcm ValleyofBowser_End
 	db $FF

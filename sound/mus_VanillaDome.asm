@@ -194,8 +194,7 @@ VanillaDome_P2Loop:
 	db NRest
 	db NRest
 	db NRest
-	db $F4
-	.word VanillaDome_P2Loop
+	sndjump VanillaDome_P2Loop
 	db $FF
 VanillaDome_Noise:
 	db Transpose
@@ -343,14 +342,9 @@ VanillaDome_NoiseLoop:
 VanillaDome_End:
 	db $FF
 VanillaDome_Footer:
-	db NRest
-	.word VanillaDome_P1Tri
-	db $01
-	.word VanillaDome_P2
-	db $02
-	.word VanillaDome_P1Tri
-	db $03
-	.word VanillaDome_Noise
-	db $04
-	.word VanillaDome_End
+	mussq1 VanillaDome_P1Tri
+	mussq2 VanillaDome_P2
+	mustri VanillaDome_P1Tri
+	musnoise VanillaDome_Noise
+	musdpcm VanillaDome_End
 	db $FF

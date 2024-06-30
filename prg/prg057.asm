@@ -413,7 +413,7 @@ bra4_A25B:
 	LDA BubbleXPos
 	SEC
 	SBC $52
-	STA $0203
+	STA SpriteMem+3
 	LDA BubbleYPos
 	SEC
 	SBC $54
@@ -425,11 +425,11 @@ bra4_A25B:
 	SBC #$10
 bra4_A275:
 	STA BubbleSpawnPoint
-	STA SpriteMem ;$0200, Y position
+	STA SpriteMem ;SpriteMem+0, Y position
 	LDA #$3E ;TileID
-	STA $0201 ;store tile ID/,mirroring 
+	STA SpriteMem+1 ;store tile ID/,mirroring 
 	LDA #$00
-	STA $0202 ;store palette
+	STA SpriteMem+2 ;store palette
 	DEC BubbleYPos
 	DEC BubbleYPos
 	JSR sub4_A0B0
@@ -570,7 +570,7 @@ loc4_A348: ;load/store tile ID (facing right)
 	CMP #$FF
 	BEQ bra4_A3BC ;if loaded a null tile branch to end section of routine
 	AND #$3F ;else, mask out attribute bits
-	STA $0201,X ;Store tile ID
+	STA SpriteMem+1,X ;Store tile ID
 	PHA ;push A to stack
 	LDA #$40 ;set A for mirrored sprite
 	JMP loc4_A37B ;jump 
@@ -589,7 +589,7 @@ bra4_A369: ;load/store tile ID (facing left)
 	CMP #$FF
 	BEQ bra4_A3BC ;if loaded a null tile branch to end section of routine
 	AND #$3F ;else, mask out attribute bits
-	STA $0201,X ;Store the tile ID
+	STA SpriteMem+1,X ;Store the tile ID
 	PHA ;push A to stack
 	LDA #$00 ;set A for unmirrored sprite
 ;********************************************************	
@@ -611,7 +611,7 @@ loc4_A37B:
 	LDA ($34),Y ;use tile ID to select respective attribute data
 	ORA $38 ;ORA against sprite mirroring 						 
 	ORA $06E0 ;ORA again with UNKNOWN (This flips the tiles as needed)
-	STA $0202,X ;store tile attributes
+	STA SpriteMem+2,X ;store tile attributes
 ;********************************************************	
 ;Position Tiles X
 	LDA #$24
@@ -620,7 +620,7 @@ loc4_A37B:
 	LDA PlayerMetaspriteHAlign
 	CLC
 	ADC PlayerRidingTileHorizPos,Y ;add tile H position to sprite H alignment 
-	STA $0203,X ;store X position 
+	STA SpriteMem+3,X ;store X position 
 ;********************************************************	
 ;Position Tiles Y	
 	LDA PlayerMetaspriteVAlign
@@ -796,7 +796,7 @@ bra4_A45F: ;load column spacing
 	ORA #$40 ;else set H mirroring bit (%01000000) (why?)
 	
 PlayerOAMmanager: 
-	STA $0201,X ;store tile ID(/mirroring bit, though it's useless here)
+	STA SpriteMem+1,X ;store tile ID(/mirroring bit, though it's useless here)
 	AND #$3F ;Mask out mirroring bits
 	TAY ;transfer masked tile ID to Y
 	LDA #$2F
@@ -805,9 +805,9 @@ PlayerOAMmanager:
 	ORA PlayerSpriteMirror ;set mirroring for whole sprite 
 	EOR PlayerSpriteAttributes ;flip mirroring bits against sprite attributes
 	ORA $06E0 ;set some bits against unknown
-	STA $0202,X ;store attributes
+	STA SpriteMem+2,X ;store attributes
 	LDA PlayerMetaspriteHAlign
-	STA $0203,X ;store horizontal position
+	STA SpriteMem+3,X ;store horizontal position
 	LDA PlayerMetaspriteVAlign
 	STA SpriteMem,X ;store vertical position 
 	TXA ;move X to A
@@ -1966,7 +1966,7 @@ loc4_A9BD: ;If player H mirrored, (facing right)
 	BEQ bra4_AA31 ;branch if it's a null tile
 ;Load tile ID
 	AND #$3F ;else strip attributes
-	STA $0201,X ;store tile ID 
+	STA SpriteMem+1,X ;store tile ID 
 	PHA ;push masked tile ID to stack
 	LDA #$40 ;set mirroring for tile (mirrored)
 	JMP loc4_A9F0 ;go to Cape OAM manager 
@@ -1987,7 +1987,7 @@ bra4_A9DE: ;get unmirrored tile ID (code loops back to here but starts ahead of 
 	CMP #$FF
 	BEQ bra4_AA31 ;branch if it's a null tile
 	AND #$3F ;else strip attributes
-	STA $0201,X ;store tile ID
+	STA SpriteMem+1,X ;store tile ID
 	PHA ;push masked tile ID to stack
 	LDA #$00 ;set mirroing for tile (unmirrored)
 ;**************************************************
@@ -2011,7 +2011,7 @@ loc4_A9F0: ;START HERE for cape OAM manager
 ;probably to do with mirroring, not sure what these values contain
 	ORA $38 ; use tile mirroring temp byte as bitmask to set some bits (00/40 bitmask: 1=set 0=ignore)
 	ORA $06E0 ; use ?? as bitmask to set some bits
-	STA $0202,X ;store attributes
+	STA SpriteMem+2,X ;store attributes
 	
 	LDA #$24
 	STA M90_PRG2 ;load the player animation bank into the 2nd PRG slot
@@ -2019,7 +2019,7 @@ loc4_A9F0: ;START HERE for cape OAM manager
 	LDA PlayerMetaspriteHAlign
 	CLC
 	ADC tbl4_AC03,Y ;add column spacing to horizontal alignment
-	STA $0203,X ;store X position
+	STA SpriteMem+3,X ;store X position
 	
 	LDA PlayerMetaspriteVAlign
 	CLC
@@ -2108,7 +2108,7 @@ loc4_AA8E: ;If player H mirrored, (facing right)
 	BEQ bra4_AB02  ;branch if it's a null tile
 ;Load tile ID	
 	AND #$3F ;else strip attributes
-	STA $0201,X ;store tile ID 
+	STA SpriteMem+1,X ;store tile ID 
 	PHA ;push masked tile ID to stack
 	LDA #$40 ;set mirroring for tile (mirrored)
 	JMP loc4_AAC1 ;go to Yoshi Cape OAM manager
@@ -2129,7 +2129,7 @@ bra4_AAAF: ;get unmirrored tile ID (code loops back to here but starts ahead of 
 	CMP #$FF
 	BEQ bra4_AB02 ;branch if it's a null tile
 	AND #$3F ;else strip attributes
-	STA $0201,X ;store tile ID
+	STA SpriteMem+1,X ;store tile ID
 	PHA ;push masked tile ID to stack
 	LDA #$00 ;set mirroing for tile (unmirrored)
 ;**************************************************
@@ -2153,7 +2153,7 @@ loc4_AAC1: ;START HERE for cape OAM manager
 ;probably to do with mirroring, not sure what these values contain
 	ORA $38 ; use tile mirroring temp byte as bitmask to set some bits (00/40 bitmask: 1=set 0=ignore)
 	ORA $06E0 ; use ?? as bitmask to set some bits
-	STA $0202,X ;store attributes
+	STA SpriteMem+2,X ;store attributes
 	
 	LDA #$24
 	STA M90_PRG2 ;load the player animation bank into the 2nd PRG slot
@@ -2161,7 +2161,7 @@ loc4_AAC1: ;START HERE for cape OAM manager
 	LDA PlayerMetaspriteHAlign
 	CLC
 	ADC tbl4_AC03,Y ;add column spacing to horizontal alignment
-	STA $0203,X ;store X position
+	STA SpriteMem+3,X ;store X position
 	
 	LDA PlayerMetaspriteVAlign
 	CLC
@@ -2743,7 +2743,7 @@ bra4_AE14_RTS:
 	RTS 
 ItemBoxLogicSub: ;X: Itembox, Y: Player Power
 	LDA ButtonsPressed
-	AND #buttonSelect ;Continue if select pressed
+	AND #btnSelect ;Continue if select pressed
 	BEQ ItemBoxLogicDone
 	
 	LDA #$07
@@ -2932,7 +2932,7 @@ JumpYSpdRoutine:
 	AND #$04
 	BEQ JumpYSpdRtDone ;Make sure the player is moving up
 	LDA ButtonsHeld
-	AND #buttonA
+	AND #btnA
 	BEQ JumpYSpdRtDone ;Make sure the A button is held
 	LDA PlayerYSpeed
 	CLC
@@ -2985,7 +2985,7 @@ ShootFireball:
 	AND #dirDown
 	BNE ShootFireballDone ;Stop if down is held
 	LDA ButtonsPressed
-	AND #buttonB
+	AND #btnB
 	BEQ ShootFireballDone ;Wait until B is pressed
 	LDA #$13 ;norm fireball 
 	STA PlayerAction ;Set PAct to throwing fireball
@@ -3003,7 +3003,7 @@ MidAirFireShoot:
 	AND #dirDown
 	BNE MidAirFireShootDone ;Stop if down is held
 	LDA ButtonsPressed
-	AND #buttonB
+	AND #btnB
 	BEQ MidAirFireShootDone ;Wait until B is pressed
 	LDY #$11 ;Make the player shoot a mid-air fireball
 	LDA UnderwaterFlag
@@ -3152,7 +3152,7 @@ loc4_B0D7:
 	JSR sub4_B1DE
 bra4_B0DA:
 	LDA ButtonsPressed
-	AND #buttonB
+	AND #btnB
 	BEQ bra4_B11D_RTS ;Make sure B is pressed
 	LDA #$00
 	STA SwallowFrameCount
@@ -3189,7 +3189,7 @@ bra4_B11E:
 	LDY ObjectCount
 	STA ObjectSlot,Y
 	LDA PlayerMovement
-	AND #buttonB
+	AND #btnB
 	BNE bra4_B138
 	LDA PlayerXPosDup
 	CLC
@@ -3251,7 +3251,7 @@ loc4_B193:
 	CMP #$09
 	BCS bra4_B1C0_RTS
 	LDA ButtonsPressed
-	AND #buttonB
+	AND #btnB
 	BEQ bra4_B1C0_RTS
 	LDA #sfx_YoshiTongue
 	STA SFXRegister
@@ -3608,7 +3608,7 @@ HoldFloatUp:
 	RTS
 SwimChk:
 	LDA ButtonsPressed
-	AND #buttonA
+	AND #btnA
 	BEQ SwimmingDone ;Make sure A is pressed
 	LDA ButtonsHeld
 	AND #dirUp
@@ -3628,7 +3628,7 @@ SwimmingDone:
 	RTS
 JumpingRoutine:
 	LDA ButtonsPressed
-	AND #buttonA
+	AND #btnA
 	BEQ SwimmingDone ;Make sure the A button is pressed
 	LDA PlayerYSpeed
 	BNE SwimmingDone ;Make sure that the player has no leftover vertical speed
@@ -3640,7 +3640,7 @@ JumpingRoutine:
 DoBJump:
 	LDY #$48 ;Set vertical speed to $48
 	LDA ButtonsHeld
-	AND #buttonB
+	AND #btnB
 	BEQ DoLowJump
 	LDY #$58 ;If B is held, set vertical speed to $58
 DoLowJump:
@@ -3662,7 +3662,7 @@ SpinJumpRoutine:
 	LDA Player1YoshiStatus
 	BEQ SpinJumpDone ;Make sure the player isn't riding Yoshi
 	LDA ButtonsPressed
-	AND #buttonA
+	AND #btnA
 	BEQ SpinJumpDone ;Make sure A is held
 	LDA ButtonsHeld
 	AND #dirUp
@@ -3735,7 +3735,7 @@ LeapRoutine:
 	CMP #$10 ;if animation frame is lower than 10,
 	BCC LeapingDone ;branch
 	LDA ButtonsPressed ;
-	AND #buttonA ;if A not pressed,
+	AND #btnA ;if A not pressed,
 	BEQ LeapingDone ;branch
 	LDA #$60 ;
 	STA PlayerYSpeed ;set y speed to $60
@@ -3750,7 +3750,7 @@ PlayerRunRoutine:
 	AND #$03
 	BEQ bra4_B55C ;Make sure either left or right are held. If they aren't, skip ahead.
 	LDA ButtonsHeld ;Otherwise, continue
-	AND #buttonB
+	AND #btnB
 	BNE SetupPlayerRun ;Switch to running if B is held
 	STA $0314 ;Likely an unused or residual opcode. Does nothing.
 	LDA PlayerXSpeed
@@ -3894,7 +3894,7 @@ SpinCapeRoutine:
 	LDA PlayerHoldFlag
 	BNE SpinCapeDone ;Make sure the player isn't carrying anything
 	LDA ButtonsPressed
-	AND #buttonB
+	AND #btnB
 	BEQ SpinCapeDone ;Make sure B is pressed
 	LDA #$08
 	STA PlayerState ;Set player state
@@ -3908,7 +3908,7 @@ sub4_B616:
 	RTS
 sub4_B61B:
 	LDA ButtonsHeld ;
-	AND #buttonB ;if b still held,
+	AND #btnB ;if b still held,
 	BNE bra4_B627 ;branch
 	LDA #$0A ;
 	STA PlayerAction ;set action to falling
@@ -3953,10 +3953,10 @@ bra4_B668_RTS:
 	RTS
 sub4_B669:
 	LDA ButtonsHeld ;
-	AND #buttonB ;if B not held,
+	AND #btnB ;if B not held,
 	BEQ bra4_B67B_RTS ;branch
 	LDA ButtonsHeld ;
-	AND #buttonA ;if A not held,
+	AND #btnA ;if A not held,
 	BEQ bra4_B67B_RTS ;branch
 	LDA #$40 ;
 	STA PlayerYSpeed ;set Y speed to $40
@@ -3981,7 +3981,7 @@ ClimbingActionList:
 	RTS
 PlayerClimbJump: ;Jump from climbing
 	LDA ButtonsPressed
-	AND #buttonA
+	AND #btnA
 	BEQ PlayerClimbJumpRTS ;If A button not pressed, branch
 	LDA ButtonsHeld ;else
 	AND #dirUp
@@ -4252,7 +4252,7 @@ TongueSpdBoostDone:
 	RTS
 TongueSwimChk:
 	LDA ButtonsPressed
-	AND #buttonA
+	AND #btnA
 	BEQ TongueSwimChkDone ;Make sure the A button is pressed
 	LDA UnderwaterFlag
 	BEQ bra4_B886 ;Branch if not underwater
@@ -4348,7 +4348,7 @@ unknownrout1:
 		LDA PlayerYSpeed ;if player's y speed isn't empty,
 		BNE rout1done ;stop
 		LDA ButtonsPressed ;
-		AND #buttonA ;make sure A is pressed
+		AND #btnA ;make sure A is pressed
 		BEQ rout1done ;
 		LDA #$60 ;
 		STA PlayerYSpeed ;set y speed to 60 (hex)

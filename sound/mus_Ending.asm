@@ -149,8 +149,7 @@ Ending_P1Loop:
 	db NRest
 	db NRest
 	db NRest
-	db $F4
-	.word Ending_P1Loop
+	sndjump Ending_P1Loop
 	db $FF
 Ending_P2:
 Ending_P2Loop:
@@ -201,8 +200,7 @@ Ending_P2Loop:
 	db $25
 	notelen 12
 	db D3
-	db $F4
-	.word Ending_P2Loop
+	sndjump Ending_P2Loop
 	db $FF
 Ending_Tri:
 Ending_TriLoop:
@@ -231,8 +229,7 @@ Ending_TriLoop:
 	db G2
 	db D3
 	db B2
-	db $F4
-	.word Ending_TriLoop
+	sndjump Ending_TriLoop
 	db $FF
 Ending_Noise:
 Ending_NoiseLoop:
@@ -288,20 +285,14 @@ Ending_NoiseLoop:
 	db C3
 	notelen 12
 	db C3
-	db $F4
-	.word Ending_NoiseLoop
+	sndjump Ending_NoiseLoop
 	db $FF
 Ending_End:
 	db $FF
 Ending_Footer:
-	db NRest
-	.word Ending_P1
-	db $01
-	.word Ending_P2
-	db $02
-	.word Ending_Tri
-	db $03
-	.word Ending_Noise
-	db $04
-	.word Ending_End
+	mussq1 Ending_P1
+	mussq2 Ending_P2
+	mustri Ending_Tri
+	musnoise Ending_Noise
+	musdpcm Ending_End
 	db $FF

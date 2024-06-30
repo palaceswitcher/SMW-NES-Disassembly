@@ -153,7 +153,7 @@ bra13_999F:
 	LDA $032F
 	AND #$03
 bra13_99A6:
-	STA $0202,X
+	STA SpriteMem+2,X
 	INX
 	INX
 	INX

@@ -91,8 +91,7 @@ ForestofIllusion_P1Loop:
 	db NRest
 	db NRest
 	db NRest
-	db $F4
-	.word ForestofIllusion_P1Loop
+	sndjump ForestofIllusion_P1Loop
 	db $FF
 ForestofIllusion_P2:
 ForestofIllusion_P2Loop:
@@ -168,8 +167,7 @@ ForestofIllusion_P2Loop:
 	db NRest
 	db NRest
 	db NRest
-	db $F4
-	.word ForestofIllusion_P2Loop
+	sndjump ForestofIllusion_P2Loop
 	db $FF
 ForestofIllusion_Tri:
 ForestofIllusion_TriLoop:
@@ -238,20 +236,14 @@ ForestofIllusion_TriLoop:
 	db NRest
 	db NRest
 	db NRest
-	db $F4
-	.word ForestofIllusion_TriLoop
+	sndjump ForestofIllusion_TriLoop
 	db $FF
 ForestofIllusion_End:
 	db $FF
 ForestofIllusion_Footer:
-	db NRest
-	.word ForestofIllusion_P1
-	db $01
-	.word ForestofIllusion_P2
-	db $02
-	.word ForestofIllusion_Tri
-	db $03
-	.word ForestofIllusion_End
-	db $04
-	.word ForestofIllusion_End
+	mussq1 ForestofIllusion_P1
+	mussq2 ForestofIllusion_P2
+	mustri ForestofIllusion_Tri
+	musnoise ForestofIllusion_End
+	musdpcm ForestofIllusion_End
 	db $FF

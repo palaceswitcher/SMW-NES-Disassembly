@@ -1,16 +1,10 @@
 YoshisIsland_P1:
-YoshisIsland_P1Loop:
-	db $F5
-	db $01
-	db Transpose
-	db NRest
-	db DutySet
-	db $12
-	db PitchSet
-	db NRest
-	db VolSet
-	db $11
-	db $A4
+	sndspeed 1
+	transpose 0
+	duty $12
+	pitch 0
+	volenv $11
+	notelen 36
 	db C2
 	notelen 12
 	db G2
@@ -27,24 +21,24 @@ YoshisIsland_P1Loop:
 	db NRest
 	db NRest
 	db NRest
-	db $A4
-	db $1A
+	notelen 36
+	db D2
 	notelen 12
 	db A2
 	notelen 24
 	db D3
 	db A2
 	notelen 12
-	db $1A
-	db $1A
+	db D2
+	db D2
 	notelen 24
-	db $1A
+	db D2
 	notelen 12
 	db NRest
 	db NRest
 	db NRest
 	db NRest
-	db $A4
+	notelen 36
 	db C2
 	notelen 12
 	db G2
@@ -54,26 +48,20 @@ YoshisIsland_P1Loop:
 	notelen 12
 	db C3
 	db B2
-	db $22
+	db A#2
 	db A2
 	notelen 48
-	db $20
-	db $F4
-	.word YoshisIsland_P1Loop
+	db G#2
+	sndjump YoshisIsland_P1
 	db $FF
 YoshisIsland_P2:
-YoshisIsland_P2Loop:
-	db Transpose
-	db C2
-	db DutySet
-	db $38
-	db PitchSet
-	db $39
-	db VolSet
-	db E5
-	db $92
+	transpose 24
+	duty $38
+	pitch $39
+	volenv $40
+	notelen 18
 	db C3
-	db $86
+	notelen 6
 	db C3
 	notelen 12
 	db C3
@@ -85,25 +73,19 @@ YoshisIsland_P2Loop:
 	db C3
 	db C3
 	db C3
-	db DutySet
-	db $0E
-	db PitchSet
-	db $0F
-	db VolSet
-	db $03
-	db $2B
+	duty $0E
+	pitch $0F
+	volenv $03
+	db G3
 	notelen 24
 	db A3
-	db $2B
-	db DutySet
-	db $38
-	db PitchSet
-	db $39
-	db VolSet
-	db E5
-	db $92
+	db G3
+	duty $38
+	pitch $39
+	volenv $40
+	notelen 18
 	db D3
-	db $86
+	notelen 6
 	db D3
 	notelen 12
 	db D3
@@ -115,25 +97,19 @@ YoshisIsland_P2Loop:
 	db D3
 	db D3
 	db D3
-	db DutySet
-	db $0E
-	db PitchSet
-	db $0F
-	db VolSet
-	db $03
+	duty $0E
+	pitch $0F
+	volenv $03
 	db A3
 	notelen 24
 	db B3
 	db A3
-	db DutySet
-	db $38
-	db PitchSet
-	db $39
-	db VolSet
-	db E5
-	db $92
+	duty $38
+	pitch $39
+	volenv $40
+	notelen 18
 	db C3
-	db $86
+	notelen 6
 	db C3
 	notelen 12
 	db C3
@@ -141,41 +117,31 @@ YoshisIsland_P2Loop:
 	notelen 24
 	db A2
 	db G2
-	db Transpose
-	db NRest
-	db DutySet
-	db $12
-	db PitchSet
-	db NRest
-	db VolSet
-	db $11
+	transpose 0
+	duty $12
+	pitch 0
+	volenv $11
 	notelen 12
-	db $22
+	db A#2
 	db A2
-	db $20
+	db G#2
 	db G2
 	notelen 48
 	db $1E
-	db $F4
-	.word YoshisIsland_P2Loop
+	sndjump YoshisIsland_P2
 	db $FF
 YoshisIsland_Tri:
-YoshisIsland_TriLoop:
-	db Transpose
-	db NRest
-	db DutySet
-	db $12
-	db PitchSet
-	db NRest
-	db VolSet
-	db $11
-	db $A4
+	transpose 0
+	duty $12
+	pitch 0
+	volenv $11
+	notelen 36
 	db C3
 	notelen 12
-	db $2B
+	db G3
 	notelen 24
 	db C4
-	db $2B
+	db G3
 	notelen 12
 	db C3
 	db C3
@@ -206,31 +172,25 @@ YoshisIsland_TriLoop:
 	db $A4
 	db C3
 	notelen 12
-	db $2B
+	db G3
 	notelen 24
 	db C4
-	db $2B
+	db G3
 	notelen 12
-	db $27
+	db D#3
 	db D3
-	db $25
+	db C#3
 	db B2
 	notelen 48
-	db $22
-	db $F4
-	.word YoshisIsland_TriLoop
+	db A#2
+	sndjump YoshisIsland_Tri
 	db $FF
 YoshisIsland_End:
 	db $FF
 YoshisIsland_Footer:
-	db NRest
-	.word YoshisIsland_P1
-	db $01
-	.word YoshisIsland_P2
-	db $02
-	.word YoshisIsland_Tri
-	db $03
-	.word YoshisIsland_End
-	db $04
-	.word YoshisIsland_End
+	mussq1 YoshisIsland_P1
+	mussq2 YoshisIsland_P2
+	mustri YoshisIsland_Tri
+	musnoise YoshisIsland_End
+	musdpcm YoshisIsland_End
 	db $FF

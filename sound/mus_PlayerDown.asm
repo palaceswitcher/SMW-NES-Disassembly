@@ -91,14 +91,9 @@ PlayerDown_P2:
 PlayerDown_End:
 	db $FF
 PlayerDown_Footer:
-	db NRest
-	.word PlayerDown_P1
-	db $01
-	.word PlayerDown_P2
-	db $02
-	.word PlayerDown_End
-	db $03
-	.word PlayerDown_End
-	db $04
-	.word PlayerDown_End
+	mussq1 PlayerDown_P1
+	mussq2 PlayerDown_P2
+	mustri PlayerDown_End
+	musnoise PlayerDown_End
+	musdpcm PlayerDown_End
 	db $FF

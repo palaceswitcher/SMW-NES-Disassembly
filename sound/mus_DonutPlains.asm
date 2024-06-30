@@ -122,8 +122,7 @@ DonutPlains_P1Loop:
 	db $2B
 	notelen 12
 	db NRest
-	db $F4
-	.word DonutPlains_P1Loop
+	sndjump DonutPlains_P1Loop
 	db $FF
 DonutPlains_P2:
 DonutPlains_P2Loop:
@@ -180,8 +179,7 @@ DonutPlains_P2Loop:
 	db NRest
 	db NRest
 	db NRest
-	db $F4
-	.word DonutPlains_P2Loop
+	sndjump DonutPlains_P2Loop
 	db $FF
 DonutPlains_Unused:
 DonutPlains_UnusedLoop:
@@ -258,20 +256,14 @@ DonutPlains_UnusedLoop:
 	db NRest
 	db NRest
 	db NRest
-	db $F4
-	.word DonutPlains_UnusedLoop
+	sndjump DonutPlains_UnusedLoop
 	db $FF
 DonutPlains_End:
 	db $FF
 DonutPlains_Footer:
-	db NRest
-	.word DonutPlains_P1
-	db $01
-	.word DonutPlains_P2
-	db $02
-	.word DonutPlains_End
-	db $03
-	.word DonutPlains_End
-	db $04
-	.word DonutPlains_End
+	mussq1 DonutPlains_P1
+	mussq2 DonutPlains_P2
+	mustri DonutPlains_End
+	musnoise DonutPlains_End
+	musdpcm DonutPlains_End
 	db $FF

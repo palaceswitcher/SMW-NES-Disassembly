@@ -353,260 +353,137 @@ tbl3_A1B5:
 	dw ObjID_h7D
 	dw ObjID_h7E
 	dw ObjID_h7E ;Object 0x7F (Urchin)
-	dw ptr4_A0D8 ;Unused excess pointers
-	db $62
-	db $95
-	db $90
-	db $95
-	db $30
-	db $96
-	db $60
-	db $96
-	db $B7
-	db $96
-	db $D5
-	db $96
-	db $D5
-	db $96
-	db $F8
-	db $96
-	db $F8
-	db $96
-	db $F8
-	db $96
-	db $24
-	db $97
-	db $42
-	db $97
-	db $69
-	db $97
-	db $9C
-	db $97
-	db $C3
-	db $97
-	db $0E
-	db $82
-	db $0E
-	db $82
-	db $0E
-	db $82
-	db $0E
-	db $82
-	db $0E
-	db $82
-	db $0E
-	db $82
-	db $57
-	db $86
-	db $57
-	db $86
-	db $5B
-	db $86
-	db $5B
-	db $86
-	db $4B
-	db $88
-	db $4B
-	db $88
-	db $12
-	db $89
-	db $12
-	db $89
-	db $A0
-	db $8A
-	db $A0
-	db $8A
-	db $A0
-	db $8A
-	db $A0
-	db $8A
-	db $A0
-	db $8A
-	db $A0
-	db $8A
-	db $DE
-	db $8C
-	db $DE
-	db $8C
-	db $17
-	db $8E
-	db $17
-	db $8E
-	db $17
-	db $8E
-	db $17
-	db $8E
-	db $17
-	db $8E
-	db $17
-	db $8E
-	db $17
-	db $8E
-	db $17
-	db $8E
-	db $90
-	db $8F
-	db $90
-	db $8F
-	db $18
-	db $91
-	db $18
-	db $91
-	db $18
-	db $91
-	db $18
-	db $91
-	db $18
-	db $91
-	db $18
-	db $91
-	db $0E
-	db $82
-	db $0E
-	db $82
-	db $60
-	db $96
-	db $24
-	db $97
-	db $49
-	db $93
-	db $49
-	db $93
-	db $B5
-	db $95
-	db $B5
-	db $95
-	db $B5
-	db $95
-	db $B5
-	db $95
-	db $B5
-	db $95
-	db $B5
-	db $95
-	db $CD
-	db $99
-	db $CD
-	db $99
-	db $11
-	db $9A
-	db $11
-	db $9A
-	db $68
-	db $9A
-	db $68
-	db $9A
-	dw ptr5_9DA5
-	db $B7
-	db $96
-	db $08
-	db $80
-	db $08
-	db $80
-	db $FB
-	db $9B
-	db $FB
-	db $9B
-	db $08
-	db $80
-	db $08
-	db $80
-	db $08
-	db $80
-	db $08
-	db $80
-	db $18
-	db $91
-	db $18
-	db $91
-	db $39
-	db $80
-	db $39
-	db $80
-	db $39
-	db $80
-	db $39
-	db $80
-	db $0E
-	db $82
-	db $0E
-	db $82
-	db $08
-	db $80
-	db $08
-	db $80
-	db $08
-	db $80
-	db $08
-	db $80
-	db $08
-	db $80
-	db $08
-	db $80
-	db $08
-	db $80
-	db $08
-	db $80
-	db $08
-	db $80
-	db $08
-	db $80
-	db $89
-	db $93
-	db $89
-	db $93
-	db $08
-	db $80
-	db $08
-	db $80
-	db $08
-	db $80
-	db $08
-	db $80
-	db $8D
-	db $95
-	db $27
-	db $97
-	db $A9
-	db $99
-	db $A9
-	db $99
-	db $0E
-	db $82
-	db $0E
-	db $82
-	db $A2
-	db $8C
-	db $64
-	db $93
-	db $DB
-	db $8C
-	db $DB
-	db $8C
-	db $DB
-	db $9B
-	db $DB
-	db $8C
-	db $39
-	db $80
-	db $00
-	db $80
-	db $00
-	db $80
-	db $39
-	db $80
-	db $0E
-	db $82
-	db $0E
-	db $82
-	db $D8
-	db $A0
-	db $D8
-	db $A0
-	db $70
-	db $96
-	db $70
-	db $96
+
+;----------------------------------------
+;Unused duplicated pointers for objects' 00-7F rendering code. Can be found in bank 52
+	dw ptr4_A0D8
+	dw ptr6_9562 ;1
+	dw ptr6_9590 ;2
+	dw ptr6_9630 ;3
+	dw ptr6_9660 ;4
+	dw ptr6_96B7 ;5
+	dw ptr6_96D5 ;6
+	dw ptr6_96D5 ;7
+	dw ptr7_96F8 ;8
+	dw ptr7_96F8 ;9
+	dw ptr7_96F8 ;a
+	dw ptr6_9724 ;b
+	dw ptr6_9742 ;c
+	dw ptr6_9769 ;d
+	dw ptr6_979C ;e
+	dw ptr6_97C3 ;f
+	dw ptr6_820E ;10
+	dw ptr6_820E ;11
+	dw ptr6_820E ;12
+	dw ptr6_820E ;13
+	dw ptr6_820E ;14
+	dw ptr6_820E ;15
+	dw ptr6_8657 ;16
+	dw ptr6_8657 ;17
+	dw ptr6_865B ;18
+	dw ptr6_865B ;19
+	dw ptr6_884B ;1a
+	dw ptr6_884B ;1b
+	dw ptr6_8912 ;1c
+	dw ptr6_8912 ;1d
+	dw ptr6_8AA0 ;1e
+	dw ptr6_8AA0 ;1f
+	dw ptr6_8AA0 ;20
+	dw ptr6_8AA0 ;21
+	dw ptr6_8AA0 ;22
+	dw ptr6_8AA0 ;23
+	dw ptr6_8CDE ;24
+	dw ptr6_8CDE ;25
+	dw ptr6_8E17 ;26
+	dw ptr6_8E17 ;27
+	dw ptr6_8E17 ;28
+	dw ptr6_8E17 ;29
+	dw ptr6_8E17 ;2a
+	dw ptr6_8E17 ;2b
+	dw ptr6_8E17 ;2c
+	dw ptr6_8E17 ;2d
+	dw ptr6_8F90 ;2e
+	dw ptr6_8F90 ;2f
+	dw ptr6_9118 ;30
+	dw ptr6_9118 ;31
+	dw ptr6_9118 ;32
+	dw ptr6_9118 ;33
+	dw ptr6_9118 ;34
+	dw ptr6_9118 ;35
+	dw ptr6_820E ;36
+	dw ptr6_820E ;37
+	dw ptr6_9660 ;38
+	dw ptr6_9724 ;39
+	dw ptr6_9349 ;3a
+	dw ptr6_9349 ;3b
+	dw ptr6_95B5 ;3c
+	dw ptr6_95B5 ;3d
+	dw ptr6_95B5 ;3e
+	dw ptr6_95B5 ;3f
+	dw ptr6_95B5 ;40
+	dw ptr6_95B5 ;41
+	dw ptr6_99CD ;42
+	dw ptr6_99CD ;43
+	dw ptr6_9A11 ;44
+	dw ptr6_9A11 ;45
+	dw ptr6_9A68 ;46
+	dw ptr6_9A68 ;47
+	dw ptr5_9DA5 ;48
+	dw ptr6_96B7 ;49
+	dw bra5_8008 ;4a
+	dw bra5_8008 ;4b
+	dw ptr6_9BFB ;4c
+	dw ptr6_9BFB ;4d
+	dw bra5_8008 ;4e
+	dw bra5_8008 ;4f
+	dw bra5_8008 ;50
+	dw bra5_8008 ;51
+	dw ptr6_9118 ;52
+	dw ptr6_9118 ;53
+	dw ptr6_8039 ;54
+	dw ptr6_8039 ;55
+	dw ptr6_8039 ;56
+	dw ptr6_8039 ;57
+	dw ptr6_820E ;58
+	dw ptr6_820E ;59
+	dw bra5_8008 ;5a
+	dw bra5_8008 ;5b
+	dw bra5_8008 ;5c
+	dw bra5_8008 ;5d
+	dw bra5_8008 ;5e
+	dw bra5_8008 ;5f
+	dw bra5_8008 ;60
+	dw bra5_8008 ;61
+	dw bra5_8008 ;62
+	dw bra5_8008 ;63
+	dw ptr6_9389 ;64
+	dw ptr6_9389 ;65
+	dw bra5_8008 ;66
+	dw bra5_8008 ;67
+	dw bra5_8008 ;68
+	dw bra5_8008 ;69
+	dw ptr6_958D ;6a
+	dw ptr6_9727 ;6b
+	dw ptr6_99A9 ;6c
+	dw ptr6_99A9 ;6d
+	dw ptr6_820E ;6e
+	dw ptr6_820E ;6f
+	dw ptr6_8CA2 ;70
+	dw ptr6_9364 ;71
+	dw ptr6_8CDB ;72
+	dw ptr6_8CDB ;73
+	dw ptr6_9BDB ;74
+	dw ptr6_8CDB ;75
+	dw ptr6_8039 ;76
+	dw ptr6_8000 ;77
+	dw ptr6_8000 ;78
+	dw ptr6_8039 ;79
+	dw ptr6_820E ;7a
+	dw ptr6_820E ;7b
+	dw ptr4_A0D8 ;7c (different)
+	dw ptr4_A0D8 ;7d (different)
+	dw ptr6_9670 ;7e
+	dw ptr6_9670 ;7f
 tbl3_A3B5:
 	db $35
 	db $35
@@ -865,258 +742,137 @@ tbl3_A435:
 	dw ObjID_hFA
 	dw ObjID_hFA
 	dw ObjID_hFA
-	db $F1
-	db $8B
-	db $F1
-	db $8B
-	db $93
-	db $90
-	db $93
-	db $90
-	db $B3
-	db $83
-	db $B3
-	db $83
-	db $FE
-	db $87
-	db $FE
-	db $87
-	db $7B
-	db $81
-	db $7B
-	db $81
-	db $19
-	db $95
-	db $19
-	db $95
-	db $32
-	db $96
-	db $32
-	db $96
-	db $44
-	db $85
-	db $44
-	db $85
-	db $44
-	db $85
-	db $44
-	db $85
-	db $FE
-	db $87
-	db $FE
-	db $87
-	db $E0
-	db $88
-	db $E0
-	db $88
-	db $97
-	db $88
-	db $97
-	db $88
-	db $17
-	db $85
-	db $17
-	db $85
-	db $5E
-	db $8A
-	db $5E
-	db $8A
-	db $95
-	db $8D
-	db $95
-	db $8D
-	db $15
-	db $8F
-	db $15
-	db $8F
-	db $C7
-	db $82
-	db $C7
-	db $82
-	db $80
-	db $99
-	db $80
-	db $99
-	db $80
-	db $99
-	db $80
-	db $99
-	db $79
-	db $9B
-	db $79
-	db $9B
-	db $87
-	db $9A
-	db $87
-	db $9A
-	db $87
-	db $9A
-	db $87
-	db $9A
-	db $79
-	db $92
-	db $79
-	db $92
-	db $B7
-	db $93
-	db $B7
-	db $93
-	db $71
-	db $8B
-	db $71
-	db $8B
-	db $28
-	db $8E
-	db $28
-	db $8E
-	db $C4
-	db $90
-	db $C4
-	db $90
-	db $0E
-	db $99
-	db $0E
-	db $99
-	db $CE
-	db $8E
-	db $D8
-	db $A0
-	db $2E
-	db $8F
-	db $D8
-	db $A0
-	db $2E
-	db $8F
-	db $D8
-	db $A0
-	db $D8
-	db $A0
-	db $49
-	db $83
-	dw ptr9_843B
-	dw ptr9_843B
-	db $40
-	db $86
-	db $40
-	db $86
-	db $C8
-	db $87
-	db $C8
-	db $87
-	db $3B
-	db $84
-	db $3B
-	db $84
-	db $40
-	db $86
-	db $40
-	db $86
-	db $C8
-	db $87
-	db $C8
-	db $87
-	dw ptr9_843B
-	dw ptr9_843B
-	db $40
-	db $86
-	db $40
-	db $86
-	db $81
-	db $8A
-	db $81
-	db $8A
-	db $59
-	db $8D
-	db $59
-	db $8D
-	db $1A
-	db $90
-	db $1A
-	db $90
-	db $D8
-	db $A0
-	db $D8
-	db $A0
-	db $86
-	db $92
-	db $86
-	db $92
-	db $E1
-	db $98
-	db $E1
-	db $98
-	db $B7
-	db $98
-	db $B7
-	db $98
-	db $BE
-	db $98
-	db $BE
-	db $98
-	db $D1
-	db $88
-	db $F9
-	db $88
-	db $00
-	db $80
-	db $00
-	db $80
-	db $75
-	db $84
-	db $75
-	db $84
-	db $75
-	db $84
-	db $75
-	db $84
-	db $ED
-	db $9B
-	db $51
-	db $99
-	db $51
-	db $99
-	db $51
-	db $99
-	db $51
-	db $99
-	db $51
-	db $99
-	db $51
-	db $99
-	db $D8
-	db $A0
-	db $D8
-	db $A0
-	db $D8
-	db $A0
-	db $D8
-	db $A0
-	db $D8
-	db $A0
-	db $D8
-	db $A0
-	db $D8
-	db $A0
-	db $00
-	db $80
-	db $00
-	db $80
-	db $00
-	db $80
-	db $00
-	db $80
-	db $0E
-	db $82
-	db $0E
-	db $82
-	db $CB
-	db $96
-	db $CB
-	db $96
-	db $CB
-	db $96
-	db $CB
-	db $96
+
+;----------------------------------------
+;Unused duplicated pointers for objects' 80-FF rendering code. Can be found in bank 52
+	dw ptr6_8BF1 ;80
+	dw ptr6_8BF1 ;81
+	dw ptr6_9093 ;82
+	dw ptr6_9093 ;83
+	dw ptr6_83B3 ;84
+	dw ptr6_83B3 ;85
+	dw ptr6_87FE ;86
+	dw ptr6_87FE ;87
+	dw ptr6_817B ;88
+	dw ptr6_817B ;89
+	dw ptr6_9519 ;8a
+	dw ptr6_9519 ;8b
+	dw ptr7_9632 ;8c
+	dw ptr7_9632 ;8d
+	dw ptr6_8544 ;8e
+	dw ptr6_8544 ;8f
+	dw ptr7_8544 ;90
+	dw ptr7_8544 ;91
+	dw ptr6_87FE ;92
+	dw ptr6_87FE ;93
+	dw ptr6_88E0 ;94
+	dw ptr6_88E0 ;95
+	dw ptr6_8897 ;96
+	dw ptr6_8897 ;97
+	dw ptr6_8517 ;98
+	dw ptr6_8517 ;99
+	dw ptr6_8A5E ;9a
+	dw ptr6_8A5E ;9b
+	dw ptr6_8D95 ;9c
+	dw ptr6_8D95 ;9d
+	dw ptr6_8F15 ;9e
+	dw ptr6_8F15 ;9f
+	dw ptr6_82C7 ;a0
+	dw ptr6_82C7 ;a1
+	dw ptr6_9980 ;a2
+	dw ptr6_9980 ;a3
+	dw ptr6_9980 ;a4
+	dw ptr6_9980 ;a5
+	dw ptr6_9B79 ;a6
+	dw ptr6_9B79 ;a7
+	dw ptr7_9A87 ;a8
+	dw ptr7_9A87 ;a9
+	dw ptr7_9A87 ;aa
+	dw ptr7_9A87 ;ab
+	dw ptr6_9279 ;ac
+	dw ptr6_9279 ;ad
+	dw ptr6_93B7 ;ae
+	dw ptr6_93B7 ;af
+	dw ptr6_8B71 ;b0
+	dw ptr6_8B71 ;b1
+	dw ptr6_8E28 ;b2
+	dw ptr6_8E28 ;b3
+	dw ptr6_90C4 ;b4
+	dw ptr6_90C4 ;b5
+	dw ptr6_990E ;b6
+	dw ptr6_990E ;b7
+	dw ptr6_8ECE ;b8
+	dw ptr4_A0D8 ;b9 (different)
+	dw ptr6_8F2E ;ba
+	dw ptr4_A0D8 ;bb (different)
+	dw ptr6_8F2E ;bc
+	dw ptr4_A0D8 ;bd (different)
+	dw ptr4_A0D8 ;be (different)
+	dw ptr6_8349 ;bf
+	dw ptr9_843B ;c0
+	dw ptr9_843B ;c1
+	dw ptr6_8640 ;c2
+	dw ptr6_8640 ;c3
+	dw ptr6_87C8 ;c4
+	dw ptr6_87C8 ;c5
+	dw ptr9_843B ;c6
+	dw ptr9_843B ;c7
+	dw ptr6_8640 ;c8
+	dw ptr6_8640 ;c9
+	dw ptr6_87C8 ;ca
+	dw ptr6_87C8 ;cb
+	dw ptr9_843B ;cc
+	dw ptr9_843B ;cd
+	dw ptr6_8640 ;ce
+	dw ptr6_8640 ;cf
+	dw ptr6_8A81 ;d0
+	dw ptr6_8A81 ;d1
+	dw ptr6_8D59 ;d2
+	dw ptr6_8D59 ;d3
+	dw ptr6_901A ;d4
+	dw ptr6_901A ;d5
+	dw ptr4_A0D8 ;d6 (different)
+	dw ptr4_A0D8 ;d7 (different)
+	dw ptr6_9286 ;d8
+	dw ptr6_9286 ;d9
+	dw ptr6_98E1 ;da
+	dw ptr6_98E1 ;db
+	dw ptr6_98B7 ;dc
+	dw ptr6_98B7 ;dd
+	dw bra4_98BE ;de
+	dw bra4_98BE ;df
+	dw ptr6_88D1 ;e0
+	dw ptr6_88F9 ;e1
+	dw ptr7_8000 ;e2
+	dw ptr7_8000 ;e3
+	dw ptr6_8475 ;e4
+	dw ptr6_8475 ;e5
+	dw ptr6_8475 ;e6
+	dw ptr6_8475 ;e7
+	dw ptr6_9BED ;e8
+	dw ptr6_9951 ;e9
+	dw ptr6_9951 ;ea
+	dw ptr6_9951 ;eb
+	dw ptr6_9951 ;ec
+	dw ptr6_9951 ;ed
+	dw ptr6_9951 ;ee
+	dw ptr4_A0D8 ;ef (different)
+	dw ptr4_A0D8 ;f0 (different)
+	dw ptr4_A0D8 ;f1 (different)
+	dw ptr4_A0D8 ;f2 (different)
+	dw ptr4_A0D8 ;f3 (different)
+	dw ptr4_A0D8 ;f4 (different)
+	dw ptr4_A0D8 ;f5 (different)
+	dw ptr7_8000 ;f6
+	dw ptr7_8000 ;f7
+	dw ptr7_8000 ;f8
+	dw ptr7_8000 ;f9
+	dw ptr6_820E ;fa
+	dw ptr6_820E ;fb
+	dw ptr6_96CB ;fc
+	dw ptr6_96CB ;fd
+	dw ptr6_96CB ;fe
+	dw ptr6_96CB ;ff
 tbl3_A635:
 	db $38
 	db $38
@@ -2245,7 +2001,7 @@ SetObjectCarryState:
 	CMP #$04
 	BCS SetObjectCarryStateDone ;Only continue if player is either walking, running, or doing nothing
 	LDA ButtonsHeld
-	AND #buttonB
+	AND #btnB
 	BEQ SetObjectCarryStateDone ;Make sure the B button is held
 	STA PlayerHoldFlag
 	LDY $A4 ;Get index for current object
@@ -2270,7 +2026,7 @@ PositionCarriedObject:
 		RTS
 bra3_AB9C:
 	LDA ButtonsHeld
-	AND #buttonB
+	AND #btnB
 	STA PlayerHoldFlag ;Set the player's carrying flag if the B button is held
 	BEQ bra3_AC08 ;Branch if the B button isn't being held
 	LDA PlayerMovement
@@ -3066,9 +2822,9 @@ tbl3_AFC3:
 ;$A9 = X Pos Lo
 ;$AA = Y Pos Hi
 ;$AB = Y Pos Lo
-;$36 = X hitbox?
-;$38 = Y hitbox?
-;$32 = d
+;$36 = Calculated X hitbox?
+;$38 = Calculated Y hitbox?
+;$32 - $33 = Movement data pointer
 ;----------------------------------------
 sub3_B043:
 	STY $2B ;Backup Y register
@@ -3137,7 +2893,7 @@ loc3_B0A8:
 	BMI bra3_B0C1 ;Branch if post-calculated object hitbox is over 127 pixels high?
 	CLC
 	ADC $AA
-	STA $AA
+	STA $AA ;Add post calculated hitbox to vertical screen?
 	BCS bra3_B0B7 ;Add 16 if the screen boundary is crossed
 	CMP #$F0
 	BCC loc3_B0CF ;Add high byte when object is 16 pixels below vertical screen boundary
@@ -3590,7 +3346,7 @@ bra3_B3B1:
 
 ;----------------------------------------
 ;SUBROUTINE ($B3B4)
-;
+;Loads an object's movement data and flips them when they reach a ledge.
 ;----------------------------------------
 sub_54_B3B4:
 	ASL

@@ -798,7 +798,7 @@ ptr6_860C:
 sub6_8616:
 	LDX $A4
 	LDA ObjectVariables,X
-	STA P1Score
+	STA P1Score ;Likely a leftover debugging function
 	AND #$0F
 	ASL
 	TAY

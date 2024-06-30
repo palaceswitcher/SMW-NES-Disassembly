@@ -1,8 +1,8 @@
 ;Button bits
-buttonA = %10000000
-buttonB = %01000000
-buttonSelect = %00100000
-buttonStart= %00010000
+btnA = %10000000
+btnB = %01000000
+btnSelect = %00100000
+btnStart= %00010000
 dirUp = %00001000
 dirDown = %00000100
 dirLeft = %00000010

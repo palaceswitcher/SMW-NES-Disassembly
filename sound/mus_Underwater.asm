@@ -214,8 +214,7 @@ Underwater_P1Loop:
 	db NRest
 	db NRest
 	db NRest
-	db $F4
-	.word Underwater_P1Loop
+	sndjump Underwater_P1Loop
 	db $FF
 Underwater_P2:
 	db Transpose
@@ -453,8 +452,7 @@ Underwater_P2Loop:
 	db NRest
 	db NRest
 	db NRest
-	db $F4
-	.word Underwater_P2Loop
+	sndjump Underwater_P2Loop
 	db $FF
 Underwater_Tri:
 	db Transpose
@@ -589,20 +587,14 @@ Underwater_TriLoop:
 	db E3
 	db $AA
 	db C3
-	db $F4
-	.word Underwater_TriLoop
+	sndjump Underwater_TriLoop
 	db $FF
 Underwater_End:
 	db $FF
 Underwater_Footer:
-	db NRest
-	.word Underwater_P1
-	db $01
-	.word Underwater_P2
-	db $02
-	.word Underwater_Tri
-	db $03
-	.word Underwater_End
-	db $04
-	.word Underwater_End
+	mussq1 Underwater_P1
+	mussq2 Underwater_P2
+	mustri Underwater_Tri
+	musnoise Underwater_End
+	musdpcm Underwater_End
 	db $FF
