@@ -1,5 +1,5 @@
 ;disassembled by BZK 6502 Disassembler
-ObjID_h88:
+Obj_h88:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra6_800A
@@ -61,7 +61,7 @@ bra6_8078:
 	BCS bra6_807F
 	JMP sub_54_B4FC
 bra6_807F:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$1E
 	BNE bra6_809C
 	INC ObjectVariables,X
@@ -230,7 +230,7 @@ SprMap_Ninji_Jump:
 	db $A6 ;1K CHR Bank
 	db $26, $27
 	db $28, $29
-ObjID_h84:
+Obj_h84:
 	LDA #$07
 	STA $25
 	LDX $A4
@@ -430,7 +430,7 @@ bra6_8348:
 bra6_834B_RTS:
 	RTS
 ptr6_834C:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$1E
 	BNE bra6_8365_RTS
 	LDA ObjectVariables,X
@@ -589,7 +589,7 @@ bra6_847E:
 	RTS
 bra6_8489:
 	LDX $A4
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$03
 	BNE bra6_849D
 	INC ObjectVariables,X
@@ -597,7 +597,7 @@ bra6_8489:
 	AND #$1F
 	STA ObjectVariables,X
 bra6_849D:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$01
 	BNE bra6_84A7
 	JSR jmp_54_BBC3
@@ -605,7 +605,7 @@ bra6_84A7:
 	JSR Obj_PlayerHitCheck
 	JSR jmp_54_BF74
 	RTS
-ObjID_h90:
+Obj_h90:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -661,7 +661,7 @@ bra6_8514:
 	RTS
 bra6_851F:
 	LDX $A4
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$01
 	BNE bra6_8533
 	INC ObjectVariables,X
@@ -669,7 +669,7 @@ bra6_851F:
 	AND #$1F
 	STA ObjectVariables,X
 bra6_8533:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$01
 	BNE bra6_853D
 	JSR jmp_54_BBC3
@@ -680,7 +680,7 @@ bra6_853D:
 ptr7_8544:
 	LDY #$00
 	LDX $A4
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$10
 	BEQ bra6_8550
 	INY
@@ -725,7 +725,7 @@ Unknown2:
 	db $0E
 	db $0C
 	db $0F
-ObjID_h86:
+Obj_h86:
 	LDA #$07
 	STA $25
 	LDX $A4
@@ -887,7 +887,7 @@ loc6_86BC:
 	STA ObjectVariables,X
 bra6_86CE_RTS:
 	RTS
-ObjID_h92:
+Obj_h92:
 	LDA #$07
 	STA $25
 	LDX $A4
@@ -1024,7 +1024,7 @@ bra6_87C6:
 bra6_87DB_RTS:
 	RTS
 ptr6_87DC:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$0E
 	BNE bra6_87FD_RTS
 	LDA ObjectVariables,X
@@ -1043,7 +1043,7 @@ bra6_87FD_RTS:
 ptr6_87FE:
 	LDY #$00
 	LDX $A4
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$10
 	BEQ bra6_880A
 	INY
@@ -1356,7 +1356,7 @@ ofs_88E5:
 	db $00
 	db $0A
 	db $80
-ObjID_h70:
+Obj_h70:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra6_8971
@@ -1444,7 +1444,7 @@ ptr6_8A0C:
 	LDY ObjActionTimer,X
 	LDA tbl6_8A53,Y
 	STA EnemyAnimFrame,X
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$01
 	BNE bra6_8A52_RTS
 	LDA ObjActionTimer,X
@@ -1675,7 +1675,7 @@ loc6_8BAE:
 	LDY #$09
 bra6_8BBA:
 loc6_8BBA:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$04
 	BEQ bra6_8BC2
 	INY
@@ -3230,7 +3230,7 @@ bra6_93A9:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
-ObjID_h72:
+Obj_h72:
 	LDX $A4
 	JSR sub6_9BEA
 	LDA ObjectSlot,X
@@ -3337,7 +3337,7 @@ tbl6_949D:
 	dw ptr6_9603
 	dw ptr6_9632
 ptr6_94AB:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$03
 	BNE bra6_94C1_RTS
 	LDA ObjActionTimer,X
@@ -3371,7 +3371,7 @@ bra6_94E5:
 	DEC ObjectYPos,X
 	RTS
 ptr6_94E9:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$03
 	BNE bra6_94FF_RTS
 	LDA ObjActionTimer,X
@@ -3396,7 +3396,7 @@ bra6_950E:
 	LDA tbl6_95CE,Y
 	BNE bra6_9525
 bra6_951A:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$08
 	BNE bra6_9522
 	INY
@@ -3406,7 +3406,7 @@ bra6_9525:
 	STA EnemyAnimFrame,X
 	RTS
 ptr6_9529:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$03
 	BNE bra6_953F_RTS
 	LDA ObjActionTimer,X
@@ -3432,7 +3432,7 @@ bra6_9557:
 	STA EnemyAnimFrame,X
 	RTS
 ptr6_955B:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$03
 	BNE bra6_9585_RTS
 	LDA ObjActionTimer,X
@@ -3471,7 +3471,7 @@ bra6_95A1:
 	RTS
 bra6_95A6:
 	INC ObjActionTimer,X
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$18
 	LSR
 	LSR
@@ -3571,7 +3571,7 @@ bra6_9611:
 	RTS
 bra6_961A:
 	LDY #$28
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$04
 	BNE bra6_9624
 	INY
@@ -3583,7 +3583,7 @@ bra6_9624:
 	INC ObjectYPos,X
 	RTS
 ptr6_9632:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$03
 	BNE bra6_964A_RTS
 	LDA ObjActionTimer,X
@@ -3771,7 +3771,7 @@ bra6_979A:
 	STA ObjActionTimer,X ;Clear action timer
 bra6_97A3_RTS:
 	RTS
-ObjID_h64:
+Obj_h64:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra6_97AE
@@ -4009,7 +4009,7 @@ loc6_9970:
 	LDY #$F6
 bra6_9972:
 loc6_9972:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$04 ;Set frequency to 4 frames using a bitmask
 	BEQ bra6_997A ;If the bits are masked out, use the 1st sprite and branch
 	INY ;Otherwise, continue and go to the 2nd podoboo sprite
@@ -4100,7 +4100,7 @@ sub6_99EF:
 	PLA
 bra6_99FF_RTS:
 	RTS
-ObjID_h6C:
+Obj_h6C:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC

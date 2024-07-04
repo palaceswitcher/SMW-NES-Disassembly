@@ -55,7 +55,7 @@ SprMap_WoodenSpikeDown:
 	db $C6, $C7
 	db $C8, $C9
 	db $CA, $CB
-ObjID_hD4:
+Obj_hD4:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -118,7 +118,7 @@ bra_80DD:
 	JSR sub_82EA
 	JSR jmp_54_BF74
 	RTS
-ObjID_hE0:
+Obj_hE0:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -221,7 +221,7 @@ bra_8196:
 	LDA #$D6
 	STA ObjectSlot+1,Y
 	RTS
-ObjID_hF4:
+Obj_hF4:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -433,7 +433,7 @@ SprMap_PeachMushroom:
 	db $90
 	db $01, $02
 	db $0B, $0C
-ObjID_hBD:
+Obj_hBD:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra_83F3
@@ -624,7 +624,7 @@ DinoTorchFlat:
 	db $D0
 	db $05, $06
 	db $0B, $0C
-ObjID_hE4:
+Obj_hE4:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -785,7 +785,7 @@ ptr7_861A:
 	LDA #$02
 	STA ObjectAction,X
 	RTS
-ObjID_hE2:
+Obj_hE2:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -943,7 +943,7 @@ bra_8759:
 	JSR GetMovementData
 bra_8766:
 	LDY #$00
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$08
 	BNE bra_8770
 	INY
@@ -1802,7 +1802,7 @@ ofs_8B8D:
 	db $64
 	db $69
 	db $FF
-ObjID_hD5:
+Obj_hD5:
 	LDX $A4
 	LDA #$02
 	STA EnemyAnimFrame,X
@@ -1897,7 +1897,7 @@ bra_8C6B:
 	LDA #sfx_EnemyHit3
 	STA SFXRegister
 	RTS
-ObjID_hDE:
+Obj_hDE:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -2052,7 +2052,7 @@ loc_8DCC:
 	RTS
 bra_8DD2:
 	LDX $A4
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$0C
 	LSR
 	LSR
@@ -2067,7 +2067,7 @@ bra_8DD2:
 	STA EnemyAnimFrame,X
 	RTS
 bra_8DF5:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$E0
 	LSR
 	LSR
@@ -2400,7 +2400,7 @@ ofs_8FCA:
 	db $C5
 	db $FF
 	db $FF
-ObjID_hBA:
+Obj_hBA:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -2463,7 +2463,7 @@ bra_904F:
 	LDA ObjectVariables,X
 	CMP #$0C
 	BCC bra_907C_RTS
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$07
 	BNE bra_907C_RTS
 	LDA EnemyAnimFrame,X
@@ -2531,7 +2531,7 @@ loc_90DD:
 	RTS
 bra_90E3_RTS:
 	RTS
-ObjID_hDF:
+Obj_hDF:
 	LDX $A4
 	JSR sub_8E78
 	LDA ObjectXPos,X
@@ -2666,7 +2666,7 @@ ptr7_91DA:
 bra_91F6_RTS:
 	RTS
 ptr7_91F7:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$07
 	BNE bra_921C_RTS
 	INC $05F6
@@ -2707,7 +2707,7 @@ ptr7_9238:
 	ASL
 	TAY
 	JSR jmp_54_B896
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$F0
 	LSR
 	LSR
@@ -2741,7 +2741,7 @@ tbl_9261:
 	db $05
 	db $05
 ptr7_9271:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$07
 	BNE bra_9296_RTS
 	INC $05F6
@@ -2836,7 +2836,7 @@ bra_9329:
 bra_9335_RTS:
 	RTS
 ptr7_9336:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$07
 	BNE bra_935B_RTS
 	INC $05F6
@@ -2884,7 +2884,7 @@ bra_939A_RTS:
 	RTS
 bra_939B:
 	LDY #$0B
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$10
 	BNE bra_93A5
 	INY
@@ -2927,7 +2927,7 @@ ptr7_93D9:
 	INC BowserStatus
 	LDA #$00
 	STA $05F6
-ObjID_hB8:
+Obj_hB8:
 	STA ObjectAction,X
 	STA $0641,X
 	STA ObjectVariables,X
@@ -2990,7 +2990,7 @@ bra_942A:
 bra_9464:
 	CMP #$D0
 	BCS bra_9477
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$18
 	LSR
 	LSR
@@ -3038,7 +3038,7 @@ bra_949E:
 	STA ObjectYPos,X
 	RTS
 ptr7_94C7:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$07
 	BNE bra_94EC_RTS
 	INC $05F6
@@ -3074,7 +3074,7 @@ bra_9506:
 	LDA #$4D
 	JSR jmp_54_B11D
 bra_9511:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$F0
 	LSR
 	LSR
@@ -3132,7 +3132,7 @@ bra_957A:
 	LDA #$4E
 	JSR jmp_54_B11D
 bra_9585:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$F0
 	LSR
 	LSR
@@ -3349,7 +3349,7 @@ bra_9762_RTS:
 	RTS
 ptr7_9763:
 	RTS
-ObjID_hB6:
+Obj_hB6:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3411,7 +3411,7 @@ tbl_97DC:
 	dw ptr7_9811
 	dw ptr7_9840
 ptr7_97E2:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$03
 	BNE bra_97F6_RTS
 	LDA ObjectVariables,X
@@ -3443,7 +3443,7 @@ ptr7_9811:
 	LDY #$20
 bra_9820:
 	STY $06E1
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$03
 	BNE bra_983B_RTS
 	LDA ObjectYPos,X

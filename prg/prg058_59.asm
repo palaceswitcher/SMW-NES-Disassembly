@@ -1446,7 +1446,7 @@ NotePitchTable:
 	include sound/sfx_Swim.asm
 	include sound/sfx_Beep.asm
 	include sound/sfx_YoshiCoin.asm
-	include sound/sfx_1up.asm
+	include sound/sfx_1UP.asm
 	include sound/sfx_Coin.asm
 	include sound/sfx_Powerup.asm
 	include sound/sfx_Warp.asm
@@ -1469,7 +1469,7 @@ NotePitchTable:
 	include sound/sfx_YoshiFireSpit.asm
 	include sound/sfx_Checkpoint.asm
 	include sound/sfx_Chainsaw.asm
- ;include mus_ic data
+ ;include music data
 	include sound/mus_Title.asm
 	include sound/mus_GameOver.asm
 	include sound/mus_PlayerDown.asm

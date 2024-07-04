@@ -2925,7 +2925,7 @@ tbl11_8EC1:
 	db $00
 	db $02
 	db $00
-	db $F5 ;mus_ic data is here for some reason
+	db $F5 ;music data is here for some reason
 	db $01
 	db $F6
 	db $00

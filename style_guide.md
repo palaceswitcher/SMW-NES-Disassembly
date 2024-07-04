@@ -41,6 +41,7 @@ Description blocks refer to a comment "block" that marks the start of something 
 ## Special Label Names
 Specific formatting should be used for code that serves a specific and common purpose or for tables of a certain function. The naming scheme for these can be found below, with words like "Purpose" being replaced by the purpose of the code or data the label represents.
 ### Objects
+`Obj_Object`: The start of an object's code\
 `Obj_Purpose`: Routine or subroutine used by multiple objects\
 `Object_AnimTbl`: Animation table\
 `SprMap_ObjectAnim<frame number>`: Sprite mappings\

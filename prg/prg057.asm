@@ -64,13 +64,13 @@ bra4_A061:
 bra4_A06D:
 	LDA FreezeFlag
 	BNE bra4_A094_RTS
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$01
 	BNE bra4_A07F
 	INC $0629
 	INC $0627
 bra4_A07F:
-	INC $062B
+	INC ObjFrameCounter
 	LDA $4A
 	BEQ bra4_A094_RTS
 	INC $4B
@@ -884,7 +884,7 @@ bra4_A50B:
 loc4_A50E: ;Unsure of purpose
 	LDA #$00
 	STA $0629 ;clear Unknown
-	LDA $062B ;get unknown2
+	LDA ObjFrameCounter ;get unknown2
 	AND #$08 ;Mask it (%00001000)
 	BEQ bra4_A51E ;if masked bit is 00, branch (set Y as 01)
 	LDY #$00 ;else set Y as 00 (adjusts offset for loading CHR bank)
@@ -2305,7 +2305,7 @@ loc4_ABB0:
 	LDA #$00
 	STA $0627 ;clear frame picker
 	LDY #$02 ;set Y to 02
-	LDA $062B ;load UNKNOWN 
+	LDA ObjFrameCounter ;load UNKNOWN 
 	AND #$01 
 	BNE bra4_ABC0 
 	LDY #$07
@@ -4500,7 +4500,7 @@ CliffDeathCheck:
 	BCC MovePlayerDown ;If above this point, continue falling as normal
 	;Otherwise, kill the player
 	LDA #mus_Death	
-	STA MusicRegister ;Play death mus_ic
+	STA MusicRegister ;Play death music
 	LDA #$00		
 	STA PlayerPowerup ;Remove any powerups
 	STA Player1YoshiStatus ;Remove yoshi

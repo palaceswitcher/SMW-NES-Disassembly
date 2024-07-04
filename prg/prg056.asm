@@ -176,7 +176,7 @@ bra9_8145:
 loc9_8145:
 	INC ObjectVariables,X
 	RTS
-ObjID_hA0:
+Obj_hA0:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_8153
@@ -346,7 +346,7 @@ loc9_82A7:
 bra9_82AD_RTS:
 	RTS
 sub9_82AE:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$02
 	BNE bra9_82C6_RTS
 	LDA #$89
@@ -369,7 +369,7 @@ ptr6_82C7:
 bra9_82D4:
 	STY $25
 	LDY #$00
-	LDA $062B
+	LDA ObjFrameCounter
 	AND $25
 	BEQ bra9_82E1
 	LDY #$01
@@ -413,7 +413,7 @@ SprMap_Paragoomba2:
 	db $12, $13, $14, $15
 	db $16, $17, $18, $19
 	db $1A, $1B, $1C, $FF
-ObjID_h98:
+Obj_h98:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_83A4
@@ -523,7 +523,7 @@ bra9_840E:
 	ASL
 	TAY
 	LDA tbl9_8422,Y
-ObjID_h8E:
+Obj_h8E:
 	STA $32
 	LDA tbl9_8422+1,Y
 	STA $33
@@ -632,7 +632,7 @@ loc9_84F7:
 bra9_84FD_RTS:
 	RTS
 sub9_84FE:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$0E
 	BNE bra9_8516_RTS
 	LDA #$86
@@ -646,7 +646,7 @@ sub9_84FE:
 bra9_8516_RTS:
 	RTS
 ptr6_8517:
-	LDA $062B
+	LDA ObjFrameCounter
 	LSR
 	LSR
 	LSR
@@ -709,7 +709,7 @@ SprMap_ParachuteGoomba2:
 	db $FF, $25, $26
 	db $29, $2A, $2B
 	db $2E, $2F, $30
-ObjID_h94:
+Obj_h94:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_85E0
@@ -855,7 +855,7 @@ sub9_8698:
 	BCS bra9_86A2
 	JMP loc9_86BB
 bra9_86A2:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$00
 	BNE bra9_86BA_RTS
 	LDA #$85
@@ -869,7 +869,7 @@ bra9_86A2:
 bra9_86BA_RTS:
 	RTS
 loc9_86BB:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$02
 	BNE bra9_86D3_RTS
 	LDA #$85
@@ -882,7 +882,7 @@ loc9_86BB:
 	JSR sub9_8000
 bra9_86D3_RTS:
 	RTS
-ObjID_h96:
+Obj_h96:
 	LDX $A4
 	LDA #$06
 	STA $25
@@ -1038,12 +1038,12 @@ bra9_880C:
 	JSR jmp_54_B5BB
 	LDA #$03
 	STA ObjectVariables,X
-	JMP ObjID_h94
+	JMP Obj_h94
 sub9_881D:
 	LDA ObjectState,X
 	AND #$20
 	BEQ bra9_884C
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$00
 	BNE bra9_883C
 	LDA #$84
@@ -1064,7 +1064,7 @@ bra9_883C:
 bra9_884B_RTS:
 	RTS
 bra9_884C:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$1E
 	BNE bra9_8864_RTS
 	LDA #$84
@@ -1078,7 +1078,7 @@ bra9_884C:
 bra9_8864_RTS:
 	RTS
 sub9_8865:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$00
 	BNE bra9_887D_RTS
 	LDA #$84
@@ -1092,7 +1092,7 @@ sub9_8865:
 bra9_887D_RTS:
 	RTS
 sub9_887E:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$00
 	BNE bra9_8896_RTS
 	LDA #$85
@@ -1118,7 +1118,7 @@ ptr6_8897:
 bra9_88A9:
 	STY $25
 	LDY #$02
-	LDA $062B
+	LDA ObjFrameCounter
 	AND $25
 	BEQ bra9_88B6
 	LDY #$03
@@ -1147,7 +1147,7 @@ bra9_88DA:
 ptr6_88E0:
 	LDX $A4
 	LDY #$00
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$08
 	BEQ bra9_88ED
 	LDY #$01
@@ -1209,7 +1209,7 @@ off_8932:
 	db $0E
 	db $06
 	db $07
-ObjID_h9A:
+Obj_h9A:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_89AE
@@ -1338,7 +1338,7 @@ ptr2_8A36:
 	JSR Obj_KillOnSpinJump
 	JMP jmp_54_BF74
 sub9_8A45:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$02
 	BNE bra9_8A5D_RTS
 	LDA #$86
@@ -1354,7 +1354,7 @@ bra9_8A5D_RTS:
 ptr6_8A5E:
 	LDA #$00
 	STA $05F0
-	LDA $062B
+	LDA ObjFrameCounter
 	LSR
 	LSR
 	LSR
@@ -1403,7 +1403,7 @@ SpinyWalk2:
 	db $1C, $1D
 	db $20, $21
 ;<---
-ObjID_h80:
+Obj_h80:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra9_8AB4
@@ -1634,7 +1634,7 @@ SprMap_VBulletBill2:
 	db $A6 ;1K CHR Bank
 	db $30, $31
 	db $2E, $2F
-ObjID_h9C:
+Obj_h9C:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_8C76
@@ -1856,7 +1856,7 @@ VPodoboo4:
 	db $31
 	db $2C
 	db $2D
-ObjID_h9E:
+Obj_h9E:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra9_8E04
@@ -2069,7 +2069,7 @@ tbl9_8F5A:
 	db $39
 	db $2D
 	db $2E
-ObjID_h82:
+Obj_h82:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra9_8F87
@@ -2211,7 +2211,7 @@ ptr6_9093:
 	AND #$40
 	STA $05F0
 	LDY #$00
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$10
 	BEQ bra9_90A8
 	LDY #$01
@@ -2256,7 +2256,7 @@ Eerie2:
 	db $16
 	db $1A
 	db $1C
-ObjID_hAA:
+Obj_hAA:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra9_90E8
@@ -2554,7 +2554,7 @@ BonyBeetle4:
 	db $06
 	db $0D
 	db $0E
-ObjID_hAC:
+Obj_hAC:
 	LDX $A4
 	LDA ObjectVariables,X
 	CMP #$05
@@ -2705,7 +2705,7 @@ StunBonyBeetle2:
 	db $18
 	db $19
 	db $1A
-ObjID_h8A:
+Obj_h8A:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_9470
@@ -2852,7 +2852,7 @@ ptr6_9519:
 	AND #$08
 	BNE bra9_9536
 	LDY #$01
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$04 ;Set animation speed to per 4 frames
 	BNE bra9_9536
 	INY
@@ -2896,7 +2896,7 @@ FishBones3:
 	db $AD
 	db $1B, $1C, $22
 	db $1E, $1F, $23
-ObjID_h8C:
+Obj_h8C:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -2969,7 +2969,7 @@ bra9_960C_RTS:
 	RTS
 bra9_960D:
 	LDX $A4
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$07
 	BNE bra9_9621
 	INC ObjectVariables,X
@@ -2977,7 +2977,7 @@ bra9_960D:
 	AND #$1F
 	STA ObjectVariables,X
 bra9_9621:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$03
 	BNE bra9_962B
 	JSR jmp_54_BBC3
@@ -3027,7 +3027,7 @@ SpikeBall:
 	db $0E
 	db $0F
 	db $10
-ObjID_hA4:
+Obj_hA4:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra9_9676
@@ -3180,7 +3180,7 @@ bra9_9794:
 	STA $33
 	JSR jmp_54_B39B
 	RTS
-ObjID_hA2:
+Obj_hA2:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra9_97B0
@@ -3504,7 +3504,7 @@ DryBones3:
 	db $FF
 	db $2D
 	db $2C
-ObjID_hA8:
+Obj_hA8:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3653,7 +3653,7 @@ StunDryBones3:
 	db $25
 	db $26
 	db $27
-ObjID_hA6:
+Obj_hA6:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC

@@ -1,6 +1,6 @@
 ;disassembled by BZK 6502 Disassembler
 ptr6_8000:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$01
 	BEQ bra5_8008
 	RTS
@@ -499,7 +499,7 @@ ofs2_82BB:
 	db $A8
 	db $A9
 	db $AA
-ObjID_h78:
+Obj_h78:
 	JSR sub5_82EC
 	LDA FrameCount
 	AND #$00
@@ -508,7 +508,7 @@ ObjID_h78:
 	JSR jmp_54_B11D
 bra5_82DC:
 	LDY #$03
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$04
 	BEQ bra5_82E7
 	LDY #$C4
@@ -584,7 +584,7 @@ ptr10_8372:
 	JSR jmp_54_BC3E
 	JSR jmp_54_BF74
 	RTS
-ObjID_h77:
+Obj_h77:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -1029,7 +1029,7 @@ bra5_8700:
 	PLA
 bra5_870C_RTS:
 	RTS
-ObjID_h4A:
+Obj_h4A:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra5_8786
@@ -1331,7 +1331,7 @@ bra5_8955:
 bra5_8966:
 	JMP loc5_898B
 loc5_8969:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$01
 	BNE bra5_8981
 	LDA ObjectYPos,X
@@ -1347,7 +1347,7 @@ bra5_8981:
 	AND #$40
 	JMP loc5_89AC
 loc5_898B:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$01
 	BNE bra5_89A3
 	LDA ObjectYPos,X
@@ -1366,7 +1366,7 @@ loc5_89AC:
 	STA EnemyAnimFrame,X
 	JMP loc5_89FD
 loc5_89B2:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$01
 	BNE bra5_89CA
 	LDA ObjectXPos,X
@@ -1382,7 +1382,7 @@ bra5_89CA:
 	ORA #$40
 	JMP loc5_89F1
 loc5_89D4:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$01
 	BNE bra5_89EC
 	LDA ObjectXPos,X
@@ -1403,7 +1403,7 @@ loc5_89F1:
 	LDY #$0C
 bra5_89FD:
 loc5_89FD:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$04
 	BEQ bra5_8A05
 	INY
@@ -1483,7 +1483,7 @@ ptr10_8A95:
 	JSR jmp_54_BC3E
 	JSR jmp_54_BF74
 	RTS
-ObjID_h4E:
+Obj_h4E:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra5_8AA9
@@ -1671,7 +1671,7 @@ bra5_8C05:
 	DEC ObjectYScreen,X
 bra5_8C17:
 loc5_8C17:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$07
 	BNE bra5_8C26_RTS
 	LDA EnemyAnimFrame,X
@@ -1771,7 +1771,7 @@ bra5_8CDE:
 	PLA
 	PLA
 	RTS
-ObjID_h76:
+Obj_h76:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -1957,7 +1957,7 @@ bra5_8E32:
 	STA SFXRegister
 bra5_8E4E_RTS:
 	RTS
-ObjID_h54:
+Obj_h54:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -2129,7 +2129,7 @@ bra5_8F91:
 	TAY
 	JSR jmp_54_B896
 	LDY #$55
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$10
 	BEQ bra5_8FA0
 	INY
@@ -2142,7 +2142,7 @@ tbl5_8FA5:
 	db $CA
 	db $D6
 	db $CA
-ObjID_h5C:
+Obj_h5C:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -2204,7 +2204,7 @@ bra5_900F:
 	JSR sub5_9056
 	RTS
 bra5_902C:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$07
 	BNE bra5_9037
 	LDA #$1D
@@ -2247,7 +2247,7 @@ bra5_9063:
 	ADC #$59
 bra5_9074:
 	STA $32
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$18
 	LSR
 	LSR
@@ -2263,7 +2263,7 @@ tbl5_9089:
 	db $01
 	db $00
 	db $02
-ObjID_h5A:
+Obj_h5A:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -2345,7 +2345,7 @@ bra5_9117:
 	JSR sub5_9056
 	RTS
 bra5_913D:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$07
 	BNE bra5_9148
 	LDA #sfx_Cutter
@@ -2367,7 +2367,7 @@ bra5_915B:
 	JSR jmp_54_B896
 	JSR sub5_9056
 	RTS
-ObjID_h66:
+Obj_h66:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3046,7 +3046,7 @@ loc5_95D8:
 	RTS
 bra5_95DE_RTS:
 	RTS
-ObjID_h7E:
+Obj_h7E:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3128,7 +3128,7 @@ tbl5_9667:
 ptr6_9670:
 	LDY #$00
 	LDX $A4
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$10
 	BEQ bra5_967C
 	INY
@@ -3253,7 +3253,7 @@ GrassPlatform5:
 	db $B7
 	db $B8
 	db $A1
-ObjID_hFA:
+Obj_hFA:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3384,7 +3384,7 @@ tbl5_97F0:
 	db $40
 	db $40
 	db $40
-ObjID_hED:
+Obj_hED:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3622,7 +3622,7 @@ ofs_99A5:
 	db $28
 	db $29
 	db $2A
-ObjID_hE7:
+Obj_hE7:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3702,7 +3702,7 @@ ptr10_9A45:
 	LDA #$00
 	STA ObjectSlot,X
 	RTS
-ObjID_hE8:
+Obj_hE8:
 	LDX $A4 ;Get index for current object?
 	LDA ObjectXPos,X
 	SEC
@@ -3937,7 +3937,7 @@ ptr6_9BED:
 	LDA #$00
 	STA $06E1
 	RTS
-ObjID_hE6:
+Obj_hE6:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC

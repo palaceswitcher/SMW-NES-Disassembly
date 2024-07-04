@@ -1,5 +1,5 @@
 ;disassembled by BZK 6502 Disassembler
-ObjID_h36:
+Obj_h36:
 	LDA YoshiXPos
 	SEC
 	SBC PlayerXPosDup
@@ -631,7 +631,7 @@ ofs_837B:
 	db $FF
 	db $EB
 	db $F5
-ObjID_h01:
+Obj_YoshiBox:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -774,7 +774,7 @@ loc7_84B3:
 	STA SFXRegister
 bra7_84C2_RTS:
 	RTS
-ObjID_h6A:
+Obj_h6A:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -823,7 +823,7 @@ loc7_8523:
 	RTS
 bra7_8529:
 	JSR jmp_54_BD3D
-ObjID_h02:
+Obj_PSwitch:
 	LDA #$02
 	STA $25 ;Configure this to stay in Yoshi's mouth when eaten 
 	LDX $A4 ;Get the index for the object's slot
@@ -1054,7 +1054,7 @@ bra7_86E1:
 	STA ObjectVariables,X
 bra7_86F2_RTS:
 	RTS
-ObjID_h03:
+Obj_Spring:
 	LDA #$03
 	STA $25
 	LDX $A4
@@ -1469,7 +1469,7 @@ bra7_8A30:
 	ORA #$03
 	STA ObjectState,X
 	RTS
-ObjID_h44:
+Obj_h44:
 	LDX $A4
 	LDA $0641,X
 	CMP #$F0
@@ -1486,11 +1486,11 @@ ObjID_h44:
 	STA $0641,X
 	RTS
 bra7_8A60:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$03
-	BNE ObjID_h04
+	BNE Obj_Shell
 	INC $0641,X
-ObjID_h04:
+Obj_Shell:
 	LDA #$04
 	STA $25
 	LDX $A4
@@ -1647,7 +1647,7 @@ ptr5_8B91:
 	JSR GetMovementData
 bra7_8B9C_RTS:
 	RTS
-ObjID_h38:
+Obj_h38:
 	LDX $A4
 	LDA ObjectState,X
 	AND #$0F
@@ -1822,7 +1822,7 @@ bra7_8CED:
 	LDA #$00
 	STA ObjectVariables,X
 	RTS
-ObjID_h49:
+Obj_h49:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -1873,7 +1873,7 @@ loc7_8D5E:
 bra7_8D64:
 	JSR jmp_54_BD3D
 	JMP loc7_8DD0
-ObjID_h05:
+Obj_1UP:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -1957,7 +1957,7 @@ tbl7_8E02:
 ptr5_8E0C:
 	JSR jmp_54_A773
 	INC Player1Lives
-	LDA #sfx_1up
+	LDA #sfx_1UP
 	STA SFXRegister ;Play 1UP sound
 	LDA #$00
 	STA ObjectSlot,X ;Despawn 1UP
@@ -1982,7 +1982,7 @@ bra7_8E34:
 	LDA #$00
 	STA ObjectVariables,X
 	RTS
-ObjID_h06:
+Obj_h06:
 	LDX $A4
 	JSR sub7_8F50
 	LDX $A4
@@ -2022,7 +2022,7 @@ bra7_8E7F:
 bra7_8E8B:
 	STA FireballSlot
 	RTS
-ObjID_h07:
+Obj_h07:
 	LDX $A4
 	JSR sub7_8F50
 	LDX $A4
@@ -2062,7 +2062,7 @@ bra7_8ECC:
 bra7_8ED8:
 	STA FireballSlot2
 	RTS
-ObjID_h08:
+Obj_h08:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -2166,7 +2166,7 @@ loc7_8FAE:
 	RTS
 bra7_8FB4_RTS:
 	RTS
-ObjID_h09:
+Obj_h09:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -2228,7 +2228,7 @@ bra7_901B:
 	LDA #$00
 	STA ObjectSlot,X
 	RTS
-ObjID_h0A:
+Obj_h0A:
 	LDX $A4
 	JSR sub7_9538
 	LDA ObjectYPos,X
@@ -2244,7 +2244,7 @@ ObjID_h0A:
 	LDA #$00
 	STA ObjectSlot,X
 	RTS
-ObjID_h6B:
+Obj_h6B:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -2295,7 +2295,7 @@ loc7_90BE:
 bra7_90C4:
 	JSR sub7_9149
 	RTS
-ObjID_h0B:
+Obj_h0B:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -2385,7 +2385,7 @@ ptr5_916B:
 	RTS
 ptr5_917C:
 	LDA ObjectVariables,X
-ObjID_h3A:
+Obj_h3A:
 	CMP #$0E
 	BCS bra7_91A2
 	LDA ObjectSlot,X
@@ -2413,7 +2413,7 @@ bra7_91A2:
 	LDA #$00
 	STA ObjectVariables,X
 	RTS
-ObjID_h0C:
+Obj_h0C:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -2552,7 +2552,7 @@ ptr5_92C3:
 	AND #$E0
 	STA ObjectState,X
 	RTS
-ObjID_h0D:
+Obj_h0D:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -2685,7 +2685,7 @@ ptr5_93D0:
 	LDA #$03
 	JSR RewardPoints
 	RTS
-ObjID_h0E:
+Obj_h0E:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -2792,7 +2792,7 @@ bra7_94AA:
 	LDA #$00
 	STA ObjectVariables,X
 	RTS
-ObjID_h0F:
+Obj_h0F:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3089,7 +3089,7 @@ bra7_968A:
 	LDA ObjectSlot,X
 	CMP #$38
 	BNE bra7_96B0
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$04
 	BEQ bra7_96B0
 	LDY #$40
@@ -3123,7 +3123,7 @@ ptr6_96D5:
 	STA $33
 	LDA #$00
 	STA $36
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$08
 	ASL
 	ASL
@@ -3135,7 +3135,7 @@ ptr7_96F8:
 	LDX $A4
 	LDA ObjectState,X
 	STA $05F0
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$04
 	BNE bra7_971A_RTS
 	ASL
@@ -3185,7 +3185,7 @@ ptr6_9742:
 	LDA #$40
 	STA $36
 	LDY #$40
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$10
 	BEQ bra7_9762
 	LDY #$00
@@ -3427,7 +3427,7 @@ bra7_98AC:
 	LDA #$C1
 	STA $0212
 	RTS
-ObjID_h42:
+Obj_h42:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra7_9908
@@ -3529,7 +3529,7 @@ ptr5_99BF:
 	RTS
 ptr6_99CD:
 	LDY #$00
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$08
 	BEQ bra7_99D7
 	INY
@@ -3617,7 +3617,7 @@ bra7_9A61:
 	JSR jmp_54_A118
 	RTS
 ptr6_9A68:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$0C
 	LSR
 	LSR
@@ -3673,7 +3673,7 @@ SprMap_BuzzyShell4:
 	db $97
 	db $2A, $2B
 	db $1C, $1D
-ObjID_h74:
+Obj_h74:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3870,7 +3870,7 @@ SprMap_GoalTape:
 	db $A6
 	db $37, $36, $36
 	db $36 ;Excess byte, can be removed
-ObjID_h48:
+Obj_h48:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra7_9C32
@@ -4066,7 +4066,7 @@ ptr5_9DA5:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
-ObjID_h4C:
+Obj_h4C:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -4185,7 +4185,7 @@ ptr5_9EB8:
 	LDA ObjXScreenDistance,X
 	BPL bra7_9EE4_RTS
 	LDA #mus_Victory
-	STA MusicRegister ;Play level complete mus_ic
+	STA MusicRegister ;Play level complete music
 	LDA #$06
 	STA Event ;Trigger goal tape event
 	LDA WorldNumber
@@ -4217,7 +4217,7 @@ sub7_9EE5:
 	STA PlayerPowerupBuffer ;Update the player's sprite
 bra7_9EF6_RTS:
 	RTS
-ObjID_h7C:
+Obj_h7C:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC

@@ -262,7 +262,7 @@ bra3_8759:
 	JSR GetMovementData
 bra3_8766:
 	LDY #$00
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$08
 	BNE bra3_8770
 	INY
@@ -2443,7 +2443,7 @@ tbl3_97DD:
 	db $98
 	db $40
 	db $98
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$03
 	BNE bra3_97F6_RTS
 	LDA ObjectVariables,X

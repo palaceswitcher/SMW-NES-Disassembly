@@ -258,7 +258,7 @@ bra14_8759:
 	JSR GetMovementData
 bra14_8766:
 	LDY #$00
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$08
 	BNE bra14_8770
 	INY
@@ -686,8 +686,8 @@ bra14_8FF4:
 	LDA ObjectYScreen,X
 	
 	incbin tilesets/ts_unused5.bin
-	
 	db $42
+
 	BCS bra14_960D
 	LDA #$0F
 	STA ObjectSlot,Y
@@ -695,7 +695,7 @@ bra14_8FF4:
 	STA ObjectState,Y
 bra14_960D:
 	CPY ObjectCount
-	BCC $95F7
+	BCC $95F7 ;Broken corrupted branch
 	RTS
 	CMP #$01
 	BEQ bra14_9619
@@ -905,7 +905,7 @@ tbl14_97DD:
 	db $98
 	db $40
 	db $98
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$03
 	BNE bra14_97F6_RTS
 	LDA ObjectVariables,X

@@ -4019,7 +4019,7 @@ bra_F403:
 	STA PlayerColYPos
 	RTS
 bra_F406:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$03
 	BNE bra_F428_RTS
 	LDA PlayerColXPos

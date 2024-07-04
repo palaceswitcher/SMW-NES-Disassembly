@@ -1,7 +1,7 @@
 ;----------------------------------------
 ;KOOPA OBJECT CODE ($8000)
 ;----------------------------------------
-ObjID_h10:
+Obj_Koopa:
 	LDX $A4 ;Get index of current object
 ;Calculate horizontal distance between player and Koopa
 	LDA ObjectXPos,X
@@ -32,21 +32,21 @@ ObjID_h10:
 	BEQ @CheckIfFrozen ;Branch if the object and player are on the same vertical screen
 	LDA ObjYScreenDistance,X
 	BPL @OffsetObjDistance ;Branch if the player is on a higher vertical screen than the object
-	;Add 10 to the Koopa's vertical distance if they're below the object
+	;Add 16 to the Koopa's vertical distance if they're below the object
 		LDA ObjectYDistance,X
 		CLC
-		ADC #$10
+		ADC #16
 		STA ObjectYDistance,X ;Increase the vertical distance value by 16
 		LDA ObjYScreenDistance,X
 		ADC #$00
 		STA ObjYScreenDistance,X ;Increase the vertical screen distance if needed
 		JMP @CheckIfFrozen
 
-	;Subtract the Koopa's vertical distance by 10 if they're above the object
+	;Subtract the Koopa's vertical distance by 16 if they're above the object
 	@OffsetObjDistance:
 		LDA ObjectYDistance,X
 		SEC
-		SBC #$10
+		SBC #16
 		STA ObjectYDistance,X
 		LDA ObjYScreenDistance,X
 		SBC #$00
@@ -54,40 +54,40 @@ ObjID_h10:
 
 @CheckIfFrozen:
 	LDA FreezeFlag
-	BEQ bra8_8066
+	BEQ bra8_8066 ;Only continue if the game isn't frozen
 	RTS
 
 ;Animate the Koopa
 bra8_8066:
 	JSR sub8_8096
 	LDY #$03
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$08
-	BEQ bra8_8073 ;Alternate between animation frames 3 and 4 every 8 frames
+	BEQ @Continue ;Alternate between animation frames 3 and 4 every 8 frames
 	INY
 
-bra8_8073:
+@Continue:
 	TYA
 	STA EnemyAnimFrame,X ;Set animation frame
 	LDA ObjectSlot,X
 	CMP #$36
-	BCC bra8_808A ;Run different code if Koopa isn't green (walks off ledges)
+	BCC GetRedKoopaMovementData ;Run different code if Koopa isn't green (walks off ledges)
 	;This seems redundant as the green Koopa has it's own code
 		LDA FrameCount
 		AND #$01
 		BNE @Stop ;Only continue every even frame
-		LDA #$10
-		JSR GetMovementData ;Get animation data for Koopa
+			LDA #$10
+			JSR GetMovementData ;Get animation data for Koopa
 	@Stop:
 		RTS
 
-bra8_808A:
+GetRedKoopaMovementData:
 	LDA FrameCount
 	AND #$01
-	BNE bra8_8096_RTS ;Only continue every even frame
-	LDA #$10
-	JSR sub_54_B3B4 ;Load animation data for Koopa
-bra8_8096_RTS:
+	BNE @Stop ;Only continue every even frame
+		LDA #$10
+		JSR sub_54_B3B4 ;Load animation data for Koopa
+@Stop:
 	RTS
 
 ;----------------------------------------
@@ -107,11 +107,14 @@ sub8_8096:
 	SBC PlayerXScreenDup
 	STA ObjXScreenDistance,X
 	STA $28
-	BEQ bra8_80B8
+
+	BEQ @CalcVertDist ;Continue if the player is to the left of the Koopa (within one screen)
 	CMP #$FF
-	BEQ bra8_80B8
-	JMP Obj_RemoveObject ;unlogged
-bra8_80B8:
+	BEQ @CalcVertDist ;Continue if the player is to the right of the Koopa (within one screne)
+		JMP Obj_RemoveObject ;Otherwise, remove the off-screen Koopa
+
+;Calculate vertical distance between the player and Koopa
+@CalcVertDist:
 	LDA ObjectYPos,X
 	SEC
 	SBC PlayerYPosDup
@@ -121,34 +124,40 @@ bra8_80B8:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ loc8_80FA
+	BEQ @CheckIfFrozen
 	LDA ObjYScreenDistance,X
-	BPL bra8_80E9
-	LDA ObjectYDistance,X
-	CLC
-	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	ADC #$00
-	STA ObjYScreenDistance,X
-	JMP loc8_80FA
-bra8_80E9:
-	LDA ObjectYDistance,X
-	SEC
-	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	SBC #$00
-	STA ObjYScreenDistance,X
-loc8_80FA:
+	BPL @OffsetObjDistance
+
+	;Add 16 to the Koopa's vertical distance if they're below the object
+		LDA ObjectYDistance,X
+		CLC
+		ADC #16
+		STA ObjectYDistance,X ;Increase the vertical distance value by 16
+		LDA ObjYScreenDistance,X
+		ADC #$00
+		STA ObjYScreenDistance,X ;Increase the vertical screen distance if needed
+		JMP @CheckIfFrozen
+
+	;Subtract the Koopa's vertical distance by 16 if they're above the object
+	@OffsetObjDistance:
+		LDA ObjectYDistance,X
+		SEC
+		SBC #$10
+		STA ObjectYDistance,X
+		LDA ObjYScreenDistance,X
+		SBC #$00
+		STA ObjYScreenDistance,X
+
+@CheckIfFrozen:
 	LDA FreezeFlag
-	BEQ bra8_8100
-	RTS ;unlogged
-bra8_8100:
+	BEQ Koopa_GetFunction ;Only continue if the game isn't frozen
+	RTS
+
+Koopa_GetFunction:
 	LDA ObjectState,X
-	AND #$1F
+	AND #%00011111 ;Mask out upper 3 bits of object's state
 	ASL
-	TAY
+	TAY ;Get pointer index
 	LDA tbl8_8114,Y
 	STA $32
 	LDA tbl8_8114+1,Y
@@ -355,7 +364,7 @@ ParatroopaWalk2:
 	db $23, $24, $25, $26
 	db $31, $32, $33, $34
 	db $FF, $3E, $3F, $FF
-ObjID_h14:
+Obj_h14:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -416,7 +425,7 @@ bra8_8308:
 	JSR GetMovementData
 bra8_8316:
 	LDY #$05
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$08
 	BEQ bra8_8320
 	INY
@@ -424,7 +433,7 @@ bra8_8320:
 	TYA
 	STA EnemyAnimFrame,X
 	RTS
-ObjID_h58:
+Obj_h58:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -487,7 +496,7 @@ bra8_8394:
 	JSR jmp_54_B11D
 bra8_83A7:
 	LDY #$05
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$08
 	BEQ bra8_83B1
 	INY
@@ -503,7 +512,7 @@ bra8_83B6:
 	JSR jmp_54_B11D
 bra8_83C1:
 	LDY #$05
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$08
 	BEQ bra8_83CB
 	INY
@@ -600,7 +609,7 @@ ptr3_847B:
 	LDA #$00
 	STA ObjectVariables,X
 	RTS
-ObjID_h16:
+Obj_h16:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra8_84F7
@@ -832,7 +841,7 @@ ptr6_865B:
 	LDX $A4
 	LDY #$03
 bra8_865F:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$08
 	BEQ bra8_8667
 	INY
@@ -896,7 +905,7 @@ RexSquishWalk2:
 	db $95
 	db $31, $32
 	db $3D, $3E
-ObjID_h1A:
+Obj_h1A:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -1087,7 +1096,7 @@ ptr6_884B:
 	BPL bra8_8853
 	RTS
 bra8_8853:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$18
 	LSR
 	LSR
@@ -1155,7 +1164,7 @@ JumpPiranha4:
 	db $14
 	db $19
 	db $1B
-ObjID_h1C:
+Obj_h1C:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -1207,7 +1216,7 @@ bra8_8911_RTS:
 	RTS
 ptr6_8912:
 	RTS
-ObjID_h1E:
+Obj_h1E:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -1419,7 +1428,7 @@ bra8_8ABF:
 	INY
 	INY
 bra8_8AC1:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$04
 	BNE bra8_8AC9
 	INY
@@ -1596,12 +1605,12 @@ ofs_8B7F:
 	db $26
 	db $27
 	db $28
-ObjID_h24:
+Obj_h24:
 	LDX LowerObjSlot ;Get the index for the current object slot
 	LDA ObjectState,X
 	CMP #$04
 	BCS bra8_8BB3
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$07
 	BNE bra8_8BB3 ;Increment the object's timer every 8th frame
 	LDA ObjectVariables,X
@@ -1853,7 +1862,7 @@ ofs_8D47:
 	db $0A
 	db $0B
 	db $0C
-ObjID_h26:
+Obj_h26:
 	LDA #$07
 	STA $25
 	LDX $A4
@@ -1953,7 +1962,7 @@ ptr3_8E0E:
 	RTS
 ptr6_8E17:
 	LDY #$00
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$04
 	BEQ bra8_8E21
 	INY
@@ -1990,7 +1999,7 @@ LotusPollen2:
 	db $01
 	db $97
 	db $08
-ObjID_h2E:
+Obj_h2E:
 	LDX $A4
 	LDA ObjectVariables,X
 	BMI bra8_8E5C
@@ -2159,7 +2168,7 @@ ptr6_8F90:
 	BNE bra8_8FAB
 bra8_8FA1:
 	LDY #$01
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$04
 	BEQ bra8_8FAB
 	INY
@@ -2218,7 +2227,7 @@ Swooper3:
 	db $33
 	db $34
 	db $35
-ObjID_h30:
+Obj_h30:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra8_9063
@@ -2375,7 +2384,7 @@ bra8_912B:
 	AND #$40
 bra8_9130:
 	STA $05F0
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$04
 	BEQ bra8_913B
 	INY
@@ -2750,7 +2759,7 @@ Mechakoopa3:
 	db $1C
 	db $1D
 	db $1E
-ObjID_h3C:
+Obj_h3C:
 	LDX $A4
 	LDA $0641,X
 	CMP #$F0
@@ -2791,7 +2800,7 @@ bra8_9418_RTS:
 loc8_9418_RTS:
 	RTS
 bra8_9419:
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$03
 	BNE bra8_9423
 	INC $0641,X
@@ -3000,7 +3009,7 @@ ptr6_95B5:
 	LDA $0641,X
 	CMP #$D0
 	BCC bra8_95C6
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$04
 	BNE bra8_95C6
 	RTS
@@ -3131,7 +3140,7 @@ StunMechakoopa6:
 	db $2D
 	db $2E
 	db $2F
-ObjID_h12:
+Obj_h12:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3188,7 +3197,7 @@ bra8_96D6:
 	LDA #$00
 	STA EnemyAnimFrame,X
 	RTS
-ObjID_h6E:
+Obj_h6E:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3289,7 +3298,7 @@ bra8_979C:
 	JSR GetMovementData
 bra8_97A7:
 	LDY #$00
-	LDA $062B
+	LDA ObjFrameCounter
 	AND #$08
 	BEQ bra8_97B1
 	INY
@@ -3403,7 +3412,7 @@ bra8_9880:
 	PLA
 	PLA
 	RTS
-ObjID_h7A:
+Obj_h7A:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3492,7 +3501,7 @@ bra8_993F_RTS:
 	RTS
 bra8_9940:
 	JMP loc8_976C
-ObjID_h7D:
+Obj_h7D:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3548,7 +3557,7 @@ bra8_99A9:
 bra8_99B2:
 	STY $06E0
 	RTS
-ObjID_hF0:
+Obj_hF0:
 	LDX $A4
 	LDA ObjectXPos,X
 	SEC
@@ -3647,13 +3656,14 @@ bra8_9A74:
 	STY $06E0
 bra8_9A77_RTS:
 	RTS
+
 	BEQ bra8_9A7F ;unlogged
 	ASL ;unlogged
 	TAX ;unlogged
 	LDA tbl8_9A99,X ;unlogged
 bra8_9A7F:
 	STA $32 ;unlogged
-	LDA tbl8_9A9A,X ;unlogged
+	LDA tbl8_9A99+1,X ;unlogged
 	STA $33 ;unlogged
 	LDY #$80 ;unlogged
 	LDX $A4 ;unlogged
@@ -3666,45 +3676,35 @@ bra8_9A93:
 	JSR jmp_54_A118 ;unlogged
 	RTS ;unlogged
 tbl8_9A99:
-	db $A3
-tbl8_9A9A:
-	db $9A
-	db $AA
-	db $9A
-	db $B1
-	db $9A
-	db $AA
-	db $9A
-	db $B8
-	db $9A
+	dw tbl8_9AA3
+	dw tbl8_9AAA
+	dw tbl8_9AB1
+	dw tbl8_9AAA
+	dw tbl8_9AB8
+tbl8_9AA3:
 	db $02
 	db $02
 	db $97
-	db $1C
-	db $1D
-	db $22
-	db $23
+	db $1C, $1D
+	db $22, $23
+tbl8_9AAA:
 	db $02
 	db $02
 	db $97
-	db $1C
-	db $1D
-	db $24
-	db $25
+	db $1C, $1D
+	db $24, $25
+tbl8_9AB1:
 	db $02
 	db $02
 	db $97
-	db $1C
-	db $1D
-	db $2A
-	db $2B
+	db $1C, $1D
+	db $2A, $2B
+tbl8_9AB8:
 	db $02
 	db $02
 	db $97
-	db $2A
-	db $2B
-	db $1C
-	db $1D
+	db $2A, $2B
+	db $1C, $1D
 incbin prg/padding/padding055.bin
 	db $23
 	db $23
