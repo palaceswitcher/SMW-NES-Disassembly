@@ -489,7 +489,7 @@ GetPntrRidingSprite: ;Only do this part if player sprite isn't in a pit
 	TAX ;move it to X
 	LDA tbl4_A5E7,X ;(This table only has one entry but is followed by another table)
 	STA $38 ;store low byte
-	LDA tbl4_A5E8,X ;load the high byte from the next table 
+	LDA tbl4_A5E7+1,X ;load the high byte from the next table 
 	STA $39  ;store high byte
 	LDX PlayerAction+1 ;get the previous player action as an offset
 	LDA PlayerRidingActionTable,X ;use that to select an action for the player whilst riding 
@@ -1049,17 +1049,12 @@ RidingLeftXoffset:
 	db $F1
 	db $F3
 tbl4_A5E7:
-	db $F1
-tbl4_A5E8
-	db $A5
-	db $FA
-	db $A5
-	db $03
-	db $A6
-	db $FA
-	db $A5
-	db $FA
-	db $A5
+	dw ptr4_A5F1
+	dw ptr4_A5FA
+	dw ptr4_A603
+	dw ptr4_A5FA
+	dw ptr4_A5FA
+ptr4_A5F1:
 	db $98
 	db $98
 	db $98
@@ -1069,6 +1064,7 @@ tbl4_A5E8
 	db $99
 	db $99
 	db $98
+ptr4_A5FA:
 	db $8A
 	db $8A
 	db $8A
@@ -1078,6 +1074,7 @@ tbl4_A5E8
 	db $86
 	db $86
 	db $8B
+ptr4_A603:
 	db $81
 	db $81
 	db $81

@@ -1,379 +1,379 @@
 ; 0x048010-0x04A00F
 lda_36_C000: 
-	dw MarioAnimTablesTbl   ;00 No Yoshi
-	dw YoshiAnimTablesTbl_1 ;01 if Yoshi present (all entries on this table point to the same thing)
-	dw YoshiAnimTablesTbl_2 ;02 
+	dw PlayerAnimTablesTbl   ;00 No Yoshi
+	dw YoshiAnimTablesTbl_1 ;01 If Yoshi present (all entries on this table point to the same thing)
+	dw YoshiAnimTablesTbl_2 ;02
 	dw YoshiAnimTablesTbl_2 ;03 Because Yoshi Status is doubled for use as an index this table is long
-	dw YoshiAnimTablesTbl_2 ;04  
+	dw YoshiAnimTablesTbl_2 ;04
 	dw YoshiAnimTablesTbl_2 ;05
-	dw YoshiAnimTablesTbl_3 ;06 used when Mario has a powerup (?)
+	dw YoshiAnimTablesTbl_3 ;06 Used when Mario has a powerup (?)
 	dw YoshiAnimTablesTbl_3 ;07
 	dw YoshiAnimTablesTbl_3 ;08
-	dw YoshiAnimTablesTbl_3 ;09 as far as I can tell these are all identical unique copies, but this hasn't been fully investigated
-MarioAnimTablesTbl:
-	dw PlayerSmall_AnimTbl
-	dw PlayerBig_AnimTbl
-	dw PlayerFire_AnimTbl
-	dw PlayerCapeStatic_AnimTbl
-	dw PlayerCapeMove_AnimTbl
-	dw PlayerSmallHold_AnimTbl
-	dw PlayerBigHold_AnimTbl
-	dw PlayerFireHold_AnimTbl
-	dw PlayerCapeStaticHold_AnimTbl
-	dw PlayerCapeMoveHold_AnimTbl
-PlayerSmall_AnimTbl:	;Player Action (associated with animation)
-	dw MsmallStand		;nothing 	00
-	dw MsmallWalk		;walking 	01
-	dw MsmallRun		;running 	02
-	dw MsmallWalk		;unused  	03
-	dw MsmallJump		;jumping 	04
-	dw MsmallSpin		;spin    	05
-	dw MsmallTurn		;skid    	06
-	dw MsmallDuck		;duck    	07
-	dw MsmallUp			;look up 	08
-	dw MsmallLeap		;run jump   09
-	dw MsmallFall		;Falling 	0A note that this is specifically for falling from a ledge, not a jump
-	dw MsmallSink		;sink    	0B
-	dw MsmallSwim		;swim    	0C
-	dw MsmallClimbIdle	;climb   	0D
-	dw MsmallClimb		;climb move	0E
-	dw MsmallLeap		;flying		0F
-	dw MsmallWin		;victory	10
-	dw MsmallDie		;dead		11
-PlayerSmallHold_AnimTbl:
-	dw MsmallHold
-	dw MsmallHoldWalk
-	dw MsmallHoldRun
-	dw MsmallHoldWalk
-	dw MsmallHoldJump
-	dw MsmallSpin
-	dw MsmallTurn
-	dw MsmallHoldDuck
-	dw MsmallUp
-	dw MsmallHoldJump
-	dw MsmallHoldFall
-	dw MsmallHoldSink
-	dw MsmallHoldSwim
-	dw MsmallClimbIdle
-	dw MsmallClimb
-	dw MsmallHoldJump
-	dw MsmallWin
-	dw MsmallDie
-MsmallStand:
-	dw PlayerSmall_Stand
+	dw YoshiAnimTablesTbl_3 ;09 As far as I can tell these are all identical unique copies, but this hasn't been fully investigated
+PlayerAnimTablesTbl:
+	dw AnimTbl_PSmall
+	dw AnimTbl_PBig
+	dw AnimTbl_PFire
+	dw AnimTbl_PCapeStatic
+	dw AnimTbl_PCapeMove
+	dw AnimTbl_PSmall_Hold
+	dw AnimTbl_PBig_Hold
+	dw AnimTbl_PFire_Hold
+	dw AnimTbl_PCapeStatic_Hold
+	dw AnimTbl_PCapeMove_Hold
+AnimTbl_PSmall:	;Player Action (associated with animation)
+	dw Anim_PSmall_Stand	;Nothing 	00
+	dw Anim_PSmall_Walk		;Walking 	01
+	dw Anim_PSmall_Run		;Running 	02
+	dw Anim_PSmall_Walk		;Unused  	03
+	dw Anim_PSmall_Jump		;Jumping 	04
+	dw Anim_PSmall_Spin		;Spin    	05
+	dw Anim_PSmall_Turn		;Skid    	06
+	dw Anim_PSmall_Duck		;Duck    	07
+	dw Anim_PSmall_Up		;Look up 	08
+	dw Anim_PSmall_RunJump	;Run jump   09
+	dw Anim_PSmall_Fall		;Falling 	0A note that this is specifically for falling from a ledge, not a jump
+	dw Anim_PSmall_Sink		;Sink    	0B
+	dw Anim_PSmall_Swim		;Swim    	0C
+	dw Anim_PSmall_ClimbIdle;Climb   	0D
+	dw Anim_PSmall_Climb	;Climb move	0E
+	dw Anim_PSmall_RunJump		;Flying		0F
+	dw Anim_PSmall_Win		;Victory	10
+	dw Anim_PSmall_Die		;Dead		11
+AnimTbl_PSmall_Hold:
+	dw Anim_PSmall_Hold
+	dw Anim_PSmall_HoldWalk
+	dw Anim_PSmall_HoldRun
+	dw Anim_PSmall_HoldWalk
+	dw Anim_PSmall_HoldJump
+	dw Anim_PSmall_Spin
+	dw Anim_PSmall_Turn
+	dw Anim_PSmall_HoldDuck
+	dw Anim_PSmall_Up
+	dw Anim_PSmall_HoldJump
+	dw Anim_PSmall_HoldFall
+	dw Anim_PSmall_HoldSink
+	dw Anim_PSmall_HoldSwim
+	dw Anim_PSmall_ClimbIdle
+	dw Anim_PSmall_Climb
+	dw Anim_PSmall_HoldJump
+	dw Anim_PSmall_Win
+	dw Anim_PSmall_Die
+Anim_PSmall_Stand:
+	dw SprMap_PSmall_Stand
 	db $0A
 	db $00
-	dw PlayerSmall_Stand
+	dw SprMap_PSmall_Stand
 	db $80
 	db $00
-MsmallWalk:
-	dw PlayerSmall_Stand
+Anim_PSmall_Walk:
+	dw SprMap_PSmall_Stand
 	db $04
 	db $00
-	dw PlayerSmall_Walk1
+	dw SprMap_PSmall_Walk1
 	db $04
 	db $00
-	dw PlayerSmall_Stand
+	dw SprMap_PSmall_Stand
 	db $80
 	db $00
-MsmallRun:
-	dw PlayerSmall_Stand
+Anim_PSmall_Run:
+	dw SprMap_PSmall_Stand
 	db $02
 	db $00
-	dw PlayerSmall_Walk1
+	dw SprMap_PSmall_Walk1
 	db $02
 	db $00
-	dw PlayerSmall_Stand
+	dw SprMap_PSmall_Stand
 	db $02
 	db $00
-	dw PlayerSmall_Walk1
+	dw SprMap_PSmall_Walk1
 	db $02
 	db $00
-	dw PlayerSmall_Stand
+	dw SprMap_PSmall_Stand
 	db $02
 	db $00
-	dw PlayerSmall_Walk1
+	dw SprMap_PSmall_Walk1
 	db $02
 	db $00
-	dw PlayerSmall_Stand
+	dw SprMap_PSmall_Stand
 	db $02
 	db $00
-	dw PlayerSmall_Walk1
+	dw SprMap_PSmall_Walk1
 	db $02
 	db $00
-	dw PlayerSmall_Stand
+	dw SprMap_PSmall_Stand
 	db $02
 	db $00
-	dw PlayerSmall_Walk1
+	dw SprMap_PSmall_Walk1
 	db $02
 	db $00
-	dw PlayerSmall_Stand
+	dw SprMap_PSmall_Stand
 	db $02
 	db $00
-	dw PlayerSmall_Walk1
+	dw SprMap_PSmall_Walk1
 	db $02
 	db $00
-	dw PlayerSmall_Stand
+	dw SprMap_PSmall_Stand
 	db $02
 	db $00
-	dw PlayerSmall_Walk1
+	dw SprMap_PSmall_Walk1
 	db $02
 	db $00
-	dw PlayerSmall_Stand
+	dw SprMap_PSmall_Stand
 	db $02
 	db $00
-	dw PlayerSmall_Walk1
+	dw SprMap_PSmall_Walk1
 	db $02
 	db $00
-	dw PlayerSmall_Run1
+	dw SprMap_PSmall_Run1
 	db $02
 	db $00
-	dw PlayerSmall_Run2
+	dw SprMap_PSmall_Run2
 	db $02
 	db $00
-	dw PlayerSmall_Run1
+	dw SprMap_PSmall_Run1
 	db $02
 	db $00
-	dw PlayerSmall_Run2
+	dw SprMap_PSmall_Run2
 	db $02
 	db $00
-	dw PlayerSmall_Run1
+	dw SprMap_PSmall_Run1
 	db $90
 	db $00
-MsmallJump:
-	dw PlayerSmall_Jump
+Anim_PSmall_Jump:
+	dw SprMap_PSmall_Jump
 	db $23
 	db $00
-	dw PlayerSmall_Fall
+	dw SprMap_PSmall_Fall
 	db $02
 	db $00
-	dw PlayerSmall_Fall
+	dw SprMap_PSmall_Fall
 	db $81
 	db $00
-MsmallLeap:
-	dw PlayerSmall_RunJump
+Anim_PSmall_RunJump:
+	dw SprMap_PSmall_RunJump
 	db $0A
 	db $00
-	dw PlayerSmall_RunJump
+	dw SprMap_PSmall_RunJump
 	db $80
 	db $00
-MsmallSpin:
-	dw PlayerSmall_Stand
+Anim_PSmall_Spin:
+	dw SprMap_PSmall_Stand
 	db $01
 	db $00
-	dw PlayerSmall_Back
+	dw SprMap_PSmall_Back
 	db $01
 	db $00
-	dw PlayerSmall_Flipped
+	dw SprMap_PSmall_Flipped
 	db $01
 	db $00
-	dw PlayerSmall_Front
+	dw SprMap_PSmall_Front
 	db $01
 	db $00
-	dw PlayerSmall_Stand
+	dw SprMap_PSmall_Stand
 	db $80
 	db $00
-MsmallTurn:
-	dw PlayerSmall_Turn
+Anim_PSmall_Turn:
+	dw SprMap_PSmall_Turn
 	db $0A
 	db $00
-	dw PlayerSmall_Turn
+	dw SprMap_PSmall_Turn
 	db $80
 	db $00
-MsmallDuck:
-	dw PlayerSmall_Duck
+Anim_PSmall_Duck:
+	dw SprMap_PSmall_Duck
 	db $08
 	db $00
-	dw PlayerSmall_Duck
+	dw SprMap_PSmall_Duck
 	db $80
 	db $00
-MsmallUp:
-	dw PlayerSmall_LookUp
+Anim_PSmall_Up:
+	dw SprMap_PSmall_LookUp
 	db $02
 	db $00
-	dw PlayerSmall_LookUp
+	dw SprMap_PSmall_LookUp
 	db $80
 	db $00
-MsmallFall:
-	dw PlayerSmall_Fall
+Anim_PSmall_Fall:
+	dw SprMap_PSmall_Fall
 	db $02
 	db $00
-	dw PlayerSmall_Fall
+	dw SprMap_PSmall_Fall
 	db $80
 	db $00
-MsmallSink:
-	dw PlayerSmall_Swim1
+Anim_PSmall_Sink:
+	dw SprMap_PSmall_Swim1
 	db $01
 	db $00
-	dw PlayerSmall_Swim1
+	dw SprMap_PSmall_Swim1
 	db $80
 	db $00
-MsmallSwim:
-	dw PlayerSmall_RunJump
+Anim_PSmall_Swim:
+	dw SprMap_PSmall_RunJump
 	db $03
 	db $00
-	dw PlayerSmall_Swim1
+	dw SprMap_PSmall_Swim1
 	db $03
 	db $00
-	dw PlayerSmall_RunJump
+	dw SprMap_PSmall_RunJump
 	db $80
 	db $00
-MsmallClimbIdle:
-	dw PlayerSmall_Climb1
+Anim_PSmall_ClimbIdle:
+	dw SprMap_PSmall_Climb1
 	db $08
 	db $00
-	dw PlayerSmall_Climb1
+	dw SprMap_PSmall_Climb1
 	db $80
 	db $00
-MsmallClimb:
-	dw PlayerSmall_Climb1
+Anim_PSmall_Climb:
+	dw SprMap_PSmall_Climb1
 	db $08
 	db $00
-	dw PlayerSmall_Climb2
+	dw SprMap_PSmall_Climb2
 	db $08
 	db $00
-	dw PlayerSmall_Climb1
+	dw SprMap_PSmall_Climb1
 	db $80
 	db $00
-MsmallWin:
-	dw PlayerSmall_Victory
+Anim_PSmall_Win:
+	dw SprMap_PSmall_Victory
 	db $0A
 	db $00
-	dw PlayerSmall_Victory
+	dw SprMap_PSmall_Victory
 	db $80
 	db $00
-MsmallDie:
-	dw PlayerSmall_Death1
+Anim_PSmall_Die:
+	dw SprMap_PSmall_Death1
 	db $28
 	db $00
-	dw PlayerSmall_Death1
+	dw SprMap_PSmall_Death1
 	db $08
 	db $00
-	dw PlayerSmall_Death2
+	dw SprMap_PSmall_Death2
 	db $08
 	db $00
-	dw PlayerSmall_Death1
+	dw SprMap_PSmall_Death1
 	db $81
 	db $00
-MsmallHold:
-	dw PlayerSmall_Hold
+Anim_PSmall_Hold:
+	dw SprMap_PSmall_Hold
 	db $0A
 	db $00
-	dw PlayerSmall_Hold
+	dw SprMap_PSmall_Hold
 	db $80
 	db $00
-MsmallHoldWalk:
-	dw PlayerSmall_Hold
+Anim_PSmall_HoldWalk:
+	dw SprMap_PSmall_Hold
 	db $04
 	db $00
-	dw PlayerSmall_HoldWalk
+	dw SprMap_PSmall_HoldWalk
 	db $04
 	db $00
-	dw PlayerSmall_Hold
+	dw SprMap_PSmall_Hold
 	db $80
 	db $00
-MsmallHoldRun:
-	dw PlayerSmall_Hold
+Anim_PSmall_HoldRun:
+	dw SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw PlayerSmall_HoldWalk
+	dw SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw PlayerSmall_Hold
+	dw SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw PlayerSmall_HoldWalk
+	dw SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw PlayerSmall_Hold
+	dw SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw PlayerSmall_HoldWalk
+	dw SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw PlayerSmall_Hold
+	dw SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw PlayerSmall_HoldWalk
+	dw SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw PlayerSmall_Hold
+	dw SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw PlayerSmall_HoldWalk
+	dw SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw PlayerSmall_Hold
+	dw SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw PlayerSmall_HoldWalk
+	dw SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw PlayerSmall_Hold
+	dw SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw PlayerSmall_HoldWalk
+	dw SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw PlayerSmall_Hold
+	dw SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw PlayerSmall_HoldWalk
+	dw SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw PlayerSmall_Hold
+	dw SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw PlayerSmall_HoldWalk
+	dw SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw PlayerSmall_Hold
+	dw SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw PlayerSmall_HoldWalk
+	dw SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw PlayerSmall_Hold
+	dw SprMap_PSmall_Hold
 	db $90
 	db $00
-MsmallHoldJump:
-	dw PlayerSmall_HoldWalk
+Anim_PSmall_HoldJump:
+	dw SprMap_PSmall_HoldWalk
 	db $23
 	db $00
-	dw PlayerSmall_HoldWalk
+	dw SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw PlayerSmall_HoldWalk
+	dw SprMap_PSmall_HoldWalk
 	db $81
 	db $00
-MsmallHoldDuck:
-	dw PlayerSmall_DuckHold
+Anim_PSmall_HoldDuck:
+	dw SprMap_PSmall_DuckHold
 	db $08
 	db $00
-	dw PlayerSmall_DuckHold
+	dw SprMap_PSmall_DuckHold
 	db $80
 	db $00
-	dw PlayerSmall_Hold
+	dw SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw PlayerSmall_Hold
+	dw SprMap_PSmall_Hold
 	db $80
 	db $00
-MsmallHoldFall:
-	dw PlayerSmall_HoldWalk
+Anim_PSmall_HoldFall:
+	dw SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw PlayerSmall_HoldWalk
+	dw SprMap_PSmall_HoldWalk
 	db $80
 	db $00
-MsmallHoldSink:
+Anim_PSmall_HoldSink:
 	dw pnt3_C2D8
 	db $01
 	db $00
 	dw pnt3_C2D8
 	db $80
 	db $00
-MsmallHoldSwim:
+Anim_PSmall_HoldSwim:
 	dw pnt3_C2D8
 	db $03
 	db $00
@@ -383,7 +383,7 @@ MsmallHoldSwim:
 	dw pnt3_C2D8
 	db $80
 	db $00
-PlayerSmall_Stand:
+SprMap_PSmall_Stand:
 	db $02
 	db $03
 	db $99
@@ -391,7 +391,7 @@ PlayerSmall_Stand:
 	db $64, $65
 	db $66, $7F
 	db $60, $61
-PlayerSmall_Walk1:
+SprMap_PSmall_Walk1:
 	db $02
 	db $03
 	db $99
@@ -399,7 +399,7 @@ PlayerSmall_Walk1:
 	db $6E, $6F
 	db $70, $71
 	db $6A, $6B
-PlayerSmall_Run1:
+SprMap_PSmall_Run1:
 	db $02
 	db $03
 	db $99
@@ -407,7 +407,7 @@ PlayerSmall_Run1:
 	db $64, $65
 	db $66, $7F
 	db $60, $6C
-PlayerSmall_Run2:
+SprMap_PSmall_Run2:
 	db $02
 	db $03
 	db $99
@@ -415,7 +415,7 @@ PlayerSmall_Run2:
 	db $6E, $6F
 	db $70, $71
 	db $6A, $6D
-PlayerSmall_RunJump:
+SprMap_PSmall_RunJump:
 	db $02
 	db $03
 	db $99
@@ -423,7 +423,7 @@ PlayerSmall_RunJump:
 	db $64, $65
 	db $66, $7F
 	db $68, $69
-PlayerSmall_Jump:
+SprMap_PSmall_Jump:
 	db $02
 	db $03
 	db $99
@@ -431,7 +431,7 @@ PlayerSmall_Jump:
 	db $74, $75
 	db $76, $77
 	db $78, $79
-PlayerSmall_Fall:
+SprMap_PSmall_Fall:
 	db $02
 	db $03
 	db $99
@@ -439,7 +439,7 @@ PlayerSmall_Fall:
 	db $7A, $7B
 	db $7C, $7D
 	db $57, $5C
-PlayerSmall_Back:
+SprMap_PSmall_Back:
 	db $02
 	db $03
 	db $99
@@ -447,7 +447,7 @@ PlayerSmall_Back:
 	db $48, $49
 	db $4A, $4B
 	db $4C, $4D
-PlayerSmall_Flipped:
+SprMap_PSmall_Flipped:
 	db $42
 	db $03
 	db $99
@@ -455,7 +455,7 @@ PlayerSmall_Flipped:
 	db $65, $64
 	db $7F, $66
 	db $61, $60
-PlayerSmall_Front:
+SprMap_PSmall_Front:
 	db $02
 	db $03
 	db $99
@@ -463,7 +463,7 @@ PlayerSmall_Front:
 	db $4E, $4F
 	db $56, $58
 	db $59, $5A
-PlayerSmall_Turn:
+SprMap_PSmall_Turn:
 	db $02
 	db $03
 	db $9A
@@ -471,14 +471,14 @@ PlayerSmall_Turn:
 	db $A9, $AB
 	db $AC, $AE
 	db $AD, $AF
-PlayerSmall_Duck:
+SprMap_PSmall_Duck:
 	db $02
 	db $02
 	db $99
 	db $08
 	db $50, $51
 	db $52, $53
-PlayerSmall_LookUp:
+SprMap_PSmall_LookUp:
 	db $02
 	db $03
 	db $99
@@ -486,7 +486,7 @@ PlayerSmall_LookUp:
 	db $5B, $5D
 	db $5E, $5F
 	db $60, $61
-PlayerSmall_Swim1:
+SprMap_PSmall_Swim1:
 	db $02
 	db $03
 	db $99
@@ -494,7 +494,7 @@ PlayerSmall_Swim1:
 	db $64, $65
 	db $66, $7F
 	db $62, $63
-PlayerSmall_Climb1:
+SprMap_PSmall_Climb1:
 	db $02
 	db $03
 	db $99
@@ -502,7 +502,7 @@ PlayerSmall_Climb1:
 	db $48, $49
 	db $4A, $4B
 	db $72, $73
-PlayerSmall_Climb2:
+SprMap_PSmall_Climb2:
 	db $42
 	db $03
 	db $99
@@ -510,7 +510,7 @@ PlayerSmall_Climb2:
 	db $49, $48
 	db $4B, $4A
 	db $73, $72
-PlayerSmall_Victory:
+SprMap_PSmall_Victory:
 	db $02
 	db $03
 	db $98
@@ -518,7 +518,7 @@ PlayerSmall_Victory:
 	db $0E, $0D
 	db $10, $0F
 	db $12, $11
-PlayerSmall_Death1:
+SprMap_PSmall_Death1:
 	db $02
 	db $03
 	db $98
@@ -526,7 +526,7 @@ PlayerSmall_Death1:
 	db $18, $19
 	db $1A, $1B
 	db $1C, $1D
-PlayerSmall_Death2:
+SprMap_PSmall_Death2:
 	db $42
 	db $03
 	db $98
@@ -534,7 +534,7 @@ PlayerSmall_Death2:
 	db $19, $18
 	db $1B, $1A
 	db $1D, $1C
-PlayerSmall_Hold:
+SprMap_PSmall_Hold:
 	db $02
 	db $03
 	db $99
@@ -542,7 +542,7 @@ PlayerSmall_Hold:
 	db $64, $65
 	db $66, $7F
 	db $40, $41
-PlayerSmall_HoldWalk:
+SprMap_PSmall_HoldWalk:
 	db $02
 	db $03
 	db $99
@@ -550,7 +550,7 @@ PlayerSmall_HoldWalk:
 	db $6E, $6F
 	db $70, $71
 	db $42, $43
-PlayerSmall_DuckHold:
+SprMap_PSmall_DuckHold:
 	db $02
 	db $02
 	db $99
@@ -565,395 +565,395 @@ pnt3_C2D8:
 	db $64, $65
 	db $66, $7F
 	db $62, $63
-PlayerBig_AnimTbl:
-	dw MbigStand
-	dw MbigWalk
-	dw MbigRun
-	dw MbigWalk
-	dw MbigJump
-	dw MbigSpin
-	dw MbigTurn
-	dw MbigDuck
-	dw MbigLookUp
-	dw MbigLeap
-	dw MbigFall
-	dw MbigSink
-	dw MbigSwim
-	dw MbigClimb
-	dw MbigClimbMove
-	dw MbigLeap
-	dw MbigWin
-PlayerBigHold_AnimTbl:
-	dw MbigHold
-	dw MbigHoldWalk
-	dw MbigHoldRun
-	dw MbigHoldWalk
-	dw MbigHoldJump
-	dw MbigSpin
-	dw MbigTurn
-	dw MbigHoldDuck
-	dw MbigLookUp
-	dw MbigSink
-	dw MbigHoldFall
-	dw MbigSink
-	dw MbigHoldSwim
-	dw MbigClimb
-	dw MbigClimbMove
-	dw MbigSink
-	dw MbigWin
-MbigStand:
-	dw PlayerBig_Stand
+AnimTbl_PBig:
+	dw Anim_PBig_Stand
+	dw Anim_PBig_Walk
+	dw Anim_PBig_Run
+	dw Anim_PBig_Walk
+	dw Anim_PBig_Jump
+	dw Anim_PBig_Spin
+	dw Anim_PBig_Turn
+	dw Anim_PBig_Duck
+	dw Anim_PBig_LookUp
+	dw Anim_PBig_RunJump
+	dw Anim_PBig_Fall
+	dw Anim_PBig_Sink
+	dw Anim_PBig_Swim
+	dw Anim_PBig_Climb
+	dw Anim_PBig_ClimbMove
+	dw Anim_PBig_RunJump
+	dw Anim_PBig_Win
+AnimTbl_PBig_Hold:
+	dw Anim_PBig_Hold
+	dw Anim_PBig_HoldWalk
+	dw Anim_PBig_HoldRun
+	dw Anim_PBig_HoldWalk
+	dw Anim_PBig_HoldJump
+	dw Anim_PBig_Spin
+	dw Anim_PBig_Turn
+	dw Anim_PBig_HoldDuck
+	dw Anim_PBig_LookUp
+	dw Anim_PBig_Sink
+	dw Anim_PBig_HoldFall
+	dw Anim_PBig_Sink
+	dw Anim_PBig_HoldSwim
+	dw Anim_PBig_Climb
+	dw Anim_PBig_ClimbMove
+	dw Anim_PBig_Sink
+	dw Anim_PBig_Win
+Anim_PBig_Stand:
+	dw SprMap_PBig_Stand
 	db $0A
 	db $00
-	dw PlayerBig_Stand
+	dw SprMap_PBig_Stand
 	db $80
 	db $00
-MbigWalk:
-	dw PlayerBig_Walk1
+Anim_PBig_Walk:
+	dw SprMap_PBig_Walk1
 	db $04
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $04
 	db $00
-	dw PlayerBig_Stand
+	dw SprMap_PBig_Stand
 	db $04
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $04
 	db $00
-	dw PlayerBig_Walk1
+	dw SprMap_PBig_Walk1
 	db $04
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $04
 	db $00
-	dw PlayerBig_Stand
+	dw SprMap_PBig_Stand
 	db $04
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $04
 	db $00
-	dw PlayerBig_Walk1
+	dw SprMap_PBig_Walk1
 	db $80
 	db $00
-MbigRun:
-	dw PlayerBig_Walk1
+Anim_PBig_Run:
+	dw SprMap_PBig_Walk1
 	db $02
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw PlayerBig_Stand
+	dw SprMap_PBig_Stand
 	db $02
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw PlayerBig_Walk1
+	dw SprMap_PBig_Walk1
 	db $02
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw PlayerBig_Stand
+	dw SprMap_PBig_Stand
 	db $02
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw PlayerBig_Walk1
+	dw SprMap_PBig_Walk1
 	db $02
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw PlayerBig_Stand
+	dw SprMap_PBig_Stand
 	db $02
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw PlayerBig_Walk1
+	dw SprMap_PBig_Walk1
 	db $02
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw PlayerBig_Stand
+	dw SprMap_PBig_Stand
 	db $02
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw PlayerBig_Run1
+	dw SprMap_PBig_Run1
 	db $02
 	db $00
-	dw PlayerBig_Run2
+	dw SprMap_PBig_Run2
 	db $02
 	db $00
-	dw PlayerBig_Run3
+	dw SprMap_PBig_Run3
 	db $02
 	db $00
-	dw PlayerBig_Run2
+	dw SprMap_PBig_Run2
 	db $02
 	db $00
-	dw PlayerBig_Run1
+	dw SprMap_PBig_Run1
 	db $90
 	db $00
-MbigJump:
-	dw PlayerBig_Jump
+Anim_PBig_Jump:
+	dw SprMap_PBig_Jump
 	db $23
 	db $00
-	dw PlayerBig_Fall
+	dw SprMap_PBig_Fall
 	db $02
 	db $00
-	dw PlayerBig_Fall
+	dw SprMap_PBig_Fall
 	db $81
 	db $00
-MbigLeap:
-	dw PlayerBig_RunJump
+Anim_PBig_RunJump:
+	dw SprMap_PBig_RunJump
 	db $0A
 	db $00
-	dw PlayerBig_RunJump
+	dw SprMap_PBig_RunJump
 	db $80
 	db $00
-MbigSpin:
-	dw PlayerBig_Front
+Anim_PBig_Spin:
+	dw SprMap_PBig_Front
 	db $01
 	db $00
-	dw PlayerBig_Back
+	dw SprMap_PBig_Back
 	db $01
 	db $00
-	dw PlayerBig_Side1
+	dw SprMap_PBig_Side1
 	db $01
 	db $00
-	dw PlayerBig_Side2
+	dw SprMap_PBig_Side2
 	db $01
 	db $00
-	dw PlayerBig_Front
+	dw SprMap_PBig_Front
 	db $80
 	db $00
-MbigTurn:
-	dw PlayerBig_Turn
+Anim_PBig_Turn:
+	dw SprMap_PBig_Turn
 	db $0A
 	db $00
-	dw PlayerBig_Turn
+	dw SprMap_PBig_Turn
 	db $80
 	db $00
-MbigDuck:
-	dw PlayerBig_Duck
+Anim_PBig_Duck:
+	dw SprMap_PBig_Duck
 	db $08
 	db $00
-	dw PlayerBig_Duck
+	dw SprMap_PBig_Duck
 	db $80
 	db $00
-MbigLookUp:
-	dw PlayerBig_LookUp
+Anim_PBig_LookUp:
+	dw SprMap_PBig_LookUp
 	db $02
 	db $00
-	dw PlayerBig_LookUp
+	dw SprMap_PBig_LookUp
 	db $80
 	db $00
-MbigFall:
-	dw PlayerBig_Fall
+Anim_PBig_Fall:
+	dw SprMap_PBig_Fall
 	db $02
 	db $00
-	dw PlayerBig_Fall
+	dw SprMap_PBig_Fall
 	db $80
 	db $00
-MbigSink:
-	dw PlayerBig_Swim1
+Anim_PBig_Sink:
+	dw SprMap_PBig_Swim1
 	db $01
 	db $00
-	dw PlayerBig_Swim1
+	dw SprMap_PBig_Swim1
 	db $80
 	db $00
-MbigSwim:
-	dw PlayerBig_RunJump
+Anim_PBig_Swim:
+	dw SprMap_PBig_RunJump
 	db $03
 	db $00
-	dw PlayerBig_Swim2
+	dw SprMap_PBig_Swim2
 	db $03
 	db $00
-	dw PlayerBig_Swim1
+	dw SprMap_PBig_Swim1
 	db $03
 	db $00
-	dw PlayerBig_Swim2
+	dw SprMap_PBig_Swim2
 	db $03
 	db $00
-	dw PlayerBig_Fall
+	dw SprMap_PBig_Fall
 	db $80
 	db $00
-MbigClimb:
-	dw PlayerBig_Climb1
+Anim_PBig_Climb:
+	dw SprMap_PBig_Climb1
 	db $08
 	db $00
-	dw PlayerBig_Climb1
+	dw SprMap_PBig_Climb1
 	db $80
 	db $00
-MbigClimbMove:
-	dw PlayerBig_Climb1
+Anim_PBig_ClimbMove:
+	dw SprMap_PBig_Climb1
 	db $08
 	db $00
-	dw PlayerBig_Climb2
+	dw SprMap_PBig_Climb2
 	db $08
 	db $00
-	dw PlayerBig_Climb1
+	dw SprMap_PBig_Climb1
 	db $80
 	db $00
-MbigWin:
-	dw PlayerBig_Victory
+Anim_PBig_Win:
+	dw SprMap_PBig_Victory
 	db $0A
 	db $00
-	dw PlayerBig_Victory
+	dw SprMap_PBig_Victory
 	db $80
 	db $00
-MbigHold:
-	dw PlayerBig_Hold
+Anim_PBig_Hold:
+	dw SprMap_PBig_Hold
 	db $0A
 	db $00
-	dw PlayerBig_Hold
+	dw SprMap_PBig_Hold
 	db $80
 	db $00
-MbigHoldWalk:
-	dw PlayerBig_HoldWalk1
+Anim_PBig_HoldWalk:
+	dw SprMap_PBig_HoldWalk1
 	db $04
 	db $00
-	dw PlayerBig_HoldWalk2
+	dw SprMap_PBig_HoldWalk2
 	db $04
 	db $00
-	dw PlayerBig_Hold
+	dw SprMap_PBig_Hold
 	db $04
 	db $00
-	dw PlayerBig_HoldWalk2
+	dw SprMap_PBig_HoldWalk2
 	db $04
 	db $00
-	dw PlayerBig_HoldWalk1
+	dw SprMap_PBig_HoldWalk1
 	db $04
 	db $00
-	dw PlayerBig_HoldWalk2
+	dw SprMap_PBig_HoldWalk2
 	db $04
 	db $00
-	dw PlayerBig_Hold
+	dw SprMap_PBig_Hold
 	db $04
 	db $00
-	dw PlayerBig_HoldWalk2
+	dw SprMap_PBig_HoldWalk2
 	db $04
 	db $00
-	dw PlayerBig_HoldWalk1
+	dw SprMap_PBig_HoldWalk1
 	db $80
 	db $00
-MbigHoldRun:
-	dw PlayerBig_HoldWalk1
+Anim_PBig_HoldRun:
+	dw SprMap_PBig_HoldWalk1
 	db $02
 	db $00
-	dw PlayerBig_HoldWalk2
+	dw SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw PlayerBig_Hold
+	dw SprMap_PBig_Hold
 	db $02
 	db $00
-	dw PlayerBig_HoldWalk2
+	dw SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw PlayerBig_HoldWalk1
+	dw SprMap_PBig_HoldWalk1
 	db $02
 	db $00
-	dw PlayerBig_HoldWalk2
+	dw SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw PlayerBig_Hold
+	dw SprMap_PBig_Hold
 	db $02
 	db $00
-	dw PlayerBig_HoldWalk2
+	dw SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw PlayerBig_HoldWalk1
+	dw SprMap_PBig_HoldWalk1
 	db $02
 	db $00
-	dw PlayerBig_HoldWalk2
+	dw SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw PlayerBig_Hold
+	dw SprMap_PBig_Hold
 	db $02
 	db $00
-	dw PlayerBig_HoldWalk2
+	dw SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw PlayerBig_HoldWalk1
+	dw SprMap_PBig_HoldWalk1
 	db $02
 	db $00
-	dw PlayerBig_HoldWalk2
+	dw SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw PlayerBig_Hold
+	dw SprMap_PBig_Hold
 	db $02
 	db $00
-	dw PlayerBig_HoldWalk2
+	dw SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw PlayerBig_HoldWalk1
+	dw SprMap_PBig_HoldWalk1
 	db $02
 	db $00
-	dw PlayerBig_HoldWalk2
+	dw SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw PlayerBig_Hold
+	dw SprMap_PBig_Hold
 	db $02
 	db $00
-	dw PlayerBig_HoldWalk2
+	dw SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw PlayerBig_HoldWalk1
+	dw SprMap_PBig_HoldWalk1
 	db $90
 	db $00
-MbigHoldJump:
-	dw PlayerBig_HoldWalk1
+Anim_PBig_HoldJump:
+	dw SprMap_PBig_HoldWalk1
 	db $23
 	db $00
-	dw PlayerBig_HoldWalk1
+	dw SprMap_PBig_HoldWalk1
 	db $02
 	db $00
-	dw PlayerBig_HoldWalk1
+	dw SprMap_PBig_HoldWalk1
 	db $81
 	db $00
-MbigHoldDuck:
-	dw PlayerBig_DuckHold
+Anim_PBig_HoldDuck:
+	dw SprMap_PBig_DuckHold
 	db $08
 	db $00
-	dw PlayerBig_DuckHold
+	dw SprMap_PBig_DuckHold
 	db $80
 	db $00
-	dw PlayerBig_LookUp
+	dw SprMap_PBig_LookUp
 	db $02
 	db $00
-	dw PlayerBig_LookUp
+	dw SprMap_PBig_LookUp
 	db $80
 	db $00
-MbigHoldFall:
-	dw PlayerBig_HoldWalk2
+Anim_PBig_HoldFall:
+	dw SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw PlayerBig_HoldWalk2
+	dw SprMap_PBig_HoldWalk2
 	db $80
 	db $00
-MbigHoldSwim:
-	dw PlayerBig_Swim1
+Anim_PBig_HoldSwim:
+	dw SprMap_PBig_Swim1
 	db $03
 	db $00
-	dw PlayerBig_Swim1
+	dw SprMap_PBig_Swim1
 	db $03
 	db $00
-	dw PlayerBig_Swim1
+	dw SprMap_PBig_Swim1
 	db $03
 	db $00
-	dw PlayerBig_Swim1
+	dw SprMap_PBig_Swim1
 	db $03
 	db $00
-	dw PlayerBig_Swim1
+	dw SprMap_PBig_Swim1
 	db $80
 	db $00
-PlayerBig_Stand:
+SprMap_PBig_Stand:
 	db $02
 	db $04
 	db $84
@@ -962,7 +962,7 @@ PlayerBig_Stand:
 	db $32, $34
 	db $35, $37
 	db $36, $38
-PlayerBig_Walk1:
+SprMap_PBig_Walk1:
 	db $02
 	db $04
 	db $84
@@ -971,7 +971,7 @@ PlayerBig_Walk1:
 	db $2A, $2C
 	db $2D, $2F
 	db $2E, $30
-PlayerBig_Walk2:
+SprMap_PBig_Walk2:
 	db $02
 	db $04
 	db $84
@@ -980,7 +980,7 @@ PlayerBig_Walk2:
 	db $22, $24
 	db $25, $27
 	db $26, $28
-PlayerBig_Run1:
+SprMap_PBig_Run1:
 	db $03
 	db $04
 	db $85
@@ -989,7 +989,7 @@ PlayerBig_Run1:
 	db $62, $63, $FF
 	db $64, $65, $68
 	db $66, $67, $FF
-PlayerBig_Run3:
+SprMap_PBig_Run3:
 	db $03
 	db $04
 	db $85
@@ -998,7 +998,7 @@ PlayerBig_Run3:
 	db $62, $63, $FF
 	db $6D, $6E, $68
 	db $6F, $70, $FF
-PlayerBig_Run2:
+SprMap_PBig_Run2:
 	db $03
 	db $04
 	db $85
@@ -1007,7 +1007,7 @@ PlayerBig_Run2:
 	db $62, $63, $FF
 	db $69, $6A, $68
 	db $6B, $6C, $FF
-PlayerBig_RunJump:
+SprMap_PBig_RunJump:
 	db $03
 	db $04
 	db $85
@@ -1016,7 +1016,7 @@ PlayerBig_RunJump:
 	db $62, $63, $FF
 	db $71, $72, $68
 	db $73, $74, $76
-PlayerBig_Jump:
+SprMap_PBig_Jump:
 	db $02
 	db $04
 	db $89
@@ -1025,7 +1025,7 @@ PlayerBig_Jump:
 	db $63, $64
 	db $65, $6E
 	db $67, $70
-PlayerBig_Fall:
+SprMap_PBig_Fall:
 	db $02
 	db $04
 	db $89
@@ -1034,7 +1034,7 @@ PlayerBig_Fall:
 	db $6B, $6C
 	db $6D, $6E
 	db $6F, $70
-PlayerBig_Front:
+SprMap_PBig_Front:
 	db $02
 	db $04
 	db $88
@@ -1043,7 +1043,7 @@ PlayerBig_Front:
 	db $23, $24
 	db $25, $26
 	db $27, $28
-PlayerBig_Back:
+SprMap_PBig_Back:
 	db $42
 	db $04
 	db $89
@@ -1052,7 +1052,7 @@ PlayerBig_Back:
 	db $76, $7C
 	db $78, $77
 	db $7A, $79
-PlayerBig_Side1:
+SprMap_PBig_Side1:
 	db $02
 	db $04
 	db $84
@@ -1061,7 +1061,7 @@ PlayerBig_Side1:
 	db $32, $34
 	db $35, $37
 	db $36, $38
-PlayerBig_Side2:
+SprMap_PBig_Side2:
 	db $42
 	db $04
 	db $84
@@ -1070,7 +1070,7 @@ PlayerBig_Side2:
 	db $34, $32
 	db $37, $35
 	db $38, $36
-PlayerBig_Turn:
+SprMap_PBig_Turn:
 	db $02
 	db $04
 	db $86
@@ -1079,7 +1079,7 @@ PlayerBig_Turn:
 	db $A9, $AB
 	db $AC, $AE
 	db $AD, $AF
-PlayerBig_Duck:
+SprMap_PBig_Duck:
 	db $02
 	db $03
 	db $84
@@ -1087,7 +1087,7 @@ PlayerBig_Duck:
 	db $39, $3A
 	db $3B, $3D
 	db $3C, $2B
-PlayerBig_LookUp:
+SprMap_PBig_LookUp:
 	db $02
 	db $04
 	db $87
@@ -1096,7 +1096,7 @@ PlayerBig_LookUp:
 	db $F5, $F6
 	db $F7, $F8
 	db $F9, $FA
-PlayerBig_Swim1:
+SprMap_PBig_Swim1:
 	db $03
 	db $04
 	db $85
@@ -1105,7 +1105,7 @@ PlayerBig_Swim1:
 	db $62, $63, $FF
 	db $7C, $7D, $FF
 	db $73, $7B, $75
-PlayerBig_Swim2:
+SprMap_PBig_Swim2:
 	db $03
 	db $04
 	db $85
@@ -1114,7 +1114,7 @@ PlayerBig_Swim2:
 	db $62, $63, $FF
 	db $77, $78, $FF
 	db $73, $7A, $76
-PlayerBig_Climb1:
+SprMap_PBig_Climb1:
 	db $02
 	db $04
 	db $88
@@ -1123,7 +1123,7 @@ PlayerBig_Climb1:
 	db $2B, $2C
 	db $2D, $2E
 	db $2F, $30
-PlayerBig_Climb2:
+SprMap_PBig_Climb2:
 	db $42
 	db $04
 	db $88
@@ -1132,7 +1132,7 @@ PlayerBig_Climb2:
 	db $2C, $2B
 	db $2E, $2D
 	db $30, $2F
-PlayerBig_Victory:
+SprMap_PBig_Victory:
 	db $02
 	db $04
 	db $8B
@@ -1141,7 +1141,7 @@ PlayerBig_Victory:
 	db $EB, $EC
 	db $ED, $EE
 	db $EF, $F0
-PlayerBig_Hold:
+SprMap_PBig_Hold:
 	db $02
 	db $04
 	db $86
@@ -1150,7 +1150,7 @@ PlayerBig_Hold:
 	db $A1, $A3
 	db $B0, $B2
 	db $B1, $B3
-PlayerBig_HoldWalk1:
+SprMap_PBig_HoldWalk1:
 	db $02
 	db $04
 	db $86
@@ -1159,7 +1159,7 @@ PlayerBig_HoldWalk1:
 	db $A1, $A3
 	db $A4, $A6
 	db $A5, $A7
-PlayerBig_HoldWalk2:
+SprMap_PBig_HoldWalk2:
 	db $02
 	db $04
 	db $86
@@ -1168,7 +1168,7 @@ PlayerBig_HoldWalk2:
 	db $A1, $A3
 	db $AA, $AC
 	db $AB, $AD
-PlayerBig_DuckHold:
+SprMap_PBig_DuckHold:
 	db $02
 	db $03
 	db $86
@@ -1176,403 +1176,403 @@ PlayerBig_DuckHold:
 	db $B4, $B5
 	db $B6, $B7
 	db $B8, $B9
-PlayerFire_AnimTbl:
-	dw MfireStand
-	dw MfireWalk
-	dw MfireRun
-	dw MfireWalk
-	dw MfireJump
-	dw MfireSpin
-	dw MfireTurn
-	dw MfireDuck
-	dw MfireLookup
-	dw MfireLeap
-	dw MfireFall
-	dw MfireSink
-	dw MfireSwim
-	dw MfireClimb
-	dw MfireClimbMove
-	dw MfireLeap ;unused
-	dw MfireWin
-	dw MfireShootAir
-	dw MfireShootSwim
-	dw MfireShoot
-PlayerFireHold_AnimTbl:
-	dw MfireHold
-	dw MfireHoldWalk
-	dw MfireHoldRun
-	dw MfireHoldWalk
-	dw MfireHoldJump
-	dw MfireSpin
-	dw MfireTurn
-	dw MfireHoldDuck
-	dw MfireLookup
-	dw MfireSink
-	dw MfireHoldSwim ;unused but fully implemented
-	dw MfireSink
-	dw MfireSwim
-	dw MfireClimb
-	dw MfireClimbMove
-	dw MfireSink
-	dw MfireWin
-	dw MfireShootAir
-	dw MfireShootSwim
-	dw MfireShoot
-MfireStand:
-	dw PlayerFire_Stand
+AnimTbl_PFire:
+	dw Anim_PFire_Stand
+	dw Anim_PFire_Walk
+	dw Anim_PFire_Run
+	dw Anim_PFire_Walk
+	dw Anim_PFire_Jump
+	dw Anim_PFire_Spin
+	dw Anim_PFire_Turn
+	dw Anim_PFire_Duck
+	dw Anim_PFire_Lookup
+	dw Anim_PFire_RunJump
+	dw Anim_PFire_Fall
+	dw Anim_PFire_Sink
+	dw Anim_PFire_Swim
+	dw Anim_PFire_Climb
+	dw Anim_PFire_ClimbMove
+	dw Anim_PFire_RunJump ;unused
+	dw Anim_PFire_Win
+	dw Anim_PFire_ShootAir
+	dw Anim_PFire_ShootSwim
+	dw Anim_PFire_Shoot
+AnimTbl_PFire_Hold:
+	dw Anim_PFire_Hold
+	dw Anim_PFire_HoldWalk
+	dw Anim_PFire_HoldRun
+	dw Anim_PFire_HoldWalk
+	dw Anim_PFire_HoldJump
+	dw Anim_PFire_Spin
+	dw Anim_PFire_Turn
+	dw Anim_PFire_HoldDuck
+	dw Anim_PFire_Lookup
+	dw Anim_PFire_Sink
+	dw Anim_PFire_HoldSwim ;unused but fully implemented
+	dw Anim_PFire_Sink
+	dw Anim_PFire_Swim
+	dw Anim_PFire_Climb
+	dw Anim_PFire_ClimbMove
+	dw Anim_PFire_Sink
+	dw Anim_PFire_Win
+	dw Anim_PFire_ShootAir
+	dw Anim_PFire_ShootSwim
+	dw Anim_PFire_Shoot
+Anim_PFire_Stand:
+	dw SprMap_PFire_Stand
 	db $0A
 	db $00
-	dw PlayerFire_Stand
+	dw SprMap_PFire_Stand
 	db $80
 	db $00
-MfireWalk:
-	dw PlayerFire_Walk1
+Anim_PFire_Walk:
+	dw SprMap_PFire_Walk1
 	db $04
 	db $00
-	dw PlayerFire_Walk2
+	dw SprMap_PFire_Walk2
 	db $04
 	db $00
-	dw PlayerFire_Stand
+	dw SprMap_PFire_Stand
 	db $04
 	db $00
-	dw PlayerFire_Walk2
+	dw SprMap_PFire_Walk2
 	db $04
 	db $00
-	dw PlayerFire_Walk1
+	dw SprMap_PFire_Walk1
 	db $04
 	db $00
-	dw PlayerFire_Walk2
+	dw SprMap_PFire_Walk2
 	db $04
 	db $00
-	dw PlayerFire_Stand
+	dw SprMap_PFire_Stand
 	db $04
 	db $00
-	dw PlayerFire_Walk2
+	dw SprMap_PFire_Walk2
 	db $04
 	db $00
-	dw PlayerFire_Walk1
+	dw SprMap_PFire_Walk1
 	db $80
 	db $00
-MfireRun:
-	dw PlayerFire_Walk1
+Anim_PFire_Run:
+	dw SprMap_PFire_Walk1
 	db $02
 	db $00
-	dw PlayerFire_Walk2
+	dw SprMap_PFire_Walk2
 	db $02
 	db $00
-	dw PlayerFire_Stand
+	dw SprMap_PFire_Stand
 	db $02
 	db $00
-	dw PlayerFire_Walk2
+	dw SprMap_PFire_Walk2
 	db $02
 	db $00
-	dw PlayerFire_Walk1
+	dw SprMap_PFire_Walk1
 	db $02
 	db $00
-	dw PlayerFire_Walk2
+	dw SprMap_PFire_Walk2
 	db $02
 	db $00
-	dw PlayerFire_Stand
+	dw SprMap_PFire_Stand
 	db $02
 	db $00
-	dw PlayerFire_Walk2
+	dw SprMap_PFire_Walk2
 	db $02
 	db $00
-	dw PlayerFire_Walk1
+	dw SprMap_PFire_Walk1
 	db $02
 	db $00
-	dw PlayerFire_Walk2
+	dw SprMap_PFire_Walk2
 	db $02
 	db $00
-	dw PlayerFire_Stand
+	dw SprMap_PFire_Stand
 	db $02
 	db $00
-	dw PlayerFire_Walk2
+	dw SprMap_PFire_Walk2
 	db $02
 	db $00
-	dw PlayerFire_Walk1
+	dw SprMap_PFire_Walk1
 	db $02
 	db $00
-	dw PlayerFire_Walk2
+	dw SprMap_PFire_Walk2
 	db $02
 	db $00
-	dw PlayerFire_Stand
+	dw SprMap_PFire_Stand
 	db $02
 	db $00
-	dw PlayerFire_Walk2
+	dw SprMap_PFire_Walk2
 	db $02
 	db $00
-	dw PlayerFire_Run1
+	dw SprMap_PFire_Run1
 	db $02
 	db $00
-	dw PlayerFire_Run2
+	dw SprMap_PFire_Run2
 	db $02
 	db $00
-	dw PlayerFire_Run3
+	dw SprMap_PFire_Run3
 	db $02
 	db $00
-	dw PlayerFire_Run2
+	dw SprMap_PFire_Run2
 	db $02
 	db $00
-	dw PlayerFire_Run1
+	dw SprMap_PFire_Run1
 	db $90
 	db $00
-MfireJump:
-	dw PlayerFire_Jump
+Anim_PFire_Jump:
+	dw SprMap_PFire_Jump
 	db $23
 	db $00
-	dw PlayerFire_Fall
+	dw SprMap_PFire_Fall
 	db $02
 	db $00
-	dw PlayerFire_Fall
+	dw SprMap_PFire_Fall
 	db $81
 	db $00
-MfireLeap:
-	dw PlayerFire_RunJump
+Anim_PFire_RunJump:
+	dw SprMap_PFire_RunJump
 	db $0A
 	db $00
-	dw PlayerFire_RunJump
+	dw SprMap_PFire_RunJump
 	db $80
 	db $00
-MfireSpin:
-	dw PlayerFire_Front
+Anim_PFire_Spin:
+	dw SprMap_PFire_Front
 	db $01
 	db $00
-	dw PlayerFire_Back
+	dw SprMap_PFire_Back
 	db $01
 	db $00
-	dw PlayerFire_Stand
+	dw SprMap_PFire_Stand
 	db $01
 	db $00
-	dw PlayerFire_Flipped
+	dw SprMap_PFire_Flipped
 	db $01
 	db $00
-	dw PlayerFire_Front
+	dw SprMap_PFire_Front
 	db $80
 	db $00
-MfireTurn:
-	dw PlayerFire_Turn
+Anim_PFire_Turn:
+	dw SprMap_PFire_Turn
 	db $0A
 	db $00
-	dw PlayerFire_Turn
+	dw SprMap_PFire_Turn
 	db $80
 	db $00
-MfireDuck:
-	dw PlayerFire_Duck
+Anim_PFire_Duck:
+	dw SprMap_PFire_Duck
 	db $08
 	db $00
-	dw PlayerFire_Duck
+	dw SprMap_PFire_Duck
 	db $80
 	db $00
-MfireLookup:
-	dw PlayerFire_LookUp
+Anim_PFire_Lookup:
+	dw SprMap_PFire_LookUp
 	db $02
 	db $00
-	dw PlayerFire_LookUp
+	dw SprMap_PFire_LookUp
 	db $80
 	db $00
-MfireFall:
-	dw PlayerFire_Fall
+Anim_PFire_Fall:
+	dw SprMap_PFire_Fall
 	db $02
 	db $00
-	dw PlayerFire_Fall
+	dw SprMap_PFire_Fall
 	db $80
 	db $00
-MfireSink:
-	dw PlayerFire_Swim1
+Anim_PFire_Sink:
+	dw SprMap_PFire_Swim1
 	db $01
 	db $00
-	dw PlayerFire_Swim1
+	dw SprMap_PFire_Swim1
 	db $80
 	db $00
-MfireSwim:
-	dw PlayerFire_RunJump
+Anim_PFire_Swim:
+	dw SprMap_PFire_RunJump
 	db $03
 	db $00
-	dw PlayerFire_Swim2
+	dw SprMap_PFire_Swim2
 	db $03
 	db $00
-	dw PlayerFire_Swim1
+	dw SprMap_PFire_Swim1
 	db $03
 	db $00
-	dw PlayerFire_Swim2
+	dw SprMap_PFire_Swim2
 	db $03
 	db $00
-	dw PlayerFire_Fall
+	dw SprMap_PFire_Fall
 	db $80
 	db $00
-MfireClimb:
-	dw PlayerFire_Climb1
+Anim_PFire_Climb:
+	dw SprMap_PFire_Climb1
 	db $08
 	db $00
-	dw PlayerFire_Climb1
+	dw SprMap_PFire_Climb1
 	db $80
 	db $00
-MfireClimbMove:
-	dw PlayerFire_Climb1
+Anim_PFire_ClimbMove:
+	dw SprMap_PFire_Climb1
 	db $08
 	db $00
-	dw PlayerFire_Climb2
+	dw SprMap_PFire_Climb2
 	db $08
 	db $00
-	dw PlayerFire_Climb1
+	dw SprMap_PFire_Climb1
 	db $80
 	db $00
-MfireWin:
-	dw PlayerFire_Victory
+Anim_PFire_Win:
+	dw SprMap_PFire_Victory
 	db $0A
 	db $00
-	dw PlayerFire_Victory
+	dw SprMap_PFire_Victory
 	db $80
 	db $00
-MfireShootAir:
-	dw PlayerFire_Swim1
+Anim_PFire_ShootAir:
+	dw SprMap_PFire_Swim1
 	db $03
 	db $00
-	dw PlayerFire_Swim1
+	dw SprMap_PFire_Swim1
 	db $80
 	db $00
-MfireShootSwim:
-	dw PlayerFire_Swim2
+Anim_PFire_ShootSwim:
+	dw SprMap_PFire_Swim2
 	db $03
 	db $00
-	dw PlayerFire_Swim1
+	dw SprMap_PFire_Swim1
 	db $03
 	db $00
-	dw PlayerFire_Swim1
+	dw SprMap_PFire_Swim1
 	db $80
 	db $00
-MfireShoot:
-	dw PlayerFire_Shoot
+Anim_PFire_Shoot:
+	dw SprMap_PFire_Shoot
 	db $03
 	db $00
-	dw PlayerFire_Shoot
+	dw SprMap_PFire_Shoot
 	db $80
 	db $00
-MfireHold:
-	dw PlayerFire_Hold
+Anim_PFire_Hold:
+	dw SprMap_PFire_Hold
 	db $0A
 	db $00
-	dw PlayerFire_Hold
+	dw SprMap_PFire_Hold
 	db $80
 	db $00
-MfireHoldWalk:
-	dw PlayerFire_HoldWalk1
+Anim_PFire_HoldWalk:
+	dw SprMap_PFire_HoldWalk1
 	db $04
 	db $00
-	dw PlayerFire_HoldWalk2
+	dw SprMap_PFire_HoldWalk2
 	db $04
 	db $00
-	dw PlayerFire_Hold
+	dw SprMap_PFire_Hold
 	db $04
 	db $00
-	dw PlayerFire_HoldWalk2
+	dw SprMap_PFire_HoldWalk2
 	db $04
 	db $00
-	dw PlayerFire_HoldWalk1
+	dw SprMap_PFire_HoldWalk1
 	db $04
 	db $00
-	dw PlayerFire_HoldWalk2
+	dw SprMap_PFire_HoldWalk2
 	db $04
 	db $00
-	dw PlayerFire_Hold
+	dw SprMap_PFire_Hold
 	db $04
 	db $00
-	dw PlayerFire_HoldWalk2
+	dw SprMap_PFire_HoldWalk2
 	db $04
 	db $00
-	dw PlayerFire_HoldWalk1
+	dw SprMap_PFire_HoldWalk1
 	db $80
 	db $00
-MfireHoldRun:
-	dw PlayerFire_HoldWalk1
+Anim_PFire_HoldRun:
+	dw SprMap_PFire_HoldWalk1
 	db $02
 	db $00
-	dw PlayerFire_HoldWalk2
+	dw SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw PlayerFire_Hold
+	dw SprMap_PFire_Hold
 	db $02
 	db $00
-	dw PlayerFire_HoldWalk2
+	dw SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw PlayerFire_HoldWalk1
+	dw SprMap_PFire_HoldWalk1
 	db $02
 	db $00
-	dw PlayerFire_HoldWalk2
+	dw SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw PlayerFire_Hold
+	dw SprMap_PFire_Hold
 	db $02
 	db $00
-	dw PlayerFire_HoldWalk2
+	dw SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw PlayerFire_HoldWalk1
+	dw SprMap_PFire_HoldWalk1
 	db $02
 	db $00
-	dw PlayerFire_HoldWalk2
+	dw SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw PlayerFire_Hold
+	dw SprMap_PFire_Hold
 	db $02
 	db $00
-	dw PlayerFire_HoldWalk2
+	dw SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw PlayerFire_HoldWalk1
+	dw SprMap_PFire_HoldWalk1
 	db $02
 	db $00
-	dw PlayerFire_HoldWalk2
+	dw SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw PlayerFire_Hold
+	dw SprMap_PFire_Hold
 	db $02
 	db $00
-	dw PlayerFire_HoldWalk2
+	dw SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw PlayerFire_HoldWalk1
+	dw SprMap_PFire_HoldWalk1
 	db $02
 	db $00
-	dw PlayerFire_HoldWalk2
+	dw SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw PlayerFire_Hold
+	dw SprMap_PFire_Hold
 	db $02
 	db $00
-	dw PlayerFire_HoldWalk2
+	dw SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw PlayerFire_HoldWalk1
+	dw SprMap_PFire_HoldWalk1
 	db $90
 	db $00
-MfireHoldJump:
-	dw PlayerFire_HoldWalk1
+Anim_PFire_HoldJump:
+	dw SprMap_PFire_HoldWalk1
 	db $23
 	db $00
-	dw PlayerFire_HoldWalk1
+	dw SprMap_PFire_HoldWalk1
 	db $02
 	db $00
-	dw PlayerFire_HoldWalk1
+	dw SprMap_PFire_HoldWalk1
 	db $81
 	db $00
-MfireHoldDuck:
-	dw PlayerFire_DuckHold
+Anim_PFire_HoldDuck:
+	dw SprMap_PFire_DuckHold
 	db $08
 	db $00
-	dw PlayerFire_DuckHold
+	dw SprMap_PFire_DuckHold
 	db $80
 	db $00
-MfireHoldSwim:
-	dw PlayerFire_HoldWalk2
+Anim_PFire_HoldSwim:
+	dw SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw PlayerFire_HoldWalk2
+	dw SprMap_PFire_HoldWalk2
 	db $80
 	db $00
-PlayerFire_Stand:
+SprMap_PFire_Stand:
 	db $02
 	db $04
 	db $80
@@ -1581,7 +1581,7 @@ PlayerFire_Stand:
 	db $2D, $2F
 	db $18, $1A
 	db $19, $1B
-PlayerFire_Walk1:
+SprMap_PFire_Walk1:
 	db $02
 	db $04
 	db $80
@@ -1590,7 +1590,7 @@ PlayerFire_Walk1:
 	db $01, $03
 	db $04, $06
 	db $05, $07
-PlayerFire_Walk2:
+SprMap_PFire_Walk2:
 	db $02
 	db $04
 	db $80
@@ -1599,7 +1599,7 @@ PlayerFire_Walk2:
 	db $0B, $0D
 	db $0E, $28
 	db $0F, $29
-PlayerFire_Run1:
+SprMap_PFire_Run1:
 	db $03
 	db $04
 	db $83
@@ -1608,7 +1608,7 @@ PlayerFire_Run1:
 	db $E2, $E4, $FF
 	db $F0, $F2, $FC
 	db $F1, $F3, $FF
-PlayerFire_Run3:
+SprMap_PFire_Run3:
 	db $03
 	db $04
 	db $83
@@ -1617,7 +1617,7 @@ PlayerFire_Run3:
 	db $E2, $E4, $FF
 	db $F8, $FA, $FC
 	db $F9, $FB, $FF
-PlayerFire_Run2:
+SprMap_PFire_Run2:
 	db $03
 	db $04
 	db $83
@@ -1626,7 +1626,7 @@ PlayerFire_Run2:
 	db $E2, $E4, $FF
 	db $F4, $F6, $FC
 	db $F5, $F7, $FF
-PlayerFire_RunJump:
+SprMap_PFire_RunJump:
 	db $03
 	db $04
 	db $83
@@ -1635,7 +1635,7 @@ PlayerFire_RunJump:
 	db $E2, $E4, $FF
 	db $C0, $C2, $C6
 	db $C1, $C3, $C7
-PlayerFire_Jump:
+SprMap_PFire_Jump:
 	db $02
 	db $04
 	db $83
@@ -1644,7 +1644,7 @@ PlayerFire_Jump:
 	db $D9, $DB
 	db $DC, $E0
 	db $DD, $E1
-PlayerFire_Fall:
+SprMap_PFire_Fall:
 	db $02
 	db $04
 	db $83
@@ -1653,7 +1653,7 @@ PlayerFire_Fall:
 	db $EB, $EC
 	db $E6, $E0
 	db $E8, $E1
-PlayerFire_Front:
+SprMap_PFire_Front:
 	db $02
 	db $04
 	db $80
@@ -1662,7 +1662,7 @@ PlayerFire_Front:
 	db $25, $2A
 	db $26, $2B
 	db $27, $30
-PlayerFire_Back:
+SprMap_PFire_Back:
 	db $42
 	db $04
 	db $80
@@ -1671,7 +1671,7 @@ PlayerFire_Back:
 	db $39, $21
 	db $3A, $22
 	db $3B, $23
-PlayerFire_Flipped:
+SprMap_PFire_Flipped:
 	db $42
 	db $04
 	db $80
@@ -1680,7 +1680,7 @@ PlayerFire_Flipped:
 	db $2F, $2D
 	db $1A, $18
 	db $1B, $19
-PlayerFire_Turn:
+SprMap_PFire_Turn:
 	db $02
 	db $04
 	db $82
@@ -1689,7 +1689,7 @@ PlayerFire_Turn:
 	db $A9, $AB
 	db $AC, $AE
 	db $AD, $AF
-PlayerFire_Duck:
+SprMap_PFire_Duck:
 	db $02
 	db $03
 	db $80
@@ -1697,7 +1697,7 @@ PlayerFire_Duck:
 	db $31, $33
 	db $34, $36
 	db $35, $37
-PlayerFire_LookUp:
+SprMap_PFire_LookUp:
 	db $02
 	db $04
 	db $81
@@ -1706,7 +1706,7 @@ PlayerFire_LookUp:
 	db $42, $43
 	db $44, $45
 	db $46, $47
-PlayerFire_Swim1:
+SprMap_PFire_Swim1:
 	db $03
 	db $04
 	db $83
@@ -1715,7 +1715,7 @@ PlayerFire_Swim1:
 	db $E2, $E4, $FF
 	db $CC, $CE, $FF
 	db $CD, $CF, $E7
-PlayerFire_Swim2:
+SprMap_PFire_Swim2:
 	db $03
 	db $04
 	db $83
@@ -1724,7 +1724,7 @@ PlayerFire_Swim2:
 	db $E2, $E4, $FF
 	db $C8, $CA, $FF
 	db $C9, $CB, $C7
-PlayerFire_Climb1:
+SprMap_PFire_Climb1:
 	db $02
 	db $04
 	db $82
@@ -1733,7 +1733,7 @@ PlayerFire_Climb1:
 	db $B1, $B3
 	db $B4, $B6
 	db $B5, $B7
-PlayerFire_Climb2:
+SprMap_PFire_Climb2:
 	db $42
 	db $04
 	db $82
@@ -1742,7 +1742,7 @@ PlayerFire_Climb2:
 	db $B3, $B1
 	db $B6, $B4
 	db $B7, $B5
-PlayerFire_Victory:
+SprMap_PFire_Victory:
 	db $02
 	db $04
 	db $81
@@ -1751,7 +1751,7 @@ PlayerFire_Victory:
 	db $6A, $6B
 	db $6C, $6D
 	db $6E, $6F
-PlayerFire_Shoot:
+SprMap_PFire_Shoot:
 	db $02
 	db $04
 	db $80
@@ -1760,7 +1760,7 @@ PlayerFire_Shoot:
 	db $09, $0D
 	db $1C, $1E
 	db $1D, $1F
-PlayerFire_Hold:
+SprMap_PFire_Hold:
 	db $02
 	db $04
 	db $82
@@ -1769,7 +1769,7 @@ PlayerFire_Hold:
 	db $81, $83
 	db $A0, $A2
 	db $A1, $A3
-PlayerFire_DuckHold:
+SprMap_PFire_DuckHold:
 	db $02
 	db $03
 	db $81
@@ -1777,7 +1777,7 @@ PlayerFire_DuckHold:
 	db $78, $79
 	db $7A, $7B
 	db $7C, $7D
-PlayerFire_HoldWalk1:
+SprMap_PFire_HoldWalk1:
 	db $02
 	db $04
 	db $82
@@ -1786,7 +1786,7 @@ PlayerFire_HoldWalk1:
 	db $81, $83
 	db $A0, $A2
 	db $85, $87
-PlayerFire_HoldWalk2:
+SprMap_PFire_HoldWalk2:
 	db $02
 	db $04
 	db $82
@@ -1795,189 +1795,189 @@ PlayerFire_HoldWalk2:
 	db $81, $83
 	db $A0, $A2
 	db $8B, $8D
-PlayerCapeStatic_AnimTbl: ;player animations for when the cape isn't animating
-	dw McapeStand ;unique from normal sprite 
-	dw McapeWalk  ;larger mapping but otherwise identical
-	dw McapeRun	  ;this suggests that the cape may have originally been part of the player sprite
-	dw MbigWalk	  ;in game the cape is mostly a separate sprite bar a few frames
-	dw MbigJump
-	dw McapeSpin
-	dw MbigTurn
-	dw MbigDuck
-	dw McapeLookUp
-	dw MbigLeap
-	dw MbigFall
-	dw MbigSink
-	dw MbigSwim
-	dw McapeClimb
-	dw McapeClimbMove
-	dw MbigLeap
-	dw MbigWin  
-PlayerCapeStaticHold_AnimTbl: 
-	dw McapeHoldStand
-	dw MbigHoldWalk
-	dw McapeRun
-	dw MbigHoldWalk
-	dw MbigHoldJump
-	dw McapeSpin
-	dw MbigTurn
-	dw MbigHoldDuck
-	dw McapeLookUp
-	dw MbigSink
-	dw MbigHoldFall
-	dw MbigSink
-	dw MbigHoldSwim
-	dw McapeClimb
-	dw McapeClimbMove
-	dw MbigSink
-	dw MbigWin
-McapeStand:
-	dw PlayerCape_Stand
+AnimTbl_PCapeStatic: ;player animations for when the cape isn't animating
+	dw Anim_PCape_Stand ;unique from normal sprite 
+	dw Anim_PCape_Walk  ;larger mapping but otherwise identical
+	dw Anim_PCape_Run	  ;this suggests that the cape may have originally been part of the player sprite
+	dw Anim_PBig_Walk	  ;in game the cape is mostly a separate sprite bar a few frames
+	dw Anim_PBig_Jump
+	dw Anim_PCape_Spin
+	dw Anim_PBig_Turn
+	dw Anim_PBig_Duck
+	dw Anim_PCape_LookUp
+	dw Anim_PBig_RunJump
+	dw Anim_PBig_Fall
+	dw Anim_PBig_Sink
+	dw Anim_PBig_Swim
+	dw Anim_PCape_Climb
+	dw Anim_PCape_ClimbMove
+	dw Anim_PBig_RunJump
+	dw Anim_PBig_Win  
+AnimTbl_PCapeStatic_Hold: 
+	dw Anim_PCape_HoldStand
+	dw Anim_PBig_HoldWalk
+	dw Anim_PCape_Run
+	dw Anim_PBig_HoldWalk
+	dw Anim_PBig_HoldJump
+	dw Anim_PCape_Spin
+	dw Anim_PBig_Turn
+	dw Anim_PBig_HoldDuck
+	dw Anim_PCape_LookUp
+	dw Anim_PBig_Sink
+	dw Anim_PBig_HoldFall
+	dw Anim_PBig_Sink
+	dw Anim_PBig_HoldSwim
+	dw Anim_PCape_Climb
+	dw Anim_PCape_ClimbMove
+	dw Anim_PBig_Sink
+	dw Anim_PBig_Win
+Anim_PCape_Stand:
+	dw SprMap_PCape_Stand
 	db $0A
 	db $00
-	dw PlayerCape_Stand
+	dw SprMap_PCape_Stand
 	db $80
 	db $00
-McapeWalk:
-	dw PlayerBig_Walk1
+Anim_PCape_Walk:
+	dw SprMap_PBig_Walk1
 	db $04
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $04
 	db $00
-	dw PlayerCape_Stand
+	dw SprMap_PCape_Stand
 	db $04
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $04
 	db $00
-	dw PlayerBig_Walk1
+	dw SprMap_PBig_Walk1
 	db $04
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $04
 	db $00
-	dw PlayerCape_Stand
+	dw SprMap_PCape_Stand
 	db $04
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $04
 	db $00
-	dw PlayerBig_Walk1
+	dw SprMap_PBig_Walk1
 	db $80
 	db $00
-McapeRun:
-	dw PlayerBig_Walk1
+Anim_PCape_Run:
+	dw SprMap_PBig_Walk1
 	db $02
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw PlayerCape_Stand
+	dw SprMap_PCape_Stand
 	db $02
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw PlayerBig_Walk1
+	dw SprMap_PBig_Walk1
 	db $02
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw PlayerCape_Stand
+	dw SprMap_PCape_Stand
 	db $02
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw PlayerBig_Walk1
+	dw SprMap_PBig_Walk1
 	db $02
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw PlayerCape_Stand
+	dw SprMap_PCape_Stand
 	db $02
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw PlayerBig_Walk1
+	dw SprMap_PBig_Walk1
 	db $02
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw PlayerCape_Stand
+	dw SprMap_PCape_Stand
 	db $02
 	db $00
-	dw PlayerBig_Walk2
+	dw SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw PlayerBig_Run1
+	dw SprMap_PBig_Run1
 	db $02
 	db $00
-	dw PlayerBig_Run2
+	dw SprMap_PBig_Run2
 	db $02
 	db $00
-	dw PlayerBig_Run3
+	dw SprMap_PBig_Run3
 	db $02
 	db $00
-	dw PlayerBig_Run2
+	dw SprMap_PBig_Run2
 	db $02
 	db $00
-	dw PlayerBig_Run1
+	dw SprMap_PBig_Run1
 	db $90
 	db $00
-McapeSpin:
-	dw PlayerBig_Front
+Anim_PCape_Spin:
+	dw SprMap_PBig_Front
 	db $01
 	db $00
-	dw PlayerCape_Back
+	dw SprMap_PCape_Back
 	db $01
 	db $00
-	dw PlayerBig_Side1
+	dw SprMap_PBig_Side1
 	db $01
 	db $00
-	dw PlayerBig_Side2
+	dw SprMap_PBig_Side2
 	db $01
 	db $00
-	dw PlayerBig_Front
+	dw SprMap_PBig_Front
 	db $80
 	db $00
-McapeLookUp:
-	dw PlayerCape_LookUp
+Anim_PCape_LookUp:
+	dw SprMap_PCape_LookUp
 	db $02
 	db $00
-	dw PlayerCape_LookUp
+	dw SprMap_PCape_LookUp
 	db $80
 	db $00
-McapeClimb:
-	dw PlayerCape_Climb1
+Anim_PCape_Climb:
+	dw SprMap_PCape_Climb1
 	db $08
 	db $00
-	dw PlayerCape_Climb1
+	dw SprMap_PCape_Climb1
 	db $80
 	db $00
-McapeClimbMove:
-	dw PlayerCape_Climb1
+Anim_PCape_ClimbMove:
+	dw SprMap_PCape_Climb1
 	db $08
 	db $00
-	dw PlayerCape_Climb2
+	dw SprMap_PCape_Climb2
 	db $08
 	db $00
-	dw PlayerCape_Climb1
+	dw SprMap_PCape_Climb1
 	db $80
 	db $00
-McapeHoldStand:
-	dw PlayerCape_Hold
+Anim_PCape_HoldStand:
+	dw SprMap_PCape_Hold
 	db $0A
 	db $00
-	dw PlayerCape_Hold
+	dw SprMap_PCape_Hold
 	db $80
 	db $00
-PlayerCape_Stand:
+SprMap_PCape_Stand:
 	db $02
 	db $04
 	db $84
@@ -1986,7 +1986,7 @@ PlayerCape_Stand:
 	db $32, $34
 	db $35, $37
 	db $36, $3F
-PlayerCape_LookUp:
+SprMap_PCape_LookUp:
 	db $02
 	db $04
 	db $87
@@ -1995,7 +1995,7 @@ PlayerCape_LookUp:
 	db $F5, $F6
 	db $F7, $F8
 	db $F9, $FB
-PlayerCape_Back:
+SprMap_PCape_Back:
 	db $03
 	db $04
 	db $89
@@ -2004,7 +2004,7 @@ PlayerCape_Back:
 	db $72, $75, $76
 	db $FF, $77, $78
 	db $FF, $79, $7A
-PlayerCape_Climb1:
+SprMap_PCape_Climb1:
 	db $02
 	db $04
 	db $88
@@ -2013,7 +2013,7 @@ PlayerCape_Climb1:
 	db $2B, $2C
 	db $31, $32
 	db $33, $34
-PlayerCape_Climb2:
+SprMap_PCape_Climb2:
 	db $42
 	db $04
 	db $88
@@ -2022,7 +2022,7 @@ PlayerCape_Climb2:
 	db $2C, $2B
 	db $32, $31
 	db $34, $33
-PlayerCape_Hold:
+SprMap_PCape_Hold:
 	db $02
 	db $04
 	db $86
@@ -2031,320 +2031,320 @@ PlayerCape_Hold:
 	db $A1, $A3
 	db $B0, $B2
 	db $B1, $BB
-PlayerCapeMove_AnimTbl:
-	dw MbigStand
-	dw MbigWalk
-	dw MbigRun
-	dw MbigWalk
-	dw MbigHoldJump
-	dw MbigSpin
-	dw MbigTurn
-	dw MbigDuck
-	dw MbigLookUp
-	dw MbigLeap
-	dw MbigFall
-	dw MbigSink
-	dw MbigSwim
-	dw McapeClimb
-	dw McapeClimbMove
-	dw MbigLeap
-	dw MbigWin
-PlayerCapeMoveHold_AnimTbl:
-	dw MbigHold
-	dw MbigHoldWalk
-	dw MbigHoldRun
-	dw MbigHoldWalk
-	dw MbigHoldJump
-	dw MbigSpin
-	dw MbigTurn
-	dw MbigHoldDuck
-	dw MbigLookUp
-	dw MbigSink
-	dw MbigHoldFall
-	dw MbigSink
-	dw MbigHoldSwim
-	dw McapeClimb
-	dw McapeClimbMove
-	dw MbigSink
-	dw MbigWin
+AnimTbl_PCapeMove:
+	dw Anim_PBig_Stand
+	dw Anim_PBig_Walk
+	dw Anim_PBig_Run
+	dw Anim_PBig_Walk
+	dw Anim_PBig_HoldJump
+	dw Anim_PBig_Spin
+	dw Anim_PBig_Turn
+	dw Anim_PBig_Duck
+	dw Anim_PBig_LookUp
+	dw Anim_PBig_RunJump
+	dw Anim_PBig_Fall
+	dw Anim_PBig_Sink
+	dw Anim_PBig_Swim
+	dw Anim_PCape_Climb
+	dw Anim_PCape_ClimbMove
+	dw Anim_PBig_RunJump
+	dw Anim_PBig_Win
+AnimTbl_PCapeMove_Hold:
+	dw Anim_PBig_Hold
+	dw Anim_PBig_HoldWalk
+	dw Anim_PBig_HoldRun
+	dw Anim_PBig_HoldWalk
+	dw Anim_PBig_HoldJump
+	dw Anim_PBig_Spin
+	dw Anim_PBig_Turn
+	dw Anim_PBig_HoldDuck
+	dw Anim_PBig_LookUp
+	dw Anim_PBig_Sink
+	dw Anim_PBig_HoldFall
+	dw Anim_PBig_Sink
+	dw Anim_PBig_HoldSwim
+	dw Anim_PCape_Climb
+	dw Anim_PCape_ClimbMove
+	dw Anim_PBig_Sink
+	dw Anim_PBig_Win
 YoshiAnimTablesTbl_1:
-	dw Yoshi_AnimTbl
-	dw Yoshi_AnimTbl
-	dw Yoshi_AnimTbl
-	dw Yoshi_AnimTbl
-	dw Yoshi_AnimTbl
-Yoshi_AnimTbl:
-	dw Anim_YoshiStand ;Standing
-	dw Anim_YoshiWalk ;Walking
-	dw Anim_YoshiRun ;Running
-	dw Anim_YoshiWalk ;The forbidden action
-	dw Anim_YoshiJump ;Jumping
-	dw Anim_YoshiJump ;Spinning. Unseen for obvious reasons
-	dw Anim_YoshiTongueDuck ;Tongue out (Ducking)
-	dw Anim_YoshiDucking ;Ducking
-	dw Anim_YoshiStand ;Looking up
-	dw Anim_YoshiJump ;Running jump
-	dw Anim_YoshiFall ;Falling
-	dw Anim_YoshiFall ;Sinking
-	dw Anim_YoshiSwim ;Swimming
-	dw Anim_YoshiTongue ;Tongue out (Idle)
-	dw Anim_YoshiTongueWalk ;Tongue out (While moving)
-	dw Anim_YoshiJump ;Flying. Technically used, although rarely seen due to a control bug
-	dw Anim_YoshiStand ;Victory pose.
-Anim_YoshiStand:
-	dw Yoshi_Stand
+	dw AnimTbl_Yoshi
+	dw AnimTbl_Yoshi
+	dw AnimTbl_Yoshi
+	dw AnimTbl_Yoshi
+	dw AnimTbl_Yoshi
+AnimTbl_Yoshi:
+	dw Anim_Yoshi_Stand ;Standing
+	dw Anim_Yoshi_Walk ;Walking
+	dw Anim_Yoshi_Run ;Running
+	dw Anim_Yoshi_Walk ;The forbidden action
+	dw Anim_Yoshi_Jump ;Jumping
+	dw Anim_Yoshi_Jump ;Spinning. Unseen for obvious reasons
+	dw Anim_Yoshi_TongueDuck ;Tongue out (Ducking)
+	dw Anim_Yoshi_Ducking ;Ducking
+	dw Anim_Yoshi_Stand ;Looking up
+	dw Anim_Yoshi_Jump ;Running jump
+	dw Anim_Yoshi_Fall ;Falling
+	dw Anim_Yoshi_Fall ;Sinking
+	dw Anim_Yoshi_Swim ;Swimming
+	dw Anim_Yoshi_Tongue ;Tongue out (Idle)
+	dw Anim_Yoshi_TongueWalk ;Tongue out (While moving)
+	dw Anim_Yoshi_Jump ;Flying. Technically used, although rarely seen due to a control bug
+	dw Anim_Yoshi_Stand ;Victory pose.
+Anim_Yoshi_Stand:
+	dw SprMap_Yoshi_Stand
 	db $0A
 	db $00
-	dw Yoshi_Stand
+	dw SprMap_Yoshi_Stand
 	db $80
 	db $00
-Anim_YoshiWalk:
-	dw Yoshi_Walk1
+Anim_Yoshi_Walk:
+	dw SprMap_Yoshi_Walk1
 	db $04
 	db $00
-	dw Yoshi_Stand
+	dw SprMap_Yoshi_Stand
 	db $04
 	db $00
-	dw Yoshi_Walk1
+	dw SprMap_Yoshi_Walk1
 	db $04
 	db $00
-	dw Yoshi_Stand
+	dw SprMap_Yoshi_Stand
 	db $80
 	db $00
-Anim_YoshiRun:
-	dw Yoshi_Walk1
+Anim_Yoshi_Run:
+	dw SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw Yoshi_Stand
+	dw SprMap_Yoshi_Stand
 	db $01
 	db $00
-	dw Yoshi_Walk1
+	dw SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw Yoshi_Walk1
+	dw SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw Yoshi_Stand
+	dw SprMap_Yoshi_Stand
 	db $01
 	db $00
-	dw Yoshi_Walk1
+	dw SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw Yoshi_Walk1
+	dw SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw Yoshi_Stand
+	dw SprMap_Yoshi_Stand
 	db $01
 	db $00
-	dw Yoshi_Walk1
+	dw SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw Yoshi_Walk1
+	dw SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw Yoshi_Stand
+	dw SprMap_Yoshi_Stand
 	db $01
 	db $00
-	dw Yoshi_Walk1
+	dw SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw Yoshi_Walk1
+	dw SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw Yoshi_Stand
+	dw SprMap_Yoshi_Stand
 	db $01
 	db $00
-	dw Yoshi_Walk1
+	dw SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw Yoshi_Walk1
+	dw SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw Yoshi_Stand
+	dw SprMap_Yoshi_Stand
 	db $01
 	db $00
-	dw Yoshi_Walk1
+	dw SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw Yoshi_Stand
+	dw SprMap_Yoshi_Stand
 	db $80
 	db $00
-Anim_YoshiJump:
-	dw Yoshi_Jump
+Anim_Yoshi_Jump:
+	dw SprMap_Yoshi_Jump
 	db $23
 	db $00
-	dw Yoshi_Walk1
+	dw SprMap_Yoshi_Walk1
 	db $02
 	db $00
-	dw Yoshi_Jump
+	dw SprMap_Yoshi_Jump
 	db $81
 	db $00
-Anim_YoshiSwim:
-	dw Yoshi_Jump
+Anim_Yoshi_Swim:
+	dw SprMap_Yoshi_Jump
 	db $01
 	db $00
-	dw Yoshi_Jump
+	dw SprMap_Yoshi_Jump
 	db $80
 	db $00
-Anim_YoshiDucking:
-	dw Yoshi_Duck
+Anim_Yoshi_Ducking:
+	dw SprMap_Yoshi_Duck
 	db $01
 	db $00
-	dw Yoshi_Duck
+	dw SprMap_Yoshi_Duck
 	db $80
 	db $00
-Anim_YoshiFall:
-	dw Yoshi_Walk1
+Anim_Yoshi_Fall:
+	dw SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw Yoshi_Walk1
+	dw SprMap_Yoshi_Walk1
 	db $80
 	db $00
-	dw Yoshi_Stand
+	dw SprMap_Yoshi_Stand
 	db $0A
 	db $00
-	dw Yoshi_Stand
+	dw SprMap_Yoshi_Stand
 	db $80
 	db $00
-Anim_YoshiTongue:
-	dw Yoshi_Flinch1
+Anim_Yoshi_Tongue:
+	dw SprMap_Yoshi_Flinch1
 	db $01
 	db $00
-	dw Yoshi_Flinch1
+	dw SprMap_Yoshi_Flinch1
 	db $01
 	db $00
-	dw Yoshi_Flinch1
+	dw SprMap_Yoshi_Flinch1
 	db $01
 	db $00
-	dw Yoshi_Flinch1
+	dw SprMap_Yoshi_Flinch1
 	db $01
 	db $00
-	dw Yoshi_Flinch1
+	dw SprMap_Yoshi_Flinch1
 	db $01
 	db $00
-	dw Yoshi_Flinch1
+	dw SprMap_Yoshi_Flinch1
 	db $01
 	db $00
-	dw Yoshi_Tongue1
+	dw SprMap_Yoshi_Tongue1
 	db $02
 	db $00
-	dw Yoshi_Tongue2
+	dw SprMap_Yoshi_Tongue2
 	db $02
 	db $00
-	dw Yoshi_Tongue3
+	dw SprMap_Yoshi_Tongue3
 	db $02
 	db $00
-	dw Yoshi_Tongue4
+	dw SprMap_Yoshi_Tongue4
 	db $04
 	db $00
-	dw Yoshi_Tongue3
+	dw SprMap_Yoshi_Tongue3
 	db $02
 	db $00
-	dw Yoshi_Tongue2
+	dw SprMap_Yoshi_Tongue2
 	db $02
 	db $00
-	dw Yoshi_Tongue1
+	dw SprMap_Yoshi_Tongue1
 	db $02
 	db $00
-	dw Yoshi_Tongue1
+	dw SprMap_Yoshi_Tongue1
 	db $02
 	db $00
-	dw Yoshi_Flinch1
+	dw SprMap_Yoshi_Flinch1
 	db $80
 	db $00
-Anim_YoshiTongueDuck:
-	dw Yoshi_Duck
+Anim_Yoshi_TongueDuck:
+	dw SprMap_Yoshi_Duck
 	db $01
 	db $00
-	dw Yoshi_Duck
+	dw SprMap_Yoshi_Duck
 	db $01
 	db $00
-	dw Yoshi_Duck
+	dw SprMap_Yoshi_Duck
 	db $01
 	db $00
-	dw Yoshi_Duck
+	dw SprMap_Yoshi_Duck
 	db $01
 	db $00
-	dw Yoshi_Duck
+	dw SprMap_Yoshi_Duck
 	db $01
 	db $00
-	dw Yoshi_Duck
+	dw SprMap_Yoshi_Duck
 	db $01
 	db $00
-	dw Yoshi_Tongue1
+	dw SprMap_Yoshi_Tongue1
 	db $02
 	db $00
-	dw Yoshi_Tongue2
+	dw SprMap_Yoshi_Tongue2
 	db $02
 	db $00
-	dw Yoshi_Tongue3
+	dw SprMap_Yoshi_Tongue3
 	db $02
 	db $00
-	dw Yoshi_Tongue4
+	dw SprMap_Yoshi_Tongue4
 	db $04
 	db $00
-	dw Yoshi_Tongue3
+	dw SprMap_Yoshi_Tongue3
 	db $02
 	db $00
-	dw Yoshi_Tongue2
+	dw SprMap_Yoshi_Tongue2
 	db $02
 	db $00
-	dw Yoshi_Tongue1
+	dw SprMap_Yoshi_Tongue1
 	db $02
 	db $00
-	dw Yoshi_Tongue1
+	dw SprMap_Yoshi_Tongue1
 	db $02
 	db $00
-	dw Yoshi_Flinch1
+	dw SprMap_Yoshi_Flinch1
 	db $80
 	db $00
-Anim_YoshiTongueWalk:
-	dw Yoshi_Flinch1
+Anim_Yoshi_TongueWalk:
+	dw SprMap_Yoshi_Flinch1
 	db $01
 	db $00
-	dw Yoshi_Flinch1
+	dw SprMap_Yoshi_Flinch1
 	db $01
 	db $00
-	dw Yoshi_Flinch1
+	dw SprMap_Yoshi_Flinch1
 	db $01
 	db $00
-	dw Yoshi_Flinch2
+	dw SprMap_Yoshi_Flinch2
 	db $01
 	db $00
-	dw Yoshi_Flinch2
+	dw SprMap_Yoshi_Flinch2
 	db $01
 	db $00
-	dw Yoshi_Flinch2
+	dw SprMap_Yoshi_Flinch2
 	db $01
 	db $00
-	dw Yoshi_Tongue1
+	dw SprMap_Yoshi_Tongue1
 	db $02
 	db $00
-	dw Yoshi_Tongue2
+	dw SprMap_Yoshi_Tongue2
 	db $02
 	db $00
-	dw Yoshi_Tongue3
+	dw SprMap_Yoshi_Tongue3
 	db $02
 	db $00
-	dw Yoshi_Tongue4
+	dw SprMap_Yoshi_Tongue4
 	db $04
 	db $00
-	dw Yoshi_Tongue3
+	dw SprMap_Yoshi_Tongue3
 	db $02
 	db $00
-	dw Yoshi_Tongue2
+	dw SprMap_Yoshi_Tongue2
 	db $02
 	db $00
-	dw Yoshi_Tongue1
+	dw SprMap_Yoshi_Tongue1
 	db $02
 	db $00
-	dw Yoshi_Tongue1
+	dw SprMap_Yoshi_Tongue1
 	db $02
 	db $00
-	dw Yoshi_Flinch1
+	dw SprMap_Yoshi_Flinch1
 	db $80
 	db $00
-Yoshi_Stand:
+SprMap_Yoshi_Stand:
 	db $04
 	db $04
 	db $91
@@ -2353,7 +2353,7 @@ Yoshi_Stand:
 	db $78, $79, $7A, $FF
 	db $FF, $FF, $6D, $6E
 	db $FF, $FF, $6F, $70
-Yoshi_Walk1:
+SprMap_Yoshi_Walk1:
 	db $04
 	db $04
 	db $93
@@ -2362,7 +2362,7 @@ Yoshi_Walk1:
 	db $FA, $FB, $EB, $FF
 	db $FF, $EC, $ED, $EE
 	db $FF, $FF, $EF, $F0
-Yoshi_Jump:
+SprMap_Yoshi_Jump:
 	db $04
 	db $04
 	db $91
@@ -2371,7 +2371,7 @@ Yoshi_Jump:
 	db $FF, $74, $75, $FF
 	db $FF, $FF, $6D, $6E
 	db $FF, $FF, $7B, $7C
-Yoshi_Flinch1:
+SprMap_Yoshi_Flinch1:
 	db $04
 	db $04
 	db $91
@@ -2380,7 +2380,7 @@ Yoshi_Flinch1:
 	db $FF, $74, $75, $FF
 	db $FF, $FF, $6D, $6E
 	db $FF, $FF, $6F, $70
-Yoshi_Tongue1:
+SprMap_Yoshi_Tongue1:
 	db $04
 	db $03
 	db $9A
@@ -2388,7 +2388,7 @@ Yoshi_Tongue1:
 	db $AB, $AC, $FF, $FF
 	db $B8, $AF, $AE, $AD
 	db $B6, $B5, $B4, $B3
-Yoshi_Tongue2:
+SprMap_Yoshi_Tongue2:
 	db $05
 	db $03
 	db $9A
@@ -2396,7 +2396,7 @@ Yoshi_Tongue2:
 	db $FF, $AB, $AC, $FF, $FF
 	db $B2, $B0, $AF, $AE, $AD
 	db $FF, $B6, $B5, $B4, $B3
-Yoshi_Tongue3:
+SprMap_Yoshi_Tongue3:
 	db $06
 	db $03
 	db $9A
@@ -2404,7 +2404,7 @@ Yoshi_Tongue3:
 	db $FF, $FF, $AB, $AC, $FF, $FF
 	db $B2, $B1, $B0, $AF, $AE, $AD
 	db $FF, $FF, $B6, $B5, $B4, $B3
-Yoshi_Tongue4:
+SprMap_Yoshi_Tongue4:
 	db $07
 	db $03
 	db $9A
@@ -2412,7 +2412,7 @@ Yoshi_Tongue4:
 	db $FF, $FF, $FF, $AB, $AC, $FF, $FF
 	db $B2, $B1, $B1, $B0, $AF, $AE, $AD
 	db $FF, $FF, $FF, $B6, $B5, $B4, $B3
-Yoshi_Flinch2:
+SprMap_Yoshi_Flinch2:
 	db $04
 	db $04
 	db $93
@@ -2421,7 +2421,7 @@ Yoshi_Flinch2:
 	db $F4, $F5, $F6, $FF
 	db $FF, $FF, $F7, $EE
 	db $FF, $FF, $EF, $F0
-Yoshi_Duck:
+SprMap_Yoshi_Duck:
 	db $04
 	db $04
 	db $92
@@ -2455,115 +2455,115 @@ pnt3_CD36:
 	dw pnt3_CD78
 	dw pnt3_CD58
 pnt3_CD58:
-	dw YoshiEat_Stand
+	dw SprMap_YoshiEat_Stand
 	db $0A
 	db $00
-	dw YoshiEat_Stand
+	dw SprMap_YoshiEat_Stand
 	db $80
 	db $00
 pnt3_CD60:
-	dw YoshiEat_Walk2
+	dw SprMap_YoshiEat_Walk2
 	db $04
 	db $00
-	dw YoshiEat_Stand
+	dw SprMap_YoshiEat_Stand
 	db $04
 	db $00
-	dw YoshiEat_Stand
+	dw SprMap_YoshiEat_Stand
 	db $80
 	db $00
 pnt3_CD6C:
-	dw YoshiEat_Stand
+	dw SprMap_YoshiEat_Stand
 	db $01
 	db $00
-	dw YoshiEat_Walk2
+	dw SprMap_YoshiEat_Walk2
 	db $01
 	db $00
-	dw YoshiEat_Stand
+	dw SprMap_YoshiEat_Stand
 	db $80
 	db $00
 pnt3_CD78:
-	dw YoshiEat_Jump
+	dw SprMap_YoshiEat_Jump
 	db $23
 	db $00
-	dw YoshiEat_Walk2
+	dw SprMap_YoshiEat_Walk2
 	db $02
 	db $00
-	dw YoshiEat_Jump
+	dw SprMap_YoshiEat_Jump
 	db $81
 	db $00
 pnt3_CD84:
-	dw YoshiEat_Jump
+	dw SprMap_YoshiEat_Jump
 	db $01
 	db $00
-	dw YoshiEat_Jump
+	dw SprMap_YoshiEat_Jump
 	db $80
 	db $00
 pnt3_CD8C:
-	dw YoshiEat_Duck
+	dw SprMap_YoshiEat_Duck
 	db $01
 	db $00
-	dw YoshiEat_Duck
+	dw SprMap_YoshiEat_Duck
 	db $80
 	db $00
 pnt3_CD94:
-	dw YoshiEat_Walk2
+	dw SprMap_YoshiEat_Walk2
 	db $01
 	db $00
-	dw YoshiEat_Walk2
+	dw SprMap_YoshiEat_Walk2
 	db $80
 	db $00
-	dw YoshiEat_Stand
+	dw SprMap_YoshiEat_Stand
 	db $0A
 	db $00
-	dw YoshiEat_Stand
+	dw SprMap_YoshiEat_Stand
 	db $80
 	db $00
 pnt3_CDA4:
-	dw YoshiSpit_Duck
+	dw SprMap_YoshiSpit_Duck
 	db $04
 	db $00
-	dw YoshiSpit_Duck
+	dw SprMap_YoshiSpit_Duck
 	db $04
 	db $00
-	dw YoshiSpit_Duck
+	dw SprMap_YoshiSpit_Duck
 	db $80
 	db $00
 pnt3_CDB0:
-	dw YoshiSpit_Stand
+	dw SprMap_YoshiSpit_Stand
 	db $02
 	db $00
-	dw YoshiSpit_Stand
+	dw SprMap_YoshiSpit_Stand
 	db $02
 	db $00
-	dw YoshiSpit_Stand
+	dw SprMap_YoshiSpit_Stand
 	db $02
 	db $00
-	dw YoshiSpit_Stand
+	dw SprMap_YoshiSpit_Stand
 	db $02
 	db $00
-	dw YoshiSpit_Stand
+	dw SprMap_YoshiSpit_Stand
 	db $80
 	db $00
 pnt3_CDC4:
-	dw YoshiSpit_Stand
+	dw SprMap_YoshiSpit_Stand
 	db $02
 	db $00
-	dw YoshiSpit_Stand
+	dw SprMap_YoshiSpit_Stand
 	db $02
 	db $00
-	dw YoshiSpit_Stand
+	dw SprMap_YoshiSpit_Stand
 	db $02
 	db $00
-	dw YoshiSpit_Stand
+	dw SprMap_YoshiSpit_Stand
 	db $02
 	db $00
-	dw YoshiSpit_Stand
+	dw SprMap_YoshiSpit_Stand
 	db $02
 	db $00
-	dw YoshiSpit_Stand
+	dw SprMap_YoshiSpit_Stand
 	db $80
 	db $00
-YoshiEat_Stand:
+SprMap_YoshiEat_Stand:
 	db $04
 	db $05
 	db $9B
@@ -2573,7 +2573,7 @@ YoshiEat_Stand:
 	db $FA, $FB, $FC, $FF
 	db $FF, $FF, $FD, $F2
 	db $FF, $FF, $EB, $F5
-YoshiEat_Walk2:
+SprMap_YoshiEat_Walk2:
 	db $03
 	db $04
 	db $A3
@@ -2582,7 +2582,7 @@ YoshiEat_Walk2:
 	db $FB, $FC, $FF
 	db $FD, $F0, $EB
 	db $FF, $F4, $F3
-YoshiEat_Jump:
+SprMap_YoshiEat_Jump:
 	db $04
 	db $04
 	db $9B
@@ -2591,7 +2591,7 @@ YoshiEat_Jump:
 	db $EE, $EF, $F0, $FF
 	db $FF, $FF, $F1, $F2
 	db $FF, $FF, $F3, $F4
-YoshiEat_Duck:
+SprMap_YoshiEat_Duck:
 	db $04
 	db $04
 	db $A0
@@ -2600,7 +2600,7 @@ YoshiEat_Duck:
 	db $38, $39, $3A, $FF
 	db $FF, $3B, $3C, $3D
 	db $FF, $FF, $3F, $35
-YoshiSpit_Stand:
+SprMap_YoshiSpit_Stand:
 	db $04
 	db $04
 	db $91
@@ -2609,7 +2609,7 @@ YoshiSpit_Stand:
 	db $FF, $6B, $6C, $FF
 	db $FF, $FF, $6D, $6E
 	db $FF, $FF, $6F, $70
-YoshiSpit_Duck:
+SprMap_YoshiSpit_Duck:
 	db $04
 	db $04
 	db $A0
@@ -2643,30 +2643,30 @@ pnt3_CE5E:
 	dw pnt3_CE98
 	dw pnt3_CE80
 pnt3_CE80:
-	dw YoshiEat_Stand
+	dw SprMap_YoshiEat_Stand
 	db $04
 	db $00
-	dw Yoshi_Stand
+	dw SprMap_Yoshi_Stand
 	db $04
 	db $00
-	dw YoshiEat_Stand
+	dw SprMap_YoshiEat_Stand
 	db $80
 	db $00
 pnt3_CE8C:
-	dw YoshiEat_Walk2
+	dw SprMap_YoshiEat_Walk2
 	db $04
 	db $00
-	dw Yoshi_Stand
+	dw SprMap_Yoshi_Stand
 	db $04
 	db $00
-	dw YoshiEat_Stand
+	dw SprMap_YoshiEat_Stand
 	db $80
 	db $00
 pnt3_CE98:
-	dw YoshiEat_Stand
+	dw SprMap_YoshiEat_Stand
 	db $0A
 	db $00
-	dw YoshiEat_Stand
+	dw SprMap_YoshiEat_Stand
 	db $80
 	db $00
 pnt3_CEA0:
@@ -2718,85 +2718,38 @@ pnt3_CED8:
 	db $05
 	db $A1
 	db $18
-	db $FF
-	db $75
-	db $76
-	db $FF
-	db $77
-	db $78
-	db $79
-	db $FF
-	db $7A
-	db $7B
-	db $7C
-	db $FF
-	db $FF
-	db $7F
-	db $7D
-	db $72
-	db $FF
-	db $FF
-	db $73
-	db $74
+	db $FF, $75, $76, $FF
+	db $77, $78, $79, $FF
+	db $7A, $7B, $7C, $FF
+	db $FF, $7F, $7D, $72
+	db $FF, $FF, $73, $74
 pnt3_CEF0:
 	db $04
 	db $04
 	db $A1
 	db $18
-	db $FF
-	db $6B
-	db $6C
-	db $FF
-	db $6D
-	db $6E
-	db $6F
-	db $FF
-	db $FF
-	db $70
-	db $71
-	db $72
-	db $FF
-	db $FF
-	db $73
-	db $74
+	db $FF, $6B, $6C, $FF
+	db $6D, $6E, $6F, $FF
+	db $FF, $70, $71, $72
+	db $FF, $FF, $73, $74
 pnt3_CF04:
 	db $03
 	db $04
 	db $A2
 	db $10
-	db $AB
-	db $AC
-	db $FF
-	db $AD
-	db $AE
-	db $FF
-	db $AF
-	db $B0
-	db $B1
-	db $FF
-	db $B2
-	db $B3
+	db $AB, $AC, $FF
+	db $AD, $AE, $FF
+	db $AF, $B0, $B1
+	db $FF, $B2, $B3
 pnt3_CF14:
 	db $04
 	db $04
 	db $A2
 	db $18
-	db $FF
-	db $B4
-	db $B5
-	db $FF
-	db $B6
-	db $B7
-	db $B8
-	db $FF
-	db $FF
-	db $B9
-	db $BA
-	db $B1
-	db $FF
-	db $FF
-	db $B2
-	db $B3
+	db $FF, $B4, $B5, $FF
+	db $B6, $B7, $B8, $FF
+	db $FF, $B9, $BA, $B1
+	db $FF, $FF, $B2, $B3
 	db $00
 	db $00
 	db $00

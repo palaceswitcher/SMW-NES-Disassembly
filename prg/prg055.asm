@@ -151,9 +151,9 @@ ptr6_820E:
 	LDA EnemyAnimFrame,X
 	ASL
 	TAX ;Get index for current frame
-	LDA KoopaMappings,X
+	LDA Koopa_SprMapPtrs,X
 	STA $32
-	LDA KoopaMappings+1,X
+	LDA Koopa_SprMapPtrs+1,X
 	STA $33 ;Load mapping pointer
 	LDY #$80
 	LDX $A4
@@ -165,37 +165,37 @@ bra8_822C:
 	STY $36
 	LDA ObjectState,X
 	AND #%01000000
-	STA $05F0 ;Store object's horizontal direction
+	STA ObjectAttributes ;Store object's horizontal direction
 	JSR jmp_52_A118
 	RTS
 
-KoopaMappings:
-	dw BeachKoopaWalk1
-	dw BeachKoopaWalk2
-	dw BeachKoopaSlide
-	dw KoopaWalk1
-	dw KoopaWalk2
-	dw ParatroopaWalk1
-	dw ParatroopaWalk2
-BeachKoopaWalk1:
+Koopa_SprMapPtrs:
+	dw SprMap_BeachKoopaWalk1
+	dw SprMap_BeachKoopaWalk2
+	dw SprMap_BeachKoopaSlide
+	dw SprMap_KoopaWalk1
+	dw SprMap_KoopaWalk2
+	dw SprMap_ParatroopaWalk1
+	dw SprMap_ParatroopaWalk2
+SprMap_BeachKoopaWalk1:
 	db $02
 	db $02
 	db $94
 	db $01, $02
 	db $06, $07
-BeachKoopaWalk2:
+SprMap_BeachKoopaWalk2:
 	db $02
 	db $02
 	db $94
 	db $01, $03
 	db $08, $09
-BeachKoopaSlide:
+SprMap_BeachKoopaSlide:
 	db $02
 	db $02
 	db $94
 	db $04, $05
 	db $0A, $0B
-KoopaWalk1:
+SprMap_KoopaWalk1:
 	db $02
 	db $04
 	db $94
@@ -203,7 +203,7 @@ KoopaWalk1:
 	db $18, $19
 	db $27, $28
 	db $35, $36
-KoopaWalk2:
+SprMap_KoopaWalk2:
 	db $02
 	db $04
 	db $94
@@ -211,7 +211,7 @@ KoopaWalk2:
 	db $1A, $1B
 	db $29, $2A
 	db $37, $38
-ParatroopaWalk1:
+SprMap_ParatroopaWalk1:
 	db $04
 	db $04
 	db $94
@@ -219,7 +219,7 @@ ParatroopaWalk1:
 	db $1C, $1D, $1E, $1F
 	db $FF, $2C, $2D, $2E
 	db $FF, $39, $3A, $FF
-ParatroopaWalk2:
+SprMap_ParatroopaWalk2:
 	db $04
 	db $04
 	db $94
@@ -859,7 +859,7 @@ bra8_8853:
 bra8_8874:
 	STY $36
 	LDA #$00
-	STA $05F0
+	STA ObjectAttributes
 	JSR jmp_54_A118
 	RTS
 tbl8_887F:
@@ -1193,7 +1193,7 @@ bra8_8AE3:
 	STY $36
 	LDA ObjectState,X
 	AND #$40
-	STA $05F0
+	STA ObjectAttributes
 	JSR jmp_54_A118
 	RTS
 tbl8_8AF1:
@@ -1476,7 +1476,7 @@ ptr6_8CDE:
 bra8_8D00:
 	STY $36
 	LDA #$00
-	STA $05F0
+	STA ObjectAttributes
 	JSR jmp_54_A118
 	RTS
 tbl8_8D0B:
@@ -1673,7 +1673,7 @@ bra8_8E21:
 bra8_8E3B:
 	STY $36
 	LDA #$00
-	STA $05F0
+	STA ObjectAttributes
 	JSR jmp_54_A118
 	RTS
 tbl8_8E46:
@@ -1880,7 +1880,7 @@ bra8_8FC5:
 	STY $36
 	LDA ObjectState,X
 	AND #$40
-	STA $05F0
+	STA ObjectAttributes
 	JSR jmp_54_A118
 	RTS
 tbl8_8FD3:
@@ -2073,7 +2073,7 @@ bra8_912B:
 	LDA ObjectState,X
 	AND #$40
 bra8_9130:
-	STA $05F0
+	STA ObjectAttributes
 	LDA ObjFrameCounter
 	AND #$04
 	BEQ bra8_913B
@@ -2377,7 +2377,7 @@ bra8_936A:
 	STY $36
 	LDA ObjectState,X
 	AND #$40
-	STA $05F0
+	STA ObjectAttributes
 loc8_9374:
 	LDA $06E1
 	PHA
@@ -2743,7 +2743,7 @@ bra8_95F6:
 	STA ObjectState,X
 bra8_960A:
 	AND #$40
-	STA $05F0
+	STA ObjectAttributes
 	JMP loc8_9374
 tbl8_9612:
 	dw StunMechakoopa1
