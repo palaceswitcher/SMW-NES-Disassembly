@@ -3,63 +3,11 @@
 ;----------------------------------------
 Obj_Koopa:
 	LDX $A4 ;Get index of current object
-;Calculate horizontal distance between player and Koopa
-	LDA ObjectXPos,X
-	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X 
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
-	STA $28
-
-	BEQ @CalcVertDist ;Continue if the player is to the left of the Koopa (within one screen)
-	CMP #$FF
-	BEQ @CalcVertDist ;Continue if the player is to the right of the Koopa (within one screne)
-		JMP Obj_RemoveObject ;Otherwise, remove the off-screen Koopa
-
-;Calculate vertical distance between the player and Koopa
-@CalcVertDist:
-	LDA ObjectYPos,X
-	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X ;Get object's vertical distance from player
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
-	BEQ @CheckIfFrozen ;Branch if the object and player are on the same vertical screen
-	LDA ObjYScreenDistance,X
-	BPL @OffsetObjDistance ;Branch if the player is on a higher vertical screen than the object
-	;Add 16 to the Koopa's vertical distance if they're below the object
-		LDA ObjectYDistance,X
-		CLC
-		ADC #16
-		STA ObjectYDistance,X ;Increase the vertical distance value by 16
-		LDA ObjYScreenDistance,X
-		ADC #$00
-		STA ObjYScreenDistance,X ;Increase the vertical screen distance if needed
-		JMP @CheckIfFrozen
-
-	;Subtract the Koopa's vertical distance by 16 if they're above the object
-	@OffsetObjDistance:
-		LDA ObjectYDistance,X
-		SEC
-		SBC #16
-		STA ObjectYDistance,X
-		LDA ObjYScreenDistance,X
-		SBC #$00
-		STA ObjYScreenDistance,X
-
-@CheckIfFrozen:
-	LDA FreezeFlag
-	BEQ bra8_8066 ;Only continue if the game isn't frozen
-	RTS
+	Obj_DistCalc bra8_8066
 
 ;Animate the Koopa
 bra8_8066:
-	JSR sub8_8096
+	JSR GenObj_Koopa
 	LDY #$03
 	LDA ObjFrameCounter
 	AND #$08
@@ -77,7 +25,7 @@ bra8_8066:
 		AND #$01
 		BNE @Stop ;Only continue every even frame
 			LDA #$10
-			JSR GetMovementData ;Get animation data for Koopa
+			JSR GetMovementData ;Get movement data for Koopa
 	@Stop:
 		RTS
 
@@ -86,72 +34,19 @@ GetRedKoopaMovementData:
 	AND #$01
 	BNE @Stop ;Only continue every even frame
 		LDA #$10
-		JSR sub_54_B3B4 ;Load animation data for Koopa
+		JSR sub_54_B3B4 ;Load movement data for Koopa
 @Stop:
 	RTS
 
 ;----------------------------------------
 ;SUBROUTINE ($8096)
-;Runs the Koopa's object code.
+;Generic code for all Koopas, used only by the red Koopa
 ;----------------------------------------
-sub8_8096:
+GenObj_Koopa:
 	LDA #$04
 	STA $25 ;Spit fire when eaten
-;Calculate horizontal distance between player and Koopa
-	LDX $A4
-	LDA ObjectXPos,X
-	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
-	STA $28
-
-	BEQ @CalcVertDist ;Continue if the player is to the left of the Koopa (within one screen)
-	CMP #$FF
-	BEQ @CalcVertDist ;Continue if the player is to the right of the Koopa (within one screne)
-		JMP Obj_RemoveObject ;Otherwise, remove the off-screen Koopa
-
-;Calculate vertical distance between the player and Koopa
-@CalcVertDist:
-	LDA ObjectYPos,X
-	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
-	BEQ @CheckIfFrozen
-	LDA ObjYScreenDistance,X
-	BPL @OffsetObjDistance
-
-	;Add 16 to the Koopa's vertical distance if they're below the object
-		LDA ObjectYDistance,X
-		CLC
-		ADC #16
-		STA ObjectYDistance,X ;Increase the vertical distance value by 16
-		LDA ObjYScreenDistance,X
-		ADC #$00
-		STA ObjYScreenDistance,X ;Increase the vertical screen distance if needed
-		JMP @CheckIfFrozen
-
-	;Subtract the Koopa's vertical distance by 16 if they're above the object
-	@OffsetObjDistance:
-		LDA ObjectYDistance,X
-		SEC
-		SBC #$10
-		STA ObjectYDistance,X
-		LDA ObjYScreenDistance,X
-		SBC #$00
-		STA ObjYScreenDistance,X
-
-@CheckIfFrozen:
-	LDA FreezeFlag
-	BEQ Koopa_GetFunction ;Only continue if the game isn't frozen
-	RTS
+	LDX $A4 ;Get index of current object
+	Obj_DistCalc Koopa_GetFunction ;Only continue if the game isn't frozen
 
 Koopa_GetFunction:
 	LDA ObjectState,X
@@ -166,87 +61,50 @@ Koopa_GetFunction:
 tbl8_8114:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
-	dw ptr_811E
-	dw ptr_8201
+	dw Obj_PowerupEatCheck
+	dw Koopa_HitCheck
+	dw Koopa_HitRespond
 
-ptr_811E:
+Koopa_HitCheck:
 	JSR Obj_CapeHitCheck ;Cape hit check
 	JSR Obj_PlayerHitCheck ;Check for collision
-	JSR Obj_KillOnSpinJump ;If the player is touching the Koopa and not hurt, kill it if spin jumped on
+	JSR Obj_KillOnSpinJump ;If the player is touching the Koopa and not hurt, kill it if it's being spin jumped on
 	JSR Obj_StompKnockback ;The player must be jumping on it like normal if it's reached this point, so knock them back
 	LDA #16
 	BMI bra8_8147 ;Redundant branch (16 isn't negative)
 	CLC
 	ADC ObjectYPos,X
-	STA ObjectYPos,X ;Position the new object 16 pixels lower
-	BCS bra8_813B ;Branch if the new object spawns crossing a vertical screen boundary
+	STA ObjectYPos,X ;Position the Beach Koopa 16 pixels lower
+	BCS bra8_813B ;Add 16 if the vertical screen is crossed
 	CMP #$F0
-	BCC loc8_8159 ;Branch if the object spawns more than 16 pixels below the screen boundary
+	BCC loc8_8159 ;Branch if it spawns more than 16 pixels below the screen boundary
+
+;Add 16 to the Beach Koopa's position if it crosses a vertical screen boundary
 bra8_813B:
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA ObjectYPos,X ;unlogged
-	INC ObjectYScreen,X ;unlogged
-	JMP loc8_8159 ;unlogged
+	CLC
+	ADC #16
+	STA ObjectYPos,X
+	INC ObjectYScreen,X ;Add 16 to vertical position (assuming overflow)
+	JMP loc8_8159
+
+;Subtracts 16 from the Beach Koopa's position, goes unused
 bra8_8147:
-	CLC ;unlogged
-	ADC ObjectYPos,X ;unlogged
-	STA ObjectYPos,X ;unlogged
-	BCS loc8_8159 ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA ObjectYPos,X ;unlogged
-	DEC ObjectYScreen,X ;unlogged
+	CLC
+	ADC ObjectYPos,X
+	STA ObjectYPos,X
+	BCS loc8_8159
+	SEC
+	SBC #16
+	STA ObjectYPos,X
+	DEC ObjectYScreen,X
+
+;Calculate horizontal distance between the new object and player
 loc8_8159:
-	LDA ObjectXPos,X
-	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X ;Calculate horizontal distance between the koopa and player
-	STA $28
-	BEQ bra8_8175
-	CMP #$FF
-	BEQ bra8_8175
-	JMP Obj_RemoveObject ;unlogged
-bra8_8175:
-	LDA ObjectYPos,X
-	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
-	BEQ loc8_81B7
-	LDA ObjYScreenDistance,X ;unlogged
-	BPL bra8_81A6 ;unlogged
-	LDA ObjectYDistance,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA ObjectYDistance,X ;unlogged
-	LDA ObjYScreenDistance,X ;unlogged
-	ADC #$00 ;unlogged
-	STA ObjYScreenDistance,X ;unlogged
-	JMP loc8_81B7 ;unlogged
-bra8_81A6:
-	LDA ObjectYDistance,X ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA ObjectYDistance,X ;unlogged
-	LDA ObjYScreenDistance,X ;unlogged
-	SBC #$00 ;unlogged
-	STA ObjYScreenDistance,X ;unlogged
-loc8_81B7:
-	LDA FreezeFlag
-	BEQ bra8_81BD
-	RTS ;unlogged
+	Obj_DistCalc bra8_81BD
+
 bra8_81BD:
-	LDY ObjectCount ;Set index for current object
-	INC ObjectCount ;Add it to the total amount of objects
+	LDY ObjectCount ;Set index for the newly-spawned Beach Koopa
+	INC ObjectCount ;Add to object slot
 	;Copy coordinates to new object
 	LDA ObjectXPos,X
 	STA ObjectXPos,Y
@@ -258,8 +116,8 @@ bra8_81BD:
 	STA ObjectYScreen,Y
 	
 	LDA ObjectState,X
-	AND #%01000000 ;Ignore everything but the object direction
-	ORA #%10000000 ;Make shell-less koopa slide
+	AND #%01000000 ;Spawn the Beach Koopa in the same direction
+	ORA #%10000000 ;Set bit 7 (unsure of what this does)
 	STA ObjectState,Y
 	LDA #$80
 	STA ObjectVariables,Y ;Set speed to 128?
@@ -269,29 +127,34 @@ bra8_81BD:
 	CLC
 	ADC #$12
 	STA ObjectSlot,Y ;Spawn the appropriate shell-less Koopa for the Koopa variant(?)
-	LDA #$04
+	LDA #objID_Shell
 	STA ObjectSlot,X ;Spawn a shell in place of the Koopa
 	LDA #$08
 	STA ObjectState,X ;Make shell bounce off
 	RTS
 
-ptr_8201:
-	LDX $A4 ;Set index for previous object?
-	LDA #$04
-	STA ObjectSlot,X ;Spawn shell in place of Koopa.
+;Spawn a shell in place of the Koopa when hit
+Koopa_HitRespond:
+	LDX $A4 ;Get index for previous object?
+	LDA #objID_Shell
+	STA ObjectSlot,X ;Spawn shell in place of Koopa
 	LDA #$00
 	STA ObjectVariables,X ;Clear speed?
 	RTS
 
+;----------------------------------------
+;KOOPA GRAPHICAL CODE ($820E)
+;Used by every Koopa variant
+;----------------------------------------
 ptr6_820E:
-	LDX $A4
+	LDX $A4 ;Get current object index
 	LDA EnemyAnimFrame,X
 	ASL
-	TAX
+	TAX ;Get index for current frame
 	LDA KoopaMappings,X
 	STA $32
 	LDA KoopaMappings+1,X
-	STA $33
+	STA $33 ;Load mapping pointer
 	LDY #$80
 	LDX $A4
 	LDA ObjectSlot,X
@@ -301,8 +164,8 @@ ptr6_820E:
 bra8_822C:
 	STY $36
 	LDA ObjectState,X
-	AND #$40
-	STA $05F0
+	AND #%01000000
+	STA $05F0 ;Store object's horizontal direction
 	JSR jmp_52_A118
 	RTS
 
@@ -364,53 +227,14 @@ ParatroopaWalk2:
 	db $23, $24, $25, $26
 	db $31, $32, $33, $34
 	db $FF, $3E, $3F, $FF
+
+;----------------------------------------
+;BOUNCING PARATROOPA OBJECT CODE ($8299)
+;----------------------------------------
 Obj_h14:
-	LDX $A4
-	LDA ObjectXPos,X
-	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
-	STA $28
-	BEQ bra8_82B7
-	CMP #$FF
-	BEQ bra8_82B7
-	JMP Obj_RemoveObject
-bra8_82B7:
-	LDA ObjectYPos,X
-	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
-	BEQ loc8_82F9
-	LDA ObjYScreenDistance,X
-	BPL bra8_82E8
-	LDA ObjectYDistance,X
-	CLC
-	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	ADC #$00
-	STA ObjYScreenDistance,X
-	JMP loc8_82F9
-bra8_82E8:
-	LDA ObjectYDistance,X
-	SEC
-	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	SBC #$00
-	STA ObjYScreenDistance,X
-loc8_82F9:
-	LDA FreezeFlag
-	BEQ bra8_82FF
-	RTS
+	LDX $A4 ;Get index of current object
+	Obj_DistCalc bra8_82FF
+
 bra8_82FF:
 	LDA ObjectVariables,X
 	BPL bra8_8308
@@ -433,53 +257,14 @@ bra8_8320:
 	TYA
 	STA EnemyAnimFrame,X
 	RTS
+
+;----------------------------------------
+;HORIZONTAL PARATROOPA OBJECT CODE ($8325)
+;----------------------------------------
 Obj_h58:
-	LDX $A4
-	LDA ObjectXPos,X
-	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
-	STA $28
-	BEQ bra8_8343
-	CMP #$FF
-	BEQ bra8_8343
-	JMP Obj_RemoveObject
-bra8_8343:
-	LDA ObjectYPos,X
-	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
-	BEQ loc8_8385
-	LDA ObjYScreenDistance,X
-	BPL bra8_8374
-	LDA ObjectYDistance,X
-	CLC
-	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	ADC #$00
-	STA ObjYScreenDistance,X
-	JMP loc8_8385
-bra8_8374:
-	LDA ObjectYDistance,X
-	SEC
-	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	SBC #$00
-	STA ObjYScreenDistance,X
-loc8_8385:
-	LDA FreezeFlag
-	BEQ bra8_838B
-	RTS ;unlogged
+	LDX $A4 ;Get index of current object
+	Obj_DistCalc bra8_838B
+
 bra8_838B:
 	LDA ObjectVariables,X
 	BPL bra8_8394
@@ -520,55 +305,13 @@ bra8_83CB:
 	TYA
 	STA EnemyAnimFrame,X
 	RTS
+
 sub8_83D0:
 	LDA #$04
 	STA $25
-	LDX $A4
-	LDA ObjectXPos,X
-	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
-	STA $28
-	BEQ bra8_83F2
-	CMP #$FF
-	BEQ bra8_83F2
-	JMP Obj_RemoveObject ;unlogged
-bra8_83F2:
-	LDA ObjectYPos,X
-	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
-	BEQ loc8_8434
-	LDA ObjYScreenDistance,X
-	BPL bra8_8423
-	LDA ObjectYDistance,X
-	CLC
-	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	ADC #$00
-	STA ObjYScreenDistance,X
-	JMP loc8_8434
-bra8_8423:
-	LDA ObjectYDistance,X
-	SEC
-	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	SBC #$00
-	STA ObjYScreenDistance,X
-loc8_8434:
-	LDA FreezeFlag
-	BEQ bra8_843A
-	RTS ;unlogged
+	LDX $A4 ;Get index of current object
+	Obj_DistCalc bra8_843A
+
 bra8_843A:
 	LDA ObjectState,X
 	AND #$1F
@@ -582,7 +325,7 @@ bra8_843A:
 tbl8_844E:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr3_8458
 	dw ptr3_847B
 ptr3_8458:
@@ -725,7 +468,7 @@ bra8_8561:
 tbl8_8575:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr3_857F
 	dw ptr_AD88
 ptr3_857F:
@@ -1071,7 +814,7 @@ ptr3_881C:
 	LDA #$15
 	JSR jmp_54_B11D
 bra8_8827:
-	JSR ptr_AB29
+	JSR Obj_PowerupEatCheck
 	RTS
 ptr3_882B:
 	LDA FrameCount
@@ -1387,7 +1130,7 @@ bra8_8A60:
 tbl8_8A74:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr3_8A7E
 	dw ptr_AD88
 ptr3_8A7E:
@@ -1492,119 +1235,66 @@ ofs_8B1F:
 	db $03
 	db $03
 	db $96
-	db $FF
-	db $FF
-	db $FF
-	db $06
-	db $1A
-	db $1B
-	db $21
-	db $22
-	db $23
+	db $FF, $FF, $FF
+	db $06, $1A, $1B
+	db $21, $22, $23
 ofs_8B2B:
 	db $03
 	db $03
 	db $96
-	db $FF
-	db $FF
-	db $FF
-	db $1C
-	db $1D
-	db $1E
-	db $24
-	db $25
-	db $23
+	db $FF, $FF, $FF
+	db $1C, $1D, $1E
+	db $24, $25, $23
 ofs_8B37:
 	db $03
 	db $03
 	db $96
-	db $FF
-	db $01
-	db $02
-	db $06
-	db $07
-	db $08
-	db $10
-	db $11
-	db $FF
+	db $FF, $01, $02
+	db $06, $07, $08
+	db $10, $11, $FF
 ofs_8B43:
 	db $03
 	db $03
 	db $96
-	db $03
-	db $04
-	db $05
-	db $09
-	db $0A
-	db $0B
-	db $12
-	db $13
-	db $FF
+	db $03, $04, $05
+	db $09, $0A, $0B
+	db $12, $13, $FF
 ofs_8B4F:
 	db $03
 	db $03
 	db $96
-	db $FF
-	db $FF
-	db $FF
-	db $06
-	db $0C
-	db $0D
-	db $14
-	db $15
-	db $16
+	db $FF, $FF, $FF
+	db $06, $0C, $0D
+	db $14, $15, $16
 ofs_8B5B:
 	db $03
 	db $03
 	db $96
-	db $FF
-	db $FF
-	db $FF
-	db $06
-	db $0E
-	db $0F
-	db $14
-	db $17
-	db $18
+	db $FF, $FF, $FF
+	db $06, $0E, $0F
+	db $14, $17, $18
 ofs_8B67:
 	db $03
 	db $03
 	db $96
-	db $FF
-	db $01
-	db $3A
-	db $06
-	db $38
-	db $39
-	db $10
-	db $11
-	db $FF
+	db $FF, $01, $3A
+	db $06, $38, $39
+	db $10, $11, $FF
 ofs_8B73:
 	db $03
 	db $03
 	db $96
-	db $FF
-	db $FF
-	db $FF
-	db $06
-	db $3B
-	db $3C
-	db $14
-	db $3D
-	db $3E
+	db $FF, $FF, $FF
+	db $06, $3B, $3C
+	db $14, $3D, $3E
 ofs_8B7F:
 	db $03
 	db $03
 	db $96
-	db $FF
-	db $19
-	db $FF
-	db $1F
-	db $20
-	db $1E
-	db $26
-	db $27
-	db $28
+	db $FF, $19, $FF
+	db $1F, $20, $1E
+	db $26, $27, $28
+
 Obj_h24:
 	LDX LowerObjSlot ;Get the index for the current object slot
 	LDA ObjectState,X
@@ -1688,7 +1378,7 @@ bra8_8C1D:
 tbl8_8C31:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr3_8C3B
 	dw ptr3_8C48
 ptr3_8C3B:
@@ -2139,7 +1829,7 @@ bra8_8F53:
 tbl8_8F67:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr3_8F71
 	dw ptr_AD88
 ptr3_8F71:
@@ -2343,7 +2033,7 @@ bra8_90CD:
 tbl8_90E1:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr3_90EB
 	dw ptr_AD88
 ptr3_90EB:
@@ -2633,7 +2323,7 @@ bra8_92F1:
 tbl8_9305:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr3_930F
 	dw ptr_AD88
 ptr3_930F:
@@ -2867,7 +2557,7 @@ bra8_948D:
 tbl8_94A1:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr3_94B1
 	dw ptr_AD88
 	dw ptr3_9564
@@ -3368,7 +3058,7 @@ bra8_9820:
 tbl8_9834:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr3_983E
 	dw ptr_AD88
 ptr3_983E:

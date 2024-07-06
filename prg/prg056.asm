@@ -244,7 +244,7 @@ bra9_81BD:
 tbl9_81D1:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr2_81D1
 	dw ptr_AD88
 ptr2_81D1:
@@ -531,7 +531,7 @@ Obj_h8E:
 tbl9_8422:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr2_842C
 	dw ptr_AD88
 ptr2_842C:
@@ -824,7 +824,7 @@ bra9_864A:
 tbl9_865E:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr2_8668
 	dw ptr_AD88
 ptr2_8668:
@@ -946,7 +946,7 @@ bra9_8740:
 tbl9_8754:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr2_875E
 	dw ptr_AD88
 ptr2_875E:
@@ -1328,7 +1328,7 @@ bra9_8A18:
 tbl9_8A2C:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr2_8A36
 	dw ptr_AD88
 ptr2_8A36:
@@ -1527,7 +1527,7 @@ bra9_8B91:
 tbl9_8BA5:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr2_8B8F
 	dw ptr_AD88
 ptr2_8B8F:
@@ -1703,7 +1703,7 @@ bra9_8CE0:
 tbl9_8CF4:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr2_8CFE
 	dw ptr_AD88
 ptr2_8CFE:
@@ -1973,7 +1973,7 @@ bra9_8ED5:
 tbl9_8EE9:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr2_8EF3
 	dw ptr_AD88
 ptr2_8EF3:
@@ -2187,7 +2187,7 @@ bra9_9059:
 tbl9_906D:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr2_9075
 ptr2_9075:
 	LDA FrameCount
@@ -2373,7 +2373,7 @@ bra9_91B9:
 tbl9_91CD:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr2_91D7
 	dw ptr_AD88
 ptr2_91D7:
@@ -2820,7 +2820,7 @@ bra9_94DA:
 tbl9_94EE:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr2_94F6
 ptr2_94F6:
 	JSR sub9_9500
@@ -3144,7 +3144,7 @@ bra9_9747:
 tbl9_975B:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr2_9765
 	dw ptr_AD88
 ptr2_9765:
@@ -3297,7 +3297,7 @@ bra9_9881:
 tbl9_9895:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr2_989F
 	dw ptr_AD88
 ptr2_989F:

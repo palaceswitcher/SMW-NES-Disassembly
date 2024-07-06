@@ -137,7 +137,7 @@ bra6_8106:
 tbl6_811A:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr6_8124
 	dw ptr_AD88
 ptr6_8124:
@@ -293,7 +293,7 @@ bra6_8232:
 tbl6_8246:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr6_8250
 	dw ptr_AD88
 ptr6_8250:
@@ -788,7 +788,7 @@ bra6_85F0:
 tbl6_8604:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr6_860C
 ptr6_860C:
 	JSR sub6_8616
@@ -950,7 +950,7 @@ bra6_8739:
 tbl6_874D:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr6_8755
 ptr6_8755:
 	JSR sub6_875F
@@ -1747,7 +1747,7 @@ bra6_8C34:
 tbl6_8C48:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr6_8C52
 	dw ptr_AD88
 ptr6_8C52:
@@ -3179,7 +3179,7 @@ bra6_933A:
 tbl6_934E:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr6_9358
 	dw ptr_AD88
 ptr6_9358:
@@ -3675,7 +3675,7 @@ bra6_96DA:
 tbl6_96EE:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr6_96F8
 	dw ptr_AD88
 ptr6_96F8:

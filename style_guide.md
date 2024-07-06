@@ -1,13 +1,16 @@
 # General Style
-## Labels
+## Label Styling
 - Jumps, branches, tables, and RAM addresses should always be written in TitleCase and should not be too verbose.
 - Shortening longer words in a label is highly encouraged.
 - What type of memory it is should not be specified unless it's a table. Do not put things like "RAM" in a RAM label or "branch" in a branch label.
 - Use local labels with a "@" at the start of them to reduce overly long names when possible. For example, the routine that checks calculates the player's horizontal jump speed and the routine that caluclates the horizontal jump speed for the Chargin' Chuck could both use `@CalcJumpXSpeed` within the routine instead of using `CalcPlayerJumpXSpeed` and `CalcChuckJumpXSpeed` respectively.
-## Constants
-- Constant values should be written in camelCase, with an underscore separating the first word.
+## Constant Styling
+- Constant values should be written in camelCase, with an underscore separating the first word or phrase.
 - Constants should have their names abbreviated, if possible.
-	- Examples: `sfx_Jump`, `evt1_Door`
+	- Examples: `sfx_Jump`, `evt1_Door`, `objID_Koopa`
+## Macro Styling
+- Macro names should be written in all lowercase with no underscores if they represent data. If they represent a repeated block of code, they should use the same conventions as labels.
+- Macro code should be indented the same way as any other code. See [below](#code-spacing-and-comments).
 ## Comments & Spacing
 - Comments should describe what something does, obviously.
 - Avoid describing the literal assembly code unless it's relevant to the code's function, such as "this loads \<variable\> into the X index."
@@ -16,6 +19,7 @@
 ## Spacing
 - Blocks of code that are executed conditionally should be indented. 
 	- This includes nested conditional code, which should be given another indent for every condition it's in.
+	- Indents should be a tab, not spaces.
 - Blocks of code should be separated by two lines, with a blank line between them. This also applies if the block below has a comment at the start of it.
 ## Separating Comments
 - Separating comments should always be represented by 40 dashes.
@@ -43,6 +47,28 @@ Specific formatting should be used for code that serves a specific and common pu
 ### Objects
 `Obj_Object`: The start of an object's code\
 `Obj_Purpose`: Routine or subroutine used by multiple objects\
+`GenObj_Purpose`: Generic object code that's either shared or used by object(s) via a subroutine call\
+`Object_GetFunction`: The code that an object uses to call from its function table\
+`Object_HitCheck`: The function that checks if the player successfully hit and object\
+`Object_HitRespond`: The object's response to being hit by the player\
 `Object_AnimTbl`: Animation table\
 `SprMap_ObjectAnim<frame number>`: Sprite mappings\
 `Object_SprMapPtrs`: Sprite mapping pointers
+
+# Constants
+- Outside of special cases like object IDs, constants should be put in `constants.asm`.
+- Avoid modifying existing constants unless they contain typos or are innacurate.
+- The correct type of constant should be used in the right scenario. For example, you shouldn't use a constant meant to represent the IDs of a sound effect for something related to objects, even if they have the same value.
+
+## Constant Types
+Below is a list of every type of constant currently used.\
+`sfx_`: SFX ID\
+`mus_`: Song ID\
+`objID_`: Object ID\
+`pAction_`: Player action\
+`evt0_`: Game state 0 event\
+`evt1_`: Game state 1 event
+
+#Macros
+- Avoid creating macros for something that can reasonably done with a existing directive like `db`.
+- Use macros for specialized data formats that would otherwise be tedious or impossible to do with existing directives. Macros should also be used for chunks of code that are repeated frequently (preferably over 10 times)

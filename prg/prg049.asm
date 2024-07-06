@@ -578,7 +578,7 @@ bra5_8356:
 tbl5_836A:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr10_8372
 ptr10_8372:
 	JSR jmp_54_BC3E
@@ -928,7 +928,7 @@ bra5_8630:
 tbl5_8644:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr10_864E
 	dw ptr_AD88
 ptr10_864E:
@@ -1475,7 +1475,7 @@ bra5_8A77:
 tbl5_8A8B:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr10_8A95
 	dw ptr_AD88
 ptr10_8A95:
@@ -1742,7 +1742,7 @@ bra5_8C91:
 tbl5_8CA5:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr10_8CAF
 	dw ptr_AD88
 ptr10_8CAF:
@@ -1898,7 +1898,7 @@ bra5_8DD1:
 tbl5_8DE5:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr10_8DED
 ptr10_8DED:
 	LDA ObjXScreenDistance,X

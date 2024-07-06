@@ -156,42 +156,60 @@ sub2_A10D:
 	STA $2D
 	JSR sub2_A5D0
 	RTS
+
+;----------------------------------------
+;SUBROUTINE ($A118)
+;$25 = Mapping width (pixels)
+;$2A = Mapping width (tiles)
+;$2D = Mapping height (tiles)
+;$2E = Mapping CHR bank
+; Parameters:
+; > $0036
+;----------------------------------------
 jmp_52_A118:
-	LDY #$00
+	LDY #$00 ;Start at beginning of mappings
+	
+;Load mapping width
 	LDA ($32),Y ;Load from first byte of sprite map
 	STA $2A ;Get width in tiles
 	TAX
 	LDA tbl2_A45B,X ;Get size in pixels based on width in tiles
 	STA $25
 	INY ;Move to next byte
+
+;Load mapping height
 	LDA ($32),Y
 	STA $2D ;Get height in tiles
 	INY ;Move to next byte
+
+;Load CHR bank
 	LDA ($32),Y
 	STA $2E ;Get CHR bank number
-	AND #$7F ;Ignore highest bit
+	AND #%01111111 ;Ignore highest bit
 	ASL
 	TAX ;Get bank attribute index
-	LDA #$2F
-	STA M90_PRG2
+	LDA #47
+	STA M90_PRG2 ;Swap bank 47 (Sprite attribute bank) into $C000 - $DFFF
 	LDA CHRSprBankAttrs,X
 	STA $30
 	LDA CHRSprBankAttrs+1,X
 	STA $31 ;Get sprite tile attribute pointer for the given bank
 	LDA $05F0
-	AND #$40
+	AND #%01000000
 	BEQ bra2_A18C ;Branch if sprite tile isn't horizontally flipped
-	LDX #$00
-	LDY $A4 ;Get index for current object
-	LDA ObjectXDistance,Y
-	CLC
-	ADC PlayerSprXPos
-	STA $28 ;Object X Distance + Player X = Object Position (low byte)
-	LDA ObjXScreenDistance,Y
-	ADC #$00 ;Add high byte if needed
-	BMI bra2_A16E
-	BEQ bra2_A15E
-	RTS
+	;If sprite is facing left:
+		LDX #$00
+		LDY $A4 ;Get index for current object
+		LDA ObjectXDistance,Y
+		CLC
+		ADC PlayerSprXPos
+		STA $28 ;Object X Distance + Player Sprite X = Object Sprite X Position
+		LDA ObjXScreenDistance,Y
+		ADC #$00 ;Add high byte if needed
+		BMI bra2_A16E ;Branch if object goes off-screen
+		BEQ bra2_A15E
+		RTS
+
 bra2_A15E:
 	LDA $28
 bra2_A160:
@@ -201,12 +219,13 @@ bra2_A160:
 	BCS bra2_A1D7 ;Position sprites vertically once the tile width is exceeded
 	;Otherwise, move next sprite a tile over
 		CLC
-		ADC #$08
+		ADC #8
 	BCC bra2_A160 ;Write every tile until the width is exceeded
 	BCS bra2_A181
 bra2_A16E:
 	LDA $28
 	LDY #$00 ;Set index to first object?
+
 bra2_A172:
 	STY $41,X
 	INX
@@ -218,6 +237,7 @@ bra2_A172:
 	BCS bra2_A160
 bra2_A180_RTS:
 	RTS
+
 bra2_A181:
 	LDA #$00
 bra2_A183:
@@ -226,6 +246,7 @@ bra2_A183:
 	CPX $2A
 	BCC bra2_A183
 	BCS bra2_A1D7 ;Position sprites vertically once the tile width is exceeded
+
 bra2_A18C:
 	LDX #$00
 	STX $41
@@ -235,6 +256,7 @@ bra2_A18C:
 	ADC PlayerSprXPos
 	BCC bra2_A19B
 	INC $41
+
 bra2_A19B:
 	CLC
 	ADC ObjectXDistance,Y
@@ -244,6 +266,7 @@ bra2_A19B:
 	BMI bra2_A1BB
 	BEQ bra2_A1AB
 	RTS
+
 bra2_A1AB:
 	LDA $28
 bra2_A1AD:

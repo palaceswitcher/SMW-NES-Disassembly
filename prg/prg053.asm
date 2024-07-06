@@ -1553,7 +1553,7 @@ bra7_8AD4:
 tbl7_8AE8:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr5_8AFA
 	dw ptr_AD88
 	dw ptr5_8B55
@@ -1793,7 +1793,7 @@ bra7_8CAC:
 tbl7_8CC0:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr5_8CCA
 	dw ptr_AD88
 ptr5_8CCA:
@@ -1951,7 +1951,7 @@ sub7_8DEA:
 tbl7_8E02:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr5_8E0C
 	dw ptr5_8E21
 ptr5_8E0C:
@@ -2372,12 +2372,12 @@ sub7_9149:
 tbl7_9161:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr5_916B
 	dw ptr5_917C
 ptr5_916B:
 	JSR jmp_54_A773
-	JSR sub3_AE37
+	JSR Obj_GetEdiblePowerup
 	LDA #$00
 	STA ObjectSlot,Y
 	LDA #$03
@@ -2535,12 +2535,12 @@ bra7_9290:
 tbl7_92A8:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr5_92B2
 	dw ptr5_92C3
 ptr5_92B2:
 	JSR jmp_54_A773
-	JSR sub3_AE37
+	JSR Obj_GetEdiblePowerup
 	LDA #$00
 	STA ObjectSlot,Y
 	LDA #$03
@@ -2674,12 +2674,12 @@ bra7_93AE:
 tbl7_93C6:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr5_93D0
 	dw ptr5_92C3
 ptr5_93D0:
 	JSR jmp_54_A773
-	JSR sub3_AE37
+	JSR Obj_GetEdiblePowerup
 	LDA #$00
 	STA ObjectSlot,Y
 	LDA #$03
@@ -2762,7 +2762,7 @@ sub7_9462:
 tbl7_947A:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr5_9484
 	dw ptr5_9497
 ptr5_9484:
@@ -3496,7 +3496,7 @@ bra7_9972:
 tbl7_9986:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr5_9990
 	dw ptr5_99BF
 ptr5_9990:
@@ -3759,7 +3759,7 @@ bra7_9B4E:
 tbl7_9B66:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr5_9B6E
 ptr5_9B6E:
 	LDA ObjXScreenDistance,X
@@ -4036,7 +4036,7 @@ bra7_9D75:
 tbl7_9D89:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr5_9D93
 	dw ptr_AD88
 ptr5_9D93:
@@ -4179,7 +4179,7 @@ loc7_9E98:
 tbl7_9EB0:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw ptr_AB29
+	dw Obj_PowerupEatCheck
 	dw ptr5_9EB8
 ptr5_9EB8:
 	LDA ObjXScreenDistance,X

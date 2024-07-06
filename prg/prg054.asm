@@ -1,4 +1,71 @@
-;disassembled by BZK 6502 Disassembler
+;--------------------------------------------------------------------------------
+;SMW NES OBJECT BANK
+;This bank handles objects and contains various functions relating to them. Object-specific things will be kept here for convenience sake
+;--------------------------------------------------------------------------------
+
+;----------------------------------------
+;OBJECT MACROS
+
+;Standard object initialization
+macro Obj_DistCalc start
+;Calculate horizontal distance between player and object
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA ObjectXDistance,X 
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA ObjXScreenDistance,X
+	STA $28
+
+	BEQ @CalcVertDist ;Continue if the player is to the left of the object (within one screen)
+	CMP #$FF
+	BEQ @CalcVertDist ;Continue if the player is to the right of the object (within one screne)
+		JMP Obj_RemoveObject ;Otherwise, remove the off-screen object
+
+;Calculate vertical distance between the player and object
+@CalcVertDist:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA ObjectYDistance,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA ObjYScreenDistance,X ;Get object's vertical distance from player
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ @CheckIfFrozen ;Branch if the object and player are on the same vertical screen
+	LDA ObjYScreenDistance,X
+	BPL @OffsetObjDistance ;Branch if the player is on a higher vertical screen than the object
+	;Add 16 to the object's vertical distance if they're below the object
+		LDA ObjectYDistance,X
+		CLC
+		ADC #16
+		STA ObjectYDistance,X ;Increase the vertical distance value by 16
+		LDA ObjYScreenDistance,X
+		ADC #$00
+		STA ObjYScreenDistance,X ;Increase the vertical screen distance if needed
+		JMP @CheckIfFrozen
+
+	;Subtract the object's vertical distance by 16 if they're above the object
+	@OffsetObjDistance:
+		LDA ObjectYDistance,X
+		SEC
+		SBC #16
+		STA ObjectYDistance,X
+		LDA ObjYScreenDistance,X
+		SBC #$00
+		STA ObjYScreenDistance,X
+
+@CheckIfFrozen:
+	LDA FreezeFlag
+	BEQ start ;Only continue if the game isn't frozen
+	RTS
+endm
+
+
+
+
 jmp_54_A000:
 	LDA YoshiUnmountedState
 	BNE bra3_A006 ;If riding Yoshi, branch
@@ -2223,7 +2290,7 @@ ptr_AA7B:
 		STA ObjectYPos,Y ;Add vertical offset to player's position
 		BCS @AddHorizHighByte ;Add to high byte if needed
 			CMP #$F0
-			BCC @Stop ;Stop if adding 16 doesn't carry over to the next byte
+			BCC @Stop ;Stop if adding 16 doesn't cross the vertical screen boundary
 
 		@AddHorizHighByte:
 			CLC
@@ -2287,18 +2354,19 @@ tbl3_AB1B:
 ;FUNCTION ($AB29)
 ;Handles Yoshi eating powerups
 ;----------------------------------------
-ptr_AB29:
+Obj_PowerupEatCheck:
 	LDA $25
 	CMP #$06
-	BNE bra3_AB33 ;Skip ahead if object can't be swallowed
+	BNE @Continue ;Skip ahead if object can't be swallowed
 	;If the object can be swallowed:
 		LDA #sfx_YoshiSwallow
 		STA SFXRegister ;Play swallow sound
 
-bra3_AB33:
-	JSR sub3_AE37
+@Continue:
+	JSR Obj_GetEdiblePowerup ;Check if Yoshi ate a generic powerup (mushroom, fire flower, or feather)
 	CPX #objID_1UP
-	BNE bra3_AB4C ;Check if Yoshi ate a star if he didn't eat a 1UP
+	BNE @CheckIfStar ;Check if Yoshi ate a star if he didn't eat a 1UP
+	;If Yoshi ate a 1UP:
 		LDY CurrentPlayer
 		LDA Player1Lives,Y
 		CLC
@@ -2306,15 +2374,15 @@ bra3_AB33:
 		STA Player1Lives,Y ;Add 1 to the player's life counter if Yoshi ate a 1UP
 		LDA #sfx_1UP
 		STA SFXRegister ;Play 1UP sound
-		BNE bra3_AB55 ;Continue and remove object
-
-	bra3_AB4C:
+		BNE @RemoveObject ;Continue and remove object
+	;If Yoshi ate a star:
+	@CheckIfStar:
 		CPX #objID_Star
-		BNE bra3_AB55 ;Continue and remove object if Yoshi didn't eat a star
+		BNE @RemoveObject ;Continue and remove object if Yoshi didn't eat a star
 			LDA #$01
 			STA InvincibilityTimer ;Give the player invincibility
 
-bra3_AB55:
+@RemoveObject:
 	LDX $A4 ;Get object's index
 	LDA #$00
 	STA ObjectSlot,X ;Remove object
@@ -2742,41 +2810,42 @@ bra3_AE36_RTS:
 
 ;----------------------------------------
 ;SUBROUTINE ($AE37)
-;Checks if Yoshi ate a powerup and responds accordingly
+;Checks if the object Yoshi ate was a powerup and gives it to the player
 ;Returns:
-;X Reg: The ID of the object eaten. Special mushrooms will be returned as ID 0x0B
+;X Reg: The ID of the object eaten. Special mushrooms will return the ID for normal mushrooms
 ;Y Reg: The index of the current object.
 ;----------------------------------------
-sub3_AE37:
+Obj_GetEdiblePowerup:
 	LDA $25
 	CMP #$06
 	BNE bra3_AE97_RTS ;Stop if object can't be swallowed
 
+;Special call that doesn't check if an object can be swallowed
 jmp_54_AE3D:
 	LDY $A4 ;Get current object's index
 	LDA PlayerPowerup
 	CMP #$04
-	BNE bra3_AE48 ;Continue if player isn't moving with a cape
+	BNE @Continue ;Continue if player isn't moving with a cape
 		LDA #$03 ;Clamp player powerup state to 3 (not moving with cape)
 
-bra3_AE48:
+@Continue:
 	STA $32 ;Copy player powerup status to scratch memory
 	LDX ObjectSlot,Y ;Get index for current object
 	CPX #objID_Koopa
-	BCC bra3_AE5F ;Branch if object's ID is between 1 and 15
+	BCC GetPowerupFromObject ;Branch if object's ID is between 1 and 15
 	;Otherwise, check if the object is a mushroom variant
 		CPX #objID_MushroomStanding
-		BEQ bra3_AE5D ;Give powerup for standing mushroom
+		BEQ SetToMushroom ;Give powerup for standing mushroom
 		CPX #objID_MushroomPrincess
-		BEQ bra3_AE5D ;Give powerup for princess-thrown mushroom
+		BEQ SetToMushroom ;Give powerup for princess-thrown mushroom
 		CPX #objID_MushroomHidden
-		BNE bra3_AE97_RTS ;Give power up if mushroom was hidden. Otherwise, don't give the player a powerup
+		BNE bra3_AE97_RTS ;Give power up if mushroom was hidden. Otherwise, don't give the player a powerup at all
 
-bra3_AE5D:
-	LDX #$0B ;Set index for mushroom
+SetToMushroom:
+	LDX #objID_Mushroom ;Replace with ID for normal mushroom
 
-bra3_AE5F:
-	LDA tbl3_AE98,X ;Get powerup for swallowing current object
+GetPowerupFromObject:
+	LDA ObjectPowerupTbl,X ;Get powerup for swallowing current object
 	BEQ bra3_AE97_RTS ;Don't change powerup if swallowing the object does nothing
 	CMP #$01
 	BNE @GivePowerupContinue ;Branch if the object 
@@ -2785,28 +2854,29 @@ bra3_AE5F:
 		BEQ @GivePowerupContinue ;Don't check the item box if the player is small
 			LDY ItemBox
 			BEQ @StoreItem ;Store a mushroom if the item box is empty
-			BNE bra3_AE7E ;Otherwise, don't overwrite the item box
+			BNE @SetPowerupEffect ;Otherwise, don't overwrite the item box
 	;If it gives a fire flower or feather when swallowed:
 	@GivePowerupContinue:
 		STA PlayerPowerup ;Give player powerup
 		LDA $32
-		BEQ bra3_AE7E ;Only put the player's powerup in the item box if the player has one
+		BEQ @SetPowerupEffect ;Only put the player's powerup in the item box if the player has one
 
 @StoreItem:
 	STA ItemBox ;Store powerup in item box
 
-bra3_AE7E:
+;Plays the powerup sound and buffers the game
+@SetPowerupEffect:
 	LDA #sfx_Powerup
 	STA SFXRegister
 	LDA #$01 ;Set powerup buffer time for fire flower
 	CPX #objID_Feather
-	BNE bra3_AE8E
+	BNE @NotFeather
 	;If Yoshi ate a feather:
 		LDA #sfx_Feather
 		STA SFXRegister ;Play feather sound
 		LDA #$81 ;Set powerup buffer time for feather
 	;If Yoshi ate a mushroom or fire flower:
-	bra3_AE8E:
+	@NotFeather:
 		STA PlayerPowerupBuffer
 		LDA #$07
 		STA Event ;Trigger appropriate event
@@ -2815,7 +2885,7 @@ bra3_AE7E:
 bra3_AE97_RTS:
 	RTS
 
-tbl3_AE98:
+ObjectPowerupTbl:
 	db $00
 	db $00
 	db $00
