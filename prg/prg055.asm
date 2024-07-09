@@ -155,14 +155,15 @@ ptr6_820E:
 	STA $32
 	LDA Koopa_SprMapPtrs+1,X
 	STA $33 ;Load mapping pointer
-	LDY #$80
+	LDY #$80 ;Use bank 2 by default
 	LDX $A4
 	LDA ObjectSlot,X
-	AND #$01
+	AND #%00000001
 	BEQ bra8_822C
-	LDY #$C0
+		LDY #$C0 ;Use bank 3 if lower bit is set
+
 bra8_822C:
-	STY $36
+	STY $36 ;Otherwise, use bank 2
 	LDA ObjectState,X
 	AND #%01000000
 	STA ObjectAttributes ;Store object's horizontal direction

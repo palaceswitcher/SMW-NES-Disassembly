@@ -741,7 +741,7 @@ sub3_E5D4:
 	STA $3C
 	JSR jmp_52_A080 ;Jump
 	JSR jmp_52_A089 ;Jump
-	JSR jmp_52_A000 ;Jump
+	JSR RenderItemBoxSprite ;Jump
 	JSR sub3_E9C4 ;Jump
 	RTS
 pnt2_E610:
@@ -963,7 +963,7 @@ pnt2_E7A2:
 	STA $3C
 	JSR jmp_52_A080 ;Jump
 	JSR jmp_52_A089 ;Jump
-	JSR jmp_52_A000 ;Jump
+	JSR RenderItemBoxSprite ;Jump
 	JSR sub3_E9C4 ;Jump
 	RTS
 pnt2_E7D0:
@@ -2006,7 +2006,7 @@ sub3_ED14:
 	STA $3C
 	JSR jmp_52_A080
 	JSR jmp_52_A089
-	JSR jmp_52_A000
+	JSR RenderItemBoxSprite
 	JSR sub3_E9C4 ;Jump
 	RTS
 sub3_ED48:
@@ -2087,12 +2087,12 @@ pnt2_EDE1:
 	JSR sub3_ED48
 	LDA #$00
 	STA UnderwaterFlag
-	LDA #$3D
+	LDA #61
 	STA M90_PRG1
-	LDA $A858
-	STA $00DC
-	LDA $A859
-	STA $00DD
+	LDA BonusEntitySet
+	STA a:$DC
+	LDA BonusEntitySet+1
+	STA a:$DD
 	LDA #$00
 	STA $06E1
 	RTS

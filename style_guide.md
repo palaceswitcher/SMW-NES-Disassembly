@@ -2,6 +2,7 @@
 
 ## General Styling
 - Avoid referring to the player as "Mario" or "Luigi", and instead just say "Player".
+- Immediate values for instructions should be represented by hexadecimal in most cases, unless used for math or PRG bank switching, where decimal should instead be used.
 
 ## Label Styling
 - Jumps, branches, tables, and RAM addresses should always be written in TitleCase and should not be too verbose.
@@ -32,7 +33,11 @@
 - Blocks of code should be separated by two lines, with a blank line between them. This also applies if the block below has a comment at the start of it.
 
 ## Separating Comments
-- Separating comments should always be represented by 40 dashes.
+Separating comments act as visual separators for the code to break it up and make it more readable.
+- Separating comments should always be represented with dashes.
+	- Separating comments should use 60 dashes for the start or end of a bank or separating drastically different parts of a bank. 
+	- Separating comments should use 40 dashes if they represent a block of code (see below)
+	- Separating comments should use 20 dashes if they separate parts of a larger block of code, such as a subroutine.
 - Comments that describe a long block of code should come above that block of code and be one indentation behind that code. So if the block of code is indented by one, the comment should have no indents.
 
 ### Description Blocks

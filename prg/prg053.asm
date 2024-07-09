@@ -257,7 +257,7 @@ bra7_81AD:
 	STA YoshiYPos
 	BCS bra7_81BF
 	CMP #$F0
-	BCC bra7_81DD_RTS
+	BCC loc7_81DD_RTS
 bra7_81BF:
 	CLC
 	ADC #$10
@@ -283,7 +283,6 @@ bra7_81CB:
 	db $CE
 	db $F5
 	db $05
-bra7_81DD_RTS:
 loc7_81DD_RTS:
 	RTS
 bra7_81DE:
@@ -373,264 +372,143 @@ bra7_826C:
 	STA SFXRegister
 bra7_827B_RTS:
 	RTS
+
+;----------------------------------------
+;SUBROUTINE ($827C)
+;----------------------------------------
 sub_53_827C:
 	LDA YoshiXScreenDist
-	BEQ bra7_8286
+	BEQ bra7_8286 ;Continue if the player is to the left of Yoshi (within one screen)
 	CMP #$FF
-	BEQ bra7_8286
+	BEQ bra7_8286 ;Continue if the player is to the right of Yoshi (within one screen)
 	RTS
+
 bra7_8286:
 	LDA YoshiUnmountedState
-	BNE bra7_828C
+	BNE bra7_828C ;Continue if Yoshi isn't mounted
 	RTS
+
 bra7_828C:
 	LDA YoshiAnimation
 	ASL
-	TAX
+	TAX ;Get index for Yoshi's animation
 	LDA tbl7_82A2,X
 	STA $32
 	LDA tbl7_82A2+1,X
 	STA $33
 	LDA #$40
-	STA $36
+	STA $36 ;Use bank 2
 	JMP jmp_52_A463
 tbl7_82A2:
-	dw ofs_82BA ;Idle Yoshi Mappings
-	dw ofs_82C5
-	dw ofs_82D0
-	dw ofs_82E3
-	dw ofs_82F6
-	dw ofs_8309
+	dw ofs_82BA ;Baby
+	dw ofs_82C5 ;Baby (Growing)
+	dw ofs_82D0 ;Ducking
+	dw ofs_82E3 ;Standing
+	dw ofs_82F6 ;Mouth Open
+	dw ofs_8309 ;Running
 	dw ofs_831C
-	dw ofs_832F
+	dw ofs_832F ;Running (Flinching)
 	dw ofs_8342
-	dw ofs_8355
-	dw ofs_8368
+	dw ofs_8355 ;Idle w/ item
+	dw ofs_8368 ;Running w/ item
 	dw ofs_837B
 ofs_82BA:
 	db $02
 	db $04
 	db $90
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $37
-	db $38
-	db $39
-	db $3A
+	db $FF, $FF
+	db $FF, $FF
+	db $37, $38
+	db $39, $3A
 ofs_82C5:
 	db $02
 	db $04
 	db $90
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $2B
-	db $2C
-	db $2D
-	db $2E
+	db $FF, $FF
+	db $FF, $FF
+	db $2B, $2C
+	db $2D, $2E
 ofs_82D0:
 	db $04
 	db $04
 	db $92
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $B1
-	db $B2
-	db $FF
-	db $B3
-	db $B4
-	db $B5
-	db $B6
-	db $FF
-	db $B7
-	db $AF
-	db $B0
+	db $FF, $FF, $FF, $FF
+	db $FF, $B1, $B2, $FF
+	db $B3, $B4, $B5, $B6
+	db $FF, $B7, $AF, $B0
 ofs_82E3:
 	db $04
 	db $04
 	db $92
-	db $FF
-	db $B8
-	db $B9
-	db $FF
-	db $BA
-	db $BB
-	db $AB
-	db $FF
-	db $FF
-	db $AC
-	db $AD
-	db $AE
-	db $FF
-	db $FF
-	db $AF
-	db $B0
+	db $FF, $B8, $B9, $FF
+	db $BA, $BB, $AB, $FF
+	db $FF, $AC, $AD, $AE
+	db $FF, $FF, $AF, $B0
 ofs_82F6:
 	db $04
 	db $04
 	db $A0
-	db $FF
-	db $2B
-	db $2C
-	db $FF
-	db $2D
-	db $2E
-	db $2F
-	db $FF
-	db $FF
-	db $30
-	db $31
-	db $32
-	db $FF
-	db $FF
-	db $33
-	db $34
+	db $FF, $2B, $2C, $FF
+	db $2D, $2E, $2F, $FF
+	db $FF, $30, $31, $32
+	db $FF, $FF, $33, $34
 ofs_8309:
 	db $04
 	db $04
 	db $91
-	db $FF
-	db $76
-	db $77
-	db $FF
-	db $78
-	db $79
-	db $7A
-	db $FF
-	db $FF
-	db $FF
-	db $6D
-	db $6E
-	db $FF
-	db $FF
-	db $6F
-	db $70
+	db $FF, $76, $77, $FF
+	db $78, $79, $7A, $FF
+	db $FF, $FF, $6D, $6E
+	db $FF, $FF, $6F, $70
 ofs_831C:
 	db $04
 	db $04
 	db $93
-	db $FF
-	db $F8
-	db $F9
-	db $FF
-	db $FA
-	db $FB
-	db $EB
-	db $FF
-	db $FF
-	db $EC
-	db $ED
-	db $EE
-	db $FF
-	db $FF
-	db $EF
-	db $F0
+	db $FF, $F8, $F9, $FF
+	db $FA, $FB, $EB, $FF
+	db $FF, $EC, $ED, $EE
+	db $FF, $FF, $EF, $F0
 ofs_832F:
 	db $04
 	db $04
 	db $91
-	db $71
-	db $72
-	db $73
-	db $FF
-	db $FF
-	db $74
-	db $75
-	db $FF
-	db $FF
-	db $FF
-	db $6D
-	db $6E
-	db $FF
-	db $FF
-	db $6F
-	db $70
+	db $71, $72, $73, $FF
+	db $FF, $74, $75, $FF
+	db $FF, $FF, $6D, $6E
+	db $FF, $FF, $6F, $70
 ofs_8342:
 	db $04
 	db $04
 	db $93
-	db $F1
-	db $F2
-	db $F3
-	db $FF
-	db $F4
-	db $F5
-	db $F6
-	db $FF
-	db $FF
-	db $FF
-	db $F7
-	db $EE
-	db $FF
-	db $FF
-	db $EF
-	db $F0
+	db $F1, $F2, $F3, $FF
+	db $F4, $F5, $F6, $FF
+	db $FF, $FF, $F7, $EE
+	db $FF, $FF, $EF, $F0
 ofs_8355:
 	db $04
 	db $04
 	db $A0
-	db $FF
-	db $36
-	db $37
-	db $FF
-	db $38
-	db $39
-	db $3A
-	db $FF
-	db $FF
-	db $3B
-	db $3C
-	db $3D
-	db $FF
-	db $FF
-	db $3F
-	db $35
+	db $FF, $36, $37, $FF
+	db $38, $39, $3A, $FF
+	db $FF, $3B, $3C, $3D
+	db $FF, $FF, $3F, $35
 ofs_8368:
 	db $04
 	db $04
 	db $A3
-	db $FF
-	db $FA
-	db $F9
-	db $FF
-	db $FF
-	db $FB
-	db $FC
-	db $FF
-	db $FF
-	db $FD
-	db $FE
-	db $EB
-	db $FF
-	db $FF
-	db $F4
-	db $F3
+	db $FF, $FA, $F9, $FF
+	db $FF, $FB, $FC, $FF
+	db $FF, $FD, $FE, $EB
+	db $FF, $FF, $F4, $F3
 ofs_837B:
 	db $04
 	db $04
 	db $9B
-	db $F7
-	db $F8
-	db $F9
-	db $FF
-	db $FA
-	db $FB
-	db $FC
-	db $FF
-	db $FF
-	db $FF
-	db $FD
-	db $F2
-	db $FF
-	db $FF
-	db $EB
-	db $F5
+	db $F7, $F8, $F9, $FF
+	db $FA, $FB, $FC, $FF
+	db $FF, $FF, $FD, $F2
+	db $FF, $FF, $EB, $F5
+
 Obj_YoshiBox:
 	LDX $A4
 	LDA ObjectXPos,X

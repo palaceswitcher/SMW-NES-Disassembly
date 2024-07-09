@@ -1,9 +1,14 @@
-jmp_52_A000:
+;----------------------------------------
+;SUBROUTINE ($A000)
+;Loads OAM data for item box sprite
+;----------------------------------------
+RenderItemBoxSprite:
 	LDY ItemBox
-	BNE bra2_A006 ;Don't render item sprite if the item box is empty
+	BNE RenderItemBoxSprCont ;Don't render item sprite if the item box is empty
 ptr6_A005:
 	RTS
-bra2_A006:
+
+RenderItemBoxSprCont:
 	LDX tbl2_A064,Y ;Get index for item's sprite data
 	LDY $3C ;Get current OAM index (always seems to be $80 for the item)
 ;Upload item box sprite to OAM
@@ -24,12 +29,14 @@ bra2_A006:
 	LDA tbl2_A074+3,X
 	STA SpriteMem+14,Y ;Copy bottom right tile
 
+;Position sprites horizontally
 	LDA #$D3
 	STA SpriteMem,Y
 	STA SpriteMem+4,Y
 	LDA #$DB
 	STA SpriteMem+8,Y
 	STA SpriteMem+12,Y
+;Position sprites vertically
 	LDA #$78
 	STA SpriteMem+3,Y
 	STA SpriteMem+11,Y
@@ -67,6 +74,7 @@ tbl2_A074:
 ;Feather
 	db $00, $03
 	db $00, $00
+
 jmp_52_A080:
 	LDA #53
 	STA M90_PRG0
@@ -163,6 +171,8 @@ sub2_A10D:
 ;$2A = Mapping width (tiles)
 ;$2D = Mapping height (tiles)
 ;$2E = Mapping CHR bank
+;$32 = Mapping data pointer
+;$36 = Bank (Stored in upper 2 bits)
 ; Parameters:
 ; > $0036
 ;----------------------------------------
@@ -170,7 +180,7 @@ jmp_52_A118:
 	LDY #$00 ;Start at beginning of mappings
 	
 ;Load mapping width
-	LDA ($32),Y ;Load from first byte of sprite map
+	LDA ($32),Y ;Load from first byte of sprite mapping
 	STA $2A ;Get width in tiles
 	TAX
 	LDA tbl2_A45B,X ;Get size in pixels based on width in tiles
@@ -205,7 +215,7 @@ jmp_52_A118:
 		ADC PlayerSprXPos
 		STA $28 ;Object X Distance + Player Sprite X Pos = Object Sprite X Position
 		LDA ObjXScreenDistance,Y
-		ADC #$00 ;Add high byte if needed
+		ADC #$00
 		BMI bra2_A16E ;Branch if object is off-screen (or to right of player)?
 		BEQ bra2_A15E ;Branch if object is on-screen (or to left of player)?
 		RTS
@@ -219,7 +229,7 @@ bra2_A160:
 	STA $41,X
 	INX
 	CPX $2A
-	BCS bra2_A1D7 ;Start positioning sprite rows once every column is positioned
+	BCS bra2_A1D7 ;Start positioning sprite rows after every column is positioned
 	;Move each column 8 pixels to the right
 		CLC
 		ADC #8
@@ -235,10 +245,10 @@ bra2_A172:
 	INX
 	CPX $2A
 	BCS bra2_A180_RTS ;Stop once every column is positioned
-	;Move each column 8 pixels to the right
+	;Move each column 8 pixels to the right?
 		CLC
 		ADC #8
-	BCC bra2_A172 ;Continue uploading each column X position if the sprite is on-screen
+	BCC bra2_A172 ;Continue uploading each column X position if the sprite is on-screen?
 	BCS bra2_A160 ;Continue uploading each column X position like normal if it goes off-screen (wraps around?)
 bra2_A180_RTS:
 	RTS
@@ -298,8 +308,8 @@ bra2_A1BF:
 	INX
 	CPX $2A
 	BCS bra2_A1CD_RTS
-	SEC
-	SBC #$08
+		SEC
+		SBC #8
 	BCS bra2_A1BF
 	BCC bra2_A1AD ;unlogged
 bra2_A1CD_RTS:
@@ -339,8 +349,9 @@ bra2_A1F5:
 	INX
 	CPX $2D
 	BCS bra2_A221
-	CLC
-	ADC #$08
+	;Position each row 8 pixels lower
+		CLC
+		ADC #8
 	STA $2B
 	BCC bra2_A1ED
 	BCS bra2_A218
@@ -354,8 +365,9 @@ bra2_A209:
 	INX
 	CPX $2D
 	BCS bra2_A217_RTS
-	CLC
-	ADC #$08
+	;Position each row 8 pixels lower
+		CLC
+		ADC #8
 	BCC bra2_A209
 	BCS bra2_A1F5
 bra2_A217_RTS:
@@ -368,6 +380,7 @@ bra2_A21A:
 	INX
 	CPX $2D
 	BCC bra2_A21A
+
 bra2_A221:
 	LDX $3C
 	LDA #$00
@@ -378,14 +391,16 @@ bra2_A22A:
 	STY $3F
 	LDA a:$B2,Y
 	BNE bra2_A23B
-	LDA $40
-	CLC
-	ADC $2A
-	STA $40
-	JMP loc2_A28A
-bra2_A23B:
-	STA $2B
-	LDY #$00
+		LDA $40
+		CLC
+		ADC $2A
+		STA $40 ;Offset index by a row if the row Y position is blank (zero) in the buffer
+		JMP loc2_A28A
+
+	bra2_A23B:
+		STA $2B
+		LDY #$00
+
 bra2_A23F:
 	STY $3E
 	LDA a:$41,Y
@@ -426,6 +441,7 @@ bra2_A281:
 	INY
 	CPY $2A
 	BCC bra2_A23F
+
 loc2_A28A:
 	LDY $3F
 	INY
@@ -445,6 +461,7 @@ bra2_A2A2:
 	STA $03C9,Y
 bra2_A2A7_RTS:
 	RTS
+
 sub_52_A2A8:
 	LDY #$00
 	LDA ($32),Y
@@ -720,66 +737,92 @@ tbl2_A45B:
 	db $20
 	db $28
 	db $30
+
+;----------------------------------------
+;SUBROUTINE ($A463)
+;$25 = Mapping width (pixels)
+;$2A = Mapping width (tiles)
+;$2D = Mapping height (tiles)
+;$2E = Mapping CHR bank
+;$32 = Mapping data pointer
+;$36 = Bank (Stored in upper 2 bits)
+; Parameters:
+; > $0036
+;----------------------------------------
 jmp_52_A463:
-	LDY #$00
-	LDA ($32),Y
-	STA $2A
+	LDY #$00 ;Start at start of mappings
+;Get mapping width
+	LDA ($32),Y ;Load from first byte of sprite mapping
+	STA $2A ;Get width in tiles
 	TAX
-	LDA tbl2_A45B,X
+	LDA tbl2_A45B,X ;Get size in pixels based on width in tiles
 	STA $25
-	INY
+	INY ;Move to next byte
+
+;Load mapping height
 	LDA ($32),Y
-	STA $2D
-	INY
+	STA $2D ;Get height in tiles
+	INY ;Move to next byte
+
+;Load CHR bank
 	LDA ($32),Y
-	STA $2E
-	AND #$7F
+	STA $2E ;Get CHR bank number
+	AND #%01111111 ;Ignore highest bit
 	ASL
-	TAX
-	LDA #$2F
-	STA M90_PRG2
+	TAX ;Get bank attribute index
+	LDA #47
+	STA M90_PRG2 ;Swap bank 47 (Sprite attribute bank) into $C000 - $DFFF
 	LDA CHRSprBankAttrs,X
 	STA $30
 	LDA CHRSprBankAttrs+1,X
-	STA $31
+	STA $31 ;Get sprite tile attribute pointer for the given bank
 	LDA YoshiIdleMovement
-	AND #$40
-	BEQ bra2_A4D5
-	LDX #$00
-	LDA YoshiXDistance
-	CLC
-	ADC PlayerSprXPos
-	STA $28
-	LDA YoshiXScreenDist
-	ADC #$00
-	BMI bra2_A4B7
-	BEQ bra2_A4A7
-	RTS
+	AND #%01000000
+	BEQ bra2_A4D5 ;Branch if Yoshi is facing right
+	;If Yoshi is facing left:
+		LDX #$00
+		LDA YoshiXDistance
+		CLC
+		ADC PlayerSprXPos
+		STA $28 ;Yoshi X Distance + Player Sprite X Pos = Yoshi Sprite X Position
+		LDA YoshiXScreenDist
+		ADC #$00
+		BMI bra2_A4B7 ;Branch if object is off-screen (or to right of player)?
+		BEQ bra2_A4A7 ;Branch if object is on-screen (or to left of player)?
+		RTS
+
 bra2_A4A7:
 	LDA $28
+
 bra2_A4A9:
 	STA $41,X
 	INX
 	CPX $2A
-	BCS bra2_A518
-	CLC
-	ADC #$08
-	BCC bra2_A4A9
-	BCS bra2_A4CA
+	BCS bra2_A518 ;Start positioning sprite rows after every column is positioned
+	;Offset each column 8 pixels to the right
+		CLC
+		ADC #8
+	BCC bra2_A4A9 ;Continue uploading each column X position if the sprite is on-screen
+	BCS bra2_A4CA ;Clear the rest of the column buffer if this column goes off-screen
+
 bra2_A4B7:
 	LDA $28
 	LDY #$00
+
 bra2_A4BB:
 	STY $41,X
 	INX
 	CPX $2A
-	BCS bra2_A4C9_RTS
-	CLC
-	ADC #$08
-	BCC bra2_A4BB
-	BCS bra2_A4A9
+	BCS bra2_A4C9_RTS ;Stop once every column is positioned
+	;Move each column 8 pixels to the right?
+		CLC
+		ADC #8
+	BCC bra2_A4BB ;Continue uploading each column X position if the sprite is on-screen?
+	BCS bra2_A4A9 ;Continue uploading each column X position like normal if it goes off-screen (wraps around?)
 bra2_A4C9_RTS:
 	RTS
+
+;Clear the rest of the metasprite column position buffer
 bra2_A4CA:
 	LDA #$00
 bra2_A4CC:
@@ -788,6 +831,9 @@ bra2_A4CC:
 	CPX $2A
 	BCC bra2_A4CC
 	BCS bra2_A518
+
+;--------------------
+;If sprite is facing right:
 bra2_A4D5:
 	LDX #$00
 	LDA $25
@@ -795,12 +841,13 @@ bra2_A4D5:
 	ADC PlayerSprXPos
 	CLC
 	ADC YoshiXDistance
-	STA $28
+	STA $28 ;Sprite Width + Yoshi X Distance + Player Sprite X Pos = Yoshi Sprite X Position
 	LDA YoshiXScreenDist
 	ADC #$00
-	BMI bra2_A4FC
-	BEQ bra2_A4EC
+	BMI bra2_A4FC ;Branch if object is on-screen (or above player)?
+	BEQ bra2_A4EC ;Branch if object is off-screen (or below player)?
 	RTS
+
 bra2_A4EC:
 	LDA $28
 bra2_A4EE:
@@ -812,6 +859,7 @@ bra2_A4EE:
 	SBC #$08
 	BCS bra2_A4EE
 	BCC bra2_A50F
+
 bra2_A4FC:
 	LDA $28
 	LDY #$00
@@ -826,6 +874,7 @@ bra2_A500:
 	BCC bra2_A4EE ;unlogged
 bra2_A50E_RTS:
 	RTS
+
 bra2_A50F:
 	LDA #$00
 bra2_A511:
@@ -844,6 +893,7 @@ bra2_A518:
 	BMI bra2_A544
 	BEQ bra2_A52C
 	RTS
+
 bra2_A52C:
 	LDA $2B
 	CMP #$C8
@@ -873,6 +923,7 @@ bra2_A548:
 	BCS bra2_A534
 bra2_A556_RTS:
 	RTS
+
 bra2_A557:
 	LDA #$00
 bra2_A559:
@@ -944,6 +995,10 @@ loc2_A5C1:
 	LDA $2E
 	STA $03C8
 	RTS
+
+;----------------------------------------
+;SUBROUTINE ($A5D0)
+;----------------------------------------
 sub2_A5D0:
 	LDA #$40
 	STA ObjectAttributes
@@ -963,6 +1018,7 @@ sub2_A5D0:
 	BMI bra2_A606
 	BEQ bra2_A5F6
 	RTS
+
 bra2_A5F6:
 	LDA $28
 bra2_A5F8:
@@ -988,6 +1044,7 @@ bra2_A60A:
 	BCS bra2_A5F8
 bra2_A618_RTS:
 	RTS
+
 bra2_A619:
 	LDA #$00
 bra2_A61B:
@@ -1039,6 +1096,7 @@ bra2_A657:
 	BCC bra2_A645
 bra2_A665_RTS:
 	RTS
+
 bra2_A666:
 	LDA #$00
 bra2_A668:
@@ -1058,6 +1116,7 @@ bra2_A66F:
 	BMI bra2_A69D
 	BEQ bra2_A685
 	RTS
+
 bra2_A685:
 	LDA $2B
 	CMP #$C8
@@ -1087,6 +1146,7 @@ bra2_A6A1:
 	BCS bra2_A68D
 bra2_A6AF_RTS:
 	RTS
+
 bra2_A6B0:
 	LDA #$00
 bra2_A6B2:

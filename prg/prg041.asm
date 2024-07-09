@@ -4970,7 +4970,7 @@ loc_BE91:
 	STA M90_PRG0
 	LDA ($DA),Y
 	STA PlayerBackColl
-	LDA #$3C
+	LDA #60
 	STA M90_PRG0
 	JSR $8000 ;Unused function, bank 60 is just padding
 	LDA $26
@@ -5073,7 +5073,7 @@ sub_BF31:
 	CMP #$78
 	BCC bra_BF7A_RTS
 	STA PlayerBackColl
-	LDA #$3C
+	LDA #60
 	STA M90_PRG0
 	JSR $8000
 bra_BF7A_RTS:

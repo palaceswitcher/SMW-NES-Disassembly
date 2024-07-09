@@ -1962,6 +1962,7 @@ EntitySetPtrs:
 	dw World6_EntitySet
 	dw World7_EntitySet
 	dw World8_EntitySet
+BonusEntitySet:
 	dw BonusLevel_EntitySet ;(Also used for Yoshi's house)
 World1_EntitySet:
 	db $74
