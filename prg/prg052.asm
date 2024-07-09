@@ -196,21 +196,21 @@ jmp_52_A118:
 	STA $31 ;Get sprite tile attribute pointer for the given bank
 	LDA ObjectAttributes
 	AND #%01000000
-	BEQ bra2_A18C ;Branch if sprite tile isn't horizontally flipped
+	BEQ bra2_A18C ;Branch if sprite tile is facing right
 	;If sprite is facing left:
 		LDX #$00
 		LDY $A4 ;Get index for current object
 		LDA ObjectXDistance,Y
 		CLC
 		ADC PlayerSprXPos
-		STA $28 ;Object X Distance + Player Sprite X = Object Sprite X Position
+		STA $28 ;Object X Distance + Player Sprite X Pos = Object Sprite X Position
 		LDA ObjXScreenDistance,Y
 		ADC #$00 ;Add high byte if needed
-		BMI bra2_A16E ;Branch if object goes off-screen
-		BEQ bra2_A15E
+		BMI bra2_A16E ;Branch if object is off-screen (or to right of player)?
+		BEQ bra2_A15E ;Branch if object is on-screen (or to left of player)?
 		RTS
 
-;Fetch previous metasprite X position
+;Fetch previous metasprite X position?
 bra2_A15E:
 	LDA $28
 
@@ -219,25 +219,27 @@ bra2_A160:
 	STA $41,X
 	INX
 	CPX $2A
-	BCS bra2_A1D7 ;Stop when the metasprite width is reached
-	;Move next column 8 pixels over
+	BCS bra2_A1D7 ;Start positioning sprite rows once every column is positioned
+	;Move each column 8 pixels to the right
 		CLC
 		ADC #8
-	BCC bra2_A160 ;Continue uploading each column if the sprite is on-screen
+	BCC bra2_A160 ;Continue uploading each column X position if the sprite is on-screen
 	BCS bra2_A181 ;Clear the rest of the column buffer if this column goes off-screen
+
 bra2_A16E:
 	LDA $28
-	LDY #$00 ;Set index to first object?
+	LDY #$00
 
 bra2_A172:
 	STY $41,X
 	INX
 	CPX $2A
-	BCS bra2_A180_RTS
-	CLC
-	ADC #$08
-	BCC bra2_A172
-	BCS bra2_A160
+	BCS bra2_A180_RTS ;Stop once every column is positioned
+	;Move each column 8 pixels to the right
+		CLC
+		ADC #8
+	BCC bra2_A172 ;Continue uploading each column X position if the sprite is on-screen
+	BCS bra2_A160 ;Continue uploading each column X position like normal if it goes off-screen (wraps around?)
 bra2_A180_RTS:
 	RTS
 
@@ -248,43 +250,49 @@ bra2_A183:
 	STA $41,X
 	INX
 	CPX $2A
-	BCC bra2_A183
-	BCS bra2_A1D7 ;Position sprites vertically once the tile width is exceeded
+	BCC bra2_A183 ;Loop until the width of the metasprite is reached
+	BCS bra2_A1D7 ;Start positioning sprites rows once the tile width is exceeded
 
+;--------------------
+;If sprite is facing right:
 bra2_A18C:
 	LDX #$00
 	STX $41
-	LDY $A4
+	LDY $A4 ;Get index for current object
 	LDA $25
 	CLC
-	ADC PlayerSprXPos
-	BCC bra2_A19B
-	INC $41
+	ADC PlayerSprXPos ;Horizontally offset object from player's position
+	BCC bra2_A19B ;Branch if object stays on-screen?
+		INC $41 ;Add 1 if the object goes off-screen
 
 bra2_A19B:
 	CLC
 	ADC ObjectXDistance,Y
-	STA $28
+	STA $28 ;Object Width + Object X Distance + Player Sprite X Pos = Object Sprite X Position
 	LDA ObjXScreenDistance,Y
 	ADC $41
-	BMI bra2_A1BB
-	BEQ bra2_A1AB
+	BMI bra2_A1BB ;Branch if object is off-screen (or to right of player)?
+	BEQ bra2_A1AB ;Branch if object is on-screen (or to left of player)?
 	RTS
 
 bra2_A1AB:
 	LDA $28
+
 bra2_A1AD:
 	STA $41,X
 	INX
 	CPX $2A
 	BCS bra2_A1D7
-	SEC
-	SBC #$08
+	;Move each column 8 pixels to the left
+		SEC
+		SBC #$08
 	BCS bra2_A1AD
 	BCC bra2_A1CE
+
 bra2_A1BB:
 	LDA $28
 	LDY #$00
+
 bra2_A1BF:
 	STY $41,X
 	INX
@@ -296,6 +304,7 @@ bra2_A1BF:
 	BCC bra2_A1AD ;unlogged
 bra2_A1CD_RTS:
 	RTS
+
 bra2_A1CE:
 	LDA #$00
 bra2_A1D0:
@@ -303,23 +312,28 @@ bra2_A1D0:
 	INX
 	CPX $2A
 	BCC bra2_A1D0
+
+;--------------------
+;Start positioning sprite rows
 bra2_A1D7:
 	LDX #$00
 	LDY $A4
 	LDA ObjectYDistance,Y
 	CLC
 	ADC PlayerSprYPos
-	STA $2B
+	STA $2B ;Object Y Distance + Player Sprite Y Pos = Object Sprite Y Position
 	LDA ObjYScreenDistance,Y
 	ADC #$00
-	BMI bra2_A205
-	BEQ bra2_A1ED
+	BMI bra2_A205 ;Branch if object is on-screen (or above player)?
+	BEQ bra2_A1ED ;Branch if object is off-screen (or below player)?
 	RTS
+
 bra2_A1ED:
 	LDA $2B
 	CMP #$C8
 	BCC bra2_A1F5
 	LDA #$F8
+
 bra2_A1F5:
 	STA $B2,X
 	INX
@@ -330,9 +344,11 @@ bra2_A1F5:
 	STA $2B
 	BCC bra2_A1ED
 	BCS bra2_A218
+
 bra2_A205:
 	LDA $2B
 	LDY #$00
+
 bra2_A209:
 	STY $B2,X
 	INX
@@ -344,6 +360,7 @@ bra2_A209:
 	BCS bra2_A1F5
 bra2_A217_RTS:
 	RTS
+
 bra2_A218:
 	LDA #$00
 bra2_A21A:

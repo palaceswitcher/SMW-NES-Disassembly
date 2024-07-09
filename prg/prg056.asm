@@ -1666,7 +1666,7 @@ bra9_8C98:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra9_8CDA
+	BEQ loc9_8CDA
 	LDA ObjYScreenDistance,X
 	BPL bra9_8CC9
 	LDA ObjectYDistance,X
@@ -1685,7 +1685,6 @@ bra9_8CC9:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra9_8CDA:
 loc9_8CDA:
 	LDA FreezeFlag
 	BEQ bra9_8CE0
@@ -1737,7 +1736,7 @@ bra9_8D2A:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra9_8D6C
+	BEQ loc9_8D6C
 	LDA ObjYScreenDistance,X
 	BPL bra9_8D5B
 	LDA ObjectYDistance,X
@@ -1756,7 +1755,6 @@ bra9_8D5B:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra9_8D6C:
 loc9_8D6C:
 	LDA FreezeFlag
 	BEQ bra9_8D72_RTS
@@ -1884,7 +1882,7 @@ bra9_8E20:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra9_8E62
+	BEQ loc9_8E62
 	LDA ObjYScreenDistance,X
 	BPL bra9_8E51
 	LDA ObjectYDistance,X
@@ -1903,7 +1901,6 @@ bra9_8E51:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra9_8E62:
 loc9_8E62:
 	LDA FreezeFlag
 	BEQ bra9_8E68
@@ -1936,7 +1933,7 @@ bra9_8E8D:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra9_8ECF
+	BEQ loc9_8ECF
 	LDA ObjYScreenDistance,X
 	BPL bra9_8EBE
 	LDA ObjectYDistance,X
@@ -1955,7 +1952,6 @@ bra9_8EBE:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra9_8ECF:
 loc9_8ECF:
 	LDA FreezeFlag
 	BEQ bra9_8ED5
@@ -2019,7 +2015,7 @@ bra9_8F39:
 	TAX
 	LDA tbl9_8F59,X
 	STA $32
-	LDA tbl9_8F5A,X
+	LDA tbl9_8F59+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -2032,43 +2028,34 @@ bra9_8F53:
 	JSR jmp_54_A118
 	RTS
 tbl9_8F59:
-	db $61
-tbl9_8F5A:
-	db $8F
-	db $68
-	db $8F
-	db $6F
-	db $8F
-	db $76
-	db $8F
+	dw tbl9_8F61
+	dw tbl9_8F68
+	dw tbl9_8F6F
+	dw tbl9_8F76
+tbl9_8F61:
 	db $02
 	db $02
 	db $A7
-	db $2B
-	db $2C
-	db $36
-	db $37
+	db $2B, $2C
+	db $36, $37
+tbl9_8F68:
 	db $02
 	db $02
 	db $A7
-	db $2D
-	db $2E
-	db $38
-	db $39
+	db $2D, $2E
+	db $38, $39
+tbl9_8F6F:
 	db $02
 	db $02
 	db $A7
-	db $36
-	db $37
-	db $2B
-	db $2C
+	db $36, $37
+	db $2B, $2C
+tbl9_8F76:
 	db $02
 	db $02
 	db $A7
-	db $38
-	db $39
-	db $2D
-	db $2E
+	db $38, $39
+	db $2D, $2E
 Obj_h82:
 	LDX $A4
 	LDA ObjectVariables,X
@@ -2097,7 +2084,7 @@ bra9_8FA3:
 	STA ObjYScreenDistance,X
 	LDA PlayerYScreenDup
 	CMP ObjectYScreen,X
-	BEQ bra9_8FE5
+	BEQ loc9_8FE5
 	LDA ObjYScreenDistance,X
 	BPL bra9_8FD4
 	LDA ObjectYDistance,X
@@ -2116,7 +2103,6 @@ bra9_8FD4:
 	LDA ObjYScreenDistance,X
 	SBC #$00
 	STA ObjYScreenDistance,X
-bra9_8FE5:
 loc9_8FE5:
 	LDA FreezeFlag
 	BEQ bra9_8FEB

@@ -5371,7 +5371,7 @@ Obj_PlayerHitCheck:
 
 @SetPlayerDuckingHeight:
 	LDA PlayerAction
-	CMP #$07
+	CMP #pAction_Duck
 	BNE @HorizHitboxCheck ;Don't change the player's hitbox size if they aren't ducking
 	LDY #$08 ;If the player is ducking, make their hitbox 8 pixels high
 
