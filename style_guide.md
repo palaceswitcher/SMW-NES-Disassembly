@@ -60,7 +60,7 @@ Description blocks refer to a comment "block" that marks the start of something 
 - Tables of a certain data type or format should start with their data type (see below) separated by an underscore.
 	- Example: `Anim_PlayerFire_Hold`
 
-### Data Types
+### Common Data Types
 Animation animation list: `AnimTbl`\
 Object animation data: `Anim`\
 Sprite mapping: `SprMap`\

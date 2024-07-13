@@ -1,4 +1,7 @@
-; 0x066010-0x06800F
+;------------------------------------------------------------
+;MOVEMENT DATA BANK
+;This bank contains the movement data used by objects
+;------------------------------------------------------------
 tbl_51_E000:
 	dw ofs_E815
 	dw ofs_E8A1
@@ -15,10 +18,10 @@ tbl_51_E000:
 	dw ofs_E8A1
 	dw ofs_E8D4
 	dw ofs_E915
-	dw ofs_E924
+	dw Move_QuadUpwardsArc
 	dw Move_HLine ;Koopa movement data
 	dw Move_HLine
-	dw ofs_E924
+	dw Move_QuadUpwardsArc ;0x12
 	dw Move_HLine
 	dw ofs_E984
 	dw ofs_E9C5
@@ -2312,37 +2315,24 @@ ofs_E915:
 	db $03
 	db $00
 	db $80
-ofs_E924:
-	db $02
-	db $F9
-	db $02
-	db $F9
-	db $02
-	db $FA
-	db $02
-	db $FA
-	db $02
-	db $FB
-	db $02
-	db $FB
-	db $02
-	db $FC
-	db $02
-	db $FC
-	db $02
-	db $FD
-	db $02
-	db $FD
-	db $02
-	db $FE
-	db $02
-	db $FE
-	db $02
-	db $FF
-	db $02
-	db $FF
-	db $00
-	db $00
+
+;Quadratic jump arc
+Move_QuadUpwardsArc:
+	movedata 2,-7
+	movedata 2,-7
+	movedata 2,-6
+	movedata 2,-6
+	movedata 2,-5
+	movedata 2,-5
+	movedata 2,-4
+	movedata 2,-4
+	movedata 2,-3
+	movedata 2,-3
+	movedata 2,-2
+	movedata 2,-2
+	movedata 2,-1
+	movedata 2,-1
+	movedata 0,0
 	db $80
 
 ;Move in a stright, horizontal line

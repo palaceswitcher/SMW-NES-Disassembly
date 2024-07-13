@@ -11,7 +11,7 @@ bra8_8066:
 	LDY #$03
 	LDA ObjFrameCounter
 	AND #$08
-	BEQ @Continue ;Alternate between animation frames 3 and 4 every 8 frames
+	BEQ @Continue ;Alternate between Koopa frames 3 and 4 every 8 frames
 	INY
 
 @Continue:
@@ -151,9 +151,9 @@ ptr6_820E:
 	LDA EnemyAnimFrame,X
 	ASL
 	TAX ;Get index for current frame
-	LDA Koopa_SprMapPtrs,X
+	LDA SprMapTbl_Koopa,X
 	STA $32
-	LDA Koopa_SprMapPtrs+1,X
+	LDA SprMapTbl_Koopa+1,X
 	STA $33 ;Load mapping pointer
 	LDY #$80 ;Use bank 2 by default
 	LDX $A4
@@ -170,7 +170,7 @@ bra8_822C:
 	JSR jmp_52_A118
 	RTS
 
-Koopa_SprMapPtrs:
+SprMapTbl_Koopa:
 	dw SprMap_BeachKoopaWalk1
 	dw SprMap_BeachKoopaWalk2
 	dw SprMap_BeachKoopaSlide
@@ -241,22 +241,25 @@ bra8_82FF:
 	BPL bra8_8308
 	JSR jmp_54_B5BB
 	RTS
+
 bra8_8308:
 	JSR sub8_83D0
 	LDA FrameCount
 	AND #$01
 	BNE bra8_8316
 	LDA #$12
-	JSR GetMovementData
+	JSR GetMovementData ;Get jump arc
+
 bra8_8316:
 	LDY #$05
 	LDA ObjFrameCounter
 	AND #$08
-	BEQ bra8_8320
+	BEQ bra8_8320 ;Alternate between Koopa frames 5 and 6 every 8 frames
 	INY
+
 bra8_8320:
 	TYA
-	STA EnemyAnimFrame,X
+	STA EnemyAnimFrame,X ;Set animation frame
 	RTS
 
 ;----------------------------------------
@@ -274,7 +277,7 @@ bra8_838B:
 bra8_8394:
 	JSR sub8_83D0
 	LDA ObjectSlot,X
-	BMI bra8_83B6
+	BMI bra8_83B6 ;Branch if paratroopa is vertical
 	LDA FrameCount
 	AND #$03
 	BNE bra8_83A7
@@ -307,6 +310,10 @@ bra8_83CB:
 	STA EnemyAnimFrame,X
 	RTS
 
+;----------------------------------------
+;SUBROUTINE ($83D0)
+;Generic code for all paratroopas
+;----------------------------------------
 sub8_83D0:
 	LDA #$04
 	STA $25

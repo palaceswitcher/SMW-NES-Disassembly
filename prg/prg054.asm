@@ -1,5 +1,5 @@
 ;------------------------------------------------------------
-;SMW NES OBJECT BANK
+;OBJECT BANK
 ;This bank handles objects and contains various functions relating to them. Object-specific things will be kept here for convenience sake
 ;------------------------------------------------------------
 
@@ -462,7 +462,7 @@ tbl3_A1B5:
 	dw Obj_h38
 	dw Obj_h38
 
-	Obj_horizontalPodoboo = ($-tbl3_A1B5)/2
+	objID_HorizontalPodoboo = ($-tbl3_A1B5)/2
 	dw Obj_h48
 
 	objID_1UPAlt = ($-tbl3_A1B5)/2 ;Verify this
@@ -986,134 +986,134 @@ tbl3_A435:
 	dw Obj_hBE
 	dw Obj_hBE
 
-	objID_CharginChuckChase = ($-tbl3_A1B5)/2 + $80
+	objID_CharginChuckChase = ($-tbl3_A435)/2 + $80
 	dw Obj_hC0
-	dw Obj_hC0
+	dw Obj_hC0 ;Actually C2
 
-	objID_CharginChuckStunned = ($-tbl3_A1B5)/2 + $80
+	objID_CharginChuckStunned = ($-tbl3_A435)/2 + $80
 	dw Obj_hC2
 	dw Obj_hC2
 
-	objID_CharginChuck_Hit = ($-tbl3_A1B5)/2 + $80
+	objID_CharginChuck_Hit = ($-tbl3_A435)/2 + $80
 	dw Obj_hBE
 	dw Obj_hBE
 
-	objID_CharginChuckChase_Hit = ($-tbl3_A1B5)/2 + $80
+	objID_CharginChuckChase_Hit = ($-tbl3_A435)/2 + $80
 	dw Obj_hC0
 	dw Obj_hC0
 
-	objID_CharginChuckStunned_Hit = ($-tbl3_A1B5)/2 + $80
+	objID_CharginChuckStunned_Hit = ($-tbl3_A435)/2 + $80
 	dw Obj_hC2
 	dw Obj_hC2
 
-	objID_CharginChuck_Hit2 = ($-tbl3_A1B5)/2 + $80
+	objID_CharginChuck_Hit2 = ($-tbl3_A435)/2 + $80
 	dw Obj_hBE
 	dw Obj_hBE
 
-	objID_CharginChuckChase_Hit2 = ($-tbl3_A1B5)/2 + $80
+	objID_CharginChuckChase_Hit2 = ($-tbl3_A435)/2 + $80
 	dw Obj_hC0
 	dw Obj_hC0
 
-	objID_BaseballChuck = ($-tbl3_A1B5)/2 + $80
+	objID_BaseballChuck = ($-tbl3_A435)/2 + $80
 	dw Obj_hCE
 	dw Obj_hCE
 
-	objID_FootballChuck = ($-tbl3_A1B5)/2 + $80
+	objID_FootballChuck = ($-tbl3_A435)/2 + $80
 	dw Obj_hD0
 	dw Obj_hD0
 
-	objID_DigginChuck = ($-tbl3_A1B5)/2 + $80
+	objID_DigginChuck = ($-tbl3_A435)/2 + $80
 	dw Obj_hD2
 	dw Obj_hD2
 
-	objID_BooBuddiesCenterAlt = ($-tbl3_A1B5)/2 + $80 ;Verify this
+	objID_BooBuddiesCenterAlt = ($-tbl3_A435)/2 + $80 ;Verify this
 	dw Obj_hD4
 	dw Obj_hD5
 
-	objID_BooBuddiesCenter = ($-tbl3_A1B5)/2 + $80 ;Verify this
+	objID_BooBuddiesCenter = ($-tbl3_A435)/2 + $80 ;Verify this
+	dw Obj_hD6 ;D8
 	dw Obj_hD6
-	dw Obj_hD6
 
-	objID_Boo = ($-tbl3_A1B5)/2 + $80
+	objID_Boo = ($-tbl3_A435)/2 + $80
+	dw Obj_hD8 ;DA
 	dw Obj_hD8
-	dw Obj_hD8
 
-	objID_BooCrewBoo = ($-tbl3_A1B5)/2 + $80 ;Verify this
+	objID_BooCrewBoo = ($-tbl3_A435)/2 + $80 ;Verify this
+	dw Obj_hDA ;DC
 	dw Obj_hDA
-	dw Obj_hDA
 
-	objID_BooFlyAway = ($-tbl3_A1B5)/2 + $80 ;Verify this
+	objID_BooFlyAway = ($-tbl3_A435)/2 + $80 ;Verify this
+	dw Obj_hDC ;DE
 	dw Obj_hDC
-	dw Obj_hDC
 
-	objID_Propeller = ($-tbl3_A1B5)/2 + $80
-	dw Obj_hDE
+	objID_Propeller = ($-tbl3_A435)/2 + $80
+	dw Obj_hDE ;E0
 
-	objID_Bowser = ($-tbl3_A1B5)/2 + $80
+	objID_Bowser = ($-tbl3_A435)/2 + $80
 	dw Obj_hDF
 
-	objID_SpikeUp = ($-tbl3_A1B5)/2 + $80
+	objID_SpikeUp = ($-tbl3_A435)/2 + $80
 	dw Obj_hE0
 	dw Obj_hE0
 
-	objID_DinoRhino = ($-tbl3_A1B5)/2 + $80
-	dw Obj_hE2
+	objID_DinoRhino = ($-tbl3_A435)/2 + $80
+	dw Obj_hE2 ;E4
 	dw Obj_hE2
 
-	objID_DinoTorch = ($-tbl3_A1B5)/2 + $80
+	objID_DinoTorch = ($-tbl3_A435)/2 + $80
 	dw Obj_hE4
 	dw Obj_hE4
 
-	objID_BonusBlock1UP = ($-tbl3_A1B5)/2 + $80
+	objID_BonusBlock1UP = ($-tbl3_A435)/2 + $80
 	dw Obj_hE6
 
-	objID_BonusBlockCoin = ($-tbl3_A1B5)/2 + $80
+	objID_BonusBlockCoin = ($-tbl3_A435)/2 + $80
 	dw Obj_hE7
 
-	objID_BonusBlock1 = ($-tbl3_A1B5)/2 + $80
-	dw Obj_hE8 ;1st bonus block
+	objID_BonusBlock1 = ($-tbl3_A435)/2 + $80
+	dw Obj_hE8 ;1st bonus block (EA)
 	dw Obj_hE8
 
-	objID_BonusBlock2 = ($-tbl3_A1B5)/2 + $80
-	dw Obj_hE8 ;2nd bonus block
+	objID_BonusBlock2 = ($-tbl3_A435)/2 + $80
+	dw Obj_hE8 ;2nd bonus block (EC)
 	dw Obj_hE8
 
-	objID_BonusBlock3 = ($-tbl3_A1B5)/2 + $80
-	dw Obj_hE8 ;3rd bonus block
+	objID_BonusBlock3 = ($-tbl3_A435)/2 + $80
+	dw Obj_hE8 ;3rd bonus block (EE)
 	dw Obj_hED
 
-	objID_NA3 = ($-tbl3_A1B5)/2 + $80 ;Verify this
-	dw Obj_hED
+	objID_NA3 = ($-tbl3_A435)/2 + $80 ;Verify this
+	dw Obj_hED ;F0
 	dw Obj_hED
 
-	objID_BGPriorityAbove = ($-tbl3_A1B5)/2 + $80
+	objID_BGPriorityAbove = ($-tbl3_A435)/2 + $80
+	dw Obj_hF0 ;F2
 	dw Obj_hF0
-	dw Obj_hF0
 
-	objID_BGPriorityBelow = ($-tbl3_A1B5)/2 + $80
+	objID_BGPriorityBelow = ($-tbl3_A435)/2 + $80
 	dw Obj_hED
 
-	objID_PipeExit = ($-tbl3_A1B5)/2 + $80
-	dw Obj_hED
+	objID_PipeExit = ($-tbl3_A435)/2 + $80
+	dw Obj_hED ;F5
 
-	objID_SpikeDown = ($-tbl3_A1B5)/2 + $80
-	dw Obj_hF4
-	dw Obj_hF4
-
-	objID_SpikeUpAlt = ($-tbl3_A1B5)/2 + $80 ;Verify this
-	dw Obj_hF4
+	objID_SpikeDown = ($-tbl3_A435)/2 + $80
+	dw Obj_hF4 ;F6
 	dw Obj_hF4
 
-	objID_VerticalParatroopa = ($-tbl3_A1B5)/2 + $80
+	objID_SpikeUpAlt = ($-tbl3_A435)/2 + $80 ;Verify this
+	dw Obj_hF4 ;F8
+	dw Obj_hF4
+
+	objID_VerticalParatroopa = ($-tbl3_A435)/2 + $80
 	dw Obj_h58
 	dw Obj_h58
 
-	objID_CountdownPlatform_1s = ($-tbl3_A1B5)/2 + $80
-	dw Obj_hFA
+	objID_CountdownPlatform_1s = ($-tbl3_A435)/2 + $80
+	dw Obj_hFA ;FC
 	dw Obj_hFA
 
-	objID_CountdownPlatform_4s = ($-tbl3_A1B5)/2 + $80
-	dw Obj_hFA
+	objID_CountdownPlatform_4s = ($-tbl3_A435)/2 + $80
+	dw Obj_hFA ;FE
 	dw Obj_hFA
 
 ;----------------------------------------
@@ -3526,6 +3526,9 @@ GetSpeedDataDone:
 	INC ObjectVariables,X
 	RTS
 
+;----------------------------------------
+;SUBROUTINE ($B1DA)
+;----------------------------------------
 GetMovementData:
 	ASL
 	TAY ;Get pointer index
@@ -3537,16 +3540,18 @@ GetMovementData:
 	LDA ObjectPRGBank
 	STA M90_PRG0
 	RTS
+
 sub3_B1EF:
 	LDX $A4
 	LDA ObjectVariables,X
-	AND #$7F
+	AND #%01111111 ;Mask out upper bit to not affect carry
 	ASL
 	TAY
 	LDA ObjectState,X
-	AND #$20
+	AND #%00100000
 	BNE bra3_B202
 	JMP loc3_B2B4
+
 bra3_B202:
 	JSR sub3_B077
 	BEQ bra3_B212
@@ -4057,17 +4062,23 @@ bra3_B5B4:
 	RTS
 bra3_B5BA_RTS:
 	RTS
+
+;----------------------------------------
+;SUBROUTINE ($B5BB)
+;Turns the object around depending 
+;----------------------------------------
 jmp_54_B5BB:
 	LDA #$00
 	STA ObjectVariables,X ;Clear object variable
 	TAY ;Set object direction to right
 	LDA ObjXScreenDistance,X
-	BMI bra3_B5C8 ;Branch if the object is behind the player, setting its direction to right
-	LDY #$40 ;If the object is ahead of the player, set object direction to left
-bra3_B5C8:
+	BMI @SetDirection ;Branch if the object is behind the player, setting its direction to right
+		LDY #$40 ;If the object is ahead of the player, set object direction to left
+@SetDirection:
 	TYA
 	STA ObjectState,X ;Store object direction
 	RTS
+
 sub_54_B5CD:
 	ASL
 	TAY

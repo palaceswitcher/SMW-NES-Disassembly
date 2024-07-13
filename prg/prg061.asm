@@ -1,6 +1,6 @@
 ;disassembled by BZK 6502 Disassembler
 tbl6_A000:
-	db $00 ;not sure what this data is for
+	db $00
 	db $00
 	db $00
 	db $00
@@ -1954,505 +1954,62 @@ GetEntitySetPtr:
 bra6_A847_RTS:
 	RTS
 EntitySetPtrs:
-	dw World1_EntitySet
-	dw World2_EntitySet
-	dw World3_EntitySet
-	dw World4_EntitySet
-	dw World5_EntitySet
-	dw World6_EntitySet
-	dw World7_EntitySet
-	dw World8_EntitySet
+	dw EntitySet_World1
+	dw EntitySet_World2
+	dw EntitySet_World3
+	dw EntitySet_World4
+	dw EntitySet_World5
+	dw EntitySet_World6
+	dw EntitySet_World7
+	dw EntitySet_World8
 BonusEntitySet:
 	dw BonusLevel_EntitySet ;(Also used for Yoshi's house)
-World1_EntitySet:
-	db $74
-	db $00
-	db $12
-	db $17
-	db $C2
-	db $1A
-	db $0B
-	db $04
-	db $49
-	db $0C
-	db $48
-	db $39
-	db $6E
-	db $00
-	db $00
-	db $4D
-	db $74
-	db $6D
-	db $04
-	db $0B
-	db $1B
-	db $01
-	db $10
-	db $C3
-	db $6A
-	db $14
-	db $A0
-	db $98
-	db $66
-	db $0E
-	db $00
-	db $4D
-	db $74
-	db $57
-	db $56
-	db $11
-	db $59
-	db $01
-	db $0C
-	db $0B
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $4D
-	db $74
-	db $4E
-	db $50
-	db $9D
-	db $84
-	db $65
-	db $0B
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $77
-World2_EntitySet:
-	db $74
-	db $1E
-	db $20
-	db $22
-	db $25
-	db $14
-	db $1A
-	db $01
-	db $6C
-	db $D1
-	db $39
-	db $0E
-	db $F4
-	db $00
-	db $00
-	db $4C
-	db $74
-	db $54
-	db $55
-	db $56
-	db $11
-	db $59
-	db $0D
-	db $15
-	db $79
-	db $76
-	db $6C
-	db $00
-	db $00
-	db $00
-	db $00
-	db $4D
-	db $00
-	db $D8
-	db $DA
-	db $DC
-	db $6A
-	db $9D
-	db $64
-	db $49
-	db $0C
-	db $68
-	db $6D
-	db $00
-	db $00
-	db $00
-	db $00
-	db $4D
-	db $70
-	db $84
-	db $88
-	db $9D
-	db $A4
-	db $8D
-	db $0B
-	db $0D
-	db $0C
-	db $49
-	db $65
-	db $A5
-	db $39
-	db $6B
-	db $00
-	db $4D
-World3_EntitySet:
-	db $74
-	db $4A
-	db $2F
-	db $42
-	db $04
-	db $0B
-	db $15
-	db $1A
-	db $D3
-	db $0C
-	db $49
-	db $39
-	db $EF
-	db $00
-	db $00
-	db $4C
-	db $00
-	db $32
-	db $30
-	db $34
-	db $52
-	db $0C
-	db $87
-	db $93
-	db $EF
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $4D
-	db $00
-	db $D8
-	db $DA
-	db $DC
-	db $82
-	db $67
-	db $02
-	db $49
-	db $0C
-	db $68
-	db $6D
-	db $00
-	db $00
-	db $00
-	db $00
-	db $4D
-	db $71
-	db $72
-	db $4B
-	db $0B
-	db $02
-	db $9C
-	db $64
-	db $A5
-	db $6B
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $4D
-World4_EntitySet:
-	db $74
-	db $22
-	db $21
-	db $13
-	db $04
-	db $0D
-	db $01
-	db $F4
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $4D
-	db $74
-	db $57
-	db $5D
-	db $5F
-	db $61
-	db $63
-	db $5B
-	db $0D
-	db $F4
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $4C
-	db $74
-	db $12
-	db $10
-	db $C3
-	db $04
-	db $1A
-	db $F4
-	db $01
-	db $0D
-	db $49
-	db $39
-	db $15
-	db $6C
-	db $6E
-	db $7A
-	db $4C
-	db $74
-	db $AD
-	db $0C
-	db $8C
-	db $4E
-	db $50
-	db $00
-	db $65
-	db $6B
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $77
-World5_EntitySet:
-	db $0C
-	db $0E
-	db $10
-	db $01
-	db $95
-	db $C3
-	db $03
-	db $12
-	db $C2
-	db $14
-	db $D3
-	db $F4
-	db $00
-	db $00
-	db $00
-	db $4D
-	db $DA
-	db $68
-	db $02
-	db $49
-	db $0D
-	db $0C
-	db $82
-	db $DC
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $4D
-	db $34
-	db $32
-	db $30
-	db $93
-	db $0D
-	db $0C
-	db $0B
-	db $52
-	db $87
-	db $C3
-	db $7F
-	db $00
-	db $00
-	db $00
-	db $00
-	db $4C
-	db $70
-	db $79
-	db $6B
-	db $0C
-	db $0D
-	db $49
-	db $9D
-	db $A4
-	db $AD
-	db $54
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $4D
-World6_EntitySet:
-	db $15
-	db $02
-	db $C3
-	db $1A
-	db $04
-	db $11
-	db $0B
-	db $0C
-	db $59
-	db $4A
-	db $24
-	db $00
-	db $00
-	db $00
-	db $74
-	db $4C
-	db $82
-	db $DA
-	db $0D
-	db $0C
-	db $49
-	db $02
-	db $66
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $74
-	db $4D
-	db $FA
-	db $1A
-	db $02
-	db $C3
-	db $01
-	db $39
-	db $0B
-	db $03
-	db $F0
-	db $F1
-	db $E7
-	db $E5
-	db $00
-	db $00
-	db $74
-	db $4D
-	db $71
-	db $72
-	db $88
-	db $0D
-	db $A4
-	db $85
-	db $E3
-	db $F7
-	db $F9
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $74
-	db $4D
-World7_EntitySet:
-	db $11
-	db $0D
-	db $FB
-	db $56
-	db $79
-	db $0E
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $74
-	db $4D
-	db $FC
-	db $FE
-	db $03
-	db $0D
-	db $0C
-	db $6B
-	db $15
-	db $48
-	db $FB
-	db $59
-	db $11
-	db $F4
-	db $EF
-	db $00
-	db $74
-	db $4D
-	db $0B
-	db $02
-	db $DA
-	db $82
-	db $66
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $74
-	db $4D
-	db $00
-	db $7D
-	db $3A
-	db $E0
-	db $4E
-	db $48
-	db $6B
-	db $89
-	db $9C
-	db $A3
-	db $E1
-	db $00
-	db $00
-	db $00
-	db $00
-	db $4D
-World8_EntitySet:
-	db $7C
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $4D
+EntitySet_World1:
+	db objID_MidwayPoint, 0, objID_RedBeachKoopa, objID_Rex+1, objID_CharginChuckChase, objID_PiranhaPlant, objID_Mushroom, objID_Shell, objID_1UPAlt, objID_FireFlower, objID_HorizontalPodoboo, objID_MushroomHidden, objID_BeachKoopaSliding, 0, 0, objID_GoalTape+1
+	db objID_MidwayPoint, objID_Vine+1, objID_Shell, objID_Mushroom, objID_PiranhaPlant+1, objID_Yoshi, objID_Koopa, objID_CharginChuckChase+1, objID_PSwitchDropped, objID_BouncingParatroopa, objID_Paragoomba, objID_ParachuteGoomba, objID_NA, objID_Star, 0, objID_GoalTape+1
+	db objID_MidwayPoint, objID_ShortPlatform+1, objID_ShortPlatform, objID_Koopa+1, objID_GreenParatroopa+1, objID_Yoshi, objID_FireFlower, objID_Mushroom, 0, 0, 0, 0, 0, 0, 0, objID_GoalTape+1
+	db objID_MidwayPoint, objID_ClimbingKoopaHoriz, objID_ClimbingKoopaVert, objID_VerticalPodoboo+1, objID_Thwomp, objID_DiagonalPodoboo+1, objID_Mushroom, 0, 0, 0, 0, 0, 0, 0, 0, objID_Reznor
+
+EntitySet_World2:
+	db objID_MidwayPoint, objID_SuperKoopaCape, objID_SuperKoopaJump, objID_SuperKoopaAlt, objID_VolcanoLotus+1, objID_BouncingParatroopa, objID_PiranhaPlant, objID_Yoshi, objID_Vine, objID_BaseballChuck+1, objID_MushroomHidden, objID_Star, objID_BGPriorityBelow, 0, 0, objID_GoalTape
+	db objID_MidwayPoint, objID_LinePlatform, objID_LinePlatform+1, objID_ShortPlatform, objID_Koopa+1, objID_GreenParatroopa+1, objID_Feather, objID_BouncingParatroopa+1, objID_Fuzzy, objID_OnOffBlock, objID_Vine, 0, 0, 0, 0, objID_GoalTape+1
+	db 0, objID_BooBuddiesCenter, objID_Boo, objID_BooCrewBoo, objID_PSwitchDropped, objID_VerticalPodoboo+1, objID_DiagonalPodoboo, objID_1UPAlt, objID_FireFlower, objID_NA+2, objID_Vine+1, 0, 0, 0, 0, objID_GoalTape+1
+	db objID_MortonRoy, objID_Thwomp, objID_Ninji, objID_VerticalPodoboo+1, objID_DryBones, objID_SpikeBall+1, objID_Mushroom, objID_Feather, objID_FireFlower, objID_1UPAlt, objID_DiagonalPodoboo+1, objID_DryBones+1, objID_MushroomHidden, objID_MushroomStanding, 0, objID_GoalTape+1
+
+EntitySet_World3:
+	db objID_MidwayPoint, objID_SpikeTop, objID_Swooper+1, objID_BuzzyBeetle, objID_Shell, objID_Mushroom, objID_BouncingParatroopa+1, objID_PiranhaPlant, objID_FootballChuck+1, objID_FireFlower, objID_1UPAlt, objID_MushroomHidden, objID_BonusBlock3+1, 0, 0, objID_GoalTape
+	db 0, objID_BlurpVertical, objID_BlurpHorizontal, objID_BlurpAlt, objID_BlurpStill, objID_FireFlower, objID_UrchinVertical+1, objID_UrchinHorizontal+1, objID_BonusBlock3+1, 0, 0, 0, 0, 0, 0, objID_GoalTape+1
+	db 0, objID_BooBuddiesCenter, objID_Boo, objID_BooCrewBoo, objID_Eerie, objID_NA+1, objID_PSwitch, objID_1UPAlt, objID_FireFlower, objID_NA+2, objID_Vine+1, 0, 0, 0, 0, objID_GoalTape+1
+	db objID_DiagonalPodobooBoss, objID_LemmyWendy, objID_SpikeTop+1, objID_Mushroom, objID_PSwitch, objID_VerticalPodoboo, objID_DiagonalPodoboo, objID_DryBones+1, objID_MushroomStanding, 0, 0, 0, 0, 0, 0, objID_GoalTape+1
+
+EntitySet_World4:
+	db objID_MidwayPoint, objID_SuperKoopaAlt, objID_SuperKoopaStraight, objID_RedBeachKoopa+1, objID_Shell, objID_Feather, objID_Yoshi, objID_BGPriorityBelow, 0, 0, 0, 0, 0, 0, 0, objID_GoalTape+1
+	db objID_MidwayPoint, objID_ShortPlatform+1, objID_Rope+1, objID_RopeLong, objID_ChainsawDown+1, objID_ChainsawUpAlt+1, objID_ChainsawUp+1, objID_Feather, objID_BGPriorityBelow, 0, 0, 0, 0, 0, 0, objID_GoalTape
+	db objID_MidwayPoint, objID_RedBeachKoopa, objID_Koopa, objID_CharginChuckChase+1, objID_Shell, objID_PiranhaPlant, objID_BGPriorityBelow, objID_Yoshi, objID_Feather, objID_1UPAlt, objID_MushroomHidden, objID_BouncingParatroopa+1, objID_Vine, objID_BeachKoopaSliding, objID_BeachKoopaSlidingAlt, objID_GoalTape
+	db objID_MidwayPoint, objID_BonyBeetle+1, objID_FireFlower, objID_SpikeBall, objID_ClimbingKoopaHoriz, objID_ClimbingKoopaVert, 0, objID_DiagonalPodoboo+1, objID_MushroomStanding, 0, 0, 0, 0, 0, 0, objID_Reznor
+
+EntitySet_World5:
+	db objID_FireFlower, objID_Star, objID_Koopa, objID_Yoshi, objID_Goomba+1, objID_CharginChuckChase+1, objID_Spring, objID_RedBeachKoopa, objID_CharginChuckChase, objID_BouncingParatroopa, objID_FootballChuck+1, objID_BGPriorityBelow, 0, 0, 0, objID_GoalTape+1
+	db objID_Boo, objID_NA+2, objID_PSwitch, objID_1UPAlt, objID_Feather, objID_FireFlower, objID_Eerie, objID_BooCrewBoo, 0, 0, 0, 0, 0, 0, 0, objID_GoalTape+1
+	db objID_BlurpAlt, objID_BlurpVertical, objID_BlurpHorizontal, objID_UrchinHorizontal+1, objID_Feather, objID_FireFlower, objID_Mushroom, objID_BlurpStill, objID_UrchinVertical+1, objID_CharginChuckChase+1, objID_Urchin+1, 0, 0, 0, 0, objID_GoalTape
+	db objID_MortonRoy, objID_Fuzzy, objID_MushroomStanding, objID_FireFlower, objID_Feather, objID_1UPAlt, objID_VerticalPodoboo+1, objID_DryBones, objID_BonyBeetle+1, objID_LinePlatform, 0, 0, 0, 0, 0, objID_GoalTape+1
+
+EntitySet_World6:
+	db objID_BouncingParatroopa+1, objID_PSwitch, objID_CharginChuckChase+1, objID_PiranhaPlant, objID_Shell, objID_Koopa+1, objID_Mushroom, objID_FireFlower, objID_GreenParatroopa+1, objID_SpikeTop, objID_VolcanoLotus, 0, 0, 0, objID_MidwayPoint, objID_GoalTape
+	db objID_Eerie, objID_Boo, objID_Feather, objID_FireFlower, objID_1UPAlt, objID_PSwitch, objID_NA, 0, 0, 0, 0, 0, 0, 0, objID_MidwayPoint, objID_GoalTape+1
+	db objID_VerticalParatroopa, objID_PiranhaPlant, objID_PSwitch, objID_CharginChuckChase+1, objID_Yoshi, objID_MushroomHidden, objID_Mushroom, objID_Spring, objID_NA3, objID_NA3+1, objID_DinoTorch+1, objID_DinoRhino+1, 0, 0, objID_MidwayPoint, objID_GoalTape+1
+	db objID_DiagonalPodobooBoss, objID_LemmyWendy, objID_Ninji, objID_Feather, objID_DryBones, objID_Thwomp+1, objID_SpikeUp+1, objID_SpikeDown+1, objID_SpikeUpAlt+1, 0, 0, 0, 0, 0, objID_MidwayPoint, objID_GoalTape+1
+
+EntitySet_World7:
+	db objID_Koopa+1, objID_Feather, objID_VerticalParatroopa+1, objID_ShortPlatform, objID_Fuzzy, objID_Star, 0, 0, 0, 0, 0, 0, 0, 0, objID_MidwayPoint, objID_GoalTape+1
+	db objID_CountdownPlatform_1s, objID_CountdownPlatform_4s, objID_Spring, objID_Feather, objID_FireFlower, objID_MushroomStanding, objID_BouncingParatroopa+1, objID_HorizontalPodoboo, objID_VerticalParatroopa+1, objID_GreenParatroopa+1, objID_Koopa+1, objID_BGPriorityBelow, objID_BonusBlock3+1, 0, objID_MidwayPoint, objID_GoalTape+1
+	db objID_Mushroom, objID_PSwitch, objID_Boo, objID_Eerie, objID_NA, 0, 0, 0, 0, 0, 0, 0, 0, 0, objID_MidwayPoint, objID_GoalTape+1
+	db 0, objID_CastleCanvas, objID_Mechakoopa, objID_Propeller, objID_ClimbingKoopaHoriz, objID_HorizontalPodoboo, objID_MushroomStanding, objID_Ninji+1, objID_VerticalPodoboo, objID_DryBonesThrowing+1, objID_Bowser, 0, 0, 0, 0, objID_GoalTape+1
+
+EntitySet_World8:
+	db objID_LevelExit, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, objID_GoalTape+1
 BonusLevel_EntitySet:
-	db $F2
-	db $F3
-	db $F5
-	db $EA
-	db $EB
-	db $EC
-	db $ED
-	db $EE
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
+	db objID_BGPriorityAbove, objID_BGPriorityAbove+1, objID_PipeExit, objID_BonusBlock1, objID_BonusBlock1+1, objID_BonusBlock2, objID_BonusBlock2+1, objID_BonusBlock3, 0, 0, 0, 0, 0, 0, 0, 0
 tbl6_AA3A:
 	db $00
 	db $00

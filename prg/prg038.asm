@@ -50,7 +50,7 @@
 	SEC
 	SBC PlayerXPosDup
 	STA ObjectXDistance,X
-	LDA a:PlayerAnimationFrame,X
+	LDA a: PlayerAnimationFrame,X
 	db $00
 	db $00
 	db $00

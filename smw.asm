@@ -2,7 +2,7 @@
 
 ;This is still a work in progress and is not recommended for use in hacks.
 
-;Assembles with parasyte's fork of ASM6.
+;Assembles with morskoyzmey's fork of ASM6.
 
 ;----------------------------------------
 db "NES", $1A	;NES Header
