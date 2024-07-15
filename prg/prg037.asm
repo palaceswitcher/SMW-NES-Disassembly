@@ -778,7 +778,7 @@ ptr7_861A:
 	JSR Obj_CapeHitCheck
 	JSR Obj_PlayerHitCheck
 	JSR Obj_KillOnSpinJump
-	JSR Obj_StompKnockback
+	JSR Obj_StompRebound
 	LDA #$00
 	STA ObjectState,X
 	STA ObjectVariables,X
@@ -1114,7 +1114,7 @@ bra_88BC:
 	STA ObjectState,X
 	STA ObjectVariables,X
 	STA ObjectAction,X
-	JSR Obj_StompKnockback
+	JSR Obj_StompRebound
 	RTS
 ptr6_88D1:
 	LDX $A4

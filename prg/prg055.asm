@@ -53,12 +53,12 @@ Koopa_GetFunction:
 	AND #%00011111 ;Mask out upper 3 bits of object's state
 	ASL
 	TAY ;Get pointer index
-	LDA tbl8_8114,Y
+	LDA FuncTbl_Koopa,Y
 	STA $32
-	LDA tbl8_8114+1,Y
+	LDA FuncTbl_Koopa+1,Y
 	STA $33
 	JMP ($32)
-tbl8_8114:
+FuncTbl_Koopa:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
@@ -66,10 +66,10 @@ tbl8_8114:
 	dw Koopa_HitRespond
 
 Koopa_HitCheck:
-	JSR Obj_CapeHitCheck ;Cape hit check
-	JSR Obj_PlayerHitCheck ;Check for collision
-	JSR Obj_KillOnSpinJump ;If the player is touching the Koopa and not hurt, kill it if it's being spin jumped on
-	JSR Obj_StompKnockback ;The player must be jumping on it like normal if it's reached this point, so knock them back
+	JSR Obj_CapeHitCheck ;Kill if hit by cape
+	JSR Obj_PlayerHitCheck ;Check for collision with player
+	JSR Obj_KillOnSpinJump ;Kill if spin-jumped on
+	JSR Obj_StompRebound ;The player must be stomping on it if the code reached this point, so knock them back
 	LDA #16
 	BMI bra8_8147 ;Redundant branch (16 isn't negative)
 	CLC
@@ -243,7 +243,7 @@ bra8_82FF:
 	RTS
 
 bra8_8308:
-	JSR sub8_83D0
+	JSR GenObj_Paratroopa
 	LDA FrameCount
 	AND #$01
 	BNE bra8_8316
@@ -275,7 +275,7 @@ bra8_838B:
 	JSR jmp_54_B5BB
 	RTS
 bra8_8394:
-	JSR sub8_83D0
+	JSR GenObj_Paratroopa
 	LDA ObjectSlot,X
 	BMI bra8_83B6 ;Branch if paratroopa is vertical
 	LDA FrameCount
@@ -314,105 +314,68 @@ bra8_83CB:
 ;SUBROUTINE ($83D0)
 ;Generic code for all paratroopas
 ;----------------------------------------
-sub8_83D0:
+GenObj_Paratroopa:
 	LDA #$04
 	STA $25
 	LDX $A4 ;Get index of current object
-	Obj_DistCalc bra8_843A
+	Obj_DistCalc Paratroopa_GetFunction
 
-bra8_843A:
+Paratroopa_GetFunction:
 	LDA ObjectState,X
-	AND #$1F
+	AND #%00011111 ;Mask out upper 3 bits
 	ASL
-	TAY
-	LDA tbl8_844E,Y
+	TAY ;Get index for object's state
+	LDA FuncTbl_Paratroopa,Y
 	STA $32
-	LDA tbl8_844E+1,Y
-	STA $33
+	LDA FuncTbl_Paratroopa+1,Y
+	STA $33 ;Load function pointer
 	JMP ($32)
-tbl8_844E:
+FuncTbl_Paratroopa:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
-	dw ptr3_8458
-	dw ptr3_847B
-ptr3_8458:
-	JSR Obj_PlayerHitCheck
-	JSR Obj_KillOnSpinJump
+	dw Paratroopa_HitCheck
+	dw Paratroopa_HitRespond
+
+Paratroopa_HitCheck:
+	JSR Obj_PlayerHitCheck ;Check for collision with player
+	JSR Obj_KillOnSpinJump ;Kill if spin jumped on
 	LDA InvincibilityTimer
 	CMP #$F7
-	BCS bra8_847A_RTS
-	JSR sub_54_BCA7
-	LDX $A4
-	LDA ObjectSlot,X
-	AND #$01
-	CLC
-	ADC #$36
-	STA ObjectSlot,X
-	LDA #$00
-	STA ObjectState,X
-bra8_847A_RTS:
+	BCS @Stop ;Only continue if the player's invincibility is about to end
+		JSR Obj_StompReboundAlt ;The player must be stomping on it if the code reached this point, so knock them back
+		LDX $A4 ;Get current object's slot
+		LDA ObjectSlot,X
+		AND #$01 ;Get paratroopa's CHR slot
+		CLC
+		ADC #objID_GreenKoopa
+		STA ObjectSlot,X ;Turn into green Koopa with same CHR slot
+		LDA #$00
+		STA ObjectState,X ;Clear state
+@Stop:
 	RTS
-ptr3_847B:
-	LDX $A4
-	LDA #$04
-	STA ObjectSlot,X
+
+;This goes unused as this is handled by the collision function
+Paratroopa_HitRespond:
+	LDX $A4 ;Get current object's slot
+	LDA #objID_Shell
+	STA ObjectSlot,X ;Replace current object with shell
 	LDA #$00
-	STA ObjectVariables,X
+	STA ObjectVariables,X ;Clear object's variables
 	RTS
+
+;----------------------------------------
+;REX OBJECT CODE ($8488)
+;----------------------------------------
 Obj_h16:
-	LDX $A4
+	LDX $A4 ;Get index for current object
 	LDA ObjectVariables,X
 	BPL bra8_84F7
-	LDA ObjectXPos,X
-	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
-	STA $28
-	BEQ bra8_84AB
-	CMP #$FF
-	BEQ bra8_84AB
-	JMP Obj_RemoveObject ;unlogged
-bra8_84AB:
-	LDA ObjectYPos,X
-	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
-	BEQ bra8_84ED
-	LDA ObjYScreenDistance,X
-	BPL bra8_84DC
-	LDA ObjectYDistance,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA ObjectYDistance,X ;unlogged
-	LDA ObjYScreenDistance,X ;unlogged
-	ADC #$00 ;unlogged
-	STA ObjYScreenDistance,X ;unlogged
-	JMP loc8_84ED ;unlogged
-bra8_84DC:
-	LDA ObjectYDistance,X
-	SEC
-	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	SBC #$00
-	STA ObjYScreenDistance,X
-bra8_84ED:
-loc8_84ED:
-	LDA FreezeFlag
-	BEQ bra8_84F3
-	RTS ;unlogged
+	Obj_DistCalc bra8_84F3
 bra8_84F3:
 	JSR jmp_54_B5BB
 	RTS
+
 bra8_84F7:
 	LDA #$06
 	STA $25
@@ -583,7 +546,7 @@ bra8_8648:
 	INC ObjectSlot,X
 	LDA #$00
 	STA ObjectState,X
-	JSR Obj_StompKnockback
+	JSR Obj_StompRebound
 	RTS
 ptr6_8657:
 	LDY #$00
@@ -1145,7 +1108,7 @@ ptr3_8A7E:
 	JSR Obj_CapeHitCheck
 	JSR Obj_PlayerHitCheck
 	JSR Obj_KillOnSpinJump
-	JSR Obj_StompKnockback
+	JSR Obj_StompRebound
 	LDX $A4
 	LDY #$01
 	LDA ObjectSlot,X
@@ -1850,7 +1813,7 @@ bra8_8F7C:
 	JSR Obj_CapeHitCheck
 	JSR Obj_PlayerHitCheck
 	JSR Obj_KillOnSpinJump
-	JSR Obj_StompKnockback
+	JSR Obj_StompRebound
 	LDX $A4
 	LDA #$82
 	STA ObjectVariables,X
@@ -2343,7 +2306,7 @@ ptr3_930F:
 bra8_931A:
 	JSR Obj_PlayerHitCheck
 	JSR Obj_KillOnSpinJump
-	JSR Obj_StompKnockback
+	JSR Obj_StompRebound
 	LDA ObjectVariables,X
 	AND #$06
 	LSR

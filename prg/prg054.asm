@@ -1488,7 +1488,7 @@ CheckIfCapeKill:
 
 ;----------------------------------------
 ;SUBROUTINE ($A74D)
-;Destroys an object if spin jumped on. Stops running the object completely if they player doesn't
+;Destroys an object if spin jumped on or jumped on with Yoshi.
 ;----------------------------------------
 Obj_KillOnSpinJump:
 	LDA Player1YoshiStatus
@@ -4065,7 +4065,7 @@ bra3_B5BA_RTS:
 
 ;----------------------------------------
 ;SUBROUTINE ($B5BB)
-;Turns the object around depending 
+;Turns the object around in the direction of the player
 ;----------------------------------------
 jmp_54_B5BB:
 	LDA #$00
@@ -5061,40 +5061,49 @@ bra3_BC9A:
 	PLA
 bra3_BCA6_RTS:
 	RTS
-sub_54_BCA7:
+
+;----------------------------------------
+;SUBROUTINE ($BCA7)
+;Like the subroutine below it, except it gives more rebound speed and always turns the player right.
+;----------------------------------------
+Obj_StompReboundAlt:
 	LDA #sfx_EnemyHit2
-	STA SFXRegister
-	LDA #$30
+	STA SFXRegister ;Play enemy hit sound
+	LDA #48
 	STA PlayerYSpeed
-	STA PlayerXSpeed
+	STA PlayerXSpeed ;Set player's horizontal and vertical rebound speed
 	LDA PlayerMovement
-	ORA #$04
-	AND #$BE
-	STA PlayerMovement
+	ORA #%00000100
+	AND #%10111110 ;This may be a bug
+	STA PlayerMovement ;Make player move upwards and right
 	LDA #$01
-	JMP RewardPoints
+	JMP RewardPoints ;Give player 200 points
 
 ;----------------------------------------
 ;SUBROUTINES ($BCBE, $BCC2)
 ;Bounces the player back and gives them points while playing a sound effect. Calling the routine below it doesn't play the sound effect.
 ;----------------------------------------
-Obj_StompKnockback:
+Obj_StompRebound:
 	LDA #sfx_EnemyHit2
 	STA SFXRegister ;Play hit sound effect
 jmp_54_BCC2:
-	LDA #$08
+	LDA #8
 	STA PlayerYSpeed ;Set vertical rebound speed
 	LDA PlayerMovement
-	ORA #$04 ;Make player move up
-	EOR #$01
-	STA PlayerMovement ;Reverse the player's direction
-	LDA #$08
+	ORA #%00000100 ;Make player move up
+	EOR #%00000001
+	STA PlayerMovement ;Reverse the player's horizontal direction
+	LDA #8
 	STA PlayerXSpeed ;Set horizontal rebound speed
 	LDA #$01 ;Give player 200 points
 
 ;----------------------------------------
 ;SUBROUTINE ($BCD4)
 ;Rewards one of 4 score values to the current player from a table based on the value of the accumulator.
+; 0 = 100
+; 1 = 200
+; 2 = 500
+; 3 = 1000
 ;----------------------------------------
 RewardPoints:
 	ASL ;Get score data index
@@ -5364,7 +5373,7 @@ bra3_BEB7:
 
 ;----------------------------------------
 ;SUBROUTINE ($BEBC)
-;Checks if the player hit's the object's hitbox. If the player takes damage or isn't touching the object, it will stop the object's code.
+;Checks if the player collides with the object's hitbox. If the player takes damage or isn't touching the object, it will stop the object's code.
 ;----------------------------------------
 Obj_PlayerHitCheck:
 	LDX $A4 ;Get current object index
@@ -5394,7 +5403,7 @@ Obj_PlayerHitCheck:
 		ADC $36
 		CLC
 		ADC ObjectXDistance,X ;5 + X Hitbox + X Distance > 255
-		BCS @VertHitboxCheck ;Move to the next check if player is within 5 pixels of the object's hitbox
+		BCS @VertHitboxCheck ;Move to the vertical check if player is within 5 pixels of the object's hitbox horizontally
 		BCC SkipPlayerObjectColl ;Otherwise, stop
 
 	;If player is to the left of the object:
@@ -5444,18 +5453,18 @@ bra3_BF1A:
 ;Check if the player can take damage
 ObjHandlePlayerColl:
 	LDA ObjYScreenDistance,X
-	BPL @InvincibilityCheck ;Skip these checks if the player is above the object
+	BPL @InvincibilityCheck ;Only continue if the player isn't above the object's hitbox
 	LDA ObjectYDistance,X
 	CMP #-14
-	BCC @InvincibilityCheck ;Skip these checks if the player is within 14 pixels of the object vertically
-	LDA PlayerAction
-	CMP #$0D
-	BEQ @GivePoints
-	CMP #$0E
-	BEQ @GivePoints
-	LDA PlayerMovement
-	AND #$04
-	BNE @InvincibilityCheck ;Branch if the player is moving up
+	BCC @InvincibilityCheck ;AND only continue if the player is within 14 pixels of the object vertically
+		LDA PlayerAction
+		CMP #pAction_ClimbIdle
+		BEQ @GivePoints
+		CMP #pAction_ClimbMove
+		BEQ @GivePoints ;Give points if the player hits the object while climbing
+		LDA PlayerMovement
+		AND #%00000100
+		BNE @InvincibilityCheck ;Don't give points if the player is moving up
 
 @GivePoints:
 	LDA InvincibilityTimer
@@ -5475,7 +5484,7 @@ ObjHandlePlayerColl:
 	;Otherwise, if player has star power:
 		LDX $A4
 		LDA ObjectState,X
-		AND #%11100000
+		AND #%11100000 ;Ignore function number bits
 		ORA #%00000100 ;Kill object
 		STA ObjectState,X
 		LDA #$00

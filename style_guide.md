@@ -67,6 +67,7 @@ Sprite mapping: `SprMap`\
 Sprite mapping pointer: `SprMapTbl`
 
 ### Conventions
+Object function pointer table: `FuncTbl_Object`\
 Animation pointer table: `AnimTbl_Object`\
 Object animation data: `Anim_Object_Animation`\
 Sprite mappings: `SprMap_Object_Animation<frame number>`\

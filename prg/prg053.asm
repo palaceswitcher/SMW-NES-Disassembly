@@ -3387,7 +3387,7 @@ bra7_999B:
 	JSR Obj_CapeHitCheck
 	JSR Obj_PlayerHitCheck
 	JSR Obj_KillOnSpinJump
-	JSR Obj_StompKnockback
+	JSR Obj_StompRebound
 	INC ObjectSlot,X
 	INC ObjectSlot,X
 	LDA #$00
