@@ -1,3 +1,93 @@
+;----------------------------------------
+;OBJECT MACROS
+
+;Calculate the distance between the object and the player
+macro Obj_DistCalc start
+	LDA ObjectXPos,X
+	SEC
+	SBC PlayerXPosDup
+	STA ObjectXDistance,X
+	LDA ObjectXScreen,X
+	SBC PlayerXScreenDup
+	STA ObjXScreenDistance,X
+	STA $28
+
+	BEQ @CalcVertDist ;Continue if the player is to the left of the object (within one screen)
+	CMP #$FF
+	BEQ @CalcVertDist ;Continue if the player is to the right of the object (within one screne)
+		JMP Obj_RemoveObject ;Otherwise, remove the off-screen object
+
+;Calculate vertical distance between the player and object
+@CalcVertDist:
+	LDA ObjectYPos,X
+	SEC
+	SBC PlayerYPosDup
+	STA ObjectYDistance,X
+	LDA ObjectYScreen,X
+	SBC PlayerYScreenDup
+	STA ObjYScreenDistance,X ;Get object's vertical distance from player
+	LDA PlayerYScreenDup
+	CMP ObjectYScreen,X
+	BEQ @CheckIfFrozen ;Branch if the object and player are on the same vertical screen
+	LDA ObjYScreenDistance,X
+	BPL @OffsetObjDistance ;Branch if the player is on a higher vertical screen than the object
+	;Add 16 to the object's vertical distance if they're below the object
+		LDA ObjectYDistance,X
+		CLC
+		ADC #16
+		STA ObjectYDistance,X ;Increase the vertical distance value by 16
+		LDA ObjYScreenDistance,X
+		ADC #$00
+		STA ObjYScreenDistance,X ;Increase the vertical screen distance if needed
+		JMP @CheckIfFrozen
+
+	;Subtract the object's vertical distance by 16 if they're above the object
+	@OffsetObjDistance:
+		LDA ObjectYDistance,X
+		SEC
+		SBC #16
+		STA ObjectYDistance,X
+		LDA ObjYScreenDistance,X
+		SBC #$00
+		STA ObjYScreenDistance,X
+
+@CheckIfFrozen:
+	LDA FreezeFlag
+	BEQ start ;Only continue if the game isn't frozen
+	RTS
+endm
+
+;Vertically offsets an object
+macro Obj_VertOffset ofs,stop
+	LDA #ofs
+	BMI bra8_8147 ;Redundant branch (16 isn't negative)
+	CLC
+	ADC ObjectYPos,X
+	STA ObjectYPos,X ;Position the object 16 pixels lower
+	BCS bra8_813B ;Add 16 if the vertical screen is crossed
+	CMP #256-ofs
+	BCC stop ;Branch if it spawns more than 16 pixels below the screen boundary
+
+;Add 16 to the object's vertical position if it crosses a vertical screen boundary and don't carry
+bra8_813B:
+	CLC
+	ADC #ofs
+	STA ObjectYPos,X
+	INC ObjectYScreen,X ;Add 16 to vertical position (assuming carry over)
+	JMP stop
+
+;Subtracts 16 from the object's vertical position, goes unused
+bra8_8147:
+	CLC
+	ADC ObjectYPos,X
+	STA ObjectYPos,X
+	BCS stop
+	SEC
+	SBC #ofs
+	STA ObjectYPos,X
+	DEC ObjectYScreen,X
+endm
+
 ;Big endian word
 macro dwb x
 	db >x, <x

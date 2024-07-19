@@ -930,7 +930,7 @@ tbl5_8644:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr10_864E
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr10_864E:
 	LDX $A4
 	LDA ObjectAction,X
@@ -1477,7 +1477,7 @@ tbl5_8A8B:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr10_8A95
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr10_8A95:
 	JSR Obj_CapeHitCheck
 	JSR jmp_54_BC3E
@@ -1744,7 +1744,7 @@ tbl5_8CA5:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr10_8CAF
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr10_8CAF:
 	JSR Obj_CapeHitCheck
 	JSR Obj_PlayerHitCheck

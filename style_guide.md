@@ -61,17 +61,11 @@ Description blocks refer to a comment "block" that marks the start of something 
 	- Example: `Anim_PlayerFire_Hold`
 
 ### Common Data Types
-Animation animation list: `AnimTbl`\
-Object animation data: `Anim`\
-Sprite mapping: `SprMap`\
-Sprite mapping pointer: `SprMapTbl`
-
-### Conventions
 Object function pointer table: `FuncTbl_Object`\
 Animation pointer table: `AnimTbl_Object`\
 Object animation data: `Anim_Object_Animation`\
 Sprite mappings: `SprMap_Object_Animation<frame number>`\
-Sprite mapping pointers: `SprMapPtrs_Object`
+Sprite mapping pointers: `SprMapTbl_Object`
 
 ## Routine Names
 - Routine names should generally state what they do while not being too verbose.

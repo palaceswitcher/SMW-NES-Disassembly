@@ -139,7 +139,7 @@ tbl6_811A:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr6_8124
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr6_8124:
 	LDX $A4
 	LDA ObjectVariables,X
@@ -295,7 +295,7 @@ tbl6_8246:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr6_8250
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr6_8250:
 	JSR sub6_825A
 	JSR Obj_PlayerHitCheck
@@ -1749,7 +1749,7 @@ tbl6_8C48:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr6_8C52
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr6_8C52:
 	LDA ObjectAction,X
 	CMP #$04
@@ -3181,7 +3181,7 @@ tbl6_934E:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr6_9358
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr6_9358:
 	LDA ReznorsDefeated
 	BNE bra6_9363_RTS
@@ -3677,7 +3677,7 @@ tbl6_96EE:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr6_96F8
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr6_96F8:
 	LDA ObjectAction,X
 	CMP #$02

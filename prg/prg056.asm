@@ -246,7 +246,7 @@ tbl9_81D1:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr2_81D1
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr2_81D1:
 	LDX $A4
 	LDA ObjectVariables,X
@@ -533,7 +533,7 @@ tbl9_8422:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr2_842C
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr2_842C:
 	LDA ObjXScreenDistance,X
 	EOR #$40
@@ -826,7 +826,7 @@ tbl9_865E:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr2_8668
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr2_8668:
 	JSR sub9_8698
 	JSR Obj_PlayerHitCheck
@@ -948,7 +948,7 @@ tbl9_8754:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr2_875E
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr2_875E:
 	LDX $A4
 	LDA ObjectVariables,X
@@ -1330,7 +1330,7 @@ tbl9_8A2C:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr2_8A36
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr2_8A36:
 	JSR sub9_8A45
 	JSR Obj_CapeHitCheck
@@ -1529,7 +1529,7 @@ tbl9_8BA5:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr2_8B8F
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr2_8B8F:
 	LDA FrameCount
 	AND #$00
@@ -1704,7 +1704,7 @@ tbl9_8CF4:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr2_8CFE
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr2_8CFE:
 	LDA ObjectVariables,X
 	CMP #$06
@@ -1971,7 +1971,7 @@ tbl9_8EE9:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr2_8EF3
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr2_8EF3:
 	JSR sub9_8EFC ;unlogged
 	JSR jmp_54_BC3E ;unlogged
@@ -2361,7 +2361,7 @@ tbl9_91CD:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr2_91D7
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr2_91D7:
 	LDA ObjectVariables,X
 	CMP #$40
@@ -3132,7 +3132,7 @@ tbl9_975B:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr2_9765
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr2_9765:
 	JSR sub9_978D
 	JSR Obj_CapeHitCheck
@@ -3285,7 +3285,7 @@ tbl9_9895:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr2_989F
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr2_989F:
 	LDA ObjectVariables,X
 	CMP #$40

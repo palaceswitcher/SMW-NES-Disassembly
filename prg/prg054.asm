@@ -2,70 +2,6 @@
 ;OBJECT BANK
 ;This bank handles objects and contains various functions relating to them. Object-specific things will be kept here for convenience sake
 ;------------------------------------------------------------
-
-;----------------------------------------
-;OBJECT MACROS
-
-;Standard object initialization
-macro Obj_DistCalc start
-;Calculate horizontal distance between player and object
-	LDA ObjectXPos,X
-	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X 
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
-	STA $28
-
-	BEQ @CalcVertDist ;Continue if the player is to the left of the object (within one screen)
-	CMP #$FF
-	BEQ @CalcVertDist ;Continue if the player is to the right of the object (within one screne)
-		JMP Obj_RemoveObject ;Otherwise, remove the off-screen object
-
-;Calculate vertical distance between the player and object
-@CalcVertDist:
-	LDA ObjectYPos,X
-	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X ;Get object's vertical distance from player
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
-	BEQ @CheckIfFrozen ;Branch if the object and player are on the same vertical screen
-	LDA ObjYScreenDistance,X
-	BPL @OffsetObjDistance ;Branch if the player is on a higher vertical screen than the object
-	;Add 16 to the object's vertical distance if they're below the object
-		LDA ObjectYDistance,X
-		CLC
-		ADC #16
-		STA ObjectYDistance,X ;Increase the vertical distance value by 16
-		LDA ObjYScreenDistance,X
-		ADC #$00
-		STA ObjYScreenDistance,X ;Increase the vertical screen distance if needed
-		JMP @CheckIfFrozen
-
-	;Subtract the object's vertical distance by 16 if they're above the object
-	@OffsetObjDistance:
-		LDA ObjectYDistance,X
-		SEC
-		SBC #16
-		STA ObjectYDistance,X
-		LDA ObjYScreenDistance,X
-		SBC #$00
-		STA ObjYScreenDistance,X
-
-@CheckIfFrozen:
-	LDA FreezeFlag
-	BEQ start ;Only continue if the game isn't frozen
-	RTS
-endm
-
-
-
-
 jmp_54_A000:
 	LDA YoshiUnmountedState
 	BNE bra3_A006 ;If riding Yoshi, branch
@@ -2710,88 +2646,104 @@ ptr_AD79:
 	BEQ bra3_AD95
 	LDY #$02
 	BNE bra3_AD95
-ptr_AD88:
-	LDY #$02
+
+;----------------------------------------
+;FUNCTION ($AD88)
+;Moves an object while they're falling off-screen
+;----------------------------------------
+Obj_FlipKill:
+	LDY #2
 	LDX $A4
 	LDA ObjectState,X
-	AND #$40
-	BNE bra3_AD95
-	LDY #$FE
+	AND #%01000000
+	BNE bra3_AD95 ;Offset object position to the right if facing right
+		LDY #-2 ;Otherwise, if facing left, offset it to the left
+
 bra3_AD95:
 	TYA
-	PHA
+	PHA ;Back offset up ins tack
 	CLC
 	ADC ObjectXPos,X
-	STA ObjectXPos,X
+	STA ObjectXPos,X ;Offset object's horizontal position
 	PLA
-	BMI bra3_ADA8
-	LDA ObjectXScreen,X
-	ADC #$00
-	BPL bra3_ADAD
-bra3_ADA8:
-	LDA ObjectXScreen,X
-	SBC #$00
+	BMI bra3_ADA8 ;Branch if offset was negative
+	;If offset was positive:
+		LDA ObjectXScreen,X
+		ADC #$00 ;Add high byte if necessary
+		BPL bra3_ADAD
+	;If offset was negative:
+	bra3_ADA8:
+		LDA ObjectXScreen,X
+		SBC #$00 ;Subtract high byte if necesssary
+
 bra3_ADAD:
-	STA ObjectXScreen,X
+	STA ObjectXScreen,X ;Store high byte
 	LDA ObjectYPos,X
 	CMP #$E0
-	BCC bra3_ADC3
-	LDA #$00
-	STA ObjectSlot,X
-	STA ObjectState,X
-	STA ObjectVariables,X
-	RTS
+	BCC bra3_ADC3 ;Branch if object above the kill zone
+		LDA #$00
+		STA ObjectSlot,X
+		STA ObjectState,X
+		STA ObjectVariables,X ;Despawn object if it goes below the kill zone
+		RTS
+
 bra3_ADC3:
 	LDA ObjectVariables,X
 	TAY
 	LDA tbl3_AE0F,Y
-	STA $32
+	STA $32 ;Get offset from object's movement data index?
 	CMP #$FF
-	BNE bra3_ADD6
-	LDA #$07
-	STA $32
-	BNE bra3_ADDF
+	BNE bra3_ADD6 ;Continue if the end of the data isn't reached
+		LDA #7
+		STA $32 ;Set offset to 7 if the end of the data is reached
+		BNE bra3_ADDF
+
+;Move through movement indices every 4th frame
 bra3_ADD6:
 	LDA FrameCount
 	AND #$03
 	BNE bra3_ADDF
 	INC ObjectVariables,X
+
 bra3_ADDF:
 	LDA $32
-	BMI bra3_ADFC
-	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
-	BCS bra3_ADF0
-	CMP #$F0
-	BCC bra3_AE0E_RTS
+	BMI bra3_ADFC ;Branch if the movement is negative (upwards)
+		CLC
+		ADC ObjectYPos,X
+		STA ObjectYPos,X ;Add offset
+		BCS bra3_ADF0 ;Add 16 if it varries to the high byte
+		CMP #$F0
+		BCC loc3_AE0E_RTS ;Also add 16 if it's 16 pixels before the vertical screen boundary. Otherwise, stop
+
 bra3_ADF0:
 	CLC
-	ADC #$10
+	ADC #16
 	STA ObjectYPos,X
-	INC ObjectYScreen,X
-	JMP loc3_AE0E_RTS
+	INC ObjectYScreen,X ;Offset position by 16 with carry to high byte
+	JMP loc3_AE0E_RTS ;Stop
+
 bra3_ADFC:
 	CLC
 	ADC ObjectYPos,X
-	STA ObjectYPos,X
-	BCS bra3_AE0E_RTS
-	SEC
-	SBC #$10
-	STA ObjectYPos,X
-	DEC ObjectYScreen,X
-bra3_AE0E_RTS:
+	STA ObjectYPos,X ;Add offset
+	BCS loc3_AE0E_RTS ;Stop if borrow from high byte isn't needed
+		SEC
+		SBC #16
+		STA ObjectYPos,X
+		DEC ObjectYScreen,X ;Subtract 16 and borrow from high byte
 loc3_AE0E_RTS:
 	RTS
+
 tbl3_AE0F:
-	db $FC
-	db $FD
-	db $FE
-	db $01
-	db $02
-	db $03
-	db $04
+	db -4
+	db -3
+	db -2
+	db 1
+	db 2
+	db 3
+	db 4
 	db $FF
+
 ptr_AE17:
 	LDA ObjXScreenDistance,X
 	BPL bra3_AE23
@@ -5086,7 +5038,7 @@ Obj_StompReboundAlt:
 Obj_StompRebound:
 	LDA #sfx_EnemyHit2
 	STA SFXRegister ;Play hit sound effect
-jmp_54_BCC2:
+Obj_StompReboundNoSFX:
 	LDA #8
 	STA PlayerYSpeed ;Set vertical rebound speed
 	LDA PlayerMovement

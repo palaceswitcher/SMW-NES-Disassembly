@@ -1433,7 +1433,7 @@ tbl7_8AE8:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr5_8AFA
-	dw ptr_AD88
+	dw Obj_FlipKill
 	dw ptr5_8B55
 	dw ptr_AD79
 	dw ptr5_8B7D
@@ -1673,7 +1673,7 @@ tbl7_8CC0:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr5_8CCA
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr5_8CCA:
 	JSR Obj_CapeHitCheck
 	JSR Obj_PlayerHitCheck
@@ -3916,7 +3916,7 @@ tbl7_9D89:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr5_9D93
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr5_9D93:
 	LDA FrameCount
 	AND #$00

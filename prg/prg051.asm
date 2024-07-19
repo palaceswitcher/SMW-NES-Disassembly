@@ -1,6 +1,6 @@
 ;------------------------------------------------------------
 ;MOVEMENT DATA BANK
-;This bank contains the movement data used by objects
+;This bank contains the series of movement vectors used by objects
 ;------------------------------------------------------------
 tbl_51_E000:
 	dw ofs_E815
@@ -22,8 +22,8 @@ tbl_51_E000:
 	dw Move_HLine ;Koopa movement data
 	dw Move_HLine
 	dw Move_QuadUpwardsArc ;0x12
-	dw Move_HLine
-	dw ofs_E984
+	dw Move_HLine ;0x13 (Rex)
+	dw Move_HLineFast ;0x14 (Squashed Rex)
 	dw ofs_E9C5
 	dw ofs_EA36
 	dw ofs_EA36
@@ -2370,71 +2370,39 @@ Move_HLine:
 	movedata 1,0
 	movedata 1,0
 	db $80
-ofs_E984:
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
+Move_HLineFast:
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
+	movedata 2,0
 	db $80
 ofs_E9C5:
 	db $00

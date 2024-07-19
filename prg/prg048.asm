@@ -464,7 +464,7 @@ tbl4_836E:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr9_8378
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr9_8378:
 	JSR sub4_83B3
 	JSR Obj_CapeHitCheck
@@ -725,7 +725,7 @@ tbl4_8574:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr9_857E
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr9_857E:
 	JSR sub4_85B9
 	JSR Obj_CapeHitCheck
@@ -970,7 +970,7 @@ tbl4_8764:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr9_876E
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr9_876E:
 	JSR sub4_8778
 	JSR Obj_CapeHitCheck
@@ -1257,7 +1257,7 @@ tbl4_899E:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr9_89A8
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr9_89A8:
 	JSR sub4_89DA
 	JSR Obj_CapeHitCheck
@@ -1624,7 +1624,7 @@ tbl4_8C75:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr9_8C7F
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr9_8C7F:
 	JSR sub4_8CB1
 	JSR Obj_CapeHitCheck
@@ -1985,7 +1985,7 @@ tbl4_8F61:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr9_8F6B
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr9_8F6B:
 	JSR sub4_8F9D
 	JSR Obj_CapeHitCheck
@@ -2723,7 +2723,7 @@ tbl4_94F3:
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
 	dw ptr9_94FD
-	dw ptr_AD88
+	dw Obj_FlipKill
 ptr9_94FD:
 	JSR sub4_9506
 	JSR jmp_54_BC3E
