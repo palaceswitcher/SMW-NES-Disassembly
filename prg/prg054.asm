@@ -33,7 +33,7 @@ bra3_A023:
 	BEQ bra3_A03B
 	RTS
 bra3_A03B:
-;Calculate distance between the player and Yoshi
+; Calculate distance between the player and Yoshi
 	LDA YoshiYPos
 	SEC
 	SBC PlayerYPosDup
@@ -47,7 +47,7 @@ bra3_A03B:
 	BEQ loc3_A07D_RTS ;Stop if the player and Yoshi are on the same vertical screen
 	LDA YoshiYScreenDist
 	BPL bra3_A06C ;Move Yoshi up if he's at a higher screen than the player
-;Move Yoshi 16 pixels down (If on a lower vertical screen)
+; Move Yoshi 16 pixels down (If on a lower vertical screen)
 	LDA YoshiYDistance
 	CLC
 	ADC #$10
@@ -229,7 +229,7 @@ bra3_A1AD:
 	RTS
 
 ;----------------------------------------
-;OBJECTS 00-7F ($A1B5)
+; OBJECTS 00-7F ($A1B5)
 tbl3_A1B5:
 	dw ptr4_A0D8
 	
@@ -525,7 +525,7 @@ tbl3_A1B5:
 	dw Obj_h7E ;Object 0x7F (Urchin)
 
 ;----------------------------------------
-;Unused duplicated pointers for objects' 00-7F rendering code. Can be found in bank 52
+; Unused duplicated pointers for objects' 00-7F rendering code. Can be found in bank 52
 	dw ptr4_A0D8
 	dw ptr6_9562 ;1
 	dw ptr6_9590 ;2
@@ -656,7 +656,7 @@ tbl3_A1B5:
 	dw ptr6_9670 ;7f
 
 ;----------------------------------------
-;OBJECTS 00 - 7F PRG BANKS ($A3B5)
+; OBJECTS 00 - 7F PRG BANKS ($A3B5)
 tbl3_A3B5:
 	db $35
 	db $35
@@ -788,7 +788,7 @@ tbl3_A3B5:
 	db $31
 
 ;----------------------------------------
-;OBJECTS 80-FF ($A435)
+; OBJECTS 80-FF ($A435)
 tbl3_A435:
 	objID_BulletBill = ($-tbl3_A435)/2 + $80
 	dw Obj_h80
@@ -875,16 +875,16 @@ tbl3_A435:
 	dw Obj_hA8
 
 	objID_DryBonesBroken = ($-tbl3_A435)/2 + $80
-	dw Obj_hA8
-	dw Obj_hA8
+	dw Obj_hA8 ;AA
+	dw Obj_hA8 ;AB
 
 	objID_BonyBeetle = ($-tbl3_A435)/2 + $80
-	dw Obj_hAA
-	dw Obj_hAA
+	dw Obj_hAA ;AC
+	dw Obj_hAA ;AD
 
 	objID_BonyBeetleBroken = ($-tbl3_A435)/2 + $80
-	dw Obj_hAC
-	dw Obj_hAC
+	dw Obj_hAC ;AE
+	dw Obj_hAC ;AF
 
 	objID_Thing = ($-tbl3_A435)/2 + $80 ;Verify this
 	dw Obj_hAE
@@ -1053,7 +1053,7 @@ tbl3_A435:
 	dw Obj_hFA
 
 ;----------------------------------------
-;Unused duplicated pointers for objects' 80-FF rendering code. Can be found in bank 52
+; Unused duplicated pointers for objects' 80-FF rendering code. Can be found in bank 52
 	dw ptr6_8BF1 ;80
 	dw ptr6_8BF1 ;81
 	dw ptr6_9093 ;82
@@ -1351,7 +1351,7 @@ Obj_CapeHitCheck:
 	CMP #$05
 	BNE @Stop ;Branch if the player isn't spinning
 
-;Get object hitbox size
+; Get object hitbox size
 	LDX $A4 ;Get index of current object
 	LDY ObjectSlot,X
 	LDA ObjectXHitBoxSizes,Y
@@ -1359,10 +1359,10 @@ Obj_CapeHitCheck:
 	LDA ObjectYHitBoxSizes,Y
 	STA $38
 
-;Check if the player is within the object's hitbox horizontally
+; Check if the player is within the object's hitbox horizontally
 	LDA ObjXScreenDistance,X
 	BPL @HorizHitboxCheckLeft ;Branch if the player is to the left of the object
-	;If player is to the right of the object:
+	; If player is to the right of the object:
 		LDA #16
 		CLC
 		ADC $36
@@ -1371,19 +1371,19 @@ Obj_CapeHitCheck:
 		BCS @VertHitboxCheck ;Branch if the player is within 16 pixels of the object's hitbox (cape distance)
 		BCC SkipCapeKill ;Otherwise, set carry and stop
 
-	;If player is to the left of the object:
+	; If player is to the left of the object:
 	@HorizHitboxCheckLeft:
 		LDA ObjectXDistance,X
 		CMP #16
 		BCS SkipCapeKill ;Don't kill the object if the player is more than 16 pixels away from it
 
-;Otherwise, if the player is within the hitbox horizontally, check if they're in the hitbox vertically
+; Otherwise, if the player is within the hitbox horizontally, check if they're in the hitbox vertically
 @VertHitboxCheck:
 	LDA ObjYScreenDistance,X
 	BEQ @VertHitboxCheckAbove ;Branch if the player's origin is already above or at the object's origin
 	CMP #$FF
 	BNE SkipCapeKill ;Don't kill the object if it's off-screen?
-	;If the player is at the same level as the object:
+	; If the player is at the same level as the object:
 		LDA #24
 		CLC
 		ADC $38
@@ -1392,12 +1392,12 @@ Obj_CapeHitCheck:
 		BCS @KillObject ;Kill the object if the player is within 24 vertical pixels of the object's hitbox (origin at its foot?)
 		BCC SkipCapeKill ;Otherwise, don't kill it and stop
 
-	;If the player's origin is above or at the object's:
+	; If the player's origin is above or at the object's:
 	@VertHitboxCheckAbove:
 		LDA ObjectYDistance,X
 		CMP #$00
 		BCS SkipCapeKill ;Don't kill the object if the player is above the object
-	;Otherwise, continue and kill the object
+	; Otherwise, continue and kill the object
 	@KillObject:
 		CLC
 		BCC CheckIfCapeKill ;Clear the carry and continue
@@ -1530,12 +1530,12 @@ bra3_A7C4:
 	LDA PlayerMovement
 	AND #$40
 	BNE @IsFacingObjectLeft ;Branch if the player is facing left
-	;If the player is facing right:
+	; If the player is facing right:
 		LDA ObjXScreenDistance,X
 		BMI @Stop ;Stop if the player is facing away from the object (facing right and to the left of it)
 		BPL bra3_A7E8 ;Branch if the player is to the left of the object
 
-	;If the player is facing left:
+	; If the player is facing left:
 	@IsFacingObjectLeft:
 		LDA ObjXScreenDistance,X
 		BPL @Stop ;Stop if the player is facing away from the object (facing left and to the right of it)
@@ -1555,7 +1555,7 @@ bra3_A7E8:
 	LDX $A4
 	LDA ObjXScreenDistance,X
 	BPL bra3_A816 ;Branch if the player is to the left of the object
-	;If the player is to the right of the object:
+	; If the player is to the right of the object:
 		LDA $32
 		CLC
 		ADC $36
@@ -1564,7 +1564,7 @@ bra3_A7E8:
 		BCS bra3_A81D
 		BCC bra3_A83D
 
-	;If the player is to the left of the object:
+	; If the player is to the left of the object:
 	bra3_A816:
 		LDA ObjectXDistance,X
 		CMP $32
@@ -2168,7 +2168,7 @@ ptr_AA7B:
 	LDX PlayerAnimationFrame ;Get hitbox index for player
 	CPX #$0C
 	BCC @Continue ;Only continue if the player isn't underwater or doing a special animation
-	;Otherwise, move to the next object function
+	; Otherwise, move to the next object function
 		LDA ObjectState,Y
 		CLC
 		ADC #$01
@@ -2182,14 +2182,14 @@ ptr_AA7B:
 	STA $34 ;Get player hitbox
 	LDX ObjectSlot,Y ;Get the index for the current object
 
-	;Get player's horizontal offset
+	; Get player's horizontal offset
 	LDA ObjectXHitBoxSizes,X
 	LSR
 	CLC
 	ADC $37
 	STA $32 ;(Player hitbox width / 2) + animation hitbox size
 
-	;Get player's vertical offset
+	; Get player's vertical offset
 	LDA ObjectYHitBoxSizes,X
 	CLC
 	ADC #4
@@ -2199,7 +2199,7 @@ ptr_AA7B:
 	LDA PlayerMovement
 	AND #%01000000
 	BNE @AddHorizOffsetLeft ;Branch if the player is facing left
-	;If the player is facing right:
+	; If the player is facing right:
 		LDA PlayerXPosDup
 		CLC
 		ADC $34
@@ -2208,7 +2208,7 @@ ptr_AA7B:
 		ADC #$00
 		JMP @AddVertOffset ;Add high byte if needed
 
-	;If the player is facing left:
+	; If the player is facing left:
 	@AddHorizOffsetLeft:
 		LDA PlayerXPosDup
 		SEC
@@ -2223,7 +2223,7 @@ ptr_AA7B:
 	STA ObjectYScreen,Y ;Carry over to high byte of player's position
 	LDA $36
 	BMI @AddNegVertOffset ;Offset differently if the vertical offset is negative
-	;Add positive offset to player's vertical position
+	; Add positive offset to player's vertical position
 		CLC
 		ADC PlayerYPosDup
 		STA ObjectYPos,Y ;Add vertical offset to player's position
@@ -2240,7 +2240,7 @@ ptr_AA7B:
 			ADC #$01
 			JMP @StoreVerticalHighByte
 
-	;Add negative offset to player's vertical position
+	; Add negative offset to player's vertical position
 	@AddNegVertOffset:
 		CLC
 		ADC PlayerYPosDup
@@ -2305,7 +2305,7 @@ Obj_PowerupEatCheck:
 	JSR Obj_GetEdiblePowerup ;Check if Yoshi ate a generic powerup (mushroom, fire flower, or feather)
 	CPX #objID_1UP
 	BNE @CheckIfStar ;Check if Yoshi ate a star if he didn't eat a 1UP
-	;If Yoshi ate a 1UP:
+	; If Yoshi ate a 1UP:
 		LDY CurrentPlayer
 		LDA Player1Lives,Y
 		CLC
@@ -2314,7 +2314,7 @@ Obj_PowerupEatCheck:
 		LDA #sfx_1UP
 		STA SFXRegister ;Play 1UP sound
 		BNE @RemoveObject ;Continue and remove object
-	;If Yoshi ate a star:
+	; If Yoshi ate a star:
 	@CheckIfStar:
 		CPX #objID_Star
 		BNE @RemoveObject ;Continue and remove object if Yoshi didn't eat a star
@@ -2361,7 +2361,7 @@ SetObjectCarryStateDone:
 	RTS
 	
 ;----------------------------------------
-;SUBROUTINE
+;SUBROUTINE ($AB92)
 ;Positions carried objects.
 ;----------------------------------------
 PositionCarriedObject:
@@ -2369,7 +2369,7 @@ PositionCarriedObject:
 	LDA ObjectState,Y
 	AND #$80
 	BNE bra3_AB9C ;Branch if the object is being carried
-	;Otherwise, stop
+	; Otherwise, stop
 		RTS
 bra3_AB9C:
 	LDA ButtonsHeld
@@ -2379,7 +2379,7 @@ bra3_AB9C:
 	LDA PlayerMovement
 	AND #$40
 	BNE bra3_ABBB ;Branch if the player is facing left
-	;Otherwise, offset the carried sprite to the right
+	; Otherwise, offset the carried sprite to the right
 		LDA PlayerXPosDup
 		CLC
 		ADC #$06
@@ -2402,7 +2402,7 @@ loc3_ABC7:
 	STA ObjectYScreen,Y
 	LDA #$EC ;Offset object -20 pixels vertically, or 20 pixels up from the player's sprite
 	BMI bra3_ABEE ;Always branch
-;This code is skipped due to the branch above
+; This code is skipped due to the branch above
 	CLC
 	ADC PlayerYPosDup
 	STA ObjectYPos,Y
@@ -2418,13 +2418,13 @@ bra3_ABDF:
 	ADC #$01
 	JMP jmp_54_AC02
 
-;Continue here
+; Continue here
 bra3_ABEE:
 	CLC
 	ADC PlayerYPosDup
 	STA ObjectYPos,Y ;Offset object 20 pixels above the origin of the player's sprite
 	BCS PositionCarriedObjectDone ;Stop if adding overflows and subtracts 20, which occurs for values 20 ($14) and higher
-	;If it doesn't overflow and subtract properly, subtract 16 ($10) and decrement the upper byte
+	; If it doesn't overflow and subtract properly, subtract 16 ($10) and decrement the upper byte
 		SEC
 		SBC #$10
 		STA ObjectYPos,Y ;Subtract 16
@@ -2667,11 +2667,11 @@ bra3_AD95:
 	STA ObjectXPos,X ;Offset object's horizontal position
 	PLA
 	BMI bra3_ADA8 ;Branch if offset was negative
-	;If offset was positive:
+	; If offset was positive:
 		LDA ObjectXScreen,X
 		ADC #$00 ;Add high byte if necessary
 		BPL bra3_ADAD
-	;If offset was negative:
+	; If offset was negative:
 	bra3_ADA8:
 		LDA ObjectXScreen,X
 		SBC #$00 ;Subtract high byte if necesssary
@@ -2698,7 +2698,7 @@ bra3_ADC3:
 		STA $32 ;Set offset to 7 if the end of the data is reached
 		BNE bra3_ADDF
 
-;Move through movement indices every 4th frame
+; Move through movement indices every 4th frame
 bra3_ADD6:
 	LDA FrameCount
 	AND #$03
@@ -2775,7 +2775,7 @@ Obj_GetEdiblePowerup:
 	CMP #$06
 	BNE bra3_AE97_RTS ;Stop if object can't be swallowed
 
-;Special call that doesn't check if an object can be swallowed
+; Special call that doesn't check if an object can be swallowed
 jmp_54_AE3D:
 	LDY $A4 ;Get current object's index
 	LDA PlayerPowerup
@@ -2788,7 +2788,7 @@ jmp_54_AE3D:
 	LDX ObjectSlot,Y ;Get index for current object
 	CPX #objID_Koopa
 	BCC GetPowerupFromObject ;Branch if object's ID is between 1 and 15
-	;Otherwise, check if the object is a mushroom variant
+	; Otherwise, check if the object is a mushroom variant
 		CPX #objID_MushroomStanding
 		BEQ SetToMushroom ;Give powerup for standing mushroom
 		CPX #objID_MushroomPrincess
@@ -2804,13 +2804,13 @@ GetPowerupFromObject:
 	BEQ bra3_AE97_RTS ;Don't change powerup if swallowing the object does nothing
 	CMP #$01
 	BNE @GivePowerupContinue ;Branch if the object 
-	;If the object gives a mushroom when swallowed:
+	; If the object gives a mushroom when swallowed:
 		LDY PlayerPowerup
 		BEQ @GivePowerupContinue ;Don't check the item box if the player is small
 			LDY ItemBox
 			BEQ @StoreItem ;Store a mushroom if the item box is empty
 			BNE @SetPowerupEffect ;Otherwise, don't overwrite the item box
-	;If it gives a fire flower or feather when swallowed:
+	; If it gives a fire flower or feather when swallowed:
 	@GivePowerupContinue:
 		STA PlayerPowerup ;Give player powerup
 		LDA $32
@@ -2819,18 +2819,18 @@ GetPowerupFromObject:
 @StoreItem:
 	STA ItemBox ;Store powerup in item box
 
-;Plays the powerup sound and buffers the game
+; Plays the powerup sound and buffers the game
 @SetPowerupEffect:
 	LDA #sfx_Powerup
 	STA SFXRegister
 	LDA #$01 ;Set powerup buffer time for fire flower
 	CPX #objID_Feather
 	BNE @NotFeather
-	;If Yoshi ate a feather:
+	; If Yoshi ate a feather:
 		LDA #sfx_Feather
 		STA SFXRegister ;Play feather sound
 		LDA #$81 ;Set powerup buffer time for feather
-	;If Yoshi ate a mushroom or fire flower:
+	; If Yoshi ate a mushroom or fire flower:
 	@NotFeather:
 		STA PlayerPowerupBuffer
 		LDA #$07
@@ -3375,20 +3375,20 @@ GetSpeedData:
 	LDA ObjectState,X
 	AND #$40
 	BEQ LoadObjSpeedRight ;Branch if object is facing right
-	;If the object is facing left, invert its X speed value
+	; If the object is facing left, invert its X speed value
 		LDA ($32),Y
 		EOR #$FF
 		CLC
 		ADC #$01 ;(x XOR 255) + 1 == -x
 		JMP StoreObjSpeedData ;Continue
-	;If object is facing right, load X speed value as normal
+	; If object is facing right, load X speed value as normal
 	LoadObjSpeedRight:
 		LDA ($32),Y
 
 StoreObjSpeedData:
 	STA $06E2 ;Store X speed
 
-;Load Y speed from next byte in table
+; Load Y speed from next byte in table
 	INY
 	LDA ($32),Y
 	STA $06E3
@@ -3396,7 +3396,7 @@ StoreObjSpeedData:
 	LDA InterruptMode
 	CMP #$04
 	BEQ ChangeObjDirection ;Branch if in the bowser fight
-	;Otherwise, add X speed to the object's position
+	; Otherwise, add X speed to the object's position
 		LDA $06E2
 		PHA ;Backup object X speed
 		CLC
@@ -3407,7 +3407,7 @@ StoreObjSpeedData:
 		LDA ObjectXScreen,X
 		ADC #$00 ;Otherwise, if speed is positive, add the upper byte of the X position
 		BPL StoreObjXSpeedCalc ;Continue if the position doesn't overflow
-		;Subtract upper byte of object's horizontal position
+		; Subtract upper byte of object's horizontal position
 		ObjNegXSpeedCalcHi:
 			LDA ObjectXScreen,X
 			SBC #$00
@@ -3415,7 +3415,7 @@ StoreObjSpeedData:
 StoreObjXSpeedCalc:
 	STA ObjectXScreen,X ;Store upper byte of object's horizontal position
 
-;Add positive vertical speed
+; Add positive vertical speed
 	LDA $06E3
 	BMI ObjNegYSpeedCalc ;Branch if object's Y speed is negative (moving upwards)
 	CLC
@@ -3424,7 +3424,7 @@ StoreObjXSpeedCalc:
 	BCS ObjYSpeedCalcHi ;Branch if it carries over (crossing vertical screen boundary)
 	CMP #$F0
 	BCC ChangeObjDirection ;If adding 10 wouldn't doesn't carry over, branch
-	;Add high byte and move 16 bytes down if addition carries over
+	; Add high byte and move 16 bytes down if addition carries over
 	ObjYSpeedCalcHi:
 		CLC
 		ADC #$10
@@ -3432,30 +3432,30 @@ StoreObjXSpeedCalc:
 		INC ObjectYScreen,X ;Carry over addition and add 16 ($10)
 		JMP ChangeObjDirection
 
-;Subtract negative vertical speed (if speed value is negative)
+; Subtract negative vertical speed (if speed value is negative)
 ObjNegYSpeedCalc:
 	CLC
 	ADC ObjectYPos,X
 	STA ObjectYPos,X ;Subtract low byte
 	BCS ChangeObjDirection ;Branch if subtraction doesn't carry over to high byte
-	;Otherwise, carry over subtraction and subtract 16 ($10)
+	; Otherwise, carry over subtraction and subtract 16 ($10)
 		SEC
 		SBC #$10
 		STA ObjectYPos,X
 		DEC ObjectYScreen,X
 
-;Change object's direction if needed and update X/Y speed table index
+; Change object's direction if needed and update X/Y speed table index
 ChangeObjDirection:
 	INY ;Move to next byte
 	LDA ($32),Y
 	CMP #$FF
 	BNE UpdateObjSpeedDataIndex ;Branch if next byte isn't a direction change
-	;If it does change direction, turn the object around
+	; If it does change direction, turn the object around
 		LDA ObjectState,X
 		EOR #%01000000
 		STA ObjectState,X ;Turn object around
 		JMP GetSpeedDataDone
-	;If the next X speed byte doesn't change direction, change object variable accordingly
+	; If the next X speed byte doesn't change direction, change object variable accordingly
 	UpdateObjSpeedDataIndex:
 		AND #%11110000
 		BEQ GetSpeedDataDone ;Branch if upper nybble of next byte is clear, moving to the next set of speed values from the table
@@ -3465,7 +3465,7 @@ ChangeObjDirection:
 			BNE SubObjXYSpeedIndex ;Branch if bits 0 - 5 aren't clear
 			STA ObjectVariables,X ;If they are clear, set the X/Y speed index directly
 			RTS
-		;If bits 0 - 5 of the next byte aren't clear, subtract the X/Y speed set index by the lower 6 bits of the next byte
+		; If bits 0 - 5 of the next byte aren't clear, subtract the X/Y speed set index by the lower 6 bits of the next byte
 		SubObjXYSpeedIndex:
 			STA $32 ;Save lower 6 bits of next byte
 			LDA ObjectVariables,X
@@ -3473,7 +3473,7 @@ ChangeObjDirection:
 			SBC $32
 			STA ObjectVariables,X ;Move back the amount of X/Y speed sets in the lower 6 bits (highest bit of the subtrahend will be cleared)
 
-;Move to next set of X/Y speeds in the table
+; Move to next set of X/Y speeds in the table
 GetSpeedDataDone:
 	INC ObjectVariables,X
 	RTS
@@ -3922,15 +3922,21 @@ bra3_B4ED:
 bra3_B4F8:
 	INC ObjectVariables,X
 	RTS
+
+
+;----------------------------------------
+;SUBROUTINE ($B4FC)
+;
+;----------------------------------------
 sub_54_B4FC:
 	LDA FrameCount
 	AND #$01
-	BNE bra3_B556
+	BNE bra3_B556 ;Only continue every even frame, branching every odd frame
 	LDA ObjectVariables,X
-	AND #$7F
+	AND #%01111111 ;Ignore direction bit
 	CMP #$07
-	BCS bra3_B50E
-	INC ObjectVariables,X
+	BCS bra3_B50E ;Branch if on 7th or later movement vectors
+	INC ObjectVariables,X ;Go to next movement vector
 bra3_B50E:
 	TAY
 	BMI bra3_B52A
@@ -5068,7 +5074,7 @@ RewardPoints:
 	LDA ScoreTbl+1,Y
 	STA $32 ;Get high byte
 	
-	;Add to player's score
+; Add to player's score
 	LDA ScoreTbl,Y
 	CLC
 	ADC P1Score,X
@@ -5077,7 +5083,7 @@ RewardPoints:
 	ADC $32
 	STA P1Score+1,X
 	
-	;Restore original X and Y registers
+; Restore original X and Y registers
 	LDY $2B
 	LDX $28
 	RTS
@@ -5349,7 +5355,7 @@ Obj_PlayerHitCheck:
 	STY $32 ;Store player's hitbox height
 	LDA ObjXScreenDistance,X
 	BPL @HorizHitboxCheckLeft ;Branch if the player is to the left of the object
-	;If player is to the right of the object:
+	; If player is to the right of the object:
 		LDA #5
 		CLC
 		ADC $36
@@ -5358,19 +5364,19 @@ Obj_PlayerHitCheck:
 		BCS @VertHitboxCheck ;Move to the vertical check if player is within 5 pixels of the object's hitbox horizontally
 		BCC SkipPlayerObjectColl ;Otherwise, stop
 
-	;If player is to the left of the object:
+	; If player is to the left of the object:
 	@HorizHitboxCheckLeft:
 		LDA ObjectXDistance,X
 		CMP #5
 		BCS SkipPlayerObjectColl ;Stop if the player is more than 5 pixels away from the object
 
-;Otherwise, if the player is within the horizontal hitbox, move to the vertical hitbox check
+; Otherwise, if the player is within the horizontal hitbox, move to the vertical hitbox check
 @VertHitboxCheck:
 	LDA ObjYScreenDistance,X
 	BEQ @VertHitboxCheckAbove ;Skip these checks if the player's origin is already above or at the object's origin
 	CMP #$FF
 	BNE SkipPlayerObjectColl ;Stop if the object is off-screen
-	;If the player is at the same level as the object:
+	; If the player is at the same level as the object:
 		LDA $32
 		CLC
 		ADC $38
@@ -5379,12 +5385,12 @@ Obj_PlayerHitCheck:
 		BCS @HandleCollision ;Handle collision with the player if they're within the object's vertical hitbox
 		BCC SkipPlayerObjectColl ;Otherwise, stop
 
-	;If the player's origin is above or at the object's:
+	; If the player's origin is above or at the object's:
 	@VertHitboxCheckAbove:
 		LDA ObjectYDistance,X
 		CMP #$00
 		BCS SkipPlayerObjectColl ;Stop if the player is above the object
-	;Otherwise, continue and handle collision with player
+	; Otherwise, continue and handle collision with player
 	@HandleCollision:
 		CLC
 		BCC CheckIfCollided ;Handle collision
@@ -5402,7 +5408,7 @@ bra3_BF1A:
 	PLA
 	RTS ;Go back two calls and stop running code for this object.
 
-;Check if the player can take damage
+; Check if the player can take damage
 ObjHandlePlayerColl:
 	LDA ObjYScreenDistance,X
 	BPL @InvincibilityCheck ;Only continue if the player isn't above the object's hitbox
@@ -5433,7 +5439,7 @@ ObjHandlePlayerColl:
 	BEQ @DamagePlayer ;Deal damage if the player isn't invincible
 	CMP #$D0
 	BCS bra3_BF1A ;Stop collision check if the player has invulnerability frames
-	;Otherwise, if player has star power:
+	; Otherwise, if player has star power:
 		LDX $A4
 		LDA ObjectState,X
 		AND #%11100000 ;Ignore function number bits
@@ -5468,7 +5474,7 @@ DealDamage:
 	CMP #$4C
 	BCC @DamagePlayer ;Don't turn objects $48 - $4C around when they damage the player
 
-;Turn the object in the direction of the player when it damages them
+; Turn the object in the direction of the player when it damages them
 @TurnObject:
 	LDA ObjXScreenDistance,X
 	BMI @TurnObjectRight ;Turn object right if the player is damaged from the right
@@ -5493,7 +5499,7 @@ DealDamage:
 		STA HurtFlag
 		JMP @GiveIFrames ;Hurt player and give them invulnerability frames
 
-;Handle damage if the player isn't riding Yoshi
+; Handle damage if the player isn't riding Yoshi
 @DamageNoYoshi:
 	LDA PlayerPowerup
 	BEQ @KillPlayer ;Kill the player if they're already small

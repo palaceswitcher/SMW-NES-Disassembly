@@ -4765,7 +4765,7 @@ loc4_BB43:
 	LDA #$27
 	STA M90_PRG3 ;Swap the collision bank into the 4th PRG slot
 	JSR jmp_39_E000 ;Jump
-	LDA #$3F	
+	LDA #$3F
 	STA M90_PRG3 ;Swap the IRQ bank back in
 	LDA PlayerBackColl
 	CMP #$F8

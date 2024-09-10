@@ -20,7 +20,7 @@ include macros.asm
 
 ;General RAM defines
 
-;game engine
+;Game engine
 PPUControlMirror = $00
 PPUMaskMirror = $01
 ScrollXPos = $02
@@ -64,6 +64,15 @@ WarpNumber = $060C
 VertScrollLock = $060D
 HorizScrollLock = $060F
 
+;Sprite rendering variables
+OAMFreeIndex = $3C
+MetaspriteBankIndex = $36
+MetaspriteRelTile = $38
+MetaspriteColXBuf = $41
+MetaspriteRowYBuf = $B2
+MetaspriteColCount = $3E
+MetaspriteRowCount = $3F
+
 GS0SpriteAnimPtr = $AE
 GS0SpriteCount = $30
 GS0SpriteBankNum = $31
@@ -85,7 +94,7 @@ HUDDisplay = $0607
 BGBank1 = $03C5
 BGBank2 = $03CB
 BGBank3 = $03C6
-BGBank4 = $03CC	;unused
+BGBank4 = $03CC ;Unused
 BGBankAnimation = $03CD
 SpriteBank1 = $03C7
 SpriteBank2 = $03C8
@@ -119,7 +128,7 @@ PlayerAnimation = $16
 PlayerAnimationFrame = $17
 PlayerMovement = $19
 PlayerPrevDirection = $4F
-PlayerSpriteAttributes = $1A	;not sure what else to call this
+PlayerSpriteAttributes = $1A ;Not sure what else to call this
 PlayerFramePtr = $1B
 PlayerAction = $1D
 PlayerPrevAction = $1E
@@ -203,7 +212,7 @@ P2LevelsUnlocked = $039F
 ColumnFinishFlag = $0480
 NextBGColumn = $0481
 
-; Object RAM
+;Object RAM
 
 ;object handler
 ObjectPRGBank = $AC
@@ -380,9 +389,76 @@ M90_CHR_CTRL1 = $D003
 
 ;--------------------------------------
 ;Level Data
+;Levels
+incbin levels/lvl_1-1.bin
+incbin levels/lvl_1-2.bin
+incbin levels/lvl_1-3.bin
+incbin levels/lvl_1-4_1.bin ;1-4 is split up by special levels
+incbin levels/lvl_GhostHouseIntro.bin
+incbin levels/lvl_CastleIntro.bin
+incbin levels/lvl_YoshiHouse.bin
+incbin levels/lvl_1-4_2.bin
+incbin levels/lvl_Bonus.bin
+incbin levels/lvl_2-1.bin
+incbin levels/lvl_2-2.bin
+incbin levels/lvl_2-3.bin
+incbin levels/lvl_2-4.bin
+incbin levels/lvl_3-1.bin
+incbin levels/lvl_3-2.bin
+incbin levels/lvl_3-3.bin
+incbin levels/lvl_3-4.bin
+incbin levels/lvl_4-1.bin
+incbin levels/lvl_4-2.bin
+incbin levels/lvl_4-3.bin
+incbin levels/lvl_4-4.bin
+incbin levels/lvl_5-1.bin
+incbin levels/lvl_5-2.bin
+incbin levels/lvl_5-3.bin
+incbin levels/lvl_5-4.bin
+incbin levels/lvl_6-1.bin
+incbin levels/lvl_6-2.bin
+incbin levels/lvl_6-3.bin
+incbin levels/lvl_6-4.bin
+incbin levels/lvl_7-1.bin
+incbin levels/lvl_7-2.bin
+incbin levels/lvl_7-3.bin
+incbin levels/lvl_7-4.bin
+incbin levels/lvl_BowserRoom.bin
+incbin levels/lvl_ClownCar.bin
+;Tilesets
+incbin tilesets/ts_1-1.bin
+incbin tilesets/ts_1-2.bin
+incbin tilesets/ts_1-3.bin
+incbin tilesets/ts_1-4.bin
+incbin tilesets/ts_2-1.bin
+incbin tilesets/ts_2-2.bin
+incbin tilesets/ts_2-3.bin
+incbin tilesets/ts_2-4.bin
+incbin tilesets/ts_3-1.bin
+incbin tilesets/ts_3-2.bin
+incbin tilesets/ts_3-3.bin
+incbin tilesets/ts_3-4.bin
+incbin tilesets/ts_4-1.bin
+incbin tilesets/ts_4-2.bin
+incbin tilesets/ts_4-3.bin
+incbin tilesets/ts_4-4.bin
+incbin tilesets/ts_5-1.bin
+incbin tilesets/ts_5-2.bin
+incbin tilesets/ts_5-3.bin
+incbin tilesets/ts_5-4.bin
+incbin tilesets/ts_6-1.bin
+incbin tilesets/ts_6-2.bin
+incbin tilesets/ts_6-3.bin
+incbin tilesets/ts_6-4.bin
+incbin tilesets/ts_7-1.bin
+incbin tilesets/ts_7-2.bin
+incbin tilesets/ts_7-3.bin
+incbin tilesets/ts_7-4.bin
+incbin tilesets/ts_YoshiHouse.bin
+incbin tilesets/ts_Unused1.bin
+incbin tilesets/ts_GhostHouseIntro.bin
+incbin tilesets/ts_CastleIntro.bin
 
-incbin levels/levels.bin
-incbin tilesets/ts_levels.bin
 ;--------------------------------------
 ;PRG banks
 

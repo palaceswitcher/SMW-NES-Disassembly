@@ -5,7 +5,7 @@ Obj_Koopa:
 	LDX $A4 ;Get index of current object
 	Obj_DistCalc bra8_8066
 
-;Animate the Koopa
+; Animate the Koopa
 bra8_8066:
 	JSR GenObj_Koopa
 	LDY #$03
@@ -106,7 +106,7 @@ bra8_81BD:
 	STA ObjectState,X ;Make shell bounce off
 	RTS
 
-;Spawn a shell in place of the Koopa when hit
+; Spawn a shell in place of the Koopa when hit
 Koopa_HitRespond:
 	LDX $A4 ;Get index for previous object?
 	LDA #objID_Shell
@@ -405,7 +405,7 @@ bra8_8596:
 bra8_85B5:
 	Obj_VertOffset 16,loc8_85E4 ;Position the squished Rex 16 pixels lower
 
-;Calculate horizontal distance between the squished Rex and player
+; Calculate horizontal distance between the squished Rex and player
 loc8_85E4:
 	Obj_DistCalc bra8_8648
 
@@ -717,124 +717,51 @@ JumpPiranha4:
 	db $14
 	db $19
 	db $1B
+
+;----------------------------------------
+;PIRANHA PLANT MASK OBJECT CODE ($88AB)
+;----------------------------------------
 Obj_h1C:
 	LDX $A4
-	LDA ObjectXPos,X
-	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
-	STA $28
-	BEQ bra8_88C9
-	CMP #$FF
-	BEQ bra8_88C9
-	JMP Obj_RemoveObject
-bra8_88C9:
-	LDA ObjectYPos,X
-	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
-	BEQ bra8_890B
-	LDA ObjYScreenDistance,X
-	BPL bra8_88FA
-	LDA ObjectYDistance,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA ObjectYDistance,X ;unlogged
-	LDA ObjYScreenDistance,X ;unlogged
-	ADC #$00 ;unlogged
-	STA ObjYScreenDistance,X ;unlogged
-	JMP loc8_890B ;unlogged
-bra8_88FA:
-	LDA ObjectYDistance,X
-	SEC
-	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	SBC #$00
-	STA ObjYScreenDistance,X
-bra8_890B:
-loc8_890B:
-	LDA FreezeFlag
-	BEQ bra8_8911_RTS
-	RTS ;unlogged
+	Obj_DistCalc bra8_8911_RTS
+
 bra8_8911_RTS:
+	;This object has no behavior
 	RTS
 ptr6_8912:
+	;Unimplemented or empty function
 	RTS
+
+
+
+;----------------------------------------
+;SUPER KOOPA W/ CAPE OBJECT CODE ($8913)
+;----------------------------------------
 Obj_h1E:
 	LDX $A4
-	LDA ObjectXPos,X
-	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
-	STA $28
-	BEQ bra8_8931
-	CMP #$FF
-	BEQ bra8_8931
-	JMP Obj_RemoveObject
-bra8_8931:
-	LDA ObjectYPos,X
-	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
-	BEQ bra8_8973
-	LDA ObjYScreenDistance,X
-	BPL bra8_8962
-	LDA ObjectYDistance,X
-	CLC
-	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	ADC #$00
-	STA ObjYScreenDistance,X
-	JMP loc8_8973
-bra8_8962:
-	LDA ObjectYDistance,X
-	SEC
-	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	SBC #$00
-	STA ObjYScreenDistance,X
-bra8_8973:
-loc8_8973:
-	LDA FreezeFlag
-	BEQ bra8_8979
-	RTS
+	Obj_DistCalc bra8_8979
+
 bra8_8979:
 	LDA ObjectVariables,X
 	CMP #$80
-	BNE bra8_8995
-	LDA ObjectYPos,X
-	SEC
-	SBC #$08
-	STA ObjectYPos,X
-	LDA ObjectYScreen,X
-	SBC #$00
-	STA ObjectYScreen,X
-	JSR jmp_54_B5BB
-	RTS
+	BNE bra8_8995 ;Branch if Super Koopa's motion has already started
+	; If motion is starting
+		LDA ObjectYPos,X
+		SEC
+		SBC #8
+		STA ObjectYPos,X
+		LDA ObjectYScreen,X
+		SBC #$00
+		STA ObjectYScreen,X ;Position the Super Koopa 8 units higher
+		JSR jmp_54_B5BB ;Turn object to face the player
+		RTS
+
 bra8_8995:
 	LDA ObjectAction,X
-	BEQ bra8_89CF
+	BEQ bra8_89CF ;Branch if the Super Koopa is flying forward
 	CMP #$02
-	BEQ bra8_89CB
+	BEQ bra8_89CB ;Branch if it was hit
+; Spawn feather
 	LDY ObjectCount
 	INC ObjectCount
 	LDA ObjectXPos,X
@@ -844,17 +771,19 @@ bra8_8995:
 	LDA ObjectYPos,X
 	STA ObjectYPos,Y
 	LDA ObjectYScreen,X
-	STA ObjectYScreen,Y
+	STA ObjectYScreen,Y ;Spawn in the same place as the Super Koopa
 	LDA #$00
 	STA ObjectVariables,Y
 	STA ObjectState,Y
-	LDA #$0D
-	STA ObjectSlot,Y
-	INC ObjectAction,X
+	LDA #objID_Feather
+	STA ObjectSlot,Y ;Spawn feather
+	INC ObjectAction,X ;Go to next action
 	RTS
+
 bra8_89CB:
 	JSR sub_54_B4FC
 	RTS
+
 bra8_89CF:
 	JSR sub8_89F6
 	LDX $A4
@@ -878,55 +807,17 @@ bra8_89DE:
 	JSR jmp_54_B11D
 bra8_89F6_RTS:
 	RTS
+
+;----------------------------------------
+;SUBROUTINE ($89F6)
+;Generic code for all Super Koopas
+;----------------------------------------
 sub8_89F6:
 	LDA #$06
 	STA $25
 	LDX $A4
-	LDA ObjectXPos,X
-	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
-	STA $28
-	BEQ bra8_8A18
-	CMP #$FF
-	BEQ bra8_8A18
-	JMP Obj_RemoveObject ;Unlogged
-bra8_8A18:
-	LDA ObjectYPos,X
-	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
-	BEQ loc8_8A5A
-	LDA ObjYScreenDistance,X
-	BPL bra8_8A49
-	LDA ObjectYDistance,X
-	CLC
-	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	ADC #$00
-	STA ObjYScreenDistance,X
-	JMP loc8_8A5A
-bra8_8A49:
-	LDA ObjectYDistance,X
-	SEC
-	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	SBC #$00
-	STA ObjYScreenDistance,X
-loc8_8A5A:
-	LDA FreezeFlag
-	BEQ bra8_8A60
-	db $60
+	Obj_DistCalc bra8_8A60
+
 bra8_8A60:
 	LDA ObjectState,X
 	AND #$1F
@@ -1362,6 +1253,9 @@ ofs_8D47:
 	db $0A
 	db $0B
 	db $0C
+;----------------------------------------
+;VOLCANO LOTUS UPPER LEFT POLLEN CODE ($8D52)
+;----------------------------------------
 Obj_h26:
 	LDA #$07
 	STA $25
