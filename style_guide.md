@@ -38,7 +38,7 @@ Separating comments act as visual separators for the code to break it up and mak
 	- Separating comments should use 60 dashes for the start or end of a bank or separating drastically different parts of a bank. 
 	- Separating comments should use 40 dashes if they represent a block of code (see below)
 	- Separating comments should use 20 dashes if they separate parts of a larger block of code, such as a subroutine.
-- Comments that describe a long block of code should come above that block of code and be one indentation behind that code. So if the block of code is indented by one, the comment should have no indents.
+- Comments that describe a long block of code should come above that block of code on its own line and be one indentation behind that code. So if the block of code is indented by one, the comment should have no indents. The comment itself should also have a space after the semicolon.
 
 ### Description Blocks
 Description blocks refer to a comment "block" that marks the start of something significant, such as an important routine or the start of significant code. It should be between two separating comments (see above).\
