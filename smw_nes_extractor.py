@@ -1,4 +1,4 @@
-#SMW NES Data Extractor v1.0.1 by PalaceSwitcher
+#SMW NES Data Extractor v1.0.2 by PalaceSwitcher
 import os
 import sys
 
@@ -6,9 +6,7 @@ import sys
 try:
 	filename = sys.argv[1]
 except IndexError:
-	#filename = input("Filename: ")
-	parser.print_help()
-	sys.exit(1)
+	filename = input("Filename: ")
 
 # File error handling
 while True:
