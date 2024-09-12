@@ -1,5 +1,5 @@
-#SMW NES Data Extractor v1.0 by PalaceSwitcher
-
+#SMW NES Data Extractor v1.0.1 by PalaceSwitcher
+import os
 import sys
 
 # Drag and drop functionality
@@ -20,6 +20,12 @@ while True:
 		filename = input("Filename: ")
 
 rom_data = f.read() #Read file
+
+# Create directories if they don't exist
+if not os.path.exists("levels"):
+	os.makedirs("levels")
+if not os.path.exists("tilesets"):
+	os.makedirs("tilesets")
 
 open("SMW.chr", "wb").write(rom_data[0x80010:0xC0010]) #Dump CHR
 
