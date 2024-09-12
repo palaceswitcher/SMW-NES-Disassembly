@@ -2,14 +2,15 @@
 
 ## General Styling
 - Avoid referring to the player as "Mario" or "Luigi", and instead just say "Player".
-- Immediate values for instructions should be represented by hexadecimal in most cases, unless used for math or PRG bank switching, where decimal should instead be used.
+- Immediate values for instructions should be represented by hexadecimal in most cases, unless used for math or PRG bank switching, where decimal should instead be used. Bitwise instructions should always use binary literals, unless they're used for modulo operations.
+	- Example: `AND #$07` should not be written as `AND #%00000111` if it's used to run code every 8th frame.
 
 ## Label Styling
 - Jumps, branches, tables, and RAM addresses should always be written in TitleCase and should not be too verbose.
 - Tables have their own special formatting conventions, which can be found [below](#labels).
 - Shortening longer words in a label is highly encouraged.
 - What type of memory it is should not be specified unless it's a table. Do not put things like "RAM" in a RAM label or "branch" in a branch label (pre-existing disassembler-generated labels are exempt from this).
-- Use local labels with a "@" at the start of them to reduce overly long names when possible. For example, the routine that checks calculates the player's horizontal jump speed and the routine that caluclates the horizontal jump speed for the Chargin' Chuck could both use `@CalcJumpXSpeed` within the routine instead of using `CalcPlayerJumpXSpeed` and `CalcChuckJumpXSpeed` respectively.
+- Use local labels with a "@" at the start of them to reduce overly long names when possible. For example, the routine that calculates the player's horizontal jump speed and the routine that caluclates the horizontal jump speed for the Chargin' Chuck could both use `@CalcJumpXSpeed` within the routine instead of using `CalcPlayerJumpXSpeed` and `CalcChuckJumpXSpeed` respectively.
 
 ## Constant Styling
 - Constant values should be written in camelCase, with an underscore separating the first word or phrase.
