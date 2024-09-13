@@ -26,7 +26,7 @@ tbl_51_E000:
 	dw Move_HLineFast ;0x14 (Squashed Rex)
 	dw ofs_E9C5
 	dw ofs_EA36
-	dw ofs_EA36
+	dw ofs_EA36 ;0x17 (Super Koopa)
 	dw ofs_EA36
 	dw ofs_EA5F
 	dw ofs_EA92
@@ -2316,93 +2316,93 @@ ofs_E915:
 	db $00
 	db $80
 
-;Quadratic jump arc
+; Quadratic jump arc
 Move_QuadUpwardsArc:
-	movedata 2,-7
-	movedata 2,-7
-	movedata 2,-6
-	movedata 2,-6
-	movedata 2,-5
-	movedata 2,-5
-	movedata 2,-4
-	movedata 2,-4
-	movedata 2,-3
-	movedata 2,-3
-	movedata 2,-2
-	movedata 2,-2
-	movedata 2,-1
-	movedata 2,-1
-	movedata 0,0
+	movedata 2, -7
+	movedata 2, -7
+	movedata 2, -6
+	movedata 2, -6
+	movedata 2, -5
+	movedata 2, -5
+	movedata 2, -4
+	movedata 2, -4
+	movedata 2, -3
+	movedata 2, -3
+	movedata 2, -2
+	movedata 2, -2
+	movedata 2, -1
+	movedata 2, -1
+	movedata 0, 0
 	db $80
 
 ;Move in a stright, horizontal line
 Move_HLine:
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
-	movedata 1,0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
+	movedata 1, 0
 	db $80
 Move_HLineFast:
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
-	movedata 2,0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
+	movedata 2, 0
 	db $80
 ofs_E9C5:
 	db $00
@@ -2519,46 +2519,26 @@ ofs_E9C5:
 	db $02
 	db $80
 ofs_EA36:
-	db $04
-	db $00
-	db $04
-	db $00
-	db $04
-	db $00
-	db $04
-	db $00
-	db $04
-	db $F9
-	db $04
-	db $F9
-	db $04
-	db $FA
-	db $04
-	db $FA
-	db $04
-	db $FB
-	db $04
-	db $FC
-	db $04
-	db $FD
-	db $04
-	db $FE
-	db $04
-	db $FF
-	db $04
-	db $01
-	db $04
-	db $02
-	db $04
-	db $03
-	db $04
-	db $04
-	db $04
-	db $05
-	db $04
-	db $06
-	db $04
-	db $00
+	movedata 4, 0
+	movedata 4, 0
+	movedata 4, 0
+	movedata 4, 0
+	movedata 4, -7
+	movedata 4, -7
+	movedata 4, -6
+	movedata 4, -6
+	movedata 4, -5
+	movedata 4, -4
+	movedata 4, -3
+	movedata 4, -2
+	movedata 4, -1
+	movedata 4, 1
+	movedata 4, 2
+	movedata 4, 3
+	movedata 4, 4
+	movedata 4, 5
+	movedata 4, 6
+	movedata 4, 0
 	db $81
 ofs_EA5F:
 	db $04

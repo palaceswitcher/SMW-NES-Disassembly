@@ -41,6 +41,30 @@ Separating comments act as visual separators for the code to break it up and mak
 	- Separating comments should use 20 dashes if they separate parts of a larger block of code, such as a subroutine.
 - Comments that describe a long block of code should come above that block of code on its own line and be one indentation behind that code. So if the block of code is indented by one, the comment should have no indents. The comment itself should also have a space after the semicolon.
 
+## Indented Comments
+Certain tables should have comments indented with tabs to a uniform distance if their data is laid out in a special way or is handled a special way. This is most commonly done for sprite mapping tables, as seen in the example below.
+
+Example:
+```
+SprMapTbl_SuperKoopa:
+	dw SprMap_SuperKoopa_Walk1		;Walking animation (Feather)
+	dw SprMap_SuperKoopa_Walk2		;
+	dw SprMap_SuperKoopa_Walk1		;Walking animation (Normal)
+	dw SprMap_SuperKoopa_Walk2		;
+
+	dw SprMap_SuperKoopa_Takeoff2	;Takeoff animation (Feather)
+	dw SprMap_SuperKoopaRed_Takeoff	;
+	dw SprMap_SuperKoopa_Takeoff2	;Takeoff animation (Normal)
+	dw SprMap_SuperKoopa_Takeoff1	;
+
+	dw SprMap_SuperKoopa_Fly2		;Fly animation (Feather)
+	dw SprMap_SuperKoopaRed_Fly		;
+	dw SprMap_SuperKoopa_Fly2		;Fly animation (Normal)
+	dw SprMap_SuperKoopa_Fly1		;
+
+	dw SprMap_SuperKoopa_Defeated
+```
+
 ### Description Blocks
 Description blocks refer to a comment "block" that marks the start of something significant, such as an important routine or the start of significant code. It should be between two separating comments (see above).\
 - The first line between the separator should describe what the code is in all caps, such as a subroutine, the start of an object's code, or the start for an important routine. It should also have the address in parentheses, if possible.

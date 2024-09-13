@@ -180,7 +180,7 @@ Obj_hA0:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_8153
-	JMP jmp_54_B5BB
+	JMP Obj_FacePlayer
 bra9_8153:
 	LDA #$06
 	STA $25
@@ -760,7 +760,7 @@ loc9_85D7:
 	BEQ bra9_85DD
 	RTS
 bra9_85DD:
-	JMP jmp_54_B5BB
+	JMP Obj_FacePlayer
 bra9_85E0:
 	LDA #$06
 	STA $25
@@ -1035,7 +1035,7 @@ bra9_880B_RTS:
 bra9_880C:
 	DEC ObjectSlot,X
 	DEC ObjectSlot,X
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	LDA #$03
 	STA ObjectVariables,X
 	JMP Obj_h94
@@ -1262,7 +1262,7 @@ loc9_89A2:
 	BEQ bra9_89A8
 	RTS
 bra9_89A8:
-	JMP jmp_54_B5BB
+	JMP Obj_FacePlayer
 bra9_89AB:
 	JMP sub_54_B4FC
 bra9_89AE:
@@ -1459,7 +1459,7 @@ bra9_8B18:
 	LDA ObjectVariables,X
 	CMP #$81
 	BCS bra9_8B23
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	RTS
 bra9_8B23:
 	JSR sub_54_B4FC
@@ -1906,7 +1906,7 @@ loc9_8E62:
 	BEQ bra9_8E68
 	RTS
 bra9_8E68:
-	JMP jmp_54_B5BB
+	JMP Obj_FacePlayer
 loc9_8E6B:
 	LDA #$07
 	STA $25
@@ -2108,7 +2108,7 @@ loc9_8FE5:
 	BEQ bra9_8FEB
 	RTS
 bra9_8FEB:
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	RTS
 loc9_8FEF:
 	LDA #$07
@@ -2295,7 +2295,7 @@ loc9_9146:
 	BEQ bra9_914C
 	RTS
 bra9_914C:
-	JMP jmp_54_B5BB
+	JMP Obj_FacePlayer
 loc9_914F:
 	LDA #$07
 	STA $25
@@ -2742,7 +2742,7 @@ loc9_9467:
 	BEQ bra9_946D
 	RTS
 bra9_946D:
-	JMP jmp_54_B5BB
+	JMP Obj_FacePlayer
 bra9_9470:
 	LDA #$07
 	STA $25
@@ -3066,7 +3066,7 @@ loc9_96D4:
 	BEQ bra9_96DA
 	RTS
 bra9_96DA:
-	JMP jmp_54_B5BB
+	JMP Obj_FacePlayer
 loc9_96DD:
 	LDA #$07
 	STA $25
@@ -3219,7 +3219,7 @@ loc9_980E:
 	BEQ bra9_9814
 	RTS
 bra9_9814:
-	JMP jmp_54_B5BB
+	JMP Obj_FacePlayer
 loc9_9817:
 	LDA #$07
 	STA $25

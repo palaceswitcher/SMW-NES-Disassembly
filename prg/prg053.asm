@@ -3309,7 +3309,7 @@ Obj_h42:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra7_9908
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	RTS
 bra7_9908:
 	LDA #$07
@@ -3804,7 +3804,7 @@ bra7_9C96:
 	LDA ObjectVariables,X
 	CMP #$80
 	BNE bra7_9D07
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	LDY ObjectCount
 	INC ObjectCount
 	INC ObjectCount

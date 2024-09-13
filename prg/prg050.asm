@@ -55,7 +55,7 @@ bra6_806E:
 	LDA ObjectVariables,X
 	CMP #$81
 	BCS bra6_8078
-	JMP jmp_54_B5BB
+	JMP Obj_FacePlayer
 bra6_8078:
 	CMP #$88
 	BCS bra6_807F
@@ -1360,7 +1360,7 @@ Obj_h70:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra6_8971
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	RTS
 bra6_8971:
 	JSR sub6_8BCA

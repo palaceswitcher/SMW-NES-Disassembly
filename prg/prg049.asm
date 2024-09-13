@@ -1082,7 +1082,7 @@ loc5_8772:
 bra5_8778:
 	LDA #$00
 	STA ObjectAction,X
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	LDA #$47
 	STA EnemyAnimFrame,X
 	RTS
@@ -1539,7 +1539,7 @@ bra5_8B0D:
 	LDA ObjectVariables,X
 	CMP #$80
 	BNE bra5_8B1D
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	LDA #$11
 	STA EnemyAnimFrame,X
 	RTS
@@ -2010,7 +2010,7 @@ bra5_8EB5:
 	BMI bra5_8EBD
 	JMP loc5_8F3F
 bra5_8EBD:
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	LDA ObjectSlot,X
 	CMP #$55
 	BCC bra5_8EEB
@@ -2193,7 +2193,7 @@ loc5_9009:
 bra5_900F:
 	LDA ObjectVariables,X
 	BPL bra5_902C
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	LDA ObjectYPos,X
 	SEC
 	SBC #$08
@@ -2317,7 +2317,7 @@ bra5_90F3:
 	LDA ObjectSlot,X
 	CMP #$62
 	BCS bra5_9117
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	LDA ObjectYPos,X
 	SEC
 	SBC #$08
@@ -3097,7 +3097,7 @@ loc5_963F:
 bra5_9645:
 	LDA ObjectVariables,X
 	BPL bra5_964E
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	RTS
 bra5_964E:
 	JSR sub5_82EC

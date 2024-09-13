@@ -12,7 +12,7 @@ bra8_8066:
 	LDA ObjFrameCounter
 	AND #$08
 	BEQ @Continue ;Alternate between Koopa frames 3 and 4 every 8 frames
-	INY
+		INY
 
 @Continue:
 	TYA
@@ -56,7 +56,7 @@ Koopa_GetFunction:
 	LDA FuncTbl_Koopa,Y
 	STA $32
 	LDA FuncTbl_Koopa+1,Y
-	STA $33
+	STA $33 ;Get function pointer
 	JMP ($32)
 FuncTbl_Koopa:
 	dw Obj_YoshiTongueCheck
@@ -69,8 +69,8 @@ Koopa_HitCheck:
 	JSR Obj_CapeHitCheck ;Kill if hit by cape
 	JSR Obj_PlayerHitCheck ;Check for collision with player
 	JSR Obj_KillOnSpinJump ;Kill if spin-jumped on
-	JSR Obj_StompRebound ;The player must be stomping on it if the code reached this point, so make them bounce off the object
-	Obj_VertOffset 16,loc8_8159 ;Position the Beach Koopa 16 pixels lower
+	JSR Obj_StompRebound ;Make player bounce if they stomp on it
+	Obj_VertOffset 16, loc8_8159 ;Position the Beach Koopa 16 pixels lower
 
 loc8_8159:
 	Obj_DistCalc bra8_81BD ;Calculate the distance between the Beach Koopa and player
@@ -128,19 +128,19 @@ ptr6_820E:
 	STA $32
 	LDA SprMapTbl_Koopa+1,X
 	STA $33 ;Load mapping pointer
-	LDY #$80 ;Use bank 2 by default
+	LDY #$80 ;Use CHR sprite bank 2 by default
 	LDX $A4
 	LDA ObjectSlot,X
-	AND #%00000001
+	AND #$01
 	BEQ bra8_822C
-		LDY #$C0 ;Use bank 3 if lower bit of ID is set
+		LDY #$C0 ;Use CHR sprite bank 3 if lower bit of ID is set
 
 bra8_822C:
-	STY $36
+	STY $36 ;Set bank number
 	LDA ObjectState,X
 	AND #%01000000
 	STA ObjectAttributes ;Store object's horizontal direction
-	JSR jmp_52_A118
+	JSR jmp_52_A118 ;Render mapping data
 	RTS
 
 SprMapTbl_Koopa:
@@ -212,7 +212,7 @@ Obj_h14:
 bra8_82FF:
 	LDA ObjectVariables,X
 	BPL bra8_8308
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	RTS
 
 bra8_8308:
@@ -245,7 +245,7 @@ Obj_h58:
 bra8_838B:
 	LDA ObjectVariables,X
 	BPL bra8_8394
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	RTS
 bra8_8394:
 	JSR GenObj_Paratroopa
@@ -346,7 +346,7 @@ Obj_h16:
 	BPL Rex_Init
 		Obj_DistCalc Rex_TurnAround
 	Rex_TurnAround:
-		JSR jmp_54_B5BB ;Turn in the direction of the player if upper bit of variable is set? Seems to be unused
+		JSR Obj_FacePlayer ;Turn in the direction of the player if upper bit of variable is set? Seems to be unused
 		RTS
 
 Rex_Init:
@@ -735,17 +735,17 @@ ptr6_8912:
 
 
 ;----------------------------------------
-;SUPER KOOPA W/ CAPE OBJECT CODE ($8913)
+;SUPER KOOPA W/ FEATHER OBJECT CODE ($8913)
 ;----------------------------------------
 Obj_h1E:
-	LDX $A4
+	LDX $A4 ;Get index for Super Koopa
 	Obj_DistCalc bra8_8979
 
 bra8_8979:
 	LDA ObjectVariables,X
 	CMP #$80
-	BNE bra8_8995 ;Branch if Super Koopa's motion has already started
-	; If motion is starting
+	BNE @ObjectNotHit ;Branch if Super Koopa is either not in vertical speed mode or doesn't have vertical speed of 0? (Vertical speed is never this low so this should always branch)
+	; If Super Koopa has no vertical speed but is in vertical speed mode:
 		LDA ObjectYPos,X
 		SEC
 		SBC #8
@@ -753,15 +753,15 @@ bra8_8979:
 		LDA ObjectYScreen,X
 		SBC #$00
 		STA ObjectYScreen,X ;Position the Super Koopa 8 units higher
-		JSR jmp_54_B5BB ;Turn object to face the player
+		JSR Obj_FacePlayer ;Turn object to face the player
 		RTS
 
-bra8_8995:
+@ObjectNotHit:
 	LDA ObjectAction,X
 	BEQ bra8_89CF ;Branch if the Super Koopa is flying forward
 	CMP #$02
-	BEQ bra8_89CB ;Branch if it was hit
-; Spawn feather
+	BEQ @HandleVertSpeed ;Branch if it was killed
+; Otherwise, if it was just hit, spawn feather
 	LDY ObjectCount
 	INC ObjectCount
 	LDA ObjectXPos,X
@@ -777,32 +777,32 @@ bra8_8995:
 	STA ObjectState,Y
 	LDA #objID_Feather
 	STA ObjectSlot,Y ;Spawn feather
-	INC ObjectAction,X ;Go to next action
+	INC ObjectAction,X ;Set Super Koopa to "killed" state
 	RTS
 
-bra8_89CB:
-	JSR sub_54_B4FC
+@HandleVertSpeed:
+	JSR sub_54_B4FC ;Handle vertical speed when falling off-stage
 	RTS
 
 bra8_89CF:
-	JSR sub8_89F6
+	JSR GenObj_SuperKoopa
 	LDX $A4
 	LDA ObjectState,X
-	AND #$0F
+	AND #%00001111
 	CMP #$04
-	BNE bra8_89DE
+	BNE bra8_89DE ;Stop if Super Koopa was defeated
 	RTS
 bra8_89DE:
 	LDA ObjectSlot,X
 	SEC
-	SBC #$10
+	SBC #16
 	LSR
 	CLC
-	ADC #$10
-	STA $25
+	ADC #16
+	STA $25 ;Subtract 7 ignoring the lowest bit to get the movement data??
 	LDA FrameCount
 	AND #$01
-	BNE bra8_89F6_RTS
+	BNE bra8_89F6_RTS ;Continue every even frame
 	LDA $25
 	JSR jmp_54_B11D
 bra8_89F6_RTS:
@@ -812,92 +812,104 @@ bra8_89F6_RTS:
 ;SUBROUTINE ($89F6)
 ;Generic code for all Super Koopas
 ;----------------------------------------
-sub8_89F6:
+GenObj_SuperKoopa:
 	LDA #$06
-	STA $25
+	STA $25 ;Swallow when eaten by Yoshi
 	LDX $A4
-	Obj_DistCalc bra8_8A60
+	Obj_DistCalc SuperKoopa_GetFunction
 
-bra8_8A60:
+SuperKoopa_GetFunction:
 	LDA ObjectState,X
-	AND #$1F
+	AND #%00011111
 	ASL
-	TAY
-	LDA tbl8_8A74,Y
+	TAY ;Get pointer index
+	LDA FuncTbl_SuperKoopa,Y
 	STA $32
-	LDA tbl8_8A74+1,Y
-	STA $33
+	LDA FuncTbl_SuperKoopa+1,Y
+	STA $33 ;Get function pointer
 	JMP ($32)
-tbl8_8A74:
+FuncTbl_SuperKoopa:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
 	dw Obj_PowerupEatCheck
-	dw ptr3_8A7E
+	dw SuperKoopa_HitCheck
 	dw Obj_FlipKill
-ptr3_8A7E:
-	JSR Obj_CapeHitCheck
-	JSR Obj_PlayerHitCheck
-	JSR Obj_KillOnSpinJump
-	JSR Obj_StompRebound
-	LDX $A4
-	LDY #$01
+
+SuperKoopa_HitCheck:
+	JSR Obj_CapeHitCheck ;Kill if hit by cape
+	JSR Obj_PlayerHitCheck ;Check for collision with player
+	JSR Obj_KillOnSpinJump ;Kill if spin-jumped on
+	JSR Obj_StompRebound ;Make player bounce if they stomp on it
+	LDX $A4 ;Get current object index
+	LDY #$01 ;If the code has reached this point, the player must have hit the Super Koopa, so update its state accordingly
 	LDA ObjectSlot,X
-	CMP #$20
-	BCC bra8_8A96
-	INY
-bra8_8A96:
+	CMP #objID_SuperKoopaJump
+	BCC @SetObjectState
+		INY ;Skip feather spawning state if this Super Koopa doesn't have a feather
+
+@SetObjectState:
 	TYA
-	STA ObjectAction,X
+	STA ObjectAction,X ;Set object's state
 	LDA #$81
-	STA ObjectVariables,X
+	STA ObjectVariables,X ;Start using motion data as Y speed (high bit set)
 	RTS
+
+;----------------------------------------
+;SUPER KOOPA GRAPHICAL CODE ($8AA0)
+;Used by every Super Koopa variant
+;----------------------------------------
 ptr6_8AA0:
-	LDX $A4
+	LDX $A4 ;Get index for current object
 	LDA ObjectVariables,X
-	BPL bra8_8AAB
-	LDY #$0C
-	BNE bra8_8AC9
+	BPL bra8_8AAB ;Branch if object isn't using it's variable for speed (during defeat)
+	LDY #$0C ;Use defeated frame
+	BNE bra8_8AC9 ;Render sprite
 bra8_8AAB:
-	AND #$7F
-	TAY
-	LDA tbl8_8AF1,Y
-	TAY
+	AND #%01111111 ;Ignore high byte of variable
+	TAY ;Get index for current animation
+	LDA SuperKoopa_AnimStartFrames,Y
+	TAY ;Get animation starting frame
 	LDA ObjectSlot,X
-	CMP #$20
-	BCC bra8_8AC1
-	CMP #$22
-	BCC bra8_8ABF
-	LDY #$08
-bra8_8ABF:
-	INY
-	INY
+	CMP #objID_SuperKoopaJump
+	BCC bra8_8AC1 ;Use flashing animation if this is the feather variant
+		CMP #objID_SuperKoopaAlt
+		BCC bra8_8ABF ;Branch if Super Koopa is a non-feather variant
+			LDY #$08 ;Set takeoff starting frame for feather variants
+	bra8_8ABF:
+		INY
+		INY ;Use starting frame for non-feather variants
+
 bra8_8AC1:
 	LDA ObjFrameCounter
 	AND #$04
 	BNE bra8_8AC9
-	INY
+		INY ;Alternate between frames every 4 frames
+
 bra8_8AC9:
 	TYA
 	ASL
-	TAX
-	LDA tbl8_8B05,X
+	TAX ;Get pointer index for frame
+	LDA SprMapTbl_SuperKoopa,X
 	STA $32
-	LDA tbl8_8B05+1,X
-	STA $33
-	LDY #$80
+	LDA SprMapTbl_SuperKoopa+1,X
+	STA $33 ;Load sprite mapping pointer
+	LDY #$80 ;Use CHR sprite bank 2 by default
 	LDX $A4
 	LDA ObjectSlot,X
 	AND #$01
 	BEQ bra8_8AE3
-	LDY #$C0
+		LDY #$C0 ;Use CHR sprite bank 3 if lower bit of ID is set
+
 bra8_8AE3:
-	STY $36
+	STY $36 ;Set bank number
 	LDA ObjectState,X
-	AND #$40
-	STA ObjectAttributes
-	JSR jmp_54_A118
+	AND #%01000000
+	STA ObjectAttributes ;Store object's horizontal direction
+	JSR jmp_54_A118 ;Render mapping data
 	RTS
-tbl8_8AF1:
+
+; Animation starting frame for each motion vector
+SuperKoopa_AnimStartFrames:
 	db $00
 	db $00
 	db $00
@@ -918,77 +930,81 @@ tbl8_8AF1:
 	db $08
 	db $08
 	db $08
-tbl8_8B05:
-	dw ofs_8B1F
-	dw ofs_8B2B
-	dw ofs_8B1F
-	dw ofs_8B2B
-	dw ofs_8B43
-	dw ofs_8B67
-	dw ofs_8B43
-	dw ofs_8B37
-	dw ofs_8B5B
-	dw ofs_8B73
-	dw ofs_8B5B
-	dw ofs_8B4F
-	dw ofs_8B7F
-ofs_8B1F:
+
+SprMapTbl_SuperKoopa:
+	dw SprMap_SuperKoopa_Walk1		;Walking animation (Feather)
+	dw SprMap_SuperKoopa_Walk2		;
+	dw SprMap_SuperKoopa_Walk1		;Walking animation (Normal)
+	dw SprMap_SuperKoopa_Walk2		;
+
+	dw SprMap_SuperKoopa_Takeoff2	;Takeoff animation (Feather)
+	dw SprMap_SuperKoopaRed_Takeoff	;
+	dw SprMap_SuperKoopa_Takeoff2	;Takeoff animation (Normal)
+	dw SprMap_SuperKoopa_Takeoff1	;
+
+	dw SprMap_SuperKoopa_Fly2		;Fly animation (Feather)
+	dw SprMap_SuperKoopaRed_Fly		;
+	dw SprMap_SuperKoopa_Fly2		;Fly animation (Normal)
+	dw SprMap_SuperKoopa_Fly1		;
+
+	dw SprMap_SuperKoopa_Defeated
+SprMap_SuperKoopa_Walk1:
 	db $03
 	db $03
 	db $96
 	db $FF, $FF, $FF
 	db $06, $1A, $1B
 	db $21, $22, $23
-ofs_8B2B:
+SprMap_SuperKoopa_Walk2:
 	db $03
 	db $03
 	db $96
 	db $FF, $FF, $FF
 	db $1C, $1D, $1E
 	db $24, $25, $23
-ofs_8B37:
+SprMap_SuperKoopa_Takeoff1:
 	db $03
 	db $03
 	db $96
 	db $FF, $01, $02
 	db $06, $07, $08
 	db $10, $11, $FF
-ofs_8B43:
+SprMap_SuperKoopa_Takeoff2:
 	db $03
 	db $03
 	db $96
 	db $03, $04, $05
 	db $09, $0A, $0B
 	db $12, $13, $FF
-ofs_8B4F:
+SprMap_SuperKoopa_Fly1:
 	db $03
 	db $03
 	db $96
 	db $FF, $FF, $FF
 	db $06, $0C, $0D
 	db $14, $15, $16
-ofs_8B5B:
+SprMap_SuperKoopa_Fly2:
 	db $03
 	db $03
 	db $96
 	db $FF, $FF, $FF
 	db $06, $0E, $0F
 	db $14, $17, $18
-ofs_8B67:
+SprMap_SuperKoopaRed_Takeoff:
 	db $03
 	db $03
 	db $96
 	db $FF, $01, $3A
 	db $06, $38, $39
 	db $10, $11, $FF
-ofs_8B73:
+SprMap_SuperKoopaRed_Fly:
 	db $03
 	db $03
 	db $96
 	db $FF, $FF, $FF
 	db $06, $3B, $3C
 	db $14, $3D, $3E
-ofs_8B7F:
+SprMap_SuperKoopa_Defeated:
 	db $03
 	db $03
 	db $96
@@ -1465,7 +1481,7 @@ bra8_8ED9:
 	BNE bra8_8EE5
 	LDA #$10
 	STA SFXRegister
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	RTS
 bra8_8EE5:
 	JSR sub_54_B4FC
@@ -1672,7 +1688,7 @@ loc8_9059:
 	BEQ bra8_905F
 	RTS ;unlogged
 bra8_905F:
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	RTS
 bra8_9063:
 	LDA #$06
@@ -1896,7 +1912,7 @@ loc8_91F8:
 	BEQ bra8_91FE
 	RTS ;unlogged
 bra8_91FE:
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	RTS
 loc8_9202:
 	LDA ObjectAction,X
@@ -2587,7 +2603,7 @@ bra8_96CC:
 	BEQ bra8_96D6
 	JMP loc8_975A
 bra8_96D6:
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	LDA #$00
 	STA EnemyAnimFrame,X
 	RTS

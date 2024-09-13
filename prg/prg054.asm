@@ -3347,20 +3347,26 @@ bra3_B0D8:
 	PLA
 	RTS
 
+;----------------------------------------
+;SUBROUTINE ($B11D)
+;Loads an object's movement vectors and stops at the last vector.
+; Parameters:
+; > A: Object ID
+;----------------------------------------
 jmp_54_B11D:
 	ASL
 	TAY
 	LDA tbl_51_E000,Y
 	STA $32
 	LDA tbl_51_E000+1,Y
-	STA $33
+	STA $33 ;Get pointer for movement data
 	JSR GetSpeedData
 	LDA ObjectPRGBank
-	STA M90_PRG0
+	STA M90_PRG0 ;Swap object into first 8K PRG bank
 	RTS
 
 ;----------------------------------------
-;SUBROUTINE
+;SUBROUTINE ($B132)
 ;Loads speed data from a table and updates the object's variable accordingly.
 ; Parameters:
 ; > $0032: Speed table pointer
@@ -3379,7 +3385,7 @@ GetSpeedData:
 		LDA ($32),Y
 		EOR #$FF
 		CLC
-		ADC #$01 ;(x XOR 255) + 1 == -x
+		ADC #$01 ;(x XOR 255) + 1 == -x (Two's complement of X speed)
 		JMP StoreObjSpeedData ;Continue
 	; If object is facing right, load X speed value as normal
 	LoadObjSpeedRight:
@@ -3480,6 +3486,9 @@ GetSpeedDataDone:
 
 ;----------------------------------------
 ;SUBROUTINE ($B1DA)
+;Loads an object's movement vectors in a looping pattern.
+; Parameters:
+; > A: Object ID
 ;----------------------------------------
 GetMovementData:
 	ASL
@@ -3926,98 +3935,62 @@ bra3_B4F8:
 
 ;----------------------------------------
 ;SUBROUTINE ($B4FC)
-;
+;Handles vertical speed in the object's variable until it reaches 7.
 ;----------------------------------------
 sub_54_B4FC:
 	LDA FrameCount
 	AND #$01
 	BNE bra3_B556 ;Only continue every even frame, branching every odd frame
-	LDA ObjectVariables,X
-	AND #%01111111 ;Ignore direction bit
-	CMP #$07
-	BCS bra3_B50E ;Branch if on 7th or later movement vectors
-	INC ObjectVariables,X ;Go to next movement vector
-bra3_B50E:
-	TAY
-	BMI bra3_B52A
-	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
-	BCS bra3_B51E
-	CMP #$F0
-	BCC loc3_B53C
-bra3_B51E:
-	CLC
-	ADC #$10
-	STA ObjectYPos,X
-	INC ObjectYScreen,X
-	JMP loc3_B53C
-bra3_B52A:
-	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
-	BCS loc3_B53C
-	SEC
-	SBC #$10
-	STA ObjectYPos,X
-	DEC ObjectYScreen,X
-loc3_B53C:
-	LDA ObjectYScreen,X
-	CMP YScreenCount
-	BCC bra3_B556
-	LDA ObjectYPos,X
-	CMP #$E0
-	BCC bra3_B556
-	LDA #$00
-	STA ObjectSlot,X
-	STA ObjectState,X
-	STA ObjectVariables,X
+		LDA ObjectVariables,X
+		AND #%01111111 ;Ignore vertical speed mode flag
+		CMP #$07
+		BCS bra3_B50E
+			INC ObjectVariables,X ;Increase vertical speed until it's 7
+	bra3_B50E:
+		TAY
+		BMI bra3_B52A ;Branch if vertical speed is negative (redundant? seems to never happen)
+		CLC
+		ADC ObjectYPos,X
+		STA ObjectYPos,X ;Vertically offset the object by its speed
+		BCS bra3_B51E
+		CMP #256-16
+		BCC loc3_B53C ;Branch if it goes more than 16 pixels below the vertical screen boundary
+
+	; Add 16 to the object's vertical position if it crosses a vertical screen boundary and doesn't carry over
+	bra3_B51E:
+		CLC
+		ADC #16
+		STA ObjectYPos,X
+		INC ObjectYScreen,X
+		JMP loc3_B53C
+
+	; Subtract 16 from the object's vertical position if it crosses the vertical screen boundary
+	bra3_B52A:
+		CLC
+		ADC ObjectYPos,X
+		STA ObjectYPos,X ;Add negative vertical offset
+		BCS loc3_B53C
+		SEC
+		SBC #16
+		STA ObjectYPos,X ;Subtract 16 if it crosses the vertical screen boundary
+		DEC ObjectYScreen,X ;Borrow from high byte if needed
+
+	; Despawn object if it crosses the death barrier
+	loc3_B53C:
+		LDA ObjectYScreen,X
+		CMP YScreenCount
+		BCC bra3_B556
+		LDA ObjectYPos,X
+		CMP #$E0
+		BCC bra3_B556 ;Don't clear object if it's above the death barrier
+			LDA #$00
+			STA ObjectSlot,X
+			STA ObjectState,X
+			STA ObjectVariables,X ;Clear object from memory
+
 bra3_B556:
-	LDA ObjectXPos,X
-	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
-	STA $28
-	BEQ bra3_B572
-	CMP #$FF
-	BEQ bra3_B572
-	JMP Obj_RemoveObject
-bra3_B572:
-	LDA ObjectYPos,X
-	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
-	BEQ bra3_B5B4
-	LDA ObjYScreenDistance,X
-	BPL bra3_B5A3
-	LDA ObjectYDistance,X
-	CLC
-	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	ADC #$00
-	STA ObjYScreenDistance,X
-	JMP bra3_B5B4
-bra3_B5A3:
-	LDA ObjectYDistance,X
-	SEC
-	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	SBC #$00
-	STA ObjYScreenDistance,X
-bra3_B5B4:
-	LDA FreezeFlag
-	BEQ bra3_B5BA_RTS
-	RTS
+	Obj_DistCalc bra3_B5BA_RTS
+
 bra3_B5BA_RTS:
 	RTS
 
@@ -4025,7 +3998,7 @@ bra3_B5BA_RTS:
 ;SUBROUTINE ($B5BB)
 ;Turns the object around in the direction of the player
 ;----------------------------------------
-jmp_54_B5BB:
+Obj_FacePlayer:
 	LDA #$00
 	STA ObjectVariables,X ;Clear object variable
 	TAY ;Set object direction to right

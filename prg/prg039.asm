@@ -3881,7 +3881,7 @@ bra_F323:
 	ORA #$01
 	STA PlayerMovement
 bra_F339:
-	LDA #$12
+	LDA #$12 ;NOTE: slope related?
 	STA PlayerXSpeed
 bra_F33D:
 	LDA PlayerColXPos
@@ -3936,7 +3936,7 @@ bra_F371:
 	AND PlayerMovement
 	STA PlayerMovement
 bra_F389:
-	LDA #$12
+	LDA #$12 ;NOTE: slope related?
 	STA PlayerXSpeed
 bra_F38D:
 	LDA PlayerColXPos

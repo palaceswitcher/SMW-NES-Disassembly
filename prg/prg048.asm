@@ -398,7 +398,7 @@ loc4_82E7:
 	BEQ bra4_82ED ;unlogged
 	RTS ;unlogged
 bra4_82ED:
-	JMP jmp_54_B5BB ;unlogged
+	JMP Obj_FacePlayer ;unlogged
 loc4_82F0:
 	LDA #$07
 	STA $25
@@ -659,7 +659,7 @@ loc4_84ED:
 	BEQ bra4_84F3
 	RTS ;unlogged
 bra4_84F3:
-	JMP jmp_54_B5BB
+	JMP Obj_FacePlayer
 loc4_84F6:
 	LDA #$07
 	STA $25
@@ -904,7 +904,7 @@ loc4_86DD:
 	BEQ bra4_86E3 ;unlogged
 	RTS ;unlogged
 bra4_86E3:
-	JMP jmp_54_B5BB ;unlogged
+	JMP Obj_FacePlayer ;unlogged
 loc4_86E6:
 	LDA #$07
 	STA $25
@@ -1117,7 +1117,7 @@ loc4_887C:
 	BEQ bra4_8882
 	RTS ;unlogged
 bra4_8882:
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	LDY #$50
 	LDA ObjectState,X
 	AND #$40
@@ -1558,7 +1558,7 @@ loc4_8BEE:
 	BEQ bra4_8BF4
 	RTS ;unlogged
 bra4_8BF4:
-	JMP jmp_54_B5BB
+	JMP Obj_FacePlayer
 loc4_8BF7:
 	LDA #$07
 	STA $25
@@ -2657,7 +2657,7 @@ loc4_946C:
 	BEQ bra4_9472
 	RTS ;unlogged
 bra4_9472:
-	JMP jmp_54_B5BB
+	JMP Obj_FacePlayer
 loc4_9475:
 	LDA #$07
 	STA $25
@@ -2980,7 +2980,7 @@ loc4_96EF:
 	BEQ bra4_96F5 ;Only continue if the game isn't frozen
 	RTS ;Stop if it is frozen
 bra4_96F5:
-	JSR jmp_54_B5BB
+	JSR Obj_FacePlayer
 	LDA $A4
 	AND #$03 ;Mask out lower 2 bits of current object index
 	ORA ObjectState,X
