@@ -3362,58 +3362,58 @@ jmp_54_B11D:
 	STA $33 ;Get pointer for movement data
 	JSR GetSpeedData
 	LDA ObjectPRGBank
-	STA M90_PRG0 ;Swap object into first 8K PRG bank
+	STA M90_PRG0 ;Swap object back into first 8K PRG bank
 	RTS
 
 ;----------------------------------------
 ;SUBROUTINE ($B132)
-;Loads speed data from a table and updates the object's variable accordingly.
+;Loads movement data from a table and updates the object's variable accordingly.
 ; Parameters:
-; > $0032: Speed table pointer
-; > Object Variable: Used to determine which speed values to load from the table
+; > $0032: Movement table pointer
+; > Object Variable: Used to determine which movement vectors to load from the table
 ;----------------------------------------
 GetSpeedData:
 	LDX $A4 ;Get index of current object
 	LDA ObjectVariables,X
 	AND #%01111111 ;Clear upper bit of object variable
 	ASL
-	TAY ;Get speed data index
+	TAY ;Get movement data index
 	LDA ObjectState,X
 	AND #$40
 	BEQ LoadObjSpeedRight ;Branch if object is facing right
-	; If the object is facing left, invert its X speed value
+	; If the object is facing left, invert its X movement value
 		LDA ($32),Y
 		EOR #$FF
 		CLC
-		ADC #$01 ;(x XOR 255) + 1 == -x (Two's complement of X speed)
-		JMP StoreObjSpeedData ;Continue
-	; If object is facing right, load X speed value as normal
+		ADC #$01 ;(x XOR 255) + 1 == -x (Two's complement of X movement)
+		JMP StoreObjMovementData ;Continue
+	; If object is facing right, load X movement value as normal
 	LoadObjSpeedRight:
 		LDA ($32),Y
 
-StoreObjSpeedData:
-	STA $06E2 ;Store X speed
+StoreObjMovementData:
+	STA $06E2 ;Store X movement
 
-; Load Y speed from next byte in table
+; Load Y movement from next byte in table
 	INY
 	LDA ($32),Y
 	STA $06E3
 
 	LDA InterruptMode
 	CMP #$04
-	BEQ ChangeObjDirection ;Branch if in the bowser fight
-	; Otherwise, add X speed to the object's position
+	BEQ ChangeObjDirection ;Branch if in the bowser fight, which has one screen
+	; Otherwise, add X movement to the object's position
 		LDA $06E2
-		PHA ;Backup object X speed
+		PHA ;Backup object X movement
 		CLC
 		ADC ObjectXPos,X
-		STA ObjectXPos,X ;Add X speed value to object's horizontal position
-		PLA ;Get X speed
-		BMI ObjNegXSpeedCalcHi ;Branch if speed is negative, subtracting upper byte of X position
+		STA ObjectXPos,X ;Add X movement to object's horizontal position
+		PLA ;Get X movement
+		BMI ObjNegXSpeedCalcHi ;Branch if X movement value is negative, subtracting upper byte of X position
 		LDA ObjectXScreen,X
-		ADC #$00 ;Otherwise, if speed is positive, add the upper byte of the X position
+		ADC #$00 ;Otherwise, if X movement value is positive, carry to upper byte of the X position if needed
 		BPL StoreObjXSpeedCalc ;Continue if the position doesn't overflow
-		; Subtract upper byte of object's horizontal position
+		; Borrow from upper byte of object's horizontal position if needed
 		ObjNegXSpeedCalcHi:
 			LDA ObjectXScreen,X
 			SBC #$00
@@ -3421,16 +3421,16 @@ StoreObjSpeedData:
 StoreObjXSpeedCalc:
 	STA ObjectXScreen,X ;Store upper byte of object's horizontal position
 
-; Add positive vertical speed
+; Add positive vertical movement
 	LDA $06E3
-	BMI ObjNegYSpeedCalc ;Branch if object's Y speed is negative (moving upwards)
+	BMI ObjNegYSpeedCalc ;Branch if object's Y movement is negative (moving upwards)
 	CLC
 	ADC ObjectYPos,X
-	STA ObjectYPos,X ;Otherwise, if speed is positive, add to low byte
+	STA ObjectYPos,X ;Otherwise, if movement is positive, add to low byte
 	BCS ObjYSpeedCalcHi ;Branch if it carries over (crossing vertical screen boundary)
 	CMP #$F0
-	BCC ChangeObjDirection ;If adding 10 wouldn't doesn't carry over, branch
-	; Add high byte and move 16 bytes down if addition carries over
+	BCC ChangeObjDirection ;If adding 10 wouldn't carry over, branch
+	; Carry to high byte and move 16 bytes down if addition carries over
 	ObjYSpeedCalcHi:
 		CLC
 		ADC #$10
@@ -3438,38 +3438,38 @@ StoreObjXSpeedCalc:
 		INC ObjectYScreen,X ;Carry over addition and add 16 ($10)
 		JMP ChangeObjDirection
 
-; Subtract negative vertical speed (if speed value is negative)
+; Subtract negative vertical movement (if speed value is negative)
 ObjNegYSpeedCalc:
 	CLC
 	ADC ObjectYPos,X
 	STA ObjectYPos,X ;Subtract low byte
-	BCS ChangeObjDirection ;Branch if subtraction doesn't carry over to high byte
-	; Otherwise, carry over subtraction and subtract 16 ($10)
+	BCS ChangeObjDirection ;Branch if subtraction doesn't borrow from high byte
+	; Otherwise, borrow from high byte and subtract 16 ($10)
 		SEC
 		SBC #$10
 		STA ObjectYPos,X
 		DEC ObjectYScreen,X
 
-; Change object's direction if needed and update X/Y speed table index
+; Change object's direction if needed and update movement vector table index
 ChangeObjDirection:
 	INY ;Move to next byte
 	LDA ($32),Y
 	CMP #$FF
-	BNE UpdateObjSpeedDataIndex ;Branch if next byte isn't a direction change
-	; If it does change direction, turn the object around
+	BNE UpdateObjSpeedDataIndex ;Branch if delimiter byte isn't reached
+	; Turn the object around and stop if the delimiter byte is reached
 		LDA ObjectState,X
 		EOR #%01000000
 		STA ObjectState,X ;Turn object around
-		JMP GetSpeedDataDone
-	; If the next X speed byte doesn't change direction, change object variable accordingly
+		JMP GetSpeedDataDone ;Go to next vector and end routine
+	; If the X movement byte isn't the delimiter, check if it's an index change vector
 	UpdateObjSpeedDataIndex:
 		AND #%11110000
-		BEQ GetSpeedDataDone ;Branch if upper nybble of next byte is clear, moving to the next set of speed values from the table
-		;Otherwise, check if lower 6 bits are clear
+		BEQ GetSpeedDataDone ;Stop if the X movement byte is normal
+		;Otherwise, check if it's a loop byte
 			LDA ($32),Y
 			AND #%00111111
-			BNE SubObjXYSpeedIndex ;Branch if bits 0 - 5 aren't clear
-			STA ObjectVariables,X ;If they are clear, set the X/Y speed index directly
+			BNE SubObjXYSpeedIndex ;Stop if this is a normal movement value
+			STA ObjectVariables,X ;If they are clear, set the movement vector index directly
 			RTS
 		; If bits 0 - 5 of the next byte aren't clear, subtract the X/Y speed set index by the lower 6 bits of the next byte
 		SubObjXYSpeedIndex:

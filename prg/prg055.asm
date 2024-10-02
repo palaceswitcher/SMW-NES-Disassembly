@@ -73,9 +73,9 @@ Koopa_HitCheck:
 	Obj_VertOffset 16, loc8_8159 ;Position the Beach Koopa 16 pixels lower
 
 loc8_8159:
-	Obj_DistCalc bra8_81BD ;Calculate the distance between the Beach Koopa and player
+	Obj_DistCalc Koopa_SpawnBeachKoopa ;Calculate the distance between the Beach Koopa and player
 
-bra8_81BD:
+Koopa_SpawnBeachKoopa:
 	LDY ObjectCount ;Set index for the newly-spawned Beach Koopa
 	INC ObjectCount ;Add to object slot
 	;Copy coordinates to new object
@@ -132,10 +132,10 @@ ptr6_820E:
 	LDX $A4
 	LDA ObjectSlot,X
 	AND #$01
-	BEQ bra8_822C
+	BEQ @Continue
 		LDY #$C0 ;Use CHR sprite bank 3 if lower bit of ID is set
 
-bra8_822C:
+@Continue:
 	STY $36 ;Set bank number
 	LDA ObjectState,X
 	AND #%01000000
@@ -255,7 +255,7 @@ bra8_8394:
 	AND #$03
 	BNE bra8_83A7
 	LDA #$3A
-	JSR jmp_54_B11D
+	JSR jmp_54_B11D ;Use oscillating movement pattern
 bra8_83A7:
 	LDY #$05
 	LDA ObjFrameCounter

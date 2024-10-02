@@ -61,7 +61,7 @@ tbl_51_E000:
 	dw ofs_E522
 	dw ofs_E534
 	dw ofs_E595
-	dw ofs_E445
+	dw ofs_E445 ;0x3A
 	dw ofs_E63F
 	dw ofs_E6F4
 	dw ofs_E3EB
@@ -1034,92 +1034,49 @@ ofs_E3EE:
 	db $00
 	db $81
 ofs_E445:
-	db $02
-	db $02
-	db $02
-	db $01
-	db $02
-	db $01
-	db $02
-	db $FF
-	db $02
-	db $FF
-	db $02
-	db $FE
-	db $02
-	db $02
-	db $02
-	db $01
-	db $02
-	db $01
-	db $02
-	db $FF
-	db $02
-	db $FF
-	db $02
-	db $FE
-	db $02
-	db $02
-	db $02
-	db $01
-	db $02
-	db $01
-	db $02
-	db $FF
-	db $02
-	db $FF
-	db $02
-	db $FE
-	db $02
-	db $02
-	db $02
-	db $01
-	db $02
-	db $01
-	db $02
-	db $FF
-	db $02
-	db $FF
-	db $02
-	db $FE
-	db $02
-	db $02
-	db $02
-	db $01
-	db $02
-	db $01
-	db $02
-	db $FF
-	db $02
-	db $FF
-	db $02
-	db $FE
-	db $02
-	db $02
-	db $02
-	db $01
-	db $02
-	db $01
-	db $02
-	db $FF
-	db $02
-	db $FF
-	db $02
-	db $FE
-	db $02
-	db $02
-	db $02
-	db $01
-	db $02
-	db $01
-	db $02
-	db $FF
-	db $02
-	db $FF
-	db $02
-	db $FE
-	db $FF
-	db $00
+	db 2, 2
+	db 2, 1
+	db 2, 1
+	db 2, -1
+	db 2, -1
+	db 2, -2
+	db 2, 2
+	db 2, 1
+	db 2, 1
+	db 2, -1
+	db 2, -1
+	db 2, -2
+	db 2, 2
+	db 2, 1
+	db 2, 1
+	db 2, -1
+	db 2, -1
+	db 2, -2
+	db 2, 2
+	db 2, 1
+	db 2, 1
+	db 2, -1
+	db 2, -1
+	db 2, -2
+	db 2, 2
+	db 2, 1
+	db 2, 1
+	db 2, -1
+	db 2, -1
+	db 2, -2
+	db 2, 2
+	db 2, 1
+	db 2, 1
+	db 2, -1
+	db 2, -1
+	db 2, -2
+	db 2, 2
+	db 2, 1
+	db 2, 1
+	db 2, -1
+	db 2, -1
+	db 2, -2
+	db -1, 0
 	db $80
 ofs_E49C:
 	db $01
