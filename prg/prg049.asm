@@ -832,7 +832,7 @@ ptr10_8564:
 	LDA #$23
 	STA MusicRegister
 	LDA #$09
-	STA Event
+	STA GameState
 bra5_857F_RTS:
 	RTS
 sub5_8580:
@@ -2491,7 +2491,7 @@ bra5_9231:
 	ASL
 	STA WarpLevelNumber
 	LDA #$03
-	STA Event
+	STA GameState
 	LDA #$7E
 	SEC
 	SBC #$78
@@ -3453,7 +3453,7 @@ bra5_9877:
 	STA ObjectYScreen,X
 	RTS
 bra5_98A4:
-	LDA Event
+	LDA GameState
 	CMP #$02
 	BNE bra5_9920_RTS
 	LDA ObjXScreenDistance,X
@@ -3541,9 +3541,9 @@ bra5_992C:
 	STA $06E0
 bra5_9940:
 	LDA tbl5_994A,Y
-	STA Event
+	STA GameState
 	LDA #$00
-	STA EventPart
+	STA GameSubstate
 	RTS
 tbl5_994A:
 	db $13

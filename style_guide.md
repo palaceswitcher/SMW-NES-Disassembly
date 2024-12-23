@@ -94,6 +94,7 @@ Sprite mapping pointers: `SprMapTbl_Object`
 
 ## Routine Names
 - Routine names should generally state what they do while not being too verbose.
+- If a routine's function is related to something or performs a specific function for something, said thing should come before the label separated with an underscore. For example, the routine that gets the PPU upload parameters is called `HUD_GetPPUUploadParams`, as it gets the upload parameters *specifically* for the PPU.
 - Note that subroutines do not have to state that they are subroutines in their name.
 	- Examples: `RewardPoints`, `SkipCapeKill`
 

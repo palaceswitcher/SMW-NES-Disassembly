@@ -1445,7 +1445,7 @@ NotePitchTable:
 	include sound/sfx_Jump.asm
 	include sound/sfx_Swim.asm
 	include sound/sfx_Beep.asm
-	include sound/sfx_YoshiCoin.asm
+	include sound/sfx_DragonCoin.asm
 	include sound/sfx_1UP.asm
 	include sound/sfx_Coin.asm
 	include sound/sfx_Powerup.asm

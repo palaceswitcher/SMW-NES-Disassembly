@@ -461,7 +461,7 @@ bra13_9B1E:
 	RTS
 	LDA #$00
 	STA $032F
-	INC a:Event
+	INC a:GameState
 	LDA MapLevelID
 	ASL
 	TAX

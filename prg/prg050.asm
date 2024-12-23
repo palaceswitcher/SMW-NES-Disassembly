@@ -1593,7 +1593,7 @@ bra6_8B17:
 	LDA #mus_Victory
 	STA MusicRegister
 	LDA #$09
-	STA Event
+	STA GameState
 	RTS
 loc6_8B20:
 	LDA ObjectYPos,X
@@ -3567,7 +3567,7 @@ bra6_9611:
 	LDA #$23
 	STA MusicRegister
 	LDA #$09
-	STA Event
+	STA GameState
 	RTS
 bra6_961A:
 	LDY #$28

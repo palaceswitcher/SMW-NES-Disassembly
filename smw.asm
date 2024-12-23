@@ -42,9 +42,9 @@ TileRowCount = $B0
 BGAttrRowCount = $B1
 MetaspriteRowAlignment = $B2
 EntitySetPtr = $DC
-GameState = $DE
-Event = $DF
-EventPart = $E0
+InLevelFlag = $DE
+GameState = $DF
+GameSubstate = $E0
 PlayerState = $E1
 
 BGPalette = $0310

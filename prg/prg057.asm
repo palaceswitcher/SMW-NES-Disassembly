@@ -57,7 +57,7 @@ loc4_A03E:
 	STA $0627
 bra4_A061:
 	JSR sub4_A0CD
-	LDA Event
+	LDA GameState
 	CMP #$01
 	BEQ bra4_A06D
 	JSR sub4_B938
@@ -133,7 +133,7 @@ bra4_A0C2:
 	STA $E4
 	RTS
 sub4_A0CD:
-	LDA Event ;
+	LDA GameState ;
 	CMP #$04 ;if event is set to 04, death
 	BEQ bra4_A0DC ;branch
 	CMP #$07 ;if 07, using item box
@@ -142,7 +142,7 @@ sub4_A0CD:
 	BNE bra4_A0E0 ;branch
 	RTS
 bra4_A0DC:
-	LDA EventPart
+	LDA GameSubstate
 	BEQ bra4_A118_RTS
 bra4_A0E0:
 	LDA PlayerState
@@ -379,7 +379,7 @@ PlayerSpriteVOffset: ;This table adjusts the sprite offset based on the height o
 	db $F8 ;01 
 	db $F0 ;02
 	db $E8 ;03
-	db $E0 ;04			
+	db $E0 ;04
 	db $D8 ;05
 	db $D0 ;06
 	db $C8 ;07
@@ -389,26 +389,25 @@ PlayerSpriteVOffset: ;This table adjusts the sprite offset based on the height o
 	db $A8 ;0B
 	db $A0 ;0C
 	
-;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
+;--------------------
 ; Bubble spawning
-;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
-	
+;--------------------
 jmp_57_A23B:
-	LDA UnderwaterFlag ;
-	BEQ bra4_A29E ;branch if not underwater
-	LDA BubbleSpawnPoint ;
-	CMP #$E8 ;if bubble spawn point is beyond vertical screen edge,
-	BCC bra4_A25B ;branch
-	LDA PlayerXPos ;
-	STA BubbleXPos ;spawn bubble at same x position as the player
-	LDA #$F0 ;load as bubble y spawn offset (if no yoshi)
+	LDA UnderwaterFlag
+	BEQ bra4_A29E ;Branch if not underwater
+	LDA BubbleSpawnPoint
+	CMP #$E8
+	BCC bra4_A25B ;Branch if bubble spawn point is beyond vertical screen edge
+	LDA PlayerXPos
+	STA BubbleXPos ;Spawn bubble at same X position as the player
+	LDA #-16 ;Bubble Y spawn offset (without Yoshi)
 	LDX Player1YoshiStatus ;if player doesn't have yoshi,
 	BEQ bra4_A255 ;branch
-	LDA #$E0 ;load as bubble y spawn offset (if yoshi)
+		LDA #-32 ;Use different vertical bubble offset if the player doesn't have Yoshi
 bra4_A255:
-	CLC ;
-	ADC PlayerYPos ;add loaded bubble y offset to player position
-	STA BubbleYPos ;store as bubble y position
+	CLC
+	ADC PlayerYPos
+	STA BubbleYPos ;Vertically offset the bubble from the player's position
 bra4_A25B:
 	LDA BubbleXPos
 	SEC
@@ -426,10 +425,10 @@ bra4_A25B:
 bra4_A275:
 	STA BubbleSpawnPoint
 	STA SpriteMem ;SpriteMem+0, Y position
-	LDA #$3E ;TileID
-	STA SpriteMem+1 ;store tile ID/,mirroring 
+	LDA #$3E
+	STA SpriteMem+1 ;Set bubble tile
 	LDA #$00
-	STA SpriteMem+2 ;store palette
+	STA SpriteMem+2 ;Set bubble sprite attributes
 	DEC BubbleYPos
 	DEC BubbleYPos
 	JSR sub4_A0B0
@@ -450,10 +449,7 @@ bra4_A29E:
 	AND #$04
 	BEQ bra4_A2C2
 	RTS
-;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
-;End of bubble spawning
-;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
-	
+
 bra4_A2AC:
 	LDA #$02
 	LDY InvincibilityTimer
@@ -468,6 +464,7 @@ bra4_A2BD:
 	BEQ bra4_A2C2
 bra4_A2C1_RTS:
 	RTS
+
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
 ;MARIO SPRITE LOADERS (Main player sprites and riding Yoshi)
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
@@ -2614,9 +2611,9 @@ bra4_AD1D_RTS:
 	RTS
 bra4_AD1E:
 	LDA #$02
-	STA Event
+	STA GameState
 	LDA #$00
-	STA EventPart
+	STA GameSubstate
 	RTS
 sub4_AD27:
 	LDA DataBank2
@@ -2656,12 +2653,12 @@ bra4_AD49:
 	JSR DismountYoshiRoutine ;unlogged
 bra4_AD76:
 	LDA #$00
-	STA EventPart
+	STA GameSubstate
 	STA PlayerState
 	STA $06DC
 	STA $06DD
 	LDA #$04
-	STA Event
+	STA GameState
 	JSR sub4_A14A
 	PLA
 	PLA
@@ -2744,7 +2741,7 @@ ItemBoxLogicSub: ;X: Itembox, Y: Player Power
 	BEQ ItemBoxLogicDone
 	
 	LDA #$07
-	STA Event ;Set to event 7 (using lesser powerup from item box)
+	STA GameState ;Set to event 7 (using lesser powerup from item box)
 	
 	LDY PlayerPowerup ;Load current powerup into Y register
 	CPY #$04
@@ -4508,9 +4505,9 @@ CliffDeathCheck:
 	STA YoshiExitStatus ;Otherwise, remove him completely
 DeathTrigger:
 	LDA #$04		
-	STA Event ;Trigger death event
+	STA GameState ;Trigger death event
 	LDA #$02		
-	STA EventPart ;Set map transition
+	STA GameSubstate ;Set map transition
 	LDA #$07		
 	STA PlayerAction ;Make player duck
 	RTS
@@ -4544,7 +4541,7 @@ loc4_BA24:
 	LDA PlayerSprYPos
 	CMP #$D0
 	BCS bra4_BA42 ;if exceed this, branch to X positioning
-	LDA Event
+	LDA GameState
 	CMP #$04 ;death 
 	BEQ bra4_BA42 ;if player dying, branch to X positioning 
 	CMP #$0B ;going down pipe
@@ -5272,7 +5269,7 @@ bra4_BFAD:
 	LDA #$01
 	STA PlayerPowerupBuffer
 	LDA #$07
-	STA Event
+	STA GameState
 loc4_BFC0:
 	LDA #$D0
 	STA InvincibilityTimer
@@ -5284,9 +5281,9 @@ loc4_BFC0:
 	RTS
 bra4_BFD2:
 	LDA #$04
-	STA Event
+	STA GameState
 	LDA #$00
-	STA EventPart
+	STA GameSubstate
 	STA PlayerState
 	STA $06DC
 	STA $06DD

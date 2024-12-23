@@ -1,6 +1,6 @@
 ;Disassembled with BZK 6502 Disassembler
 jmp_41_A000:
-	LDA a:Event ;Load event number
+	LDA a:GameState ;Load event number
 	ASL
 	TAY ;Get pointer for it
 	LDA tbl_A012,Y	
@@ -9,9 +9,9 @@ jmp_41_A000:
 	STA $33 ;Load upper byte of pointer
 	JMP ($32) ;Jump to loaded pointer
 tbl_A012:
-	dw pnt5_A074 ;Event 0
-	dw pnt5_A0A2 ;Event 1
-	dw pnt5_A695 ;Event 2
+	dw pnt5_A074 ;GameState 0
+	dw pnt5_A0A2 ;GameState 1
+	dw pnt5_A695 ;GameState 2
 	dw pnt5_A706
 	dw pnt5_A761
 	dw pnt5_A7A6
@@ -77,7 +77,7 @@ pnt5_A074:
 	STA BGAttrRowCount ;Only update the palette of the first nametable
 	JSR sub_B75D
 pnt5_A09E:
-	INC a:Event ;Go to the next event
+	INC a:GameState ;Go to the next event
 	RTS
 pnt5_A0A2:
 	JSR sub_AE96 ;Reset PPU settings
@@ -120,7 +120,7 @@ pnt5_A0A2:
 	STA $52
 	LDA #$EF
 	STA LogoYOffset ;Set Y offset for the logo
-	INC a:Event ;Go to next event number
+	INC a:GameState ;Go to next event number
 	RTS
 sub_A107:
 	LDX #$07
@@ -989,7 +989,7 @@ bra_A6C3:
 	DEX
 	BNE bra_A6C1
 	LDA #$04
-	STA a:Event
+	STA a:GameState
 	RTS
 bra_A6CF:
 	JSR sub_B486
@@ -1004,7 +1004,7 @@ bra_A6D3:
 	LDA #$02
 	JSR sub_42_8DF8
 	JSR sub_A6EE
-	INC a:Event
+	INC a:GameState
 	RTS
 sub_A6EE:
 	LDA #$00
@@ -1041,7 +1041,7 @@ pnt5_A706:
 	LDA #$2A
 	STA $08
 	LDA #$07
-	STA a:Event
+	STA a:GameState
 	RTS
 bra_A735:
 	LDA ButtonsPressed
@@ -1091,7 +1091,7 @@ pnt5_A761:
 	STA $0368
 	STA $0369
 	JSR sub_B068
-	INC a:Event
+	INC a:GameState
 	RTS
 pnt5_A7A6:
 	LDA ButtonsHeld
@@ -1109,7 +1109,7 @@ bra_A7BB:
 	STA $0312
 	JSR sub_B068
 	LDA #$00
-	STA a:Event
+	STA a:GameState
 	STA PlayerXScreenDup
 	STA PlayerXPosDup
 	STA $0360
@@ -1121,7 +1121,7 @@ pnt5_A7D3:
 	STA $08
 	NOP
 	NOP
-	INC Event
+	INC GameState
 	NOP
 	NOP
 	NOP
@@ -1205,7 +1205,7 @@ bra_A854:
 	LDX #$00
 	STX GS0SpriteSlot
 	JSR sub_AC1D
-	INC a:Event
+	INC a:GameState
 	RTS
 tbl_A869:
 	db $E8
@@ -1228,7 +1228,7 @@ pnt5_A86F:
 	LDA $0D
 	STA $11
 	JSR sub_AE8A
-	INC a:Event
+	INC a:GameState
 	RTS
 pnt5_A892:
 	LDX #$01
@@ -1239,7 +1239,7 @@ bra_A89B:
 	LDA Player1Lives,X
 	BNE bra_A8A6
 	LDA #$2C
-	STA a:Event
+	STA a:GameState
 	RTS
 bra_A8A6:
 	JSR sub_AE96
@@ -1279,7 +1279,7 @@ bra_A8E1:
 	LDA #$0B
 	STA InterruptMode
 	JSR sub_B068
-	INC a:Event
+	INC a:GameState
 	RTS
 pnt5_A8FE:
 	LDA MapMovementFlag
@@ -1304,7 +1304,7 @@ pnt5_A927:
 	LDA #$05
 	STA PalTransition ;Start palette fadeout
 	JSR sub_B068
-	INC a:Event ;Go to the next event
+	INC a:GameState ;Go to the next event
 	RTS
 pnt5_A933:
 	JSR sub_B75D
@@ -1348,7 +1348,7 @@ pnt5_A933:
 	STA FadeoutMode
 	STA $0312
 	JSR sub_B068
-	INC a:Event
+	INC a:GameState
 	RTS
 tbl_A98F:
 	db $09
@@ -1380,7 +1380,7 @@ pnt5_A9A7:
 	LDA #$00
 	STA $037C
 	LDA #$0B
-	STA a:Event
+	STA a:GameState
 	RTS
 tbl_A9B5:
 	db $00
@@ -1484,7 +1484,7 @@ bra_AA52:
 	CMP #$04
 	BCC bra_AA38 ;Branch if the timer hasn't reached 4 yet
 	LDA #$12
-	STA a:Event ;Otherwise, start fadeout
+	STA a:GameState ;Otherwise, start fadeout
 	RTS
 sub_AA5F:
 	LDA ButtonsPressed
@@ -1639,7 +1639,7 @@ bra_AB62:
 	STA $0312
 	JSR sub_B068
 	LDA #$08
-	STA a:Event
+	STA a:GameState
 	RTS
 bra_AB79:
 	LDA WorldSelectNum
@@ -1875,7 +1875,7 @@ bra_ACA8:
 	LDY #$40
 	JSR CycleFrameCount
 	LDA #$2E
-	STA a:Event ;Enter Yoshi house
+	STA a:GameState ;Enter Yoshi house
 	RTS
 loc_ACB3:
 	LDA #$00
@@ -1914,7 +1914,7 @@ loc_ACD3:
 	JSR sub_B068
 	LDY #$E0
 	JSR CycleFrameCount ;Wait 224 frames
-	INC a:Event
+	INC a:GameState
 	RTS
 tbl_AD09:
 	db $00
@@ -1969,16 +1969,16 @@ pnt5_AD29:
 	LSR
 	STA WorldNumber
 	LDA #$01
-	STA a:GameState
+	STA a:InLevelFlag
 	LDA #$00
-	STA a:Event
+	STA a:GameState
 	RTS
 pnt5_AD5C:
 	LDA #$00
 	STA $5B
 	LDA #$2A
 	STA $08
-	INC a:Event
+	INC a:GameState
 	RTS
 tbl_AD68:
 	db $00
@@ -2020,23 +2020,23 @@ pnt5_AD7E:
 bra_ADA0:
 	LDA $037E
 	BEQ bra_ADA9
-	INC a:Event
+	INC a:GameState
 	RTS
 bra_ADA9:
 	LDA UnlockNextLevel
 	BEQ bra_ADB4
 	LDA #$1C
-	STA a:Event
+	STA a:GameState
 	RTS
 bra_ADB4:
 	LDA $0398
 	BEQ bra_ADBF
 	LDA #$1F
-	STA a:Event
+	STA a:GameState
 	RTS
 bra_ADBF:
 	LDA #$21
-	STA a:Event
+	STA a:GameState
 	RTS
 pnt5_ADC5:
 	JSR sub_AE96
@@ -2064,7 +2064,7 @@ pnt5_ADC5:
 	JSR sub_B068
 	LDY #$FF
 	JSR CycleFrameCount
-	INC a:Event
+	INC a:GameState
 	RTS
 pnt5_AE09:
 	JSR sub_AE96
@@ -2098,7 +2098,7 @@ bra_AE26:
 	JSR sub_B068
 	LDA #$00
 	STA WorldSelectNum
-	INC a:Event
+	INC a:GameState
 	RTS
 tbl_AE5A:
 	db $28, $01, $00, $50
@@ -2171,7 +2171,7 @@ bra_AEE3:
 	LDA GameType
 	BNE bra_AEF9
 	LDA #$08
-	STA a:Event
+	STA a:GameState
 	LDY P1LevelsUnlocked
 	CPY LevelID
 	BNE bra_AEF8_RTS
@@ -2190,7 +2190,7 @@ bra_AF02:
 	INC P1LevelsUnlocked,X
 bra_AF0D:
 	LDA #$25
-	STA a:Event
+	STA a:GameState
 	RTS
 pnt5_AF13:
 	RTS
@@ -2214,15 +2214,15 @@ bra_AF2D:
 	LDA GameType
 	BNE SetPlayerChange ;Switch to the other player
 	LDA #$2C
-	STA a:Event
+	STA a:GameState
 	RTS
 SetGameOver:
 	LDA #$22
-	STA a:Event
+	STA a:GameState
 	RTS
 SetPlayerChange:
 	LDA #$25
-	STA a:Event
+	STA a:GameState
 	RTS
 pnt5_AF4C:
 	JSR sub_AEA3
@@ -2251,7 +2251,7 @@ pnt5_AF4C:
 	JSR CycleFrameCount
 	LDY #$E0
 	JSR CycleFrameCount
-	INC a:Event
+	INC a:GameState
 	RTS
 pnt5_AF93:
 	LDA GameType
@@ -2266,7 +2266,7 @@ bra_AFA0:
 	BNE bra_AFAB
 	JMP loc_AF98
 bra_AFAB:
-	INC a:Event
+	INC a:GameState
 	RTS
 pnt5_AFAF:
 	LDA GameType
@@ -2291,7 +2291,7 @@ bra_AFD5:
 	STA CurrentPlayer
 loc_AFDA:
 	LDA #$07
-	STA a:Event
+	STA a:GameState
 	LDA CurrentPlayer
 	BEQ bra_AFEA_RTS
 	LDA $0332
@@ -2305,7 +2305,7 @@ bra_AFEB:
 pnt5_AFF3:
 	LDA MapMovementFlag
 	BNE bra_AFFE
-	INC a:Event
+	INC a:GameState
 	JMP loc_B001
 bra_AFFE:
 	JSR sub_42_8FFB
@@ -2326,7 +2326,7 @@ bra_B01C:
 	LDA WorldSelectNum
 	CMP #$04
 	BCC bra_B029
-	INC a:Event
+	INC a:GameState
 	JMP loc_B02C
 bra_B029:
 	JSR sub2_90D3
@@ -2348,14 +2348,14 @@ pnt5_B03E:
 	LDA #$07
 	STA WorldNumber
 	LDA #$01
-	STA a:GameState
+	STA a:InLevelFlag
 	STA UnlockNextLevel
 	LDA #$00
-	STA a:Event
+	STA a:GameState
 	RTS
 pnt5_B062:
 	LDA #$07
-	STA a:Event
+	STA a:GameState
 	RTS
 sub_B068:
 	LDA BGPalette
@@ -5164,7 +5164,7 @@ bra_BF7A_RTS:
 	db $CD
 	db $1A ;Unlogged data ends here
 sub_BFD0:
-	STA a:Event ;Store set event
+	STA a:GameState ;Store set event
 	LDA #$01
 	STA WorldSelectTrigger ;Reset the trigger
 	RTS

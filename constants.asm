@@ -14,7 +14,7 @@ sfx_Pause = $02
 sfx_Jump = $03
 sfx_Swim = $04
 sfx_Beep = $05
-sfx_YoshiCoin = $06
+sfx_DragonCoin = $06
 sfx_1UP = $07
 sfx_Coin = $08
 sfx_Powerup = $09
@@ -168,7 +168,7 @@ pAction_ShootFireAir = $11
 pAction_ShootFireSwimming = $12
 pAction_ShootFire = $13
 
-;Events
+;Game States
 evt1_Default = $02
 evt1_Door = $03
 evt1_Death = $04

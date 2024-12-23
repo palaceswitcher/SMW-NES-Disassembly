@@ -4065,7 +4065,7 @@ ptr5_9EB8:
 	LDA #mus_Victory
 	STA MusicRegister ;Play level complete music
 	LDA #$06
-	STA Event ;Trigger goal tape event
+	STA GameState ;Trigger goal tape event
 	LDA WorldNumber
 	ASL
 	ASL ;Multiply world number by 4
@@ -4090,7 +4090,7 @@ sub7_9EE5:
 	BNE bra7_9EF6_RTS ;Only do this if the player is small
 	INC PlayerPowerup ;Make the player big
 	LDA #$07
-	STA Event ;Update the player's sprite?
+	STA GameState ;Update the player's sprite?
 	LDA #$01
 	STA PlayerPowerupBuffer ;Update the player's sprite
 bra7_9EF6_RTS:

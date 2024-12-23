@@ -2213,7 +2213,7 @@ ptr9_9193:
 	JMP loc2_919B
 loc2_919B:
 	LDA #$0C
-	STA a:Event
+	STA a:GameState
 	RTS
 ptr9_91A1:
 	DEC $0356
@@ -4452,7 +4452,7 @@ ClearNTLoop:
 pnt5_9B28:
 	LDA #$00
 	STA $032F
-	INC a:Event
+	INC a:GameState
 	LDA $037F
 	ASL
 	TAX

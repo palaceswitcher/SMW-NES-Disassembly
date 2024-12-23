@@ -6053,7 +6053,7 @@ bra6_BFAD:
 	LDA #$01
 	STA PlayerPowerupBuffer
 	LDA #$07
-	STA Event
+	STA GameState
 loc6_BFC0:
 	LDA #$D0
 	STA InvincibilityTimer
@@ -6065,9 +6065,9 @@ loc6_BFC0:
 	RTS
 bra6_BFD2:
 	LDA #$04
-	STA Event
+	STA GameState
 	LDA #$00
-	STA EventPart
+	STA GameSubstate
 	STA PlayerState
 	STA $06DC
 	STA $06DD

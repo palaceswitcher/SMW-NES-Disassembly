@@ -187,7 +187,7 @@ bra_E160:
 	LDA #$01
 	STA PlayerPowerupBuffer ;Make the game pause while the player takes damage
 	LDA #$07
-	STA Event ;Trigger powerup change event??
+	STA GameState ;Trigger powerup change event??
 loc_E173:
 	LDA #$D0
 	STA InvincibilityTimer
@@ -199,9 +199,9 @@ loc_E173:
 	RTS
 bra_E185:
 	LDA #$04
-	STA Event ;Trigger the death event
+	STA GameState ;Trigger the death event
 	LDA #$00
-	STA EventPart ;Go to the first part of the event
+	STA GameSubstate ;Go to the first part of the event
 	STA PlayerState ;Remove any powerups the player has
 	STA $06DC
 	STA $06DD
@@ -249,7 +249,7 @@ ptr8_E1C9:
 	ASL
 	STA WarpLevelNumber
 	LDA #$03
-	STA Event
+	STA GameState
 	LDA PlayerBackColl
 	SEC
 	SBC #$78

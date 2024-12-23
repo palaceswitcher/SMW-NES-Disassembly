@@ -3380,7 +3380,7 @@ bra_983C:
 	RTS
 ptr7_9840:
 	LDA #$09
-	STA Event
+	STA GameState
 	LDA ObjXScreenDistance,X
 	BPL bra_9852
 	LDA ObjectXDistance,X

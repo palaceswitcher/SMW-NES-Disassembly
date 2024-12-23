@@ -7,7 +7,7 @@ jmp_54_A000:
 	BNE bra3_A006 ;If riding Yoshi, branch
 	RTS
 bra3_A006:
-	LDA Event
+	LDA GameState
 	CMP #$04
 	BEQ bra3_A023 ;If the player is dying, branch
 	LDA #$35
@@ -2834,7 +2834,7 @@ GetPowerupFromObject:
 	@NotFeather:
 		STA PlayerPowerupBuffer
 		LDA #$07
-		STA Event ;Trigger appropriate event
+		STA GameState ;Trigger appropriate event
 		LDY $A4 ;Return current object index in Y register
 
 bra3_AE97_RTS:
@@ -5482,7 +5482,7 @@ DealDamage:
 	LDA #$01
 	STA PlayerPowerupBuffer ;Make the game buffer while the player is taking damage
 	LDA #$07
-	STA Event ;Pause game to change powerup
+	STA GameState ;Pause game to change powerup
 
 @GiveIFrames:
 	LDA #$D0
@@ -5496,9 +5496,9 @@ DealDamage:
 
 @KillPlayer:
 	LDA #evt1_Death
-	STA Event ;Trigger death event
+	STA GameState ;Trigger death event
 	LDA #$00
-	STA EventPart ;Go to first part of event
+	STA GameSubstate ;Go to first part of event
 	STA PlayerState
 	STA $06DC
 	STA $06DD ;Clear player variables

@@ -4515,7 +4515,7 @@ ofs_9E87:
 	LDA #$23
 	STA MusicRegister
 	LDA #$06
-	STA Event
+	STA GameState
 	LDA WorldNumber
 	ASL
 	ASL
@@ -4539,7 +4539,7 @@ bra9_9EE4_RTS:
 	BNE bra9_9EF6_RTS
 	INC PlayerPowerup
 	LDA #$07
-	STA Event
+	STA GameState
 	LDA #$01
 	STA PlayerPowerupBuffer
 bra9_9EF6_RTS:
