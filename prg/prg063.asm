@@ -565,18 +565,19 @@ loc3_E45F:
 
 bra3_E47C:
 	LDA PauseFlag
-	BEQ bra3_E494 ;Branch if game isn't paused
+	BEQ bra3_E494 ;Stop if game isn't paused
 	;If game is paused:
 		JSR JYButtonComboCheck ;Check for Easter egg button combo
 		LDA ButtonsPressed
 		AND #btnSelect
-		BEQ bra3_E494
+		BEQ bra3_E494 ;Stop if select isn't pressed
 		;If select pressed:
-			INC a:GameSubstate ;Enter level exit state
+			INC a:GameSubstate ;Enter level exit state if
 			LDX CurrentPlayer
 			INC Player1Lives,X ;Temporarily increment current player's life count
+
 bra3_E494:
-	JSR sub3_F27F ;Update HUD
+	JSR HUD_Update ;Update HUD before stopping
 	RTS
 
 loc3_E498:
@@ -679,7 +680,7 @@ pnt2_E54E:
 	LDX #$00 ;Set action tick count to 1
 	LDY #$28 ;Set tick length to 40 frames
 	JSR sub3_E5B6 ;Jump
-	JSR sub3_F27F ;Jump
+	JSR HUD_Update ;Jump
 	INC a:GameSubstate ;Start level transition
 	RTS
 pnt2_E570:
@@ -758,7 +759,7 @@ sub3_E5D4:
 	RTS
 pnt2_E610:
 	JSR sub3_ED14 ;Jump
-	JSR sub3_F27F ;Jump
+	JSR HUD_Update ;Jump
 	LDA ButtonsPressed
 	AND #btnA|btnB
 	BEQ bra3_E62F ;If A or B are pressed,
@@ -2064,7 +2065,7 @@ pnt2_ED93:
 	JSR sub3_E5D4 ;Jump
 	LDA #sfx_Warp
 	STA SFXRegister ;Play warp sound
-	JSR sub3_F27F ;Jump
+	JSR HUD_Update ;Jump
 	INC a:GameSubstate ;Go to next part of event
 	RTS
 pnt2_EDAA:
@@ -2110,7 +2111,7 @@ pnt2_EDE1:
 	RTS
 pnt2_EE02:
 	JSR sub3_ED14
-	JSR sub3_F27F
+	JSR HUD_Update
 	LDA #$01
 	STA PlayerAction
 	LDA #$10
@@ -2155,7 +2156,7 @@ pnt2_EE3D:
 	RTS
 pnt2_EE59:
 	JSR sub3_ED14
-	JSR sub3_F27F
+	JSR HUD_Update
 	LDA #$00
 	STA PlayerAction
 	LDA #$10
@@ -2212,7 +2213,7 @@ bra3_EEBF:
 	RTS
 pnt2_EEC8:
 	JSR sub3_ED14
-	JSR sub3_F27F
+	JSR HUD_Update
 	LDA #$0F
 	STA PlayerAction
 	LDA #$50
@@ -2719,50 +2720,50 @@ bra3_F270:
 
 ;----------------------------------------
 ;SUBROUTINE ($F27F)
-;Updates HUD contents
+;Updates HUD counters while in levels.
 ;----------------------------------------
-sub3_F27F:
+HUD_Update:
 	LDA InterruptMode
 	CMP #$04
-	BEQ bra3_F29D ;Don't render the HUD in the Bowser fight
+	BEQ @Stop ;Don't render the HUD in the Bowser fight
 	LDA PPUUpdatePtr
-	BNE bra3_F29D ;Stop if the upper byte of the PPU pointer is empty
+	BNE @Stop ;Stop if the upper byte of the PPU pointer is empty
 		LDA HUDUpdate
 		ASL
 		TAY
-		LDA tbl3_F29E,Y
+		LDA HUD_UpdateFuncs,Y
 		STA $32
-		LDA tbl3_F29E+1,Y
+		LDA HUD_UpdateFuncs+1,Y
 		STA $33 ;Get pointer for current HUD update state
 		JMP ($32) ;Jump to loaded pointer
-bra3_F29D:
+@Stop:
 	RTS
 	
-tbl3_F29E:
-	dw pnt2_F2A8 ;Life count
-	dw pnt2_F2D6 ;Dragon Coins
-	dw pnt2_F303 ;Timer
-	dw pnt2_F329 ;Score
-	dw pnt2_F358 ;Coins
+HUD_UpdateFuncs:
+	dw HUD_UpdateLifeCount
+	dw HUD_UpdateDragonCoins
+	dw HUD_UpdateTimer
+	dw HUD_UpdateScore
+	dw HUD_UpdateCoinCount
 
 ;--------------------
-; Update life count
+; Update life counter display
 ;--------------------
-pnt2_F2A8:
+HUD_UpdateLifeCount:
 	JSR HUD_GetPPUUploadParams ;Get PPU upload parameters
-	INC HUDUpdate
+	INC HUDUpdate ;Go to next update state after this code is finished
 	LDX #0 ;Set index for Player 1
 	LDA CurrentPlayer
 	BEQ @Continue ;Continue using Player 1 index if it's their turn
-		LDX #1 ;Load index for Player 2 otherwise, effectively clamping the player value to 1 (Player 2)
+		LDX #1 ;Use index for Player 2 otherwise, effectively clamping the player value to 1 (Player 2)
 @Continue:
 	LDA Player1Lives,X
 	STA $34
 	LDA #$00
 	STA $35 ;Pass in player's life count
 	LDA #$0B
-	STA $26 ;Set number start tile
-	JSR HUD_RenderCounterToBuf
+	STA $26 ;Number tiles start at #$0B
+	JSR HUD_RenderCounterToBuf ;Render counter to buffer
 
 ; Upload HUD counter buffer to PPU data buffer backwards
 	LDY #$00 ;Start at end of life count string
@@ -2770,17 +2771,17 @@ pnt2_F2A8:
 @UploadLoop:
 	LDA HUDUpdateTiles,Y ;Load currently updated HUD tile
 	STA PPUDataBuffer,X
-	INY ;Advance to tile in HUD string
+	INY ;Advance to next tile in HUD buffer
 	DEX ;Go to previous tile in PPU data buffer
-	BPL @UploadLoop ;Loop until two tiles are uploaded
+	BPL @UploadLoop
 	RTS
 
 ;--------------------
-; Update Dragon Coin Display
+; Update Dragon Coin display
 ;--------------------
-pnt2_F2D6:
+HUD_UpdateDragonCoins:
 	JSR HUD_GetPPUUploadParams ;Get PPU upload parameters
-	INC HUDUpdate ;Go to next update state after this code is finished.
+	INC HUDUpdate ;Go to next update state after this code is finished
 
 ; Clear PPU buffer for Dragon coins
 	LDX #4 ;Clear 5 tiles starting from the back
@@ -2793,7 +2794,7 @@ bra3_F2E0:
 	LDX #0 ;Set index for player 1
 	LDA CurrentPlayer
 	BEQ @Continue ;Continue using Player 1 index if it's their turn
-		LDX #1 ;Load index for Player 2 otherwise, effectively clamping the player value to 1 (Player 2)
+		LDX #1 ;Use index for Player 2 otherwise, effectively clamping the player value to 1 (Player 2)
 @Continue:
 	LDA Player1YoshiCoins,X
 	STA $25 ;Copy player's Dragon Coin count to zero page for faster access
@@ -2808,54 +2809,66 @@ bra3_F2E0:
 		BCC @TileUploadLoop
 @Stop:
 	RTS
-	
-pnt2_F303: 
-	JSR HUD_GetPPUUploadParams
-	INC HUDUpdate
+
+;--------------------
+; Update timer display
+;--------------------
+HUD_UpdateTimer:
+	JSR HUD_GetPPUUploadParams ;Get PPU upload parameters
+	INC HUDUpdate ;Go to next update state after this code is finished
 	LDA LevelTimerLo
 	STA $34
 	LDA LevelTimerHi
-	STA $35
+	STA $35 ;Pass in timer
 	LDA #$0B
-	STA $26
-	JSR HUD_RenderCounterToBuf
+	STA $26 ;Number tiles start at #$0B
+	JSR HUD_RenderCounterToBuf ;Render counter to buffer
+
+; Upload HUD counter buffer to PPU data buffer backwards
 	LDY #$00
-	LDX #$02
-bra3_F31E:
+	LDX #$02 ;Upload 3 tiles from buffer
+@UploadLoop:
 	LDA HUDUpdateTiles,Y
 	STA PPUDataBuffer,X
-	INY
-	DEX
-	BPL bra3_F31E
+	INY ;Advance to next tile in HUD buffer
+	DEX ;Go to previous tile in PPU data buffer
+	BPL @UploadLoop
 	RTS
-	
-pnt2_F329:
-	JSR HUD_GetPPUUploadParams
-	INC HUDUpdate ;Update HUD
-	LDX #$00 ;set index for player 1
-	LDA CurrentPlayer ;get current player
-	BEQ bra3_F338 ;branch if it's player 1
-	LDX #$02 ;Otherwise set index for player 2
-	
-bra3_F338: 
-	LDA #$0B
+
+;--------------------
+; Update score display
+;--------------------
+HUD_UpdateScore:
+	JSR HUD_GetPPUUploadParams ;Get PPU upload parameters
+	INC HUDUpdate ;Go to next update state after this code is finished
+	LDX #0 ;Set index for player 1
+	LDA CurrentPlayer
+	BEQ @Continue ;Continue using Player 1 index if it's their turn
+		LDX #2 ;Use index for Player 2 otherwise, effectively clamping the player value to 1 (Player 2)
+@Continue:
+	LDA #$0B ;Number tiles start at #$0B
 	STA $26
 	LDA P1Score,X
 	STA $34
 	LDA P1Score+1,X
-	STA $35
-	JSR HUD_RenderCounterToBuf
+	STA $35 ;Pass in player's score
+	JSR HUD_RenderCounterToBuf ;Render counter to buffer
+
+; Upload HUD counter buffer to PPU data buffer backwards
 	LDY #$00
-	LDX #$04
-bra3_F34D:
+	LDX #$04 ;Display up to 5 digits
+@UploadLoop:
 	LDA HUDUpdateTiles,Y
 	STA PPUDataBuffer,X
-	INY
-	DEX
-	BPL bra3_F34D
+	INY ;Advance to next tile in HUD buffer
+	DEX ;Go to previous tile in PPU data buffer
+	BPL @UploadLoop
 	RTS
 
-pnt2_F358:
+;--------------------
+; Update coin counter display
+;--------------------
+HUD_UpdateCoinCount:
 	JSR HUD_GetPPUUploadParams
 	LDA #$00
 	STA HUDUpdate
@@ -2865,20 +2878,22 @@ pnt2_F358:
 	LDX #$01 ;Otherwise, set values to Player 2
 bra3_F369:
 	LDA Player1Coins,X ;Load current player's coin count
-	STA $34 ;Store in memory
+	STA $34
 	LDA #$00
-	STA $35 ;Clear extra memory byte (not needed)
-	LDA #$0B
-	STA $26 ;Set start tile?
-	JSR HUD_RenderCounterToBuf
+	STA $35
+	LDA #$0B ;Pass in player's coin count
+	STA $26 ;Number tiles start at #$0B
+	JSR HUD_RenderCounterToBuf ;Render counter to buffer
+
+; Upload HUD counter buffer to PPU data buffer backwards
 	LDY #$00
-	LDX #$01
-bra3_F37D:
+	LDX #$01 ;Display up to 2 digits
+@UploadLoop:
 	LDA HUDUpdateTiles,Y
 	STA PPUDataBuffer,X
-	INY
-	DEX
-	BPL bra3_F37D
+	INY ;Advance to next tile in HUD buffer
+	DEX ;Go to previous tile in PPU data buffer
+	BPL @UploadLoop
 	RTS
 
 ;----------------------------------------
@@ -2996,38 +3011,38 @@ Div16:
 	RTS
 
 	LDA #$2B
- 	STA PPUAddr
+	STA PPUAddr
 	LDA #$40
- 	STA PPUAddr
- 	LDX #$00
- 	LDA InterruptMode
- 	CMP #$04
- 	BEQ bra3_F442
- 	LDA CurrentPlayer
- 	BNE bra3_F436 ;if player 2, branch
+	STA PPUAddr
+	LDX #$00
+	LDA InterruptMode
+	CMP #$04
+	BEQ bra3_F442
+	LDA CurrentPlayer
+	BNE bra3_F436 ;if player 2, branch
 bra3_F42A: ;if player 1
- 	LDA tbl3_F44E,X
- 	STA PPUData
- 	INX
- 	CPX #$80
- 	BCC bra3_F42A
+	LDA tbl3_F44E,X
+	STA PPUData
+	INX
+	CPX #$80
+	BCC bra3_F42A
 	RTS
 	
 bra3_F436:  ;If player 2, go here
 	LDA tbl3_F4CE,X
- 	STA PPUData
- 	INX
- 	CPX #$80
- 	BCC bra3_F436
- 	RTS
-	
+	STA PPUData
+	INX
+	CPX #$80
+	BCC bra3_F436
+	RTS
+
 bra3_F442: ;not sure, it just loads nothing from a table and clears PPU data over and over
- 	LDA tbl3_F54E,X ;this entire table is just #$00 and it's massive
- 	STA PPUData ;clear PPU data
+	LDA tbl3_F54E,X ;this entire table is just #$00 and it's massive
+	STA PPUData ;clear PPU data
 	INX ;Increment X
- 	CPX #$80
- 	BCC bra3_F442 ;Loop if X < #$80
- 	RTS
+	CPX #$80
+	BCC bra3_F442 ;Loop if X < #$80
+	RTS
 tbl3_F44E:
 	db $00
 	db $00

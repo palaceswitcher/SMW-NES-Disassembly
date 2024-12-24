@@ -27,9 +27,10 @@
 - If you aren't entirely sure of what something does, add a question mark after the comment.
 
 # Code Spacing and Comments
+
 ## Spacing
 - Blocks of code that are executed conditionally should be indented. 
-	- This includes nested conditional code, which should be given another indent for every condition it's in.
+	- This includes nested conditional code, which should be given another indent for every condition it's in. If two conditions come one after another with no instructions between, however, they should be treated as one condition.
 	- Indents should be a tab, not spaces.
 - Blocks of code should be separated by two lines, with a blank line between them. This also applies if the block below has a comment at the start of it.
 
