@@ -5495,7 +5495,7 @@ DealDamage:
 	RTS
 
 @KillPlayer:
-	LDA #evt1_Death
+	LDA #gameState_Death
 	STA GameState ;Trigger death event
 	LDA #$00
 	STA GameSubstate ;Go to first part of event

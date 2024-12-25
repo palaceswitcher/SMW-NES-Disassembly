@@ -504,13 +504,14 @@ pnt2_E3DD:
 		RTS
 
 ;----------------------------------------
-; DEFAULT GAME STATE ($E409)
+;DEFAULT GAME STATE ($E409)
 ;----------------------------------------
 pnt2_E409:
 	LDA a:GameSubstate
-	BEQ bra3_E411 ;Branch if at 1st event part
-	JMP loc3_E498 ;Jump
-bra3_E411:
+	BEQ @Continue
+	JMP loc3_E498 ;Jump if in the exit transition substate
+
+@Continue:
 	LDX #$02
 	LDA tbl3_EF08,X
 	STA NMIJMPOpcode+1 ;Set the high byte of the NMI jump
@@ -590,7 +591,7 @@ loc3_E498:
 	STA PauseFlag ;Unpause the game
 	STA a:InLevelFlag ;Set game state for the map
 	STA a:GameSubstate ;End level transition
-	LDA #$16
+	LDA #gameState_MapLevelComplete
 	STA a:GameState
 	JSR sub3_E4BA ;Jump
 	RTS

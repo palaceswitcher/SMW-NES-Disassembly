@@ -1,4 +1,4 @@
-;Button bits
+; Button bits
 btnA = %10000000
 btnB = %01000000
 btnSelect = %00100000
@@ -8,7 +8,7 @@ dirDown = %00000100
 dirLeft = %00000010
 dirRight = %00000001
 
-;Sound effect IDs
+; Sound effect IDs
 sfx_SpinJump = $01
 sfx_Pause = $02
 sfx_Jump = $03
@@ -39,7 +39,7 @@ sfx_YoshiFireSpit = $1B
 sfx_Checkpoint = $1C
 sfx_Cutter = $1D
 
-;Music IDs
+; Music IDs
 mus_Title = $20
 mus_GameOver = $21
 mus_Death = $22
@@ -57,7 +57,7 @@ mus_Underwater = $2D
 mus_Silence = $2E
 mus_Ending = $2F
 
-;Music notes
+; Music notes
 NRest = $00
 F1 = $11
 F#1 = $12
@@ -133,7 +133,7 @@ D#7 = $57
 E7 = $58
 F7 = $59
 
-;Music Commands
+; Music Commands
 NLen = $80
 SegCall = $F0
 SegEnd = $F1
@@ -144,7 +144,7 @@ VolSet = $F8
 DutySet = $F9
 PitchSet = $FA
 
-;Player action
+; Player Actions
 pAction_Idle = $00
 pAction_Walk = $01
 pAction_Run = $02
@@ -168,20 +168,27 @@ pAction_ShootFireAir = $11
 pAction_ShootFireSwimming = $12
 pAction_ShootFire = $13
 
-;Game States
-evt1_Default = $02
-evt1_Door = $03
-evt1_Death = $04
-evt1_Cutscene = $05
-evt1_LevelClear = $06
-evt1_Peach = $09
-evt1_EasterEgg = $0A
-evt1_PipeEnterDown = $0B
-evt1_PipeExitSide = $0C
-evt1_PipeLevelEnter = $0D
-evt1_PipeExitUp = $0E
-evt1_PipeCannonEnter = $0F
-evt1_PipeCannonLaunch = $10
-evt1_PipeCannonEnter2 = $11
-evt1_PipeCannonLaunch2 = $12
-evt1_PipeEnterUp = $13
+; Game States (In-Level)
+gameState_Default = $02
+gameState_Door = $03
+gameState_Death = $04
+gameState_Cutscene = $05
+gameState_LevelClear = $06
+gameState_Peach = $09
+gameState_EasterEgg = $0A
+gameState_PipeEnterDown = $0B
+gameState_PipeExitSide = $0C
+gameState_PipeLevelEnter = $0D
+gameState_PipeExitUp = $0E
+gameState_PipeCannonEnter = $0F
+gameState_PipeCannonLaunch = $10
+gameState_PipeCannonEnter2 = $11
+gameState_PipeCannonLaunch2 = $12
+gameState_PipeEnterUp = $13
+
+; Game States (Outside of levels)
+gameState_Title = $02
+gameState_TitleMenu = $03
+gameState_Map = $0B
+gameState_WorldSelect = $11
+gameState_MapLevelComplete = $16
