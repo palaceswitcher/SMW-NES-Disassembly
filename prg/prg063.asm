@@ -7,16 +7,16 @@ jmp_63_E000:
 	TYA
 	PHA ;Push the Y register into the stack
 	LDA PPUMaskMirror
-	STA PPUMask ;Copy the software mask register to the hardware register
+	STA PPUMASK ;Copy the software mask register to the hardware register
 	LDA XScroll
-	STA PPUScroll ;Set horizontal scroll in the PPU
+	STA PPUSCROLL ;Set horizontal scroll in the PPU
 	LDA YScroll
-	STA PPUScroll ;Set vertical scroll in the PPU
+	STA PPUSCROLL ;Set vertical scroll in the PPU
 	LDA PPUControlMirror
 	AND #$FC
 	ORA VerticalScrollFlag
 	STA PPUControlMirror
-	STA PPUCtrl
+	STA PPUCTRL
 	
 	JSR sub3_F6E0 ;Set interupt mode to on
 ;UPDATE CHR ;Seems to have an effect when the game lags too much	
@@ -59,49 +59,49 @@ NMI_E062:
 	
 	LDA ColumnFinishFlag
 	BEQ bra3_E0E8
-	LDA PPUStatus ;Clear PPU address data latch
+	LDA PPUSTATUS ;Clear PPU address data latch
 	LDA PPUControlMirror
 	ORA #$04
-	STA PPUCtrl
-	LDA PPUStatus ;Clear PPU address data latch
+	STA PPUCTRL
+	LDA PPUSTATUS ;Clear PPU address data latch
 	LDA ColumnFinishFlag
-	STA PPUAddr
+	STA PPUADDR
 	LDA NextBGColumn
-	STA PPUAddr
+	STA PPUADDR
 	LDX #$00
 bra3_E088:
 	LDA TileColumnMem,X
-	STA PPUData
+	STA PPUDATA
 	INX
 	CPX #$1E
 	BCC bra3_E088
-	LDA PPUStatus ;Clear PPU address data latch
+	LDA PPUSTATUS ;Clear PPU address data latch
 	LDA ColumnFinishFlag
 	ORA #$08
-	STA PPUAddr
+	STA PPUADDR
 	LDA NextBGColumn
-	STA PPUAddr
+	STA PPUADDR
 bra3_E0A4:
 	LDA TileColumnMem,X
-	STA PPUData
+	STA PPUDATA
 	INX
 	CPX #$38
 	BCC bra3_E0A4
-	LDA PPUStatus ;Clear PPU address data latch
+	LDA PPUSTATUS ;Clear PPU address data latch
 	LDA PPUControlMirror
 	AND #$FB
-	STA PPUCtrl
+	STA PPUCTRL
 	LDA PalAssignPtrHi
 	BEQ bra3_E0E1
 	LDX #$00
 bra3_E0C0:
-	LDA PPUStatus ;Clear PPU address data latch
+	LDA PPUSTATUS ;Clear PPU address data latch
 	LDA PalAssignPtrHi,X
-	STA PPUAddr
+	STA PPUADDR
 	LDA PalAssignPtrLo,X
-	STA PPUAddr
+	STA PPUADDR
 	LDA PalAssignData,X
-	STA PPUData
+	STA PPUDATA
 	INX
 	INX
 	INX
@@ -124,14 +124,14 @@ bra3_E0F0:
 	
 bra3_E0F8: ;OAM writing for in level sprites
 	LDA #$00
-	STA PPUOAMAddr
+	STA OAMADDR
 	LDA #$02 ; this is the start address SpriteMem+0
 	STA OAMDMA ;set OAM to copy sprite all data from SpriteMem+0-$02FF
 	
 	LDA PPUMaskMirror
-	STA PPUMask
+	STA PPUMASK
 	LDA ScrollXPos
-	STA PPUScroll ;update X scrolling
+	STA PPUSCROLL ;update X scrolling
 ;Screen shake flag check and timer
 	LDY $03
 	LDA $0633
@@ -156,12 +156,12 @@ bra3_E11E: ;go here if screen shake timer less than #$30 (48 decimal)
 	INY ;Increment Y by 4 
 	
 bra3_E12F:
-	STY PPUScroll
+	STY PPUSCROLL
 	LDA PPUControlMirror
 	AND #$FC
 	ORA VerticalScrollFlag
 	STA PPUControlMirror
-	STA PPUCtrl
+	STA PPUCTRL
 	JSR sub3_F6E0
 ;Update BG and sprite banks	
 	LDA BGBank1
@@ -207,20 +207,25 @@ Reset:
 	TXS ;Set the stack pointer to $FF
 	LDA #$00
 	STA M90_IRQ_DISABLE ;Disable mapper interrupts
-	STA PPUMask ;Clear the screen
-	STA PPUCtrl
+	STA PPUMASK ;Clear the screen
+	STA PPUCTRL
 	LDX #$02 ;Set the amount of frames to wait. This is likely done to prevent false negatives
-bra3_E1A5:
-	BIT PPUStatus
-	BPL bra3_E1A5 ;Wait for VBlank
-bra3_E1AA:
-	BIT PPUStatus
-	BMI bra3_E1AA ;Wait for the VBlank flag to clear
+
+VBlankWait1:
+	BIT PPUSTATUS
+	BPL VBlankWait1 ;Wait for VBlank
+VBlankWait2:
+	BIT PPUSTATUS
+	BMI VBlankWait2 ;Wait for the VBlank flag to clear
 	DEX
-	BNE bra3_E1A5 ;Loop until the set amount of frames have passed
-	LDA #$3E
+	BNE VBlankWait1 ;Loop until the set amount of frames have passed
+
+;--------------------
+
+; Mapper/System initialization
+	LDA #62
 	STA M90_PRG2 ;Swap bank 62 into the 3rd PRG bank
-	LDA #$3F
+	LDA #63
 	STA M90_PRG3 ;Swap bank 63 into the 4th PRG bank
 	LDA #%10000101
 	STA M90_IRQ_MODE ;Set mapper IRQ mode (Count down, normal prescaler, 3 bit prescaler, PPU A12 source/scanline counter)
@@ -241,23 +246,26 @@ bra3_E1AA:
 	LDA #%00000001
 	STA M90_CHR_CTRL2 ;Enable horizontal nametable mirroring
 	LDA #%00001111
-	STA APUStatus ;Enable audio channels (excluding DMC)
+	STA APUSTATUS ;Enable audio channels (excluding DMC)
 	LDA #$00
-	STA DMCFreq ;Disable the DMC channel
+	STA DMC_FREQ ;Disable the DMC channel
 	LDA #%01000000
-	STA Joy2Frame ;Disable the IRQ for the APU frame counter
+	STA JOY2 ;Disable APU frame counter interrupt
 	STA M90_IRQ_DISABLE ;Disable mapper interrupts
-	LDA PPUStatus ;Clear PPU address latch
+	LDA PPUSTATUS ;Clear PPU address latch
+
 	LDA #$10 ;Set the high/low byte of the PPU address
 	TAX ;Also set the loop count
 bra3_E202: ;No idea what this loop is for
-	STA PPUAddr
-	STA PPUAddr ;Store the high/low bytes
-	EOR #$10 ;Do XOR operation
+	STA PPUADDR
+	STA PPUADDR ;Store the high/low bytes
+	EOR #$10 ;Alternate between #$10 and #$0
 	DEX
 	BNE bra3_E202 ;Keep looping until the loop count is reached
+
+; Wipe memory
 	LDA #$00 ;Load zero
-	LDX #$00 ;Clear the X index
+	LDX #$00 ;Clear X index
 ClearMemory:
 	STA $00,X
 	STA $0200,X
@@ -269,44 +277,46 @@ ClearMemory:
 	DEX
 	BNE ClearMemory ;Keep looping until every page is cleared
 
+; Initialize game engine?
 	LDA #$00 ;Clear the accumulator
-	JSR MapperProtection ;Make sure the game is on Mapper 90
-	LDA #$3A
-	STA M90_PRG0 ;Swap the music bank into 1st PRG slot
-	LDA #$3B
-	STA M90_PRG1 ;Swap the 2nd music bank into 2nd PRG slot
+	JSR MapperProtection ;Verify the game is on Mapper 90
+	LDA #58
+	STA M90_PRG0
+	LDA #59
+	STA M90_PRG1 ;Swap music banks into first and second PRG banks
 	JSR jmp_58_85D6 ;Initizialize sound driver
 	LDA #mus_Title
 	STA MusicRegister ;Play the title screen music
 	JSR sub_58_8E23+1 ;Jumps inbetween an opcode. Probably an error.
 	INC MuteFlag ;Enable audio
 	LDA #$00
-	STA HUDDisplay
-	CLI ;Clear interrupt
+	STA HUDDisplay ;Sey HUD to default display mode?
+	CLI ;Disable interrupts
 	LDA #$80
 	ORA PalTransition
 	STA PalTransition ;Disable transition
 	LDA #$03
 	STA PlayerPowerup ;Set powerup to cape
+
 	LDA #$4C
 	STA NMIJMPOpcode ;Store the first byte of the NMI JMP
 	LDX #$04
 	LDA tbl3_EF08,X	
-	STA NMIJMPOpcode+1 ;Load the low byte of the NMI JMP location
+	STA NMIJMPOpcode+1
 	LDA #$E0
-	STA NMIJMPOpcode+2 ;Set the high byte of the NMI JMP location
+	STA NMIJMPOpcode+2 ;Load JMP location pointer
 	LDA #%10001000
-	STA PPUCtrl
+	STA PPUCTRL
 	STA PPUControlMirror ;Set PPU control
 	LDA #%00011000
-	STA PPUMask
+	STA PPUMASK
 	STA PPUMaskMirror ;Set PPU mask
-bra3_E277:
+
 loc3_E277:
 	INC $00E4
 	LDA FrameCount
 	CMP FrameCount+1
-	BEQ bra3_E277 ;Loop if the duplicate frame counter is the same as the main counter
+	BEQ loc3_E277 ;Loop if the duplicate frame counter is the same as the main counter
 	STA FrameCount+1 ;If they aren't, make them the same
 	LDA #$01
 	STA $062D
@@ -441,9 +451,9 @@ tbl3_E384:
 	dw pnt2_E3DD
 pnt2_E388:
 	LDA #$00
-	STA PPUCtrl
+	STA PPUCTRL
 	STA PPUControlMirror ;Clear PPU control
-	STA PPUMask
+	STA PPUMASK
 	STA PPUMaskMirror ;Clear PPU mask
 	LDX #$00 ;Set slot to 0
 	TXA
@@ -468,7 +478,7 @@ bra3_E397:
 	LDA #%00011000
 	STA PPUMaskMirror ;Set PPU mask
 	LDA #%10001000
-	STA PPUCtrl
+	STA PPUCTRL
 	STA PPUControlMirror ;Set PPU control
 	LDA #%01
 	STA M90_CHR_CTRL2 ;Set mirroring to horizontal
@@ -589,12 +599,13 @@ loc3_E498:
 	JSR sub3_E904 ;Jump
 	LDA #$00
 	STA PauseFlag ;Unpause the game
-	STA a:InLevelFlag ;Set game state for the map
-	STA a:GameSubstate ;End level transition
+	STA a:InLevelFlag ;Not in a level anymore
+	STA a:GameSubstate
 	LDA #gameState_MapLevelComplete
-	STA a:GameState
+	STA a:GameState ;Set to transition state for completing a level
 	JSR sub3_E4BA ;Jump
 	RTS
+
 sub3_E4BA:
 	LDX CurrentPlayer ;Set index for current player
 	LDA PlayerPowerup
@@ -859,21 +870,32 @@ pnt2_E6B0:
 	STA PlayerActionTicks ;Disable action timer
 	STA PlayerAction ;Clear player action
 	RTS
+
+;----------------------------------------
+;SUBROUTINE ($E6D5)
+;----------------------------------------
 sub3_E6D5:
 	LDA PalTransition
 	AND #$80
 	BEQ bra3_E6EC ;Branch if the palette transition is already set??
 	LDA #$05 ;If it isn't, set it
 	BNE bra3_E6E9
+
+;----------------------------------------
+;SUBROUTINE ($E6E0)
+;----------------------------------------
 sub3_E6E0:
 	LDA PalTransition
 	AND #$80 ;If palette transition not set,
 	BEQ bra3_E6EC
 	LDA #$00
+
 bra3_E6E9:
 	STA PalTransition
+
 bra3_E6EC:
 	RTS
+
 pnt2_E6ED:
 	LDA #$39
 	STA M90_PRG1 ;Swap player bank into 2nd PRG slot
@@ -2270,31 +2292,31 @@ bra3_EF2B:
 	JSR sub3_F20F
 bra3_EF33: ;OAM writing for title screen and map sprites
 	LDA #$00
-	STA PPUOAMAddr
+	STA OAMADDR
 	LDA #$02
 	STA OAMDMA
 	LDA PPUMaskMirror
-	STA PPUMask
+	STA PPUMASK
 	LDA #$00
-	STA PPUAddr
-	STA PPUAddr
+	STA PPUADDR
+	STA PPUADDR
 	LDA PPUControlMirror
 	AND #$FC
 	ORA VerticalScrollFlag
 	STA PPUControlMirror
-	STA PPUCtrl
+	STA PPUCTRL
 	LDA LogoFlag
 	BNE bra3_EF67
 	LDA ScrollXPos
-	STA PPUScroll
+	STA PPUSCROLL
 	LDA ScrollYPos
-	STA PPUScroll
+	STA PPUSCROLL
 	JMP loc3_EF73
 bra3_EF67:
 	LDA LogoXOffset
-	STA PPUScroll
+	STA PPUSCROLL
 	LDA LogoYOffset
-	STA PPUScroll
+	STA PPUSCROLL
 loc3_EF73:
 	JSR sub3_F6E0
 ;Update CHR for title logo and map screen	
@@ -2353,24 +2375,24 @@ loc3_EFE0:
 	TYA
 	PHA ;Push Y register to stack
 	LDA PPUMaskMirror
-	STA PPUMask ;Copy software mask register to hardware register
+	STA PPUMASK ;Copy software mask register to hardware register
 	LDA PPUControlMirror
 	AND #%11111100 ;Mask out bits
 	ORA VerticalScrollFlag ;Add vertical scroll flag (changes nametable address if set)
 	STA PPUControlMirror
-	STA PPUCtrl ;Store in both software and hardware registers
+	STA PPUCTRL ;Store in both software and hardware registers
 	LDA LogoFlag ;If logo flag set,
 	BNE bra3_F008 ;branch
 	LDA ScrollXPos
-	STA PPUScroll ;Load horizontal scroll position into PPU
+	STA PPUSCROLL ;Load horizontal scroll position into PPU
 	LDA ScrollYPos
-	STA PPUScroll ;Load vertical scroll position into PPU
+	STA PPUSCROLL ;Load vertical scroll position into PPU
 	JMP loc3_F014
 bra3_F008:
 	LDA LogoXOffset
-	STA PPUScroll ;Load logo horizontal offset into PPU
+	STA PPUSCROLL ;Load logo horizontal offset into PPU
 	LDA LogoYOffset
-	STA PPUScroll ;Load logo vertical offset into PPU
+	STA PPUSCROLL ;Load logo vertical offset into PPU
 loc3_F014:
 	JSR sub3_F6E0
 	LDX BGBank1
@@ -2406,51 +2428,51 @@ bra3_F04E:
 	BNE bra3_F04C
 	RTS
 sub3_F055:
-	LDA PPUStatus ;Clear address latch
+	LDA PPUSTATUS ;Clear address latch
 	LDA PPUControlMirror ;Load PPU control software reg
 	ORA #$04 ;Do OR operation, effectively adding 4
-	STA PPUCtrl ;Store in PPU control hardware reg
-	LDA PPUStatus
+	STA PPUCTRL ;Store in PPU control hardware reg
+	LDA PPUSTATUS
 	LDA ColumnFinishFlag
-	STA PPUAddr ;Load upper byte of PPU address (20 when scrolling)
+	STA PPUADDR ;Load upper byte of PPU address (20 when scrolling)
 	LDA NextBGColumn
-	STA PPUAddr ;Load current column into low byte of PPU address
+	STA PPUADDR ;Load current column into low byte of PPU address
 	LDX #$00 ;Set row to 0
 bra3_F070:
 	LDA TileColumnMem,X ;Load 8x8 tile row data
-	STA PPUData ;Store it in the PPU
+	STA PPUDATA ;Store it in the PPU
 	INX ;Move to next row
 	CPX #$1E ;Keep looping until row 30 is reached
 	BCC bra3_F070
-	LDA PPUStatus ;Clear address latch
+	LDA PPUSTATUS ;Clear address latch
 	LDA ColumnFinishFlag ;Load upper byte (20 when scrolling)
 	ORA #$08 ;Do OR operation, effectively adding 8
-	STA PPUAddr ;Store as upper byte of PPU address
+	STA PPUADDR ;Store as upper byte of PPU address
 	LDA NextBGColumn
-	STA PPUAddr ;Load current column into lower byte of PPU address
+	STA PPUADDR ;Load current column into lower byte of PPU address
 bra3_F08C:
 	LDA TileColumnMem,X ;Load 8x8 tile row data
-	STA PPUData ;Store it in the PPU
+	STA PPUDATA ;Store it in the PPU
 	INX ;Move to next row
 	CPX TileRowCount ;Keep looping until current row count is reached
 	BCC bra3_F08C
-	LDA PPUStatus ;Clear address latch
+	LDA PPUSTATUS ;Clear address latch
 	LDA PPUControlMirror
 	AND #%11111011
-	STA PPUCtrl ;Set PPUCTRL to increment by 1
+	STA PPUCTRL ;Set PPUCTRL to increment by 1
 	RTS
 sub3_F0A2:
 	LDA PalAssignPtrHi
 	BEQ bra3_F0CA ;Stop if upper byte of mapping pointer is empty
 	LDX #$00
 bra3_F0A9:
-	LDA PPUStatus ;Clear address latch
+	LDA PPUSTATUS ;Clear address latch
 	LDA PalAssignPtrHi,X
-	STA PPUAddr
+	STA PPUADDR
 	LDA PalAssignPtrLo,X
-	STA PPUAddr ;Load attribute pointer
+	STA PPUADDR ;Load attribute pointer
 	LDA PalAssignData,X
-	STA PPUData ;Store attributes
+	STA PPUDATA ;Store attributes
 	INX
 	INX
 	INX ;Load next pointer data set
@@ -2516,24 +2538,24 @@ pnt2_F0F8:
 	LSR ;Divide it by 8
 	ORA #$B0 ;Do OR operation
 	TAX ;Set it as lower byte of PPU address
-	STY PPUAddr ;Store upper byte
-	STX PPUAddr ;Store lower byte
+	STY PPUADDR ;Store upper byte
+	STX PPUADDR ;Store lower byte
 	LDA ScrollXPos
-	STA PPUScroll
-	STA PPUScroll ;Set the horizontal scroll to both axes
+	STA PPUSCROLL
+	STA PPUSCROLL ;Set the horizontal scroll to both axes
 	STA M90_IRQ_DISABLE ;Disable mapper IRQ
 	RTS ;Done
 pnt2_F127: ;HUD ON MAP SCREEN
-	LDA PPUStatus
+	LDA PPUSTATUS
 	LDA #$2B ;Load upper byte of PPU address
-	STA PPUAddr
+	STA PPUADDR
 	LDA #$40 ;Load lower byte of PPU address
-	STA PPUAddr
+	STA PPUADDR
 	LDA #$00
-	STA PPUScroll
-	STA PPUScroll ;Set scroll to default position
+	STA PPUSCROLL
+	STA PPUSCROLL ;Set scroll to default position
 	LDA #%00001110
-	STA PPUMask ;Disable sprite rendering
+	STA PPUMASK ;Disable sprite rendering
 	LDX #$EC
 	STX M90_BG_CHR0 ;Set bank EC to 1st BG bank
 	INX ;Load next CHR bank
@@ -2546,10 +2568,10 @@ pnt2_F152:
 	STA M90_IRQ_DISABLE ;Disable mapper IRQ
 	RTS
 bra3_F156:
-	LDA PPUStatus
+	LDA PPUSTATUS
 	BPL bra3_F156 ;Keep looping if VBlank isn't set
 bra3_F15B:
-	LDA PPUStatus
+	LDA PPUSTATUS
 	BPL bra3_F15B ;Keep looping if VBlank isn't set
 	RTS ;Return
 	ASL
@@ -2587,12 +2609,12 @@ sub3_F184:
 	CLC
 	ADC #$20
 	LDX #$00
-	STA PPUAddr
-	STX PPUAddr
+	STA PPUADDR
+	STX PPUADDR
 	LDY #$03
 	LDA #$FF
 bra3_F195:
-	STA PPUData
+	STA PPUDATA
 	DEX
 	BNE bra3_F195
 	DEY
@@ -2624,21 +2646,21 @@ UpdateJoypadDone:
 	
 ReadJoypad:
 	LDA #$01
-	STA Joy1 ;Strobe controller input
+	STA JOY1 ;Strobe controller input
 	LDA #$00
-	STA Joy1 ;Reload controller input
+	STA JOY1 ;Reload controller input
 	LDA #$01
-	STA Joy1 ;Strobe controller again
+	STA JOY1 ;Strobe controller again
 	NOP
 	NOP ;Wait 2 cycles
 	LDA #$00
-	STA Joy1 ;Read controller input
+	STA JOY1 ;Read controller input
 	NOP
 	NOP ;Wait 2 cycles
 	LDA #$01
 	LSR ;Set the carry by shifting a bit into it
 	TAX ;Set the X index for the first controller
-	STA Joy1 ;Reload controller input again
+	STA JOY1 ;Reload controller input again
 	JSR sub3_F1EC
 	INX ;Set the X index for the second controller
 sub3_F1EC:
@@ -2647,7 +2669,7 @@ sub3_F1EC:
 	LDY #$08 ;Set loop count to 8
 bra3_F1F3:
 	PHA ;Push blank value into the stack
-	LDA Joy1,X ;Read controller input
+	LDA JOY1,X ;Read controller input
 	STA $063D ;Store input data
 	LSR
 	LSR ;Shift bit 1 of the control input into the carry (check for left button?)
@@ -2669,18 +2691,18 @@ sub3_F20F:
 	LDA $03A0
 	ORA PPUControlMirror
 	AND #$7F
-	STA PPUCtrl
+	STA PPUCTRL
 	LDY #$00
 	LDX #$00
 bra3_F222:
-	LDA PPUStatus ;Clear address latch
+	LDA PPUSTATUS ;Clear address latch
 	LDA PPUUpdatePtr
-	STA PPUAddr ;Set upper byte of PPU pointer
+	STA PPUADDR ;Set upper byte of PPU pointer
 	LDA PPUUpdatePtr+1
-	STA PPUAddr ;Set lower byte of PPU pointer
+	STA PPUADDR ;Set lower byte of PPU pointer
 bra3_F231:
 	LDA PPUDataBuffer,X
-	STA PPUData ;Transfer data from the buffer
+	STA PPUDATA ;Transfer data from the buffer
 	INY
 	INX ;Go to the next byte of the buffer
 	CPY PPUWriteCount
@@ -3012,9 +3034,9 @@ Div16:
 	RTS
 
 	LDA #$2B
-	STA PPUAddr
+	STA PPUADDR
 	LDA #$40
-	STA PPUAddr
+	STA PPUADDR
 	LDX #$00
 	LDA InterruptMode
 	CMP #$04
@@ -3023,7 +3045,7 @@ Div16:
 	BNE bra3_F436 ;if player 2, branch
 bra3_F42A: ;if player 1
 	LDA tbl3_F44E,X
-	STA PPUData
+	STA PPUDATA
 	INX
 	CPX #$80
 	BCC bra3_F42A
@@ -3031,7 +3053,7 @@ bra3_F42A: ;if player 1
 	
 bra3_F436:  ;If player 2, go here
 	LDA tbl3_F4CE,X
-	STA PPUData
+	STA PPUDATA
 	INX
 	CPX #$80
 	BCC bra3_F436
@@ -3039,7 +3061,7 @@ bra3_F436:  ;If player 2, go here
 
 bra3_F442: ;not sure, it just loads nothing from a table and clears PPU data over and over
 	LDA tbl3_F54E,X ;this entire table is just #$00 and it's massive
-	STA PPUData ;clear PPU data
+	STA PPUDATA ;clear PPU data
 	INX ;Increment X
 	CPX #$80
 	BCC bra3_F442 ;Loop if X < #$80
@@ -3447,50 +3469,50 @@ bra3_F5E3:
 	CMP #$8E
 	BCS bra3_F623
 	LDA $03E5,X
-	STA PPUAddr
+	STA PPUADDR
 	LDA $03E6,X
-	STA PPUAddr
+	STA PPUADDR
 	CLC
 	ADC #$20
 	STA $28
 	LDA $03E5,X
 	ADC #$00
 	LDY $03F6
-	STY PPUData
+	STY PPUDATA
 	LDY $03F7
-	STY PPUData
-	STA PPUAddr
+	STY PPUDATA
+	STA PPUADDR
 	LDA $28
-	STA PPUAddr
+	STA PPUADDR
 	LDY $03F8
-	STY PPUData
+	STY PPUDATA
 	LDY $03F9
-	STY PPUData
+	STY PPUDATA
 	INX
 	INX
 	INX
 	JMP loc3_F5D0
 bra3_F623:
 	LDA $03E5,X
-	STA PPUAddr
+	STA PPUADDR
 	LDA $03E6,X
-	STA PPUAddr
+	STA PPUADDR
 	CLC
 	ADC #$20
 	STA $28
 	LDA $03E5,X
 	ADC #$00
 	LDY $03FA
-	STY PPUData
+	STY PPUDATA
 	LDY $03FB
-	STY PPUData
-	STA PPUAddr
+	STY PPUDATA
+	STA PPUADDR
 	LDA $28
-	STA PPUAddr
+	STA PPUADDR
 	LDY $03FC
-	STY PPUData
+	STY PPUDATA
 	LDY $03FD
-	STY PPUData
+	STY PPUDATA
 	INX
 	INX
 	INX
@@ -3501,9 +3523,9 @@ bra3_F623:
 	RTS
 loc3_F668:
 	LDA $03E5,X
-	STA PPUAddr
+	STA PPUADDR
 	LDA $03E6,X
-	STA PPUAddr
+	STA PPUADDR
 	CLC
 	ADC #$20
 	STA $28
@@ -3512,17 +3534,17 @@ loc3_F668:
 	STA $25
 	LDY $03E4
 	LDA tbl3_F6AB,Y
-	STA PPUData
+	STA PPUDATA
 	LDA tbl3_F6AC,Y
-	STA PPUData
+	STA PPUDATA
 	LDA $25
-	STA PPUAddr
+	STA PPUADDR
 	LDA $28
-	STA PPUAddr
+	STA PPUADDR
 	LDA tbl3_F6AD,Y
-	STA PPUData
+	STA PPUDATA
 	LDA tbl3_F6AE,Y
-	STA PPUData
+	STA PPUDATA
 	INX
 	INX
 	INX
@@ -3585,7 +3607,7 @@ sub3_F6E0:
 loc3_F6F3:
 	STA MemJMPPtr+1
 	LDX InterruptMode
-	LDA PPUStatus ;Clear address latch
+	LDA PPUSTATUS ;Clear address latch
 	LDA InterruptLineTable,X
 	STA M90_IRQ_DISABLE
 	STA M90_IRQ_COUNTER ;Temporarily disable interrupts and set IRQ counter to the given scanline, causing it to fire an interrupt once the number of scanlines has been reached
@@ -3817,14 +3839,14 @@ bra3_F867:
 
 	LDX #$2B
 	LDY #$40
-	STX PPUAddr
-	STY PPUAddr ;Set PPU address to $2B40
+	STX PPUADDR
+	STY PPUADDR ;Set PPU address to $2B40
 
-	LDA PPUStatus ;Clear PPU address data latch 
+	LDA PPUSTATUS ;Clear PPU address data latch 
 	LDA #$00
-	STA PPUScroll ;Set horizontal scroll for HUD (seems to position the item box, not the HUD itself)
+	STA PPUSCROLL ;Set horizontal scroll for HUD (seems to position the item box, not the HUD itself)
 	LDA #$C4
-	STA PPUScroll ;Set vertical scroll for HUD
+	STA PPUSCROLL ;Set vertical scroll for HUD
 	INC HUDDisplay
 
 	LDA #$EC
@@ -3844,7 +3866,7 @@ bra3_F89E:
 	DEX
 	BNE bra3_F89E ;Wait 59 (X*5 - 1) cycles before updating HUD
 	LDA #%00010000
-	STA PPUMask ;Display sprites only
+	STA PPUMASK ;Display sprites only
 	LDA #$00
 	STA HUDDisplay
 	RTS
@@ -3860,26 +3882,26 @@ bra3_F8B7:
 	BNE bra3_F8B7
 	LDX #$2B
 	LDY #$40
-	STX PPUAddr
-	STY PPUAddr
-	LDA PPUStatus
+	STX PPUADDR
+	STY PPUADDR
+	LDA PPUSTATUS
 	LDA #$00
-	STA PPUScroll
+	STA PPUSCROLL
 	LDA #$C4
-	STA PPUScroll
+	STA PPUSCROLL
 	LDA #$00
 	STA HUDDisplay
 	RTS
 loc3_F8D7:
 	LDX #$22
 	LDY #$D8 ;Set interrupt line
-	STX PPUAddr
-	STY PPUAddr ;Store interrupt line
-	LDA PPUStatus
+	STX PPUADDR
+	STY PPUADDR ;Store interrupt line
+	LDA PPUSTATUS
 	LDA #$00
-	STA PPUScroll
+	STA PPUSCROLL
 	LDA #$B0
-	STA PPUScroll
+	STA PPUSCROLL
 	LDA #$00
 	STA HUDDisplay
 	LDA #$C8

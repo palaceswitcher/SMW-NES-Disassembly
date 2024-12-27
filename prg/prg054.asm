@@ -5011,12 +5011,17 @@ Obj_StompReboundAlt:
 	JMP RewardPoints ;Give player 200 points
 
 ;----------------------------------------
-;SUBROUTINES ($BCBE, $BCC2)
-;Bounces the player back and gives them points while playing a sound effect. Calling the routine below it doesn't play the sound effect.
+;SUBROUTINE ($BCBE)
+;Bounces the player back and gives them points while playing a sound effect 
 ;----------------------------------------
 Obj_StompRebound:
 	LDA #sfx_EnemyHit2
 	STA SFXRegister ;Play hit sound effect
+
+;----------------------------------------
+;SUBROUTINE ($BCC2)
+;Bounces the player back and gives them points
+;----------------------------------------
 Obj_StompReboundNoSFX:
 	LDA #8
 	STA PlayerYSpeed ;Set vertical rebound speed
@@ -5031,10 +5036,12 @@ Obj_StompReboundNoSFX:
 ;----------------------------------------
 ;SUBROUTINE ($BCD4)
 ;Rewards one of 4 score values to the current player from a table based on the value of the accumulator.
-; 0 = 100
-; 1 = 200
-; 2 = 500
-; 3 = 1000
+; Parameters:
+; > A = Score Value
+;   > 0 = 100
+;   > 1 = 200
+;   > 2 = 500
+;   > 3 = 1000
 ;----------------------------------------
 RewardPoints:
 	ASL ;Get score data index

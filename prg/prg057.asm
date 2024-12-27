@@ -5197,7 +5197,7 @@ bra4_BF32:
 	STA PlayerColXScreen
 	RTS
 	LDA ($32),Y ;everything below here is useless/leftover
-	STA PPUData
+	STA PPUDATA
 	DEC PlayerMetaspriteVAlign
 	BNE bra4_BF32
 	JSR sub4_BF59
@@ -5206,7 +5206,7 @@ bra4_BF32:
 	JSR sub4_BF59
 	LDA ($32),Y
 bra4_BF4B:
-	STA PPUData
+	STA PPUDATA
 	DEC PlayerMetaspriteVAlign
 	BNE bra4_BF4B
 	JSR sub4_BF59

@@ -58,10 +58,10 @@ YoshiHouse:
 	db $60
 TilemapDecompSub:
 	LDA #$00
-	STA PPUMask ;Clear PPU mask, disabling rendering
-	STA PPUCtrl ;Clear PPU control, disabling NMI
+	STA PPUMASK ;Clear PPU mask, disabling rendering
+	STA PPUCTRL ;Clear PPU control, disabling NMI
 	TAY ;Clear Y register
-	LDA PPUStatus ;Clear PPU address latch
+	LDA PPUSTATUS ;Clear PPU address latch
 	LDA Current8x8Tilemap ;Get current tilemap
 	ASL
 	TAX ;Get the pointer for it
@@ -70,10 +70,10 @@ TilemapDecompSub:
 	LDA TilemapPointers+1,X
 	STA $39 ;Load upper byte of pointer
 	LDA ($38),Y
-	STA PPUAddr ;Get upper byte of PPU address from tilemap header
+	STA PPUADDR ;Get upper byte of PPU address from tilemap header
 	JSR GoToNextByte
 	LDA ($38),Y
-	STA PPUAddr ;Get lower byte of PPU address from tilemap header
+	STA PPUADDR ;Get lower byte of PPU address from tilemap header
 ByteTypeCheck:
 	JSR GoToNextByte
 	LDA ($38),Y ;Read next byte
@@ -85,7 +85,7 @@ ByteTypeCheck:
 bra2_87E3:
 	JSR GoToNextByte
 	LDA ($38),Y ;Read next byte
-	STA PPUData ;Store tile data
+	STA PPUDATA ;Store tile data
 	DEC TileRepeatBytesLeft ;Decrement byte count
 	BNE bra2_87E3 ;Keep looping until byte count reached
 	BEQ ByteTypeCheck ;Branch once it is reached
@@ -94,7 +94,7 @@ bra2_87F1:
 	JSR GoToNextByte
 	LDA ($38),Y ;Read next byte
 RepeatTileRender:
-	STA PPUData ;Store tile data
+	STA PPUDATA ;Store tile data
 	DEC TileRepeatCount
 	BNE RepeatTileRender ;Repeatedly render that tile until the repeat count is reached
 	BEQ ByteTypeCheck ;Branch once the repeat count is reached
@@ -1525,9 +1525,9 @@ sub_42_8DF8:
 	ASL
 	TAX
 	LDA tbl2_8E67,X
-	STA PPUAddr
+	STA PPUADDR
 	LDA tbl2_8E67+1,X
-	STA PPUAddr
+	STA PPUADDR
 	LDA tbl2_8E71,X
 	STA $2E
 	LDA tbl2_8E71+1,X
@@ -1535,7 +1535,7 @@ sub_42_8DF8:
 	LDY #$00
 bra2_8E57:
 	LDA ($2E),Y
-	STA PPUData
+	STA PPUDATA
 	INY
 	CPY $32
 	BCC bra2_8E57
@@ -3701,13 +3701,13 @@ ofs_97D0:
 	db $FF
 sub_42_97D3:
 	LDA #$2B
-	STA PPUAddr
+	STA PPUADDR
 	LDA #$40
-	STA PPUAddr
+	STA PPUADDR
 	LDX #$00
 bra2_97DF:
 	LDA #$71
-	STA PPUData
+	STA PPUDATA
 	INX
 	CPX #$80
 	BCC bra2_97DF
@@ -3842,9 +3842,9 @@ bra2_97DF:
 	db $00
 TransitionScreenSub:
 	LDX #$21
-	STX PPUAddr ;Set upper byte of address
+	STX PPUADDR ;Set upper byte of address
 	LDX #$80
-	STX PPUAddr ;Set lower byte of address
+	STX PPUADDR ;Set lower byte of address
 	LDY #$00 ;Clear Y register
 	ASL
 	ASL
@@ -3855,7 +3855,7 @@ TransitionScreenSub:
 	TAX
 RenderTransitionScreen:
 	LDA TransitionScreenData,X
-	STA PPUData
+	STA PPUDATA
 	INX
 	INY
 	CPY #$40 ;Render 2 rows of tiles
@@ -4438,12 +4438,12 @@ ClearNametable:
 	CLC
 	ADC #$20 ;Add $20 to upper byte
 	LDX #$00 ;Set lower byte of address and nametable size
-	STA PPUAddr
-	STX PPUAddr
+	STA PPUADDR
+	STX PPUADDR
 	LDY #$03 ;Set upper byte of nametable size (in tiles)
 	LDA #$FF
 ClearNTLoop:
-	STA PPUData
+	STA PPUDATA
 	DEX
 	BNE ClearNTLoop
 	DEY
@@ -4738,14 +4738,14 @@ bra2_9C4F:
 	STA $26
 	JSR sub2_9C78
 	LDA #$2B
-	STA PPUAddr
+	STA PPUADDR
 	LDA #$69
-	STA PPUAddr
+	STA PPUADDR
 	LDY #$01
 	LDX #$01
 bra2_9C6D:
 	LDA $0378,Y
-	STA PPUData
+	STA PPUDATA
 	DEY
 	DEX
 	BPL bra2_9C6D
@@ -4804,22 +4804,22 @@ bra2_9CCB:
 	RTS
 sub2_9CCF:
 	LDA #$2B
-	STA PPUAddr
+	STA PPUADDR
 	LDA #$40
-	STA PPUAddr
+	STA PPUADDR
 	LDX #$00
 	LDA $0399
 	BNE bra2_9CEC
 bra2_9CE0:
 	LDA tbl2_9CF8,X
-	STA PPUData
+	STA PPUDATA
 	INX
 	CPX #$80
 	BCC bra2_9CE0
 	RTS
 bra2_9CEC:
 	LDA tbl2_9D78,X
-	STA PPUData
+	STA PPUDATA
 	INX
 	CPX #$80
 	BCC bra2_9CEC

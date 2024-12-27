@@ -292,6 +292,8 @@ ChannelPtrs = $0724
 VolMacroPtrs = $0751
 DutyMacroPtrs = $075D
 
+ChannelVolMacroInds = $074D
+
 Pulse1Transpose = $070D
 ChannelPitch = $0739
 Pulse1VolumeEnv = $0749
@@ -314,36 +316,36 @@ MusicSpeed = $072C
 TrianglePitchSetting = $0763
 
 ;Hardware registers
-PPUCtrl = $2000
-PPUMask = $2001
-PPUStatus = $2002
-PPUOAMAddr = $2003
-PPUOAMData = $2004
-PPUScroll = $2005
-PPUAddr = $2006
-PPUData = $2007
-Sq1Vol = $4000
-Sq1Sweep = $4001
-Sq1Lo = $4002
-Sq1Hi = $4003
-Sq2Vol = $4004
-Sq2Sweep = $4005
-Sq2Lo = $4006
-Sq2Hi = $4007
-TriLinear = $4008
-TriLo = $400A
-TriHi = $400B
-NoiseVol = $400C
-NoiseLo = $400E
-NoiseHi = $400F
-DMCFreq = $4010
-DMCRaw = $4011
-DMCStart = $4012
-DMCLength = $4013
+PPUCTRL = $2000
+PPUMASK = $2001
+PPUSTATUS = $2002
+OAMADDR = $2003
+OAMDATA = $2004
+PPUSCROLL = $2005
+PPUADDR = $2006
+PPUDATA = $2007
+SQ1_VOL = $4000
+SQ1_SWEEP = $4001
+SQ1_LO = $4002
+SQ1_HI = $4003
+SQ2_VOL = $4004
+SQ2_SWEEP = $4005
+SQ2_LO = $4006
+SQ2_HI = $4007
+TRI_LINEAR = $4008
+TRI_LO = $400A
+TRI_HI = $400B
+NOISE_VOL = $400C
+NOISE_LO = $400E
+NOISE_HI = $400F
+DMC_FREQ = $4010
+DMC_RAW = $4011
+DMC_START = $4012
+DMC_LEN = $4013
 OAMDMA = $4014
-APUStatus = $4015
-Joy1 = $4016
-Joy2Frame = $4017
+APUSTATUS = $4015
+JOY1 = $4016
+JOY2 = $4017
 
 ;Mapper-specific registers
 

@@ -146,63 +146,74 @@ bra10_85CE:
 bra10_85D5_RTS:
 	RTS
 
-;This is the effective start point for the driver.
+;----------------------------------------
+;SUBROUTINE ($85D6)
+;Initialize sound driver
+;----------------------------------------
 jmp_58_85D6:
-	LDA #$0F
-	STA APUStatus
+	LDA #%00001111
+	STA APUSTATUS ;Enable every channel excluding DMC
 	LDA #$00
-	STA Sq1Vol
-	STA Sq2Vol
-	STA TriLinear
-	STA NoiseVol
-	STA DMCFreq
+	STA SQ1_VOL
+	STA SQ2_VOL
+	STA TRI_LINEAR
+	STA NOISE_VOL
+	STA DMC_FREQ
 	LDA #$7F
-	STA Sq1Sweep
-	STA Sq2Sweep
+	STA SQ1_SWEEP
+	STA SQ2_SWEEP ;Disable hardware sweep
+
+; Clear sound driver RAM
 	LDA #$00
-	LDY #$D5
-bra10_85F8:
+	LDY #$D5 ;Upper limit of audio RAM
+AudioRAMClearLoop:
 	STA $0700,Y
 	DEY
-	BNE bra10_85F8
+	BNE AudioRAMClearLoop ;Loop backwards until the start of page 7 is reached
+
 	LDA #$FF
-	LDX #$04
+	LDX #4
 bra10_8602:
 	DEX
-	STA $074D,X
+	STA ChannelVolMacroInds,X
 	STA $07B1,X
 	BNE bra10_8602
-	LDX #$04
+
+	LDX #4
 bra10_860D:
 	DEX
 	STA $0765,X
 	STA $07C9,X
 	BNE bra10_860D
-	LDX #$02
+
+	LDX #2
 bra10_8618:
 	DEX
 	STA $075B,X
 	STA $07BF,X
 	BNE bra10_8618
-	LDX #$08
+
+; Clear SFX queue
+	LDX #8
 bra10_8623:
 	DEX
 	STA $0701,X
 	BNE bra10_8623
 	RTS
+
 jmp_58_862A:
 	LDA PauseFlag
 	BEQ bra10_8642
 	LDA #$00
-	STA APUStatus
+	STA APUSTATUS
 	LDA #%00000111
-	STA APUStatus ;Disable noise channel
+	STA APUSTATUS ;Disable noise channel
 	JSR sub10_8C85
 	JSR sub10_86E8
 	JMP loc10_8671
 bra10_8642:
 	LDA #$0F
-	STA APUStatus ;Re-enable all channels (excluding DMC)
+	STA APUSTATUS ;Re-enable all channels (excluding DMC)
 loc10_8647:
 	JSR sub10_8C85
 	JSR sub10_86E8
@@ -241,7 +252,7 @@ bra10_867E:
 	CPY #$01
 	BNE bra10_86A2
 	LDA #$00
-	STA APUStatus
+	STA APUSTATUS
 bra10_86A2:
 	CPY #$F0
 	BEQ bra10_86AB
@@ -255,22 +266,22 @@ bra10_86AB:
 	LDA SoundPointer
 	AND #$F0
 	ORA #$30
-	STA Sq1Vol
+	STA SQ1_VOL
 	LDX #$01
 	LDY #$02
 	JSR sub10_8DD6
 	LDA SoundPointer
 	AND #$F0
 	ORA #$30
-	STA Sq2Vol
+	STA SQ2_VOL
 	LDA #$00
-	STA TriLinear
+	STA TRI_LINEAR
 	LDA #$30
-	STA NoiseVol
+	STA NOISE_VOL
 	LDA #$FF
 	STA PauseFlag
 	LDA #$0F
-	STA APUStatus
+	STA APUSTATUS
 bra10_86DF_RTS:
 	RTS
 bra10_86E0:
@@ -356,7 +367,7 @@ bra10_875C:
 	LDA #$00
 	STA Pulse1VolumeEnv,X
 	LDA #$FF
-	STA $074D,X
+	STA ChannelVolMacroInds,X
 	CPY #$04
 	BPL bra10_879C
 	LDA #$00
@@ -694,7 +705,7 @@ loc10_8A0A:
 	LDA #$FF
 	CPX #$04
 	BPL bra10_8A26_RTS
-	STA $074D,Y
+	STA ChannelVolMacroInds,Y
 	STA $0765,Y
 	CPX #$02
 	BPL bra10_8A26_RTS
@@ -761,7 +772,7 @@ bra10_8A85:
 	LDX $070B
 	LDY #$00
 	LDA (SoundPointer),Y
-	STA $074D,X
+	STA ChannelVolMacroInds,X
 	RTS
 
 sub10_8AAB:
@@ -842,12 +853,12 @@ sub10_8B2F:
 
 loc10_8B39:
 	LDX $070B
-	LDA $074D,X
+	LDA ChannelVolMacroInds,X
 	TAY
 	CPY #$FF
 	BEQ bra10_8BA1_RTS
 	LDX $070B
-	LDA $074D,X
+	LDA ChannelVolMacroInds,X
 	BNE bra10_8B9E
 	
 	;Move to next RLE tag
@@ -865,7 +876,7 @@ loc10_8B39:
 	LDX $070B
 	LDY #$00
 	LDA (SoundPointer),Y
-	STA $074D,X
+	STA ChannelVolMacroInds,X
 	TAY
 	CPY #$FF
 	BNE loc10_8B39
@@ -887,10 +898,10 @@ bra10_8B91:
 	LDX $070B
 	LDY #$00
 	LDA (SoundPointer),Y
-	STA $074D,X
+	STA ChannelVolMacroInds,X
 	JMP loc10_8B39
 bra10_8B9E:
-	DEC $074D,X
+	DEC ChannelVolMacroInds,X
 bra10_8BA1_RTS:
 	RTS
 
@@ -1029,7 +1040,7 @@ bra10_8CA2:
 	PLA
 	ORA SoundPointer
 	ORA #$30
-	STA Sq1Vol
+	STA SQ1_VOL
 	JSR sub10_8DFB
 	LDA #$00
 	STA SoundPointer+1
@@ -1041,7 +1052,7 @@ bra10_8CC0:
 	CLC
 	ADC $FE
 	STA $0741,Y
-	STA Sq1Lo
+	STA SQ1_LO
 	LDA $0742,Y
 	STA SoundPointer
 	LDA $073A,Y
@@ -1051,7 +1062,7 @@ bra10_8CC0:
 	BEQ bra10_8CE3_RTS
 	STA $0742,Y
 	ORA #$F8
-	STA Sq1Hi
+	STA SQ1_HI
 bra10_8CE3_RTS:
 	RTS
 sub10_8CE4:
@@ -1070,7 +1081,7 @@ bra10_8CF4:
 	PLA
 	ORA SoundPointer
 	ORA #$30
-	STA Sq2Vol
+	STA SQ2_VOL
 	JSR sub10_8DFB
 	LDA #$00
 	STA SoundPointer+1
@@ -1082,7 +1093,7 @@ bra10_8D12:
 	CLC
 	ADC $FE
 	STA $0741,Y
-	STA Sq2Lo
+	STA SQ2_LO
 	LDA $0742,Y
 	STA SoundPointer
 	LDA $073A,Y
@@ -1092,7 +1103,7 @@ bra10_8D12:
 	BEQ bra10_8D35_RTS
 	STA $0742,Y
 	ORA #$F8
-	STA Sq2Hi
+	STA SQ2_HI
 bra10_8D35_RTS:
 	RTS
 sub10_8D36:
@@ -1110,7 +1121,7 @@ bra10_8D46:
 	LDA #$FF
 bra10_8D4F:
 	ORA #$80
-	STA TriLinear
+	STA TRI_LINEAR
 	JSR sub10_8DFB
 	LDA #$00
 	STA SoundPointer+1
@@ -1122,7 +1133,7 @@ bra10_8D61:
 	CLC
 	ADC $FE
 	STA $0741,Y
-	STA TriLo
+	STA TRI_LO
 	LDA $0742,Y
 	STA SoundPointer
 	LDA $073A,Y
@@ -1132,7 +1143,7 @@ bra10_8D61:
 	BEQ bra10_8D84_RTS
 	STA $0742,Y
 	ORA #$F8
-	STA TriHi
+	STA TRI_HI
 bra10_8D84_RTS:
 	RTS
 sub10_8D85:
@@ -1147,19 +1158,19 @@ bra10_8D95:
 	JSR sub10_8DB1
 	LDA SoundPointer
 	ORA #$30
-	STA NoiseVol
+	STA NOISE_VOL
 	JSR sub10_8DFB
 	LDA ChannelPitch,Y
 	CLC
 	ADC $FE
-	STA NoiseLo
+	STA NOISE_LO
 	LDA #$F8
-	STA NoiseHi
+	STA NOISE_HI
 	RTS
 sub10_8DB1:
 	TYA
 	PHA
-	LDA $074D,X
+	LDA ChannelVolMacroInds,X
 	TAY
 	CPY #$FF
 	BNE bra10_8DC0

@@ -1538,7 +1538,7 @@ loc_AAB1:
 	RTS
 	LDA #$88
 	STA PPUControlMirror
-	STA PPUCtrl
+	STA PPUCTRL
 	RTS
 sub_AACB:
 	LDA #$2A
@@ -1881,7 +1881,7 @@ loc_ACB3:
 	LDA #$00
 	STA ScrollXPos
 	STA ScrollYPos
-	STA PPUMask
+	STA PPUMASK
 	STA PPUMaskMirror ;Clear PPU registers
 	JSR ClearNametable ;Clear the screen
 	LDA #$2E
@@ -2117,21 +2117,21 @@ sub_AE8A:
 	LDA #%00011000
 	STA PPUMaskMirror ;Set PPU mask bits
 	LDA #%10001000
-	STA PPUCtrl ;Set PPU control bits
+	STA PPUCTRL ;Set PPU control bits
 	STA PPUControlMirror
 	RTS
 sub_AE96:
 	LDA #$00
-	STA PPUCtrl
+	STA PPUCTRL
 	STA PPUControlMirror
-	STA PPUMask
+	STA PPUMASK
 	STA PPUMaskMirror ;Clear the PPU mask and control registers, disabling rendering and NMI
 	RTS
 sub_AEA3:
 	LDA #$00
 	STA ScrollXPos
 	STA ScrollYPos
-	STA PPUMask
+	STA PPUMASK
 	STA PPUMaskMirror ;Clear the PPU registers
 	JSR ClearNametable ;Clear the screen
 	RTS
@@ -3124,50 +3124,50 @@ tbl_B319:
 	db $C0
 	db $C0
 sub_B399:
-	LDA PPUStatus
+	LDA PPUSTATUS
 	LDA $00
 	ORA #$04
-	STA PPUCtrl
-	LDA PPUStatus
+	STA PPUCTRL
+	LDA PPUSTATUS
 	LDA $0480
-	STA PPUAddr
+	STA PPUADDR
 	LDA NextBGColumn
-	STA PPUAddr
+	STA PPUADDR
 	LDX #$00
 bra_B3B4:
 	LDA $0485,X
-	STA PPUData
+	STA PPUDATA
 	INX
 	CPX #$1E
 	BCC bra_B3B4
-	LDA PPUStatus
+	LDA PPUSTATUS
 	LDA $0480
 	ORA #$08
-	STA PPUAddr
+	STA PPUADDR
 	LDA NextBGColumn
-	STA PPUAddr
+	STA PPUADDR
 bra_B3D0:
 	LDA $0485,X
-	STA PPUData
+	STA PPUDATA
 	INX
 	CPX #$38
 	BCC bra_B3D0
-	LDA PPUStatus
+	LDA PPUSTATUS
 	LDA $00
 	AND #$FB
-	STA PPUCtrl
+	STA PPUCTRL
 	RTS
 	LDA PalAssignPtrHi
 	BEQ bra_B40E_RTS
 	LDX #$00
 bra_B3ED:
-	LDA PPUStatus
+	LDA PPUSTATUS
 	LDA PalAssignPtrHi,X
-	STA PPUAddr
+	STA PPUADDR
 	LDA PalAssignPtrLo,X
-	STA PPUAddr
+	STA PPUADDR
 	LDA PalAssignData,X
-	STA PPUData
+	STA PPUDATA
 	INX
 	INX
 	INX
@@ -3760,10 +3760,10 @@ sub_B75D:
 	RTS
 	RTS
 sub_B800:
-	LDA PPUStatus ;Clear PPU address latch
+	LDA PPUSTATUS ;Clear PPU address latch
 	LDA PPUControlMirror
 	AND #%01111111
-	STA PPUCtrl ;Disable NMI
+	STA PPUCTRL ;Disable NMI
 	LDA #$00
 	STA ScrollYPos ;Clear the vertical scroll position
 	LDA ScrollXPos
@@ -3869,38 +3869,38 @@ bra_B8BA:
 bra_B8C9:
 	JMP loc_B81F
 bra_B8CC:
-	LDA PPUStatus
+	LDA PPUSTATUS
 	LDA #$23
-	STA PPUAddr
+	STA PPUADDR
 	LDA #$C0
-	STA PPUAddr
+	STA PPUADDR
 	LDX #$00
 bra_B8DB:
 	LDA TileAttributes,X
-	STA PPUData
+	STA PPUDATA
 	INX
 	CPX #$40
 	BCC bra_B8DB
-	LDA PPUStatus
+	LDA PPUSTATUS
 	LDA #$2B
-	STA PPUAddr
+	STA PPUADDR
 	LDA #$C0
-	STA PPUAddr
+	STA PPUADDR
 bra_B8F3:
 	LDA TileAttributes,X
-	STA PPUData
+	STA PPUDATA
 	INX
 	CPX #$80
 	BCC bra_B8F3
 	RTS
 	LDA #$2B
-	STA PPUAddr
+	STA PPUADDR
 	LDA #$40
-	STA PPUAddr
+	STA PPUADDR
 	LDX #$00
 bra_B90B:
 	LDA tbl_B917,X
-	STA PPUData
+	STA PPUDATA
 	INX
 	CPX #$80
 	BCC bra_B90B
