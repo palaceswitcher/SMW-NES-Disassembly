@@ -20,7 +20,7 @@
 
 - Constant values should be written in camelCase, with an underscore separating the first word or phrase.
 - Constants should have their names abbreviated, if possible.
-	- Examples: `sfx_Jump`, `evt1_Door`, `objID_Koopa`
+	- Examples: `sfx_Jump`, `gameState_Door`, `objID_Koopa`
 
 ### Macro Styling
 
@@ -97,9 +97,11 @@ Description blocks refer to a comment "block" that marks the start of something 
 
 ## Labels
 
+If a label pertains to a certain thing, such as the player or the HUD, its purpose should come before the label followed by an underscore. This isn't necessary if the label is for something very specific or minor. More info for specific label types can be found below.
+
 ### Table Names
 
-- Tables of a certain data type or format should start with their data type (see below) separated by an underscore.
+- Tables of a certain data type or format should have their data type (see below) at the start of their label.
 	- Example: `Anim_PlayerFire_Hold`
 
 #### Common Data Types
@@ -113,7 +115,7 @@ Sprite mapping pointers: `SprMapTbl_Object`
 ### Routine Names
 
 - Routine names should generally state what they do while not being too verbose.
-- If a routine's function is related to something or performs a specific function for something, said thing should come before the label separated with an underscore. For example, the routine that gets the PPU upload parameters is called `HUD_GetPPUUploadParams`, as it gets the upload parameters *specifically* for the PPU.
+- Routines should have their whatever they're related to come before their label. For example, the routine that gets the PPU upload parameters is called `HUD_GetPPUUploadParams`, as it gets the PPU upload parameters *specifically* for the HUD.
 - Note that subroutines do not have to state that they are subroutines in their name.
 	- Examples: `RewardPoints`, `SkipCapeKill`
 
@@ -148,4 +150,4 @@ Below is a list of every type of constant currently used.\
 ## Macros
 
 - Avoid creating macros for something that can reasonably done with a existing directive like `db`.
-- Use macros for specialized data formats that would otherwise be tedious or impossible to do with existing directives. Macros should also be used for chunks of code that are repeated frequently (preferably over 10 times)
+- Use macros for specialized data formats that would otherwise be tedious or impossible to do with existing directives. Macros should also be used for chunks of code that are repeated frequently (preferably over 10 times).
