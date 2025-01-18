@@ -192,7 +192,7 @@ loc_E173:
 	LDA #$D0
 	STA InvincibilityTimer
 	LDA #sfx_PowerDown
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA ObjectState,X
 	AND #$E0
 	STA ObjectState,X
@@ -2846,7 +2846,7 @@ loc_EE99:
 	INC Player1Lives,X
 	LDA #$07 ;Load 1up sound effect
 bra_EEA1:
-	STA SFXRegister ;Play the loaded sound effect
+	STA Sound_Sfx ;Play the loaded sound effect
 	LDA PlayerColXPos
 	SEC
 	SBC $52

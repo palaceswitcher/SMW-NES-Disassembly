@@ -284,9 +284,9 @@ ClearMemory:
 	STA M90_PRG0
 	LDA #59
 	STA M90_PRG1 ;Swap music banks into first and second PRG banks
-	JSR jmp_58_85D6 ;Initizialize sound driver
+	JSR Sound_Init ;Initizialize sound driver
 	LDA #mus_Title
-	STA MusicRegister ;Play the title screen music
+	STA Sound_Music ;Play the title screen music
 	JSR sub_58_8E23+1 ;Jumps inbetween an opcode. Probably an error.
 	INC MuteFlag ;Enable audio
 	LDA #$00
@@ -519,7 +519,7 @@ pnt2_E3DD:
 pnt2_E409:
 	LDA a:GameSubstate
 	BEQ @Continue
-	JMP loc3_E498 ;Jump if in the exit transition substate
+	JMP loc3_E498 ;Jump if in the level exit substate
 
 @Continue:
 	LDX #$02
@@ -572,7 +572,7 @@ loc3_E45F:
 			EOR #$01
 			STA PauseFlag ;Toggle pause flag
 			LDA #sfx_Pause
-			STA SFXRegister ;Play pause/unpause sound
+			STA Sound_Sfx ;Play pause/unpause sound
 
 bra3_E47C:
 	LDA PauseFlag
@@ -601,12 +601,16 @@ loc3_E498:
 	STA PauseFlag ;Unpause the game
 	STA a:InLevelFlag ;Not in a level anymore
 	STA a:GameSubstate
-	LDA #gameState_MapLevelComplete
-	STA a:GameState ;Set to transition state for completing a level
-	JSR sub3_E4BA ;Jump
+	LDA #gameState_MapExitLevelTransition
+	STA a:GameState ;Set to transition state for exiting a level
+	JSR BackupPlayerPowerups
 	RTS
 
-sub3_E4BA:
+;----------------------------------------
+;SUBROUTINE ($E4BA)
+;Backup the player's powerup and Yoshi.
+;----------------------------------------
+BackupPlayerPowerups:
 	LDX CurrentPlayer ;Set index for current player
 	LDA PlayerPowerup
 	STA P1PowerupBackup,X ;Backup player's powerup
@@ -630,7 +634,7 @@ tbl3_E4DC:
 	dw pnt2_E509
 pnt2_E4E4:
 	LDA #sfx_Warp
-	STA SFXRegister ;Play warp sound
+	STA Sound_Sfx ;Play warp sound
 	INC a:GameSubstate
 	RTS
 pnt2_E4EC:
@@ -688,7 +692,7 @@ pnt2_E54E:
 	STA PlayerYSpeed ;Clear player's Y speed
 	JSR sub3_E5D4 ;Jump
 	LDA #mus_Death
-	STA MusicRegister ;Play death music
+	STA Sound_Music ;Play death music
 	LDX #$00 ;Set action tick count to 1
 	LDY #$28 ;Set tick length to 40 frames
 	JSR sub3_E5B6 ;Jump
@@ -726,7 +730,7 @@ pnt2_E597:
 	STA a:GameSubstate ;Go to first part of event
 	LDA #$16
 	STA a:GameState ;Trigger map fade-in
-	JSR sub3_E4BA
+	JSR BackupPlayerPowerups
 	RTS
 sub3_E5B6:
 	INC ActionFrameCount ;Increment frame count for player action
@@ -822,7 +826,7 @@ pnt2_E649:
 	LDA #$05
 	STA PlayerAction ;Do spin jump
 	LDA #sfx_SpinJump
-	STA SFXRegister ;Play spin jump sound
+	STA Sound_Sfx ;Play spin jump sound
 	RTS
 bra3_E681:
 	LDA PlayerSprXPos
@@ -978,7 +982,7 @@ pnt2_E774:
 	STA a:GameSubstate ;Clear event part
 	LDA #$16
 	STA a:GameState ;Set event number to 16h
-	JSR sub3_E4BA ;Jump
+	JSR BackupPlayerPowerups ;Jump
 	RTS
 pnt2_E79E:
 	INC a:GameState ;Increment event number (go right to next event)
@@ -1066,7 +1070,7 @@ bra3_E840:
 	STA a:GameSubstate ;Set event part
 	LDA #$16
 	STA a:GameState
-	JSR sub3_E4BA
+	JSR BackupPlayerPowerups
 	RTS
 pnt2_E85F:
 	LDA a:GameSubstate
@@ -2087,7 +2091,7 @@ pnt2_ED93:
 	STA PlayerAction ;Make player stand still
 	JSR sub3_E5D4 ;Jump
 	LDA #sfx_Warp
-	STA SFXRegister ;Play warp sound
+	STA Sound_Sfx ;Play warp sound
 	JSR HUD_Update ;Jump
 	INC a:GameSubstate ;Go to next part of event
 	RTS
@@ -2197,7 +2201,7 @@ bra3_EE72:
 	CMP #$02
 	BNE bra3_EE84
 	LDA #sfx_Warp
-	STA SFXRegister
+	STA Sound_Sfx
 bra3_EE84:
 	LDX #$00
 	LDY #$19
@@ -2250,7 +2254,7 @@ pnt2_EEC8:
 	CMP #$02
 	BNE bra3_EEEB
 	LDA #$10
-	STA SFXRegister
+	STA Sound_Sfx
 bra3_EEEB:
 	LDX #$00
 	LDY #$19
@@ -2490,7 +2494,7 @@ sub3_F0CB:
 	ADC LevelNumber ;Add it to level count
 	TAX ;Copy to X reg
 	LDA LevelMusic,X
-	STA MusicRegister ;Load/play music for level
+	STA Sound_Music ;Load/play music for level
 	RTS
 LevelMusic:
 	db $29 ;1-1 Music

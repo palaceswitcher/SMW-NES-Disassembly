@@ -2000,11 +2000,11 @@ bra2_905B:
 	STA $0379
 	JSR sub2_90D3
 	LDA #$05
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA $037F
 	TAX
 	LDA tbl2_9071,X
-	STA MusicRegister
+	STA Sound_Music
 	RTS
 tbl2_9071:
 	db $25 ;overworld map music settings

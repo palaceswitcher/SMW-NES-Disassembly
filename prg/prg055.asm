@@ -1480,7 +1480,7 @@ bra8_8ED9:
 	CMP #$81
 	BNE bra8_8EE5
 	LDA #$10
-	STA SFXRegister
+	STA Sound_Sfx
 	JSR Obj_FacePlayer
 	RTS
 bra8_8EE5:
@@ -2364,7 +2364,7 @@ bra8_9541:
 	LDA #$04
 	STA PlayerAction
 	LDA #$0F
-	STA SFXRegister
+	STA Sound_Sfx
 	LDX $A4
 	LDA #$0F
 	STA ObjectSlot,X

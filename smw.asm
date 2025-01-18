@@ -282,38 +282,30 @@ EndingFreezeFlag = $06E6
 ClownCarFace = $06E8
 PauseFlag = $0709
 
-;Sound Driver RAM Defines
-MusicRegister = $8E
-SFXRegister = $8F
+; Sound Driver RAM Defines
+Sound_Music = $8E ;ID of the music track being played
+Sound_Sfx = $8F ;ID of the sound effect being played
 MusicBackup = $90
-SoundPointer = $FE
+Sound_DataPtr = $FE
 MuteFlag = $0700
-ChannelPtrs = $0724
-VolMacroPtrs = $0751
-DutyMacroPtrs = $075D
+Sound_CurrChannelOfs = $070B
+Sound_CurrChannelPtrOfs = $070C
+Sound_ChannelPtrs = $0724
+Sound_VolMacroPtrs = $0751
+Sound_DutyMacroPtrs = $075D
 
-ChannelVolMacroInds = $074D
+Sound_MusicMacroPtrs = $0769
+Sound_MusVolRleCounters = $074D
+Sound_SfxVolRleCounters = $07B1
+Sound_SFXFreeChannels = $07C9
 
-Pulse1Transpose = $070D
-ChannelPitch = $0739
-Pulse1VolumeEnv = $0749
-Pulse1Duty = $0759
-ChannelPitchSetting = $0761
-
-Pulse2Transpose = $070E
-Pulse2VolumeEnv = $074A
-Pulse2Duty = $075A
-Pulse2PitchSetting = $0762
-
-TriangleTranspose = $070F
-TriangleVolumeEnv = $074B
-TrianglePitchSetting = $0763
-
-NoiseVolumeEnv = $074C
-NoisePitchSetting = $0764
+Sound_Transpose = $070D
+Sound_ChnPitches = $0739
+Sound_VolMacros = $0749
+Sound_DutyMacros = $0759
+Sound_PitchMacros = $0761
 
 MusicSpeed = $072C
-TrianglePitchSetting = $0763
 
 ;Hardware registers
 PPUCTRL = $2000

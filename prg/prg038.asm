@@ -702,7 +702,7 @@ bra14_960D:
 	JMP loc14_970B_RTS
 bra14_9619:
 	LDA #$10
-	STA SFXRegister
+	STA Sound_Sfx
 	INC $05F6
 	LDY ObjectCount
 	INC ObjectCount

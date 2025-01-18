@@ -179,7 +179,7 @@ bra6_8151:
 	LDA #$01
 	JSR RewardPoints
 	LDA #sfx_EnemyHit2
-	STA SFXRegister
+	STA Sound_Sfx
 	LDX $A4
 	LDA #$81
 	STA ObjectVariables,X
@@ -424,7 +424,7 @@ bra6_833F:
 	LDA #$01
 	STA ScreenShake
 	LDA #sfx_Thud
-	STA SFXRegister
+	STA Sound_Sfx
 bra6_8348:
 	INC ObjectVariables,X
 bra6_834B_RTS:
@@ -1463,7 +1463,7 @@ bra6_8A31:
 	STA ScreenShake
 	STA FreezeFlag
 	LDA #sfx_Thud
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA ObjectYPos,X
 	AND #$F8
 	STA ObjectYPos,X
@@ -1558,7 +1558,7 @@ ptr6_8ADB:
 	BCC bra6_8B13
 	BNE bra6_8AEA
 	LDA #$10
-	STA SFXRegister
+	STA Sound_Sfx
 	BNE bra6_8B13
 bra6_8AEA:
 	CMP #$38
@@ -1591,7 +1591,7 @@ bra6_8B13:
 	RTS
 bra6_8B17:
 	LDA #mus_Victory
-	STA MusicRegister
+	STA Sound_Music
 	LDA #$09
 	STA GameState
 	RTS
@@ -1778,7 +1778,7 @@ bra6_8C78:
 	BNE bra6_8C9B
 bra6_8C86:
 	LDA #sfx_Feather
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA #$06
 	STA ObjectAction,X
 	LDA #$00
@@ -3565,7 +3565,7 @@ ptr6_9603:
 	BCC bra6_961A
 bra6_9611:
 	LDA #$23
-	STA MusicRegister
+	STA Sound_Music
 	LDA #$09
 	STA GameState
 	RTS
@@ -3752,7 +3752,7 @@ bra6_9767:
 	LDA #$04
 	STA PlayerAction ;Make player jump off
 	LDA #sfx_Feather
-	STA SFXRegister ;Play feather/hit sound
+	STA Sound_Sfx ;Play feather/hit sound
 	LDY #$04 ;Load "hit" action into Y register
 	LDA ObjectSlot,X
 	CMP #$72

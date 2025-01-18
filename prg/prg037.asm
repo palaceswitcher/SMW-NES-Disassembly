@@ -1815,7 +1815,7 @@ bra_8C6B:
 	JSR sub_82EA
 	JSR jmp_54_BF74
 	LDA #sfx_EnemyHit3
-	STA SFXRegister
+	STA Sound_Sfx
 	RTS
 Obj_hDE:
 	LDX $A4
@@ -3128,7 +3128,7 @@ bra_9612:
 	JMP loc_970B_RTS
 bra_9619:
 	LDA #$10
-	STA SFXRegister
+	STA Sound_Sfx
 	INC $05F6
 	LDY ObjectCount
 	INC ObjectCount
@@ -3263,7 +3263,7 @@ ptr7_970C:
 bra_975B:
 	STY PlayerMovement
 	LDA #mus_Ending
-	STA MusicRegister
+	STA Sound_Music
 	RTS
 bra_9762_RTS:
 	RTS

@@ -369,7 +369,7 @@ bra7_826C:
 	LDA #$00
 	STA YoshiUnmountedState
 	LDA #$0D
-	STA SFXRegister
+	STA Sound_Sfx
 bra7_827B_RTS:
 	RTS
 
@@ -649,7 +649,7 @@ loc7_84B3:
 	SBC #$00
 	STA YoshiYScreen
 	LDA #sfx_YoshiMount
-	STA SFXRegister
+	STA Sound_Sfx
 bra7_84C2_RTS:
 	RTS
 Obj_h6A:
@@ -835,7 +835,7 @@ bra7_862A:
 	LDA #$1E
 	STA $0635
 	LDA #$0F
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA #$00
 	LDX $A4
 	STA ObjectSlot,X
@@ -852,7 +852,7 @@ bra7_8653:
 	LDA #$04
 	STA PlayerAction
 	LDA #$03
-	STA SFXRegister
+	STA Sound_Sfx
 	RTS
 bra7_866B:
 	LDA PlayerMovement
@@ -1285,7 +1285,7 @@ bra7_89B1:
 	LDX $A4
 	INC ObjectState,X
 	LDA #sfx_Swim
-	STA SFXRegister ;Play bounce sound
+	STA Sound_Sfx ;Play bounce sound
 	RTS
 ptr5_89C1:
 	LDA FrameCount
@@ -1459,7 +1459,7 @@ bra7_8B15:
 	LDA #$04
 	STA PlayerAction
 	LDA #$0F
-	STA SFXRegister
+	STA Sound_Sfx
 	LDX $A4
 	LDA #$0F
 	STA ObjectSlot,X
@@ -1483,7 +1483,7 @@ bra7_8B3F:
 	LDA PlayerHoldFlag
 	BNE bra7_8B33_RTS
 	LDA #$15
-	STA SFXRegister
+	STA Sound_Sfx
 	RTS
 ptr5_8B55:
 	LDX $A4
@@ -1836,7 +1836,7 @@ ptr5_8E0C:
 	JSR jmp_54_A773
 	INC Player1Lives
 	LDA #sfx_1UP
-	STA SFXRegister ;Play 1UP sound
+	STA Sound_Sfx ;Play 1UP sound
 	LDA #$00
 	STA ObjectSlot,X ;Despawn 1UP
 	LDA #$03
@@ -2722,7 +2722,7 @@ bra7_951E:
 	LDA ObjectState,X
 	BNE bra7_9527
 	LDY #$0F
-	STY SFXRegister
+	STY Sound_Sfx
 bra7_9527:
 	CMP #$10
 	BCC bra7_9534
@@ -3396,7 +3396,7 @@ bra7_999B:
 	LDA #$28
 	STA ObjectState,X
 	LDA #$18
-	STA SFXRegister
+	STA Sound_Sfx
 	RTS
 ptr5_99BF:
 	LDX $A4
@@ -3684,7 +3684,7 @@ bra7_9BB3:
 	JSR sub7_9EE5
 	LDX $A4
 	LDA #$1C
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA #$00
 	STA ObjectSlot,X
 	LDA WorldNumber
@@ -4063,7 +4063,7 @@ ptr5_9EB8:
 	LDA ObjXScreenDistance,X
 	BPL bra7_9EE4_RTS
 	LDA #mus_Victory
-	STA MusicRegister ;Play level complete music
+	STA Sound_Music ;Play level complete music
 	LDA #$06
 	STA GameState ;Trigger goal tape event
 	LDA WorldNumber

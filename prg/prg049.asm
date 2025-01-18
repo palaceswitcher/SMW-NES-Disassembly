@@ -830,7 +830,7 @@ ptr10_8564:
 	CMP #$B0
 	BCC bra5_857F_RTS
 	LDA #$23
-	STA MusicRegister
+	STA Sound_Music
 	LDA #$09
 	STA GameState
 bra5_857F_RTS:
@@ -949,7 +949,7 @@ ptr10_864E:
 	LDA #$30
 	STA PlayerYSpeed
 	LDA #$0F
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA #$05
 	STA ObjectAction,X
 	LDA #$00
@@ -1211,7 +1211,7 @@ bra5_8871:
 	JSR sub3_B7A2
 	BEQ bra5_8886
 	LDA #$0E
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA #$02
 	STA ObjectAction,X
 	RTS
@@ -1750,7 +1750,7 @@ ptr10_8CAF:
 	JSR Obj_PlayerHitCheck
 	JSR Obj_KillOnSpinJump
 	LDA #sfx_EnemyHit2
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA #$01
 	JSR RewardPoints
 	LDX $A4
@@ -1954,7 +1954,7 @@ bra5_8E32:
 	LDA #$20
 	STA PlayerYSpeed
 	LDA #$16
-	STA SFXRegister
+	STA Sound_Sfx
 bra5_8E4E_RTS:
 	RTS
 Obj_h54:
@@ -2208,7 +2208,7 @@ bra5_902C:
 	AND #$07
 	BNE bra5_9037
 	LDA #$1D
-	STA SFXRegister
+	STA Sound_Sfx
 bra5_9037:
 	JSR sub5_92D7
 	LDA $058C,X
@@ -2349,7 +2349,7 @@ bra5_913D:
 	AND #$07
 	BNE bra5_9148
 	LDA #sfx_Cutter
-	STA SFXRegister
+	STA Sound_Sfx
 bra5_9148:
 	JSR sub5_82EC
 	LDA $058C,X
@@ -3905,14 +3905,14 @@ ptr10_9B8C:
 	CMP #$03
 	BNE bra5_9BDA
 	LDA #sfx_BlockRelease
-	STA SFXRegister ;Play block release sound
+	STA Sound_Sfx ;Play block release sound
 	LDA #$E8
 	BNE bra5_9BE5 ;Spawn 1UP
 bra5_9BDA:
 	LDA #$00
 	JSR RewardPoints ;Give the player 100 points
 	LDA #sfx_Coin
-	STA SFXRegister ;Play coin sound
+	STA Sound_Sfx ;Play coin sound
 	LDA #$E9 ;Spawn coin sprite
 bra5_9BE5:
 	STA ObjectSlot,Y ;Store sprite in memory
@@ -4049,7 +4049,7 @@ bra5_9CE0:
 	BCS bra5_9CF3_RTS
 	INC Player1Lives
 	LDA #$07
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA #$00
 	STA ObjectSlot,X
 	LDA #$03

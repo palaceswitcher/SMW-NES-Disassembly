@@ -849,7 +849,7 @@ sub4_A4CE:
 	ADC LevelNumber
 	TAX
 	LDA LevelMusicQueue,X
-	STA MusicRegister
+	STA Sound_Music
 	RTS
 LevelMusicQueue:
 	db mus_Overworld, mus_ForestofIllusion, mus_Title, mus_Castle ;World 1
@@ -2700,7 +2700,7 @@ sub4_ADB3:
 	ORA #$04
 	STA PlayerMovement ;Set vertical movement upwards
 	LDA #sfx_PowerDown
-	STA SFXRegister ;Play damage sound
+	STA Sound_Sfx ;Play damage sound
 	LDA #$03
 	STA PlayerAction ;Knock the player off Yoshi
 	LDA #$00
@@ -2724,7 +2724,7 @@ bra4_ADF0:
 	CPY #$01
 	BNE bra4_AE03
 	LDX #mus_ValleyofBowser
-	STX MusicRegister ;Play the Valley of Bowser theme
+	STX Sound_Music ;Play the Valley of Bowser theme
 bra4_AE03:
 	CPY #$F8
 	BCC bra4_AE0F
@@ -2768,7 +2768,7 @@ bra4_AE42:
 	STA PlayerPowerupBuffer
 bra4_AE45:
 	LDA ItemBoxSFX,X
-	STA SFXRegister ;Play the corresponding sound effect for the item
+	STA Sound_Sfx ;Play the corresponding sound effect for the item
 ItemBoxLogicDone:
 	RTS
 ItemBoxSFX:
@@ -3248,7 +3248,7 @@ loc4_B193:
 	AND #btnB
 	BEQ bra4_B1C0_RTS
 	LDA #sfx_YoshiTongue
-	STA SFXRegister
+	STA Sound_Sfx
 	LDY #$09
 	LDA ButtonsHeld
 	AND #dirDown
@@ -3485,7 +3485,7 @@ bra4_B33F:
 	INY ;increment Y
 	STY ObjectCount ;Update object count
 	LDA #sfx_YoshiFireSpit
-	STA SFXRegister ;Play Yoshi fire sound
+	STA Sound_Sfx ;Play Yoshi fire sound
 	RTS ;end
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
 ;END OF YOSHI FIRE SPAWN
@@ -3615,7 +3615,7 @@ DoSwim:
 	ORA #$04
 	STA PlayerMovement ;Set movement to moving up
 	LDA #sfx_Swim
-	STA SFXRegister ;Play swim sound
+	STA Sound_Sfx ;Play swim sound
 	LDA #$0C
 	STA PlayerAction ;Set action to swimming up
 SwimmingDone:
@@ -3650,7 +3650,7 @@ ExecuteJump:
 	LDA #$04
 	STA PlayerAction ;Trigger jumping animation/action
 	LDA #sfx_Jump
-	STA SFXRegister ;Play the jump sound
+	STA Sound_Sfx ;Play the jump sound
 	RTS
 SpinJumpRoutine:
 	LDA Player1YoshiStatus
@@ -3671,7 +3671,7 @@ ExecuteSpinJump:
 	LDA #$05
 	STA PlayerAction ;Trigger spinning action
 	LDA #sfx_SpinJump
-	STA SFXRegister ;Play the spin sound
+	STA Sound_Sfx ;Play the spin sound
 SpinJumpDone:
 	RTS
 DismountYoshiRoutine:
@@ -3893,7 +3893,7 @@ SpinCapeRoutine:
 	LDA #$08
 	STA PlayerState ;Set player state
 	LDA #sfx_SpinJump
-	STA SFXRegister ;Play spin sound
+	STA Sound_Sfx ;Play spin sound
 SpinCapeDone:
 	RTS
 sub4_B616:
@@ -3988,7 +3988,7 @@ PlayerClimbJump: ;Jump from climbing
 	LDA #$04
 	STA PlayerAction ;Make the player jump
 	LDA #sfx_Jump
-	STA SFXRegister ;Play the jump sound
+	STA Sound_Sfx ;Play the jump sound
 	LDA #$00
 	STA PlayerState ;Make the player stop climbing
 	STA $06DC ;Clear Unknown 1
@@ -4218,7 +4218,7 @@ bra4_B835:
 	STA Player1YoshiStatus ;Make Yoshi swallow
 	JSR sub4_A14A
 	LDA #sfx_YoshiSwallow
-	STA SFXRegister ;Play swallow sound
+	STA Sound_Sfx ;Play swallow sound
 	RTS
 TongueSpeedBoost:
 	LDA ButtonsHeld
@@ -4264,7 +4264,7 @@ bra4_B886:
 	LDY #$30
 bra4_B897:
 	STY PlayerYSpeed
-	STX SFXRegister ;Play whatever sound was loaded into the X reg
+	STX Sound_Sfx ;Play whatever sound was loaded into the X reg
 	LDA PlayerMovement
 	ORA #$04
 	STA PlayerMovement ;Set movement to jumping/swimming
@@ -4494,7 +4494,7 @@ CliffDeathCheck:
 	BCC MovePlayerDown ;If above this point, continue falling as normal
 	;Otherwise, kill the player
 	LDA #mus_Death	
-	STA MusicRegister ;Play death music
+	STA Sound_Music ;Play death music
 	LDA #$00		
 	STA PlayerPowerup ;Remove any powerups
 	STA Player1YoshiStatus ;Remove yoshi
@@ -5152,7 +5152,7 @@ loc4_BED5: ;Player bumped head on ceiling
 	CMP #$03 ;if player is climbing,
 	BEQ bra4_BEF1 ;branch
 	LDA #sfx_Thud
-	STA SFXRegister ;play "thud" sound
+	STA Sound_Sfx ;play "thud" sound
 bra4_BEF1: ;If player bumps head whilst climbing
 	LDA PlayerColYPos
 	CLC
@@ -5274,7 +5274,7 @@ loc4_BFC0:
 	LDA #$D0
 	STA InvincibilityTimer
 	LDA #sfx_PowerDown
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA ObjectState,X
 	AND #$E0
 	STA ObjectState,X

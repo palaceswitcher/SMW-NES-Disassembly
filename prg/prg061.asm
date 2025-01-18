@@ -5881,7 +5881,7 @@ tbl6_BE75:
 	db $80
 jmp_61_BE85:
 	LDA #$00
-	STA MusicRegister
+	STA Sound_Music
 	STA ScrollXPos
 	STA $03
 	STA $5B
@@ -6058,7 +6058,7 @@ loc6_BFC0:
 	LDA #$D0
 	STA InvincibilityTimer
 	LDA #$0C
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA ObjectState,X
 	AND #$E0
 	STA ObjectState,X

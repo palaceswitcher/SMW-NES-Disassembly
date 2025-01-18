@@ -1416,7 +1416,7 @@ CheckIfCapeKill:
 		LDA #$01
 		JSR RewardPoints ;Give 200 points
 		LDA #sfx_EnemyHit2
-		STA SFXRegister ;Play hit sound
+		STA Sound_Sfx ;Play hit sound
 		PLA
 		PLA ;Go back two calls and stop running code for this object
 @Stop:
@@ -2299,7 +2299,7 @@ Obj_PowerupEatCheck:
 	BNE @Continue ;Skip ahead if object can't be swallowed
 	;If the object can be swallowed:
 		LDA #sfx_YoshiSwallow
-		STA SFXRegister ;Play swallow sound
+		STA Sound_Sfx ;Play swallow sound
 
 @Continue:
 	JSR Obj_GetEdiblePowerup ;Check if Yoshi ate a generic powerup (mushroom, fire flower, or feather)
@@ -2312,7 +2312,7 @@ Obj_PowerupEatCheck:
 		ADC #1
 		STA Player1Lives,Y ;Add 1 to the player's life counter if Yoshi ate a 1UP
 		LDA #sfx_1UP
-		STA SFXRegister ;Play 1UP sound
+		STA Sound_Sfx ;Play 1UP sound
 		BNE @RemoveObject ;Continue and remove object
 	; If Yoshi ate a star:
 	@CheckIfStar:
@@ -2822,13 +2822,13 @@ GetPowerupFromObject:
 ; Plays the powerup sound and buffers the game
 @SetPowerupEffect:
 	LDA #sfx_Powerup
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA #$01 ;Set powerup buffer time for fire flower
 	CPX #objID_Feather
 	BNE @NotFeather
 	; If Yoshi ate a feather:
 		LDA #sfx_Feather
-		STA SFXRegister ;Play feather sound
+		STA Sound_Sfx ;Play feather sound
 		LDA #$81 ;Set powerup buffer time for feather
 	; If Yoshi ate a mushroom or fire flower:
 	@NotFeather:
@@ -4999,7 +4999,7 @@ bra3_BCA6_RTS:
 ;----------------------------------------
 Obj_StompReboundAlt:
 	LDA #sfx_EnemyHit2
-	STA SFXRegister ;Play enemy hit sound
+	STA Sound_Sfx ;Play enemy hit sound
 	LDA #48
 	STA PlayerYSpeed
 	STA PlayerXSpeed ;Set player's horizontal and vertical rebound speed
@@ -5016,7 +5016,7 @@ Obj_StompReboundAlt:
 ;----------------------------------------
 Obj_StompRebound:
 	LDA #sfx_EnemyHit2
-	STA SFXRegister ;Play hit sound effect
+	STA Sound_Sfx ;Play hit sound effect
 
 ;----------------------------------------
 ;SUBROUTINE ($BCC2)
@@ -5100,7 +5100,7 @@ bra3_BD2C:
 	CLC
 	ADC #$11 ;Play next hit sound
 bra3_BD31:
-	STA SFXRegister ;Play appropriate sound
+	STA Sound_Sfx ;Play appropriate sound
 	LDY $2B
 	LDX $28
 	LDA #$01
@@ -5202,7 +5202,7 @@ bra3_BDE1:
 	STA ObjectSlot,X ;Spawn a mushroom in
 bra3_BDE6:
 	LDA #sfx_BlockRelease
-	STA SFXRegister ;Play the block release sound
+	STA Sound_Sfx ;Play the block release sound
 	LDY ObjectCount
 	INC ObjectCount ;Set the index for the new object
 	LDA ObjectXPos,X
@@ -5495,7 +5495,7 @@ DealDamage:
 	LDA #$D0
 	STA InvincibilityTimer ;Give player (128) invulnerability frames
 	LDA #sfx_PowerDown
-	STA SFXRegister ;Play hurt sound
+	STA Sound_Sfx ;Play hurt sound
 	LDA ObjectState,X
 	AND #%11100000
 	STA ObjectState,X ;End collision check for this frame

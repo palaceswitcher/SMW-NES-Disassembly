@@ -105,7 +105,7 @@ pnt5_A0A2:
 	ADC LevelNumber ;Then add it to the level number to get the level ID
 	STA BGPalette ;Use palette for corresponding level ID
 	LDA #mus_Title
-	STA MusicRegister ;Play title screen music
+	STA Sound_Music ;Play title screen music
 	LDA #$00
 	STA FadeoutMode ;Set fadeout mode
 	STA $0312
@@ -1031,7 +1031,7 @@ pnt5_A706:
 	LDA #$05
 	STA $0312
 	LDA #$0A
-	STA SFXRegister
+	STA Sound_Sfx
 	JSR sub_B068
 	LDA #$00
 	STA InterruptMode
@@ -1052,7 +1052,7 @@ bra_A735:
 	LDA #$00
 	STA GameType
 	LDA #sfx_Beep
-	STA SFXRegister
+	STA Sound_Sfx
 	RTS
 bra_A74B:
 	LDA ButtonsPressed
@@ -1063,7 +1063,7 @@ bra_A74B:
 	LDA #$01
 	STA GameType
 	LDA #$05
-	STA SFXRegister
+	STA Sound_Sfx
 bra_A760_RTS:
 	RTS
 pnt5_A761:
@@ -1169,7 +1169,7 @@ bra_A808:
 	STA MapLevelID
 	TAX
 	LDA tbl_A7DF,X
-	STA MusicRegister
+	STA Sound_Music
 	LDA P1LevelsUnlocked,X
 	CMP #$06
 	BEQ bra_A825
@@ -1461,7 +1461,7 @@ bra_AA23:
 bra_AA25:
 	STA PlayerMapAnim
 	LDA #sfx_Beep
-	STA SFXRegister ;Play "beep" sound
+	STA Sound_Sfx ;Play "beep" sound
 	LDA #$00
 	STA OverworldMapTimer ;Clear overworld timer
 	STA FrameCount
@@ -1604,7 +1604,7 @@ pnt5_AB1D:
 	AND #$02
 	BEQ bra_AB30
 	LDA #sfx_Beep
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA WorldSelectNum
 	BEQ bra_AB45
 	DEC WorldSelectNum
@@ -1613,7 +1613,7 @@ bra_AB30:
 	AND #$01
 	BEQ bra_AB45
 	LDA #sfx_Beep
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA WorldSelectNum
 	CMP #$06
 	BCS bra_AB45
@@ -1623,7 +1623,7 @@ bra_AB45:
 	AND #$90
 	BEQ bra_AB79
 	LDA #sfx_Beep
-	STA SFXRegister
+	STA Sound_Sfx
 	LDX WorldSelectNum
 	LDA tbl_AB95,X
 	STA MapLevelID
@@ -1885,7 +1885,7 @@ loc_ACB3:
 	STA PPUMaskMirror ;Clear PPU registers
 	JSR ClearNametable ;Clear the screen
 	LDA #$2E
-	STA MusicRegister ;Stop playing music
+	STA Sound_Music ;Stop playing music
 	LDA CurrentPlayer
 	BNE P2TransitionSet ;Branch if player #2 is playing
 	LDA #$01
@@ -2041,7 +2041,7 @@ bra_ADBF:
 pnt5_ADC5:
 	JSR sub_AE96
 	LDA #mus_Ending
-	STA MusicRegister
+	STA Sound_Music
 	LDA #$2A
 	STA M90_PRG0
 	LDA #$02
@@ -2229,7 +2229,7 @@ pnt5_AF4C:
 	LDA #$00
 	JSR TransitionScreenSub
 	LDA #mus_GameOver
-	STA MusicRegister
+	STA Sound_Music
 	JSR ClearGS0Sprites
 	JSR ClearSprites
 	LDA #$00

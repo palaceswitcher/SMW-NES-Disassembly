@@ -1507,13 +1507,13 @@ bra11_85F8:
 bra11_8602:
 	DEX
 	STA $074D,X
-	STA $07B1,X
+	STA Sound_SfxVolRleCounters,X
 	BNE bra11_8602
 	LDX #$04
 bra11_860D:
 	DEX
 	STA $0765,X
-	STA $07C9,X
+	STA Sound_SFXFreeChannels,X
 	BNE bra11_860D
 	LDX #$02
 bra11_8618:
@@ -1544,13 +1544,13 @@ loc11_8647:
 	JSR sub11_86E8
 	LDA #$00
 	STA $070A
-	STA $070B
+	STA Sound_CurrChannelOfs
 	STA $070C
 bra11_8658:
 	JSR sub11_87A1
 	JSR sub11_8B25
 	INC $070A
-	INC $070B
+	INC Sound_CurrChannelOfs
 	INC $070C
 	INC $070C
 	LDX $070A
@@ -1560,13 +1560,13 @@ loc11_8671:
 	LDA #$10
 	STA $070A
 	LDA #$64
-	STA $070B
+	STA Sound_CurrChannelOfs
 	STA $070C
 bra11_867E:
 	JSR sub11_87A1
 	JSR sub11_8B25
 	INC $070A
-	INC $070B
+	INC Sound_CurrChannelOfs
 	INC $070C
 	INC $070C
 	LDX $070A
@@ -1651,7 +1651,7 @@ loc11_8716:
 	BEQ bra11_86DF_RTS
 	LDA $070A
 	BMI bra11_872F
-	STA $070B
+	STA Sound_CurrChannelOfs
 	ASL
 	STA $070C
 	JMP loc11_8741
@@ -1659,7 +1659,7 @@ bra11_872F:
 	AND #$7F
 	CLC
 	ADC #$64
-	STA $070B
+	STA Sound_CurrChannelOfs
 	TXA
 	AND #$7F
 	ASL
@@ -1688,7 +1688,7 @@ bra11_875C:
 	LDA #$00
 	STA $0731,X
 	STA $0732,X
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDA #$00
 	STA $0749,X
 	LDA #$FF
@@ -1724,7 +1724,7 @@ sub11_87A1:
 	BNE bra11_87C5
 	JSR sub11_87E0
 	LDX $070C
-	LDY $070B
+	LDY Sound_CurrChannelOfs
 	LDA $072D,Y
 	STA $0732,X
 bra11_87C5:
@@ -1760,7 +1760,7 @@ loc11_87E0:
 bra11_87FB:
 	AND #$7F
 	BEQ bra11_8805
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	STA $072D,X
 bra11_8805:
 	JSR sub11_8E20
@@ -1813,7 +1813,7 @@ bra11_883B:
 	CPX #$04
 	BNE bra11_884B
 bra11_884B:
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	CLC
 	ADC $070D,X
 	ASL
@@ -1910,7 +1910,7 @@ tbl11_8895:
 	STA $FE
 	LDA $0725,X
 	STA $FF
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDY #$00
 	LDA ($FE),Y
 	STA $0710,X
@@ -1921,7 +1921,7 @@ tbl11_8895:
 	LDA $0725,X
 	STA $0715,X
 	JMP loc11_87E0
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	DEC $0710,X
 	BEQ bra11_892C
 	LDX $070C
@@ -1977,7 +1977,7 @@ bra11_8971:
 	STA $FF
 	LDY #$00
 	LDA ($FE),Y
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	STA $070D,X
 bra11_899B:
 	JSR sub11_8E20
@@ -2030,7 +2030,7 @@ bra11_89E3:
 	STA $0742,X
 	STA $0742,Y
 loc11_8A0A:
-	LDY $070B
+	LDY Sound_CurrChannelOfs
 	LDA $070A
 	AND #$0F
 	TAX
@@ -2050,7 +2050,7 @@ bra11_8A26_RTS:
 	LDA $0725,X
 	STA $FF
 	JSR sub11_8E20
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDA $0710,X
 	BNE bra11_8A46
 	LDY #$00
@@ -2087,7 +2087,7 @@ sub11_8A7A:
 	BMI bra11_8A85
 	RTS
 bra11_8A85:
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDY $070C
 	LDA $0749,X
 	ASL
@@ -2098,7 +2098,7 @@ bra11_8A85:
 	LDA tbl11_8000+1,X
 	STA $0752,Y
 	STA $FF
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDY #$00
 	LDA ($FE),Y
 	STA $074D,X
@@ -2111,7 +2111,7 @@ sub11_8AAB:
 	BMI bra11_8AB6
 	RTS
 bra11_8AB6:
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDY $070C
 	LDA $0759,X
 	ASL
@@ -2122,7 +2122,7 @@ bra11_8AB6:
 	LDA tbl11_8000+1,X
 	STA $075E,Y
 	STA $FF
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDY #$00
 	LDA ($FE),Y
 	STA $075B,X
@@ -2135,18 +2135,18 @@ sub11_8ADC:
 	BMI bra11_8AE7
 	RTS
 bra11_8AE7:
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDY $070C
 	LDA $0761,X
 	ASL
 	TAX
 	LDA tbl11_8000,X
-	STA $0769,Y
+	STA Sound_MusicMacroPtrs,Y
 	STA $FE
 	LDA tbl11_8000+1,X
 	STA $076A,Y
 	STA $FF
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDY #$00
 	LDA ($FE),Y
 	STA $0765,X
@@ -2160,7 +2160,7 @@ sub11_8B0D:
 	JSR sub11_8E20
 	LDY #$00
 	LDA ($FE),Y
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	RTS
 sub11_8B25:
 	JSR sub11_8B2F
@@ -2175,12 +2175,12 @@ sub11_8B2F:
 	BPL bra11_8BA1_RTS
 bra11_8B39:
 loc11_8B39:
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDA $074D,X
 	TAY
 	CPY #$FF
 	BEQ bra11_8BA1_RTS
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDA $074D,X
 	BNE bra11_8B9E
 	LDX $070C
@@ -2193,7 +2193,7 @@ loc11_8B39:
 	ADC $0752,X
 	STA $0752,X
 	STA $FF
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDY #$00
 	LDA ($FE),Y
 	STA $074D,X
@@ -2215,7 +2215,7 @@ bra11_8B8C:
 	LDA $0752,X
 	STA $FF
 bra11_8B91:
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDY #$00
 	LDA ($FE),Y
 	STA $074D,X
@@ -2232,12 +2232,12 @@ sub11_8BA2:
 	BPL bra11_8C14_RTS
 bra11_8BAC:
 loc11_8BAC:
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDA $075B,X
 	TAY
 	CPY #$FF
 	BEQ bra11_8C14_RTS
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDA $075B,X
 	BNE bra11_8C11
 	LDX $070C
@@ -2250,7 +2250,7 @@ loc11_8BAC:
 	ADC $075E,X
 	STA $075E,X
 	STA $FF
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDY #$00
 	LDA ($FE),Y
 	STA $075B,X
@@ -2272,7 +2272,7 @@ bra11_8BFF:
 	LDA $075E,X
 	STA $FF
 bra11_8C04:
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDY #$00
 	LDA ($FE),Y
 	STA $075B,X
@@ -2289,7 +2289,7 @@ sub11_8C15:
 	BPL bra11_8C84_RTS
 bra11_8C1F:
 loc11_8C1F:
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDA $0765,X
 	TAY
 	CPY #$FF
@@ -2299,14 +2299,14 @@ loc11_8C1F:
 	LDX $070C
 	LDA #$02
 	CLC
-	ADC $0769,X
-	STA $0769,X
+	ADC Sound_MusicMacroPtrs,X
+	STA Sound_MusicMacroPtrs,X
 	STA $FE
 	LDA #$00
 	ADC $076A,X
 	STA $076A,X
 	STA $FF
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDY #$00
 	LDA ($FE),Y
 	STA $0765,X
@@ -2319,8 +2319,8 @@ loc11_8C1F:
 	AND #$FE
 	BPL bra11_8C74
 	CLC
-	ADC $0769,X
-	STA $0769,X
+	ADC Sound_MusicMacroPtrs,X
+	STA Sound_MusicMacroPtrs,X
 	STA $FE
 	BCS bra11_8C6F
 	DEC $076A,X
@@ -2328,7 +2328,7 @@ bra11_8C6F:
 	LDA $076A,X
 	STA $FF
 bra11_8C74:
-	LDX $070B
+	LDX Sound_CurrChannelOfs
 	LDY #$00
 	LDA ($FE),Y
 	STA $0765,X
@@ -2547,7 +2547,7 @@ bra11_8E0A:
 	PLA
 	PHA
 	TAY
-	LDA $0769,Y
+	LDA Sound_MusicMacroPtrs,Y
 	STA $FE
 	LDA $076A,Y
 	STA $FF

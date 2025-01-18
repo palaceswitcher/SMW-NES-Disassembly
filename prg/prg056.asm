@@ -278,7 +278,7 @@ bra9_81FC:
 	LDA #$01
 	JSR RewardPoints
 	LDA #$12
-	STA SFXRegister
+	STA Sound_Sfx
 	LDX $A4
 	LDA ObjectSlot,X
 	AND #$01
@@ -561,7 +561,7 @@ bra9_8448:
 	LDA #$01
 	JSR RewardPoints
 	LDA #$12
-	STA SFXRegister
+	STA Sound_Sfx
 	JMP loc9_846E
 	RTS
 loc9_846E:
@@ -842,7 +842,7 @@ ptr2_8668:
 	LDA #$01
 	JSR RewardPoints
 	LDA #$12
-	STA SFXRegister
+	STA Sound_Sfx
 	LDX $A4
 	INC ObjectSlot,X
 	INC ObjectSlot,X
@@ -1558,7 +1558,7 @@ bra9_8BB6:
 	LDA #$01
 	JSR RewardPoints
 	LDA #$12
-	STA SFXRegister
+	STA Sound_Sfx
 	LDX $A4
 	LDA #$81
 	STA ObjectVariables,X
@@ -2388,7 +2388,7 @@ loc9_91E7:
 	LDA #$01
 	JSR RewardPoints
 	LDA #$12
-	STA SFXRegister
+	STA Sound_Sfx
 	LDX $A4
 	LDA ObjectSlot,X
 	CLC
@@ -3149,7 +3149,7 @@ ptr2_9765:
 	LDA #$01
 	JSR RewardPoints
 	LDA #$12
-	STA SFXRegister
+	STA Sound_Sfx
 	JMP loc9_98D1
 sub9_978D:
 	LDA FrameCount
@@ -3309,7 +3309,7 @@ loc9_98AF:
 	LDA #$01
 	JSR RewardPoints
 	LDA #$12
-	STA SFXRegister
+	STA Sound_Sfx
 loc9_98D1:
 	LDX $A4
 	LDA ObjectSlot,X
@@ -4513,7 +4513,7 @@ ofs_9E87:
 	LDA ObjXScreenDistance,X ;The rest of the code in this is unused
 	BPL bra9_9EE4_RTS
 	LDA #$23
-	STA MusicRegister
+	STA Sound_Music
 	LDA #$06
 	STA GameState
 	LDA WorldNumber

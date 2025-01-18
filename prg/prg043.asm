@@ -706,7 +706,7 @@ bra3_960D:
 	JMP loc3_970B_RTS
 bra3_9619:
 	LDA #$10
-	STA SFXRegister
+	STA Sound_Sfx
 	INC $05F6
 	LDY ObjectCount
 	INC ObjectCount
@@ -840,7 +840,7 @@ loc3_970B_RTS:
 bra3_975B:
 	STY PlayerMovement
 	LDA #$2F
-	STA MusicRegister
+	STA Sound_Music
 	RTS
 bra3_9762_RTS:
 	RTS

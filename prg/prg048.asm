@@ -480,7 +480,7 @@ ptr9_8378:
 	LDA #$01
 	JSR RewardPoints
 	LDA #$12
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA ObjectSlot,X
 	CLC
 	ADC #$04
@@ -741,7 +741,7 @@ ptr9_857E:
 	LDA #$01
 	JSR RewardPoints
 	LDA #$12
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA ObjectSlot,X
 	CLC
 	ADC #$02
@@ -1273,7 +1273,7 @@ ptr9_89A8:
 	LDA #$01
 	JSR RewardPoints
 	LDA #$12
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA ObjectSlot,X
 	AND #$01
 	ORA #$C4
@@ -1640,7 +1640,7 @@ ptr9_8C7F:
 	LDA #$01
 	JSR RewardPoints
 	LDA #$12
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA ObjectSlot,X
 	AND #$01
 	ORA #$C4
@@ -2001,7 +2001,7 @@ ptr9_8F6B:
 	LDA #$01
 	JSR RewardPoints
 	LDA #$12
-	STA SFXRegister
+	STA Sound_Sfx
 	LDA ObjectSlot,X
 	AND #$01
 	ORA #$C4

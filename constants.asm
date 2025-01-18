@@ -191,4 +191,4 @@ gameState_Title = $02
 gameState_TitleMenu = $03
 gameState_Map = $0B
 gameState_WorldSelect = $11
-gameState_MapLevelComplete = $16
+gameState_MapExitLevelTransition = $16
