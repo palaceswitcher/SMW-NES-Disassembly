@@ -2,21 +2,23 @@
 sub9_8000:
 	LDX $A4
 	LDA ObjectVariables,X
-	AND #$7F
+	AND #%01111111
 	ASL
 	TAY
 	LDA ObjectState,X
-	AND #$20
+	AND #%00100000
 	BNE bra9_8013
-	JMP loc9_80A2
+	JMP loc9_80A2 ;Jump if goomba is moving up
+
 bra9_8013:
 	JSR sub3_B077
 	BNE bra9_8078
 	LDA ObjectVariables,X
-	AND #$7F
+	AND #%01111111
 	CMP #$07
-	BCS bra9_8024
-	INC ObjectVariables,X
+	BCS bra9_8024 ;No goomba has more than 7 movement vectors
+	INC ObjectVariables,X ;Go to next movement vector
+
 bra9_8024:
 	PHA
 	CLC
@@ -65,6 +67,7 @@ bra9_806F:
 bra9_8074:
 	STA ObjectXScreen,X
 	RTS
+
 bra9_8078:
 	LDA $AA
 	AND #$0F
@@ -86,6 +89,7 @@ bra9_808E:
 	AND #$80
 	STA ObjectVariables,X
 	RTS
+
 loc9_80A2:
 	INY
 	LDA ($32),Y
@@ -99,6 +103,7 @@ loc9_80A2:
 	AND #$80
 	STA ObjectVariables,X
 	RTS
+
 bra9_80BD:
 	DEY
 	JSR sub3_B057
@@ -709,111 +714,26 @@ SprMap_ParachuteGoomba2:
 	db $FF, $25, $26
 	db $29, $2A, $2B
 	db $2E, $2F, $30
+
 Obj_h94:
 	LDX $A4
 	LDA ObjectVariables,X
 	BPL bra9_85E0
-	LDA ObjectXPos,X
-	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
-	STA $28
-	BEQ bra9_8595
-	CMP #$FF
-	BEQ bra9_8595
-	JMP Obj_RemoveObject
-bra9_8595:
-	LDA ObjectYPos,X
-	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
-	BEQ bra9_85D7
-	LDA ObjYScreenDistance,X
-	BPL bra9_85C6
-	LDA ObjectYDistance,X
-	CLC
-	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	ADC #$00
-	STA ObjYScreenDistance,X
-	JMP loc9_85D7
-bra9_85C6:
-	LDA ObjectYDistance,X
-	SEC
-	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	SBC #$00
-	STA ObjYScreenDistance,X
-bra9_85D7:
-loc9_85D7:
-	LDA FreezeFlag
-	BEQ bra9_85DD
-	RTS
+	Obj_DistCalc bra9_85DD
+
+; Make goomba face player if bit 7 of variable is set
 bra9_85DD:
 	JMP Obj_FacePlayer
+
 bra9_85E0:
 	LDA #$06
-	STA $25
+	STA $25 ;Swallow when eaten by yoshi
 	LDX $A4
-	LDA ObjectXPos,X
-	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
-	STA $28
-	BEQ bra9_8602
-	CMP #$FF
-	BEQ bra9_8602
-	JMP Obj_RemoveObject
-bra9_8602:
-	LDA ObjectYPos,X
-	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
-	BEQ bra9_8644
-	LDA ObjYScreenDistance,X
-	BPL bra9_8633
-	LDA ObjectYDistance,X
-	CLC
-	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	ADC #$00
-	STA ObjYScreenDistance,X
-	JMP loc9_8644
-bra9_8633:
-	LDA ObjectYDistance,X
-	SEC
-	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
-	SBC #$00
-	STA ObjYScreenDistance,X
-bra9_8644:
-loc9_8644:
-	LDA FreezeFlag
-	BEQ bra9_864A
-	RTS
+	Obj_DistCalc bra9_864A
+
 bra9_864A:
 	LDA ObjectState,X
-	AND #$1F
+	AND #%00011111
 	ASL
 	TAY
 	LDA tbl9_865E,Y
@@ -824,31 +744,33 @@ bra9_864A:
 tbl9_865E:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr2_8668
-	dw Obj_FlipKill
+	dw Obj_PowerupEatCheck ;Check if eaten as a powerup?
+	dw ptr2_8668 ;Collision handling
+	dw Obj_FlipKill ;Flip object when killed
+
 ptr2_8668:
 	JSR sub9_8698
-	JSR Obj_PlayerHitCheck
-	JSR Obj_KillOnSpinJump
-	LDA #$10
-	STA PlayerYSpeed
+	JSR Obj_PlayerHitCheck ;Handle collision with the player
+	JSR Obj_KillOnSpinJump ;Kill if spinjumped on
+	LDA #16
+	STA PlayerYSpeed ;Give player vertical speed boost
 	LDA PlayerMovement
-	ORA #$04
-	EOR #$01
+	ORA #%00000100 ;Boost player upwards
+	EOR #%00000001 ;Move player in opposite direction
 	STA PlayerMovement
-	LDA #$10
-	STA PlayerXSpeed
-	LDA #$01
-	JSR RewardPoints
-	LDA #$12
-	STA Sound_Sfx
+	LDA #16
+	STA PlayerXSpeed ;Move player backwards a bit
+	LDA #1
+	JSR RewardPoints ;Reward 200 points
+	LDA #sfx_EnemyHit2
+	STA Sound_Sfx ;Play hit sound
 	LDX $A4
 	INC ObjectSlot,X
-	INC ObjectSlot,X
+	INC ObjectSlot,X ;Knock goomba over
 	LDA #$80
-	STA ObjectVariables,X
+	STA ObjectVariables,X ;Face the player
 	RTS
+
 sub9_8698:
 	LDA ObjectVariables,X
 	CMP #$03
@@ -858,7 +780,7 @@ bra9_86A2:
 	LDA ObjFrameCounter
 	AND #$00
 	BNE bra9_86BA_RTS
-	LDA #$85
+	LDA #$85 ;Hardcoded straight line movement
 	ASL
 	TAY
 	LDA tbl9_9C5E,Y
@@ -868,6 +790,7 @@ bra9_86A2:
 	JSR sub9_8000
 bra9_86BA_RTS:
 	RTS
+
 loc9_86BB:
 	LDA ObjFrameCounter
 	AND #$02
@@ -949,6 +872,7 @@ tbl9_8754:
 	dw Obj_PowerupEatCheck
 	dw ptr2_875E
 	dw Obj_FlipKill
+
 ptr2_875E:
 	LDX $A4
 	LDA ObjectVariables,X

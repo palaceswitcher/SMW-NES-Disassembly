@@ -7294,6 +7294,8 @@ tbl_51_FD80:
 	db $DF
 	db $BF
 	db $7F
+
+; High nybble lookup table, faster to access than bit shifting 4 times
 tbl_51_FE00:
 	db $00
 	db $00

@@ -3550,7 +3550,7 @@ loc6_B22C:
 	LDA #$12 ;Player bottom screen offset (see below)
 	STA $6D
 	LDY #$00 ;Player top screen offset (see below)
-	STY LevelTopScreenOffset ;Preset the offset for determining the player's screen ID on the top screen
+	STY LevelVScreenOffset ;Preset the offset for determining the player's screen ID on the top screen
 	STA LevelBottomScreenOffset ;Preset offset for determining the player's screen ID on the bottom screen
 	LDY LevelNumber ;Use level number as index
 	LDA LvlScreenOrderPtrLo,Y

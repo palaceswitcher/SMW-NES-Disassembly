@@ -263,7 +263,7 @@ InterruptMode = $0606
 YScreenCount = $060E
 XScreenCount = $0610
 UnderwaterFlag = $061D
-LevelTopScreenOffset = $04FA
+LevelVScreenOffset = $04FA
 LevelBottomScreenOffset = $04FB
 
 PlayerPowerupBuffer = $0626

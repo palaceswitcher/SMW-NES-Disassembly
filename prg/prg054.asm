@@ -3223,7 +3223,7 @@ sub3_B043:
 	STA $36
 	LDA ObjectYHitBoxSizes,Y
 	CLC
-	ADC #$04 ;Object's vertical hitbox + 4
+	ADC #$04 ;Object's hitbox height + 4
 	JMP loc3_B08D
 
 sub3_B057:
@@ -3246,52 +3246,64 @@ bra3_B06C:
 	SBC #$08
 	JMP loc3_B08D
 
+;----------------------------------------
+;SUBROUTINE ($B077)
+;$A8 = X Pos Lo
+;$A9 = X Pos Hi
+;$AA = Y Pos Lo
+;$AB = Y Pos Hi
+;$36 = Calculated X hitbox?
+;$38 = Calculated Y hitbox?
+;$32 - $33 = Movement data pointer
+;----------------------------------------
 sub3_B077:
 	STY $2B
 	LDX $A4
-	LDY ObjectSlot,X
-	LDA ObjectState,X
-	AND #$40
-	BEQ bra3_B088
-	LDA ObjectXHitBoxSizes,Y
+	LDY ObjectSlot,X ;Load current object
+	LDA ObjectState,X ;Get state of current object
+	AND #%01000000
+	BEQ @SetObjXPosOfs ;Offset position by 0 if the object isn't mirrored
+	LDA ObjectXHitBoxSizes,Y ;Offset the object by its hitbox width during the calculation if it's mirrored
 
-bra3_B088:
+@SetObjXPosOfs:
 	STA $36
 	LDA ObjectYHitBoxSizes,Y
 
 loc3_B08D:
-	STA $38 ;Store added hitbox
-	;Calulate object X position?
+	STA $38 ;Store vertical position offset
+
+; Move object origin back to the left if mirrored
 	LDA ObjectXPos,X
 	CLC
 	ADC $36
-	STA $A8 ;Add object position by pre-set value
+	STA $A8
 	LDA ObjectXScreen,X
 	ADC #$00
 	STA $A9
 	
-	;Copy object Y position?
+	; Copy Y position
 	LDA ObjectYPos,X
 	STA $AA
 	LDA ObjectYScreen,X
 	STA $AB
 
+; Move origin to bottom of object
 loc3_B0A8:
-	;Add post-calculated object hitbox height to object's vertical position?
 	LDA $38
-	BMI bra3_B0C1 ;Branch if post-calculated object hitbox is over 127 pixels high?
+	BMI bra3_B0C1 ;Perform subtraction instead of the offset is a negative value
 	CLC
 	ADC $AA
-	STA $AA ;Add post calculated hitbox to vertical screen?
-	BCS bra3_B0B7 ;Add 16 if the screen boundary is crossed
-	CMP #$F0
-	BCC loc3_B0CF ;Add high byte when object is 16 pixels below vertical screen boundary
+	STA $AA
+	BCS bra3_B0B7 ;Add 16 and carry if carry is needed
+	CMP #256-16
+	BCC loc3_B0CF ;Branch if adding 16 wouldn't require a carry
 
+; Add 16 to Y boundary and carry
 bra3_B0B7:
 	CLC
 	ADC #16
 	STA $AA
-	INC $AB ;Add 16 to vertical position (assuming overflow)
+	INC $AB ;Add 16 to vertical position and carry
 	JMP loc3_B0CF
 
 bra3_B0C1:
@@ -3306,43 +3318,46 @@ bra3_B0C1:
 
 loc3_B0CF:
 	LDA $AA
-	CMP #$D8
-	BCC bra3_B0D8
+	CMP #256-40
+	BCC bra3_B0D8 ;Branch if object doesn't cross the vertical screen boundary? (assuming it's at least 8 units tall?)
 	LDA #$00
 	RTS
 
 bra3_B0D8:
 	LDY $AB
-	LDA LevelTopScreenOffset,Y
+	LDA LevelVScreenOffset,Y
 	CLC
-	ADC $A9
+	ADC $A9 ;Get level screen index of object's origin
 	TAY
+
 	LDA DataBank2
 	STA M90_PRG0
 	LDA ($8C),Y
-	TAY
-	AND #$1F
-	ORA #$80
+	TAY ;Get the screen number of the object's origin
+	AND #31 ;Only 32 possible screens per level
+	ORA #%10000000
 	STA $35
 	LDA #$00
 	STA $34
 	LDY $A8
 	LDA $AA
-	AND #$F0
-	ORA tbl_51_FE00,Y
+	AND #%11110000 ;Get tile row of object origin
+	ORA tbl_51_FE00,Y ;Get tile X position
 	TAY
+
+; Get the tile the object's origin is on
 	LDA DataBank1
 	STA M90_PRG0
-	LDA ($34),Y
+	LDA ($34),Y ;Get tile
 	TAY
 	LDA DataBank2
 	STA M90_PRG0
-	LDA ($DA),Y
+	LDA ($DA),Y ;Get tile behavior
 	TAY
-	LDA tbl_51_FF00,Y
+	LDA tbl_51_FF00,Y ;Return upper nybble of behavior
 	PHA
 	LDA ObjectPRGBank
-	STA M90_PRG0
+	STA M90_PRG0 ;Switch the object's PRG bank back in
 	LDY $2B
 	PLA
 	RTS
@@ -5092,7 +5107,7 @@ bra3_BD18:
 	CMP #$06
 	BCC bra3_BD2C ;Branch if <6 enemies have been hit
 	LDX CurrentPlayer
-	INC Player1Lives,X ;If 7 more have been hit, give the current player a life
+	INC Player1Lives,X ;If 7 or more have been hit, give the current player a life
 	LDA #$07
 	BNE bra3_BD31 ;Play 1UP sound
 bra3_BD2C:
@@ -5311,7 +5326,7 @@ bra3_BEB7:
 
 ;----------------------------------------
 ;SUBROUTINE ($BEBC)
-;Checks if the player collides with the object's hitbox. If the player takes damage or isn't touching the object, it will stop the object's code.
+;Checks if the player collides with the object's hitbox. If the player stomps the object, they are rewarded 200 points. Otherwise, if the player takes damage or isn't touching the object, it will stop the object's code.
 ;----------------------------------------
 Obj_PlayerHitCheck:
 	LDX $A4 ;Get current object index
@@ -5386,7 +5401,7 @@ bra3_BF1A:
 	STA ObjectState,X ;Stop checking for collision
 	PLA
 	PLA
-	RTS ;Go back two calls and stop running code for this object.
+	RTS ;Go back two calls and stop running code for this object
 
 ; Check if the player can take damage
 ObjHandlePlayerColl:
@@ -5402,8 +5417,9 @@ ObjHandlePlayerColl:
 		BEQ @GivePoints ;Give points if the player hits the object while climbing
 		LDA PlayerMovement
 		AND #%00000100
-		BNE @InvincibilityCheck ;Don't give points if the player is moving up
+		BNE @InvincibilityCheck ;Player can be assumed to be taking damage from the object if they are moving upwards
 
+; Otherwise, if the player is falling downwards, it can be assumed that they're stomping on the object
 @GivePoints:
 	LDA InvincibilityTimer
 	BNE @GivePointsContinue ;Reward points immediately if the player already has invulnerability frames

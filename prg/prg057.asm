@@ -4722,7 +4722,7 @@ loc4_BB09:
 	LDA #$00
 	STA $26 ;clear $26
 	LDY PlayerColYScreen
-	LDA LevelTopScreenOffset,Y ;Get screen offset for the vertical hitbox screen
+	LDA LevelVScreenOffset,Y ;Get screen offset for the vertical hitbox screen
 	CLC
 	ADC PlayerColXScreen ;Add hitbox X screen to get total screen number (Y screen offset + X screen = total screen)
 	TAY ;move result to Y
@@ -4794,7 +4794,7 @@ loc4_BB95:
 	LDA #$00
 	STA $26
 	LDY PlayerColYScreen
-	LDA LevelTopScreenOffset,Y
+	LDA LevelVScreenOffset,Y
 	CLC
 	ADC PlayerColXScreen
 	TAY
@@ -4934,7 +4934,7 @@ bra4_BC7E:
 	LDA #$00
 	STA $26
 	LDY PlayerColYScreen ;Use the vertical screen of the player's collision as the index
-	LDA LevelTopScreenOffset,Y ;Determines what to offset the player's collision X screen number based on what vertical screen they're on. If they're on the top screen, offset it by #$12. If they're on the bottom, don't offset it.
+	LDA LevelVScreenOffset,Y ;Determines what to offset the player's collision X screen number based on what vertical screen they're on. If they're on the top screen, offset it by #$12. If they're on the bottom, don't offset it.
 	CLC
 	ADC PlayerColXScreen ;Player X Screen + Offset = Absolute Screen
 	TAY ;Set the ordered screen value as the index
@@ -4984,7 +4984,7 @@ loc4_BCB8:
 	SBC #$00
 	STA PlayerColXScreen
 	LDY PlayerColYScreen
-	LDA LevelTopScreenOffset,Y
+	LDA LevelVScreenOffset,Y
 	CLC
 	ADC PlayerColXScreen
 	TAY

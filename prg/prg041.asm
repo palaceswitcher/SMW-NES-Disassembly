@@ -3699,7 +3699,7 @@ sub_B75D:
 	LDA tbl_B997+3,X
 	STA $6D
 	LDY #$00
-	STY LevelTopScreenOffset
+	STY LevelVScreenOffset
 	STA LevelBottomScreenOffset
 	LDY LevelNumber
 	LDA tbl_BA07,Y
@@ -4931,7 +4931,7 @@ loc_BE5D:
 	LDA #$00
 	STA $26
 	LDY $66
-	LDA LevelTopScreenOffset,Y
+	LDA LevelVScreenOffset,Y
 	CLC
 	ADC $64
 	TAY
@@ -5041,7 +5041,7 @@ sub_BED2:
 	RTS
 sub_BF31:
 	LDY $66
-	LDA LevelTopScreenOffset,Y
+	LDA LevelVScreenOffset,Y
 	CLC
 	ADC $64
 	TAY
