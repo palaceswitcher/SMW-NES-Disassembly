@@ -1,58 +1,58 @@
 ;disassembled by BZK 6502 Disassembler
 Obj_h88:
 	LDX $A4
-	LDA ObjectVariables,X
+	LDA objVar,X
 	BMI bra6_800A
 	JMP loc6_809C
 bra6_800A:
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra6_8026
 	CMP #$FF
 	BEQ bra6_8026
 	JMP Obj_RemoveObject
 bra6_8026:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra6_8068
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra6_8057
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc6_8068
 bra6_8057:
-	LDA ObjectYDistance,X ;unlogged
+	LDA objYDistLo,X ;unlogged
 	SEC ;unlogged
 	SBC #$10 ;unlogged
-	STA ObjectYDistance,X ;unlogged
-	LDA ObjYScreenDistance,X ;unlogged
+	STA objYDistLo,X ;unlogged
+	LDA objYDistHi,X ;unlogged
 	SBC #$00 ;unlogged
-	STA ObjYScreenDistance,X ;unlogged
+	STA objYDistHi,X ;unlogged
 bra6_8068:
 loc6_8068:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra6_806E
 	RTS ;unlogged
 bra6_806E:
-	LDA ObjectVariables,X
+	LDA objVar,X
 	CMP #$81
 	BCS bra6_8078
 	JMP Obj_FacePlayer
@@ -61,71 +61,71 @@ bra6_8078:
 	BCS bra6_807F
 	JMP sub_54_B4FC
 bra6_807F:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$1E
 	BNE bra6_809C
-	INC ObjectVariables,X
-	LDA ObjectVariables,X
+	INC objVar,X
+	LDA objVar,X
 	AND #$0F
 	CMP #$0E
 	BCC bra6_809C
-	LDA ObjectVariables,X
+	LDA objVar,X
 	AND #$70
 	ORA #$01
-	STA ObjectVariables,X
+	STA objVar,X
 bra6_809C:
 loc6_809C:
 	LDA #$07
 	STA $25
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra6_80BE
 	CMP #$FF
 	BEQ bra6_80BE
 	JMP Obj_RemoveObject
 bra6_80BE:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra6_8100
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra6_80EF
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc6_8100
 bra6_80EF:
-	LDA ObjectYDistance,X ;unlogged
+	LDA objYDistLo,X ;unlogged
 	SEC ;unlogged
 	SBC #$10 ;unlogged
-	STA ObjectYDistance,X ;unlogged
-	LDA ObjYScreenDistance,X ;unlogged
+	STA objYDistLo,X ;unlogged
+	LDA objYDistHi,X ;unlogged
 	SBC #$00 ;unlogged
-	STA ObjYScreenDistance,X ;unlogged
+	STA objYDistHi,X ;unlogged
 bra6_8100:
 loc6_8100:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra6_8106
 	RTS ;unlogged
 bra6_8106:
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$1F
 	ASL
 	TAY
@@ -142,16 +142,16 @@ tbl6_811A:
 	dw Obj_FlipKill
 ptr6_8124:
 	LDX $A4
-	LDA ObjectVariables,X
+	LDA objVar,X
 	BMI bra6_8151
 	AND #$0F
 	BNE bra6_8139
-	LDA ObjectVariables,X
+	LDA objVar,X
 	ORA #$88
-	STA ObjectVariables,X
+	STA objVar,X
 	BNE bra6_8151
 bra6_8139:
-	LDA FrameCount
+	LDA frameCount
 	AND #$04
 	BEQ bra6_8140
 	RTS
@@ -169,28 +169,28 @@ bra6_8151:
 	JSR Obj_PlayerHitCheck
 	JSR Obj_KillOnSpinJump
 	LDA #$10
-	STA PlayerYSpeed
-	LDA PlayerMovement
+	STA playerYSpd
+	LDA playerMoveFlags
 	ORA #$04
 	EOR #$01
-	STA PlayerMovement
+	STA playerMoveFlags
 	LDA #$10
-	STA PlayerXSpeed
+	STA playerXSpd
 	LDA #$01
 	JSR RewardPoints
 	LDA #sfx_EnemyHit2
-	STA Sound_Sfx
+	STA sndSfx
 	LDX $A4
 	LDA #$81
-	STA ObjectVariables,X
+	STA objVar,X
 	RTS
 ptr6_817B:
 	LDX $A4
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$40
 	STA $05F0
 	LDY #$00
-	LDA ObjectVariables,X
+	LDA objVar,X
 	BMI bra6_8196
 	AND #$0F
 	BEQ bra6_8196
@@ -207,7 +207,7 @@ bra6_8196:
 	STA $33
 	LDY #$80
 	LDX $A4
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	AND #$01
 	BEQ bra6_81B0
 	LDY #$C0
@@ -234,54 +234,54 @@ Obj_h84:
 	LDA #$07
 	STA $25
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra6_81EA
 	CMP #$FF
 	BEQ bra6_81EA
 	JMP Obj_RemoveObject
 bra6_81EA:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra6_822C
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra6_821B
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc6_822C
 bra6_821B:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra6_822C:
 loc6_822C:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra6_8232
 	RTS
 bra6_8232:
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$1F
 	ASL
 	TAY
@@ -303,7 +303,7 @@ ptr6_8250:
 	RTS
 sub6_825A:
 	LDX $A4
-	LDA ObjectVariables,X
+	LDA objVar,X
 	AND #$0F
 	ASL
 	TAY
@@ -319,17 +319,17 @@ tbl6_8270:
 	dw ptr6_834C
 	dw ptr6_8366
 ptr6_827A:
-	LDA ObjXScreenDistance,X
+	LDA objXDistHi,X
 	AND #$40
 	EOR #$40
 	STA $25
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$BF
 	ORA $25
-	STA ObjectState,X
-	LDA ObjectXDistance,X
+	STA objState,X
+	LDA objXDistLo,X
 	TAY
-	LDA ObjXScreenDistance,X
+	LDA objXDistHi,X
 	BEQ bra6_82A0
 	CMP #$FF
 	BNE bra6_82A7_RTS
@@ -340,25 +340,25 @@ bra6_82A0:
 	CPY #$30
 	BCS bra6_82A7_RTS
 bra6_82A4:
-	INC ObjectVariables,X
+	INC objVar,X
 bra6_82A7_RTS:
 	RTS
 ptr6_82A8
-	LDA ObjXScreenDistance,X
+	LDA objXDistHi,X
 	AND #$40
 	EOR #$40
 	STA $25
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$BF
 	ORA $25
-	STA ObjectState,X
-	LDA ObjXScreenDistance,X
+	STA objState,X
+	LDA objXDistHi,X
 	BEQ bra6_82C6
 	CMP #$FF
 	BEQ bra6_82D4
 	BNE bra6_82E0 ;unlogged
 bra6_82C6:
-	LDA ObjectXDistance,X
+	LDA objXDistLo,X
 	SEC
 	SBC #$18
 	BCC bra6_82E6
@@ -366,7 +366,7 @@ bra6_82C6:
 	BCC bra6_82E5_RTS
 	BCS bra6_82E0
 bra6_82D4:
-	LDA ObjectXDistance,X
+	LDA objXDistLo,X
 	CLC
 	ADC #$30
 	BCS bra6_82E6
@@ -374,119 +374,119 @@ bra6_82D4:
 	BCS bra6_82E5_RTS
 bra6_82E0:
 	LDA #$80
-	STA ObjectVariables,X
+	STA objVar,X
 bra6_82E5_RTS:
 	RTS
 bra6_82E6:
-	INC ObjectVariables,X
+	INC objVar,X
 	RTS
 ptr6_82EA:
 	LDA #$08
 	BMI bra6_8305
 	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
+	ADC objYLo,X
+	STA objYLo,X
 	CMP #$F0
 	BCC bra6_8324
 	CLC
 	ADC #$10
-	STA ObjectYPos,X
-	INC ObjectYScreen,X
+	STA objYLo,X
+	INC objYHi,X
 	JMP loc6_8324
 bra6_8305:
 	CLC ;unlogged
-	ADC ObjectYPos,X ;unlogged
-	STA ObjectYPos,X ;unlogged
-	LDA ObjectYScreen,X ;unlogged
+	ADC objYLo,X ;unlogged
+	STA objYLo,X ;unlogged
+	LDA objYHi,X ;unlogged
 	SBC #$00 ;unlogged
-	STA ObjectYScreen,X ;unlogged
-	LDA ObjectYPos,X ;unlogged
+	STA objYHi,X ;unlogged
+	LDA objYLo,X ;unlogged
 	CMP #$F0 ;unlogged
 	BCC bra6_8324 ;unlogged
-	LDA ObjectYPos,X ;unlogged
+	LDA objYLo,X ;unlogged
 	SEC ;unlogged
 	SBC #$10 ;unlogged
-	STA ObjectYPos,X ;unlogged
+	STA objYLo,X ;unlogged
 bra6_8324:
 loc6_8324:
 	JSR sub_54_BB59
 	BEQ bra6_834B_RTS
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	AND #$F0
-	STA ObjectYPos,X
-	LDA WorldNumber
+	STA objYLo,X
+	LDA worldNumber
 	CMP #$05
 	BNE bra6_833F
-	LDA ObjectYScreen,X
-	CMP PlayerYScreenDup
+	LDA objYHi,X
+	CMP playerYHiDup
 	BNE bra6_8348
 bra6_833F:
 	LDA #$01
-	STA ScreenShake
+	STA screenShake
 	LDA #sfx_Thud
-	STA Sound_Sfx
+	STA sndSfx
 bra6_8348:
-	INC ObjectVariables,X
+	INC objVar,X
 bra6_834B_RTS:
 	RTS
 ptr6_834C:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$1E
 	BNE bra6_8365_RTS
-	LDA ObjectVariables,X
+	LDA objVar,X
 	CLC
 	ADC #$10
-	STA ObjectVariables,X
+	STA objVar,X
 	AND #$F0
 	CMP #$C0
 	BCC bra6_8365_RTS
-	INC ObjectVariables,X
+	INC objVar,X
 bra6_8365_RTS:
 	RTS
 ptr6_8366:
 	LDA #$FC
 	BMI bra6_8381
 	CLC ;unlogged
-	ADC ObjectYPos,X ;unlogged
-	STA ObjectYPos,X ;unlogged
+	ADC objYLo,X ;unlogged
+	STA objYLo,X ;unlogged
 	CMP #$F0 ;unlogged
 	BCC bra6_83A0 ;unlogged
 	CLC ;unlogged
 	ADC #$10 ;unlogged
-	STA ObjectYPos,X ;unlogged
-	INC ObjectYScreen,X ;unlogged
+	STA objYLo,X ;unlogged
+	INC objYHi,X ;unlogged
 	JMP loc6_83A0 ;unlogged
 bra6_8381:
 	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
-	LDA ObjectYScreen,X
+	ADC objYLo,X
+	STA objYLo,X
+	LDA objYHi,X
 	SBC #$00
-	STA ObjectYScreen,X
-	LDA ObjectYPos,X
+	STA objYHi,X
+	LDA objYLo,X
 	CMP #$F0
 	BCC bra6_83A0
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
 	SBC #$10
-	STA ObjectYPos,X
+	STA objYLo,X
 bra6_83A0:
 loc6_83A0:
 	JSR sub_54_BB73
 	BEQ bra6_83B2_RTS
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	ORA #$0F
-	STA ObjectYPos,X
+	STA objYLo,X
 	LDA #$80
-	STA ObjectVariables,X
+	STA objVar,X
 bra6_83B2_RTS:
 	RTS
 ptr6_83B3:
 	LDX $A4
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$40
 	STA $05F0
-	LDA ObjectVariables,X
+	LDA objVar,X
 	AND #$0F
 	ASL
 	TAX
@@ -496,7 +496,7 @@ ptr6_83B3:
 	STA $33
 	LDY #$80
 	LDX $A4
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	AND #$01
 	BEQ bra6_83DB
 	LDY #$C0
@@ -535,69 +535,69 @@ SprMap_Thwomp_Attack:
 	db $2F, $30, $31
 	db $35, $36, $37
 	LDX $A4 ;unlogged code start
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra6_8436
 	CMP #$FF
 	BEQ bra6_8436
 	JMP Obj_RemoveObject
 bra6_8436:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra6_8478
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra6_8467
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc6_8478
 bra6_8467:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra6_8478:
 loc6_8478:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra6_847E
 	RTS
 bra6_847E:
-	LDA ObjectVariables,X
+	LDA objVar,X
 	BPL bra6_8489
 	LDA #$00
-	STA ObjectVariables,X
+	STA objVar,X
 	RTS
 bra6_8489:
 	LDX $A4
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$03
 	BNE bra6_849D
-	INC ObjectVariables,X
-	LDA ObjectVariables,X
+	INC objVar,X
+	LDA objVar,X
 	AND #$1F
-	STA ObjectVariables,X
+	STA objVar,X
 bra6_849D:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$01
 	BNE bra6_84A7
 	JSR jmp_54_BBC3
@@ -607,69 +607,69 @@ bra6_84A7:
 	RTS
 Obj_h90:
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra6_84CC
 	CMP #$FF
 	BEQ bra6_84CC
 	JMP Obj_RemoveObject
 bra6_84CC:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra6_850E
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra6_84FD
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc6_850E
 bra6_84FD:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra6_850E:
 loc6_850E:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra6_8514
 	RTS
 bra6_8514:
-	LDA ObjectVariables,X
+	LDA objVar,X
 	BPL bra6_851F
 	LDA #$00
-	STA ObjectVariables,X
+	STA objVar,X
 	RTS
 bra6_851F:
 	LDX $A4
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$01
 	BNE bra6_8533
-	INC ObjectVariables,X
-	LDA ObjectVariables,X
+	INC objVar,X
+	LDA objVar,X
 	AND #$1F
-	STA ObjectVariables,X
+	STA objVar,X
 bra6_8533:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$01
 	BNE bra6_853D
 	JSR jmp_54_BBC3
@@ -680,7 +680,7 @@ bra6_853D:
 ptr7_8544:
 	LDY #$00
 	LDX $A4
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$10
 	BEQ bra6_8550
 	INY
@@ -694,7 +694,7 @@ bra6_8550:
 	STA $33
 	LDY #$80
 	LDX $A4
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	AND #$01
 	BEQ bra6_856A
 	LDY #$C0
@@ -729,54 +729,54 @@ Obj_h86:
 	LDA #$07
 	STA $25
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra6_85A8
 	CMP #$FF
 	BEQ bra6_85A8
 	JMP Obj_RemoveObject
 bra6_85A8:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra6_85EA
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra6_85D9
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc6_85EA
 bra6_85D9:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra6_85EA:
 loc6_85EA:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra6_85F0
 	RTS
 bra6_85F0:
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$1F
 	ASL
 	TAY
@@ -797,8 +797,8 @@ ptr6_860C:
 	RTS
 sub6_8616:
 	LDX $A4
-	LDA ObjectVariables,X
-	STA P1Score ;Likely a leftover debugging function
+	LDA objVar,X
+	STA playerScores ;Likely a leftover debugging function
 	AND #$0F
 	ASL
 	TAY
@@ -816,129 +816,129 @@ ptr6_8637:
 	LDA #$FF
 	BMI bra6_8652
 	CLC ;unlogged
-	ADC ObjectYPos,X ;unlogged
-	STA ObjectYPos,X ;unlogged
+	ADC objYLo,X ;unlogged
+	STA objYLo,X ;unlogged
 	CMP #$F0 ;unlogged
 	BCC bra6_8671 ;unlogged
 	CLC ;unlogged
 	ADC #$10 ;unlogged
-	STA ObjectYPos,X ;unlogged
-	INC ObjectYScreen,X ;unlogged
+	STA objYLo,X ;unlogged
+	INC objYHi,X ;unlogged
 	JMP loc6_8671 ;unlogged
 bra6_8652:
 	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
-	LDA ObjectYScreen,X
+	ADC objYLo,X
+	STA objYLo,X
+	LDA objYHi,X
 	SBC #$00
-	STA ObjectYScreen,X
-	LDA ObjectYPos,X
+	STA objYHi,X
+	LDA objYLo,X
 	CMP #$F0
 	BCC bra6_8671
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
 	SBC #$10
-	STA ObjectYPos,X
+	STA objYLo,X
 bra6_8671:
 loc6_8671:
 	JSR sub_54_BB73
 	BEQ bra6_8681_RTS
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	ORA #$0F
-	STA ObjectYPos,X
-	INC ObjectVariables,X
+	STA objYLo,X
+	INC objVar,X
 bra6_8681_RTS:
 	RTS
 ptr6_8682:
 	LDA #$01
 	BMI bra6_869D
 	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
+	ADC objYLo,X
+	STA objYLo,X
 	CMP #$F0
 	BCC bra6_86BC
 	CLC
 	ADC #$10
-	STA ObjectYPos,X
-	INC ObjectYScreen,X
+	STA objYLo,X
+	INC objYHi,X
 	JMP loc6_86BC
 bra6_869D:
 	CLC ;unlogged
-	ADC ObjectYPos,X ;unlogged
-	STA ObjectYPos,X ;unlogged
-	LDA ObjectYScreen,X ;unlogged
+	ADC objYLo,X ;unlogged
+	STA objYLo,X ;unlogged
+	LDA objYHi,X ;unlogged
 	SBC #$00 ;unlogged
-	STA ObjectYScreen,X ;unlogged
-	LDA ObjectYPos,X ;unlogged
+	STA objYHi,X ;unlogged
+	LDA objYLo,X ;unlogged
 	CMP #$F0 ;unlogged
 	BCC bra6_86BC ;unlogged
-	LDA ObjectYPos,X ;unlogged
+	LDA objYLo,X ;unlogged
 	SEC ;unlogged
 	SBC #$10 ;unlogged
-	STA ObjectYPos,X ;unlogged
+	STA objYLo,X ;unlogged
 bra6_86BC:
 loc6_86BC:
 	JSR sub_54_BB59
 	BEQ bra6_86CE_RTS
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	AND #$F0
-	STA ObjectYPos,X
+	STA objYLo,X
 	LDA #$80
-	STA ObjectVariables,X
+	STA objVar,X
 bra6_86CE_RTS:
 	RTS
 Obj_h92:
 	LDA #$07
 	STA $25
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra6_86F1
 	CMP #$FF
 	BEQ bra6_86F1
 	JMP Obj_RemoveObject
 bra6_86F1:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra6_8733
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra6_8722
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc6_8733
 bra6_8722:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra6_8733:
 loc6_8733:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra6_8739
 	RTS
 bra6_8739:
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$1F
 	ASL
 	TAY
@@ -959,8 +959,8 @@ ptr6_8755:
 	RTS ;unlogged
 sub6_875F:
 	LDX $A4
-	LDA ObjectVariables,X
-	STA P1Score
+	LDA objVar,X
+	STA playerScores
 	AND #$0F
 	ASL
 	TAY
@@ -978,72 +978,72 @@ ptr6_8780:
 	LDA #$FF
 	PHA
 	CLC
-	ADC ObjectXPos,X
-	STA ObjectXPos,X
+	ADC objXLo,X
+	STA objXLo,X
 	PLA
 	BMI bra6_8794
-	LDA ObjectXScreen,X ;unlogged
+	LDA objXHi,X ;unlogged
 	ADC #$00 ;unlogged
 	BPL bra6_8799 ;unlogged
 bra6_8794:
-	LDA ObjectXScreen,X
+	LDA objXHi,X
 	SBC #$00
 bra6_8799:
-	STA ObjectXScreen,X
+	STA objXHi,X
 	JSR sub_54_BBA8
 	BEQ bra6_87AC_RTS
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	ORA #$0F
-	STA ObjectXPos,X
-	INC ObjectVariables,X
+	STA objXLo,X
+	INC objVar,X
 bra6_87AC_RTS:
 	RTS
 ptr6_87AD:
 	LDA #$01
 	PHA
 	CLC
-	ADC ObjectXPos,X
-	STA ObjectXPos,X
+	ADC objXLo,X
+	STA objXLo,X
 	PLA
 	BMI bra6_87C1
-	LDA ObjectXScreen,X
+	LDA objXHi,X
 	ADC #$00
 	BPL bra6_87C6
 bra6_87C1:
-	LDA ObjectXScreen,X ;unlogged
+	LDA objXHi,X ;unlogged
 	SBC #$00 ;unlogged
 bra6_87C6:
-	STA ObjectXScreen,X
+	STA objXHi,X
 	JSR sub_54_BB8E
 	BEQ bra6_87DB_RTS
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	AND #$F0
-	STA ObjectXPos,X
+	STA objXLo,X
 	LDA #$80
-	STA ObjectVariables,X
+	STA objVar,X
 bra6_87DB_RTS:
 	RTS
 ptr6_87DC:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$0E
 	BNE bra6_87FD_RTS
-	LDA ObjectVariables,X
+	LDA objVar,X
 	CLC
 	ADC #$10
-	STA ObjectVariables,X
+	STA objVar,X
 	AND #$F0
 	CMP #$C0
 	BCC bra6_87FD_RTS
-	INC ObjectVariables,X
-	LDA ObjectVariables,X
+	INC objVar,X
+	LDA objVar,X
 	AND #$8F
-	STA ObjectVariables,X
+	STA objVar,X
 bra6_87FD_RTS:
 	RTS
 ptr6_87FE:
 	LDY #$00
 	LDX $A4
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$10
 	BEQ bra6_880A
 	INY
@@ -1057,7 +1057,7 @@ bra6_880A:
 	STA $33
 	LDY #$80
 	LDX $A4
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	AND #$01
 	BEQ bra6_8824
 	LDY #$C0
@@ -1358,14 +1358,14 @@ ofs_88E5:
 	db $80
 Obj_h70:
 	LDX $A4
-	LDA ObjectVariables,X
+	LDA objVar,X
 	BPL bra6_8971
 	JSR Obj_FacePlayer
 	RTS
 bra6_8971:
 	JSR sub6_8BCA
 	LDX $A4
-	LDA ObjectAction,X
+	LDA objAction,X
 	ASL
 	TAY
 	LDA tbl6_8988,Y
@@ -1383,32 +1383,32 @@ tbl6_8988:
 	dw ptr6_8A98
 	dw ptr6_8ADB
 ptr6_899D:
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$40
-	STA EnemyAnimFrame,X
-	LDA ObjectState,X
+	STA enemyAnimFrame,X
+	LDA objState,X
 	AND #$40
 	BNE bra6_89AA
 	JMP loc6_8B8F
 bra6_89AA:
 	JMP loc6_8B6D
 ptr6_89AD:
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$C0
 	ORA #$40
-	STA EnemyAnimFrame,X
-	LDA ObjectState,X
+	STA enemyAnimFrame,X
+	LDA objState,X
 	AND #$40
 	BNE bra6_89C1
 	JMP loc6_8B44
 bra6_89C1:
 	JMP loc6_8B20
 ptr6_89C4:
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$C0
 	ORA #$80
-	STA EnemyAnimFrame,X
-	LDA ObjectXDistance,X
+	STA enemyAnimFrame,X
+	LDA objXDistLo,X
 	BPL bra6_89DB
 	EOR #$FF
 	CMP #$1C
@@ -1419,57 +1419,57 @@ bra6_89DB:
 	BCS bra6_89EA
 bra6_89DF:
 	LDA #$04
-	STA ObjectAction,X
+	STA objAction,X
 	LDA #$00
-	STA ObjActionTimer,X
+	STA objActionTimer,X
 	RTS
 bra6_89EA:
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$40
 	BNE bra6_89F4
 	JMP loc6_8B6D
 bra6_89F4:
 	JMP loc6_8B8F
 ptr6_89F7:
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$80
-	STA EnemyAnimFrame,X
-	LDA ObjectState,X
+	STA enemyAnimFrame,X
+	LDA objState,X
 	AND #$40
 	BNE bra6_8A09
 	JMP loc6_8B20
 bra6_8A09:
 	JMP loc6_8B44
 ptr6_8A0C:
-	LDY ObjActionTimer,X
+	LDY objActionTimer,X
 	LDA tbl6_8A53,Y
-	STA EnemyAnimFrame,X
-	LDA ObjFrameCounter
+	STA enemyAnimFrame,X
+	LDA objFrameCount
 	AND #$01
 	BNE bra6_8A52_RTS
-	LDA ObjActionTimer,X
+	LDA objActionTimer,X
 	LSR
 	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
-	LDA ObjActionTimer,X
+	ADC objYLo,X
+	STA objYLo,X
+	LDA objActionTimer,X
 	CMP #$0F
 	BCS bra6_8A31
-	INC ObjActionTimer,X
+	INC objActionTimer,X
 bra6_8A31:
 	JSR sub3_B077
 	BEQ bra6_8A52_RTS
 	LDA #$01
-	STA ScreenShake
-	STA FreezeFlag
+	STA screenShake
+	STA freezeFlag
 	LDA #sfx_Thud
-	STA Sound_Sfx
-	LDA ObjectYPos,X
+	STA sndSfx
+	LDA objYLo,X
 	AND #$F8
-	STA ObjectYPos,X
+	STA objYLo,X
 	LDA #$00
-	STA ObjActionTimer,X
-	INC ObjectAction,X
+	STA objActionTimer,X
+	INC objAction,X
 bra6_8A52_RTS:
 	RTS
 tbl6_8A53:
@@ -1490,8 +1490,8 @@ tbl6_8A53:
 	db $53
 	db $55
 ptr6_8A63:
-	INC ObjActionTimer,X
-	LDA ObjActionTimer,X
+	INC objActionTimer,X
+	LDA objActionTimer,X
 	CMP #$10
 	BCC bra6_8A97_RTS
 	CMP #$18
@@ -1499,66 +1499,66 @@ ptr6_8A63:
 	CMP #$14
 	BNE bra6_8A97_RTS
 	LDA #$00
-	LDY ObjXScreenDistance,X
+	LDY objXDistHi,X
 	BMI bra6_8A7E
 	LDA #$40
 bra6_8A7E:
-	STA ObjectState,X
-	LDA ObjectState,X
+	STA objState,X
+	LDA objState,X
 	AND #$40
 	ORA #$16
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 bra6_8A8C:
 	LDA #$00
-	STA FreezeFlag
-	STA ObjectAction,X
-	STA ObjActionTimer,X
+	STA freezeFlag
+	STA objAction,X
+	STA objActionTimer,X
 bra6_8A97_RTS:
 	RTS
 ptr6_8A98:
 	LDA #$02
-	CMP ObjectVariables,X
+	CMP objVar,X
 	BCS bra6_8AAF
 	LDA #$07
-	STA ObjectAction,X
+	STA objAction,X
 	LDA #$00
-	STA ObjActionTimer,X
+	STA objActionTimer,X
 	LDA #$18
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 bra6_8AAF:
-	INC ObjActionTimer,X
-	LDA ObjActionTimer,X
+	INC objActionTimer,X
+	LDA objActionTimer,X
 	CMP #$18
 	BCS bra6_8ABD
-	LDA #PlayerAnimationFrame
+	LDA #playerAnimFrame
 	BNE bra6_8AC3
 bra6_8ABD:
 	CMP #$20
 	BCS bra6_8AC7
 	LDA #$14
 bra6_8AC3:
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 bra6_8AC7:
 	CMP #$28
 	BCC bra6_8ADA_RTS
 	LDA #$15
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	LDA #$05
-	STA ObjectAction,X
+	STA objAction,X
 	LDA #$00
-	STA ObjActionTimer,X
+	STA objActionTimer,X
 bra6_8ADA_RTS:
 	RTS
 ptr6_8ADB:
-	LDA ObjActionTimer,X
+	LDA objActionTimer,X
 	CMP #$30
 	BCC bra6_8B13
 	BNE bra6_8AEA
 	LDA #$10
-	STA Sound_Sfx
+	STA sndSfx
 	BNE bra6_8B13
 bra6_8AEA:
 	CMP #$38
@@ -1585,157 +1585,157 @@ bra6_8B0A:
 	BCS bra6_8B17
 	LDA #$38
 bra6_8B10:
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 bra6_8B13:
-	INC ObjActionTimer,X
+	INC objActionTimer,X
 	RTS
 bra6_8B17:
 	LDA #mus_Victory
-	STA Sound_Music
+	STA sndMusic
 	LDA #$09
-	STA GameState
+	STA gameState
 	RTS
 loc6_8B20:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	CMP #$20
 	BCS bra6_8B2D
 	LDA #$02
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra6_8B2D:
-	DEC ObjectYPos,X
-	LDA ObjectVariables,X
+	DEC objYLo,X
+	LDA objVar,X
 	CMP #$02
 	BNE bra6_8B3A
-	DEC ObjectYPos,X
+	DEC objYLo,X
 bra6_8B3A:
 	LDY #$03
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$40
 	JMP loc6_8B67
 loc6_8B44:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	CMP #$80
 	BCC bra6_8B51
 	LDA #$00
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra6_8B51:
-	INC ObjectYPos,X
-	LDA ObjectVariables,X
+	INC objYLo,X
+	LDA objVar,X
 	CMP #$02
 	BNE bra6_8B5E
-	INC ObjectYPos,X
+	INC objYLo,X
 bra6_8B5E:
 	LDY #$0B
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$C0
 	ORA #$80
 loc6_8B67:
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	JMP loc6_8BBA
 loc6_8B6D:
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	CMP #$20
 	BCS bra6_8B7A
 	LDA #$01
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra6_8B7A:
-	DEC ObjectXPos,X
-	LDA ObjectVariables,X
+	DEC objXLo,X
+	LDA objVar,X
 	CMP #$02
 	BNE bra6_8B87
-	DEC ObjectXPos,X
+	DEC objXLo,X
 bra6_8B87:
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	ORA #$40
 	JMP loc6_8BAE
 loc6_8B8F:
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	CMP #$C8
 	BCC bra6_8B9C
 	LDA #$03
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra6_8B9C:
-	INC ObjectXPos,X
-	LDA ObjectVariables,X
+	INC objXLo,X
+	LDA objVar,X
 	CMP #$02
 	BNE bra6_8BA9
-	INC ObjectXPos,X
+	INC objXLo,X
 bra6_8BA9:
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$80
 loc6_8BAE:
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	LDY #$01
-	LDA ObjectAction,X
+	LDA objAction,X
 	BEQ bra6_8BBA
 	LDY #$09
 bra6_8BBA:
 loc6_8BBA:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$04
 	BEQ bra6_8BC2
 	INY
 bra6_8BC2:
 	TYA
-	ORA EnemyAnimFrame,X
-	STA EnemyAnimFrame,X
+	ORA enemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 sub6_8BCA:
 	LDA #$07
 	STA $25
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra6_8BEC
 	CMP #$FF
 	BEQ bra6_8BEC
 	JMP Obj_RemoveObject ;unlogged
 bra6_8BEC:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra6_8C2E
-	LDA ObjYScreenDistance,X ;unlogged
+	LDA objYDistHi,X ;unlogged
 	BPL bra6_8C1D ;unlogged
-	LDA ObjectYDistance,X ;unlogged
+	LDA objYDistLo,X ;unlogged
 	CLC ;unlogged
 	ADC #$10 ;unlogged
-	STA ObjectYDistance,X ;unlogged
-	LDA ObjYScreenDistance,X ;unlogged
+	STA objYDistLo,X ;unlogged
+	LDA objYDistHi,X ;unlogged
 	ADC #$00 ;unlogged
-	STA ObjYScreenDistance,X ;unlogged
+	STA objYDistHi,X ;unlogged
 	JMP loc6_8C2E ;unlogged
 bra6_8C1D:
-	LDA ObjectYDistance,X ;unlogged
+	LDA objYDistLo,X ;unlogged
 	SEC ;unlogged
 	SBC #$10 ;unlogged
-	STA ObjectYDistance,X ;unlogged
-	LDA ObjYScreenDistance,X ;unlogged
+	STA objYDistLo,X ;unlogged
+	LDA objYDistHi,X ;unlogged
 	SBC #$00 ;unlogged
-	STA ObjYScreenDistance,X ;unlogged
+	STA objYDistHi,X ;unlogged
 bra6_8C2E:
 loc6_8C2E:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra6_8C34
 	RTS
 bra6_8C34:
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$1F
 	ASL
 	TAY
@@ -1751,20 +1751,20 @@ tbl6_8C48:
 	dw ptr6_8C52
 	dw Obj_FlipKill
 ptr6_8C52:
-	LDA ObjectAction,X
+	LDA objAction,X
 	CMP #$04
 	BCS bra6_8CA1_RTS
 	JSR Obj_PlayerHitCheck
-	LDA InvincibilityTimer
+	LDA invincibilityTimer
 	CMP #$F7
 	BCS bra6_8CA1_RTS
-	LDA ObjectAction,X
+	LDA objAction,X
 	BEQ bra6_8C86
 	CMP #$01
 	BNE bra6_8C78
 	LDA #$30
-	STA PlayerXSpeed
-	LDA PlayerMovement
+	STA playerXSpd
+	LDA playerMoveFlags
 	AND #$BE
 	ORA #$04
 	BNE bra6_8C9B
@@ -1772,29 +1772,29 @@ bra6_8C78:
 	CMP #$03
 	BNE bra6_8C86
 	LDA #$30
-	STA PlayerXSpeed
-	LDA PlayerMovement
+	STA playerXSpd
+	LDA playerMoveFlags
 	ORA #$45
 	BNE bra6_8C9B
 bra6_8C86:
 	LDA #sfx_Feather
-	STA Sound_Sfx
+	STA sndSfx
 	LDA #$06
-	STA ObjectAction,X
+	STA objAction,X
 	LDA #$00
-	STA ObjActionTimer,X
-	INC ObjectVariables,X
-	LDA PlayerMovement
+	STA objActionTimer,X
+	INC objVar,X
+	LDA playerMoveFlags
 	ORA #$04
 bra6_8C9B:
-	STA PlayerMovement
+	STA playerMoveFlags
 	LDA #$30
-	STA PlayerYSpeed
+	STA playerYSpd
 bra6_8CA1_RTS:
 	RTS
 ptr6_8CA2:
 	LDX $A4
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$3F
 	ASL
 	TAX
@@ -1804,16 +1804,16 @@ ptr6_8CA2:
 	STA $33
 	LDY #$80
 	LDX $A4
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	AND #$01
 	BEQ bra6_8CC2
 	LDY #$C0 ;unlogged
 bra6_8CC2:
 	STY $36
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$C0
 	STA $05F0
-	LDA WorldNumber
+	LDA worldNumber
 	CMP #$04
 	BEQ bra6_8CD7
 	JSR jmp_54_A118
@@ -1822,11 +1822,11 @@ bra6_8CD7:
 	JSR sub_52_A2A8
 	RTS
 ptr6_8CDB:
-	LDA WorldNumber
+	LDA worldNumber
 	CMP #$02
 	BNE bra6_8D12
 	LDX $A4
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$3F
 	ASL
 	TAX
@@ -1836,13 +1836,13 @@ ptr6_8CDB:
 	STA $33
 	LDY #$80
 	LDX $A4
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	AND #$01
 	BEQ bra6_8D02
 	LDY #$C0
 bra6_8D02:
 	STY $36
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$C0
 	ORA #$60
 	STA $05F0
@@ -1850,7 +1850,7 @@ bra6_8D02:
 	RTS
 bra6_8D12:
 	LDX $A4
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	SEC
 	SBC #$1D
 	AND #$3F
@@ -1862,13 +1862,13 @@ bra6_8D12:
 	STA $33
 	LDY #$80
 	LDX $A4
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	AND #$01
 	BEQ bra6_8D35
 	LDY #$C0
 bra6_8D35:
 	STY $36
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$C0
 	ORA #$60
 	STA $05F0
@@ -3120,54 +3120,54 @@ sub6_92D0:
 	LDA #$07
 	STA $25
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra6_92F2
 	CMP #$FF
 	BEQ bra6_92F2
 	JMP Obj_RemoveObject
 bra6_92F2:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra6_9334
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra6_9323
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc6_9334
 bra6_9323:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra6_9334:
 loc6_9334:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra6_933A
 	RTS ;unlogged
 bra6_933A:
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$1F
 	ASL
 	TAY
@@ -3183,7 +3183,7 @@ tbl6_934E:
 	dw ptr6_9358
 	dw Obj_FlipKill
 ptr6_9358:
-	LDA ReznorsDefeated
+	LDA reznorsDefeated
 	BNE bra6_9363_RTS
 	JSR jmp_54_BC3E
 	JSR jmp_54_BF74
@@ -3191,7 +3191,7 @@ bra6_9363_RTS:
 	RTS
 ptr6_9364:
 	LDX $A4
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$3F
 	ASL
 	TAX
@@ -3202,14 +3202,14 @@ ptr6_9364:
 	LDA #$40
 	STA $36
 	LDX $A4
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$C0
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
 ptr6_9389:
 	LDX $A4
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$3F
 	ASL
 	TAX
@@ -3219,13 +3219,13 @@ ptr6_9389:
 	STA $33
 	LDY #$80
 	LDX $A4
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	AND #$01
 	BEQ bra6_93A9
 	LDY #$C0
 bra6_93A9:
 	STY $36
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$C0
 	STA $05F0
 	JSR jmp_54_A118
@@ -3233,17 +3233,17 @@ bra6_93A9:
 Obj_h72:
 	LDX $A4
 	JSR sub6_9BEA
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	CMP #$72
 	BNE bra6_93C8
-	LDA ObjectVariables,X
+	LDA objVar,X
 	BMI bra6_93CB
 bra6_93C8:
 	JMP loc6_9488
 bra6_93CB:
-	LDA ObjectVariables,X
+	LDA objVar,X
 	AND #$7F
-	STA ObjectVariables,X
+	STA objVar,X
 bra6_93D3:
 	JSR jmp_54_B785
 	AND #$07
@@ -3253,7 +3253,7 @@ bra6_93D3:
 	STA $0668
 	TAY
 	LDA tbl6_95CD,Y
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 bra6_93E8:
 	JSR jmp_54_B785
 	AND #$07
@@ -3268,59 +3268,59 @@ bra6_93E8:
 	LDX tbl6_95DD,Y
 	LDA tbl6_95F5,X
 	LDX $A4
-	STA ObjectXPos,X
+	STA objXLo,X
 	LDX tbl6_95DD,Y
 	LDA tbl6_95FC,X
 	LDX $A4
-	STA ObjectYPos,X
+	STA objYLo,X
 	LDX tbl6_95DD+1,Y
 	LDA tbl6_95F5,X
 	LDX $A4
-	STA ObjectXPos+1,X
+	STA objXLo+1,X
 	LDA #$0D
-	STA ObjectXScreen+1,X
+	STA objXHi+1,X
 	LDX tbl6_95DD+1,Y
 	LDA tbl6_95FC,X
 	LDX $A4
-	STA ObjectYPos+1,X
+	STA objYLo+1,X
 	LDA #$01
-	STA ObjectYScreen+1,X
+	STA objYHi+1,X
 	LDA #$73
-	STA ObjectSlot+1,X
+	STA objSlot+1,X
 	LDA #$2C
-	STA EnemyAnimFrame+1,X
+	STA enemyAnimFrame+1,X
 	LDX tbl6_95DD+2,Y
 	LDA tbl6_95F5,X
 	LDX $A4
-	STA ObjectXPos+2,X
+	STA objXLo+2,X
 	LDA #$0D
-	STA ObjectXScreen+2,X
+	STA objXHi+2,X
 	LDX tbl6_95DD+2,Y
 	LDA tbl6_95FC,X
 	LDX $A4
-	STA ObjectYPos+2,X
+	STA objYLo+2,X
 	LDA #$01
-	STA ObjectYScreen+2,X
+	STA objYHi+2,X
 	LDA #$75
-	STA ObjectSlot+2,X
+	STA objSlot+2,X
 	LDA #$2C
-	STA EnemyAnimFrame+2,X
+	STA enemyAnimFrame+2,X
 	LDA #$00
-	STA ObjectState,X
-	STA ObjectState+1,X
-	STA ObjectState+2,X
-	STA ObjectAction,X
-	STA ObjectAction+1,X
-	STA ObjectAction+2,X
-	STA ObjActionTimer,X
+	STA objState,X
+	STA objState+1,X
+	STA objState+2,X
+	STA objAction,X
+	STA objAction+1,X
+	STA objAction+2,X
+	STA objActionTimer,X
 	STA $0642,X
 	STA $0643,X
-	INC ObjectCount
-	INC ObjectCount
+	INC objCount
+	INC objCount
 	RTS
 loc6_9488:
 	JSR sub6_9670
-	LDA ObjectAction,X
+	LDA objAction,X
 	ASL
 	TAY
 	LDA tbl6_949D,Y
@@ -3337,20 +3337,20 @@ tbl6_949D:
 	dw ptr6_9603
 	dw ptr6_9632
 ptr6_94AB:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$03
 	BNE bra6_94C1_RTS
-	LDA ObjActionTimer,X
+	LDA objActionTimer,X
 	CMP #$18
 	BCC bra6_94C2
 	LDA #$00
-	STA ObjActionTimer,X
-	INC ObjectAction,X
+	STA objActionTimer,X
+	INC objAction,X
 bra6_94C1_RTS:
 	RTS
 bra6_94C2:
-	INC ObjActionTimer,X
-	LDA ObjectSlot,X
+	INC objActionTimer,X
+	LDA objSlot,X
 	CMP #$72
 	BEQ bra6_94E5
 	SEC
@@ -3365,26 +3365,26 @@ bra6_94C2:
 	LDA tbl6_95FC,Y
 	SEC
 	SBC #$10
-	CMP ObjectYPos,X
+	CMP objYLo,X
 	BCS bra6_94C1_RTS
 bra6_94E5:
-	DEC ObjectYPos,X
+	DEC objYLo,X
 	RTS
 ptr6_94E9:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$03
 	BNE bra6_94FF_RTS
-	LDA ObjActionTimer,X
+	LDA objActionTimer,X
 	CMP #$18
 	BCC bra6_9500
 	LDA #$00
-	STA ObjActionTimer,X
-	INC ObjectAction,X
+	STA objActionTimer,X
+	INC objAction,X
 bra6_94FF_RTS:
 	RTS
 bra6_9500:
-	INC ObjActionTimer,X
-	LDA ObjectSlot,X
+	INC objActionTimer,X
+	LDA objSlot,X
 	CMP #$72
 	BEQ bra6_950E
 	LDA #$2C
@@ -3396,31 +3396,31 @@ bra6_950E:
 	LDA tbl6_95CE,Y
 	BNE bra6_9525
 bra6_951A:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$08
 	BNE bra6_9522
 	INY
 bra6_9522:
 	LDA tbl6_95CD,Y
 bra6_9525:
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 ptr6_9529:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$03
 	BNE bra6_953F_RTS
-	LDA ObjActionTimer,X
+	LDA objActionTimer,X
 	CMP #$1C
 	BCC bra6_9540
 	LDA #$00
-	STA ObjActionTimer,X
-	INC ObjectAction,X
+	STA objActionTimer,X
+	INC objAction,X
 bra6_953F_RTS:
 	RTS
 bra6_9540:
-	INC ObjActionTimer,X
-	INC ObjectYPos,X
-	LDA ObjectSlot,X
+	INC objActionTimer,X
+	INC objYLo,X
+	LDA objSlot,X
 	CMP #$72
 	BEQ bra6_9551
 	LDA #$2C
@@ -3429,55 +3429,55 @@ bra6_9551:
 	LDY $0668
 	LDA tbl6_95CD,Y
 bra6_9557:
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 ptr6_955B:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$03
 	BNE bra6_9585_RTS
-	LDA ObjActionTimer,X
+	LDA objActionTimer,X
 	CMP #$18
 	BCC bra6_9586
 	LDA #$00
-	STA ObjActionTimer,X
-	STA ObjectAction,X
-	LDA ObjectVariables,X
+	STA objActionTimer,X
+	STA objAction,X
+	LDA objVar,X
 	ORA #$80
-	STA ObjectVariables,X
-	LDA ObjectSlot,X
+	STA objVar,X
+	LDA objSlot,X
 	CMP #$72
 	BEQ bra6_9585_RTS
 	LDA #$00
-	STA ObjectSlot,X
+	STA objSlot,X
 bra6_9585_RTS:
 	RTS
 bra6_9586:
-	INC ObjActionTimer,X
+	INC objActionTimer,X
 	RTS
 ptr6_958A:
-	LDA ObjActionTimer,X
+	LDA objActionTimer,X
 	CMP #$30
 	BCC bra6_95A6
 	LDA #$00
-	STA ObjActionTimer,X
+	STA objActionTimer,X
 	LDY #$02
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	CMP #$72
 	BNE bra6_95A1
 	LDY #$06
 bra6_95A1:
 	TYA
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra6_95A6:
-	INC ObjActionTimer,X
-	LDA ObjFrameCounter
+	INC objActionTimer,X
+	LDA objFrameCount
 	AND #$18
 	LSR
 	LSR
 	LSR
 	TAY
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	CMP #$72
 	BNE bra6_95BE
 	LDA tbl6_95C5,Y
@@ -3485,7 +3485,7 @@ bra6_95A6:
 bra6_95BE:
 	LDA tbl6_95C9,Y
 bra6_95C1:
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 tbl6_95C5:
 	db $25
@@ -3557,113 +3557,113 @@ tbl6_95FC:
 	db $68
 	db $78
 ptr6_9603:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	CMP #$E0
 	BCS bra6_9611
-	LDA ObjActionTimer,X
+	LDA objActionTimer,X
 	CMP #$50
 	BCC bra6_961A
 bra6_9611:
 	LDA #$23
-	STA Sound_Music
+	STA sndMusic
 	LDA #$09
-	STA GameState
+	STA gameState
 	RTS
 bra6_961A:
 	LDY #$28
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$04
 	BNE bra6_9624
 	INY
 bra6_9624:
 	TYA
-	STA EnemyAnimFrame,X
-	INC ObjActionTimer,X
-	INC ObjectYPos,X
-	INC ObjectYPos,X
+	STA enemyAnimFrame,X
+	INC objActionTimer,X
+	INC objYLo,X
+	INC objYLo,X
 	RTS
 ptr6_9632:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$03
 	BNE bra6_964A_RTS
-	LDA ObjActionTimer,X
+	LDA objActionTimer,X
 	CMP #$1C
 	BCC bra6_964B
 	LDA #$00
-	STA ObjActionTimer,X
+	STA objActionTimer,X
 	LDA #$03
-	STA ObjectAction,X
+	STA objAction,X
 bra6_964A_RTS:
 	RTS
 bra6_964B:
-	INC ObjActionTimer,X
+	INC objActionTimer,X
 	LDY $0667
 	LDA tbl6_95DD,Y
 	TAY
 	LDA tbl6_95FC,Y
 	CLC
 	ADC #$04
-	CMP ObjectYPos,X
+	CMP objYLo,X
 	BCC bra6_9666
-	INC ObjectYPos,X
-	INC ObjectYPos,X
+	INC objYLo,X
+	INC objYLo,X
 bra6_9666:
 	LDY $0668
 	LDA tbl6_95CD,Y
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 sub6_9670:
 	LDA #$07
 	STA $25
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra6_9692
 	CMP #$FF
 	BEQ bra6_9692
 	JMP Obj_RemoveObject ;unlogged
 bra6_9692:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra6_96D4
-	LDA ObjYScreenDistance,X ;unlogged
+	LDA objYDistHi,X ;unlogged
 	BPL bra6_96C3 ;unlogged
-	LDA ObjectYDistance,X ;unlogged
+	LDA objYDistLo,X ;unlogged
 	CLC ;unlogged
 	ADC #$10 ;unlogged
-	STA ObjectYDistance,X ;unlogged
-	LDA ObjYScreenDistance,X ;unlogged
+	STA objYDistLo,X ;unlogged
+	LDA objYDistHi,X ;unlogged
 	ADC #$00 ;unlogged
-	STA ObjYScreenDistance,X ;unlogged
+	STA objYDistHi,X ;unlogged
 	JMP loc6_96D4 ;unlogged
 bra6_96C3:
-	LDA ObjectYDistance,X ;unlogged
+	LDA objYDistLo,X ;unlogged
 	SEC ;unlogged
 	SBC #$10 ;unlogged
-	STA ObjectYDistance,X ;unlogged
-	LDA ObjYScreenDistance,X ;unlogged
+	STA objYDistLo,X ;unlogged
+	LDA objYDistHi,X ;unlogged
 	SBC #$00 ;unlogged
-	STA ObjYScreenDistance,X ;unlogged
+	STA objYDistHi,X ;unlogged
 bra6_96D4:
 loc6_96D4:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra6_96DA
 	RTS ;unlogged
 bra6_96DA:
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$1F
 	ASL
 	TAY
@@ -3679,13 +3679,13 @@ tbl6_96EE:
 	dw ptr6_96F8
 	dw Obj_FlipKill
 ptr6_96F8:
-	LDA ObjectAction,X
+	LDA objAction,X
 	CMP #$02
 	BCC bra6_9700
 bra6_96FF_RTS:
 	RTS
 bra6_9700:
-	LDA PlayerXPosDup
+	LDA playerXLoDup
 	CMP #$28
 	BCC bra6_9732
 	CMP #$38
@@ -3711,7 +3711,7 @@ bra6_9700:
 	CMP #$D8
 	BCC bra6_96FF_RTS
 bra6_9732:
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	SEC
 	SBC #$72
 	BNE bra6_9740
@@ -3729,116 +3729,116 @@ loc6_9747:
 	LDA tbl6_95FC,Y
 	SEC
 	SBC #$0C
-	CMP ObjectYPos,X
+	CMP objYLo,X
 	BCC bra6_97A3_RTS
 	JSR Obj_PlayerHitCheck
-	LDA PlayerMovement
+	LDA playerMoveFlags
 	AND #$04
 	BNE bra6_9763
-	LDA PlayerYSpeed
+	LDA playerYSpd
 	BNE bra6_9767
 bra6_9763:
 	JSR jmp_54_BF74
 	RTS
 bra6_9767:
-	LDA InvincibilityTimer
+	LDA invincibilityTimer
 	CMP #$F7
 	BCS bra6_97A3_RTS ;If the invincibility timer is above this, stop
 	LDA #$30
-	STA PlayerYSpeed ;Give player vertical height when hitting them
-	LDA PlayerMovement
+	STA playerYSpd ;Give player vertical height when hitting them
+	LDA playerMoveFlags
 	ORA #$04
-	STA PlayerMovement ;Make player move upwards
+	STA playerMoveFlags ;Make player move upwards
 	LDA #$04
-	STA PlayerAction ;Make player jump off
+	STA playerAction ;Make player jump off
 	LDA #sfx_Feather
-	STA Sound_Sfx ;Play feather/hit sound
+	STA sndSfx ;Play feather/hit sound
 	LDY #$04 ;Load "hit" action into Y register
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	CMP #$72
 	BNE bra6_979A
-	INC ObjectVariables,X ;Add to hit count
-	LDA ObjectVariables,X
+	INC objVar,X ;Add to hit count
+	LDA objVar,X
 	AND #%01111111 ;Mask out bit 7
 	CMP #$03
 	BCC bra6_979A ;If Lemmy/Wendy hasn't been hit 3 times, branch
 	LDY #$05 ;If they have, load "defeat" action into Y register
-	STY ReznorsDefeated ;Also store here (why??)
+	STY reznorsDefeated ;Also store here (why??)
 bra6_979A:
 	TYA
-	STA ObjectAction,X ;Trigger loaded action
+	STA objAction,X ;Trigger loaded action
 	LDA #$00
-	STA ObjActionTimer,X ;Clear action timer
+	STA objActionTimer,X ;Clear action timer
 bra6_97A3_RTS:
 	RTS
 Obj_h64:
 	LDX $A4
-	LDA ObjectVariables,X
+	LDA objVar,X
 	BMI bra6_97AE
 	JMP loc6_9831
 bra6_97AE:
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X ;Subtract the object's X position by the player's to get its distance from it
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X ;Calculate object's horizontal screen distance from the player
+	SBC playerXLoDup
+	STA objXDistLo,X ;Subtract the object's X position by the player's to get its distance from it
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X ;Calculate object's horizontal screen distance from the player
 	STA $28
 	BEQ bra6_97CA
 	CMP #$FF
 	BEQ bra6_97CA
 	JMP Obj_RemoveObject ;unlogged
 bra6_97CA:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X ;Subtract the object's Y position by the player's to get its distance from them
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X ;Do the same for the object's Y screen
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X ;Subtract the object's Y position by the player's to get its distance from them
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X ;Do the same for the object's Y screen
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra6_980C ;If the player and the object are on the same vertical screen, branch
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra6_97FB ;Branch if the vertical screen difference is lower than 80h
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X ;Add to the object's distance
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X ;Add to the object's distance
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X ;Add (nothing?) to the object's distance
+	STA objYDistHi,X ;Add (nothing?) to the object's distance
 	JMP loc6_980C
 bra6_97FB:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X ;Subtract from the object's distance
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X ;Subtract from the object's distance
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X ;Subtract (nothing?) from the object's distance
+	STA objYDistHi,X ;Subtract (nothing?) from the object's distance
 bra6_980C:
 loc6_980C:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra6_9812 ;Branch if the game currently isn't frozen
 	RTS
 bra6_9812:
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	CMP #$71
 	BNE bra6_981E ;If a diagonal podoboo isn't in the object slot, branch
 	LDA #$A7
-	STA SpriteBank2 ;Swap 1K CHR bank into second bank slot
+	STA chrSpriteBank2 ;Swap 1K CHR bank into second bank slot
 bra6_981E:
 	LDA #$00
-	STA ObjectVariables,X ;Clear any variables for the object
+	STA objVar,X ;Clear any variables for the object
 	LDY #$80 ;Load down-right direction
-	LDA ObjXScreenDistance,X
+	LDA objXDistHi,X
 	BMI bra6_982C ;Branch if the player is a screen or more ahead of it
 	LDY #$C0 ;If the player isn't, load down-left direction
 bra6_982C:
 	TYA
-	STA ObjectAction,X ;Store loaded direction
+	STA objAction,X ;Store loaded direction
 	RTS
 loc6_9831:
 	JSR sub6_92D0
@@ -3846,19 +3846,19 @@ loc6_9831:
 	BEQ bra6_9845
 	CMP #$02
 	BEQ bra6_9845
-	LDA ObjectAction,X
+	LDA objAction,X
 	EOR #$40
-	STA ObjectAction,X ;Horizontally flip the podoboo
+	STA objAction,X ;Horizontally flip the podoboo
 bra6_9845:
 	JSR sub6_9997
 	BEQ bra6_9856
 	CMP #$02
 	BEQ bra6_9856
-	LDA ObjectAction,X
+	LDA objAction,X
 	EOR #$80
-	STA ObjectAction,X ;Vertically flip the podoboo
+	STA objAction,X ;Vertically flip the podoboo
 bra6_9856:
-	LDA ObjectAction,X
+	LDA objAction,X
 	AND #$40 ;Get the horizontal direction of the podoboo
 	BEQ bra6_9860 ;If it's facing right, branch
 	JMP loc6_98EB ;If it's facing left, jump
@@ -3866,44 +3866,44 @@ bra6_9860:
 	LDA #$01 ;Load speed value of 1
 	PHA ;Store the value in the stack
 	CLC
-	ADC ObjectXPos,X
-	STA ObjectXPos,X ;Add that speed value to the object's X position	
+	ADC objXLo,X
+	STA objXLo,X ;Add that speed value to the object's X position	
 	PLA ;Load the previously stored speed value
 	BMI bra6_9874 ;Branch if it's over 80h/negative
-	LDA ObjectXScreen,X
+	LDA objXHi,X
 	ADC #$00 ;Add (nothing?) to it's X screen value
 	BPL bra6_9879 ;Branch if it's less than 80h/positive
 bra6_9874:
-	LDA ObjectXScreen,X
+	LDA objXHi,X
 	SBC #$00 ;Subtract (nothing?) from it's X screen value
 bra6_9879:
-	STA ObjectXScreen,X
-	LDA ObjectAction,X
+	STA objXHi,X
+	LDA objAction,X
 	AND #$80 ;Get the vertical diagonal of the podoboo
 	BNE bra6_98B7 ;If facing up, branch
 	LDA #$FF
 	BMI bra6_98A0 ;If facing down, load speed value of -1 and branch
 	CLC ;unused
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
+	ADC objYLo,X
+	STA objYLo,X
 	BCS bra6_9894
 	CMP #$F0
 	BCC bra6_98B2
 bra6_9894: ;unused
 	CLC
 	ADC #$10
-	STA ObjectYPos,X
-	INC ObjectYScreen,X
+	STA objYLo,X
+	INC objYHi,X
 	JMP bra6_98B2
 bra6_98A0:
 	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X ;Add loaded speed value to it's Y position
+	ADC objYLo,X
+	STA objYLo,X ;Add loaded speed value to it's Y position
 	BCS bra6_98B2
 	SEC
 	SBC #$10
-	STA ObjectYPos,X ;Move the podoboo down 16 units
-	DEC ObjectYScreen,X ;Move it to the lower horizontal screen
+	STA objYLo,X ;Move the podoboo down 16 units
+	DEC objYHi,X ;Move it to the lower horizontal screen
 bra6_98B2:
 	LDY #$34 ;Load animation frame 34h
 	JMP loc6_9972 ;Jump
@@ -3911,26 +3911,26 @@ bra6_98B7:
 	LDA #$01
 	BMI bra6_98D4
 	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
+	ADC objYLo,X
+	STA objYLo,X
 	BCS bra6_98C8
 	CMP #$F0
 	BCC bra6_98E6
 bra6_98C8:
 	CLC
 	ADC #$10
-	STA ObjectYPos,X
-	INC ObjectYScreen,X
+	STA objYLo,X
+	INC objYHi,X
 	JMP loc6_98E6
 bra6_98D4:
 	CLC ;unlogged
-	ADC ObjectYPos,X ;unlogged
-	STA ObjectYPos,X ;unlogged
+	ADC objYLo,X ;unlogged
+	STA objYLo,X ;unlogged
 	BCS bra6_98E6 ;unlogged
 	SEC ;unlogged
 	SBC #$10 ;unlogged
-	STA ObjectYPos,X ;unlogged
-	DEC ObjectYScreen,X ;unlogged
+	STA objYLo,X ;unlogged
+	DEC objYHi,X ;unlogged
 bra6_98E6:
 loc6_98E6:
 	LDY #$B6
@@ -3939,44 +3939,44 @@ loc6_98EB:
 	LDA #$FF
 	PHA
 	CLC
-	ADC ObjectXPos,X
-	STA ObjectXPos,X
+	ADC objXLo,X
+	STA objXLo,X
 	PLA
 	BMI bra6_98FF
-	LDA ObjectXScreen,X ;unlogged
+	LDA objXHi,X ;unlogged
 	ADC #$00 ;unlogged
 	BPL bra6_9904 ;unlogged
 bra6_98FF:
-	LDA ObjectXScreen,X
+	LDA objXHi,X
 	SBC #$00
 bra6_9904:
-	STA ObjectXScreen,X
-	LDA ObjectAction,X
+	STA objXHi,X
+	LDA objAction,X
 	AND #$80
 	BNE bra6_9941
 	LDA #$FF
 	BMI bra6_992B
 	CLC ;unlogged
-	ADC ObjectYPos,X ;unlogged
-	STA ObjectYPos,X ;unlogged
+	ADC objYLo,X ;unlogged
+	STA objYLo,X ;unlogged
 	BCS bra6_991F ;unlogged
 	CMP #$F0 ;unlogged
 	BCC bra6_993D ;unlogged
 bra6_991F:
 	CLC ;unlogged
 	ADC #$10 ;unlogged
-	STA ObjectYPos,X ;unlogged
-	INC ObjectYScreen,X ;unlogged
+	STA objYLo,X ;unlogged
+	INC objYHi,X ;unlogged
 	JMP bra6_993D ;unlogged
 bra6_992B:
 	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
+	ADC objYLo,X
+	STA objYLo,X
 	BCS bra6_993D
 	SEC
 	SBC #$10
-	STA ObjectYPos,X
-	DEC ObjectYScreen,X
+	STA objYLo,X
+	DEC objYHi,X
 bra6_993D:
 	LDY #$74
 	BNE bra6_9972
@@ -3984,42 +3984,42 @@ bra6_9941:
 	LDA #$01
 	BMI bra6_995E
 	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
+	ADC objYLo,X
+	STA objYLo,X
 	BCS bra6_9952
 	CMP #$F0
 	BCC bra6_9970
 bra6_9952:
 	CLC
 	ADC #$10
-	STA ObjectYPos,X
-	INC ObjectYScreen,X
+	STA objYLo,X
+	INC objYHi,X
 	JMP loc6_9970
 bra6_995E:
 	CLC ;unlogged routine
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
+	ADC objYLo,X
+	STA objYLo,X
 	BCS bra6_9970
 	SEC
 	SBC #$10
-	STA ObjectYPos,X
-	DEC ObjectYScreen,X
+	STA objYLo,X
+	DEC objYHi,X
 bra6_9970:
 loc6_9970:
 	LDY #$F6
 bra6_9972:
 loc6_9972:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$04 ;Set frequency to 4 frames using a bitmask
 	BEQ bra6_997A ;If the bits are masked out, use the 1st sprite and branch
 	INY ;Otherwise, continue and go to the 2nd podoboo sprite
 bra6_997A:
 	TYA
-	STA EnemyAnimFrame,X ;Store loaded podoboo sprite
+	STA enemyAnimFrame,X ;Store loaded podoboo sprite
 	JMP loc6_9BEA ;Jump
 sub6_9981:
 	STY $2B
-	LDA ObjectAction,X
+	LDA objAction,X
 	AND #$40
 	BEQ bra6_998E
 	LDA #$00
@@ -4034,7 +4034,7 @@ sub6_9997:
 	STY $2B
 	LDA #$08
 	STA $36
-	LDA ObjectAction,X
+	LDA objAction,X
 	AND #$80
 	BEQ bra6_99A6
 	LDA #$10
@@ -4043,7 +4043,7 @@ bra6_99A6:
 ptr6_99A9:
 	JSR sub6_99EF
 	LDX $A4
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$3F
 	ASL
 	TAX
@@ -4053,7 +4053,7 @@ ptr6_99A9:
 	STA $33
 	LDY #$80
 	LDX $A4
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	AND #$01
 	BEQ bra6_99CC
 	LDY #$C0
@@ -4091,7 +4091,7 @@ tbl6_99D8:
 	db $FF
 sub6_99EF:
 	LDX $A4
-	LDA ObjectVariables,X
+	LDA objVar,X
 	BPL bra6_99FF_RTS
 	LDA #$02
 	STA $2D
@@ -4102,58 +4102,58 @@ bra6_99FF_RTS:
 	RTS
 Obj_h6C:
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra6_9A1E
 	CMP #$FF
 	BEQ bra6_9A1E
 	JMP Obj_RemoveObject
 bra6_9A1E:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra6_9A60
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra6_9A4F
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc6_9A60
 bra6_9A4F:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra6_9A60:
 loc6_9A60:
 	LDA $06DF
 	BEQ bra6_9A6C
 	LDA #$02
-	STA ObjectAction,X
+	STA objAction,X
 	BNE bra6_9A6F
 bra6_9A6C:
 	JSR jmp_54_BD3D
 bra6_9A6F:
-	LDA ObjectAction,X
+	LDA objAction,X
 	ASL
 	TAY
 	LDA tbl6_9A81,Y
@@ -4169,72 +4169,72 @@ ptr6_9A87:
 	LDA #$FF
 	BMI bra6_9AA4
 	CLC ;unlogged
-	ADC ObjectYPos,X ;unlogged
-	STA ObjectYPos,X ;unlogged
+	ADC objYLo,X ;unlogged
+	STA objYLo,X ;unlogged
 	BCS bra6_9A98 ;unlogged
 	CMP #$F0 ;unlogged
 	BCC bra6_9AB6 ;unlogged
 bra6_9A98:
 	CLC ;unlogged
 	ADC #$10 ;unlogged
-	STA ObjectYPos,X ;unlogged
-	INC ObjectYScreen,X ;unlogged
+	STA objYLo,X ;unlogged
+	INC objYHi,X ;unlogged
 	JMP bra6_9AB6 ;unlogged
 bra6_9AA4:
 	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
+	ADC objYLo,X
+	STA objYLo,X
 	BCS bra6_9AB6
 	SEC ;unlogged
 	SBC #$10 ;unlogged
-	STA ObjectYPos,X ;unlogged
-	DEC ObjectYScreen,X ;unlogged
+	STA objYLo,X ;unlogged
+	DEC objYHi,X ;unlogged
 bra6_9AB6:
 	LDA #$01
-	STA FreezeFlag
+	STA freezeFlag
 	LDY #$00
-	LDA FrameCount
+	LDA frameCount
 	AND #$08
 	BNE bra6_9AC4
 	INY
 bra6_9AC4:
 	TYA
-	STA EnemyAnimFrame,X
-	INC ObjActionTimer,X
-	LDA ObjActionTimer,X
+	STA enemyAnimFrame,X
+	INC objActionTimer,X
+	LDA objActionTimer,X
 	CMP #$10
 	BCC bra6_9ADE_RTS
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	CLC
 	ADC #$12
 	STA $06DE
-	INC ObjectAction,X
+	INC objAction,X
 bra6_9ADE_RTS:
 	RTS
 ptr6_9ADF:
 	LDA #$FF
 	BMI bra6_9AFC
 	CLC ;unlogged start
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
+	ADC objYLo,X
+	STA objYLo,X
 	BCS bra6_9AF0
 	CMP #$F0
 	BCC bra6_9B0E
 bra6_9AF0:
 	CLC
 	ADC #$10
-	STA ObjectYPos,X
-	INC ObjectYScreen,X
+	STA objYLo,X
+	INC objYHi,X
 	JMP bra6_9B0E ;unlogged end
 bra6_9AFC:
 	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
+	ADC objYLo,X
+	STA objYLo,X
 	BCS bra6_9B0E
 	SEC
 	SBC #$10
-	STA ObjectYPos,X
-	DEC ObjectYScreen,X
+	STA objYLo,X
+	DEC objYHi,X
 bra6_9B0E:
 	LDA #$08
 	STA $36
@@ -4242,27 +4242,27 @@ bra6_9B0E:
 	JSR sub3_B7A2
 	BEQ bra6_9B28
 	LDA #$00
-	STA FreezeFlag
-	INC ObjectAction,X
-	LDA ObjectYPos,X
+	STA freezeFlag
+	INC objAction,X
+	LDA objYLo,X
 	STA $06DF
 	RTS
 bra6_9B28:
 	LDY #$00
-	LDA FrameCount
+	LDA frameCount
 	AND #$08
 	BNE bra6_9B31
 	INY
 bra6_9B31:
 	TYA
-	STA EnemyAnimFrame,X
-	LDA ObjectXPos,X
+	STA enemyAnimFrame,X
+	LDA objXLo,X
 	STA $65
-	LDA ObjectXScreen,X
-	STA PlayerColXScreen
-	LDA ObjectYPos,X
+	LDA objXHi,X
+	STA playerCollXHi
+	LDA objYLo,X
 	STA $67
-	LDA ObjectYScreen,X
+	LDA objYHi,X
 	STA $66
 	LDA $67
 	CLC
@@ -4281,10 +4281,10 @@ bra6_9B5D:
 	AND #$0F
 	BNE bra6_9B7A_RTS
 	LDY #$05
-	LDA WorldNumber
+	LDA worldNumber
 	CMP #$01
 	BNE bra6_9B75
-	LDA LevelNumber
+	LDA levelNumber
 	CMP #$02
 	BNE bra6_9B75
 	LDY #$01
@@ -4295,31 +4295,31 @@ bra6_9B7A_RTS:
 	RTS
 ptr6_9B7B:
 	LDA #$02
-	STA EnemyAnimFrame,X
-	LDA Player1YoshiStatus
+	STA enemyAnimFrame,X
+	LDA playerYoshiState
 	BNE bra6_9BD6_RTS
-	LDA PlayerHoldFlag
+	LDA playerHoldFlag
 	BNE bra6_9BD6_RTS
-	LDA ObjXScreenDistance,X
+	LDA objXDistHi,X
 	BPL bra6_9B99
 	LDA #$10
 	CLC
-	ADC ObjectXDistance,X
+	ADC objXDistLo,X
 	BCS bra6_9BA0
 	BCC bra6_9BD7
 bra6_9B99:
-	LDA ObjectXDistance,X
+	LDA objXDistLo,X
 	CMP #$00
 	BCS bra6_9BD7
 bra6_9BA0:
-	LDA PlayerYScreenDup
+	LDA playerYHiDup
 	BEQ bra6_9BAD
-	LDA PlayerYPosDup
+	LDA playerYLoDup
 	CMP $06DE
 	BCS bra6_9BD7
 	BCC bra6_9BB4
 bra6_9BAD:
-	LDA PlayerYPosDup
+	LDA playerYLoDup
 	CMP $06DF
 	BCC bra6_9BD7
 bra6_9BB4:
@@ -4328,17 +4328,17 @@ bra6_9BB4:
 	BEQ bra6_9BD6_RTS
 	CMP #$0E
 	BEQ bra6_9BD6_RTS
-	LDA ButtonsHeld
+	LDA btnHeld
 	AND #$08
 	BEQ bra6_9BD6_RTS
 	LDA #$00
-	STA PlayerYSpeed
-	STA PlayerXSpeed
+	STA playerYSpd
+	STA playerXSpd
 	LDA #$03
-	STA PlayerState
+	STA playerState
 	STA $06DC
 	LDA #$0D
-	STA PlayerAction
+	STA playerAction
 bra6_9BD6_RTS:
 	RTS
 bra6_9BD7:
@@ -4349,57 +4349,57 @@ bra6_9BD7:
 	BNE bra6_9BE9_RTS
 bra6_9BE1:
 	LDA #$00
-	STA PlayerState
+	STA playerState
 	LDA #$0A
-	STA PlayerAction
+	STA playerAction
 bra6_9BE9_RTS:
 	RTS
 sub6_9BEA:
 loc6_9BEA:
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra6_9C06
 	CMP #$FF
 	BEQ bra6_9C06
 	JMP Obj_RemoveObject
 bra6_9C06:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra6_9C48
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra6_9C37
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc6_9C48
 bra6_9C37:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra6_9C48:
 loc6_9C48:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra6_9C4E_RTS
 	RTS ;unlogged
 bra6_9C4E_RTS:
@@ -4445,7 +4445,7 @@ bra6_9C6C:
 	ORA #$08
 bra6_9C99:
 	STA $03E5,X
-	LDA PlayerBackColl
+	LDA playerBackColl
 	STA $03E4,X
 	INX
 	INX

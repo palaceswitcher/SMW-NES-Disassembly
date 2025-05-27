@@ -130,19 +130,19 @@ tbl10_8000:
 	dw ofs_8100
 	include sound/instruments.asm
 jmp_58_85BE:
-	LDA Sound_Sfx
+	LDA sndSfx
 	BMI bra10_85C4
 	BNE bra10_85CE
 bra10_85C4:
-	LDA Sound_Music
-	CMP MusicBackup ;Check if the BGM has changed
+	LDA sndMusic
+	CMP sndMusicBackup ;Check if the BGM has changed
 	BEQ bra10_85D5_RTS ;If not, stop
-	LDA Sound_Music ;If it has, back up the song ID
-	STA MusicBackup
+	LDA sndMusic ;If it has, back up the song ID
+	STA sndMusicBackup
 bra10_85CE:
 	JSR sub10_8E2F
 	LDA #$00
-	STA Sound_Sfx ;Clear SFX register
+	STA sndSfx ;Clear SFX register
 bra10_85D5_RTS:
 	RTS
 
@@ -150,7 +150,7 @@ bra10_85D5_RTS:
 ;SUBROUTINE ($85D6)
 ;Initialize sound driver
 ;----------------------------------------
-Sound_Init:
+sndInit:
 	LDA #%00001111
 	STA APUSTATUS ;Enable every channel excluding DMC
 	LDA #$00
@@ -175,15 +175,15 @@ AudioRAMClearLoop:
 	LDX #4
 bra10_8602:
 	DEX
-	STA Sound_MusVolRleCounters,X
-	STA Sound_SfxVolRleCounters,X
+	STA sndMusicVolRleCounters,X
+	STA sndSfxVolRleCounters,X
 	BNE bra10_8602
 
 	LDX #4
 bra10_860D:
 	DEX
 	STA $0765,X
-	STA Sound_SFXFreeChannels,X
+	STA sndFreeSfxChannels,X
 	BNE bra10_860D
 
 	LDX #2
@@ -202,7 +202,7 @@ bra10_8623:
 	RTS
 
 jmp_58_862A:
-	LDA PauseFlag
+	LDA pauseFlag
 	BEQ bra10_8642
 	LDA #$00
 	STA APUSTATUS
@@ -219,15 +219,15 @@ loc10_8647:
 	JSR sub10_86E8
 	LDA #$00
 	STA $070A
-	STA Sound_CurrChannelOfs
-	STA Sound_CurrChannelPtrOfs
+	STA sndCurChannelOffs
+	STA sndCurChannelPtrOffs
 bra10_8658:
 	JSR sub10_87A1
 	JSR sub10_8B25
 	INC $070A
-	INC Sound_CurrChannelOfs
-	INC Sound_CurrChannelPtrOfs
-	INC Sound_CurrChannelPtrOfs
+	INC sndCurChannelOffs
+	INC sndCurChannelPtrOffs
+	INC sndCurChannelPtrOffs
 	LDX $070A
 	CPX #$04
 	BNE bra10_8658
@@ -235,15 +235,15 @@ loc10_8671:
 	LDA #$10
 	STA $070A
 	LDA #$64
-	STA Sound_CurrChannelOfs
-	STA Sound_CurrChannelPtrOfs
+	STA sndCurChannelOffs
+	STA sndCurChannelPtrOffs
 bra10_867E:
 	JSR sub10_87A1
 	JSR sub10_8B25
 	INC $070A
-	INC Sound_CurrChannelOfs
-	INC Sound_CurrChannelPtrOfs
-	INC Sound_CurrChannelPtrOfs
+	INC sndCurChannelOffs
+	INC sndCurChannelPtrOffs
+	INC sndCurChannelPtrOffs
 	LDX $070A
 	CPX #$14
 	BNE bra10_867E
@@ -263,14 +263,14 @@ bra10_86AB:
 	LDX #$00
 	LDY #$00
 	JSR sub10_8DD6
-	LDA Sound_DataPtr
+	LDA sndDataPtr
 	AND #$F0
 	ORA #$30
 	STA SQ1_VOL
 	LDX #$01
 	LDY #$02
 	JSR sub10_8DD6
-	LDA Sound_DataPtr
+	LDA sndDataPtr
 	AND #$F0
 	ORA #$30
 	STA SQ2_VOL
@@ -279,14 +279,14 @@ bra10_86AB:
 	LDA #$30
 	STA NOISE_VOL
 	LDA #$FF
-	STA PauseFlag
+	STA pauseFlag
 	LDA #$0F
 	STA APUSTATUS
 bra10_86DF_RTS:
 	RTS
 bra10_86E0:
 	LDA #$00
-	STA PauseFlag
+	STA pauseFlag
 	JMP loc10_8647
 sub10_86E8:
 	LDA $0700
@@ -314,41 +314,41 @@ sub10_8707:
 	ASL
 	TAX
 	LDA tbl10_8E41,X
-	STA Sound_DataPtr
+	STA sndDataPtr
 	LDA tbl10_8E41+1,X
-	STA Sound_DataPtr+1
+	STA sndDataPtr+1
 	LDY #$00
 loc10_8716:
-	LDA (Sound_DataPtr),Y
+	LDA (sndDataPtr),Y
 	STA $070A
 	TAX
 	CPX #$FF
 	BEQ bra10_86DF_RTS ;Stop if the end byte is reached ($FF)
 	LDA $070A
 	BMI bra10_872F
-	STA Sound_CurrChannelOfs
+	STA sndCurChannelOffs
 	ASL
-	STA Sound_CurrChannelPtrOfs
+	STA sndCurChannelPtrOffs
 	JMP loc10_8741
 bra10_872F:
 	AND #$7F
 	CLC
 	ADC #$64
-	STA Sound_CurrChannelOfs
+	STA sndCurChannelOffs
 	TXA
 	AND #$7F
 	ASL
 	CLC
 	ADC #$64
-	STA Sound_CurrChannelPtrOfs
+	STA sndCurChannelPtrOffs
 loc10_8741:
-	LDX Sound_CurrChannelPtrOfs
+	LDX sndCurChannelPtrOffs
 	INY
-	LDA (Sound_DataPtr),Y
-	STA Sound_ChannelPtrs,X
+	LDA (sndDataPtr),Y
+	STA sndChannelPtrs,X
 	INY
-	LDA (Sound_DataPtr),Y
-	STA Sound_ChannelPtrs+1,X
+	LDA (sndDataPtr),Y
+	STA sndChannelPtrs+1,X
 	INY
 	TYA
 	PHA
@@ -363,25 +363,25 @@ bra10_875C:
 	LDA #$00
 	STA $0731,X
 	STA $0732,X
-	LDX Sound_CurrChannelOfs
+	LDX sndCurChannelOffs
 	LDA #$00
-	STA Sound_VolMacros,X
+	STA sndVolMacros,X
 	LDA #$FF
-	STA Sound_MusVolRleCounters,X
+	STA sndMusicVolRleCounters,X
 	CPY #$04
 	BPL bra10_879C
 	LDA #$00
-	STA Sound_PitchMacros,X
+	STA sndPitchMacros,X
 	LDA #$FF
 	STA $0765,X
 	CPY #$03
 	BPL bra10_879C
 	LDA #$00
-	STA Sound_Transpose,X
+	STA sndTranspose,X
 	CPY #$02
 	BPL bra10_879C
 	LDA #$00
-	STA Sound_DutyMacros,X
+	STA sndDutyMacros,X
 	LDA #$FF
 	STA $075B,X
 bra10_879C:
@@ -389,17 +389,17 @@ bra10_879C:
 	TAY
 	JMP loc10_8716
 sub10_87A1:
-	LDX Sound_CurrChannelPtrOfs
-	LDA Sound_ChannelPtrs,X
-	ORA Sound_ChannelPtrs+1,X
+	LDX sndCurChannelPtrOffs
+	LDA sndChannelPtrs,X
+	ORA sndChannelPtrs+1,X
 	BEQ bra10_87DF_RTS
 	LDA $0731,X
 	BNE bra10_87DC
 	LDA $0732,X
 	BNE bra10_87C5
 	JSR sub10_87E0
-	LDX Sound_CurrChannelPtrOfs
-	LDY Sound_CurrChannelOfs
+	LDX sndCurChannelPtrOffs
+	LDY sndCurChannelOffs
 	LDA $072D,Y
 	STA $0732,X
 bra10_87C5:
@@ -412,7 +412,7 @@ bra10_87C5:
 bra10_87D4:
 	LDY #$00
 loc10_87D6:
-	LDA MusicSpeed,Y
+	LDA sndMusicSpeed,Y
 	STA $0731,X
 bra10_87DC:
 	DEC $0731,X
@@ -420,13 +420,13 @@ bra10_87DF_RTS:
 	RTS
 sub10_87E0:
 loc10_87E0:
-	LDX Sound_CurrChannelPtrOfs
-	LDA Sound_ChannelPtrs,X
-	STA Sound_DataPtr
-	LDA Sound_ChannelPtrs+1,X
-	STA Sound_DataPtr+1
+	LDX sndCurChannelPtrOffs
+	LDA sndChannelPtrs,X
+	STA sndDataPtr
+	LDA sndChannelPtrs+1,X
+	STA sndDataPtr+1
 	LDY #$00
-	LDA (Sound_DataPtr),Y
+	LDA (sndDataPtr),Y
 	BPL bra10_8832
 	TAX
 	CPX #$F0
@@ -435,7 +435,7 @@ loc10_87E0:
 bra10_87FB:
 	AND #$7F
 	BEQ bra10_8805
-	LDX Sound_CurrChannelOfs
+	LDX sndCurChannelOffs
 	STA $072D,X
 bra10_8805:
 	JSR sub10_8E20
@@ -489,16 +489,16 @@ bra10_883B:
 	CPX #$04
 	BNE bra10_884B
 bra10_884B:
-	LDX Sound_CurrChannelOfs
+	LDX sndCurChannelOffs
 	CLC
-	ADC Sound_Transpose,X
+	ADC sndTranspose,X
 	ASL
 	TAY
-	LDX Sound_CurrChannelPtrOfs
+	LDX sndCurChannelPtrOffs
 	LDA NotePitchTable,Y
-	STA Sound_ChnPitches,X
+	STA sndChannelPitches,X
 	LDA NotePitchTable+1,Y
-	STA Sound_ChnPitches+1,X
+	STA sndChannelPitches+1,X
 	JMP loc10_8878
 bra10_8866:
 	TAX
@@ -510,8 +510,8 @@ bra10_8866:
 	TAX
 bra10_8871:
 	TXA
-	LDX Sound_CurrChannelPtrOfs
-	STA Sound_ChnPitches,X
+	LDX sndCurChannelPtrOffs
+	STA sndChannelPitches,X
 loc10_8878:
 	JSR sub10_8A65
 	JSR sub10_8E20
@@ -524,10 +524,10 @@ loc10_887F:
 	TYA
 	TAX
 	LDA tbl10_8895,X
-	STA Sound_DataPtr
+	STA sndDataPtr
 	LDA tbl10_8895+1,X
-	STA Sound_DataPtr+1
-	JMP (Sound_DataPtr)
+	STA sndDataPtr+1
+	JMP (sndDataPtr)
 tbl10_8895:
 	dw ofs_88B5
 	dw ofs_88CC
@@ -546,86 +546,86 @@ tbl10_8895:
 	dw loc10_87E0
 	dw ofs_89EC
 ofs_88B5:
-	LDX Sound_CurrChannelPtrOfs
+	LDX sndCurChannelPtrOffs
 	CLC
-	LDA Sound_ChannelPtrs,X
+	LDA sndChannelPtrs,X
 	ADC #$02
 	STA $071C,X
-	LDA Sound_ChannelPtrs+1,X
+	LDA sndChannelPtrs+1,X
 	ADC #$00
 	STA $071D,X
 	JMP loc10_893D
 ofs_88CC:
-	LDX Sound_CurrChannelPtrOfs
+	LDX sndCurChannelPtrOffs
 	LDA $071C,X
-	STA Sound_ChannelPtrs,X
+	STA sndChannelPtrs,X
 	LDA $071D,X
-	STA Sound_ChannelPtrs+1,X
+	STA sndChannelPtrs+1,X
 	LDA #$00
 	STA $071C,X
 	STA $071D,X
 	JMP loc10_87E0
 ofs_88E6:
-	LDX Sound_CurrChannelPtrOfs
-	LDA Sound_ChannelPtrs,X
-	STA Sound_DataPtr
-	LDA Sound_ChannelPtrs+1,X
-	STA Sound_DataPtr+1
-	LDX Sound_CurrChannelOfs
+	LDX sndCurChannelPtrOffs
+	LDA sndChannelPtrs,X
+	STA sndDataPtr
+	LDA sndChannelPtrs+1,X
+	STA sndDataPtr+1
+	LDX sndCurChannelOffs
 	LDY #$00
-	LDA (Sound_DataPtr),Y
+	LDA (sndDataPtr),Y
 	STA $0710,X
 	JSR sub10_8E20
-	LDX Sound_CurrChannelPtrOfs
-	LDA Sound_ChannelPtrs,X
+	LDX sndCurChannelPtrOffs
+	LDA sndChannelPtrs,X
 	STA $0714,X
-	LDA Sound_ChannelPtrs+1,X
+	LDA sndChannelPtrs+1,X
 	STA $0715,X
 	JMP loc10_87E0
 ofs_8912:
-	LDX Sound_CurrChannelOfs
+	LDX sndCurChannelOffs
 	DEC $0710,X
 	BEQ bra10_892C
-	LDX Sound_CurrChannelPtrOfs
+	LDX sndCurChannelPtrOffs
 	LDA $0714,X
-	STA Sound_ChannelPtrs,X
+	STA sndChannelPtrs,X
 	LDA $0715,X
-	STA Sound_ChannelPtrs+1,X
+	STA sndChannelPtrs+1,X
 	JMP loc10_87E0
 bra10_892C:
-	LDX Sound_CurrChannelPtrOfs
+	LDX sndCurChannelPtrOffs
 	LDA #$00
 	STA $0714,X
 	STA $0715,X
 	JMP loc10_87E0
 loc10_893A:
-	LDX Sound_CurrChannelPtrOfs
+	LDX sndCurChannelPtrOffs
 loc10_893D:
-	LDA Sound_ChannelPtrs,X
-	STA Sound_DataPtr
-	LDA Sound_ChannelPtrs+1,X
-	STA Sound_DataPtr+1
+	LDA sndChannelPtrs,X
+	STA sndDataPtr
+	LDA sndChannelPtrs+1,X
+	STA sndDataPtr+1
 	LDY #$00
-	LDA (Sound_DataPtr),Y
-	STA Sound_ChannelPtrs,X
+	LDA (sndDataPtr),Y
+	STA sndChannelPtrs,X
 	INY
-	LDA (Sound_DataPtr),Y
-	STA Sound_ChannelPtrs+1,X
+	LDA (sndDataPtr),Y
+	STA sndChannelPtrs+1,X
 	JMP loc10_87E0
 ofs_8957:
-	LDX Sound_CurrChannelPtrOfs
-	LDA Sound_ChannelPtrs,X
-	STA Sound_DataPtr
-	LDA Sound_ChannelPtrs+1,X
-	STA Sound_DataPtr+1
+	LDX sndCurChannelPtrOffs
+	LDA sndChannelPtrs,X
+	STA sndDataPtr
+	LDA sndChannelPtrs+1,X
+	STA sndDataPtr+1
 	LDY #$00
-	LDA (Sound_DataPtr),Y
+	LDA (sndDataPtr),Y
 	LDX $070A
 	CPX #$04
 	BMI bra10_8971
 	LDY #$64
 bra10_8971:
-	STA MusicSpeed,Y ;Set Music/SFX speed
+	STA sndMusicSpeed,Y ;Set Music/SFX speed
 	JSR sub10_8E20
 	JMP loc10_87E0
 ofs_897A:
@@ -634,15 +634,15 @@ ofs_897A:
 	TAX
 	CPX #$03
 	BPL bra10_899B
-	LDX Sound_CurrChannelPtrOfs
-	LDA Sound_ChannelPtrs,X
-	STA Sound_DataPtr
-	LDA Sound_ChannelPtrs+1,X
-	STA Sound_DataPtr+1
+	LDX sndCurChannelPtrOffs
+	LDA sndChannelPtrs,X
+	STA sndDataPtr
+	LDA sndChannelPtrs+1,X
+	STA sndDataPtr+1
 	LDY #$00
-	LDA (Sound_DataPtr),Y
-	LDX Sound_CurrChannelOfs
-	STA Sound_Transpose,X
+	LDA (sndDataPtr),Y
+	LDX sndCurChannelOffs
+	STA sndTranspose,X
 bra10_899B:
 	JSR sub10_8E20
 	JMP loc10_87E0
@@ -656,7 +656,7 @@ ofs_89A1:
 	JMP loc10_87E0
 bra10_89B1:
 	JSR sub10_8B0D
-	STA Sound_VolMacros,X
+	STA sndVolMacros,X
 	JMP loc10_87E0
 ofs_89BA:
 	LDA $070A
@@ -668,7 +668,7 @@ ofs_89BA:
 	JMP loc10_87E0
 bra10_89CA:
 	JSR sub10_8B0D
-	STA Sound_DutyMacros,X
+	STA sndDutyMacros,X
 	JMP loc10_87E0
 ofs_89D3:
 	LDA $070A
@@ -680,13 +680,13 @@ ofs_89D3:
 	JMP loc10_87E0
 bra10_89E3:
 	JSR sub10_8B0D
-	STA Sound_PitchMacros,X
+	STA sndPitchMacros,X
 	JMP loc10_87E0
 ofs_89EC:
-	LDX Sound_CurrChannelPtrOfs
+	LDX sndCurChannelPtrOffs
 	LDA #$00
-	STA Sound_ChannelPtrs,X
-	STA Sound_ChannelPtrs+1,X
+	STA sndChannelPtrs,X
+	STA sndChannelPtrs+1,X
 	LDA $070A
 	AND #$0F
 	ASL
@@ -698,14 +698,14 @@ ofs_89EC:
 	STA $0742,X
 	STA $0742,Y
 loc10_8A0A:
-	LDY Sound_CurrChannelOfs
+	LDY sndCurChannelOffs
 	LDA $070A
 	AND #$0F
 	TAX
 	LDA #$FF
 	CPX #$04
 	BPL bra10_8A26_RTS
-	STA Sound_MusVolRleCounters,Y
+	STA sndMusicVolRleCounters,Y
 	STA $0765,Y
 	CPX #$02
 	BPL bra10_8A26_RTS
@@ -713,34 +713,34 @@ loc10_8A0A:
 bra10_8A26_RTS:
 	RTS
 ofs_8A27:
-	LDX Sound_CurrChannelPtrOfs
-	LDA Sound_ChannelPtrs,X
-	STA Sound_DataPtr
-	LDA Sound_ChannelPtrs+1,X
-	STA Sound_DataPtr+1
+	LDX sndCurChannelPtrOffs
+	LDA sndChannelPtrs,X
+	STA sndDataPtr
+	LDA sndChannelPtrs+1,X
+	STA sndDataPtr+1
 	JSR sub10_8E20
-	LDX Sound_CurrChannelOfs
+	LDX sndCurChannelOffs
 	LDA $0710,X
 	BNE bra10_8A46
 	LDY #$00
-	LDA (Sound_DataPtr),Y
+	LDA (sndDataPtr),Y
 	STA $0710,X
 bra10_8A46:
 	DEC $0710,X
 	BNE bra10_8A62
-	LDX Sound_CurrChannelPtrOfs
-	LDA Sound_ChannelPtrs,X
+	LDX sndCurChannelPtrOffs
+	LDA sndChannelPtrs,X
 	CLC
 	ADC #$02
-	STA Sound_ChannelPtrs,X
-	LDA Sound_ChannelPtrs+1,X
+	STA sndChannelPtrs,X
+	LDA sndChannelPtrs+1,X
 	ADC #$00
-	STA Sound_ChannelPtrs+1,X
+	STA sndChannelPtrs+1,X
 	JMP loc10_87E0
 bra10_8A62:
 	JMP loc10_893A
 sub10_8A65:
-	LDX Sound_CurrChannelPtrOfs
+	LDX sndCurChannelPtrOffs
 	LDA $0742,X
 	ORA #$80
 	STA $0742,X
@@ -758,21 +758,21 @@ sub10_8A7A:
 	RTS
 
 bra10_8A85:
-	LDX Sound_CurrChannelOfs
-	LDY Sound_CurrChannelPtrOfs
-	LDA Sound_VolMacros,X
+	LDX sndCurChannelOffs
+	LDY sndCurChannelPtrOffs
+	LDA sndVolMacros,X
 	ASL
 	TAX
 	LDA tbl10_8000,X
-	STA Sound_VolMacroPtrs,Y
-	STA Sound_DataPtr
+	STA sndVolMacroPtrs,Y
+	STA sndDataPtr
 	LDA tbl10_8000+1,X
-	STA Sound_VolMacroPtrs+1,Y
-	STA Sound_DataPtr+1
-	LDX Sound_CurrChannelOfs
+	STA sndVolMacroPtrs+1,Y
+	STA sndDataPtr+1
+	LDX sndCurChannelOffs
 	LDY #$00
-	LDA (Sound_DataPtr),Y
-	STA Sound_MusVolRleCounters,X
+	LDA (sndDataPtr),Y
+	STA sndMusicVolRleCounters,X
 	RTS
 
 sub10_8AAB:
@@ -783,20 +783,20 @@ sub10_8AAB:
 	BMI bra10_8AB6
 	RTS
 bra10_8AB6:
-	LDX Sound_CurrChannelOfs
-	LDY Sound_CurrChannelPtrOfs
-	LDA Sound_DutyMacros,X
+	LDX sndCurChannelOffs
+	LDY sndCurChannelPtrOffs
+	LDA sndDutyMacros,X
 	ASL
 	TAX
 	LDA tbl10_8000,X
-	STA Sound_DutyMacroPtrs,Y
-	STA Sound_DataPtr
+	STA sndDutyMacroPtrs,Y
+	STA sndDataPtr
 	LDA tbl10_8000+1,X
-	STA Sound_DutyMacroPtrs+1,Y
-	STA Sound_DataPtr+1
-	LDX Sound_CurrChannelOfs
+	STA sndDutyMacroPtrs+1,Y
+	STA sndDataPtr+1
+	LDX sndCurChannelOffs
 	LDY #$00
-	LDA (Sound_DataPtr),Y
+	LDA (sndDataPtr),Y
 	STA $075B,X
 	RTS
 sub10_8ADC:
@@ -807,35 +807,35 @@ sub10_8ADC:
 	BMI bra10_8AE7
 	RTS
 bra10_8AE7:
-	LDX Sound_CurrChannelOfs
-	LDY Sound_CurrChannelPtrOfs
-	LDA Sound_PitchMacros,X
+	LDX sndCurChannelOffs
+	LDY sndCurChannelPtrOffs
+	LDA sndPitchMacros,X
 	ASL
 	TAX
 	LDA tbl10_8000,X
-	STA Sound_MusicMacroPtrs,Y
-	STA Sound_DataPtr
+	STA sndMusicMacroPtrs,Y
+	STA sndDataPtr
 	LDA tbl10_8000+1,X
 	STA $076A,Y
-	STA Sound_DataPtr+1
-	LDX Sound_CurrChannelOfs
+	STA sndDataPtr+1
+	LDX sndCurChannelOffs
 	LDY #$00
-	LDA (Sound_DataPtr),Y
+	LDA (sndDataPtr),Y
 	STA $0765,X
 	RTS
 
 sub10_8B0D:
 	;Load pointer for current channel
-	LDX Sound_CurrChannelPtrOfs
-	LDA Sound_ChannelPtrs,X
-	STA Sound_DataPtr
-	LDA Sound_ChannelPtrs+1,X
-	STA Sound_DataPtr+1
+	LDX sndCurChannelPtrOffs
+	LDA sndChannelPtrs,X
+	STA sndDataPtr
+	LDA sndChannelPtrs+1,X
+	STA sndDataPtr+1
 	
 	JSR sub10_8E20 ;Move to next byte
 	LDY #$00
-	LDA (Sound_DataPtr),Y
-	LDX Sound_CurrChannelOfs
+	LDA (sndDataPtr),Y
+	LDX sndCurChannelOffs
 	RTS
 
 sub10_8B25:
@@ -852,62 +852,62 @@ sub10_8B2F:
 	BPL bra10_8BA1_RTS
 
 loc10_8B39:
-	LDX Sound_CurrChannelOfs
-	LDA Sound_MusVolRleCounters,X
+	LDX sndCurChannelOffs
+	LDA sndMusicVolRleCounters,X
 	TAY
 	CPY #$FF
 	BEQ bra10_8BA1_RTS ;Stop if the counter is a terminator byte
-	LDX Sound_CurrChannelOfs
-	LDA Sound_MusVolRleCounters,X
+	LDX sndCurChannelOffs
+	LDA sndMusicVolRleCounters,X
 	BNE bra10_8B9E
 
 ;Move to next volume RLE tag when the timer ends
-	LDX Sound_CurrChannelPtrOfs ;Get index for current channel
+	LDX sndCurChannelPtrOffs ;Get index for current channel
 	LDA #2 ;Tags are two bytes
 	CLC
-	ADC Sound_VolMacroPtrs,X
-	STA Sound_VolMacroPtrs,X
-	STA Sound_DataPtr
+	ADC sndVolMacroPtrs,X
+	STA sndVolMacroPtrs,X
+	STA sndDataPtr
 	LDA #$00
-	ADC Sound_VolMacroPtrs+1,X
-	STA Sound_VolMacroPtrs+1,X
-	STA Sound_DataPtr+1 ;Move to next RLE tag
+	ADC sndVolMacroPtrs+1,X
+	STA sndVolMacroPtrs+1,X
+	STA sndDataPtr+1 ;Move to next RLE tag
 
-	LDX Sound_CurrChannelOfs
+	LDX sndCurChannelOffs
 	LDY #0
-	LDA (Sound_DataPtr),Y
-	STA Sound_MusVolRleCounters,X ;Load length of RLE rag
+	LDA (sndDataPtr),Y
+	STA sndMusicVolRleCounters,X ;Load length of RLE rag
 	TAY
 	CPY #$FF
 	BNE loc10_8B39 ;Branch if this isn't a jump tag
 
 ; Move RLE pointer if a jump tag is encountered
-	LDX Sound_CurrChannelPtrOfs
+	LDX sndCurChannelPtrOffs
 	LDY #$01
-	LDA (Sound_DataPtr),Y
+	LDA (sndDataPtr),Y
 	AND #%11111110 ;Make jump distance even (all tags are two bytes)
 	BPL bra10_8B91 ;Stop if the tag isn't a jump tag
 	; Move sound macro pointer and sound pointer
 		CLC
-		ADC Sound_VolMacroPtrs,X
-		STA Sound_VolMacroPtrs,X
-		STA Sound_DataPtr ;Move base address as well
+		ADC sndVolMacroPtrs,X
+		STA sndVolMacroPtrs,X
+		STA sndDataPtr ;Move base address as well
 		BCS bra10_8B8C ;Branch if page boundary not crossed
-			DEC Sound_VolMacroPtrs+1,X ;Decrement low byte if needed
+			DEC sndVolMacroPtrs+1,X ;Decrement low byte if needed
 	bra10_8B8C:
-		LDA Sound_VolMacroPtrs+1,X
-		STA Sound_DataPtr+1
+		LDA sndVolMacroPtrs+1,X
+		STA sndDataPtr+1
 
 bra10_8B91:
-	LDX Sound_CurrChannelOfs
+	LDX sndCurChannelOffs
 	LDY #$00 ;Move to start of macro data
-	LDA (Sound_DataPtr),Y
-	STA Sound_MusVolRleCounters,X ;Load RLE repeat count from tag
+	LDA (sndDataPtr),Y
+	STA sndMusicVolRleCounters,X ;Load RLE repeat count from tag
 	JMP loc10_8B39
 
 ; Decrement volume macro RLE counter for the length of the RLE tag
 bra10_8B9E:
-	DEC Sound_MusVolRleCounters,X ;Decrement volume macro RLE counter
+	DEC sndMusicVolRleCounters,X ;Decrement volume macro RLE counter
 
 bra10_8BA1_RTS:
 	RTS
@@ -920,49 +920,49 @@ sub10_8BA2:
 	BPL bra10_8C14_RTS
 
 loc10_8BAC:
-	LDX Sound_CurrChannelOfs
+	LDX sndCurChannelOffs
 	LDA $075B,X
 	TAY
 	CPY #$FF
 	BEQ bra10_8C14_RTS
-	LDX Sound_CurrChannelOfs
+	LDX sndCurChannelOffs
 	LDA $075B,X
 	BNE bra10_8C11
-	LDX Sound_CurrChannelPtrOfs
+	LDX sndCurChannelPtrOffs
 	LDA #$02
 	CLC
-	ADC Sound_DutyMacroPtrs,X
-	STA Sound_DutyMacroPtrs,X
-	STA Sound_DataPtr
+	ADC sndDutyMacroPtrs,X
+	STA sndDutyMacroPtrs,X
+	STA sndDataPtr
 	LDA #$00
-	ADC Sound_DutyMacroPtrs+1,X
-	STA Sound_DutyMacroPtrs+1,X
-	STA Sound_DataPtr+1
-	LDX Sound_CurrChannelOfs
+	ADC sndDutyMacroPtrs+1,X
+	STA sndDutyMacroPtrs+1,X
+	STA sndDataPtr+1
+	LDX sndCurChannelOffs
 	LDY #$00
-	LDA (Sound_DataPtr),Y
+	LDA (sndDataPtr),Y
 	STA $075B,X
 	TAY
 	CPY #$FF
 	BNE loc10_8BAC
-	LDX Sound_CurrChannelPtrOfs
+	LDX sndCurChannelPtrOffs
 	LDY #$01
-	LDA (Sound_DataPtr),Y
+	LDA (sndDataPtr),Y
 	AND #$FE
 	BPL bra10_8C04
 	CLC
-	ADC Sound_DutyMacroPtrs,X
-	STA Sound_DutyMacroPtrs,X
-	STA Sound_DataPtr
+	ADC sndDutyMacroPtrs,X
+	STA sndDutyMacroPtrs,X
+	STA sndDataPtr
 	BCS bra10_8BFF
-	DEC Sound_DutyMacroPtrs+1,X
+	DEC sndDutyMacroPtrs+1,X
 bra10_8BFF:
-	LDA Sound_DutyMacroPtrs+1,X
-	STA Sound_DataPtr+1
+	LDA sndDutyMacroPtrs+1,X
+	STA sndDataPtr+1
 bra10_8C04:
-	LDX Sound_CurrChannelOfs
+	LDX sndCurChannelOffs
 	LDY #$00
-	LDA (Sound_DataPtr),Y
+	LDA (sndDataPtr),Y
 	STA $075B,X
 	JMP loc10_8BAC
 bra10_8C11:
@@ -977,48 +977,48 @@ sub10_8C15:
 	BPL bra10_8C84_RTS
 bra10_8C1F:
 loc10_8C1F:
-	LDX Sound_CurrChannelOfs
+	LDX sndCurChannelOffs
 	LDA $0765,X
 	TAY
 	CPY #$FF
 	BEQ bra10_8C84_RTS
 	LDA $0765,X
 	BNE bra10_8C81
-	LDX Sound_CurrChannelPtrOfs
+	LDX sndCurChannelPtrOffs
 	LDA #$02
 	CLC
-	ADC Sound_MusicMacroPtrs,X
-	STA Sound_MusicMacroPtrs,X
-	STA Sound_DataPtr
+	ADC sndMusicMacroPtrs,X
+	STA sndMusicMacroPtrs,X
+	STA sndDataPtr
 	LDA #$00
 	ADC $076A,X
 	STA $076A,X
-	STA Sound_DataPtr+1
-	LDX Sound_CurrChannelOfs
+	STA sndDataPtr+1
+	LDX sndCurChannelOffs
 	LDY #$00
-	LDA (Sound_DataPtr),Y
+	LDA (sndDataPtr),Y
 	STA $0765,X
 	TAY
 	CPY #$FF
 	BNE bra10_8C1F
-	LDX Sound_CurrChannelPtrOfs
+	LDX sndCurChannelPtrOffs
 	LDY #$01
-	LDA (Sound_DataPtr),Y
+	LDA (sndDataPtr),Y
 	AND #$FE
 	BPL bra10_8C74
 	CLC
-	ADC Sound_MusicMacroPtrs,X
-	STA Sound_MusicMacroPtrs,X
-	STA Sound_DataPtr
+	ADC sndMusicMacroPtrs,X
+	STA sndMusicMacroPtrs,X
+	STA sndDataPtr
 	BCS bra10_8C6F
 	DEC $076A,X
 bra10_8C6F:
 	LDA $076A,X
-	STA Sound_DataPtr+1
+	STA sndDataPtr+1
 bra10_8C74:
-	LDX Sound_CurrChannelOfs
+	LDX sndCurChannelOffs
 	LDY #$00
-	LDA (Sound_DataPtr),Y
+	LDA (sndDataPtr),Y
 	STA $0765,X
 	JMP loc10_8C1F
 bra10_8C81:
@@ -1041,27 +1041,27 @@ sub10_8C92:
 	LDY #$00
 bra10_8CA2:
 	JSR sub10_8DB1
-	LDA Sound_DataPtr
+	LDA sndDataPtr
 	PHA
 	JSR sub10_8DD6
 	PLA
-	ORA Sound_DataPtr
+	ORA sndDataPtr
 	ORA #$30
 	STA SQ1_VOL
 	JSR sub10_8DFB
 	LDA #$00
-	STA Sound_DataPtr+1
-	LDA Sound_DataPtr
+	STA sndDataPtr+1
+	LDA sndDataPtr
 	BPL bra10_8CC0
 	DEC $FF
 bra10_8CC0:
-	LDA Sound_ChnPitches,Y
+	LDA sndChannelPitches,Y
 	CLC
 	ADC $FE
 	STA $0741,Y
 	STA SQ1_LO
 	LDA $0742,Y
-	STA Sound_DataPtr
+	STA sndDataPtr
 	LDA $073A,Y
 	ADC $FF
 	TAX
@@ -1082,27 +1082,27 @@ sub10_8CE4:
 	LDY #$02
 bra10_8CF4:
 	JSR sub10_8DB1
-	LDA Sound_DataPtr
+	LDA sndDataPtr
 	PHA
 	JSR sub10_8DD6
 	PLA
-	ORA Sound_DataPtr
+	ORA sndDataPtr
 	ORA #$30
 	STA SQ2_VOL
 	JSR sub10_8DFB
 	LDA #$00
-	STA Sound_DataPtr+1
-	LDA Sound_DataPtr
+	STA sndDataPtr+1
+	LDA sndDataPtr
 	BPL bra10_8D12
 	DEC $FF
 bra10_8D12:
-	LDA Sound_ChnPitches,Y
+	LDA sndChannelPitches,Y
 	CLC
 	ADC $FE
 	STA $0741,Y
 	STA SQ2_LO
 	LDA $0742,Y
-	STA Sound_DataPtr
+	STA sndDataPtr
 	LDA $073A,Y
 	ADC $FF
 	TAX
@@ -1123,7 +1123,7 @@ sub10_8D36:
 	LDY #$04
 bra10_8D46:
 	JSR sub10_8DB1
-	LDA Sound_DataPtr
+	LDA sndDataPtr
 	BEQ bra10_8D4F
 	LDA #$FF
 bra10_8D4F:
@@ -1131,18 +1131,18 @@ bra10_8D4F:
 	STA TRI_LINEAR
 	JSR sub10_8DFB
 	LDA #$00
-	STA Sound_DataPtr+1
-	LDA Sound_DataPtr
+	STA sndDataPtr+1
+	LDA sndDataPtr
 	BPL bra10_8D61
 	DEC $FF
 bra10_8D61:
-	LDA Sound_ChnPitches,Y
+	LDA sndChannelPitches,Y
 	CLC
 	ADC $FE
 	STA $0741,Y
 	STA TRI_LO
 	LDA $0742,Y
-	STA Sound_DataPtr
+	STA sndDataPtr
 	LDA $073A,Y
 	ADC $FF
 	TAX
@@ -1163,11 +1163,11 @@ sub10_8D85:
 	LDY #$06
 bra10_8D95:
 	JSR sub10_8DB1
-	LDA Sound_DataPtr
+	LDA sndDataPtr
 	ORA #$30
 	STA NOISE_VOL
 	JSR sub10_8DFB
-	LDA Sound_ChnPitches,Y
+	LDA sndChannelPitches,Y
 	CLC
 	ADC $FE
 	STA NOISE_LO
@@ -1177,7 +1177,7 @@ bra10_8D95:
 sub10_8DB1:
 	TYA
 	PHA
-	LDA Sound_MusVolRleCounters,X
+	LDA sndMusicVolRleCounters,X
 	TAY
 	CPY #$FF
 	BNE bra10_8DC0
@@ -1187,14 +1187,14 @@ bra10_8DC0:
 	PLA
 	PHA
 	TAY
-	LDA Sound_VolMacroPtrs,Y
-	STA Sound_DataPtr
-	LDA Sound_VolMacroPtrs+1,Y
-	STA Sound_DataPtr+1
+	LDA sndVolMacroPtrs,Y
+	STA sndDataPtr
+	LDA sndVolMacroPtrs+1,Y
+	STA sndDataPtr+1
 	LDY #$01
-	LDA (Sound_DataPtr),Y
+	LDA (sndDataPtr),Y
 loc10_8DD1:
-	STA Sound_DataPtr
+	STA sndDataPtr
 	PLA
 	TAY
 	RTS
@@ -1211,14 +1211,14 @@ bra10_8DE5:
 	PLA
 	PHA
 	TAY
-	LDA Sound_DutyMacroPtrs,Y
-	STA Sound_DataPtr
-	LDA Sound_DutyMacroPtrs+1,Y
-	STA Sound_DataPtr+1
+	LDA sndDutyMacroPtrs,Y
+	STA sndDataPtr
+	LDA sndDutyMacroPtrs+1,Y
+	STA sndDataPtr+1
 	LDY #$01
-	LDA (Sound_DataPtr),Y
+	LDA (sndDataPtr),Y
 loc10_8DF6:
-	STA Sound_DataPtr
+	STA sndDataPtr
 	PLA
 	TAY
 	RTS
@@ -1235,14 +1235,14 @@ bra10_8E0A:
 	PLA
 	PHA
 	TAY
-	LDA Sound_MusicMacroPtrs,Y
-	STA Sound_DataPtr
+	LDA sndMusicMacroPtrs,Y
+	STA sndDataPtr
 	LDA $076A,Y
-	STA Sound_DataPtr+1
+	STA sndDataPtr+1
 	LDY #$01
-	LDA (Sound_DataPtr),Y
+	LDA (sndDataPtr),Y
 loc10_8E1B:
-	STA Sound_DataPtr
+	STA sndDataPtr
 	PLA
 	TAY
 	RTS
@@ -1252,12 +1252,12 @@ loc10_8E1B:
 ;Increments the pointer for channel data, optionally ignoring the index for the current channel if the second subroutine is called.
 ;----------------------------------------
 sub10_8E20:
-	LDX Sound_CurrChannelPtrOfs ;Get current channel
+	LDX sndCurChannelPtrOffs ;Get current channel
 sub_58_8E23:
-	INC Sound_ChannelPtrs,X
-	LDA Sound_ChannelPtrs,X
+	INC sndChannelPtrs,X
+	LDA sndChannelPtrs,X
 	BNE bra10_8E2E_RTS ;Don't increment high byte if no overflow
-		INC Sound_ChannelPtrs+1,X
+		INC sndChannelPtrs+1,X
 bra10_8E2E_RTS:
 	RTS
 

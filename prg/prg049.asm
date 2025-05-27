@@ -1,12 +1,12 @@
 ;disassembled by BZK 6502 Disassembler
 ptr6_8000:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$01
 	BEQ bra5_8008
 	RTS
 bra5_8008:
 	LDX $A4
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	BNE bra5_8010
 	RTS
 bra5_8010:
@@ -19,20 +19,20 @@ bra5_8010:
 	STA $33
 	LDY #$80
 	LDX $A4
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	AND #$01
 	BEQ bra5_802B
 	LDY #$C0
 bra5_802B:
 	STY $36
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$C0
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
 ptr6_8039:
 	LDX $A4
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$3F
 	ASL
 	TAX
@@ -43,7 +43,7 @@ ptr6_8039:
 	LDA #$80
 	STA $36
 	LDX $A4
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$C0
 	STA $05F0
 	JSR jmp_54_A118
@@ -501,72 +501,72 @@ ofs2_82BB:
 	db $AA
 Obj_h78:
 	JSR sub5_82EC
-	LDA FrameCount
+	LDA frameCount
 	AND #$00
 	BNE bra5_82DC
 	LDA #$2C
 	JSR jmp_54_B11D
 bra5_82DC:
 	LDY #$03
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$04
 	BEQ bra5_82E7
 	LDY #$C4
 bra5_82E7:
 	TYA
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 sub5_82EC:
 	LDA #$07
 	STA $25
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_830E
 	CMP #$FF
 	BEQ bra5_830E
 	JMP Obj_RemoveObject
 bra5_830E:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ loc5_8350
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_833F
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_8350
 bra5_833F:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 loc5_8350:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_8356
 	RTS
 bra5_8356:
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$1F
 	ASL
 	TAY
@@ -586,100 +586,100 @@ ptr10_8372:
 	RTS
 Obj_h77:
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_8397
 	CMP #$FF
 	BEQ bra5_8397
 	JMP Obj_RemoveObject
 bra5_8397:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_83D9
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_83C8
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_83D9
 bra5_83C8:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_83D9:
 loc5_83D9:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_83DF
 	RTS
 bra5_83DF:
-	LDA ObjectVariables,X
+	LDA objVar,X
 	BPL bra5_844D
 	LDA #$00
-	STA ReznorsDefeated
-	STA ObjectVariables,X
-	LDY ObjectCount
-	INC ObjectCount
-	INC ObjectCount
+	STA reznorsDefeated
+	STA objVar,X
+	LDY objCount
+	INC objCount
+	INC objCount
 	LDA #$18
-	STA ObjectVariables,Y
+	STA objVar,Y
 	LDA #$40
 	STA $0641,Y
 	LDA #$0C
 	STA $0579,Y
 	LDA #$80
 	STA $0642,Y
-	LDA ObjectXScreen,X
-	STA ObjectXScreen,Y
-	STA ObjectXScreen+1,Y
-	LDA ObjectYScreen,X
-	STA ObjectYScreen,Y
-	STA ObjectYScreen+1,Y
-	LDA ObjectXPos,X
+	LDA objXHi,X
+	STA objXHi,Y
+	STA objXHi+1,Y
+	LDA objYHi,X
+	STA objYHi,Y
+	STA objYHi+1,Y
+	LDA objXLo,X
 	CLC
 	ADC #$27
-	STA ObjectXPos,Y
-	LDA ObjectXPos,X
+	STA objXLo,Y
+	LDA objXLo,X
 	SEC
 	SBC #$2A
-	STA ObjectXPos+1,Y
-	LDA ObjectYPos,X
+	STA objXLo+1,Y
+	LDA objYLo,X
 	CLC
 	ADC #$45
-	STA ObjectYPos,Y
-	STA ObjectYPos+1,Y
+	STA objYLo,Y
+	STA objYLo+1,Y
 	LDA #$77
-	STA ObjectSlot,Y
-	STA ObjectSlot+1,Y
+	STA objSlot,Y
+	STA objSlot+1,Y
 	LDA #$00
-	STA ObjectState,Y
-	STA ObjectState+1,Y
-	STA ObjectAction,Y
-	STA ObjectAction+1,Y
+	STA objState,Y
+	STA objState+1,Y
+	STA objAction,Y
+	STA objAction+1,Y
 	RTS
 bra5_844D:
 	JSR sub5_85C6
-	LDA ObjectAction,X
+	LDA objAction,X
 	ASL
 	TAY
 	LDA tbl5_8462,Y
@@ -696,7 +696,7 @@ tbl5_8462:
 	dw ptr10_8553
 	dw ptr10_8564
 ptr10_8470:
-	LDA FrameCount
+	LDA frameCount
 	AND #$07
 	BNE bra5_847B
 	LDA #$2B
@@ -704,17 +704,17 @@ ptr10_8470:
 bra5_847B:
 	JSR sub5_8580
 	LDA #$68
-	STA EnemyAnimFrame,X
-	LDA ObjXScreenDistance,X
+	STA enemyAnimFrame,X
+	LDA objXDistHi,X
 	BPL bra5_8493_RTS
 	LDA #$00
 	STA $0641,X
-	INC ObjectAction,X
-	INC ObjectAction,X
+	INC objAction,X
+	INC objAction,X
 bra5_8493_RTS:
 	RTS
 ptr10_8494:
-	LDA FrameCount
+	LDA frameCount
 	AND #$07
 	BNE bra5_849F
 	LDA #$2B
@@ -722,49 +722,49 @@ ptr10_8494:
 bra5_849F:
 	JSR sub5_8580
 	LDA #$28
-	STA EnemyAnimFrame,X
-	LDA ObjXScreenDistance,X
+	STA enemyAnimFrame,X
+	LDA objXDistHi,X
 	BMI bra5_84B4_RTS
 	LDA #$00
 	STA $0641,X
-	INC ObjectAction,X
+	INC objAction,X
 bra5_84B4_RTS:
 	RTS
 ptr10_84B5:
-	LDA FrameCount
+	LDA frameCount
 	AND #$07
 	BNE bra5_84C0
 	LDA #$2B
 	JSR jmp_54_B470
 bra5_84C0:
 	LDA #$02
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	LDA $0641,X
 	CMP #$20
 	BCS bra5_84D0
 	INC $0641,X
 	RTS
 bra5_84D0:
-	LDA ObjXScreenDistance,X
+	LDA objXDistHi,X
 	BMI bra5_84DE
 	LDA #$00
-	STA ObjectAction,X
+	STA objAction,X
 	STA $0641,X
 	RTS
 bra5_84DE:
 	LDA #$00
 	STA $0641,X
-	DEC ObjectAction,X
+	DEC objAction,X
 	RTS
 ptr10_84E7:
-	LDA FrameCount
+	LDA frameCount
 	AND #$07
 	BNE bra5_84F2
 	LDA #$2B
 	JSR jmp_54_B470
 bra5_84F2:
 	LDA #$41
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	INC $0641,X
 	LDA $0641,X
 	CMP #$20
@@ -773,25 +773,25 @@ bra5_84F2:
 	BCC bra5_8513_RTS
 	LDA #$00
 	STA $0641,X
-	DEC ObjectAction,X
-	DEC ObjectAction,X
-	DEC ObjectAction,X
+	DEC objAction,X
+	DEC objAction,X
+	DEC objAction,X
 bra5_8513_RTS:
 	RTS
 bra5_8514:
 	JSR sub5_8599
 	LDA #$40
-	STA ObjectState,Y
+	STA objState,Y
 	RTS
 ptr10_851D:
-	LDA FrameCount
+	LDA frameCount
 	AND #$07
 	BNE bra5_8528
 	LDA #$2B
 	JSR jmp_54_B470
 bra5_8528:
 	LDA #$01
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	INC $0641,X
 	LDA $0641,X
 	CMP #$20
@@ -800,39 +800,39 @@ bra5_8528:
 	BCC bra5_854E_RTS
 	LDA #$00
 	STA $0641,X
-	DEC ObjectAction,X
-	DEC ObjectAction,X
-	DEC ObjectAction,X
+	DEC objAction,X
+	DEC objAction,X
+	DEC objAction,X
 bra5_854E_RTS:
 	RTS
 bra5_854A:
 	JSR sub5_8599
 	LDA #$00
-	STA ObjectState,Y
+	STA objState,Y
 	RTS
 ptr10_8553:
-	LDA FrameCount
+	LDA frameCount
 	AND #$07
 	BNE bra5_855E
 	LDA #$2B
 	JSR jmp_54_B470
 bra5_855E:
 	LDA #$05
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 ptr10_8564:
 	LDA #$06
-	STA EnemyAnimFrame,X
-	LDA ReznorsDefeated
+	STA enemyAnimFrame,X
+	LDA reznorsDefeated
 	CMP #$03
 	BCC bra5_857F_RTS
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	CMP #$B0
 	BCC bra5_857F_RTS
 	LDA #$23
-	STA Sound_Music
+	STA sndMusic
 	LDA #$09
-	STA GameState
+	STA gameState
 bra5_857F_RTS:
 	RTS
 sub5_8580:
@@ -842,81 +842,81 @@ sub5_8580:
 	BCC bra5_8598_RTS
 	LDA #$00
 	STA $0641,X
-	INC ObjectAction,X
-	INC ObjectAction,X
-	INC ObjectAction,X
+	INC objAction,X
+	INC objAction,X
+	INC objAction,X
 bra5_8598_RTS:
 	RTS
 sub5_8599:
-	LDY ObjectCount
-	INC ObjectCount
-	LDA ObjectXPos,X
-	STA ObjectXPos,Y
-	LDA ObjectYPos,X
-	STA ObjectYPos,Y
-	LDA ObjectXScreen,X
-	STA ObjectXScreen,Y
-	LDA ObjectYScreen,X
-	STA ObjectYScreen,Y
+	LDY objCount
+	INC objCount
+	LDA objXLo,X
+	STA objXLo,Y
+	LDA objYLo,X
+	STA objYLo,Y
+	LDA objXHi,X
+	STA objXHi,Y
+	LDA objYHi,X
+	STA objYHi,Y
 	LDA #$78
-	STA ObjectSlot,Y
+	STA objSlot,Y
 	LDA #$00
-	STA ObjectVariables,Y
+	STA objVar,Y
 	STA $0641,Y
-	STA ObjectAction,Y
+	STA objAction,Y
 	RTS
 sub5_85C6:
 	LDA #$07
 	STA $25
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_85E8
 	CMP #$FF
 	BEQ bra5_85E8
 	JMP Obj_RemoveObject
 bra5_85E8:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_862A
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_8619
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_862A
 bra5_8619:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_862A:
 loc5_862A:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_8630
 	RTS
 bra5_8630:
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$1F
 	ASL
 	TAY
@@ -933,50 +933,50 @@ tbl5_8644:
 	dw Obj_FlipKill
 ptr10_864E:
 	LDX $A4
-	LDA ObjectAction,X
+	LDA objAction,X
 	CMP #$05
 	BCS bra5_86BC_RTS
 	JSR sub5_86BD
 	JSR sub5_86C6
-	LDA PlayerMovement
+	LDA playerMoveFlags
 	AND #$04
 	BEQ bra5_86BC_RTS
 	LDA #$F7
-	STA InvincibilityTimer
-	LDA PlayerMovement
+	STA invincibilityTimer
+	LDA playerMoveFlags
 	AND #$FB
-	STA PlayerMovement
+	STA playerMoveFlags
 	LDA #$30
-	STA PlayerYSpeed
+	STA playerYSpd
 	LDA #$0F
-	STA Sound_Sfx
+	STA sndSfx
 	LDA #$05
-	STA ObjectAction,X
+	STA objAction,X
 	LDA #$00
 	STA $0641,X
-	LDY ObjectCount
-	INC ObjectCount
-	LDA ObjectXPos,X
-	STA ObjectXPos,Y
-	LDA ObjectYPos,X
-	STA ObjectYPos,Y
-	LDA ObjectYPos,X
+	LDY objCount
+	INC objCount
+	LDA objXLo,X
+	STA objXLo,Y
+	LDA objYLo,X
+	STA objYLo,Y
+	LDA objYLo,X
 	CLC
 	ADC #$20
-	STA ObjectYPos,X
-	LDA ObjectXScreen,X
-	STA ObjectXScreen,Y
-	LDA ObjectYScreen,X
-	STA ObjectYScreen,Y
+	STA objYLo,X
+	LDA objXHi,X
+	STA objXHi,Y
+	LDA objYHi,X
+	STA objYHi,Y
 	LDA #$77
-	STA ObjectSlot,Y
+	STA objSlot,Y
 	LDA #$04
-	STA ObjectState,Y
+	STA objState,Y
 	LDA #$00
-	STA ObjectVariables,Y
+	STA objVar,Y
 	LDA #$06
-	STA ObjectAction,Y
-	INC ReznorsDefeated
+	STA objAction,Y
+	INC reznorsDefeated
 bra5_86BC_RTS:
 	RTS
 sub5_86BD:
@@ -986,21 +986,21 @@ sub5_86BD:
 	PLA
 	RTS
 sub5_86C6:
-	LDA ObjXScreenDistance,X
+	LDA objXDistHi,X
 	BPL bra5_86D8
 	LDA #$08
 	CLC
 	ADC #$20
 	CLC
-	ADC ObjectXDistance,X
+	ADC objXDistLo,X
 	BCS bra5_86DF
 	BCC bra5_86FF
 bra5_86D8:
-	LDA ObjectXDistance,X
+	LDA objXDistLo,X
 	CMP #$08
 	BCS bra5_86FF
 bra5_86DF:
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BEQ bra5_86F5
 	CMP #$FF
 	BNE bra5_86FF
@@ -1008,11 +1008,11 @@ bra5_86DF:
 	CLC
 	ADC #$28
 	CLC
-	ADC ObjectYDistance,X
+	ADC objYDistLo,X
 	BCS bra5_86FC
 	BCC bra5_86FF
 bra5_86F5:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CMP #$00
 	BCS bra5_86FF
 bra5_86FC:
@@ -1022,74 +1022,74 @@ bra5_86FF:
 	SEC
 bra5_8700:
 	BCC bra5_870C_RTS
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$E0
-	STA ObjectState,X
+	STA objState,X
 	PLA
 	PLA
 bra5_870C_RTS:
 	RTS
 Obj_h4A:
 	LDX $A4
-	LDA ObjectVariables,X
+	LDA objVar,X
 	BPL bra5_8786
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_8730
 	CMP #$FF
 	BEQ bra5_8730
 	JMP Obj_RemoveObject
 bra5_8730:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_8772
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_8761
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_8772
 bra5_8761:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_8772:
 loc5_8772:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_8778
 	RTS
 bra5_8778:
 	LDA #$00
-	STA ObjectAction,X
+	STA objAction,X
 	JSR Obj_FacePlayer
 	LDA #$47
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 bra5_8786:
 	JSR sub5_8A0D
 	LDX $A4
-	LDA ObjectAction,X
+	LDA objAction,X
 	ASL
 	TAY
 	LDA tbl5_879D,Y
@@ -1103,10 +1103,10 @@ tbl5_879D:
 	dw ptr10_8889
 	dw ptr10_88FA
 ptr10_87A5:
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$4F
-	STA EnemyAnimFrame,X
-	LDA ObjectState,X
+	STA enemyAnimFrame,X
+	LDA objState,X
 	AND #$40
 	BNE bra5_87E4
 	LDA #$02
@@ -1120,7 +1120,7 @@ ptr10_87A5:
 	JSR sub3_B7A2
 	BNE bra5_87D0
 	LDA #$01
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra5_87D0:
 	LDA #$0E
@@ -1129,7 +1129,7 @@ bra5_87D0:
 	JSR sub3_B7A2
 	BEQ bra5_87E1
 	LDA #$03
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra5_87E1:
 	JMP loc5_89D4
@@ -1145,7 +1145,7 @@ bra5_87E4:
 	JSR sub3_B7A2
 	BNE bra5_8800
 	LDA #$03
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra5_8800:
 	LDA #$00
@@ -1154,16 +1154,16 @@ bra5_8800:
 	JSR sub3_B7A2
 	BEQ bra5_8811
 	LDA #$01
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra5_8811:
 	JMP loc5_89B2
 ptr10_8814:
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$CF
 	ORA #$40
-	STA EnemyAnimFrame,X
-	LDA ObjectState,X
+	STA enemyAnimFrame,X
+	LDA objState,X
 	AND #$40
 	BNE bra5_8855
 	LDA #$FB
@@ -1177,7 +1177,7 @@ ptr10_8814:
 	JSR sub3_B7A2
 	BNE bra5_8841
 	LDA #$02
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra5_8841:
 	LDA #$08
@@ -1186,7 +1186,7 @@ bra5_8841:
 	JSR sub3_B7A2
 	BEQ bra5_8852
 	LDA #$00
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra5_8852:
 	JMP loc5_898B
@@ -1202,7 +1202,7 @@ bra5_8855:
 	JSR sub3_B7A2
 	BNE bra5_8871
 	LDA #$00
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra5_8871:
 	LDA #$08
@@ -1211,18 +1211,18 @@ bra5_8871:
 	JSR sub3_B7A2
 	BEQ bra5_8886
 	LDA #$0E
-	STA Sound_Sfx
+	STA sndSfx
 	LDA #$02
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra5_8886:
 	JMP loc5_8969
 ptr10_8889:
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$CF
 	ORA #$80
-	STA EnemyAnimFrame,X
-	LDA ObjectState,X
+	STA enemyAnimFrame,X
+	LDA objState,X
 	AND #$40
 	BNE bra5_88CA
 	LDA #$10
@@ -1236,7 +1236,7 @@ ptr10_8889:
 	JSR sub3_B7A2
 	BNE bra5_88B6
 	LDA #$03
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra5_88B6:
 	LDA #$00
@@ -1245,7 +1245,7 @@ bra5_88B6:
 	JSR sub3_B7A2
 	BEQ bra5_88C7
 	LDA #$01
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra5_88C7:
 	JMP loc5_89B2
@@ -1261,7 +1261,7 @@ bra5_88CA:
 	JSR sub3_B7A2
 	BNE bra5_88E6
 	LDA #$01
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra5_88E6:
 	LDA #$0F
@@ -1270,15 +1270,15 @@ bra5_88E6:
 	JSR sub3_B7A2
 	BEQ bra5_88F7
 	LDA #$03
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra5_88F7:
 	JMP loc5_89D4
 ptr10_88FA:
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$8F
-	STA EnemyAnimFrame,X
-	LDA ObjectState,X
+	STA enemyAnimFrame,X
+	LDA objState,X
 	AND #$40
 	BNE bra5_8939
 	LDA #$14
@@ -1292,7 +1292,7 @@ ptr10_88FA:
 	JSR sub3_B7A2
 	BNE bra5_8925
 	LDA #$00
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra5_8925:
 	LDA #$08
@@ -1301,7 +1301,7 @@ bra5_8925:
 	JSR sub3_B7A2
 	BEQ bra5_8936
 	LDA #$02
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra5_8936:
 	JMP loc5_8969
@@ -1317,7 +1317,7 @@ bra5_8939:
 	JSR sub3_B7A2
 	BNE bra5_8955
 	LDA #$02
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra5_8955:
 	LDA #$08
@@ -1326,144 +1326,144 @@ bra5_8955:
 	JSR sub3_B7A2
 	BEQ bra5_8966
 	LDA #$00
-	STA ObjectAction,X
+	STA objAction,X
 	RTS
 bra5_8966:
 	JMP loc5_898B
 loc5_8969:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$01
 	BNE bra5_8981
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
 	SBC #$01
-	STA ObjectYPos,X
-	LDA ObjectYScreen,X
+	STA objYLo,X
+	LDA objYHi,X
 	SBC #$00
-	STA ObjectYScreen,X
+	STA objYHi,X
 bra5_8981:
 	LDY #$09
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$40
 	JMP loc5_89AC
 loc5_898B:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$01
 	BNE bra5_89A3
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	CLC
 	ADC #$01
-	STA ObjectYPos,X
-	LDA ObjectYScreen,X
+	STA objYLo,X
+	LDA objYHi,X
 	ADC #$00
-	STA ObjectYScreen,X
+	STA objYHi,X
 bra5_89A3:
 	LDY #$0E
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$C0
 	ORA #$80
 loc5_89AC:
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	JMP loc5_89FD
 loc5_89B2:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$01
 	BNE bra5_89CA
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
 	SBC #$01
-	STA ObjectXPos,X
-	LDA ObjectXScreen,X
+	STA objXLo,X
+	LDA objXHi,X
 	SBC #$00
-	STA ObjectXScreen,X
+	STA objXHi,X
 bra5_89CA:
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$80
 	ORA #$40
 	JMP loc5_89F1
 loc5_89D4:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$01
 	BNE bra5_89EC
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	CLC
 	ADC #$01
-	STA ObjectXPos,X
-	LDA ObjectXScreen,X
+	STA objXLo,X
+	LDA objXHi,X
 	ADC #$00
-	STA ObjectXScreen,X
+	STA objXHi,X
 bra5_89EC:
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$80
 loc5_89F1:
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	LDY #$07
-	LDA ObjectAction,X
+	LDA objAction,X
 	BEQ bra5_89FD
 	LDY #$0C
 bra5_89FD:
 loc5_89FD:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$04
 	BEQ bra5_8A05
 	INY
 bra5_8A05:
 	TYA
-	ORA EnemyAnimFrame,X
-	STA EnemyAnimFrame,X
+	ORA enemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 sub5_8A0D:
 	LDA #$06
 	STA $25
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_8A2F
 	CMP #$FF
 	BEQ bra5_8A2F
 	JMP Obj_RemoveObject
 bra5_8A2F:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_8A71
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_8A60
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_8A71
 bra5_8A60:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_8A71:
 loc5_8A71:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_8A77
 	RTS
 bra5_8A77:
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$1F
 	ASL
 	TAY
@@ -1485,73 +1485,73 @@ ptr10_8A95:
 	RTS
 Obj_h4E:
 	LDX $A4
-	LDA ObjectVariables,X
+	LDA objVar,X
 	BMI bra5_8AA9
 	JMP loc5_8B21
 bra5_8AA9:
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_8AC5
 	CMP #$FF
 	BEQ bra5_8AC5
 	JMP Obj_RemoveObject
 bra5_8AC5:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_8B07
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_8AF6
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_8B07
 bra5_8AF6:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_8B07:
 loc5_8B07:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_8B0D
 	RTS
 bra5_8B0D:
-	LDA ObjectVariables,X
+	LDA objVar,X
 	CMP #$80
 	BNE bra5_8B1D
 	JSR Obj_FacePlayer
 	LDA #$11
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 bra5_8B1D:
 	JSR sub_54_B4FC
 	RTS
 loc5_8B21:
 	JSR sub5_8C27
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	CMP #$50
 	BCS bra5_8B83
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$40
 	BNE bra5_8B59
 	LDA #$18
@@ -1560,16 +1560,16 @@ loc5_8B21:
 	JSR sub3_B7A2
 	CMP #$02
 	BEQ bra5_8B48
-	LDA ObjectState,X
+	LDA objState,X
 	ORA #$40
-	STA ObjectState,X
+	STA objState,X
 	RTS
 bra5_8B48:
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	CLC
 	ADC #$01
-	STA ObjectXPos,X
-	LDA ObjectXScreen,X
+	STA objXLo,X
+	LDA objXHi,X
 	ADC #$00
 	JMP loc5_8B7D
 bra5_8B59:
@@ -1579,22 +1579,22 @@ bra5_8B59:
 	JSR sub3_B7A2
 	CMP #$02
 	BEQ bra5_8B6F
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$BF
-	STA ObjectState,X
+	STA objState,X
 	RTS
 bra5_8B6F:
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
 	SBC #$01
-	STA ObjectXPos,X
-	LDA ObjectXScreen,X
+	STA objXLo,X
+	LDA objXHi,X
 	SBC #$00
 loc5_8B7D:
-	STA ObjectXScreen,X
+	STA objXHi,X
 	JMP loc5_8C17
 bra5_8B83:
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$80
 	BNE bra5_8BD2
 	LDA #$08
@@ -1603,34 +1603,34 @@ bra5_8B83:
 	JSR sub3_B7A2
 	CMP #$02
 	BEQ bra5_8BA0
-	LDA ObjectState,X
+	LDA objState,X
 	ORA #$80
-	STA ObjectState,X
+	STA objState,X
 	RTS
 bra5_8BA0:
 	LDA #$01
 	BMI bra5_8BBD
 	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
+	ADC objYLo,X
+	STA objYLo,X
 	BCS bra5_8BB1
 	CMP #$F0
 	BCC bra5_8BCF
 bra5_8BB1:
 	CLC
 	ADC #$10
-	STA ObjectYPos,X
-	INC ObjectYScreen,X
+	STA objYLo,X
+	INC objYHi,X
 	JMP loc5_8BCF
 bra5_8BBD:
 	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
+	ADC objYLo,X
+	STA objYLo,X
 	BCS bra5_8BCF
 	SEC
 	SBC #$10
-	STA ObjectYPos,X
-	DEC ObjectYScreen,X
+	STA objYLo,X
+	DEC objYHi,X
 bra5_8BCF:
 loc5_8BCF:
 	JMP loc5_8C17
@@ -1641,96 +1641,96 @@ bra5_8BD2:
 	JSR sub3_B7A2
 	CMP #$02
 	BEQ bra5_8BE8
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$7F
-	STA ObjectState,X
+	STA objState,X
 	RTS
 bra5_8BE8:
 	LDA #$FF
 	BMI bra5_8C05
 	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
+	ADC objYLo,X
+	STA objYLo,X
 	BCS bra5_8BF9
 	CMP #$F0
 	BCC bra5_8C17
 bra5_8BF9:
 	CLC
 	ADC #$10
-	STA ObjectYPos,X
-	INC ObjectYScreen,X
+	STA objYLo,X
+	INC objYHi,X
 	JMP loc5_8C17
 bra5_8C05:
 	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X
+	ADC objYLo,X
+	STA objYLo,X
 	BCS bra5_8C17
 	SEC
 	SBC #$10
-	STA ObjectYPos,X
-	DEC ObjectYScreen,X
+	STA objYLo,X
+	DEC objYHi,X
 bra5_8C17:
 loc5_8C17:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$07
 	BNE bra5_8C26_RTS
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	EOR #$40
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 bra5_8C26_RTS:
 	RTS
 sub5_8C27:
 	LDA #$06
 	STA $25
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_8C49
 	CMP #$FF
 	BEQ bra5_8C49
 	JMP Obj_RemoveObject
 bra5_8C49:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_8C8B
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_8C7A
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_8C8B
 bra5_8C7A:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_8C8B:
 loc5_8C8B:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_8C91
 	RTS ;unlogged
 bra5_8C91:
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$1F
 	ASL
 	TAY
@@ -1750,143 +1750,143 @@ ptr10_8CAF:
 	JSR Obj_PlayerHitCheck
 	JSR Obj_KillOnSpinJump
 	LDA #sfx_EnemyHit2
-	STA Sound_Sfx
+	STA sndSfx
 	LDA #$01
 	JSR RewardPoints
 	LDX $A4
 	LDA #$81
-	STA ObjectVariables,X
-	LDA PlayerState
+	STA objVar,X
+	LDA playerState
 	CMP #$03
 	BEQ bra5_8CDE
 	LDA #$30
-	STA PlayerYSpeed
-	LDA PlayerMovement
+	STA playerYSpd
+	LDA playerMoveFlags
 	ORA #$04
 	EOR #$01
-	STA PlayerMovement
+	STA playerMoveFlags
 	LDA #$30
-	STA PlayerXSpeed
+	STA playerXSpd
 bra5_8CDE:
 	PLA
 	PLA
 	RTS
 Obj_h76:
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_8CFF
 	CMP #$FF
 	BEQ bra5_8CFF
 	JMP Obj_RemoveObject
 bra5_8CFF:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_8D41
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_8D30
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_8D41
 bra5_8D30:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_8D41:
 loc5_8D41:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_8D47
 	RTS
 bra5_8D47:
-	LDA ObjectVariables,X
+	LDA objVar,X
 	BPL bra5_8D5A
 	LDA #$00
-	STA ObjectVariables,X
-	STA ONOFFBlockFlag
+	STA objVar,X
+	STA switchBlockFlag
 	LDA #$57
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 bra5_8D5A:
 	JSR sub5_8D67
-	LDA ONOFFBlockFlag
+	LDA switchBlockFlag
 	CLC
 	ADC #$57
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 sub5_8D67:
 	LDA #$07
 	STA $25
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_8D89
 	CMP #$FF
 	BEQ bra5_8D89
 	JMP Obj_RemoveObject
 bra5_8D89:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_8DCB
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_8DBA
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_8DCB
 bra5_8DBA:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_8DCB:
 loc5_8DCB:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_8DD1
 	RTS
 bra5_8DD1:
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$1F
 	ASL
 	TAY
@@ -1901,21 +1901,21 @@ tbl5_8DE5:
 	dw Obj_PowerupEatCheck
 	dw ptr10_8DED
 ptr10_8DED:
-	LDA ObjXScreenDistance,X
+	LDA objXDistHi,X
 	BPL bra5_8DFF
 	LDA #$08
 	CLC
 	ADC #$10
 	CLC
-	ADC ObjectXDistance,X
+	ADC objXDistLo,X
 	BCS bra5_8E06
 	BCC bra5_8E26
 bra5_8DFF:
-	LDA ObjectXDistance,X
+	LDA objXDistLo,X
 	CMP #$08
 	BCS bra5_8E26
 bra5_8E06:
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BEQ bra5_8E1C
 	CMP #$FF
 	BNE bra5_8E26
@@ -1923,11 +1923,11 @@ bra5_8E06:
 	CLC
 	ADC #$10
 	CLC
-	ADC ObjectYDistance,X
+	ADC objYDistLo,X
 	BCS bra5_8E23
 	BCC bra5_8E26
 bra5_8E1C:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CMP #$00
 	BCS bra5_8E26
 bra5_8E23:
@@ -1937,81 +1937,81 @@ bra5_8E26:
 	SEC
 bra5_8E27:
 	BCC bra5_8E32
-	LDA ObjectState,X
+	LDA objState,X
 	AND #$E0
-	STA ObjectState,X
+	STA objState,X
 	RTS
 bra5_8E32:
-	LDA PlayerMovement
+	LDA playerMoveFlags
 	AND #$04
 	BEQ bra5_8E4E_RTS
-	LDA ONOFFBlockFlag
+	LDA switchBlockFlag
 	EOR #$01
-	STA ONOFFBlockFlag
-	LDA PlayerMovement
+	STA switchBlockFlag
+	LDA playerMoveFlags
 	AND #$FB
-	STA PlayerMovement
+	STA playerMoveFlags
 	LDA #$20
-	STA PlayerYSpeed
+	STA playerYSpd
 	LDA #$16
-	STA Sound_Sfx
+	STA sndSfx
 bra5_8E4E_RTS:
 	RTS
 Obj_h54:
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_8E6D
 	CMP #$FF
 	BEQ bra5_8E6D
 	JMP Obj_RemoveObject
 bra5_8E6D:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_8EAF
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_8E9E
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_8EAF
 bra5_8E9E:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_8EAF:
 loc5_8EAF:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_8EB5
 	RTS
 bra5_8EB5:
-	LDA ObjectVariables,X
+	LDA objVar,X
 	BMI bra5_8EBD
 	JMP loc5_8F3F
 bra5_8EBD:
 	JSR Obj_FacePlayer
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	CMP #$55
 	BCC bra5_8EEB
 	CMP #$56
@@ -2019,36 +2019,36 @@ bra5_8EBD:
 	CMP #$57
 	BCC bra5_8F0D
 	BEQ bra5_8EE2
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
 	SBC #$08
-	STA ObjectXPos,X
-	LDA ObjectXScreen,X
+	STA objXLo,X
+	LDA objXHi,X
 	SBC #$00
-	STA ObjectXScreen,X
+	STA objXHi,X
 bra5_8EE2:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
 	SBC #$08
 	JMP loc5_8F02
 bra5_8EEB:
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
 	SBC #$07
-	STA ObjectXPos,X
-	LDA ObjectXScreen,X
+	STA objXLo,X
+	LDA objXHi,X
 	SBC #$00
-	STA ObjectXScreen,X
-	LDA ObjectYPos,X
+	STA objXHi,X
+	LDA objYLo,X
 	SEC
 	SBC #$04
 loc5_8F02:
-	STA ObjectYPos,X
-	LDA ObjectYScreen,X
+	STA objYLo,X
+	LDA objYHi,X
 	SBC #$00
-	STA ObjectYScreen,X
+	STA objYHi,X
 bra5_8F0D:
-	LDY ObjectSlot,X
+	LDY objSlot,X
 	CPY #$57
 	BNE bra5_8F18
 	LDY #$54
@@ -2061,22 +2061,22 @@ bra5_8F1E:
 	DEY
 	DEY
 	TYA
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 bra5_8F25:
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	CLC
 	ADC #$04
-	STA ObjectXPos,X
-	LDA ObjectXScreen,X
+	STA objXLo,X
+	LDA objXHi,X
 	ADC #$00
-	STA ObjectXScreen,X
-	LDA ObjectYPos,X
+	STA objXHi,X
+	LDA objYLo,X
 	SEC
 	SBC #$08
 	JMP loc5_8F02
 loc5_8F3F:
-	LDY ObjectSlot,X
+	LDY objSlot,X
 	CPY #$79
 	BEQ bra5_8F7E
 	CPY #$57
@@ -2086,7 +2086,7 @@ bra5_8F4C:
 	DEY
 	DEY
 	TYA
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	LDA $058C,X
 	LSR
 	SEC
@@ -2101,7 +2101,7 @@ bra5_8F62:
 	TAY
 	JSR jmp_54_B896
 	LDY #$DA
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	CMP #$58
 	BCS bra5_8F78
 	SEC
@@ -2129,13 +2129,13 @@ bra5_8F91:
 	TAY
 	JSR jmp_54_B896
 	LDY #$55
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$10
 	BEQ bra5_8FA0
 	INY
 bra5_8FA0:
 	TYA
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 tbl5_8FA5:
 	db $CA
@@ -2144,71 +2144,71 @@ tbl5_8FA5:
 	db $CA
 Obj_h5C:
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_8FC7
 	CMP #$FF
 	BEQ bra5_8FC7
 	JMP Obj_RemoveObject
 bra5_8FC7:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_9009
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_8FF8
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_9009
 bra5_8FF8:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_9009:
 loc5_9009:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_900F
 	RTS
 bra5_900F:
-	LDA ObjectVariables,X
+	LDA objVar,X
 	BPL bra5_902C
 	JSR Obj_FacePlayer
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
 	SBC #$08
-	STA ObjectYPos,X
-	LDA ObjectYScreen,X
+	STA objYLo,X
+	LDA objYHi,X
 	SBC #$00
-	STA ObjectYScreen,X
+	STA objYHi,X
 	JSR sub5_9056
 	RTS
 bra5_902C:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$07
 	BNE bra5_9037
 	LDA #$1D
-	STA Sound_Sfx
+	STA sndSfx
 bra5_9037:
 	JSR sub5_92D7
 	LDA $058C,X
@@ -2228,14 +2228,14 @@ bra5_904A:
 	JSR sub5_9056
 	RTS
 sub5_9056:
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	AND #$FE
 	CMP #$60
 	BNE bra5_9063
 	LDA #$E2
 	BNE bra5_9074
 bra5_9063:
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	AND #$FE
 	SEC
 	SBC #$5A
@@ -2247,7 +2247,7 @@ bra5_9063:
 	ADC #$59
 bra5_9074:
 	STA $32
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$18
 	LSR
 	LSR
@@ -2256,7 +2256,7 @@ bra5_9074:
 	LDA tbl5_9089,Y
 	CLC
 	ADC $32
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 tbl5_9089:
 	db $00
@@ -2265,91 +2265,91 @@ tbl5_9089:
 	db $02
 Obj_h5A:
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_90AB
 	CMP #$FF
 	BEQ bra5_90AB
 	JMP Obj_RemoveObject
 bra5_90AB:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_90ED
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_90DC
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_90ED
 bra5_90DC:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_90ED:
 loc5_90ED:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_90F3
 	RTS
 bra5_90F3:
-	LDA ObjectVariables,X
+	LDA objVar,X
 	BPL bra5_913D
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	CMP #$62
 	BCS bra5_9117
 	JSR Obj_FacePlayer
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
 	SBC #$08
-	STA ObjectYPos,X
-	LDA ObjectYScreen,X
+	STA objYLo,X
+	LDA objYHi,X
 	SBC #$00
-	STA ObjectYScreen,X
+	STA objYHi,X
 	JSR sub5_9056
 	RTS
 bra5_9117:
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
 	SBC #$A0
-	STA ObjectXPos,X
-	LDA ObjectXScreen,X
+	STA objXLo,X
+	LDA objXHi,X
 	SBC #$00
-	STA ObjectXScreen,X
-	LDA ObjectYPos,X
+	STA objXHi,X
+	LDA objYLo,X
 	SEC
 	SBC #$08
-	STA ObjectYPos,X
-	LDA ObjectYScreen,X
+	STA objYLo,X
+	LDA objYHi,X
 	SBC #$00
-	STA ObjectYScreen,X
+	STA objYHi,X
 	JSR sub5_9056
 	RTS
 bra5_913D:
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$07
 	BNE bra5_9148
 	LDA #sfx_Cutter
-	STA Sound_Sfx
+	STA sndSfx
 bra5_9148:
 	JSR sub5_82EC
 	LDA $058C,X
@@ -2369,65 +2369,65 @@ bra5_915B:
 	RTS
 Obj_h66:
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_9182
 	CMP #$FF
 	BEQ bra5_9182
 	JMP Obj_RemoveObject
 bra5_9182:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_91C4
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_91B3
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_91C4
 bra5_91B3:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_91C4:
 loc5_91C4:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_91CA
 	RTS
 bra5_91CA:
 	LDA $0635
 	BNE bra5_91D5
 	LDA #$00
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 bra5_91D5:
 	INC $067C
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	CMP #$68
 	BCS bra5_91F2
 	LDA #$69
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	LDA #$00
 	STA $28
 	STA $2B
@@ -2437,22 +2437,22 @@ bra5_91D5:
 	RTS
 bra5_91F2:
 	LDA #$6A
-	STA EnemyAnimFrame,X
-	LDA ObjXScreenDistance,X
+	STA enemyAnimFrame,X
+	LDA objXDistHi,X
 	BPL bra5_9209
 	LDA #$00
 	CLC
 	ADC #$10
 	CLC
-	ADC ObjectXDistance,X
+	ADC objXDistLo,X
 	BCS bra5_9210
 	BCC bra5_9230
 bra5_9209:
-	LDA ObjectXDistance,X
+	LDA objXDistLo,X
 	CMP #$00
 	BCS bra5_9230
 bra5_9210:
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BEQ bra5_9226
 	CMP #$FF
 	BNE bra5_9230
@@ -2460,11 +2460,11 @@ bra5_9210:
 	CLC
 	ADC #$20
 	CLC
-	ADC ObjectYDistance,X
+	ADC objYDistLo,X
 	BCS bra5_922D
 	BCC bra5_9230
 bra5_9226:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CMP #$00
 	BCS bra5_9230
 bra5_922D:
@@ -2477,28 +2477,28 @@ bra5_9231:
 	LDA $1E
 	CMP #$08
 	BNE bra5_9262_RTS
-	LDA DataBank2
+	LDA prgDataBank2
 	CMP #$23
 	BEQ bra5_9262_RTS
 	LDA $1E
 	CMP #$08
 	BNE bra5_9262_RTS
-	LDA WorldNumber
+	LDA worldNumber
 	ASL
 	ASL
 	CLC
-	ADC LevelNumber
+	ADC levelNumber
 	ASL
-	STA WarpLevelNumber
+	STA warpLvlNumber
 	LDA #$03
-	STA GameState
+	STA gameState
 	LDA #$7E
 	SEC
 	SBC #$78
 	ASL
 	ASL
 	ASL
-	STA WarpNumber
+	STA warpNumber
 bra5_9262_RTS:
 	RTS
 tbl5_9263:
@@ -2621,30 +2621,30 @@ tbl5_92B7:
 	db $FF
 	db $FF
 sub5_92D7:
-	LDA Player1YoshiStatus
+	LDA playerYoshiState
 	BNE bra5_92E1_RTS
-	LDA PlayerHoldFlag
+	LDA playerHoldFlag
 	BEQ bra5_92E2
 bra5_92E1_RTS:
 	RTS
 bra5_92E2:
 	LDA $06DC
 	BEQ bra5_9329
-	LDA ObjXScreenDistance,X
+	LDA objXDistHi,X
 	BPL bra5_92F9
 	LDA #$05
 	CLC
 	ADC #$10
 	CLC
-	ADC ObjectXDistance,X
+	ADC objXDistLo,X
 	BCS bra5_9300
 	BCC bra5_9320
 bra5_92F9:
-	LDA ObjectXDistance,X
+	LDA objXDistLo,X
 	CMP #$05
 	BCS bra5_9320
 bra5_9300:
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BEQ bra5_9316
 	CMP #$FF
 	BNE bra5_9320
@@ -2652,11 +2652,11 @@ bra5_9300:
 	CLC
 	ADC #$10
 	CLC
-	ADC ObjectYDistance,X
+	ADC objYDistLo,X
 	BCS bra5_931D
 	BCC bra5_9320
 bra5_9316:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CMP #$00
 	BCS bra5_9320
 bra5_931D:
@@ -2671,27 +2671,27 @@ bra5_9321:
 	RTS
 bra5_9329:
 	LDY #$50
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	CMP #$5E
 	BCC bra5_9334
 	LDY #$88
 bra5_9334:
 	STY $38
-	LDA ObjXScreenDistance,X
+	LDA objXDistHi,X
 	BPL bra5_9348
 	LDA #$04
 	CLC
 	ADC #$04
 	CLC
-	ADC ObjectXDistance,X
+	ADC objXDistLo,X
 	BCS bra5_934F
 	BCC bra5_936F
 bra5_9348:
-	LDA ObjectXDistance,X
+	LDA objXDistLo,X
 	CMP #$00
 	BCS bra5_936F
 bra5_934F:
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BEQ bra5_9365
 	CMP #$FF
 	BNE bra5_936F
@@ -2699,11 +2699,11 @@ bra5_934F:
 	CLC
 	ADC $38
 	CLC
-	ADC ObjectYDistance,X
+	ADC objYDistLo,X
 	BCS bra5_936C
 	BCC bra5_936F
 bra5_9365:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CMP #$00
 	BCS bra5_936F
 bra5_936C:
@@ -2718,17 +2718,17 @@ bra5_9370:
 	BEQ bra5_9394_RTS
 	CMP #$0E
 	BEQ bra5_9394_RTS
-	LDA ButtonsHeld
+	LDA btnHeld
 	AND #$08
 	BEQ bra5_9394_RTS
 	LDA #$00
-	STA PlayerYSpeed
-	STA PlayerXSpeed
+	STA playerYSpd
+	STA playerXSpd
 	LDA #$03
-	STA PlayerState
+	STA playerState
 	STA $06DC
 	LDA #$0D
-	STA PlayerAction
+	STA playerAction
 bra5_9394_RTS:
 	RTS
 bra5_9395:
@@ -2739,363 +2739,363 @@ bra5_9395:
 	BNE bra5_93A7_RTS
 bra5_939F:
 	LDA #$00
-	STA PlayerState
+	STA playerState
 	LDA #$0A
-	STA PlayerAction
+	STA playerAction
 bra5_93A7_RTS:
 	RTS
 sub5_93A8:
 	LDX $A4
-	LDA ObjectState,X
+	LDA objState,X
 	BMI bra5_93B2
 	JMP loc5_94B2
 bra5_93B2:
-	LDA PlayerXPosDup
+	LDA playerXLoDup
 	CLC
 	ADC $28
-	STA PlayerXPosDup
+	STA playerXLoDup
 	LDA $28
 	BMI bra5_93C4
-	LDA PlayerXScreenDup
+	LDA playerXHiDup
 	ADC #$00
 	JMP loc5_93C8
 bra5_93C4:
-	LDA PlayerXScreenDup
+	LDA playerXHiDup
 	SBC #$00
 loc5_93C8:
-	STA PlayerXScreenDup
+	STA playerXHiDup
 	LDA $2B
 	BMI bra5_93E3
 	CLC
-	ADC PlayerYPosDup
-	STA PlayerYPosDup
+	ADC playerYLoDup
+	STA playerYLoDup
 	BCS bra5_93D9
 	CMP #$F0
 	BCC bra5_93FF
 bra5_93D9:
 	CLC
 	ADC #$10
-	STA PlayerYPosDup
-	INC PlayerYScreenDup
+	STA playerYLoDup
+	INC playerYHiDup
 	JMP loc5_93FF
 bra5_93E3:
 	CLC
-	ADC PlayerYPosDup
-	STA PlayerYPosDup
+	ADC playerYLoDup
+	STA playerYLoDup
 	BCS bra5_93FF
 	SEC
 	SBC #$10
-	STA PlayerYPosDup
-	DEC PlayerYScreenDup
-	LDY VertScrollLock
-	CPY PlayerYScreenDup
+	STA playerYLoDup
+	DEC playerYHiDup
+	LDY vertScrollLock
+	CPY playerYHiDup
 	BNE bra5_93FF
 	INY
-	STY PlayerYScreenDup
+	STY playerYHiDup
 	LDA #$00
-	STA PlayerYPosDup
+	STA playerYLoDup
 bra5_93FF:
 loc5_93FF:
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_941B
 	CMP #$FF
 	BEQ bra5_941B
 	JMP Obj_RemoveObject
 bra5_941B:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_945D
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_944C
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_945D
 bra5_944C:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_945D:
 loc5_945D:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_9463
 	RTS
 bra5_9463:
 	LDA #$00
-	STA ObjectState,X
-	LDA ObjXScreenDistance,X
+	STA objState,X
+	LDA objXDistHi,X
 	BEQ bra5_947A
 	CMP #$FF
 	BNE bra5_9481_RTS
-	LDA ObjectXDistance,X
+	LDA objXDistLo,X
 	CMP $25
 	BCC bra5_9481_RTS
 	BCS bra5_9482
 bra5_947A:
-	LDA ObjectXDistance,X
+	LDA objXDistLo,X
 	CMP #$05
 	BCC bra5_9482
 bra5_9481_RTS:
 	RTS
 bra5_9482:
-	LDA PlayerMovement
+	LDA playerMoveFlags
 	AND #$04
 	BNE bra5_94A1_RTS
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BNE bra5_9496
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CMP #$08
 	BCC bra5_94A2
 	BCS bra5_94A1_RTS
 bra5_9496:
 	CMP #$FF
 	BNE bra5_94A1_RTS
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CMP #$FA
 	BCS bra5_94A2
 bra5_94A1_RTS:
 	RTS
 bra5_94A2:
 	LDA #$00
-	STA PlayerYSpeed
-	STA ObjectYDistance,X
-	STA ObjYScreenDistance,X
+	STA playerYSpd
+	STA objYDistLo,X
+	STA objYDistHi,X
 	LDA #$80
-	STA ObjectState,X
+	STA objState,X
 	RTS
 loc5_94B2:
-	LDA ObjXScreenDistance,X
+	LDA objXDistHi,X
 	BEQ bra5_94C4
 	CMP #$FF
 	BNE bra5_94CB_RTS
-	LDA ObjectXDistance,X
+	LDA objXDistLo,X
 	CMP $25
 	BCC bra5_94CB_RTS
 	BCS bra5_94CC
 bra5_94C4:
-	LDA ObjectXDistance,X
+	LDA objXDistLo,X
 	CMP #$05
 	BCC bra5_94CC
 bra5_94CB_RTS:
 	RTS
 bra5_94CC:
-	LDA PlayerMovement
+	LDA playerMoveFlags
 	AND #$04
 	BNE bra5_94EB_RTS
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BNE bra5_94E0
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CMP #$08
 	BCC bra5_94EC
 	BCS bra5_94EB_RTS
 bra5_94E0:
 	CMP #$FF
 	BNE bra5_94EB_RTS
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CMP #$FA
 	BCS bra5_94EC
 bra5_94EB_RTS:
 	RTS
 bra5_94EC:
 	LDA #$00
-	STA PlayerYSpeed
-	STA ObjectYDistance,X
-	STA ObjYScreenDistance,X
-	LDA ObjectYPos,X
-	STA PlayerYPosDup
-	LDA ObjectYScreen,X
-	STA PlayerYScreenDup
-	LDY VertScrollLock
-	CPY PlayerYScreenDup
+	STA playerYSpd
+	STA objYDistLo,X
+	STA objYDistHi,X
+	LDA objYLo,X
+	STA playerYLoDup
+	LDA objYHi,X
+	STA playerYHiDup
+	LDY vertScrollLock
+	CPY playerYHiDup
 	BNE bra5_950E
 	INY
-	STY PlayerYScreenDup
+	STY playerYHiDup
 	LDA #$00
-	STA PlayerYPosDup
+	STA playerYLoDup
 bra5_950E:
 	LDA #$00
-	STA ObjectYDistance,X
-	STA ObjYScreenDistance,X
+	STA objYDistLo,X
+	STA objYDistHi,X
 	LDA #$80
-	STA ObjectState,X
+	STA objState,X
 	LDA #$01
-	STA PlayerAction
-	STA PlayerYSpeed
+	STA playerAction
+	STA playerYSpd
 	RTS
 sub5_9522:
-	LDA PlayerState
+	LDA playerState
 	CMP #$03
 	BEQ bra5_9529
 	RTS
 bra5_9529:
 	LDA #$00
-	STA PlayerXSpeed
-	LDA PlayerXPosDup
+	STA playerXSpd
+	LDA playerXLoDup
 	CLC
 	ADC $28
-	STA PlayerXPosDup
+	STA playerXLoDup
 	LDA $28
 	BMI bra5_953F
-	LDA PlayerXScreenDup
+	LDA playerXHiDup
 	ADC #$00
 	JMP loc5_9543
 bra5_953F:
-	LDA PlayerXScreenDup
+	LDA playerXHiDup
 	SBC #$00
 loc5_9543:
-	STA PlayerXScreenDup
+	STA playerXHiDup
 	LDA $2B
 	BMI bra5_955E
 	CLC
-	ADC PlayerYPosDup
-	STA PlayerYPosDup
+	ADC playerYLoDup
+	STA playerYLoDup
 	BCS bra5_9554
 	CMP #$F0
 	BCC bra5_957A
 bra5_9554:
 	CLC
 	ADC #$10
-	STA PlayerYPosDup
-	INC PlayerYScreenDup
+	STA playerYLoDup
+	INC playerYHiDup
 	JMP loc5_957A
 bra5_955E:
 	CLC
-	ADC PlayerYPosDup
-	STA PlayerYPosDup
+	ADC playerYLoDup
+	STA playerYLoDup
 	BCS bra5_957A
 	SEC
 	SBC #$10
-	STA PlayerYPosDup
-	DEC PlayerYScreenDup
-	LDY VertScrollLock
-	CPY PlayerYScreenDup
+	STA playerYLoDup
+	DEC playerYHiDup
+	LDY vertScrollLock
+	CPY playerYHiDup
 	BNE bra5_957A
 	INY
-	STY PlayerYScreenDup
+	STY playerYHiDup
 	LDA #$00
-	STA PlayerYPosDup
+	STA playerYLoDup
 bra5_957A:
 loc5_957A:
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_9596
 	CMP #$FF
 	BEQ bra5_9596
 	JMP Obj_RemoveObject
 bra5_9596:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_95D8
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_95C7
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_95D8
 bra5_95C7:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_95D8:
 loc5_95D8:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_95DE_RTS
 	RTS
 bra5_95DE_RTS:
 	RTS
 Obj_h7E:
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_95FD
 	CMP #$FF
 	BEQ bra5_95FD
 	JMP Obj_RemoveObject
 bra5_95FD:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_963F
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_962E
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_963F
 bra5_962E:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_963F:
 loc5_963F:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_9645
 	RTS
 bra5_9645:
-	LDA ObjectVariables,X
+	LDA objVar,X
 	BPL bra5_964E
 	JSR Obj_FacePlayer
 	RTS
@@ -3128,7 +3128,7 @@ tbl5_9667:
 ptr6_9670:
 	LDY #$00
 	LDX $A4
-	LDA ObjFrameCounter
+	LDA objFrameCount
 	AND #$10
 	BEQ bra5_967C
 	INY
@@ -3142,7 +3142,7 @@ bra5_967C:
 	STA $33
 	LDY #$80
 	LDX $A4
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	AND #$01
 	BEQ bra5_9696
 	LDY #$C0
@@ -3173,7 +3173,7 @@ WallUrchin2:
 	db $19, $1A, $1B, $1C
 ptr6_96CB:
 	LDX $A4
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	ASL
 	TAX
 	LDA tbl5_96EB,X
@@ -3255,82 +3255,82 @@ GrassPlatform5:
 	db $A1
 Obj_hFA:
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_974A
 	CMP #$FF
 	BEQ bra5_974A
 	JMP Obj_RemoveObject
 bra5_974A:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_978C
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_977B
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_978C
 bra5_977B:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_978C:
 loc5_978C:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_9792
 	RTS
 bra5_9792:
-	LDA ObjectVariables,X
+	LDA objVar,X
 	BMI bra5_979A
 	JMP loc5_97D3
 bra5_979A:
 	LDA #$00
-	STA ObjectVariables,X
-	LDA ObjectXPos,X
+	STA objVar,X
+	LDA objXLo,X
 	SEC
 	SBC #$08
-	STA ObjectXPos,X
-	LDA ObjectXScreen,X
+	STA objXLo,X
+	LDA objXHi,X
 	SBC #$00
-	STA ObjectXScreen,X
-	LDA ObjectYPos,X
+	STA objXHi,X
+	LDA objYLo,X
 	SEC
 	SBC #$08
-	STA ObjectYPos,X
-	LDA ObjectYScreen,X
+	STA objYLo,X
+	LDA objYHi,X
 	SBC #$00
-	STA ObjectYScreen,X
+	STA objYHi,X
 	LDY #$01
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	AND #$FE
 	CMP #$FE
 	BNE bra5_97CE
 	LDY #$04
 bra5_97CE:
 	TYA
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	RTS
 loc5_97D3:
 	LDA $058C,X
@@ -3386,91 +3386,91 @@ tbl5_97F0:
 	db $40
 Obj_hED:
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_982F
 	CMP #$FF
 	BEQ bra5_982F
 	JMP Obj_RemoveObject
 bra5_982F:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_9871
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_9860
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_9871
 bra5_9860:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_9871:
 loc5_9871:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_9877
 	RTS
 bra5_9877:
-	LDA ObjectVariables,X
+	LDA objVar,X
 	BPL bra5_98A4
 	LDA #$00
-	STA ObjectVariables,X
-	LDA ObjectXPos,X
+	STA objVar,X
+	LDA objXLo,X
 	CLC
 	ADC #$08
-	STA ObjectXPos,X
-	LDA ObjectXScreen,X
+	STA objXLo,X
+	LDA objXHi,X
 	ADC #$00
-	STA ObjectXScreen,X
-	LDA ObjectYPos,X
+	STA objXHi,X
+	LDA objYLo,X
 	CLC
 	ADC #$08
-	STA ObjectYPos,X
-	LDA ObjectYScreen,X
+	STA objYLo,X
+	LDA objYHi,X
 	ADC #$00
-	STA ObjectYScreen,X
+	STA objYHi,X
 	RTS
 bra5_98A4:
-	LDA GameState
+	LDA gameState
 	CMP #$02
 	BNE bra5_9920_RTS
-	LDA ObjXScreenDistance,X
+	LDA objXDistHi,X
 	BPL bra5_98BC
 	LDA #$00
 	CLC
 	ADC #$10
 	CLC
-	ADC ObjectXDistance,X
+	ADC objXDistLo,X
 	BCS bra5_98C3
 	BCC bra5_98E3
 bra5_98BC:
-	LDA ObjectXDistance,X
+	LDA objXDistLo,X
 	CMP #$00
 	BCS bra5_98E3
 bra5_98C3:
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BEQ bra5_98D9
 	CMP #$FF
 	BNE bra5_98E3
@@ -3478,11 +3478,11 @@ bra5_98C3:
 	CLC
 	ADC #$10
 	CLC
-	ADC ObjectYDistance,X
+	ADC objYDistLo,X
 	BCS bra5_98E0
 	BCC bra5_98E3
 bra5_98D9:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CMP #$00
 	BCS bra5_98E3
 bra5_98E0:
@@ -3492,33 +3492,33 @@ bra5_98E3:
 	SEC
 bra5_98E4:
 	BCS bra5_9920_RTS
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	CMP #$F0
 	BEQ bra5_98F6
 	CMP #$F1
 	BEQ bra5_98F6
-	LDA Player1YoshiStatus
+	LDA playerYoshiState
 	BNE bra5_9920_RTS
 bra5_98F6:
 	LDY #$06
-	LDA PlayerMovement
+	LDA playerMoveFlags
 	AND #$40
 	BEQ bra5_9900
 	LDY #$0A
 bra5_9900:
 	STY $25
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	SEC
 	SBC #$EF
 	TAY
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	CMP #$F5
 	BEQ bra5_9940
 	CMP #$EF
 	BNE bra5_9921
 	LDA #$01
 	STA $06E9
-	LDA ButtonsHeld
+	LDA btnHeld
 	AND #$08
 	BNE bra5_992C
 bra5_9920_RTS:
@@ -3530,20 +3530,20 @@ bra5_9921:
 	CMP #$07
 	BNE bra5_9920_RTS
 bra5_992C:
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	CLC
 	ADC $25
-	STA PlayerXPosDup
-	LDA ObjectXScreen,X
+	STA playerXLoDup
+	LDA objXHi,X
 	ADC #$00
-	STA PlayerXScreenDup
+	STA playerXHiDup
 	LDA #$20
 	STA $06E0
 bra5_9940:
 	LDA tbl5_994A,Y
-	STA GameState
+	STA gameState
 	LDA #$00
-	STA GameSubstate
+	STA gameSubstate
 	RTS
 tbl5_994A:
 	db $13
@@ -3555,7 +3555,7 @@ tbl5_994A:
 	db $0D
 ptr6_9951:
 	LDX $A4
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$3F
 	ASL
 	TAX
@@ -3565,13 +3565,13 @@ ptr6_9951:
 	STA $33
 	LDY #$80
 	LDX $A4
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	AND #$01
 	BEQ bra5_9971
 	LDY #$C0
 bra5_9971:
 	STY $36
-	LDA EnemyAnimFrame,X
+	LDA enemyAnimFrame,X
 	AND #$C0
 	STA $05F0
 	JSR sub_52_ADAF
@@ -3624,56 +3624,56 @@ ofs_99A5:
 	db $2A
 Obj_hE7:
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_99CA
 	CMP #$FF
 	BEQ bra5_99CA
 	JMP Obj_RemoveObject
 bra5_99CA:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_9A0C
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_99FB
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_9A0C
 bra5_99FB:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_9A0C:
 loc5_9A0C:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_9A12
 	RTS
 bra5_9A12:
 	LDA #$03
-	STA EnemyAnimFrame,X
-	LDA ObjectAction,X
+	STA enemyAnimFrame,X
+	LDA objAction,X
 	ASL
 	TAY
 	LDA tbl5_9A29,Y
@@ -3685,73 +3685,73 @@ tbl5_9A29:
 	dw ptr10_9A2D
 	dw ptr10_9A45
 ptr10_9A2D:
-	LDA FrameCount
+	LDA frameCount
 	AND #$00
 	BNE bra5_9A38
 	LDA #$49
 	JSR jmp_54_B470
 bra5_9A38:
-	LDA ObjectVariables,X
+	LDA objVar,X
 	AND #$0F
 	CMP #$0E
 	BNE bra5_9A44_RTS
-	INC ObjectAction,X
+	INC objAction,X
 bra5_9A44_RTS:
 	RTS
 ptr10_9A45:
 	LDA #$00
-	STA ObjectSlot,X
+	STA objSlot,X
 	RTS
 Obj_hE8:
 	LDX $A4 ;Get index for current object?
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X ;Calculate horizontal distance between the player and the object
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X ;Calculate horizontal distance between the player and the object
 	STA $28
 	BEQ bra5_9A69
 	CMP #$FF
 	BEQ bra5_9A69
 	JMP Obj_RemoveObject
 bra5_9A69:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X ;Calculate vertical distance between the player and the object
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X ;Calculate vertical distance between the player and the object
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_9AAB
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_9A9A
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_9AAB
 bra5_9A9A:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_9AAB:
 loc5_9AAB:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_9AB1
 	RTS
 bra5_9AB1:
-	LDA ObjectAction,X
+	LDA objAction,X
 	ASL
 	TAY ;Get pointer for current action
 	LDA tbl5_9AC3,Y
@@ -3769,30 +3769,30 @@ tbl5_9AC3:
 	dw ptr10_9BEC
 ptr10_9AD1:
 	LDA #$40
-	STA EnemyAnimFrame,X
+	STA enemyAnimFrame,X
 	LDY #$22
-	LDA PlayerPowerup
+	LDA playerPowerup
 	BNE bra5_9AE4 ;Branch ahead if the player has no powerup
-	LDA Player1YoshiStatus
+	LDA playerYoshiState
 	BNE bra5_9AE4 ;Branch ahead if the player is riding Yoshi
 	LDY #$18
 bra5_9AE4:
 	STY $25
-	LDA ObjXScreenDistance,X
+	LDA objXDistHi,X
 	BPL bra5_9AF8
 	LDA #$06
 	CLC
 	ADC #$10
 	CLC
-	ADC ObjectXDistance,X
+	ADC objXDistLo,X
 	BCS bra5_9AFF
 	BCC bra5_9B1F
 bra5_9AF8:
-	LDA ObjectXDistance,X
+	LDA objXDistLo,X
 	CMP #$06
 	BCS bra5_9B1F
 bra5_9AFF:
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BEQ bra5_9B15
 	CMP #$FF
 	BNE bra5_9B1F
@@ -3800,11 +3800,11 @@ bra5_9AFF:
 	CLC
 	ADC #$10
 	CLC
-	ADC ObjectYDistance,X
+	ADC objYDistLo,X
 	BCS bra5_9B1C
 	BCC bra5_9B1F
 bra5_9B15:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CMP #$00
 	BCS bra5_9B1F
 bra5_9B1C:
@@ -3814,32 +3814,32 @@ bra5_9B1F:
 	SEC
 bra5_9B20:
 	BCS bra5_9B2F_RTS
-	LDA PlayerYSpeed
+	LDA playerYSpd
 	BEQ bra5_9B2F_RTS
-	LDA PlayerMovement
+	LDA playerMoveFlags
 	AND #$04
 	BEQ bra5_9B2F_RTS
-	INC ObjectAction,X
+	INC objAction,X
 bra5_9B2F_RTS:
 	RTS
 ptr10_9B30:
-	LDA FrameCount
+	LDA frameCount
 	AND #$00
 	BNE bra5_9B3B
 	LDA #$48
 	JSR jmp_54_B470
 bra5_9B3B:
-	LDA ObjectVariables,X
+	LDA objVar,X
 	AND #$0F
 	CMP #$09
 	BNE bra5_9B47_RTS
-	INC ObjectAction,X
+	INC objAction,X
 bra5_9B47_RTS:
 	RTS
 ptr10_9B48:
 	LDA $06EA
 	BMI bra5_9B68
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	SEC
 	SBC #$EA
 	TAY
@@ -3850,32 +3850,32 @@ ptr10_9B48:
 	AND #$01
 	BNE bra5_9B68
 bra5_9B62:
-	INC ObjectAction,X
-	INC ObjectAction,X
+	INC objAction,X
+	INC objAction,X
 bra5_9B68:
-	INC ObjectAction,X
+	INC objAction,X
 	RTS
 ptr10_9B6C:
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	STA $25
 	LDY #$FF
 bra5_9B73:
 	INY
-	LDA ObjectSlot,Y
+	LDA objSlot,Y
 	CMP $25
 	BNE bra5_9B87
-	LDA ObjectAction,Y
+	LDA objAction,Y
 	CMP #$05
 	BCS bra5_9B87
 	LDA #$00
-	STA ObjectSlot,Y
+	STA objSlot,Y
 bra5_9B87:
-	CPY ObjectCount
+	CPY objCount
 	BCC bra5_9B73
 ptr10_9B8B:
 	RTS
 ptr10_9B8C:
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	SEC
 	SBC #$EA
 	TAY
@@ -3885,38 +3885,38 @@ ptr10_9B8C:
 	STA $06EA,Y
 	STA $25
 	LDA #$01
-	STA EnemyAnimFrame,X
-	LDY ObjectCount
-	INC ObjectCount
-	LDA ObjectXPos,X
-	STA ObjectXPos,Y
-	LDA ObjectXScreen,X
-	STA ObjectXScreen,Y
-	LDA ObjectYPos,X
-	STA ObjectYPos,Y
-	LDA ObjectYScreen,X
-	STA ObjectYScreen,Y
+	STA enemyAnimFrame,X
+	LDY objCount
+	INC objCount
+	LDA objXLo,X
+	STA objXLo,Y
+	LDA objXHi,X
+	STA objXHi,Y
+	LDA objYLo,X
+	STA objYLo,Y
+	LDA objYHi,X
+	STA objYHi,Y
 	LDA #$00
-	STA ObjectAction,Y
-	STA ObjectState,Y
+	STA objAction,Y
+	STA objState,Y
 	LDA #$80
-	STA ObjectVariables,Y
+	STA objVar,Y
 	LDA $25
 	CMP #$03
 	BNE bra5_9BDA
 	LDA #sfx_BlockRelease
-	STA Sound_Sfx ;Play block release sound
+	STA sndSfx ;Play block release sound
 	LDA #$E8
 	BNE bra5_9BE5 ;Spawn 1UP
 bra5_9BDA:
 	LDA #$00
 	JSR RewardPoints ;Give the player 100 points
 	LDA #sfx_Coin
-	STA Sound_Sfx ;Play coin sound
+	STA sndSfx ;Play coin sound
 	LDA #$E9 ;Spawn coin sprite
 bra5_9BE5:
-	STA ObjectSlot,Y ;Store sprite in memory
-	INC ObjectAction,X
+	STA objSlot,Y ;Store sprite in memory
+	INC objAction,X
 	RTS
 ptr10_9BEC:
 	RTS
@@ -3939,93 +3939,93 @@ ptr6_9BED:
 	RTS
 Obj_hE6:
 	LDX $A4
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 	BEQ bra5_9C2E
 	CMP #$FF
 	BEQ bra5_9C2E
 	JMP Obj_RemoveObject
 bra5_9C2E:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ bra5_9C70
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL bra5_9C5F
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	ADC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 	JMP loc5_9C70
 bra5_9C5F:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA ObjectYDistance,X
-	LDA ObjYScreenDistance,X
+	STA objYDistLo,X
+	LDA objYDistHi,X
 	SBC #$00
-	STA ObjYScreenDistance,X
+	STA objYDistHi,X
 bra5_9C70:
 loc5_9C70:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ bra5_9C76
 	RTS
 bra5_9C76:
-	LDA ObjectAction,X
+	LDA objAction,X
 	BNE bra5_9C9B
-	LDA FrameCount
+	LDA frameCount
 	AND #$00
 	BNE bra5_9C86
 	LDA #$4A
 	JSR jmp_54_B470
 bra5_9C86:
-	LDA ObjectVariables,X
+	LDA objVar,X
 	AND #$1F
 	CMP #$0F
 	BCC bra5_9C9A_RTS
-	INC ObjectAction,X
+	INC objAction,X
 	LDA #$00
-	STA ObjectVariables,X
-	STA ObjectState,X
+	STA objVar,X
+	STA objState,X
 bra5_9C9A_RTS:
 	RTS
 bra5_9C9B:
-	LDA FrameCount
+	LDA frameCount
 	AND #$00
 	BNE bra5_9CA6
 	LDA #$0B
 	JSR GetMovementData
 bra5_9CA6:
-	LDA ObjXScreenDistance,X
+	LDA objXDistHi,X
 	BPL bra5_9CB8
 	LDA #$08
 	CLC
 	ADC #$10
 	CLC
-	ADC ObjectXDistance,X
+	ADC objXDistLo,X
 	BCS bra5_9CBF
 	BCC bra5_9CDF
 bra5_9CB8:
-	LDA ObjectXDistance,X
+	LDA objXDistLo,X
 	CMP #$08
 	BCS bra5_9CDF
 bra5_9CBF:
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BEQ bra5_9CD5
 	CMP #$FF
 	BNE bra5_9CDF
@@ -4033,11 +4033,11 @@ bra5_9CBF:
 	CLC
 	ADC #$10
 	CLC
-	ADC ObjectYDistance,X
+	ADC objYDistLo,X
 	BCS bra5_9CDC
 	BCC bra5_9CDF
 bra5_9CD5:
-	LDA ObjectYDistance,X
+	LDA objYDistLo,X
 	CMP #$00
 	BCS bra5_9CDF
 bra5_9CDC:
@@ -4047,11 +4047,11 @@ bra5_9CDF:
 	SEC
 bra5_9CE0:
 	BCS bra5_9CF3_RTS
-	INC Player1Lives
+	INC playerLives
 	LDA #$07
-	STA Sound_Sfx
+	STA sndSfx
 	LDA #$00
-	STA ObjectSlot,X
+	STA objSlot,X
 	LDA #$03
 	JSR RewardPoints
 bra5_9CF3_RTS:

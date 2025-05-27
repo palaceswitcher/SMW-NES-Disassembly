@@ -3,13 +3,13 @@
 
 ; Calculate the distance between the object and the player
 macro Obj_DistCalc start
-	LDA ObjectXPos,X
+	LDA objXLo,X
 	SEC
-	SBC PlayerXPosDup
-	STA ObjectXDistance,X
-	LDA ObjectXScreen,X
-	SBC PlayerXScreenDup
-	STA ObjXScreenDistance,X
+	SBC playerXLoDup
+	STA objXDistLo,X
+	LDA objXHi,X
+	SBC playerXHiDup
+	STA objXDistHi,X
 	STA $28
 
 	BEQ @CalcVertDist ;Continue if the player is to the left of the object (within one screen)
@@ -19,40 +19,40 @@ macro Obj_DistCalc start
 
 ; Calculate vertical distance between the player and object
 @CalcVertDist:
-	LDA ObjectYPos,X
+	LDA objYLo,X
 	SEC
-	SBC PlayerYPosDup
-	STA ObjectYDistance,X
-	LDA ObjectYScreen,X
-	SBC PlayerYScreenDup
-	STA ObjYScreenDistance,X ;Get object's vertical distance from player
-	LDA PlayerYScreenDup
-	CMP ObjectYScreen,X
+	SBC playerYLoDup
+	STA objYDistLo,X
+	LDA objYHi,X
+	SBC playerYHiDup
+	STA objYDistHi,X ;Get object's vertical distance from player
+	LDA playerYHiDup
+	CMP objYHi,X
 	BEQ @CheckIfFrozen ;Branch if the object and player are on the same vertical screen
-	LDA ObjYScreenDistance,X
+	LDA objYDistHi,X
 	BPL @OffsetObjDistance ;Branch if the player is on a higher vertical screen than the object
 	; Add 16 to the object's vertical distance if they're below the object
-		LDA ObjectYDistance,X
+		LDA objYDistLo,X
 		CLC
 		ADC #16
-		STA ObjectYDistance,X ;Increase the vertical distance value by 16
-		LDA ObjYScreenDistance,X
+		STA objYDistLo,X ;Increase the vertical distance value by 16
+		LDA objYDistHi,X
 		ADC #$00
-		STA ObjYScreenDistance,X ;Increase the vertical screen distance if needed
+		STA objYDistHi,X ;Increase the vertical screen distance if needed
 		JMP @CheckIfFrozen
 
 	; Subtract the object's vertical distance by 16 if they're above the object
 	@OffsetObjDistance:
-		LDA ObjectYDistance,X
+		LDA objYDistLo,X
 		SEC
 		SBC #16
-		STA ObjectYDistance,X
-		LDA ObjYScreenDistance,X
+		STA objYDistLo,X
+		LDA objYDistHi,X
 		SBC #$00
-		STA ObjYScreenDistance,X
+		STA objYDistHi,X
 
 @CheckIfFrozen:
-	LDA FreezeFlag
+	LDA freezeFlag
 	BEQ start ;Only continue if the game isn't frozen
 	RTS
 endm
@@ -62,8 +62,8 @@ macro Obj_VertOffset ofs,stop
 	LDA #ofs
 	BMI bra8_8147 ;Redundant branch (16 isn't negative)
 	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X ;Position the object 16 pixels lower
+	ADC objYLo,X
+	STA objYLo,X ;Position the object 16 pixels lower
 	BCS bra8_813B ;Add 16 if the vertical screen is crossed
 	CMP #256-ofs
 	BCC stop ;Branch if it spawns more than 16 pixels below the screen boundary
@@ -72,20 +72,20 @@ macro Obj_VertOffset ofs,stop
 bra8_813B:
 	CLC
 	ADC #ofs
-	STA ObjectYPos,X
-	INC ObjectYScreen,X ;Add 16 to vertical position (assuming carry over)
+	STA objYLo,X
+	INC objYHi,X ;Add 16 to vertical position (assuming carry over)
 	JMP stop
 
 ; Subtracts 16 from the object's vertical position, goes unused
 bra8_8147:
 	CLC
-	ADC ObjectYPos,X
-	STA ObjectYPos,X ;Add negative vertical offset
+	ADC objYLo,X
+	STA objYLo,X ;Add negative vertical offset
 	BCS stop
 	SEC
 	SBC #ofs
-	STA ObjectYPos,X ;Subtract 16 if it crosses the vertical screen barrier
-	DEC ObjectYScreen,X ;Borrow from high byte if needed
+	STA objYLo,X ;Subtract 16 if it crosses the vertical screen barrier
+	DEC objYHi,X ;Borrow from high byte if needed
 endm
 
 ; Big endian word

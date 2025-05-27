@@ -2,51 +2,51 @@
 ;SUBROUTINE ($A000)
 ;Loads OAM data for item box sprite
 ;----------------------------------------
-RenderItemBoxSprite:
-	LDY ItemBox
-	BNE RenderItemBoxSprCont ;Don't render item sprite if the item box is empty
+RenderplayerItemBoxSprite:
+	LDY playerItemBox
+	BNE RenderplayerItemBoxSprCont ;Don't render item sprite if the item box is empty
 ptr6_A005:
 	RTS
 
-RenderItemBoxSprCont:
+RenderplayerItemBoxSprCont:
 	LDX tbl2_A064,Y ;Get index for item's sprite data
-	LDY OAMFreeIndex ;Get current OAM index (always seems to be $80 for the item)
+	LDY oamFreeIndex ;Get current OAM index (always seems to be $80 for the item)
 ; Upload item box sprite to OAM
 	LDA tbl2_A068,X
-	STA SpriteMem+1,Y
+	STA spriteMem+1,Y
 	LDA tbl2_A074,X
-	STA SpriteMem+2,Y ;Copy upper left tile
+	STA spriteMem+2,Y ;Copy upper left tile
 	LDA tbl2_A068+1,X
-	STA SpriteMem+5,Y
+	STA spriteMem+5,Y
 	LDA tbl2_A074+1,X
-	STA SpriteMem+6,Y ;Copy upper right tile
+	STA spriteMem+6,Y ;Copy upper right tile
 	LDA tbl2_A068+2,X
-	STA SpriteMem+9,Y
+	STA spriteMem+9,Y
 	LDA tbl2_A074+2,X
-	STA SpriteMem+10,Y ;Copy bottom left tile
+	STA spriteMem+10,Y ;Copy bottom left tile
 	LDA tbl2_A068+3,X
-	STA SpriteMem+13,Y
+	STA spriteMem+13,Y
 	LDA tbl2_A074+3,X
-	STA SpriteMem+14,Y ;Copy bottom right tile
+	STA spriteMem+14,Y ;Copy bottom right tile
 
 ; Position sprites horizontally
 	LDA #$D3
-	STA SpriteMem,Y
-	STA SpriteMem+4,Y
+	STA spriteMem,Y
+	STA spriteMem+4,Y
 	LDA #$DB
-	STA SpriteMem+8,Y
-	STA SpriteMem+12,Y
+	STA spriteMem+8,Y
+	STA spriteMem+12,Y
 ; Position sprites vertically
 	LDA #$78
-	STA SpriteMem+3,Y
-	STA SpriteMem+11,Y
+	STA spriteMem+3,Y
+	STA spriteMem+11,Y
 	LDA #$80
-	STA SpriteMem+7,Y
-	STA SpriteMem+15,Y
-	INC OAMFreeIndex
-	INC OAMFreeIndex
-	INC OAMFreeIndex
-	INC OAMFreeIndex ;Move to next slot in OAM
+	STA spriteMem+7,Y
+	STA spriteMem+15,Y
+	INC oamFreeIndex
+	INC oamFreeIndex
+	INC oamFreeIndex
+	INC oamFreeIndex ;Move to next slot in OAM
 	RTS
 
 tbl2_A064:
@@ -81,26 +81,26 @@ jmp_52_A080:
 	JSR sub_53_827C
 	RTS
 jmp_52_A089:
-	LDA FrameCount
+	LDA frameCount
 	AND #$01
 	BNE bra2_A0A3
 	LDX #$00
 bra2_A091:
 	STX $A4
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	BEQ bra2_A09B
 	JSR sub2_A0B5
 bra2_A09B:
 	LDX $A4
 	INX
-	CPX ObjectCount
+	CPX objCount
 	BCC bra2_A091
 	RTS
 bra2_A0A3:
-	LDX ObjectCount
+	LDX objCount
 bra2_A0A5:
 	STX $A4
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	BEQ bra2_A0AF
 	JSR sub2_A0B5
 bra2_A0AF:
@@ -109,7 +109,7 @@ bra2_A0AF:
 	BPL bra2_A0A5
 	RTS
 sub2_A0B5:
-	LDY ObjectSlot,X
+	LDY objSlot,X
 	BMI bra2_A0BF
 	LDA tbl2_A93B,Y
 	BNE bra2_A0C7
@@ -124,7 +124,7 @@ bra2_A0C7:
 	STA $25
 	LDA $25
 	STA M90_PRG0
-	LDA ObjectSlot,X
+	LDA objSlot,X
 	BMI bra2_A0E4
 	ASL
 	TAX
@@ -145,7 +145,7 @@ jmp_52_A0F3:
 	LDX #$00
 bra2_A0F5:
 	STX $A4
-	LDA ObjectAction,X
+	LDA objAction,X
 	CMP #$F2
 	BEQ bra2_A102
 	CMP #$F3
@@ -155,11 +155,11 @@ bra2_A102:
 bra2_A105:
 	LDX $A4
 	INX
-	CPX ObjectCount
+	CPX objCount
 	BCC bra2_A0F5
 	RTS
 sub2_A10D:
-	LDA ObjectAction,X
+	LDA objAction,X
 	AND #$0F
 	STA $2D
 	JSR sub2_A5D0
@@ -175,7 +175,7 @@ sub2_A10D:
 ;$2E = Mapping CHR bank ID
 ;$30 = CHR attribute bank pointer
 ;$32 = Mapping data pointer
-;MetaspriteBankIndex = Bank (Stored in upper 2 bits)
+;metaspriteBankIndex = Bank (Stored in upper 2 bits)
 ;$A4 = Object index (currently active obj)
 ; Parameters:
 ; > $0036
@@ -208,17 +208,17 @@ jmp_52_A118:
 	STA $30
 	LDA CHRSprBankAttrs+1,X
 	STA $31 ;Get sprite tile attribute pointer for the given bank
-	LDA ObjectAttributes
+	LDA objAttrs
 	AND #%01000000
 	BEQ bra2_A18C ;Branch if sprite tile is facing right
 	; If sprite is facing left:
 		LDX #$00
 		LDY $A4 ;Get index for current object
-		LDA ObjectXDistance,Y
+		LDA objXDistLo,Y
 		CLC
-		ADC PlayerSprXPos
+		ADC playerSprX
 		STA $28 ;Object X Distance + Player Sprite X Pos = Object Sprite X Position
-		LDA ObjXScreenDistance,Y
+		LDA objXDistHi,Y
 		ADC #$00 ;If carry set, object sprite has crossed a screen boundary
 		BMI bra2_A16E ;Branch if object is a screen behind the player and its sprite also isn't on screen (presumably handles edge cases whilst moving across screen borders)
 		BEQ bra2_A15E ;Branch if object is on-screen
@@ -231,7 +231,7 @@ bra2_A15E: ;If object is on screen, start here
 
 ; Upload metasprite column X positions to buffer
 bra2_A160:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX $2A ;Compare sprite width to current tile
 	BCS bra2_A1D7 ;Start positioning sprite rows after every column is positioned
@@ -248,7 +248,7 @@ bra2_A16E:
 	LDY #$00  
 
 bra2_A172:
-	STY MetaspriteColXBuf,X
+	STY metaspriteColumnXBuf,X
 	INX
 	CPX $2A ;Compare sprite width to current tile
 	BCS bra2_A180_RTS ;Stop once every column is positioned
@@ -265,7 +265,7 @@ bra2_A180_RTS:
 ClearMetaColumnBuf:
 	LDA #$00
 bra2_A183:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX $2A
 	BCC bra2_A183 ;Loop until the width of the metasprite is reached
@@ -277,20 +277,20 @@ bra2_A183:
 ; If sprite is facing right:
 bra2_A18C:
 	LDX #$00
-	STX MetaspriteColXBuf ;Clear first byte of the column buffer (used for tracking if object crossed a screen boundary later)
+	STX metaspriteColumnXBuf ;Clear first byte of the column buffer (used for tracking if object crossed a screen boundary later)
 	LDY $A4 ;Get index for current object
 	LDA $25 ;Get the pixel width of the sprite
 	CLC
-	ADC PlayerSprXPos ;Object Sprite Width + Player Sprite X Position = Object Sprite Offset (likely a failsafe if the object's width puts it on or off screen relative to the player)
+	ADC playerSprX ;Object Sprite Width + Player Sprite X Position = Object Sprite Offset (likely a failsafe if the object's width puts it on or off screen relative to the player)
 	BCC bra2_A19B ;Branch if object stays on-screen
-		INC MetaspriteColXBuf ;Add 1 if the object goes off-screen (either direction?)
+		INC metaspriteColumnXBuf ;Add 1 if the object goes off-screen (either direction?)
 
 bra2_A19B: 
 	CLC
-	ADC ObjectXDistance,Y
+	ADC objXDistLo,Y
 	STA $28 ;Object Sprite Width + Player Sprite X Position + Object X Distance = Object Sprite X Position
-	LDA ObjXScreenDistance,Y
-	ADC MetaspriteColXBuf ;Add on an extra screen if object width puts it off-screen relative to the player
+	LDA objXDistHi,Y
+	ADC metaspriteColumnXBuf ;Add on an extra screen if object width puts it off-screen relative to the player
 	BMI bra2_A1BB ;Branch if object is off-screen to the left
 	BEQ bra2_A1AB ;Branch if object is on-screen
 	RTS ;End if object is a screen ahead of the player
@@ -301,7 +301,7 @@ bra2_A1AB:
 	LDA $28 ;Retrieve object sprite X position
 
 bra2_A1AD:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX $2A ;Compare sprite width to current tile
 	BCS bra2_A1D7 ;Start positioning sprite rows after every column is positioned
@@ -319,7 +319,7 @@ bra2_A1BB:
 
 ; Clear the column buffer with check to see if any columns would be on screen (handle edge cases on the left side?)
 bra2_A1BF:
-	STY MetaspriteColXBuf,X
+	STY metaspriteColumnXBuf,X
 	INX
 	CPX $2A
 	BCS bra2_A1CD_RTS ;Continue clearing column X position until sprite width has been reached
@@ -338,7 +338,7 @@ bra2_A1CD_RTS:
 bra2_A1CE:
 	LDA #$00
 bra2_A1D0:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX $2A
 	BCC bra2_A1D0 ;Loop until the whole column has been cleared
@@ -350,11 +350,11 @@ bra2_A1D0:
 bra2_A1D7:
 	LDX #$00
 	LDY $A4 ;get object index 
-	LDA ObjectYDistance,Y
+	LDA objYDistLo,Y
 	CLC
-	ADC PlayerSprYPos
+	ADC playerSprY
 	STA $2B ;Object Y Distance + Player Sprite Y Pos = Object Sprite Y Position
-	LDA ObjYScreenDistance,Y
+	LDA objYDistHi,Y
 	ADC #$00
 	BMI bra2_A205 ;Branch if object is at or above the player
 	BEQ bra2_A1ED ;Otherwise, branch if the object is below the player
@@ -369,7 +369,7 @@ bra2_A1ED:
 	LDA #$F8 ;Otherwise, position the rest of the sprite off-screen
 
 bra2_A1F5:
-	STA MetaspriteRowYBuf,X ;Store loaded position into the metasprite row buffer
+	STA metaspriteRowYBuf,X ;Store loaded position into the metasprite row buffer
 	INX
 	CPX $2D
 	BCS bra2_A221 ;When the sprite height has been reached, branch to the OAM manager
@@ -387,7 +387,7 @@ bra2_A205: ;If the object is below player Y screen, start here
 	LDY #$00
 
 bra2_A209:
-	STY MetaspriteRowYBuf,X ;Clear the row buffer
+	STY metaspriteRowYBuf,X ;Clear the row buffer
 	INX
 	CPX $2D
 	BCS bra2_A217_RTS ;When all positions have been cleared, branch
@@ -404,7 +404,7 @@ bra2_A217_RTS:
 bra2_A218:
 	LDA #$00
 bra2_A21A:
-	STA MetaspriteRowYBuf,X
+	STA metaspriteRowYBuf,X
 	INX
 	CPX $2D
 	BCC bra2_A21A ;Keep looping until all of the row buffer has been cleared
@@ -414,14 +414,14 @@ bra2_A21A:
 ;$40 = Mapping index
 ;--------------------
 bra2_A221:
-	LDX OAMFreeIndex ;Get free index space
+	LDX oamFreeIndex ;Get free index space
 	LDA #$00
 	STA $40 ;Clear mapping index
 	LDA #$00
 	TAY ;Set Y index for start of buffer range
 bra2_A22A: 
-	STY MetaspriteRowCount ;Update row counter
-	LDA a:MetaspriteRowYBuf,Y
+	STY metaspriteRowCount ;Update row counter
+	LDA a:metaspriteRowYBuf,Y
 	BNE bra2_A23B ;If loaded tile position isn't 00, branch
 		LDA $40
 		CLC
@@ -435,12 +435,12 @@ bra2_A23B: ;If tile position not 00, start here
 	LDY #$00 ;Start at beginning of mapping data
 
 bra2_A23F:
-	STY MetaspriteColCount ;Update column counter
-	LDA a:MetaspriteColXBuf,Y ;Get X position for current tile
+	STY metaspriteColumnCount ;Update column counter
+	LDA a:metaspriteColumnXBuf,Y ;Get X position for current tile
 	BEQ bra2_A281 ;If loaded tile position is 0 (empty), branch
-	STA SpriteMem+3,X ;Set tile's Y position
+	STA spriteMem+3,X ;Set tile's Y position
 	LDA $2B
-	STA SpriteMem,X ;Set tile's Y position
+	STA spriteMem,X ;Set tile's Y position
 	LDY $40 
 	INY
 	INY
@@ -449,21 +449,21 @@ bra2_A23F:
 	CMP #$FF
 	BNE bra2_A260 ;If tile ID isn't #$FF, branch
 	LDA #$F8 ;If it is, place the tile off screen
-	STA SpriteMem,X ;Store Y position of tile
+	STA spriteMem,X ;Store Y position of tile
 	BMI bra2_A281 ;Branch ahead
 bra2_A260:
 	AND #%00111111
-	STA MetaspriteRelTile ;Get tile ID relative to its bank
-	ORA MetaspriteBankIndex ;Add bank index
-	STA SpriteMem+1,X ;Set tile ID
+	STA metaspriteRelTile ;Get tile ID relative to its bank
+	ORA metaspriteBankIndex ;Add bank index
+	STA spriteMem+1,X ;Set tile ID
 	LDY $A4 ;Get currently active object slot
-	LDA ObjectAttributes
+	LDA objAttrs
 	EOR #%01000000
 	AND #%11100000 ;Get flipped object attribute with respect to priority and vertical flipping
-	LDY MetaspriteRelTile
+	LDY metaspriteRelTile
 	ORA ($30),Y ;Get sprite tile attributes for given attributes
 	ORA $06E1 ;Include object priority override
-	STA SpriteMem+2,X ;Set tile attributes
+	STA spriteMem+2,X ;Set tile attributes
 	TXA
 	CLC
 	ADC #$04 ;Move OAM free space index a single sprite ahead (4 bytes)
@@ -471,7 +471,7 @@ bra2_A260:
 
 bra2_A281:
 	INC $40 ;Advance mapping offset to next tile ID
-	LDY MetaspriteColCount
+	LDY metaspriteColumnCount
 	INY ;Move to next column
 	CPY $2A
 	BCC bra2_A23F ;Keep looping until all columns have been rendered
@@ -479,16 +479,16 @@ bra2_A281:
 
 ; Go to next column
 loc2_A28A:
-	LDY MetaspriteRowCount
+	LDY metaspriteRowCount
 	INY
 	CPY $2D ;Compare the row counter to the mapping height
 	BCC bra2_A22A ;Keep looping until all rows are rendered
-	STX OAMFreeIndex ;Update the OAM tracker when the sprite is finished
-	LDA MetaspriteBankIndex
+	STX oamFreeIndex ;Update the OAM tracker when the sprite is finished
+	LDA metaspriteBankIndex
 	AND #$80
 	BEQ bra2_A2A7_RTS ;Stop if the object sprite is in the third CHR bank
 	LDY #$01 ;Set index for second sprite CHR bank
-	LDA MetaspriteBankIndex
+	LDA metaspriteBankIndex
 	AND #$40
 	BNE bra2_A2A2 ;Branch if the object sprite is in the third CHR bank, maintaining the index for it
 	TAY ;Otherwise, use the index for the third bank
@@ -541,16 +541,16 @@ sub2_A2DE:
 	STA $30
 	LDA CHRSprBankAttrs+1,X
 	STA $31
-	LDA ObjectAttributes
+	LDA objAttrs
 	AND #$40
 	BEQ bra2_A33E
 	LDX #$00
 	LDY $A4
-	LDA ObjectXDistance,Y
+	LDA objXDistLo,Y
 	CLC
-	ADC PlayerSprXPos
+	ADC playerSprX
 	STA $28
-	LDA ObjXScreenDistance,Y
+	LDA objXDistHi,Y
 	ADC #$00
 	BMI bra2_A320
 	BEQ bra2_A310
@@ -558,7 +558,7 @@ sub2_A2DE:
 bra2_A310:
 	LDA $28
 bra2_A312:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX $2A
 	BCS bra2_A389
@@ -570,7 +570,7 @@ bra2_A320:
 	LDA $28 ;unlogged
 	LDY #$00 ;unlogged
 bra2_A324:
-	STY MetaspriteColXBuf,X ;unlogged
+	STY metaspriteColumnXBuf,X ;unlogged
 	INX ;unlogged
 	CPX $2A ;unlogged
 	BCS bra2_A332_RTS ;unlogged
@@ -583,33 +583,33 @@ bra2_A332_RTS:
 bra2_A333:
 	LDA #$00 ;unlogged
 bra2_A335:
-	STA MetaspriteColXBuf,X ;unlogged
+	STA metaspriteColumnXBuf,X ;unlogged
 	INX ;unlogged
 	CPX $2A ;unlogged
 	BCC bra2_A335 ;unlogged
 	BCS bra2_A389 ;unlogged
 bra2_A33E:
 	LDX #$00
-	STX MetaspriteColXBuf
+	STX metaspriteColumnXBuf
 	LDY $A4
 	LDA $25
 	CLC
-	ADC PlayerSprXPos
+	ADC playerSprX
 	BCC bra2_A34D
-	INC MetaspriteColXBuf
+	INC metaspriteColumnXBuf
 bra2_A34D:
 	CLC
-	ADC ObjectXDistance,Y
+	ADC objXDistLo,Y
 	STA $28
-	LDA ObjXScreenDistance,Y
-	ADC MetaspriteColXBuf
+	LDA objXDistHi,Y
+	ADC metaspriteColumnXBuf
 	BMI bra2_A36D
 	BEQ bra2_A35D
 	RTS
 bra2_A35D:
 	LDA $28
 bra2_A35F:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX $2A
 	BCS bra2_A389
@@ -621,7 +621,7 @@ bra2_A36D:
 	LDA $28
 	LDY #$00
 bra2_A371:
-	STY MetaspriteColXBuf,X
+	STY metaspriteColumnXBuf,X
 	INX
 	CPX $2A
 	BCS bra2_A37F_RTS
@@ -634,18 +634,18 @@ bra2_A37F_RTS:
 bra2_A380:
 	LDA #$00
 bra2_A382:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX $2A
 	BCC bra2_A382
 bra2_A389:
 	LDX #$00
 	LDY $A4
-	LDA ObjectYDistance,Y
+	LDA objYDistLo,Y
 	CLC
-	ADC PlayerSprYPos
+	ADC playerSprY
 	STA $2B
-	LDA ObjYScreenDistance,Y
+	LDA objYDistHi,Y
 	ADC #$00
 	BMI bra2_A3B7
 	BEQ bra2_A39F
@@ -656,7 +656,7 @@ bra2_A39F:
 	BCC bra2_A3A7
 	LDA #$F8
 bra2_A3A7:
-	STA MetaspriteRowYBuf,X
+	STA metaspriteRowYBuf,X
 	INX
 	CPX $2D
 	BCS bra2_A3D3
@@ -670,7 +670,7 @@ bra2_A3B7:
 	LDA $2B
 	LDY #$00
 bra2_A3BB:
-	STY MetaspriteRowYBuf,X
+	STY metaspriteRowYBuf,X
 	INX
 	CPX $2D
 	BCS bra2_A3C9_RTS
@@ -682,19 +682,19 @@ bra2_A3C9_RTS:
 	RTS
 	LDA #$00 ;unlogged
 bra2_A3CC:
-	STA MetaspriteRowYBuf,X ;unlogged
+	STA metaspriteRowYBuf,X ;unlogged
 	INX ;unlogged
 	CPX $2D ;unlogged
 	BCC bra2_A3CC ;unlogged
 bra2_A3D3:
-	LDX OAMFreeIndex
+	LDX oamFreeIndex
 	LDA #$00
 	STA $40
 	LDA #$00
 	TAY
 bra2_A3DC:
-	STY MetaspriteRowCount
-	LDA a:MetaspriteRowYBuf,Y
+	STY metaspriteRowCount
+	LDA a:metaspriteRowYBuf,Y
 	BNE bra2_A3ED
 	LDA $40
 	CLC
@@ -705,12 +705,12 @@ bra2_A3ED:
 	STA $2B
 	LDY #$00
 bra2_A3F1:
-	STY MetaspriteColCount
-	LDA a:MetaspriteColXBuf,Y
+	STY metaspriteColumnCount
+	LDA a:metaspriteColumnXBuf,Y
 	BEQ bra2_A433
-	STA SpriteMem+3,X
+	STA spriteMem+3,X
 	LDA $2B
-	STA SpriteMem,X
+	STA spriteMem,X
 	LDY $40
 	INY
 	INY
@@ -719,44 +719,44 @@ bra2_A3F1:
 	CMP #$FF
 	BNE bra2_A412
 	LDA #$F8
-	STA SpriteMem,X
+	STA spriteMem,X
 	BMI bra2_A433
 bra2_A412:
 	AND #%00111111
-	STA MetaspriteRelTile
-	ORA MetaspriteBankIndex
-	STA SpriteMem+1,X
+	STA metaspriteRelTile
+	ORA metaspriteBankIndex
+	STA spriteMem+1,X
 	LDY $A4
-	LDA ObjectAttributes
+	LDA objAttrs
 	EOR #$40
 	AND #$E0
-	LDY MetaspriteRelTile
+	LDY metaspriteRelTile
 	ORA ($30),Y
 	ORA $06E1
-	STA SpriteMem+2,X
+	STA spriteMem+2,X
 	TXA
 	CLC
 	ADC #$04
 	TAX
 bra2_A433:
 	INC $40
-	LDY MetaspriteColCount
+	LDY metaspriteColumnCount
 	INY
 	CPY $2A
 	BCC bra2_A3F1
 loc2_A43C:
-	LDY MetaspriteRowCount
+	LDY metaspriteRowCount
 	INY
 	CPY $2D
 	BCC bra2_A3DC
-	STX OAMFreeIndex
+	STX oamFreeIndex
 	RTS
 sub2_A446:
-	LDA MetaspriteBankIndex
+	LDA metaspriteBankIndex
 	AND #$80
 	BEQ bra2_A45A_RTS
 	LDY #$01
-	LDA MetaspriteBankIndex
+	LDA metaspriteBankIndex
 	AND #$40
 	BNE bra2_A455
 	TAY
@@ -782,7 +782,7 @@ tbl2_A45B:
 ;$2D = Mapping height (tiles)
 ;$2E = Mapping CHR bank
 ;$32 = Mapping data pointer
-;MetaspriteBankIndex = Bank (Stored in upper 2 bits)
+;metaspriteBankIndex = Bank (Stored in upper 2 bits)
 ; Parameters:
 ; > $0036
 ;----------------------------------------
@@ -813,16 +813,16 @@ jmp_52_A463:
 	STA $30
 	LDA CHRSprBankAttrs+1,X
 	STA $31 ;Get sprite tile attribute pointer for the given bank
-	LDA YoshiIdleMovement
+	LDA yoshiIdleMovement
 	AND #%01000000
 	BEQ bra2_A4D5 ;Branch if Yoshi is facing right
 	;If Yoshi is facing left:
 		LDX #$00
-		LDA YoshiXDistance
+		LDA yoshiXDistLo
 		CLC
-		ADC PlayerSprXPos
+		ADC playerSprX
 		STA $28 ;Yoshi X Distance + Player Sprite X Pos = Yoshi Sprite X Position
-		LDA YoshiXScreenDist
+		LDA yoshiXDistHi
 		ADC #$00
 		BMI bra2_A4B7 ;Branch if object is off-screen (or to right of player)?
 		BEQ bra2_A4A7 ;Branch if object is on-screen (or to left of player)?
@@ -832,7 +832,7 @@ bra2_A4A7:
 	LDA $28
 
 bra2_A4A9:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX $2A
 	BCS bra2_A518 ;Start positioning sprite rows after every column is positioned
@@ -847,7 +847,7 @@ bra2_A4B7:
 	LDY #$00
 
 bra2_A4BB:
-	STY MetaspriteColXBuf,X
+	STY metaspriteColumnXBuf,X
 	INX
 	CPX $2A
 	BCS bra2_A4C9_RTS ;Stop once every column is positioned
@@ -863,7 +863,7 @@ bra2_A4C9_RTS:
 bra2_A4CA:
 	LDA #$00
 bra2_A4CC:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX $2A
 	BCC bra2_A4CC
@@ -875,11 +875,11 @@ bra2_A4D5:
 	LDX #$00
 	LDA $25
 	CLC
-	ADC PlayerSprXPos
+	ADC playerSprX
 	CLC
-	ADC YoshiXDistance
+	ADC yoshiXDistLo
 	STA $28 ;Sprite Width + Yoshi X Distance + Player Sprite X Pos = Yoshi Sprite X Position
-	LDA YoshiXScreenDist
+	LDA yoshiXDistHi
 	ADC #$00
 	BMI bra2_A4FC ;Branch if object is on-screen (or above player)?
 	BEQ bra2_A4EC ;Branch if object is off-screen (or below player)?
@@ -888,7 +888,7 @@ bra2_A4D5:
 bra2_A4EC:
 	LDA $28
 bra2_A4EE:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX $2A
 	BCS bra2_A518
@@ -901,7 +901,7 @@ bra2_A4FC:
 	LDA $28
 	LDY #$00
 bra2_A500:
-	STY MetaspriteColXBuf,X
+	STY metaspriteColumnXBuf,X
 	INX
 	CPX $2A
 	BCS bra2_A50E_RTS
@@ -915,17 +915,17 @@ bra2_A50E_RTS:
 bra2_A50F:
 	LDA #$00
 bra2_A511:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX $2A
 	BCC bra2_A511
 bra2_A518:
 	LDX #$00
-	LDA YoshiYDistance
+	LDA yoshiYDist
 	CLC
-	ADC PlayerSprYPos
+	ADC playerSprY
 	STA $2B
-	LDA YoshiYScreenDist
+	LDA yoshiYDistHi
 	ADC #$00
 	BMI bra2_A544
 	BEQ bra2_A52C
@@ -937,7 +937,7 @@ bra2_A52C:
 	BCC bra2_A534
 	LDA #$F8
 bra2_A534:
-	STA MetaspriteRowYBuf,X
+	STA metaspriteRowYBuf,X
 	INX
 	CPX $2D
 	BCS bra2_A560
@@ -950,7 +950,7 @@ bra2_A544:
 	LDA $2B
 	LDY #$00
 bra2_A548:
-	STY MetaspriteRowYBuf,X
+	STY metaspriteRowYBuf,X
 	INX
 	CPX $2D
 	BCS bra2_A556_RTS
@@ -964,19 +964,19 @@ bra2_A556_RTS:
 bra2_A557:
 	LDA #$00
 bra2_A559:
-	STA MetaspriteRowYBuf,X
+	STA metaspriteRowYBuf,X
 	INX
 	CPX $2D
 	BCC bra2_A559
 bra2_A560:
-	LDX OAMFreeIndex
+	LDX oamFreeIndex
 	LDA #$00
 	STA $40
 	LDA #$00
 	TAY
 bra2_A569:
-	STY MetaspriteRowCount
-	LDA a:MetaspriteRowYBuf,Y
+	STY metaspriteRowCount
+	LDA a:metaspriteRowYBuf,Y
 	BNE bra2_A57A
 	LDA $40
 	CLC
@@ -987,12 +987,12 @@ bra2_A57A:
 	STA $2B
 	LDY #$00
 bra2_A57E:
-	STY MetaspriteColCount
-	LDA a:MetaspriteColXBuf,Y
+	STY metaspriteColumnCount
+	LDA a:metaspriteColumnXBuf,Y
 	BEQ bra2_A5B8
-	STA SpriteMem+3,X
+	STA spriteMem+3,X
 	LDA $2B
-	STA SpriteMem,X
+	STA spriteMem,X
 	LDY $40
 	INY
 	INY
@@ -1001,34 +1001,34 @@ bra2_A57E:
 	CMP #$FF
 	BNE bra2_A59F
 	LDA #$F8
-	STA SpriteMem,X
+	STA spriteMem,X
 	BMI bra2_A5B8
 bra2_A59F:
 	AND #%00111111
 	TAY
-	ORA MetaspriteBankIndex
-	STA SpriteMem+1,X
-	LDA YoshiIdleMovement
+	ORA metaspriteBankIndex
+	STA spriteMem+1,X
+	LDA yoshiIdleMovement
 	EOR #$40
 	AND #$C0
 	ORA ($30),Y
-	STA SpriteMem+2,X
+	STA spriteMem+2,X
 	TXA
 	CLC
 	ADC #$04
 	TAX
 bra2_A5B8:
 	INC $40
-	LDY MetaspriteColCount
+	LDY metaspriteColumnCount
 	INY
 	CPY $2A
 	BCC bra2_A57E
 loc2_A5C1:
-	LDY MetaspriteRowCount
+	LDY metaspriteRowCount
 	INY
 	CPY $2D
 	BCC bra2_A569
-	STX OAMFreeIndex
+	STX oamFreeIndex
 	LDA $2E
 	STA $03C8
 	RTS
@@ -1038,19 +1038,19 @@ loc2_A5C1:
 ;----------------------------------------
 sub2_A5D0:
 	LDA #$40
-	STA ObjectAttributes
+	STA objAttrs
 	LDA #$08
 	STA $25
-	LDA ObjectAttributes
+	LDA objAttrs
 	AND #$40
 	BEQ bra2_A624
 	LDX #$00
 	LDY $A4
-	LDA ObjectXDistance,Y
+	LDA objXDistLo,Y
 	CLC
-	ADC PlayerSprXPos
+	ADC playerSprX
 	STA $28
-	LDA ObjXScreenDistance,Y
+	LDA objXDistHi,Y
 	ADC #$00
 	BMI bra2_A606
 	BEQ bra2_A5F6
@@ -1059,7 +1059,7 @@ sub2_A5D0:
 bra2_A5F6:
 	LDA $28
 bra2_A5F8:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX #$02
 	BCS bra2_A66F
@@ -1071,7 +1071,7 @@ bra2_A606:
 	LDA $28
 	LDY #$00
 bra2_A60A:
-	STY MetaspriteColXBuf,X
+	STY metaspriteColumnXBuf,X
 	INX
 	CPX #$02
 	BCS bra2_A618_RTS
@@ -1085,33 +1085,33 @@ bra2_A618_RTS:
 bra2_A619:
 	LDA #$00
 bra2_A61B:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX #$02
 	BCC bra2_A61B
 	BCS bra2_A66F
 bra2_A624:
 	LDX #$00 ;unlogged code start
-	STX MetaspriteColXBuf
+	STX metaspriteColumnXBuf
 	LDY $A4
 	LDA $25
 	CLC
-	ADC PlayerSprXPos
+	ADC playerSprX
 	BCC bra2_A633
-	INC MetaspriteColXBuf
+	INC metaspriteColumnXBuf
 bra2_A633:
 	CLC
-	ADC ObjectXDistance,Y
+	ADC objXDistLo,Y
 	STA $28
-	LDA ObjXScreenDistance,Y
-	ADC MetaspriteColXBuf
+	LDA objXDistHi,Y
+	ADC metaspriteColumnXBuf
 	BMI bra2_A653
 	BEQ bra2_A643
 	RTS
 bra2_A643:
 	LDA $28
 bra2_A645:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX #$02
 	BCS bra2_A66F
@@ -1123,7 +1123,7 @@ bra2_A653:
 	LDA $28
 	LDY #$00
 bra2_A657:
-	STY MetaspriteColXBuf,X
+	STY metaspriteColumnXBuf,X
 	INX
 	CPX #$02
 	BCS bra2_A665_RTS
@@ -1137,18 +1137,18 @@ bra2_A665_RTS:
 bra2_A666:
 	LDA #$00
 bra2_A668:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX #$02
 	BCC bra2_A668 ;unlogged code end
 bra2_A66F:
 	LDX #$00
 	LDY $A4
-	LDA ObjectYDistance,Y
+	LDA objYDistLo,Y
 	CLC
-	ADC PlayerSprYPos
+	ADC playerSprY
 	STA $2B
-	LDA ObjYScreenDistance,Y
+	LDA objYDistHi,Y
 	ADC #$00
 	BMI bra2_A69D
 	BEQ bra2_A685
@@ -1160,7 +1160,7 @@ bra2_A685:
 	BCC bra2_A68D
 	LDA #$F8
 bra2_A68D:
-	STA MetaspriteRowYBuf,X
+	STA metaspriteRowYBuf,X
 	INX
 	CPX $2D
 	BCS bra2_A6B9
@@ -1173,7 +1173,7 @@ bra2_A69D:
 	LDA $2B
 	LDY #$00
 bra2_A6A1:
-	STY MetaspriteRowYBuf,X
+	STY metaspriteRowYBuf,X
 	INX
 	CPX $2D
 	BCS bra2_A6AF_RTS
@@ -1187,16 +1187,16 @@ bra2_A6AF_RTS:
 bra2_A6B0:
 	LDA #$00
 bra2_A6B2:
-	STA MetaspriteRowYBuf,X
+	STA metaspriteRowYBuf,X
 	INX
 	CPX $2D
 	BCC bra2_A6B2
 bra2_A6B9:
-	LDA WorldNumber
+	LDA worldNumber
 	ASL
 	ASL
 	CLC
-	ADC LevelNumber
+	ADC levelNumber
 	TAY
 	LDA tbl2_A71F,Y
 	BNE bra2_A6CC
@@ -1206,13 +1206,13 @@ bra2_A6CC:
 	LDA #$5A
 bra2_A6CE:
 	STA $25
-	LDX OAMFreeIndex
+	LDX oamFreeIndex
 	LDA #$00
 	STA $40
 	TAY
 bra2_A6D7:
-	STY MetaspriteRowCount
-	LDA a:MetaspriteRowYBuf,Y
+	STY metaspriteRowCount
+	LDA a:metaspriteRowYBuf,Y
 	BNE bra2_A6E8
 	LDA $40
 	CLC
@@ -1223,33 +1223,33 @@ bra2_A6E8:
 	STA $2B
 	LDY #$00
 bra2_A6EC:
-	STY MetaspriteColCount
-	LDA a:MetaspriteColXBuf,Y
+	STY metaspriteColumnCount
+	LDA a:metaspriteColumnXBuf,Y
 	BEQ bra2_A70C
-	STA SpriteMem+3,X
+	STA spriteMem+3,X
 	LDA $2B
-	STA SpriteMem,X
+	STA spriteMem,X
 	LDY $40
 	LDA $25
-	STA SpriteMem+1,X
+	STA spriteMem+1,X
 	LDA #$22
-	STA SpriteMem+2,X
+	STA spriteMem+2,X
 	TXA
 	CLC
 	ADC #$04
 	TAX
 bra2_A70C:
 	INC $40
-	LDY MetaspriteColCount
+	LDY metaspriteColumnCount
 	INY
 	CPY #$02
 	BCC bra2_A6EC
 loc2_A715:
-	LDY MetaspriteRowCount
+	LDY metaspriteRowCount
 	INY
 	CPY $2D
 	BCC bra2_A6D7
-	STX OAMFreeIndex
+	STX oamFreeIndex
 	RTS
 tbl2_A71F:
 	db $01
@@ -2206,16 +2206,16 @@ jmp_52_AC3B:
 	STA $30
 	LDA CHRSprBankAttrs+1,X
 	STA $31
-	LDA ObjectAttributes
+	LDA objAttrs
 	AND #$40
 	BEQ bra2_ACAA
 	LDX #$00
 	LDY $A4
-	LDA ObjectXDistance,Y
+	LDA objXDistLo,Y
 	CLC
-	ADC PlayerSprXPos
+	ADC playerSprX
 	STA $28
-	LDA ObjXScreenDistance,Y
+	LDA objXDistHi,Y
 	ADC #$00
 	BMI bra2_AC8C
 	BEQ bra2_AC7C
@@ -2223,7 +2223,7 @@ jmp_52_AC3B:
 bra2_AC7C:
 	LDA $28
 bra2_AC7E:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX $2A
 	BCS bra2_ACF5
@@ -2235,7 +2235,7 @@ bra2_AC8C:
 	LDA $28
 	LDY #$00
 bra2_AC90:
-	STY MetaspriteColXBuf,X
+	STY metaspriteColumnXBuf,X
 	INX
 	CPX $2A
 	BCS bra2_AC9E_RTS
@@ -2248,33 +2248,33 @@ bra2_AC9E_RTS:
 bra2_AC9F:
 	LDA #$00
 bra2_ACA1:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX $2A
 	BCC bra2_ACA1
 	BCS bra2_ACF5
 bra2_ACAA:
 	LDX #$00
-	STX MetaspriteColXBuf
+	STX metaspriteColumnXBuf
 	LDY $A4
 	LDA $25
 	CLC
-	ADC PlayerSprXPos
+	ADC playerSprX
 	BCC bra2_ACB9
-	INC MetaspriteColXBuf ;unlogged
+	INC metaspriteColumnXBuf ;unlogged
 bra2_ACB9:
 	CLC
-	ADC ObjectXDistance,Y
+	ADC objXDistLo,Y
 	STA $28
-	LDA ObjXScreenDistance,Y
-	ADC MetaspriteColXBuf
+	LDA objXDistHi,Y
+	ADC metaspriteColumnXBuf
 	BMI bra2_ACD9
 	BEQ bra2_ACC9
 	RTS
 bra2_ACC9:
 	LDA $28
 bra2_ACCB:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX $2A
 	BCS bra2_ACF5
@@ -2286,7 +2286,7 @@ bra2_ACD9:
 	LDA $28
 	LDY #$00
 bra2_ACDD:
-	STY MetaspriteColXBuf,X
+	STY metaspriteColumnXBuf,X
 	INX
 	CPX $2A
 	BCS bra2_ACEB_RTS
@@ -2299,18 +2299,18 @@ bra2_ACEB_RTS:
 bra2_ACEC:
 	LDA #$00
 bra2_ACEE:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX $2A
 	BCC bra2_ACEE
 bra2_ACF5:
 	LDX #$00
 	LDY $A4
-	LDA ObjectYDistance,Y
+	LDA objYDistLo,Y
 	CLC
-	ADC PlayerSprYPos
+	ADC playerSprY
 	STA $2B
-	LDA ObjYScreenDistance,Y
+	LDA objYDistHi,Y
 	ADC #$00
 	BMI bra2_AD23
 	BEQ bra2_AD0B
@@ -2321,7 +2321,7 @@ bra2_AD0B:
 	BCC bra2_AD13
 	LDA #$F8
 bra2_AD13:
-	STA MetaspriteRowYBuf,X
+	STA metaspriteRowYBuf,X
 	INX
 	CPX $2D
 	BCS bra2_AD3F
@@ -2334,7 +2334,7 @@ bra2_AD23:
 	LDA $2B
 	LDY #$00
 bra2_AD27:
-	STY MetaspriteRowYBuf,X
+	STY metaspriteRowYBuf,X
 	INX
 	CPX $2D
 	BCS bra2_AD35_RTS
@@ -2347,19 +2347,19 @@ bra2_AD35_RTS:
 bra2_AD36:
 	LDA #$00
 bra2_AD38:
-	STA MetaspriteRowYBuf,X
+	STA metaspriteRowYBuf,X
 	INX
 	CPX $2D
 	BCC bra2_AD38
 bra2_AD3F:
-	LDX OAMFreeIndex
+	LDX oamFreeIndex
 	LDA #$00
 	STA $40
 	LDA #$00
 	TAY
 bra2_AD48:
-	STY MetaspriteRowCount
-	LDA a:MetaspriteRowYBuf,Y
+	STY metaspriteRowCount
+	LDA a:metaspriteRowYBuf,Y
 	BNE bra2_AD59
 	LDA $40
 	CLC
@@ -2370,12 +2370,12 @@ bra2_AD59:
 	STA $2B
 	LDY #$00
 bra2_AD5D:
-	STY MetaspriteColCount
-	LDA a:MetaspriteColXBuf,Y
+	STY metaspriteColumnCount
+	LDA a:metaspriteColumnXBuf,Y
 	BEQ bra2_AD9C
-	STA SpriteMem+3,X
+	STA spriteMem+3,X
 	LDA $2B
-	STA SpriteMem,X
+	STA spriteMem,X
 	LDY $40
 	INY
 	INY
@@ -2384,36 +2384,36 @@ bra2_AD5D:
 	CMP #$FF
 	BNE bra2_AD7E
 	LDA #$F8 ;unlogged
-	STA SpriteMem,X ;unlogged
+	STA spriteMem,X ;unlogged
 	BMI bra2_AD9C ;unlogged
 bra2_AD7E:
 	AND #%00111111
-	STA MetaspriteRelTile
-	ORA MetaspriteBankIndex
-	STA SpriteMem+1,X
+	STA metaspriteRelTile
+	ORA metaspriteBankIndex
+	STA spriteMem+1,X
 	LDY $A4
-	LDA ObjectAttributes
+	LDA objAttrs
 	EOR #$40
 	AND #$C0
-	LDY MetaspriteRelTile
+	LDY metaspriteRelTile
 	ORA ($30),Y
-	STA SpriteMem+2,X
+	STA spriteMem+2,X
 	TXA
 	CLC
 	ADC #$04
 	TAX
 bra2_AD9C:
 	INC $40
-	LDY MetaspriteColCount
+	LDY metaspriteColumnCount
 	INY
 	CPY $2A
 	BCC bra2_AD5D
 loc2_ADA5:
-	LDY MetaspriteRowCount
+	LDY metaspriteRowCount
 	INY
 	CPY $2D
 	BCC bra2_AD48
-	STX OAMFreeIndex
+	STX oamFreeIndex
 	RTS
 sub_52_ADAF:
 	LDY #$02
@@ -2428,16 +2428,16 @@ sub_52_ADAF:
 	STA $30
 	LDA CHRSprBankAttrs+1,X
 	STA $31
-	LDA ObjectAttributes
+	LDA objAttrs
 	AND #$40
 	BEQ bra2_AE13
 	LDX #$00
 	LDY $A4
-	LDA ObjectXDistance,Y
+	LDA objXDistLo,Y
 	CLC
-	ADC PlayerSprXPos
+	ADC playerSprX
 	STA $28
-	LDA ObjXScreenDistance,Y
+	LDA objXDistHi,Y
 	ADC #$00
 	BMI bra2_ADF5
 	BEQ bra2_ADE5
@@ -2445,7 +2445,7 @@ sub_52_ADAF:
 bra2_ADE5:
 	LDA $28
 bra2_ADE7:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX #$02
 	BCS bra2_AE58
@@ -2457,7 +2457,7 @@ bra2_ADF5:
 	LDA $28 ;unlogged
 	LDY #$00 ;unlogged
 bra2_ADF9:
-	STY MetaspriteColXBuf,X ;unlogged
+	STY metaspriteColumnXBuf,X ;unlogged
 	INX ;unlogged
 	CPX #$02 ;unlogged
 	BCS bra2_AE07_RTS ;unlogged
@@ -2470,7 +2470,7 @@ bra2_AE07_RTS:
 bra2_AE08:
 	LDA #$00 ;unlogged
 bra2_AE0A:
-	STA MetaspriteColXBuf,X ;unlogged
+	STA metaspriteColumnXBuf,X ;unlogged
 	INX ;unlogged
 	CPX #$02 ;unlogged
 	BCC bra2_AE0A ;unlogged
@@ -2480,11 +2480,11 @@ bra2_AE13:
 	LDY $A4
 	LDA #$08
 	CLC
-	ADC PlayerSprXPos
+	ADC playerSprX
 	CLC
-	ADC ObjectXDistance,Y
+	ADC objXDistLo,Y
 	STA $28
-	LDA ObjXScreenDistance,Y
+	LDA objXDistHi,Y
 	ADC #$00
 	BMI bra2_AE3C
 	BEQ bra2_AE2C
@@ -2492,7 +2492,7 @@ bra2_AE13:
 bra2_AE2C:
 	LDA $28
 bra2_AE2E:
-	STA MetaspriteColXBuf,X
+	STA metaspriteColumnXBuf,X
 	INX
 	CPX #$02
 	BCS bra2_AE58
@@ -2504,7 +2504,7 @@ bra2_AE3C:
 	LDA $28 ;unlogged
 	LDY #$00 ;unlogged
 bra2_AE40:
-	STY MetaspriteColXBuf,X ;unlogged
+	STY metaspriteColumnXBuf,X ;unlogged
 	INX ;unlogged
 	CPX #$02 ;unlogged
 	BCS bra2_AE4E_RTS ;unlogged
@@ -2517,18 +2517,18 @@ bra2_AE4E_RTS:
 bra2_AE4F:
 	LDA #$00 ;unlogged
 bra2_AE51:
-	STA MetaspriteColXBuf,X ;unlogged
+	STA metaspriteColumnXBuf,X ;unlogged
 	INX ;unlogged
 	CPX #$02 ;unlogged
 	BCC bra2_AE51 ;unlogged
 bra2_AE58:
 	LDX #$00
 	LDY $A4
-	LDA ObjectYDistance,Y
+	LDA objYDistLo,Y
 	CLC
-	ADC PlayerSprYPos
+	ADC playerSprY
 	STA $2B
-	LDA ObjYScreenDistance,Y
+	LDA objYDistHi,Y
 	ADC #$00
 	BMI bra2_AE86
 	BEQ bra2_AE6E
@@ -2539,7 +2539,7 @@ bra2_AE6E:
 	BCC bra2_AE76
 	LDA #$F8
 bra2_AE76:
-	STA MetaspriteRowYBuf,X
+	STA metaspriteRowYBuf,X
 	INX
 	CPX #$02
 	BCS bra2_AEA2
@@ -2552,7 +2552,7 @@ bra2_AE86:
 	LDA $2B
 	LDY #$00
 bra2_AE8A:
-	STY MetaspriteRowYBuf,X
+	STY metaspriteRowYBuf,X
 	INX
 	CPX #$02
 	BCS bra2_AE98_RTS
@@ -2565,19 +2565,19 @@ bra2_AE98_RTS:
 bra2_AE99:
 	LDA #$00
 bra2_AE9B:
-	STA MetaspriteRowYBuf,X
+	STA metaspriteRowYBuf,X
 	INX
 	CPX #$02
 	BCC bra2_AE9B
 bra2_AEA2:
-	LDX OAMFreeIndex
+	LDX oamFreeIndex
 	LDA #$00
 	STA $40
 	LDA #$00
 	TAY
 bra2_AEAB:
-	STY MetaspriteRowCount
-	LDA a:MetaspriteRowYBuf,Y
+	STY metaspriteRowCount
+	LDA a:metaspriteRowYBuf,Y
 	BNE bra2_AEBC
 	LDA $40
 	CLC
@@ -2588,12 +2588,12 @@ bra2_AEBC:
 	STA $2B
 	LDY #$00
 bra2_AEC0:
-	STY MetaspriteColCount
-	LDA a:MetaspriteColXBuf,Y
+	STY metaspriteColumnCount
+	LDA a:metaspriteColumnXBuf,Y
 	BEQ bra2_AF02
-	STA SpriteMem+3,X
+	STA spriteMem+3,X
 	LDA $2B
-	STA SpriteMem,X
+	STA spriteMem,X
 	LDY $40
 	INY
 	INY
@@ -2602,42 +2602,42 @@ bra2_AEC0:
 	CMP #$FF
 	BNE bra2_AEE1
 	LDA #$F8 ;unlogged
-	STA SpriteMem,X ;unlogged
+	STA spriteMem,X ;unlogged
 	BMI bra2_AF02 ;unlogged
 bra2_AEE1:
 	AND #%00111111
-	STA MetaspriteRelTile
-	ORA MetaspriteBankIndex
-	STA SpriteMem+1,X
+	STA metaspriteRelTile
+	ORA metaspriteBankIndex
+	STA spriteMem+1,X
 	LDY $A4
-	LDA ObjectAttributes
+	LDA objAttrs
 	EOR #$40
 	AND #$E0
-	LDY MetaspriteRelTile
+	LDY metaspriteRelTile
 	ORA ($30),Y
 	ORA $06E1
-	STA SpriteMem+2,X
+	STA spriteMem+2,X
 	TXA
 	CLC
 	ADC #$04
 	TAX
 bra2_AF02:
 	INC $40
-	LDY MetaspriteColCount
+	LDY metaspriteColumnCount
 	INY
 	CPY #$02
 	BCC bra2_AEC0
 loc2_AF0B:
-	LDY MetaspriteRowCount
+	LDY metaspriteRowCount
 	INY
 	CPY #$02
 	BCC bra2_AEAB
-	STX OAMFreeIndex
-	LDA MetaspriteBankIndex
+	STX oamFreeIndex
+	LDA metaspriteBankIndex
 	AND #$80
 	BEQ bra2_AF28_RTS
 	LDY #$01
-	LDA MetaspriteBankIndex
+	LDA metaspriteBankIndex
 	AND #$40
 	BNE bra2_AF23
 	TAY

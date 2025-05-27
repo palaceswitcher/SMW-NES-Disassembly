@@ -139,7 +139,7 @@
 	db $00
 	db $00
 	db $00
-	LDA FrameCount ;More useless padding code?
+	LDA frameCount ;More useless padding code?
 	AND #$07
 	BNE bra13_999F
 	INC $032F
@@ -153,7 +153,7 @@ bra13_999F:
 	LDA $032F
 	AND #$03
 bra13_99A6:
-	STA SpriteMem+2,X
+	STA spriteMem+2,X
 	INX
 	INX
 	INX
@@ -161,7 +161,7 @@ bra13_99A6:
 	CPX #$40
 	BCC bra13_99A6
 	RTS
-	LDA FrameCount
+	LDA frameCount
 	AND #$07
 	BNE bra13_99BB
 	INC $032F
@@ -180,24 +180,24 @@ bra13_99CC:
 	LDA #$40
 	STA $42
 	RTS
-	LDA MapLevelID
+	LDA mapLevelId
 	ASL
 	ASL
 	TAX
 	LDA tbl13_9A8D,X
-	STA CameraXScreen
-	STA PlayerColXScreen
-	STA PlayerXScreen
+	STA cameraXHi
+	STA playerCollXHi
+	STA playerXHi
 	LDA tbl13_9A8E,X
 	STA $52
 	STA $65
 	STA $02
 	CLC
-	ADC PlayerXPos
-	STA PlayerXPos
-	LDA PlayerXScreen
+	ADC playerXLo
+	STA playerXLo
+	LDA playerXHi
 	ADC #$00
-	STA PlayerXScreen
+	STA playerXHi
 	RTS
 	ASL
 	TAX
@@ -207,21 +207,21 @@ bra13_99CC:
 	STA $26
 	LDY #$00
 	LDA ($25),Y
-	STA PPUUpdatePtr
+	STA ppuUpdatePtr
 	INY
 	LDA ($25),Y
-	STA PPUUpdatePtr+1
+	STA ppuUpdatePtr+1
 	INY
 	LDA ($25),Y
 	STA $03A3
 	INY
 	LDA ($25),Y
-	STA PPUWriteCount
+	STA ppuBufSize
 	INY
 	LDX #$00
 bra13_9A22:
 	LDA ($25),Y
-	STA PPUDataBuffer,X
+	STA ppuDataBuf,X
 	INY
 	INX
 	CPX #$20
@@ -461,20 +461,20 @@ bra13_9B1E:
 	RTS
 	LDA #$00
 	STA $032F
-	INC a:GameState
-	LDA MapLevelID
+	INC a:gameState
+	LDA mapLevelId
 	ASL
 	TAX
-	LDA UnlockNextLevel
+	LDA unlockNextLevel
 	BNE bra13_9B3E
 	STA $0379
 	RTS
 bra13_9B3E:
-	INC MapLevelID
+	INC mapLevelId
 	JMP loc13_9B4C
-	LDA MapLevelID
+	LDA mapLevelId
 	BEQ bra13_9B4C
-	DEC MapLevelID
+	DEC mapLevelId
 bra13_9B4C:
 loc13_9B4C:
 	STX $0391
@@ -484,7 +484,7 @@ loc13_9B4C:
 	STA $0360
 	STA $037C
 	LDX #$01
-	LDA CurrentPlayer
+	LDA curPlayer
 	BNE bra13_9B65
 	LDX #$00
 bra13_9B65:
@@ -494,7 +494,7 @@ bra13_9B65:
 	ADC $41,X
 	STA $41,X
 	BCC bra13_9B73_RTS
-	INC GS0SpriteFlags,X
+	INC gs0SpriteFlags,X
 bra13_9B73_RTS:
 	RTS
 	STA $25
@@ -503,7 +503,7 @@ bra13_9B73_RTS:
 	SBC $25
 	STA $41,X
 	BCS bra13_9B82_RTS
-	DEC GS0SpriteFlags,X
+	DEC gs0SpriteFlags,X
 bra13_9B82_RTS:
 	RTS
 	db $00
@@ -700,7 +700,7 @@ bra13_9B82_RTS:
 	db $00
 	JSR sub13_9CCF
 	LDX #$00
-	LDA CurrentPlayer
+	LDA curPlayer
 	BEQ bra13_9C4F
 	LDX #$01
 bra13_9C4F:
@@ -782,7 +782,7 @@ sub13_9CCF:
 	LDA #$40
 	STA PPUADDR
 	LDX #$00
-	LDA CurrentPlayer
+	LDA curPlayer
 	BNE bra13_9CEC
 bra13_9CE0:
 	LDA tbl13_9CF8,X
@@ -1062,7 +1062,7 @@ bra13_9DFC:
 	LDA $25
 	TAX
 	INX
-	LDA CurrentPlayer
+	LDA curPlayer
 	BEQ bra13_9E0B
 	LDA $25
 	CLC

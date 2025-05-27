@@ -62,7 +62,7 @@ TilemapDecompSub:
 	STA PPUCTRL ;Clear PPU control, disabling NMI
 	TAY ;Clear Y register
 	LDA PPUSTATUS ;Clear PPU address latch
-	LDA Current8x8Tilemap ;Get current tilemap
+	LDA curRleTilemap ;Get current tilemap
 	ASL
 	TAX ;Get the pointer for it
 	LDA TilemapPointers,X
@@ -81,21 +81,21 @@ ByteTypeCheck:
 	CMP #$FF
 	BEQ bra2_8801_RTS ;Stop if a null byte is reached
 	AND #%01111111
-	STA TileRepeatBytesLeft ;Mask out bit 7 and get the amount of bytes until the next repeat
+	STA rleRepeatBytesLeft ;Mask out bit 7 and get the amount of bytes until the next repeat
 bra2_87E3:
 	JSR GoToNextByte
 	LDA ($38),Y ;Read next byte
 	STA PPUDATA ;Store tile data
-	DEC TileRepeatBytesLeft ;Decrement byte count
+	DEC rleRepeatBytesLeft ;Decrement byte count
 	BNE bra2_87E3 ;Keep looping until byte count reached
 	BEQ ByteTypeCheck ;Branch once it is reached
 bra2_87F1:
-	STA TileRepeatCount ;Store repeat count
+	STA rleRepeatCount ;Store repeat count
 	JSR GoToNextByte
 	LDA ($38),Y ;Read next byte
 RepeatTileRender:
 	STA PPUDATA ;Store tile data
-	DEC TileRepeatCount
+	DEC rleRepeatCount
 	BNE RepeatTileRender ;Repeatedly render that tile until the repeat count is reached
 	BEQ ByteTypeCheck ;Branch once the repeat count is reached
 bra2_8801_RTS:
@@ -110,7 +110,7 @@ NextByteDone:
 	LDX #$00 ;Clear X offset
 	LDA #$00
 bra2_880D:
-	STA MetaspriteRowAlignment,X ;Clear metasprite row position
+	STA metaspriteRowAlignment,X ;Clear metasprite row position
 	INX
 	CPX #$09 ;Keep clearing all 9 of them
 	BCC bra2_880D
@@ -118,7 +118,7 @@ bra2_880D:
 	LDX #$00 ;Clear X index
 	LDA #$F8 ;Set off-screen Y position
 bra2_8819:
-	STA SpriteMem,X ;Put sprite at off-screen Y position
+	STA spriteMem,X ;Put sprite at off-screen Y position
 	INX
 	INX
 	INX
@@ -129,7 +129,7 @@ ClearOtherSprites:
 	LDX #$10 ;Set the X index to $10 and ignore the first 4 sprites
 	LDA #$F8
 bra2_8827:
-	STA SpriteMem,X
+	STA spriteMem,X
 	INX
 	INX
 	INX
@@ -140,7 +140,7 @@ bra2_8827:
 	LDA #$00
 	STA $2B
 bra2_8838:
-	LDA GS0SpriteFrame,X
+	LDA gs0SpriteFrame,X
 	BEQ bra2_883F
 	JSR sub2_8848
 bra2_883F:
@@ -152,19 +152,19 @@ bra2_883F:
 sub2_8848:
 	LDY #$04
 	LDX $2C
-	LDA GS0SpriteSlot,X
+	LDA gs0SpriteSlot,X
 	ASL
 	TAX
 	LDA TitleSpriteAnimations,X
-	STA GS0SpriteAnimPtr
+	STA gs0SpriteAnimPtr
 	LDA TitleSpriteAnimations+1,X
-	STA GS0SpriteAnimPtr+1
-	LDA (GS0SpriteAnimPtr),Y
-	STA ScratchRAM+3
+	STA gs0SpriteAnimPtr+1
+	LDA (gs0SpriteAnimPtr),Y
+	STA scratchRam+3
 	LDA $2C
 	TAY
 	TAX
-	LDA GS0SpriteFrame,X
+	LDA gs0SpriteFrame,X
 	ASL
 	TAX
 	LDA tbl2_8900,X
@@ -178,10 +178,10 @@ sub2_8848:
 	LDA a:$41,Y
 	STA $25
 	STA $27
-	LDA GS0SpriteFlags,Y
+	LDA gs0SpriteFlags,Y
 	STA $2E
 	STA $2F
-	LDA GS0SpriteYPos,Y
+	LDA gs0SpriteY,Y
 	STA $26
 	LDY #$00
 	LDA ($32),Y
@@ -201,9 +201,9 @@ loc2_889C:
 	CMP #$FF
 	BEQ bra2_88D5
 	ORA $31
-	STA SpriteMem+1,X
+	STA spriteMem+1,X
 	LDA $26
-	STA SpriteMem,X
+	STA spriteMem,X
 	LDA $2E
 	BEQ bra2_88BD
 	LDA $27
@@ -221,9 +221,9 @@ bra2_88C7:
 	LDA $27
 	SBC #$40
 bra2_88CB:
-	STA SpriteMem+3,X
+	STA spriteMem+3,X
 	LDA ($38),Y
-	STA SpriteMem+2,X
+	STA spriteMem+2,X
 	INC $2B
 bra2_88D5:
 	INY
@@ -275,22 +275,22 @@ tbl2_8900:
 	dw SprMap_TitleYoshi_Walk2
 	dw SprMap_TitleYoshi_Jump
 ;Map sprites (starts at hex 16)
-	dw SprMap_MapPlayer_Down1
-	dw SprMap_MapPlayer_Down2
-	dw SprMap_MapPlayer_Down3
-	dw SprMap_MapPlayer_Left1
-	dw SprMap_MapPlayer_Left2
-	dw SprMap_MapPlayer_Climb1
-	dw SprMap_MapPlayer_Climb2
-	dw SprMap_MapPlayer_Up1
-	dw SprMap_MapPlayer_Up2
-	dw SprMap_MapPlayer_Up3
-	dw SprMap_MapPlayer_SwimDown1
-	dw SprMap_MapPlayer_SwimDown2
-	dw SprMap_MapPlayer_SwimLeft1
-	dw SprMap_MapPlayer_SwimLeft2 ;unused
-	dw SprMap_MapPlayer_SwimUp1
-	dw SprMap_MapPlayer_SwimUp2
+	dw SprMap_MapplayerDown1
+	dw SprMap_MapplayerDown2
+	dw SprMap_MapplayerDown3
+	dw SprMap_MapplayerLeft1
+	dw SprMap_MapplayerLeft2
+	dw SprMap_MapplayerClimb1
+	dw SprMap_MapplayerClimb2
+	dw SprMap_MapplayerUp1
+	dw SprMap_MapplayerUp2
+	dw SprMap_MapplayerUp3
+	dw SprMap_MapplayerSwimDown1
+	dw SprMap_MapplayerSwimDown2
+	dw SprMap_MapplayerSwimLeft1
+	dw SprMap_MapplayerSwimLeft2 ;unused
+	dw SprMap_MapplayerSwimUp1
+	dw SprMap_MapplayerSwimUp2
 	dw SprMap_MapBoo ;unused
 	dw SprMap_MapHalo ;unused
 	dw SprMap_MapYoshi_Down1
@@ -305,17 +305,17 @@ tbl2_8900:
 	dw SprMap_MapYoshi_SwimLeft2 ;unused
 	dw SprMap_MapYoshi_SwimUp1
 	dw SprMap_MapYoshi_SwimUp2
-	dw SprMap_MapPlayer_Start
+	dw SprMap_MapplayerStart
 	dw SprMap_MapYoshi_Start1
 	dw SprMap_MapYoshi_Start2
 	dw SprMap_MapYoshi_SwimStart1
 	dw SprMap_MapYoshi_SwimStart2
-	dw SprMap_MapPlayer_SwimStart1
-	dw SprMap_MapPlayer_SwimStart2
-	dw SprMap_MapPlayer_Right1
-	dw SprMap_MapPlayer_Right2
-	dw SprMap_MapPlayer_SwimRight1 ;unused
-	dw SprMap_MapPlayer_SwimRight2 ;unused
+	dw SprMap_MapplayerSwimStart1
+	dw SprMap_MapplayerSwimStart2
+	dw SprMap_MapplayerRight1
+	dw SprMap_MapplayerRight2
+	dw SprMap_MapplayerSwimRight1 ;unused
+	dw SprMap_MapplayerSwimRight2 ;unused
 	dw SprMap_MapYoshi_Right1
 	dw SprMap_MapYoshi_Right2
 	dw SprMap_MapYoshi_SwimRight1 ;unused
@@ -992,70 +992,70 @@ pnt3_8C4C:
 	db $00
 	db $01
 	db $01
-SprMap_MapPlayer_Down1:
+SprMap_MapplayerDown1:
 	db $02
 	db $02
 	db $05
 	db $06
 	db $0D
 	db $0E
-SprMap_MapPlayer_Down2:
+SprMap_MapplayerDown2:
 	db $02
 	db $02
 	db $07
 	db $08
 	db $0F
 	db $10
-SprMap_MapPlayer_Down3:
+SprMap_MapplayerDown3:
 	db $02
 	db $02
 	db $05
 	db $06
 	db $11
 	db $12
-SprMap_MapPlayer_Left1:
+SprMap_MapplayerLeft1:
 	db $02
 	db $02
 	db $50
 	db $51
 	db $60
 	db $61
-SprMap_MapPlayer_Left2:
+SprMap_MapplayerLeft2:
 	db $02
 	db $02
 	db $52
 	db $53
 	db $62
 	db $63
-SprMap_MapPlayer_Climb1:
+SprMap_MapplayerClimb1:
 	db $02
 	db $02
 	db $2A
 	db $2B
 	db $36
 	db $37
-SprMap_MapPlayer_Climb2:
+SprMap_MapplayerClimb2:
 	db $02
 	db $02
 	db $2C
 	db $2D
 	db $38
 	db $39
-SprMap_MapPlayer_Up1:
+SprMap_MapplayerUp1:
 	db $02
 	db $02
 	db $44
 	db $45
 	db $54
 	db $55
-SprMap_MapPlayer_Up2:
+SprMap_MapplayerUp2:
 	db $02
 	db $02
 	db $46
 	db $47
 	db $56
 	db $57
-SprMap_MapPlayer_Up3:
+SprMap_MapplayerUp3:
 	db $02
 	db $02
 	db $48
@@ -1069,42 +1069,42 @@ pnt3_8C8E:
 	db $00
 	db $02
 	db $02
-SprMap_MapPlayer_SwimDown1:
+SprMap_MapplayerSwimDown1:
 	db $02
 	db $02
 	db $07
 	db $08
 	db $13
 	db $14
-SprMap_MapPlayer_SwimDown2:
+SprMap_MapplayerSwimDown2:
 	db $02
 	db $02
 	db $05
 	db $06
 	db $15
 	db $16
-SprMap_MapPlayer_SwimLeft1:
+SprMap_MapplayerSwimLeft1:
 	db $02
 	db $02
 	db $50
 	db $51
 	db $64
 	db $65
-SprMap_MapPlayer_SwimLeft2:
+SprMap_MapplayerSwimLeft2:
 	db $02
 	db $02
 	db $52
 	db $53
 	db $66
 	db $67
-SprMap_MapPlayer_SwimUp1:
+SprMap_MapplayerSwimUp1:
 	db $02
 	db $02
 	db $24
 	db $25
 	db $13
 	db $14
-SprMap_MapPlayer_SwimUp2:
+SprMap_MapplayerSwimUp2:
 	db $02
 	db $02
 	db $22
@@ -1300,7 +1300,7 @@ SprMap_MapYoshi_SwimUp2:
 	db $35
 	db $15
 	db $16
-SprMap_MapPlayer_Start:
+SprMap_MapplayerStart:
 	db $02
 	db $02
 	db $1D
@@ -1343,14 +1343,14 @@ SprMap_MapYoshi_SwimStart2:
 	db $0C
 	db $15
 	db $16
-SprMap_MapPlayer_SwimStart1:
+SprMap_MapplayerSwimStart1:
 	db $02
 	db $02
 	db $1F
 	db $08
 	db $13
 	db $14
-SprMap_MapPlayer_SwimStart2:
+SprMap_MapplayerSwimStart2:
 	db $02
 	db $02
 	db $1D
@@ -1364,14 +1364,14 @@ pnt3_8D92:
 	db $40
 	db $41
 	db $41
-SprMap_MapPlayer_Right1:
+SprMap_MapplayerRight1:
 	db $02
 	db $02
 	db $51
 	db $50
 	db $61
 	db $60
-SprMap_MapPlayer_Right2:
+SprMap_MapplayerRight2:
 	db $02
 	db $02
 	db $53
@@ -1385,14 +1385,14 @@ pnt3_8DA4:
 	db $40
 	db $42
 	db $42
-SprMap_MapPlayer_SwimRight1:
+SprMap_MapplayerSwimRight1:
 	db $02
 	db $02
 	db $51
 	db $50
 	db $65
 	db $64
-SprMap_MapPlayer_SwimRight2:
+SprMap_MapplayerSwimRight2:
 	db $02
 	db $02
 	db $53
@@ -1477,33 +1477,33 @@ SprMap_MapYoshi_SwimRight2:
 ;----------------------------------------
 sub_42_8DF8:
 ;Load sprite into memory
-	STA GS0SpriteFrame,X ;Load sprite frame
+	STA gs0SpriteFrame,X ;Load sprite frame
 	ASL
 	TAY ;Get pointer for it
 	LDA tbl2_8A0C,Y
-	STA GS0SpriteXPos,X ;Set X position for sprite (only works for menu?)
+	STA gs0SpriteX,X ;Set X position for sprite (only works for menu?)
 	LDA tbl2_8A0C+1,Y
-	STA GS0SpriteYPos,X ;Set Y position for sprite (only used for menu?)
+	STA gs0SpriteY,X ;Set Y position for sprite (only used for menu?)
 	LDA TitleSpriteFrameTypes,Y
-	STA GS0SpriteFlags,X ;Store flags for animation frame (useless/unknown?)
+	STA gs0SpriteFlags,X ;Store flags for animation frame (useless/unknown?)
 	LDA TitleSpriteFrameTypes+1,Y
-	STA GS0SpriteSlot,X ;Load sprite
+	STA gs0SpriteSlot,X ;Load sprite
 	
 ;Load sprite animation and bank
 	ASL
 	TAX ;Get index for current sprite
 	;Load sprite animation pointer
 	LDA TitleSpriteAnimations,X
-	STA GS0SpriteAnimPtr
+	STA gs0SpriteAnimPtr
 	LDA TitleSpriteAnimations+1,X
-	STA GS0SpriteAnimPtr+1
+	STA gs0SpriteAnimPtr+1
 	;Load sprite's bank
 	LDY #$02
-	LDA (GS0SpriteAnimPtr),Y
-	STA GS0SpriteBankNum ;Load sprite bank
+	LDA (gs0SpriteAnimPtr),Y
+	STA gs0chrSpriteBank ;Load sprite bank
 	;Account for sprite's CHR bank
 	LDY #$04
-	LDA (GS0SpriteAnimPtr),Y ;Load 5th byte of animation data
+	LDA (gs0SpriteAnimPtr),Y ;Load 5th byte of animation data
 	LSR
 	LSR
 	LSR
@@ -1511,8 +1511,8 @@ sub_42_8DF8:
 	LSR
 	LSR ;Shift out 6 bits to get sprite bank index
 	TAX ;Set 1K bank to swap
-	LDA GS0SpriteBankNum
-	STA SpriteBank1,X ;Swap the bank out in the set bank
+	LDA gs0chrSpriteBank
+	STA chrSpriteBank1,X ;Swap the bank out in the set bank
 	RTS
 
 ;----------------------------------------
@@ -1973,7 +1973,7 @@ sub_42_8FFB:
 	LDA ($2E),Y
 	STA $0361
 	LDX $0399
-	LDA P1YoshiBackup,X
+	LDA playerStoredYoshi,X
 	BEQ bra2_903B
 	LDX $0361
 	LDA tbl2_9091,X
@@ -1981,7 +1981,7 @@ sub_42_8FFB:
 bra2_903B:
 	LDA $037C
 	BNE bra2_904F
-	LDA FrameCount
+	LDA frameCount
 	AND #$F8
 	LDA #$00
 	STA $0378
@@ -2000,11 +2000,11 @@ bra2_905B:
 	STA $0379
 	JSR sub2_90D3
 	LDA #$05
-	STA Sound_Sfx
+	STA sndSfx
 	LDA $037F
 	TAX
 	LDA tbl2_9071,X
-	STA Sound_Music
+	STA sndMusic
 	RTS
 tbl2_9071:
 	db $25 ;overworld map music settings
@@ -2160,17 +2160,17 @@ sub2_9138:
 bra2_913E_RTS:
 	RTS
 sub2_913F:
-	INC PlayerXPosDup
+	INC playerXLoDup
 	BNE bra2_9145_RTS
-	INC PlayerXScreenDup
+	INC playerXHiDup
 bra2_9145_RTS:
 	RTS
 sub2_9146:
-	DEC PlayerXPosDup
-	LDA PlayerXPosDup
+	DEC playerXLoDup
+	LDA playerXLoDup
 	CMP #$FF
 	BNE bra2_9150_RTS
-	DEC PlayerXScreenDup
+	DEC playerXHiDup
 bra2_9150_RTS:
 	RTS
 sub2_9151:
@@ -2197,23 +2197,23 @@ tbl2_9163:
 	dw ptr9_9193
 ptr9_917B:
 	LDA #$00
-	STA OverworldMapScreen
+	STA mapScreen
 	JMP loc2_919B
 ptr9_9183:
 	LDA #$01
-	STA OverworldMapScreen
+	STA mapScreen
 	JMP loc2_919B
 ptr9_918B:
 	LDA #$02
-	STA OverworldMapScreen
+	STA mapScreen
 	JMP loc2_919B
 ptr9_9193:
 	LDA #$03
-	STA OverworldMapScreen
+	STA mapScreen
 	JMP loc2_919B
 loc2_919B:
 	LDA #$0C
-	STA a:GameState
+	STA a:gameState
 	RTS
 ptr9_91A1:
 	DEC $0356
@@ -3506,15 +3506,15 @@ ofs_96CD:
 ofs_96DA:
 	db $FF
 sub2_96DB:
-	DEC GS0SpriteXPos,X
-	LDA GS0SpriteXPos,X
+	DEC gs0SpriteX,X
+	LDA gs0SpriteX,X
 	CMP #$FF
 	BNE bra2_96E6
-	DEC GS0SpriteFlags,X
+	DEC gs0SpriteFlags,X
 bra2_96E6:
-	LDA GS0SpriteFlags,X
+	LDA gs0SpriteFlags,X
 	BNE bra2_96F5_RTS
-	LDA GS0SpriteXPos,X
+	LDA gs0SpriteX,X
 	CMP #$20
 	BCS bra2_96F5_RTS
 	LDA #$00
@@ -3522,9 +3522,9 @@ bra2_96E6:
 bra2_96F5_RTS:
 	RTS
 sub2_96F6:
-	INC GS0SpriteXPos,X ;Move sprite one pixel ahead
+	INC gs0SpriteX,X ;Move sprite one pixel ahead
 	BNE bra2_96FD_RTS
-	INC GS0SpriteFlags,X ;Make sprite visible?
+	INC gs0SpriteFlags,X ;Make sprite visible?
 bra2_96FD_RTS:
 	RTS
 sub_42_96FE:
@@ -3554,27 +3554,27 @@ tbl2_9721:
 	db $40
 	db $40
 AnimateMapPlayer:
-	LDA FrameCount
+	LDA frameCount
 	AND #$07
 	BNE bra2_9752_RTS ;Only do this every 8th frame
-	LDA PlayerMapAnim
+	LDA playerMapAnim
 	ASL
 	TAX ;Get pointer for the player's map animation
 	LDA tbl2_9753,X
-	STA ScratchRAM
+	STA scratchRam
 	LDA tbl2_9753+1,X
-	STA ScratchRAM+1 ;Load pointer
-	LDY PlayerMapFrame
+	STA scratchRam+1 ;Load pointer
+	LDY playerMapFrame
 bra2_9740:
-	LDA (ScratchRAM),Y
+	LDA (scratchRam),Y
 	CMP #$FF
 	BNE bra2_974D ;Continue until terminating byte is reached
 	LDY #$00
-	STY PlayerMapFrame
+	STY playerMapFrame
 	BEQ bra2_9740 ;Loop back to the start of the animation
 bra2_974D:
-	STA GS0SpriteFrame ;Update the player's sprite
-	INC PlayerMapFrame ;Go to the next animation frame
+	STA gs0SpriteFrame ;Update the player's sprite
+	INC playerMapFrame ;Go to the next animation frame
 bra2_9752_RTS:
 	RTS
 tbl2_9753:
@@ -4123,7 +4123,7 @@ TransitionScreenData:
 	db $00
 	db $00
 pnt5_998A:
-	LDA FrameCount
+	LDA frameCount
 	AND #$07
 	BNE bra2_999F
 	INC $032F
@@ -4137,7 +4137,7 @@ bra2_999F:
 	LDA $032F
 	AND #$03
 bra2_99A6:
-	STA SpriteMem+2,X
+	STA spriteMem+2,X
 	INX
 	INX
 	INX
@@ -4146,7 +4146,7 @@ bra2_99A6:
 	BCC bra2_99A6
 	RTS
 sub_42_99B2:
-	LDA FrameCount
+	LDA frameCount
 	AND #$07
 	BNE bra2_99BB
 	INC $032F
@@ -4171,19 +4171,19 @@ sub_42_99D6:
 	ASL
 	TAX
 	LDA tbl2_9A8D,X
-	STA CameraXScreen
-	STA PlayerColXScreen
-	STA PlayerXScreen
+	STA cameraXHi
+	STA playerCollXHi
+	STA playerXHi
 	LDA tbl2_9A8E,X
 	STA $52
 	STA $65
 	STA $02
 	CLC
-	ADC PlayerXPos
-	STA PlayerXPos
-	LDA PlayerXScreen
+	ADC playerXLo
+	STA playerXLo
+	LDA playerXHi
 	ADC #$00
-	STA PlayerXScreen
+	STA playerXHi
 	RTS
 sub_42_99FA:
 	ASL
@@ -4194,21 +4194,21 @@ sub_42_99FA:
 	STA $26
 	LDY #$00
 	LDA ($25),Y
-	STA PPUUpdatePtr
+	STA ppuUpdatePtr
 	INY
 	LDA ($25),Y
-	STA PPUUpdatePtr+1
+	STA ppuUpdatePtr+1
 	INY
 	LDA ($25),Y
 	STA $03A3
 	INY
 	LDA ($25),Y
-	STA PPUWriteCount
+	STA ppuBufSize
 	INY
 	LDX #$00
 bra2_9A22:
 	LDA ($25),Y
-	STA PPUDataBuffer,X
+	STA ppuDataBuf,X
 	INY
 	INX
 	CPX #$20
@@ -4248,7 +4248,7 @@ CHRBankSub:
 	LDY #$00
 bra2_9A52:
 	LDA ($32),Y ;Load banks from pointer location
-	STA BGBank1,Y ;Set CHR banks
+	STA chrBgBank1,Y ;Set CHR banks
 	INY
 	CPY #$06
 	BCC bra2_9A52
@@ -4452,7 +4452,7 @@ ClearNTLoop:
 pnt5_9B28:
 	LDA #$00
 	STA $032F
-	INC a:GameState
+	INC a:gameState
 	LDA $037F
 	ASL
 	TAX
@@ -4482,19 +4482,19 @@ bra2_9B65:
 	INC $039C,X
 	RTS
 	CLC
-	ADC GS0SpriteXPos,X
-	STA GS0SpriteXPos,X
+	ADC gs0SpriteX,X
+	STA gs0SpriteX,X
 	BCC bra2_9B73_RTS
-	INC GS0SpriteFlags,X
+	INC gs0SpriteFlags,X
 bra2_9B73_RTS:
 	RTS
 	STA $25
 	SEC
-	LDA GS0SpriteXPos,X
+	LDA gs0SpriteX,X
 	SBC $25
-	STA GS0SpriteXPos,X
+	STA gs0SpriteX,X
 	BCS bra2_9B82_RTS
-	DEC GS0SpriteFlags,X
+	DEC gs0SpriteFlags,X
 bra2_9B82_RTS:
 	RTS
 tbl_9B83:
@@ -5089,14 +5089,14 @@ bra2_9DFC:
 	LDA $25
 	TAX
 	INX ;Set index for player #1
-	LDA CurrentPlayer
+	LDA curPlayer
 	BEQ bra2_9E0B ;Branch if player #1 is playing
 	LDA $25 ;Otherwise, continue
 	CLC
 	ADC #$09
 	TAX ;Set index for player #2
 bra2_9E0B:
-	LDA CastleDestroyFlags,X
+	LDA castlesDestroyed,X
 	BEQ bra2_9E53 ;Branch if the castle isn't destroyed
 	LDA $25 ;Otherwise, continue
 	TAX
@@ -5114,7 +5114,7 @@ bra2_9E0B:
 	SEC
 	LDA tbl2_9E5C+1,X
 	SBC $52
-	STA ScratchRAM+8 ;Location - camera position = screen position
+	STA scratchRam+8 ;Location - camera position = screen position
 	BCS bra2_9E31
 	DEC $32
 bra2_9E31:
@@ -5125,7 +5125,7 @@ bra2_9E31:
 	STA $32 ;Set the sprite's vertical screen
 	SEC
 	LDA tbl2_9E5C+3,X
-	SBC ScrollYPos
+	SBC scrollY
 	STA $38 ;Location - camera position = screen position
 	BCS bra2_9E48
 	DEC $32
