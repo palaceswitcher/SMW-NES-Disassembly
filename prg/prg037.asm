@@ -1,4 +1,4 @@
-;disassembled with BZK 6502 Disassembler
+; disassembled with BZK 6502 Disassembler
 ptr7_8000:
 	LDA playerYHi
 	BNE bra_8005
@@ -2003,7 +2003,7 @@ bra_8DF5:
 	STA enemyAnimFrame,X
 	RTS
 tbl_8E12:
-	db $00 ;Clown car blink cycle
+	db $00 ; Clown car blink cycle
 	db $00
 	db $00
 	db $00
@@ -2815,14 +2815,14 @@ bra_93A5:
 	STA clownCarFace
 	RTS
 tbl_93AF:
-	db $00 ;phase if no hits
-	db $02 ;phase after 1 or 2 hits
+	db $00 ; phase if no hits
+	db $02 ; phase after 1 or 2 hits
 	db $02
-	db $07 ;phase after 3 hits
-	db $0E ;phase after 4 or 5 hits 
+	db $07 ; phase after 3 hits
+	db $0E ; phase after 4 or 5 hits 
 	db $0E
-	db $13 ;phase after 6 hits
-	db $1A ;phase after 7 or 8 hits
+	db $13 ; phase after 6 hits
+	db $1A ; phase after 7 or 8 hits
 	db $1A
 	db $1F
 ptr7_93B9:

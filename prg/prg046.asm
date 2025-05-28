@@ -1,5 +1,5 @@
-;disassembled by BZK 6502 Disassembler
-	incbin levels/lvl_Map.bin ;include tilemap data for the overworld map
+; disassembled by BZK 6502 Disassembler
+	incbin levels/lvl_Map.bin ; include tilemap data for the overworld map
 	
 	db $2D
 	db $00
@@ -139,7 +139,7 @@
 	db $00
 	db $00
 	db $00
-	LDA frameCount ;More useless padding code?
+	LDA frameCount ; More useless padding code?
 	AND #$07
 	BNE bra13_999F
 	INC $032F

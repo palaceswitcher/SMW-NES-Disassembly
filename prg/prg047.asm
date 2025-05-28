@@ -1,10 +1,10 @@
-;Disassembled with BZK 6502 Disassembler
+; Disassembled with BZK 6502 Disassembler
 CHRSprBankAttrs:
-	dw Attr_Bank80 ;Fire Mario
+	dw Attr_Bank80 ; Fire Mario
 	dw Attr_Bank81 ; |
 	dw Attr_Bank82 ; |
 	dw Attr_Bank83 ; |
-	dw Attr_Bank84 ;Big/Cape Mario + Cape
+	dw Attr_Bank84 ; Big/Cape Mario + Cape
 	dw Attr_Bank85 ; |
 	dw Attr_Bank86 ; |
 	dw Attr_Bank87 ; |
@@ -12,59 +12,59 @@ CHRSprBankAttrs:
 	dw Attr_Bank89 ; |
 	dw Attr_Bank8A ; |
 	dw Attr_Bank8B ; |
-	dw Attr_Bank90 ;Unused
+	dw Attr_Bank90 ; Unused
 	dw Attr_Bank90 ; |
 	dw Attr_Bank90 ; |
 	dw Attr_Bank90 ; |
-	dw Attr_Bank90 ;Universal Objects/Yoshi
+	dw Attr_Bank90 ; Universal Objects/Yoshi
 	dw Attr_Bank91 ; |
 	dw Attr_Bank92 ; |
 	dw Attr_Bank93 ; |
-	dw Attr_Bank94 ;Koopas
-	dw Attr_Bank95 ;Chainsaw, Rex
-	dw Attr_Bank96 ;Super Koopa, Swooper
-	dw Attr_Bank97 ;Piranha Plant, Volcano Lotus + Pollen, Buzzy, Spike Top
-	dw Attr_Bank98 ;Small Mario
+	dw Attr_Bank94 ; Koopas
+	dw Attr_Bank95 ; Chainsaw, Rex
+	dw Attr_Bank96 ; Super Koopa, Swooper
+	dw Attr_Bank97 ; Piranha Plant, Volcano Lotus + Pollen, Buzzy, Spike Top
+	dw Attr_Bank98 ; Small Mario
 	dw Attr_Bank99 ; |
-	dw Attr_Bank9A ;Universal Objects/Yoshi (Continued)
+	dw Attr_Bank9A ; Universal Objects/Yoshi (Continued)
 	dw Attr_Bank9B ; |
-	dw Attr_BankA0 ;Unused
+	dw Attr_BankA0 ; Unused
 	dw Attr_BankA0 ; |
 	dw Attr_BankA0 ; |
 	dw Attr_BankA0 ; |
-	dw Attr_BankA0 ;Universal Objects/Yoshi (Continued)
+	dw Attr_BankA0 ; Universal Objects/Yoshi (Continued)
 	dw Attr_BankA1 ; |
 	dw Attr_BankA2 ; |
 	dw Attr_BankA3 ; |
-	dw Attr_BankA4 ;Fuzzy, Alt Spike Top, Platforms, ON/OFF Button
-	dw Attr_BankA5 ;Paragoomba, Parachute Goomba
-	dw Attr_BankA6 ;Blupr, Unused Muncher, Spiny, Ninji, Bullet Bill, Unused Vertical Bullet bill
-	dw Attr_BankA7 ;Alt Vertical Podoboo, Diagonal Podoboo, Unused Lakitu
-	dw Attr_BankA8 ;Alt (Unused?) Horizontal Podoboo, Urchin, Unused Clappin' Chuck
-	dw Attr_BankA9 ;Idle/Stunned Chargin' Chuck
-	dw Attr_BankAA ;Baseball Chuck, Chargin' Chuck, Running Chargin' Chuck
-	dw Attr_BankAB ;Boos, Errie, Thwomp, P-Door
-	dw Attr_BankAC ;Dry Bones + Bone, Spiky Ball
-	dw Attr_BankAD ;Bony Beetle, Platform, Horizontal Podoboo, Alt (Unused? Maybe unique?) Platform
-	dw Attr_BankAE ;Mechakoopa, Unused Platform, Alt (Unused??) Platform
-	dw Attr_BankAF ;Passin' Chuck, Diggin' Chuck
-	dw Attr_BankB0 ;Morton
+	dw Attr_BankA4 ; Fuzzy, Alt Spike Top, Platforms, ON/OFF Button
+	dw Attr_BankA5 ; Paragoomba, Parachute Goomba
+	dw Attr_BankA6 ; Blupr, Unused Muncher, Spiny, Ninji, Bullet Bill, Unused Vertical Bullet bill
+	dw Attr_BankA7 ; Alt Vertical Podoboo, Diagonal Podoboo, Unused Lakitu
+	dw Attr_BankA8 ; Alt (Unused?) Horizontal Podoboo, Urchin, Unused Clappin' Chuck
+	dw Attr_BankA9 ; Idle/Stunned Chargin' Chuck
+	dw Attr_BankAA ; Baseball Chuck, Chargin' Chuck, Running Chargin' Chuck
+	dw Attr_BankAB ; Boos, Errie, Thwomp, P-Door
+	dw Attr_BankAC ; Dry Bones + Bone, Spiky Ball
+	dw Attr_BankAD ; Bony Beetle, Platform, Horizontal Podoboo, Alt (Unused? Maybe unique?) Platform
+	dw Attr_BankAE ; Mechakoopa, Unused Platform, Alt (Unused??) Platform
+	dw Attr_BankAF ; Passin' Chuck, Diggin' Chuck
+	dw Attr_BankB0 ; Morton
 	dw Attr_BankB1 ; |
 	dw Attr_BankB2 ; |
 	dw Attr_BankB3 ; |
-	dw Attr_BankB4 ;Lemmy
+	dw Attr_BankB4 ; Lemmy
 	dw Attr_BankB5 ; |
-	dw Attr_BankB6 ;Reznor
-	dw Attr_BankB7 ;Lemmy (Falling)
-	dw Attr_BankB8 ;Wendy
+	dw Attr_BankB6 ; Reznor
+	dw Attr_BankB7 ; Lemmy (Falling)
+	dw Attr_BankB8 ; Wendy
 	dw Attr_BankB9 ; |
 	dw Attr_BankBA ; |
-	dw Attr_BankBB ;Unused
-	dw Attr_BankBC ;Roy
+	dw Attr_BankBB ; Unused
+	dw Attr_BankBC ; Roy
 	dw Attr_BankBD ; |
 	dw Attr_BankBE ; |
 	dw Attr_BankBF ; |
-	dw Attr_BankCC ;Unused
+	dw Attr_BankCC ; Unused
 	dw Attr_BankCC ; |
 	dw Attr_BankCC ; |
 	dw Attr_BankCC ; |
@@ -78,10 +78,10 @@ CHRSprBankAttrs:
 	dw Attr_BankCC ; |
 	dw Attr_BankCC ; |
 	dw Attr_BankCD ; |
-	dw Attr_BankCE ;Countdown Platform
-	dw Attr_BankCF ;Wooden Spike
-	dw Attr_BankD0 ;Dino-Torch, Dino Rhino
-	dw Attr_BankE0 ;Unused
+	dw Attr_BankCE ; Countdown Platform
+	dw Attr_BankCF ; Wooden Spike
+	dw Attr_BankD0 ; Dino-Torch, Dino Rhino
+	dw Attr_BankE0 ; Unused
 	dw Attr_BankE0 ; |
 	dw Attr_BankE0 ; |
 	dw Attr_BankE0 ; |
@@ -96,10 +96,10 @@ CHRSprBankAttrs:
 	dw Attr_BankE0 ; |
 	dw Attr_BankE0 ; |
 	dw Attr_BankE0 ; |
-	dw Attr_BankE0 ;Bowser, Propeller
-	dw Attr_BankE1 ;Damaged Bowser, Propeller
-	dw Attr_BankE2 ;Peach (In-ship), "HELP!" Text, Propeller
-	dw Attr_BankE3 ;Bowser, Descending Peach, Propeller
+	dw Attr_BankE0 ; Bowser, Propeller
+	dw Attr_BankE1 ; Damaged Bowser, Propeller
+	dw Attr_BankE2 ; Peach (In-ship), "HELP!" Text, Propeller
+	dw Attr_BankE3 ; Bowser, Descending Peach, Propeller
 Attr_Bank80:
 	db $00, $00, $00, $00, $01, $01, $01, $01, $00, $00, $00, $00, $00, $00, $01, $01
 	db $03, $03, $03, $03, $03, $03, $00, $00, $01, $01, $01, $01, $01, $01, $01, $01
@@ -425,7 +425,7 @@ Attr_BankE3:
 	db $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02
 	db $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02, $02
 	db $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $03, $02
-;sprite palette mappings end
+; sprite palette mappings end
 	db $FF
 	db $00
 	db $FF

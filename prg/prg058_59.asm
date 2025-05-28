@@ -1,4 +1,4 @@
-;Disassembled by BZK 6502 Disassembler
+; Disassembled by BZK 6502 Disassembler
 tbl10_8000:
 	dw ofs_8100
 	dw ofs_8104
@@ -17,9 +17,9 @@ tbl10_8000:
 	dw ofs_8194
 	dw ofs_819C
 	dw ofs_81A6
-	dw Vol_LongEcho1 ;0x11
-	dw ofs_81C2 ;0x12
-	dw ofs_81CD ;0x13
+	dw Vol_LongEcho1 ; 0x11
+	dw ofs_81C2 ; 0x12
+	dw ofs_81CD ; 0x13
 	dw ofs_81D9
 	dw ofs_81E3
 	dw ofs_81ED
@@ -52,12 +52,12 @@ tbl10_8000:
 	dw ofs_82C9
 	dw ofs_82D1
 	dw ofs_82FD
-	dw ofs_831B ;0x34
+	dw ofs_831B ; 0x34
 	dw ofs_8100
 	dw ofs_8327
 	dw ofs_8337
 	dw ofs_833F
-	dw ofs_8343 ;0x39
+	dw ofs_8343 ; 0x39
 	dw ofs_8100
 	dw ofs_8100
 	dw ofs_8100
@@ -65,7 +65,7 @@ tbl10_8000:
 	dw ofs_8100
 	dw ofs_8100
 	dw ofs_834F
-	dw Vol_PlinkEcho ;0x41
+	dw Vol_PlinkEcho ; 0x41
 	dw ofs_8379
 	dw ofs_8381
 	dw ofs_8397
@@ -80,9 +80,9 @@ tbl10_8000:
 	dw ofs_8431
 	dw ofs_8437
 	dw ofs_8100
-	dw ofs_843D ;0x50
-	dw ofs_844E ;0x51
-	dw ofs_845E ;0x52
+	dw ofs_843D ; 0x50
+	dw ofs_844E ; 0x51
+	dw ofs_845E ; 0x52
 	dw ofs_8462
 	dw ofs_846E
 	dw ofs_8472
@@ -91,16 +91,16 @@ tbl10_8000:
 	dw ofs_84B4
 	dw ofs_84C0
 	dw ofs_8100
-	dw ofs_84CC ;0x5B
+	dw ofs_84CC ; 0x5B
 	dw ofs_84D0
 	dw ofs_84DE
-	dw ofs_84EE ;0x5E
+	dw ofs_84EE ; 0x5E
 	dw ofs_8508
-	dw ofs_8520 ;0x60
-	dw ofs_8528 ;0x61
+	dw ofs_8520 ; 0x60
+	dw ofs_8528 ; 0x61
 	dw ofs_853E
 	dw ofs_8554
-	dw ofs_8576 ;0x64
+	dw ofs_8576 ; 0x64
 	dw ofs_8100
 	dw ofs_8100
 	dw ofs_8100
@@ -135,24 +135,24 @@ jmp_58_85BE:
 	BNE bra10_85CE
 bra10_85C4:
 	LDA sndMusic
-	CMP sndMusicBackup ;Check if the BGM has changed
-	BEQ bra10_85D5_RTS ;If not, stop
-	LDA sndMusic ;If it has, back up the song ID
+	CMP sndMusicBackup ; Check if the BGM has changed
+	BEQ bra10_85D5_RTS ; If not, stop
+	LDA sndMusic ; If it has, back up the song ID
 	STA sndMusicBackup
 bra10_85CE:
 	JSR sub10_8E2F
 	LDA #$00
-	STA sndSfx ;Clear SFX register
+	STA sndSfx ; Clear SFX register
 bra10_85D5_RTS:
 	RTS
 
 ;----------------------------------------
-;SUBROUTINE ($85D6)
-;Initialize sound driver
+; SUBROUTINE ($85D6)
+; Initialize sound driver
 ;----------------------------------------
 sndInit:
 	LDA #%00001111
-	STA APUSTATUS ;Enable every channel excluding DMC
+	STA APUSTATUS ; Enable every channel excluding DMC
 	LDA #$00
 	STA SQ1_VOL
 	STA SQ2_VOL
@@ -161,15 +161,15 @@ sndInit:
 	STA DMC_FREQ
 	LDA #$7F
 	STA SQ1_SWEEP
-	STA SQ2_SWEEP ;Disable hardware sweep
+	STA SQ2_SWEEP ; Disable hardware sweep
 
 ; Clear sound driver RAM
 	LDA #$00
-	LDY #$D5 ;Upper limit of audio RAM
+	LDY #$D5 ; Upper limit of audio RAM
 AudioRAMClearLoop:
 	STA $0700,Y
 	DEY
-	BNE AudioRAMClearLoop ;Loop backwards until the start of page 7 is reached
+	BNE AudioRAMClearLoop ; Loop backwards until the start of page 7 is reached
 
 	LDA #$FF
 	LDX #4
@@ -207,13 +207,13 @@ jmp_58_862A:
 	LDA #$00
 	STA APUSTATUS
 	LDA #%00000111
-	STA APUSTATUS ;Disable noise channel
+	STA APUSTATUS ; Disable noise channel
 	JSR sub10_8C85
 	JSR sub10_86E8
 	JMP loc10_8671
 bra10_8642:
 	LDA #$0F
-	STA APUSTATUS ;Re-enable all channels (excluding DMC)
+	STA APUSTATUS ; Re-enable all channels (excluding DMC)
 loc10_8647:
 	JSR sub10_8C85
 	JSR sub10_86E8
@@ -323,7 +323,7 @@ loc10_8716:
 	STA $070A
 	TAX
 	CPX #$FF
-	BEQ bra10_86DF_RTS ;Stop if the end byte is reached ($FF)
+	BEQ bra10_86DF_RTS ; Stop if the end byte is reached ($FF)
 	LDA $070A
 	BMI bra10_872F
 	STA sndCurChannelOffs
@@ -625,7 +625,7 @@ ofs_8957:
 	BMI bra10_8971
 	LDY #$64
 bra10_8971:
-	STA sndMusicSpeed,Y ;Set Music/SFX speed
+	STA sndMusicSpeed,Y ; Set Music/SFX speed
 	JSR sub10_8E20
 	JMP loc10_87E0
 ofs_897A:
@@ -751,10 +751,10 @@ sub10_8A65:
 
 sub10_8A7A:
 	LDA $070A
-	AND #%1111 ;Mask out lower nybble
+	AND #%1111 ; Mask out lower nybble
 	TAX
 	CPX #$04
-	BMI bra10_8A85 ;Branch if it's commands F0 to F3
+	BMI bra10_8A85 ; Branch if it's commands F0 to F3
 	RTS
 
 bra10_8A85:
@@ -825,14 +825,14 @@ bra10_8AE7:
 	RTS
 
 sub10_8B0D:
-	;Load pointer for current channel
+	; Load pointer for current channel
 	LDX sndCurChannelPtrOffs
 	LDA sndChannelPtrs,X
 	STA sndDataPtr
 	LDA sndChannelPtrs+1,X
 	STA sndDataPtr+1
 	
-	JSR sub10_8E20 ;Move to next byte
+	JSR sub10_8E20 ; Move to next byte
 	LDY #$00
 	LDA (sndDataPtr),Y
 	LDX sndCurChannelOffs
@@ -856,14 +856,14 @@ loc10_8B39:
 	LDA sndMusicVolRleCounters,X
 	TAY
 	CPY #$FF
-	BEQ bra10_8BA1_RTS ;Stop if the counter is a terminator byte
+	BEQ bra10_8BA1_RTS ; Stop if the counter is a terminator byte
 	LDX sndCurChannelOffs
 	LDA sndMusicVolRleCounters,X
 	BNE bra10_8B9E
 
-;Move to next volume RLE tag when the timer ends
-	LDX sndCurChannelPtrOffs ;Get index for current channel
-	LDA #2 ;Tags are two bytes
+; Move to next volume RLE tag when the timer ends
+	LDX sndCurChannelPtrOffs ; Get index for current channel
+	LDA #2 ; Tags are two bytes
 	CLC
 	ADC sndVolMacroPtrs,X
 	STA sndVolMacroPtrs,X
@@ -871,43 +871,43 @@ loc10_8B39:
 	LDA #$00
 	ADC sndVolMacroPtrs+1,X
 	STA sndVolMacroPtrs+1,X
-	STA sndDataPtr+1 ;Move to next RLE tag
+	STA sndDataPtr+1 ; Move to next RLE tag
 
 	LDX sndCurChannelOffs
 	LDY #0
 	LDA (sndDataPtr),Y
-	STA sndMusicVolRleCounters,X ;Load length of RLE rag
+	STA sndMusicVolRleCounters,X ; Load length of RLE rag
 	TAY
 	CPY #$FF
-	BNE loc10_8B39 ;Branch if this isn't a jump tag
+	BNE loc10_8B39 ; Branch if this isn't a jump tag
 
 ; Move RLE pointer if a jump tag is encountered
 	LDX sndCurChannelPtrOffs
 	LDY #$01
 	LDA (sndDataPtr),Y
-	AND #%11111110 ;Make jump distance even (all tags are two bytes)
-	BPL bra10_8B91 ;Stop if the tag isn't a jump tag
+	AND #%11111110 ; Make jump distance even (all tags are two bytes)
+	BPL bra10_8B91 ; Stop if the tag isn't a jump tag
 	; Move sound macro pointer and sound pointer
 		CLC
 		ADC sndVolMacroPtrs,X
 		STA sndVolMacroPtrs,X
-		STA sndDataPtr ;Move base address as well
-		BCS bra10_8B8C ;Branch if page boundary not crossed
-			DEC sndVolMacroPtrs+1,X ;Decrement low byte if needed
+		STA sndDataPtr ; Move base address as well
+		BCS bra10_8B8C ; Branch if page boundary not crossed
+			DEC sndVolMacroPtrs+1,X ; Decrement low byte if needed
 	bra10_8B8C:
 		LDA sndVolMacroPtrs+1,X
 		STA sndDataPtr+1
 
 bra10_8B91:
 	LDX sndCurChannelOffs
-	LDY #$00 ;Move to start of macro data
+	LDY #$00 ; Move to start of macro data
 	LDA (sndDataPtr),Y
-	STA sndMusicVolRleCounters,X ;Load RLE repeat count from tag
+	STA sndMusicVolRleCounters,X ; Load RLE repeat count from tag
 	JMP loc10_8B39
 
 ; Decrement volume macro RLE counter for the length of the RLE tag
 bra10_8B9E:
-	DEC sndMusicVolRleCounters,X ;Decrement volume macro RLE counter
+	DEC sndMusicVolRleCounters,X ; Decrement volume macro RLE counter
 
 bra10_8BA1_RTS:
 	RTS
@@ -1248,30 +1248,30 @@ loc10_8E1B:
 	RTS
 
 ;----------------------------------------
-;SUBROUTINES ($8E20, $8E23)
-;Increments the pointer for channel data, optionally ignoring the index for the current channel if the second subroutine is called.
+; SUBROUTINES ($8E20, $8E23)
+; Increments the pointer for channel data, optionally ignoring the index for the current channel if the second subroutine is called.
 ;----------------------------------------
 sub10_8E20:
-	LDX sndCurChannelPtrOffs ;Get current channel
+	LDX sndCurChannelPtrOffs ; Get current channel
 sub_58_8E23:
 	INC sndChannelPtrs,X
 	LDA sndChannelPtrs,X
-	BNE bra10_8E2E_RTS ;Don't increment high byte if no overflow
+	BNE bra10_8E2E_RTS ; Don't increment high byte if no overflow
 		INC sndChannelPtrs+1,X
 bra10_8E2E_RTS:
 	RTS
 
 sub10_8E2F:
-	TAX ;Store saved sound ID in X reg
-	LDY #$FF ;Set index to -1
+	TAX ; Store saved sound ID in X reg
+	LDY #$FF ; Set index to -1
 bra10_8E32:
 	CPY #$07
-	BEQ bra10_8E40_RTS ;Stop if the index is out of range
-	INY ;Increment index
+	BEQ bra10_8E40_RTS ; Stop if the index is out of range
+	INY ; Increment index
 	LDA $0701,Y
-	BPL bra10_8E32 ;Loop only if bit 7 of the sound ID is cleared
-	TXA ;Retrieve backed up sound ID
-	STA $0701,Y ;Store in SFX queue
+	BPL bra10_8E32 ; Loop only if bit 7 of the sound ID is cleared
+	TXA ; Retrieve backed up sound ID
+	STA $0701,Y ; Store in SFX queue
 bra10_8E40_RTS:
 	RTS
 
@@ -1308,7 +1308,7 @@ tbl10_8E41:
 	dw Chainsaw_Footer
 	dw Empty_Footer
 	dw Empty_Footer
-;Music pointers
+; Music pointers
 	dw Title_Footer
 	dw GameOver_Footer
 	dw PlayerDown_Footer
@@ -1358,15 +1358,15 @@ NotePitchTable:
 	dw $0000
 	dw $0000
 	dw $0000
-	dw $07F2 ;A-0
-	dw $0780 ;A#0
-	dw $0714 ;B-0
-	dw $06AE ;C-1
-	dw $064E ;C#1
-	dw $05F4 ;D-1
-	dw $059E ;D#1
-	dw $054D ;E-1
-	dw $0501 ;F-1
+	dw $07F2 ; A-0
+	dw $0780 ; A#0
+	dw $0714 ; B-0
+	dw $06AE ; C-1
+	dw $064E ; C#1
+	dw $05F4 ; D-1
+	dw $059E ; D#1
+	dw $054D ; E-1
+	dw $0501 ; F-1
 	dw $04B9
 	dw $0475
 	dw $0435
@@ -1457,7 +1457,7 @@ NotePitchTable:
 	dw $0004
 	dw $0003
 	dw $0002
- ;include sfx_ data
+ ; include sfx_ data
 	include sound/sfx_SpinJump.asm
 	include sound/sfx_Pause.asm
 	include sound/sfx_Jump.asm
@@ -1487,7 +1487,7 @@ NotePitchTable:
 	include sound/sfx_YoshiFireSpit.asm
 	include sound/sfx_Checkpoint.asm
 	include sound/sfx_Chainsaw.asm
- ;include music data
+ ; include music data
 	include sound/mus_Title.asm
 	include sound/mus_GameOver.asm
 	include sound/mus_PlayerDown.asm

@@ -1,4 +1,4 @@
-;disassembled by BZK 6502 Disassembler
+; disassembled by BZK 6502 Disassembler
 	incbin tilesets/ts_Bowser.bin
 	
 	db $17
@@ -39,7 +39,7 @@
 	db $00
 	db $BE
 	db $BC
-	LDA #$00 ;all of the code here is useless padding
+	LDA #$00 ; all of the code here is useless padding
 	STA objState,X
 	STA objVar,X
 	LDA #$02
@@ -695,7 +695,7 @@ bra14_8FF4:
 	STA objState,Y
 bra14_960D:
 	CPY objCount
-	BCC $95F7 ;Broken corrupted branch
+	BCC $95F7 ; Broken corrupted branch
 	RTS
 	CMP #$01
 	BEQ bra14_9619

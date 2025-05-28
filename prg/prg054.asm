@@ -1,24 +1,24 @@
 ;------------------------------------------------------------
-;OBJECT BANK
-;This bank handles objects and contains various functions relating to them. Object-specific things will be kept here for convenience sake
+; OBJECT BANK
+; This bank handles objects and contains various functions relating to them. Object-specific things will be kept here for convenience sake
 ;------------------------------------------------------------
 jmp_54_A000:
 	LDA yoshiUnmountedState
-	BNE bra3_A006 ;If riding Yoshi, branch
+	BNE bra3_A006 ; If riding Yoshi, branch
 	RTS
 bra3_A006:
 	LDA gameState
 	CMP #$04
-	BEQ bra3_A023 ;If the player is dying, branch
+	BEQ bra3_A023 ; If the player is dying, branch
 	LDA #$35
-	STA curObjPrgBank ;Set current object bank to 53
+	STA curObjPrgBank ; Set current object bank to 53
 	LDA curObjPrgBank
-	STA M90_PRG0 ;Swap the current object bank in
+	STA M90_PRG0 ; Swap the current object bank in
 	LDA #$33
-	STA M90_PRG3 ;Swap bank 51 into the 4th PRG slot
-	JSR Obj_h36 ;Jump
+	STA M90_PRG3 ; Swap bank 51 into the 4th PRG slot
+	JSR Obj_h36 ; Jump
 	LDA #$3F
-	STA M90_PRG3 ;Swap bank 63 back in
+	STA M90_PRG3 ; Swap bank 63 back in
 	RTS
 bra3_A023:
 	LDA yoshiXLo
@@ -44,9 +44,9 @@ bra3_A03B:
 
 	LDA playerYHiDup
 	CMP yoshiYHi
-	BEQ loc3_A07D_RTS ;Stop if the player and Yoshi are on the same vertical screen
+	BEQ loc3_A07D_RTS ; Stop if the player and Yoshi are on the same vertical screen
 	LDA yoshiYDistHi
-	BPL bra3_A06C ;Move Yoshi up if he's at a higher screen than the player
+	BPL bra3_A06C ; Move Yoshi up if he's at a higher screen than the player
 ; Move Yoshi 16 pixels down (If on a lower vertical screen)
 	LDA yoshiYDist
 	CLC
@@ -56,9 +56,9 @@ bra3_A03B:
 	ADC #$00
 	STA yoshiYDistHi
 
-	JMP loc3_A07D_RTS ;Jump
+	JMP loc3_A07D_RTS ; Jump
 
-;Move Yoshi 16 pixels up
+; Move Yoshi 16 pixels up
 bra3_A06C:
 	LDA yoshiYDist
 	SEC
@@ -313,13 +313,13 @@ tbl3_A1B5:
 	objID_SuperKoopaJump = ($-tbl3_A1B5)/2
 	dw Obj_h1E
 
-	objID_SuperKoopaStraight = ($-tbl3_A1B5)/2 ;Verify this
+	objID_SuperKoopaStraight = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h1E
 
-	objID_SuperKoopaAlt = ($-tbl3_A1B5)/2 ;Verify this
+	objID_SuperKoopaAlt = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h1E
 
-	objID_SuperKoopaFlyUp = ($-tbl3_A1B5)/2 ;Verify this
+	objID_SuperKoopaFlyUp = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h1E
 
 	objID_VolcanoLotus = ($-tbl3_A1B5)/2
@@ -354,17 +354,17 @@ tbl3_A1B5:
 	dw Obj_h30
 	dw Obj_h30
 
-	objID_BlurpAlt = ($-tbl3_A1B5)/2 ;Verify this
+	objID_BlurpAlt = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h30
 
-	objID_BlurpRight = ($-tbl3_A1B5)/2 ;Verify this
+	objID_BlurpRight = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h30
 
 	objID_GreenKoopa = ($-tbl3_A1B5)/2
 	dw Obj_h36
 	dw Obj_h36
 
-	objID_KoopaShellAlt = ($-tbl3_A1B5)/2 ;Verify this
+	objID_KoopaShellAlt = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h38
 
 	objID_MushroomHidden = ($-tbl3_A1B5)/2
@@ -401,7 +401,7 @@ tbl3_A1B5:
 	objID_HorizontalPodoboo = ($-tbl3_A1B5)/2
 	dw Obj_h48
 
-	objID_1UPAlt = ($-tbl3_A1B5)/2 ;Verify this
+	objID_1UPAlt = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h49
 
 	objID_SpikeTop = ($-tbl3_A1B5)/2
@@ -417,22 +417,22 @@ tbl3_A1B5:
 	dw Obj_h4E
 
 	objID_ClimbingKoopaVert = ($-tbl3_A1B5)/2
-	dw Obj_h4E ;50
-	dw Obj_h4E ;51
+	dw Obj_h4E ; 50
+	dw Obj_h4E ; 51
 
 	objID_BlurpStill = ($-tbl3_A1B5)/2
-	dw Obj_h30 ;52 (Blurp)
+	dw Obj_h30 ; 52 (Blurp)
 	dw Obj_h30
 
 	objID_LinePlatform = ($-tbl3_A1B5)/2
-	dw Obj_h54 ;54 (Line Platform)
+	dw Obj_h54 ; 54 (Line Platform)
 	dw Obj_h54
 
 	objID_ShortPlatform = ($-tbl3_A1B5)/2
 	dw Obj_h54
 	dw Obj_h54
 
-	objID_GreenParatroopa = ($-tbl3_A1B5)/2 ;Verify this
+	objID_GreenParatroopa = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h58
 	dw Obj_h58
 
@@ -452,7 +452,7 @@ tbl3_A1B5:
 	dw Obj_h5A
 	dw Obj_h5A
 
-	objID_ChainsawUpAlt = ($-tbl3_A1B5)/2 ;Verify this
+	objID_ChainsawUpAlt = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h5A
 	dw Obj_h5A
 
@@ -460,7 +460,7 @@ tbl3_A1B5:
 	dw Obj_h64
 	dw Obj_h64
 
-	objID_NA = ($-tbl3_A1B5)/2 ;Verify this
+	objID_NA = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h66
 	dw Obj_h66
 	dw Obj_h66
@@ -505,12 +505,12 @@ tbl3_A1B5:
 	dw Obj_h77
 
 	objID_ReznorFire = ($-tbl3_A1B5)/2
-	dw Obj_h78 ;Object 0x78 (Reznor Fire)
+	dw Obj_h78 ; Object 0x78 (Reznor Fire)
 
 	objID_Fuzzy = ($-tbl3_A1B5)/2
-	dw Obj_h54 ;Object 0x79 (Fuzzy)
+	dw Obj_h54 ; Object 0x79 (Fuzzy)
 
-	objID_BeachKoopaSlidingAlt = ($-tbl3_A1B5)/2 ;Verify this
+	objID_BeachKoopaSlidingAlt = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h7A
 	dw Obj_h7A
 
@@ -522,138 +522,138 @@ tbl3_A1B5:
 
 	objID_Urchin = ($-tbl3_A1B5)/2
 	dw Obj_h7E
-	dw Obj_h7E ;Object 0x7F (Urchin)
+	dw Obj_h7E ; Object 0x7F (Urchin)
 
 ;----------------------------------------
 ; Unused duplicated pointers for objects' 00-7F rendering code. Can be found in bank 52
 	dw ptr4_A0D8
-	dw ptr6_9562 ;1
-	dw ptr6_9590 ;2
-	dw ptr6_9630 ;3
-	dw ptr6_9660 ;4
-	dw ptr6_96B7 ;5
-	dw ptr6_96D5 ;6
-	dw ptr6_96D5 ;7
-	dw ptr7_96F8 ;8
-	dw ptr7_96F8 ;9
-	dw ptr7_96F8 ;a
-	dw ptr6_9724 ;b
-	dw ptr6_9742 ;c
-	dw ptr6_9769 ;d
-	dw ptr6_979C ;e
-	dw ptr6_97C3 ;f
-	dw ptr6_820E ;10
-	dw ptr6_820E ;11
-	dw ptr6_820E ;12
-	dw ptr6_820E ;13
-	dw ptr6_820E ;14
-	dw ptr6_820E ;15
-	dw ptr6_8657 ;16
-	dw ptr6_8657 ;17
-	dw ptr6_865B ;18
-	dw ptr6_865B ;19
-	dw ptr6_884B ;1a
-	dw ptr6_884B ;1b
-	dw ptr6_8912 ;1c
-	dw ptr6_8912 ;1d
-	dw ptr6_8AA0 ;1e
-	dw ptr6_8AA0 ;1f
-	dw ptr6_8AA0 ;20
-	dw ptr6_8AA0 ;21
-	dw ptr6_8AA0 ;22
-	dw ptr6_8AA0 ;23
-	dw ptr6_8CDE ;24
-	dw ptr6_8CDE ;25
-	dw ptr6_8E17 ;26
-	dw ptr6_8E17 ;27
-	dw ptr6_8E17 ;28
-	dw ptr6_8E17 ;29
-	dw ptr6_8E17 ;2a
-	dw ptr6_8E17 ;2b
-	dw ptr6_8E17 ;2c
-	dw ptr6_8E17 ;2d
-	dw ptr6_8F90 ;2e
-	dw ptr6_8F90 ;2f
-	dw ptr6_9118 ;30
-	dw ptr6_9118 ;31
-	dw ptr6_9118 ;32
-	dw ptr6_9118 ;33
-	dw ptr6_9118 ;34
-	dw ptr6_9118 ;35
-	dw ptr6_820E ;36
-	dw ptr6_820E ;37
-	dw ptr6_9660 ;38
-	dw ptr6_9724 ;39
-	dw ptr6_9349 ;3a
-	dw ptr6_9349 ;3b
-	dw ptr6_95B5 ;3c
-	dw ptr6_95B5 ;3d
-	dw ptr6_95B5 ;3e
-	dw ptr6_95B5 ;3f
-	dw ptr6_95B5 ;40
-	dw ptr6_95B5 ;41
-	dw ptr6_99CD ;42
-	dw ptr6_99CD ;43
-	dw ptr6_9A11 ;44
-	dw ptr6_9A11 ;45
-	dw ptr6_9A68 ;46
-	dw ptr6_9A68 ;47
-	dw ptr5_9DA5 ;48
-	dw ptr6_96B7 ;49
-	dw bra5_8008 ;4a
-	dw bra5_8008 ;4b
-	dw ptr6_9BFB ;4c
-	dw ptr6_9BFB ;4d
-	dw bra5_8008 ;4e
-	dw bra5_8008 ;4f
-	dw bra5_8008 ;50
-	dw bra5_8008 ;51
-	dw ptr6_9118 ;52
-	dw ptr6_9118 ;53
-	dw ptr6_8039 ;54
-	dw ptr6_8039 ;55
-	dw ptr6_8039 ;56
-	dw ptr6_8039 ;57
-	dw ptr6_820E ;58
-	dw ptr6_820E ;59
-	dw bra5_8008 ;5a
-	dw bra5_8008 ;5b
-	dw bra5_8008 ;5c
-	dw bra5_8008 ;5d
-	dw bra5_8008 ;5e
-	dw bra5_8008 ;5f
-	dw bra5_8008 ;60
-	dw bra5_8008 ;61
-	dw bra5_8008 ;62
-	dw bra5_8008 ;63
-	dw ptr6_9389 ;64
-	dw ptr6_9389 ;65
-	dw bra5_8008 ;66
-	dw bra5_8008 ;67
-	dw bra5_8008 ;68
-	dw bra5_8008 ;69
-	dw ptr6_958D ;6a
-	dw ptr6_9727 ;6b
-	dw ptr6_99A9 ;6c
-	dw ptr6_99A9 ;6d
-	dw ptr6_820E ;6e
-	dw ptr6_820E ;6f
-	dw ptr6_8CA2 ;70
-	dw ptr6_9364 ;71
-	dw ptr6_8CDB ;72
-	dw ptr6_8CDB ;73
-	dw ptr6_9BDB ;74
-	dw ptr6_8CDB ;75
-	dw ptr6_8039 ;76
-	dw ptr6_8000 ;77
-	dw ptr6_8000 ;78
-	dw ptr6_8039 ;79
-	dw ptr6_820E ;7a
-	dw ptr6_820E ;7b
-	dw ptr4_A0D8 ;7c (different)
-	dw ptr4_A0D8 ;7d (different)
-	dw ptr6_9670 ;7e
-	dw ptr6_9670 ;7f
+	dw ptr6_9562 ; 1
+	dw ptr6_9590 ; 2
+	dw ptr6_9630 ; 3
+	dw ptr6_9660 ; 4
+	dw ptr6_96B7 ; 5
+	dw ptr6_96D5 ; 6
+	dw ptr6_96D5 ; 7
+	dw ptr7_96F8 ; 8
+	dw ptr7_96F8 ; 9
+	dw ptr7_96F8 ; a
+	dw ptr6_9724 ; b
+	dw ptr6_9742 ; c
+	dw ptr6_9769 ; d
+	dw ptr6_979C ; e
+	dw ptr6_97C3 ; f
+	dw ptr6_820E ; 10
+	dw ptr6_820E ; 11
+	dw ptr6_820E ; 12
+	dw ptr6_820E ; 13
+	dw ptr6_820E ; 14
+	dw ptr6_820E ; 15
+	dw ptr6_8657 ; 16
+	dw ptr6_8657 ; 17
+	dw ptr6_865B ; 18
+	dw ptr6_865B ; 19
+	dw ptr6_884B ; 1a
+	dw ptr6_884B ; 1b
+	dw ptr6_8912 ; 1c
+	dw ptr6_8912 ; 1d
+	dw ptr6_8AA0 ; 1e
+	dw ptr6_8AA0 ; 1f
+	dw ptr6_8AA0 ; 20
+	dw ptr6_8AA0 ; 21
+	dw ptr6_8AA0 ; 22
+	dw ptr6_8AA0 ; 23
+	dw ptr6_8CDE ; 24
+	dw ptr6_8CDE ; 25
+	dw ptr6_8E17 ; 26
+	dw ptr6_8E17 ; 27
+	dw ptr6_8E17 ; 28
+	dw ptr6_8E17 ; 29
+	dw ptr6_8E17 ; 2a
+	dw ptr6_8E17 ; 2b
+	dw ptr6_8E17 ; 2c
+	dw ptr6_8E17 ; 2d
+	dw ptr6_8F90 ; 2e
+	dw ptr6_8F90 ; 2f
+	dw ptr6_9118 ; 30
+	dw ptr6_9118 ; 31
+	dw ptr6_9118 ; 32
+	dw ptr6_9118 ; 33
+	dw ptr6_9118 ; 34
+	dw ptr6_9118 ; 35
+	dw ptr6_820E ; 36
+	dw ptr6_820E ; 37
+	dw ptr6_9660 ; 38
+	dw ptr6_9724 ; 39
+	dw ptr6_9349 ; 3a
+	dw ptr6_9349 ; 3b
+	dw ptr6_95B5 ; 3c
+	dw ptr6_95B5 ; 3d
+	dw ptr6_95B5 ; 3e
+	dw ptr6_95B5 ; 3f
+	dw ptr6_95B5 ; 40
+	dw ptr6_95B5 ; 41
+	dw ptr6_99CD ; 42
+	dw ptr6_99CD ; 43
+	dw ptr6_9A11 ; 44
+	dw ptr6_9A11 ; 45
+	dw ptr6_9A68 ; 46
+	dw ptr6_9A68 ; 47
+	dw ptr5_9DA5 ; 48
+	dw ptr6_96B7 ; 49
+	dw bra5_8008 ; 4a
+	dw bra5_8008 ; 4b
+	dw ptr6_9BFB ; 4c
+	dw ptr6_9BFB ; 4d
+	dw bra5_8008 ; 4e
+	dw bra5_8008 ; 4f
+	dw bra5_8008 ; 50
+	dw bra5_8008 ; 51
+	dw ptr6_9118 ; 52
+	dw ptr6_9118 ; 53
+	dw ptr6_8039 ; 54
+	dw ptr6_8039 ; 55
+	dw ptr6_8039 ; 56
+	dw ptr6_8039 ; 57
+	dw ptr6_820E ; 58
+	dw ptr6_820E ; 59
+	dw bra5_8008 ; 5a
+	dw bra5_8008 ; 5b
+	dw bra5_8008 ; 5c
+	dw bra5_8008 ; 5d
+	dw bra5_8008 ; 5e
+	dw bra5_8008 ; 5f
+	dw bra5_8008 ; 60
+	dw bra5_8008 ; 61
+	dw bra5_8008 ; 62
+	dw bra5_8008 ; 63
+	dw ptr6_9389 ; 64
+	dw ptr6_9389 ; 65
+	dw bra5_8008 ; 66
+	dw bra5_8008 ; 67
+	dw bra5_8008 ; 68
+	dw bra5_8008 ; 69
+	dw ptr6_958D ; 6a
+	dw ptr6_9727 ; 6b
+	dw ptr6_99A9 ; 6c
+	dw ptr6_99A9 ; 6d
+	dw ptr6_820E ; 6e
+	dw ptr6_820E ; 6f
+	dw ptr6_8CA2 ; 70
+	dw ptr6_9364 ; 71
+	dw ptr6_8CDB ; 72
+	dw ptr6_8CDB ; 73
+	dw ptr6_9BDB ; 74
+	dw ptr6_8CDB ; 75
+	dw ptr6_8039 ; 76
+	dw ptr6_8000 ; 77
+	dw ptr6_8000 ; 78
+	dw ptr6_8039 ; 79
+	dw ptr6_820E ; 7a
+	dw ptr6_820E ; 7b
+	dw ptr4_A0D8 ; 7c (different)
+	dw ptr4_A0D8 ; 7d (different)
+	dw ptr6_9670 ; 7e
+	dw ptr6_9670 ; 7f
 
 ;----------------------------------------
 ; OBJECTS 00 - 7F PRG BANKS ($A3B5)
@@ -818,11 +818,11 @@ tbl3_A435:
 	dw Obj_h8C
 	dw Obj_h8C
 
-	objID_ParachuteGoombaAlt = ($-tbl3_A435)/2 + $80 ;Verify this
+	objID_ParachuteGoombaAlt = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw Obj_h8E
 	dw Obj_h8E
 
-	objID_FuzzyAlt = ($-tbl3_A435)/2 + $80 ;Verify this
+	objID_FuzzyAlt = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw Obj_h90
 	dw Obj_h90
 
@@ -850,7 +850,7 @@ tbl3_A435:
 	dw Obj_h9C
 	dw Obj_h9C
 
-	objID_DiagonalPodobooAlt = ($-tbl3_A435)/2 + $80 ;Verify this
+	objID_DiagonalPodobooAlt = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw Obj_h9E
 	dw Obj_h9E
 
@@ -875,18 +875,18 @@ tbl3_A435:
 	dw Obj_hA8
 
 	objID_DryBonesBroken = ($-tbl3_A435)/2 + $80
-	dw Obj_hA8 ;AA
-	dw Obj_hA8 ;AB
+	dw Obj_hA8 ; AA
+	dw Obj_hA8 ; AB
 
 	objID_BonyBeetle = ($-tbl3_A435)/2 + $80
-	dw Obj_hAA ;AC
-	dw Obj_hAA ;AD
+	dw Obj_hAA ; AC
+	dw Obj_hAA ; AD
 
 	objID_BonyBeetleBroken = ($-tbl3_A435)/2 + $80
-	dw Obj_hAC ;AE
-	dw Obj_hAC ;AF
+	dw Obj_hAC ; AE
+	dw Obj_hAC ; AF
 
-	objID_Thing = ($-tbl3_A435)/2 + $80 ;Verify this
+	objID_Thing = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw Obj_hAE
 	dw Obj_hAE
 
@@ -906,12 +906,12 @@ tbl3_A435:
 	dw Obj_hB6
 	dw ptr4_A0D8
 
-	objID_Smoke = ($-tbl3_A435)/2 + $80 ;Verify this
+	objID_Smoke = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw Obj_hB8
 	dw ptr4_A0D8
 	dw Obj_hBA
 
-	objID_NA2 = ($-tbl3_A435)/2 + $80 ;Verify this
+	objID_NA2 = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw ptr4_A0D8
 	dw ptr4_A0D8
 
@@ -924,7 +924,7 @@ tbl3_A435:
 
 	objID_CharginChuckChase = ($-tbl3_A435)/2 + $80
 	dw Obj_hC0
-	dw Obj_hC0 ;Actually C2
+	dw Obj_hC0 ; Actually C2
 
 	objID_CharginChuckStunned = ($-tbl3_A435)/2 + $80
 	dw Obj_hC2
@@ -962,28 +962,28 @@ tbl3_A435:
 	dw Obj_hD2
 	dw Obj_hD2
 
-	objID_booBuddiesCenterAlt = ($-tbl3_A435)/2 + $80 ;Verify this
+	objID_booBuddiesCenterAlt = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw Obj_hD4
 	dw Obj_hD5
 
-	objID_booBuddiesCenter = ($-tbl3_A435)/2 + $80 ;Verify this
-	dw Obj_hD6 ;D8
+	objID_booBuddiesCenter = ($-tbl3_A435)/2 + $80 ; Verify this
+	dw Obj_hD6 ; D8
 	dw Obj_hD6
 
 	objID_Boo = ($-tbl3_A435)/2 + $80
-	dw Obj_hD8 ;DA
+	dw Obj_hD8 ; DA
 	dw Obj_hD8
 
-	objID_BooCrewBoo = ($-tbl3_A435)/2 + $80 ;Verify this
-	dw Obj_hDA ;DC
+	objID_BooCrewBoo = ($-tbl3_A435)/2 + $80 ; Verify this
+	dw Obj_hDA ; DC
 	dw Obj_hDA
 
-	objID_BooFlyAway = ($-tbl3_A435)/2 + $80 ;Verify this
-	dw Obj_hDC ;DE
+	objID_BooFlyAway = ($-tbl3_A435)/2 + $80 ; Verify this
+	dw Obj_hDC ; DE
 	dw Obj_hDC
 
 	objID_Propeller = ($-tbl3_A435)/2 + $80
-	dw Obj_hDE ;E0
+	dw Obj_hDE ; E0
 
 	objID_Bowser = ($-tbl3_A435)/2 + $80
 	dw Obj_hDF
@@ -993,7 +993,7 @@ tbl3_A435:
 	dw Obj_hE0
 
 	objID_DinoRhino = ($-tbl3_A435)/2 + $80
-	dw Obj_hE2 ;E4
+	dw Obj_hE2 ; E4
 	dw Obj_hE2
 
 	objID_DinoTorch = ($-tbl3_A435)/2 + $80
@@ -1007,37 +1007,37 @@ tbl3_A435:
 	dw Obj_hE7
 
 	objID_BonusBlock1 = ($-tbl3_A435)/2 + $80
-	dw Obj_hE8 ;1st bonus block (EA)
+	dw Obj_hE8 ; 1st bonus block (EA)
 	dw Obj_hE8
 
 	objID_BonusBlock2 = ($-tbl3_A435)/2 + $80
-	dw Obj_hE8 ;2nd bonus block (EC)
+	dw Obj_hE8 ; 2nd bonus block (EC)
 	dw Obj_hE8
 
 	objID_BonusBlock3 = ($-tbl3_A435)/2 + $80
-	dw Obj_hE8 ;3rd bonus block (EE)
+	dw Obj_hE8 ; 3rd bonus block (EE)
 	dw Obj_hED
 
-	objID_NA3 = ($-tbl3_A435)/2 + $80 ;Verify this
-	dw Obj_hED ;F0
+	objID_NA3 = ($-tbl3_A435)/2 + $80 ; Verify this
+	dw Obj_hED ; F0
 	dw Obj_hED
 
 	objID_BGPriorityAbove = ($-tbl3_A435)/2 + $80
-	dw Obj_hF0 ;F2
+	dw Obj_hF0 ; F2
 	dw Obj_hF0
 
 	objID_BGPriorityBelow = ($-tbl3_A435)/2 + $80
 	dw Obj_hED
 
 	objID_PipeExit = ($-tbl3_A435)/2 + $80
-	dw Obj_hED ;F5
+	dw Obj_hED ; F5
 
 	objID_SpikeDown = ($-tbl3_A435)/2 + $80
-	dw Obj_hF4 ;F6
+	dw Obj_hF4 ; F6
 	dw Obj_hF4
 
-	objID_SpikeUpAlt = ($-tbl3_A435)/2 + $80 ;Verify this
-	dw Obj_hF4 ;F8
+	objID_SpikeUpAlt = ($-tbl3_A435)/2 + $80 ; Verify this
+	dw Obj_hF4 ; F8
 	dw Obj_hF4
 
 	objID_VerticalParatroopa = ($-tbl3_A435)/2 + $80
@@ -1045,146 +1045,146 @@ tbl3_A435:
 	dw Obj_h58
 
 	objID_CountdownPlatform_1s = ($-tbl3_A435)/2 + $80
-	dw Obj_hFA ;FC
+	dw Obj_hFA ; FC
 	dw Obj_hFA
 
 	objID_CountdownPlatform_4s = ($-tbl3_A435)/2 + $80
-	dw Obj_hFA ;FE
+	dw Obj_hFA ; FE
 	dw Obj_hFA
 
 ;----------------------------------------
 ; Unused duplicated pointers for objects' 80-FF rendering code. Can be found in bank 52
-	dw ptr6_8BF1 ;80
-	dw ptr6_8BF1 ;81
-	dw ptr6_9093 ;82
-	dw ptr6_9093 ;83
-	dw ptr6_83B3 ;84
-	dw ptr6_83B3 ;85
-	dw ptr6_87FE ;86
-	dw ptr6_87FE ;87
-	dw ptr6_817B ;88
-	dw ptr6_817B ;89
-	dw ptr6_9519 ;8a
-	dw ptr6_9519 ;8b
-	dw ptr7_9632 ;8c
-	dw ptr7_9632 ;8d
-	dw ptr6_8544 ;8e
-	dw ptr6_8544 ;8f
-	dw ptr7_8544 ;90
-	dw ptr7_8544 ;91
-	dw ptr6_87FE ;92
-	dw ptr6_87FE ;93
-	dw ptr6_88E0 ;94
-	dw ptr6_88E0 ;95
-	dw ptr6_8897 ;96
-	dw ptr6_8897 ;97
-	dw ptr6_8517 ;98
-	dw ptr6_8517 ;99
-	dw ptr6_8A5E ;9a
-	dw ptr6_8A5E ;9b
-	dw ptr6_8D95 ;9c
-	dw ptr6_8D95 ;9d
-	dw ptr6_8F15 ;9e
-	dw ptr6_8F15 ;9f
-	dw ptr6_82C7 ;a0
-	dw ptr6_82C7 ;a1
-	dw ptr6_9980 ;a2
-	dw ptr6_9980 ;a3
-	dw ptr6_9980 ;a4
-	dw ptr6_9980 ;a5
-	dw ptr6_9B79 ;a6
-	dw ptr6_9B79 ;a7
-	dw ptr7_9A87 ;a8
-	dw ptr7_9A87 ;a9
-	dw ptr7_9A87 ;aa
-	dw ptr7_9A87 ;ab
-	dw ptr6_9279 ;ac
-	dw ptr6_9279 ;ad
-	dw ptr6_93B7 ;ae
-	dw ptr6_93B7 ;af
-	dw ptr6_8B71 ;b0
-	dw ptr6_8B71 ;b1
-	dw ptr6_8E28 ;b2
-	dw ptr6_8E28 ;b3
-	dw ptr6_90C4 ;b4
-	dw ptr6_90C4 ;b5
-	dw ptr6_990E ;b6
-	dw ptr6_990E ;b7
-	dw ptr6_8ECE ;b8
-	dw ptr4_A0D8 ;b9 (different)
-	dw ptr6_8F2E ;ba
-	dw ptr4_A0D8 ;bb (different)
-	dw ptr6_8F2E ;bc
-	dw ptr4_A0D8 ;bd (different)
-	dw ptr4_A0D8 ;be (different)
-	dw ptr6_8349 ;bf
-	dw ptr9_843B ;c0
-	dw ptr9_843B ;c1
-	dw ptr6_8640 ;c2
-	dw ptr6_8640 ;c3
-	dw ptr6_87C8 ;c4
-	dw ptr6_87C8 ;c5
-	dw ptr9_843B ;c6
-	dw ptr9_843B ;c7
-	dw ptr6_8640 ;c8
-	dw ptr6_8640 ;c9
-	dw ptr6_87C8 ;ca
-	dw ptr6_87C8 ;cb
-	dw ptr9_843B ;cc
-	dw ptr9_843B ;cd
-	dw ptr6_8640 ;ce
-	dw ptr6_8640 ;cf
-	dw ptr6_8A81 ;d0
-	dw ptr6_8A81 ;d1
-	dw ptr6_8D59 ;d2
-	dw ptr6_8D59 ;d3
-	dw ptr6_901A ;d4
-	dw ptr6_901A ;d5
-	dw ptr4_A0D8 ;d6 (different)
-	dw ptr4_A0D8 ;d7 (different)
-	dw ptr6_9286 ;d8
-	dw ptr6_9286 ;d9
-	dw ptr6_98E1 ;da
-	dw ptr6_98E1 ;db
-	dw ptr6_98B7 ;dc
-	dw ptr6_98B7 ;dd
-	dw bra4_98BE ;de
-	dw bra4_98BE ;df
-	dw ptr6_88D1 ;e0
-	dw ptr6_88F9 ;e1
-	dw ptr7_8000 ;e2
-	dw ptr7_8000 ;e3
-	dw ptr6_8475 ;e4
-	dw ptr6_8475 ;e5
-	dw ptr6_8475 ;e6
-	dw ptr6_8475 ;e7
-	dw ptr6_9BED ;e8
-	dw ptr6_9951 ;e9
-	dw ptr6_9951 ;ea
-	dw ptr6_9951 ;eb
-	dw ptr6_9951 ;ec
-	dw ptr6_9951 ;ed
-	dw ptr6_9951 ;ee
-	dw ptr4_A0D8 ;ef (different)
-	dw ptr4_A0D8 ;f0 (different)
-	dw ptr4_A0D8 ;f1 (different)
-	dw ptr4_A0D8 ;f2 (different)
-	dw ptr4_A0D8 ;f3 (different)
-	dw ptr4_A0D8 ;f4 (different)
-	dw ptr4_A0D8 ;f5 (different)
-	dw ptr7_8000 ;f6
-	dw ptr7_8000 ;f7
-	dw ptr7_8000 ;f8
-	dw ptr7_8000 ;f9
-	dw ptr6_820E ;fa
-	dw ptr6_820E ;fb
-	dw ptr6_96CB ;fc
-	dw ptr6_96CB ;fd
-	dw ptr6_96CB ;fe
-	dw ptr6_96CB ;ff
+	dw ptr6_8BF1 ; 80
+	dw ptr6_8BF1 ; 81
+	dw ptr6_9093 ; 82
+	dw ptr6_9093 ; 83
+	dw ptr6_83B3 ; 84
+	dw ptr6_83B3 ; 85
+	dw ptr6_87FE ; 86
+	dw ptr6_87FE ; 87
+	dw ptr6_817B ; 88
+	dw ptr6_817B ; 89
+	dw ptr6_9519 ; 8a
+	dw ptr6_9519 ; 8b
+	dw ptr7_9632 ; 8c
+	dw ptr7_9632 ; 8d
+	dw ptr6_8544 ; 8e
+	dw ptr6_8544 ; 8f
+	dw ptr7_8544 ; 90
+	dw ptr7_8544 ; 91
+	dw ptr6_87FE ; 92
+	dw ptr6_87FE ; 93
+	dw ptr6_88E0 ; 94
+	dw ptr6_88E0 ; 95
+	dw ptr6_8897 ; 96
+	dw ptr6_8897 ; 97
+	dw ptr6_8517 ; 98
+	dw ptr6_8517 ; 99
+	dw ptr6_8A5E ; 9a
+	dw ptr6_8A5E ; 9b
+	dw ptr6_8D95 ; 9c
+	dw ptr6_8D95 ; 9d
+	dw ptr6_8F15 ; 9e
+	dw ptr6_8F15 ; 9f
+	dw ptr6_82C7 ; a0
+	dw ptr6_82C7 ; a1
+	dw ptr6_9980 ; a2
+	dw ptr6_9980 ; a3
+	dw ptr6_9980 ; a4
+	dw ptr6_9980 ; a5
+	dw ptr6_9B79 ; a6
+	dw ptr6_9B79 ; a7
+	dw ptr7_9A87 ; a8
+	dw ptr7_9A87 ; a9
+	dw ptr7_9A87 ; aa
+	dw ptr7_9A87 ; ab
+	dw ptr6_9279 ; ac
+	dw ptr6_9279 ; ad
+	dw ptr6_93B7 ; ae
+	dw ptr6_93B7 ; af
+	dw ptr6_8B71 ; b0
+	dw ptr6_8B71 ; b1
+	dw ptr6_8E28 ; b2
+	dw ptr6_8E28 ; b3
+	dw ptr6_90C4 ; b4
+	dw ptr6_90C4 ; b5
+	dw ptr6_990E ; b6
+	dw ptr6_990E ; b7
+	dw ptr6_8ECE ; b8
+	dw ptr4_A0D8 ; b9 (different)
+	dw ptr6_8F2E ; ba
+	dw ptr4_A0D8 ; bb (different)
+	dw ptr6_8F2E ; bc
+	dw ptr4_A0D8 ; bd (different)
+	dw ptr4_A0D8 ; be (different)
+	dw ptr6_8349 ; bf
+	dw ptr9_843B ; c0
+	dw ptr9_843B ; c1
+	dw ptr6_8640 ; c2
+	dw ptr6_8640 ; c3
+	dw ptr6_87C8 ; c4
+	dw ptr6_87C8 ; c5
+	dw ptr9_843B ; c6
+	dw ptr9_843B ; c7
+	dw ptr6_8640 ; c8
+	dw ptr6_8640 ; c9
+	dw ptr6_87C8 ; ca
+	dw ptr6_87C8 ; cb
+	dw ptr9_843B ; cc
+	dw ptr9_843B ; cd
+	dw ptr6_8640 ; ce
+	dw ptr6_8640 ; cf
+	dw ptr6_8A81 ; d0
+	dw ptr6_8A81 ; d1
+	dw ptr6_8D59 ; d2
+	dw ptr6_8D59 ; d3
+	dw ptr6_901A ; d4
+	dw ptr6_901A ; d5
+	dw ptr4_A0D8 ; d6 (different)
+	dw ptr4_A0D8 ; d7 (different)
+	dw ptr6_9286 ; d8
+	dw ptr6_9286 ; d9
+	dw ptr6_98E1 ; da
+	dw ptr6_98E1 ; db
+	dw ptr6_98B7 ; dc
+	dw ptr6_98B7 ; dd
+	dw bra4_98BE ; de
+	dw bra4_98BE ; df
+	dw ptr6_88D1 ; e0
+	dw ptr6_88F9 ; e1
+	dw ptr7_8000 ; e2
+	dw ptr7_8000 ; e3
+	dw ptr6_8475 ; e4
+	dw ptr6_8475 ; e5
+	dw ptr6_8475 ; e6
+	dw ptr6_8475 ; e7
+	dw ptr6_9BED ; e8
+	dw ptr6_9951 ; e9
+	dw ptr6_9951 ; ea
+	dw ptr6_9951 ; eb
+	dw ptr6_9951 ; ec
+	dw ptr6_9951 ; ed
+	dw ptr6_9951 ; ee
+	dw ptr4_A0D8 ; ef (different)
+	dw ptr4_A0D8 ; f0 (different)
+	dw ptr4_A0D8 ; f1 (different)
+	dw ptr4_A0D8 ; f2 (different)
+	dw ptr4_A0D8 ; f3 (different)
+	dw ptr4_A0D8 ; f4 (different)
+	dw ptr4_A0D8 ; f5 (different)
+	dw ptr7_8000 ; f6
+	dw ptr7_8000 ; f7
+	dw ptr7_8000 ; f8
+	dw ptr7_8000 ; f9
+	dw ptr6_820E ; fa
+	dw ptr6_820E ; fb
+	dw ptr6_96CB ; fc
+	dw ptr6_96CB ; fd
+	dw ptr6_96CB ; fe
+	dw ptr6_96CB ; ff
 
 ;------------------------------------
-;OBJECTS 80-FF PRG BANKS ($A635)
+; OBJECTS 80-FF PRG BANKS ($A635)
 tbl3_A635:
 	db $38
 	db $38
@@ -1316,15 +1316,15 @@ tbl3_A635:
 	db $31
 
 ;----------------------------------------
-;ROUTINE ($A6B5)
-;Removes the object of the X index from memory.
+; ROUTINE ($A6B5)
+; Removes the object of the X index from memory.
 ;----------------------------------------
 Obj_RemoveObject:
 	LDA #$00
 	STA objAction,X
 	STA objSlot,X
 	STA objState,X
-	STA objVar,X ;Wipe the object from memory
+	STA objVar,X ; Wipe the object from memory
 	LDA $058C,X
 	TAY
 	LDX tbl_51_FC80,Y
@@ -1334,25 +1334,25 @@ Obj_RemoveObject:
 	RTS
 
 ;----------------------------------------
-;SUBROUTINE ($A6D4)
-;Checks if an object is being hit by a cape and kills it accordingly.
+; SUBROUTINE ($A6D4)
+; Checks if an object is being hit by a cape and kills it accordingly.
 ;----------------------------------------
 Obj_CapeHitCheck:
 	LDA playerYoshiState
-	BNE @Stop ;Stop if the player is riding Yoshi
+	BNE @Stop ; Stop if the player is riding Yoshi
 		LDA playerPowerup
 		CMP #$03
-		BCS @Continue ;Only continue if the player has a cape
+		BCS @Continue ; Only continue if the player has a cape
 @Stop:
 	RTS
 
 @Continue:
 	LDA playerPrevAction
 	CMP #$05
-	BNE @Stop ;Branch if the player isn't spinning
+	BNE @Stop ; Branch if the player isn't spinning
 
 ; Get object hitbox size
-	LDX $A4 ;Get index of current object
+	LDX $A4 ; Get index of current object
 	LDY objSlot,X
 	LDA ObjectXHitBoxSizes,Y
 	STA $36
@@ -1361,98 +1361,98 @@ Obj_CapeHitCheck:
 
 ; Check if the player is within the object's hitbox horizontally
 	LDA objXDistHi,X
-	BPL @HorizHitboxCheckLeft ;Branch if the player is to the left of the object
+	BPL @HorizHitboxCheckLeft ; Branch if the player is to the left of the object
 	; If player is to the right of the object:
 		LDA #16
 		CLC
 		ADC $36
 		CLC
-		ADC objXDistLo,X ;X Hitbox + 16 + X Distance > 255
-		BCS @VertHitboxCheck ;Branch if the player is within 16 pixels of the object's hitbox (cape distance)
-		BCC SkipCapeKill ;Otherwise, set carry and stop
+		ADC objXDistLo,X ; X Hitbox + 16 + X Distance > 255
+		BCS @VertHitboxCheck ; Branch if the player is within 16 pixels of the object's hitbox (cape distance)
+		BCC SkipCapeKill ; Otherwise, set carry and stop
 
 	; If player is to the left of the object:
 	@HorizHitboxCheckLeft:
 		LDA objXDistLo,X
 		CMP #16
-		BCS SkipCapeKill ;Don't kill the object if the player is more than 16 pixels away from it
+		BCS SkipCapeKill ; Don't kill the object if the player is more than 16 pixels away from it
 
 ; Otherwise, if the player is within the hitbox horizontally, check if they're in the hitbox vertically
 @VertHitboxCheck:
 	LDA objYDistHi,X
-	BEQ @VertHitboxCheckAbove ;Branch if the player's origin is already above or at the object's origin
+	BEQ @VertHitboxCheckAbove ; Branch if the player's origin is already above or at the object's origin
 	CMP #$FF
-	BNE SkipCapeKill ;Don't kill the object if it's off-screen?
+	BNE SkipCapeKill ; Don't kill the object if it's off-screen?
 	; If the player is at the same level as the object:
 		LDA #24
 		CLC
 		ADC $38
 		CLC
-		ADC objYDistLo,X ;Y hitbox + 24 + Y Distance > 255
-		BCS @KillObject ;Kill the object if the player is within 24 vertical pixels of the object's hitbox (origin at its foot?)
-		BCC SkipCapeKill ;Otherwise, don't kill it and stop
+		ADC objYDistLo,X ; Y hitbox + 24 + Y Distance > 255
+		BCS @KillObject ; Kill the object if the player is within 24 vertical pixels of the object's hitbox (origin at its foot?)
+		BCC SkipCapeKill ; Otherwise, don't kill it and stop
 
 	; If the player's origin is above or at the object's:
 	@VertHitboxCheckAbove:
 		LDA objYDistLo,X
 		CMP #$00
-		BCS SkipCapeKill ;Don't kill the object if the player is above the object
+		BCS SkipCapeKill ; Don't kill the object if the player is above the object
 	; Otherwise, continue and kill the object
 	@KillObject:
 		CLC
-		BCC CheckIfCapeKill ;Clear the carry and continue
+		BCC CheckIfCapeKill ; Clear the carry and continue
 
 SkipCapeKill:
 	SEC
 	
 CheckIfCapeKill:
-	BCS @Stop ;Stop if the carry flag was set
+	BCS @Stop ; Stop if the carry flag was set
 		LDA objState,X
 		AND #%11100000
-		ORA #%00000100 ;Enable collision check
+		ORA #%00000100 ; Enable collision check
 		STA objState,X
 		LDA #$00
-		STA objVar,X ;Reset object animation(?)
+		STA objVar,X ; Reset object animation(?)
 		LDA #$01
-		JSR RewardPoints ;Give 200 points
+		JSR RewardPoints ; Give 200 points
 		LDA #sfx_EnemyHit2
-		STA sndSfx ;Play hit sound
+		STA sndSfx ; Play hit sound
 		PLA
-		PLA ;Go back two calls and stop running code for this object
+		PLA ; Go back two calls and stop running code for this object
 @Stop:
 	RTS
 
 ;----------------------------------------
-;SUBROUTINE ($A74D)
-;Destroys an object if spin jumped on or jumped on with Yoshi.
+; SUBROUTINE ($A74D)
+; Destroys an object if spin jumped on or jumped on with Yoshi.
 ;----------------------------------------
 Obj_KillOnSpinJump:
 	LDA playerYoshiState
-	BNE @Continue ;Continue if player has Yoshi
+	BNE @Continue ; Continue if player has Yoshi
 	LDA playerPrevAction
 	CMP #$05
-	BNE @Stop ;If the player doesn't have Yoshi, make sure they're spin jumping
+	BNE @Stop ; If the player doesn't have Yoshi, make sure they're spin jumping
 
 @Continue:
 	LDA #$20
-	STA playerYSpd ;Set player's vertical speed
+	STA playerYSpd ; Set player's vertical speed
 	LDA playerMoveFlags
 	ORA #$04
-	STA playerMoveFlags ;Make player face up
+	STA playerMoveFlags ; Make player face up
 	LDA #$04
-	STA playerAction ;Make player jump
+	STA playerAction ; Make player jump
 	LDA #$0F
-	STA objSlot,X ;Make object pop
+	STA objSlot,X ; Make object pop
 	LDA #$00
-	STA objState,X ;Remove object
+	STA objState,X ; Remove object
 	PLA
-	PLA ;Go back two calls and stop running code for this object
+	PLA ; Go back two calls and stop running code for this object
 @Stop:
 	RTS
 
 jmp_54_A773:
 	LDA objXDistHi,X
-	BPL bra3_A785 ;Branch if the player is a screen ahead of the object
+	BPL bra3_A785 ; Branch if the player is a screen ahead of the object
 	LDA #$08
 	CLC
 	ADC #$10
@@ -1463,12 +1463,12 @@ jmp_54_A773:
 bra3_A785:
 	LDA objXDistLo,X
 	CMP #$08
-	BCS bra3_A7AC ;Branch if the player isn't within 8 horizontal pixels of the object's hitbox
+	BCS bra3_A7AC ; Branch if the player isn't within 8 horizontal pixels of the object's hitbox
 bra3_A78C:
 	LDA objYDistHi,X
-	BEQ bra3_A7A2 ;Branch if the player is to the left of the object
+	BEQ bra3_A7A2 ; Branch if the player is to the left of the object
 	CMP #$FF
-	BNE bra3_A7AC ;Branch if the player isn't to the right of the object
+	BNE bra3_A7AC ; Branch if the player isn't to the right of the object
 	LDA #$14
 	CLC
 	ADC #$10
@@ -1479,7 +1479,7 @@ bra3_A78C:
 bra3_A7A2:
 	LDA objYDistLo,X
 	CMP #$00
-	BCS bra3_A7AC ;Branch if the player is above the object's hitbox?
+	BCS bra3_A7AC ; Branch if the player is above the object's hitbox?
 bra3_A7A9:
 	CLC
 	BCC bra3_A7AD
@@ -1497,10 +1497,10 @@ bra3_A7BA_RTS:
 	RTS
 
 ;----------------------------------------
-;ROUTINE ($A7BB)
-;Checks if Yoshi's tongue is able to eat an object.
-;Takes the object's tongue behavior $25 as a parameter.
-;Values:
+; ROUTINE ($A7BB)
+; Checks if Yoshi's tongue is able to eat an object.
+; Takes the object's tongue behavior $25 as a parameter.
+; Values:
 ; > 00 - 06 = Copy to Yoshi State
 ; > 02 = P-Switch
 ; > 03 = Spring
@@ -1511,50 +1511,50 @@ bra3_A7BA_RTS:
 Obj_YoshiTongueCheck:
 	LDA $25
 	CMP #$07
-	BNE bra3_A7C4 ;Branch if the object is completely inedible
-	JMP YoshiEatStop ;Otherwise, jump
+	BNE bra3_A7C4 ; Branch if the object is completely inedible
+	JMP YoshiEatStop ; Otherwise, jump
 
 bra3_A7C4:
 	LDA yoshiTongueState
 	CMP #$01
-	BEQ @Continue ;Branch if there's nothing on Yoshi's tongue already
+	BEQ @Continue ; Branch if there's nothing on Yoshi's tongue already
 
 @Stop:
-	JMP YoshiEatStop ;If there is, jump
+	JMP YoshiEatStop ; If there is, jump
 
 @Continue:
-	LDX $A4 ;Get index for current object
+	LDX $A4 ; Get index for current object
 	LDA playerState
 	CMP #$09
-	BCC @Stop ;Stop if Yoshi's tongue isn't out
+	BCC @Stop ; Stop if Yoshi's tongue isn't out
 	LDA playerMoveFlags
 	AND #$40
-	BNE @IsFacingObjectLeft ;Branch if the player is facing left
+	BNE @IsFacingObjectLeft ; Branch if the player is facing left
 	; If the player is facing right:
 		LDA objXDistHi,X
-		BMI @Stop ;Stop if the player is facing away from the object (facing right and to the left of it)
-		BPL bra3_A7E8 ;Branch if the player is to the left of the object
+		BMI @Stop ; Stop if the player is facing away from the object (facing right and to the left of it)
+		BPL bra3_A7E8 ; Branch if the player is to the left of the object
 
 	; If the player is facing left:
 	@IsFacingObjectLeft:
 		LDA objXDistHi,X
-		BPL @Stop ;Stop if the player is facing away from the object (facing left and to the right of it)
+		BPL @Stop ; Stop if the player is facing away from the object (facing left and to the right of it)
 
 bra3_A7E8:
 	LDX playerAnimFrame
 	CPX #$06
-	BCC YoshiEatStop ;Make sure Yoshi's mouth is open
+	BCC YoshiEatStop ; Make sure Yoshi's mouth is open
 	LDA tbl3_A85F,X
-	STA $32 ;Get the width of Yoshi's tongue hitbox
-	LDY $A4 ;Get index for current object
+	STA $32 ; Get the width of Yoshi's tongue hitbox
+	LDY $A4 ; Get index for current object
 	LDX objSlot,Y
 	LDA ObjectXHitBoxSizes,X
-	STA $36 ;Get object hitbox width
+	STA $36 ; Get object hitbox width
 	LDA ObjectYHitBoxSizes,X
-	STA $38 ;Get object hitbox height
+	STA $38 ; Get object hitbox height
 	LDX $A4
 	LDA objXDistHi,X
-	BPL bra3_A816 ;Branch if the player is to the left of the object
+	BPL bra3_A816 ; Branch if the player is to the left of the object
 	; If the player is to the right of the object:
 		LDA $32
 		CLC
@@ -1608,9 +1608,9 @@ bra3_A83E:
 YoshiEatStop:
 	LDX $A4
 	LDA objState,X
-	AND #$E0 ;Mask out the lower 5 bits
+	AND #$E0 ; Mask out the lower 5 bits
 	ORA #$03
-	STA objState,X ;Run main collision code
+	STA objState,X ; Run main collision code
 	RTS
 tbl3_A85F:
 	db $00
@@ -1642,13 +1642,13 @@ tbl3_A86D:
 	db $0B
 	db $0C
 	db $0D
-;A87B
+; A87B
 ObjectXHitBoxSizes:
 	db $00
 	db $00
 	db $10
 	db $10
-	db $10 ;Koopa shell
+	db $10 ; Koopa shell
 	db $10
 	db $08
 	db $08
@@ -1660,7 +1660,7 @@ ObjectXHitBoxSizes:
 	db $10
 	db $10
 	db $10
-	db $10 ;Koopa
+	db $10 ; Koopa
 	db $10
 	db $10
 	db $10
@@ -1900,13 +1900,13 @@ ObjectXHitBoxSizes:
 	db $20
 	db $20
 	db $20
-;A97B
+; A97B
 ObjectYHitBoxSizes:
 	db $00
 	db $00
 	db $10
 	db $10
-	db $10 ;Koopa shell
+	db $10 ; Koopa shell
 	db $10
 	db $08
 	db $08
@@ -1918,7 +1918,7 @@ ObjectYHitBoxSizes:
 	db $10
 	db $10
 	db $10
-	db $20 ;Koopa
+	db $20 ; Koopa
 	db $20
 	db $10
 	db $10
@@ -2160,53 +2160,53 @@ ObjectYHitBoxSizes:
 	db $20
 
 ;----------------------------------------
-;FUNCTION ($AA7B)
-;Offsets the player's position for the current object? Doesn't seem to do anything when disabled.
+; FUNCTION ($AA7B)
+; Offsets the player's position for the current object? Doesn't seem to do anything when disabled.
 ;----------------------------------------
 ptr_AA7B:
-	LDY $A4 ;Get index for the current object
-	LDX playerAnimFrame ;Get hitbox index for player
+	LDY $A4 ; Get index for the current object
+	LDX playerAnimFrame ; Get hitbox index for player
 	CPX #$0C
-	BCC @Continue ;Only continue if the player isn't underwater or doing a special animation
+	BCC @Continue ; Only continue if the player isn't underwater or doing a special animation
 	; Otherwise, move to the next object function
 		LDA objState,Y
 		CLC
 		ADC #$01
-		STA objState,Y ;Move to next object function
+		STA objState,Y ; Move to next object function
 		RTS
 
 @Continue:
 	LDA tbl3_AB0D,X
 	STA $37
 	LDA tbl3_AB1B,X
-	STA $34 ;Get player hitbox
-	LDX objSlot,Y ;Get the index for the current object
+	STA $34 ; Get player hitbox
+	LDX objSlot,Y ; Get the index for the current object
 
 	; Get player's horizontal offset
 	LDA ObjectXHitBoxSizes,X
 	LSR
 	CLC
 	ADC $37
-	STA $32 ;(Player hitbox width / 2) + animation hitbox size
+	STA $32 ; (Player hitbox width / 2) + animation hitbox size
 
 	; Get player's vertical offset
 	LDA ObjectYHitBoxSizes,X
 	CLC
 	ADC #4
-	EOR #%11111111 ;Make value negative
+	EOR #%11111111 ; Make value negative
 	STA $36 ;-1 * (Hitbox height + 4) + 1
 
 	LDA playerMoveFlags
 	AND #%01000000
-	BNE @AddHorizOffsetLeft ;Branch if the player is facing left
+	BNE @AddHorizOffsetLeft ; Branch if the player is facing left
 	; If the player is facing right:
 		LDA playerXLoDup
 		CLC
 		ADC $34
 		STA objXLo,Y
-		LDA playerXHiDup ;Offset player's position to the right
+		LDA playerXHiDup ; Offset player's position to the right
 		ADC #$00
-		JMP @AddVertOffset ;Add high byte if needed
+		JMP @AddVertOffset ; Add high byte if needed
 
 	; If the player is facing left:
 	@AddHorizOffsetLeft:
@@ -2215,26 +2215,26 @@ ptr_AA7B:
 		SBC $32
 		STA objXLo,Y
 		LDA playerXHiDup
-		SBC #$00 ;Offset player's position to the left
+		SBC #$00 ; Offset player's position to the left
 
 @AddVertOffset:
 	STA objXHi,Y
 	LDA playerYHiDup
-	STA objYHi,Y ;Carry over to high byte of player's position
+	STA objYHi,Y ; Carry over to high byte of player's position
 	LDA $36
-	BMI @AddNegVertOffset ;Offset differently if the vertical offset is negative
+	BMI @AddNegVertOffset ; Offset differently if the vertical offset is negative
 	; Add positive offset to player's vertical position
 		CLC
 		ADC playerYLoDup
-		STA objYLo,Y ;Add vertical offset to player's position
-		BCS @AddHorizHighByte ;Add to high byte if needed
+		STA objYLo,Y ; Add vertical offset to player's position
+		BCS @AddHorizHighByte ; Add to high byte if needed
 			CMP #$F0
-			BCC @Stop ;Stop if adding 16 doesn't cross the vertical screen boundary
+			BCC @Stop ; Stop if adding 16 doesn't cross the vertical screen boundary
 
 		@AddHorizHighByte:
 			CLC
 			ADC #16
-			STA objYLo,Y ;Offset Y position by 16
+			STA objYLo,Y ; Offset Y position by 16
 			LDA objYHi,Y
 			CLC
 			ADC #$01
@@ -2245,13 +2245,13 @@ ptr_AA7B:
 		CLC
 		ADC playerYLoDup
 		STA objYLo,Y
-		BCS @Stop ;Stop if subtraction doesn't need to borrow from the high byte
+		BCS @Stop ; Stop if subtraction doesn't need to borrow from the high byte
 			SEC
 			SBC #16
 			STA objYLo,Y
 			LDA objYHi,Y
 			SEC
-			SBC #$01 ;Borrow from high byte if needed
+			SBC #$01 ; Borrow from high byte if needed
 
 @StoreVerticalHighByte:
 	STA objYHi,Y
@@ -2259,149 +2259,149 @@ ptr_AA7B:
 	RTS
 
 tbl3_AB0D:
-	db $00 ;Idle
-	db $00 ;Walking
-	db $00 ;Running
-	db $00 ;Unused
-	db $00 ;Jumping
-	db $00 ;Spinning
-	db $00 ;Turning (Unused)
-	db $18 ;Ducking
-	db $28 ;Looking up
-	db $30 ;Running jump
-	db $28 ;Falling
-	db $18 ;Sinking
-	db $00 ;Swimming up
-	db $00 ;Climbing idle
+	db $00 ; Idle
+	db $00 ; Walking
+	db $00 ; Running
+	db $00 ; Unused
+	db $00 ; Jumping
+	db $00 ; Spinning
+	db $00 ; Turning (Unused)
+	db $18 ; Ducking
+	db $28 ; Looking up
+	db $30 ; Running jump
+	db $28 ; Falling
+	db $18 ; Sinking
+	db $00 ; Swimming up
+	db $00 ; Climbing idle
 tbl3_AB1B:
-	db $00 ;Idle
-	db $01 ;Walking
-	db $02 ;Running
-	db $03 ;Unused
-	db $04 ;Jumping
-	db $05 ;Spinning
-	db $10 ;Turning (Unused)
-	db $10 ;Ducking
-	db $20 ;Looking up
-	db $28 ;Running jump
-	db $20 ;Falling
-	db $10 ;Sinking
-	db $10 ;Swimming up
-	db $10 ;Climbing idle
+	db $00 ; Idle
+	db $01 ; Walking
+	db $02 ; Running
+	db $03 ; Unused
+	db $04 ; Jumping
+	db $05 ; Spinning
+	db $10 ; Turning (Unused)
+	db $10 ; Ducking
+	db $20 ; Looking up
+	db $28 ; Running jump
+	db $20 ; Falling
+	db $10 ; Sinking
+	db $10 ; Swimming up
+	db $10 ; Climbing idle
 
 ;----------------------------------------
-;FUNCTION ($AB29)
-;Handles Yoshi eating powerups
+; FUNCTION ($AB29)
+; Handles Yoshi eating powerups
 ;----------------------------------------
 Obj_PowerupEatCheck:
 	LDA $25
 	CMP #$06
-	BNE @Continue ;Skip ahead if object can't be swallowed
-	;If the object can be swallowed:
+	BNE @Continue ; Skip ahead if object can't be swallowed
+	; If the object can be swallowed:
 		LDA #sfx_YoshiSwallow
-		STA sndSfx ;Play swallow sound
+		STA sndSfx ; Play swallow sound
 
 @Continue:
-	JSR Obj_GetEdiblePowerup ;Check if Yoshi ate a generic powerup (mushroom, fire flower, or feather)
+	JSR Obj_GetEdiblePowerup ; Check if Yoshi ate a generic powerup (mushroom, fire flower, or feather)
 	CPX #objID_1UP
-	BNE @CheckIfStar ;Check if Yoshi ate a star if he didn't eat a 1UP
+	BNE @CheckIfStar ; Check if Yoshi ate a star if he didn't eat a 1UP
 	; If Yoshi ate a 1UP:
 		LDY curPlayer
 		LDA playerLives,Y
 		CLC
 		ADC #1
-		STA playerLives,Y ;Add 1 to the player's life counter if Yoshi ate a 1UP
+		STA playerLives,Y ; Add 1 to the player's life counter if Yoshi ate a 1UP
 		LDA #sfx_1UP
-		STA sndSfx ;Play 1UP sound
-		BNE @RemoveObject ;Continue and remove object
+		STA sndSfx ; Play 1UP sound
+		BNE @RemoveObject ; Continue and remove object
 	; If Yoshi ate a star:
 	@CheckIfStar:
 		CPX #objID_Star
-		BNE @RemoveObject ;Continue and remove object if Yoshi didn't eat a star
+		BNE @RemoveObject ; Continue and remove object if Yoshi didn't eat a star
 			LDA #$01
-			STA invincibilityTimer ;Give the player invincibility
+			STA invincibilityTimer ; Give the player invincibility
 
 @RemoveObject:
-	LDX $A4 ;Get object's index
+	LDX $A4 ; Get object's index
 	LDA #$00
-	STA objSlot,X ;Remove object
+	STA objSlot,X ; Remove object
 	RTS
 
 ptr_AB5D:
-	LDX $A4 ;Get index for object
+	LDX $A4 ; Get index for object
 	LDA $058C,X
 	STA $0632
 	LDA #$00
-	STA objSlot,X ;Remove object
+	STA objSlot,X ; Remove object
 	RTS
 
 ;----------------------------------------
-;SUBROUTINE
-;Updates player and object values when an object is picked up.
+; SUBROUTINE
+; Updates player and object values when an object is picked up.
 ;----------------------------------------
 SetObjectCarryState:
 	LDA playerYoshiState
-	BNE SetObjectCarryStateDone ;Make sure the player isn't riding Yoshi
+	BNE SetObjectCarryStateDone ; Make sure the player isn't riding Yoshi
 	LDA playerHoldFlag
-	BNE SetObjectCarryStateDone ;Stop if the player is already carrying something
+	BNE SetObjectCarryStateDone ; Stop if the player is already carrying something
 	LDA playerAction+1
 	CMP #$04
-	BCS SetObjectCarryStateDone ;Only continue if player is either walking, running, or doing nothing
+	BCS SetObjectCarryStateDone ; Only continue if player is either walking, running, or doing nothing
 	LDA btnHeld
 	AND #btnB
-	BEQ SetObjectCarryStateDone ;Make sure the B button is held
+	BEQ SetObjectCarryStateDone ; Make sure the B button is held
 	STA playerHoldFlag
-	LDY $A4 ;Get index for current object
+	LDY $A4 ; Get index for current object
 	LDA objState,Y
 	ORA #$80
-	STA objState,Y ;Set object to "held"
+	STA objState,Y ; Set object to "held"
 	PLA
-	PLA ;Add 2 to stack pointer? The accumulator is overwritten after every call to this routine, so this is seemingly useless.
+	PLA ; Add 2 to stack pointer? The accumulator is overwritten after every call to this routine, so this is seemingly useless.
 SetObjectCarryStateDone:
 	RTS
 	
 ;----------------------------------------
-;SUBROUTINE ($AB92)
-;Positions carried objects.
+; SUBROUTINE ($AB92)
+; Positions carried objects.
 ;----------------------------------------
 PositionCarriedObject:
 	LDY $A4
 	LDA objState,Y
 	AND #$80
-	BNE bra3_AB9C ;Branch if the object is being carried
+	BNE bra3_AB9C ; Branch if the object is being carried
 	; Otherwise, stop
 		RTS
 bra3_AB9C:
 	LDA btnHeld
 	AND #btnB
-	STA playerHoldFlag ;Set the player's carrying flag if the B button is held
-	BEQ bra3_AC08 ;Branch if the B button isn't being held
+	STA playerHoldFlag ; Set the player's carrying flag if the B button is held
+	BEQ bra3_AC08 ; Branch if the B button isn't being held
 	LDA playerMoveFlags
 	AND #$40
-	BNE bra3_ABBB ;Branch if the player is facing left
+	BNE bra3_ABBB ; Branch if the player is facing left
 	; Otherwise, offset the carried sprite to the right
 		LDA playerXLoDup
 		CLC
 		ADC #$06
-		STA objXLo,Y ;Offset the object 6 pixels right of the player
+		STA objXLo,Y ; Offset the object 6 pixels right of the player
 		LDA playerXHiDup
-		ADC #$00 ;Update the X screen if needed (high byte)
+		ADC #$00 ; Update the X screen if needed (high byte)
 		JMP loc3_ABC7
 
 bra3_ABBB:
 	LDA playerXLoDup
 	SEC
 	SBC #$16
-	STA objXLo,Y ;Offset the carried object's X position by 22 ($16) pixels
+	STA objXLo,Y ; Offset the carried object's X position by 22 ($16) pixels
 	LDA playerXHiDup
 	SBC #$00
 
 loc3_ABC7:
-	STA objXHi,Y ;Update the X screen when needed (high byte)
+	STA objXHi,Y ; Update the X screen when needed (high byte)
 	LDA playerYHiDup
 	STA objYHi,Y
-	LDA #$EC ;Offset object -20 pixels vertically, or 20 pixels up from the player's sprite
-	BMI bra3_ABEE ;Always branch
+	LDA #$EC ; Offset object -20 pixels vertically, or 20 pixels up from the player's sprite
+	BMI bra3_ABEE ; Always branch
 ; This code is skipped due to the branch above
 	CLC
 	ADC playerYLoDup
@@ -2422,24 +2422,24 @@ bra3_ABDF:
 bra3_ABEE:
 	CLC
 	ADC playerYLoDup
-	STA objYLo,Y ;Offset object 20 pixels above the origin of the player's sprite
-	BCS PositionCarriedObjectDone ;Stop if adding overflows and subtracts 20, which occurs for values 20 ($14) and higher
+	STA objYLo,Y ; Offset object 20 pixels above the origin of the player's sprite
+	BCS PositionCarriedObjectDone ; Stop if adding overflows and subtracts 20, which occurs for values 20 ($14) and higher
 	; If it doesn't overflow and subtract properly, subtract 16 ($10) and decrement the upper byte
 		SEC
 		SBC #$10
-		STA objYLo,Y ;Subtract 16
+		STA objYLo,Y ; Subtract 16
 		LDA objYHi,Y
 		SEC
-		SBC #$01 ;Decrement upper byte
+		SBC #$01 ; Decrement upper byte
 ;--------------------
-;SUB-SUBROUTINE
-;Sets current object's Y screen.
+; SUB-SUBROUTINE
+; Sets current object's Y screen.
 ;--------------------
 jmp_54_AC02:
 	STA objYHi,Y
 PositionCarriedObjectDone:
 	PLA
-	PLA ;Add 2 to stack pointer? Seemingly useless.
+	PLA ; Add 2 to stack pointer? Seemingly useless.
 	RTS
 
 bra3_AC08:
@@ -2648,54 +2648,54 @@ ptr_AD79:
 	BNE bra3_AD95
 
 ;----------------------------------------
-;FUNCTION ($AD88)
-;Moves an object while they're falling off-screen
+; FUNCTION ($AD88)
+; Moves an object while they're falling off-screen
 ;----------------------------------------
 Obj_FlipKill:
 	LDY #2
 	LDX $A4
 	LDA objState,X
 	AND #%01000000
-	BNE bra3_AD95 ;Offset object position to the right if facing right
-		LDY #-2 ;Otherwise, if facing left, offset it to the left
+	BNE bra3_AD95 ; Offset object position to the right if facing right
+		LDY #-2 ; Otherwise, if facing left, offset it to the left
 
 bra3_AD95:
 	TYA
-	PHA ;Back offset up ins tack
+	PHA ; Back offset up ins tack
 	CLC
 	ADC objXLo,X
-	STA objXLo,X ;Offset object's horizontal position
+	STA objXLo,X ; Offset object's horizontal position
 	PLA
-	BMI bra3_ADA8 ;Branch if offset was negative
+	BMI bra3_ADA8 ; Branch if offset was negative
 	; If offset was positive:
 		LDA objXHi,X
-		ADC #$00 ;Add high byte if necessary
+		ADC #$00 ; Add high byte if necessary
 		BPL bra3_ADAD
 	; If offset was negative:
 	bra3_ADA8:
 		LDA objXHi,X
-		SBC #$00 ;Subtract high byte if necesssary
+		SBC #$00 ; Subtract high byte if necesssary
 
 bra3_ADAD:
-	STA objXHi,X ;Store high byte
+	STA objXHi,X ; Store high byte
 	LDA objYLo,X
 	CMP #$E0
-	BCC bra3_ADC3 ;Branch if object above the kill zone
+	BCC bra3_ADC3 ; Branch if object above the kill zone
 		LDA #$00
 		STA objSlot,X
 		STA objState,X
-		STA objVar,X ;Despawn object if it goes below the kill zone
+		STA objVar,X ; Despawn object if it goes below the kill zone
 		RTS
 
 bra3_ADC3:
 	LDA objVar,X
 	TAY
 	LDA tbl3_AE0F,Y
-	STA $32 ;Get offset from object's movement data index?
+	STA $32 ; Get offset from object's movement data index?
 	CMP #$FF
-	BNE bra3_ADD6 ;Continue if the end of the data isn't reached
+	BNE bra3_ADD6 ; Continue if the end of the data isn't reached
 		LDA #7
-		STA $32 ;Set offset to 7 if the end of the data is reached
+		STA $32 ; Set offset to 7 if the end of the data is reached
 		BNE bra3_ADDF
 
 ; Move through movement indices every 4th frame
@@ -2707,30 +2707,30 @@ bra3_ADD6:
 
 bra3_ADDF:
 	LDA $32
-	BMI bra3_ADFC ;Branch if the movement is negative (upwards)
+	BMI bra3_ADFC ; Branch if the movement is negative (upwards)
 		CLC
 		ADC objYLo,X
-		STA objYLo,X ;Add offset
-		BCS bra3_ADF0 ;Add 16 if it varries to the high byte
+		STA objYLo,X ; Add offset
+		BCS bra3_ADF0 ; Add 16 if it varries to the high byte
 		CMP #$F0
-		BCC loc3_AE0E_RTS ;Also add 16 if it's 16 pixels before the vertical screen boundary. Otherwise, stop
+		BCC loc3_AE0E_RTS ; Also add 16 if it's 16 pixels before the vertical screen boundary. Otherwise, stop
 
 bra3_ADF0:
 	CLC
 	ADC #16
 	STA objYLo,X
-	INC objYHi,X ;Offset position by 16 with carry to high byte
-	JMP loc3_AE0E_RTS ;Stop
+	INC objYHi,X ; Offset position by 16 with carry to high byte
+	JMP loc3_AE0E_RTS ; Stop
 
 bra3_ADFC:
 	CLC
 	ADC objYLo,X
-	STA objYLo,X ;Add offset
-	BCS loc3_AE0E_RTS ;Stop if borrow from high byte isn't needed
+	STA objYLo,X ; Add offset
+	BCS loc3_AE0E_RTS ; Stop if borrow from high byte isn't needed
 		SEC
 		SBC #16
 		STA objYLo,X
-		DEC objYHi,X ;Subtract 16 and borrow from high byte
+		DEC objYHi,X ; Subtract 16 and borrow from high byte
 loc3_AE0E_RTS:
 	RTS
 
@@ -2764,78 +2764,78 @@ bra3_AE36_RTS:
 	RTS
 
 ;----------------------------------------
-;SUBROUTINE ($AE37)
-;Checks if the object Yoshi ate was a powerup and gives it to the player
-;Returns:
-;X Reg: The ID of the object eaten. Special mushrooms will return the ID for normal mushrooms
-;Y Reg: The index of the current object.
+; SUBROUTINE ($AE37)
+; Checks if the object Yoshi ate was a powerup and gives it to the player
+; Returns:
+; X Reg: The ID of the object eaten. Special mushrooms will return the ID for normal mushrooms
+; Y Reg: The index of the current object.
 ;----------------------------------------
 Obj_GetEdiblePowerup:
 	LDA $25
 	CMP #$06
-	BNE bra3_AE97_RTS ;Stop if object can't be swallowed
+	BNE bra3_AE97_RTS ; Stop if object can't be swallowed
 
 ; Special call that doesn't check if an object can be swallowed
 jmp_54_AE3D:
-	LDY $A4 ;Get current object's index
+	LDY $A4 ; Get current object's index
 	LDA playerPowerup
 	CMP #$04
-	BNE @Continue ;Continue if player isn't moving with a cape
-		LDA #$03 ;Clamp player powerup state to 3 (not moving with cape)
+	BNE @Continue ; Continue if player isn't moving with a cape
+		LDA #$03 ; Clamp player powerup state to 3 (not moving with cape)
 
 @Continue:
-	STA $32 ;Copy player powerup status to scratch memory
-	LDX objSlot,Y ;Get index for current object
+	STA $32 ; Copy player powerup status to scratch memory
+	LDX objSlot,Y ; Get index for current object
 	CPX #objID_Koopa
-	BCC GetPowerupFromObject ;Branch if object's ID is between 1 and 15
+	BCC GetPowerupFromObject ; Branch if object's ID is between 1 and 15
 	; Otherwise, check if the object is a mushroom variant
 		CPX #objID_MushroomStanding
-		BEQ SetToMushroom ;Give powerup for standing mushroom
+		BEQ SetToMushroom ; Give powerup for standing mushroom
 		CPX #objID_MushroomPrincess
-		BEQ SetToMushroom ;Give powerup for princess-thrown mushroom
+		BEQ SetToMushroom ; Give powerup for princess-thrown mushroom
 		CPX #objID_MushroomHidden
-		BNE bra3_AE97_RTS ;Give power up if mushroom was hidden. Otherwise, don't give the player a powerup at all
+		BNE bra3_AE97_RTS ; Give power up if mushroom was hidden. Otherwise, don't give the player a powerup at all
 
 SetToMushroom:
-	LDX #objID_Mushroom ;Replace with ID for normal mushroom
+	LDX #objID_Mushroom ; Replace with ID for normal mushroom
 
 GetPowerupFromObject:
-	LDA ObjectPowerupTbl,X ;Get powerup for swallowing current object
-	BEQ bra3_AE97_RTS ;Don't change powerup if swallowing the object does nothing
+	LDA ObjectPowerupTbl,X ; Get powerup for swallowing current object
+	BEQ bra3_AE97_RTS ; Don't change powerup if swallowing the object does nothing
 	CMP #$01
-	BNE @GivePowerupContinue ;Branch if the object 
+	BNE @GivePowerupContinue ; Branch if the object 
 	; If the object gives a mushroom when swallowed:
 		LDY playerPowerup
-		BEQ @GivePowerupContinue ;Don't check the item box if the player is small
+		BEQ @GivePowerupContinue ; Don't check the item box if the player is small
 			LDY playerItemBox
-			BEQ @StoreItem ;Store a mushroom if the item box is empty
-			BNE @SetPowerupEffect ;Otherwise, don't overwrite the item box
+			BEQ @StoreItem ; Store a mushroom if the item box is empty
+			BNE @SetPowerupEffect ; Otherwise, don't overwrite the item box
 	; If it gives a fire flower or feather when swallowed:
 	@GivePowerupContinue:
-		STA playerPowerup ;Give player powerup
+		STA playerPowerup ; Give player powerup
 		LDA $32
-		BEQ @SetPowerupEffect ;Only put the player's powerup in the item box if the player has one
+		BEQ @SetPowerupEffect ; Only put the player's powerup in the item box if the player has one
 
 @StoreItem:
-	STA playerItemBox ;Store powerup in item box
+	STA playerItemBox ; Store powerup in item box
 
 ; Plays the powerup sound and buffers the game
 @SetPowerupEffect:
 	LDA #sfx_Powerup
 	STA sndSfx
-	LDA #$01 ;Set powerup buffer time for fire flower
+	LDA #$01 ; Set powerup buffer time for fire flower
 	CPX #objID_Feather
 	BNE @NotFeather
 	; If Yoshi ate a feather:
 		LDA #sfx_Feather
-		STA sndSfx ;Play feather sound
-		LDA #$81 ;Set powerup buffer time for feather
+		STA sndSfx ; Play feather sound
+		LDA #$81 ; Set powerup buffer time for feather
 	; If Yoshi ate a mushroom or fire flower:
 	@NotFeather:
 		STA playerPowerupBuffer
 		LDA #$07
-		STA gameState ;Trigger appropriate event
-		LDY $A4 ;Return current object index in Y register
+		STA gameState ; Trigger appropriate event
+		LDY $A4 ; Return current object index in Y register
 
 bra3_AE97_RTS:
 	RTS
@@ -2852,9 +2852,9 @@ ObjectPowerupTbl:
 	db $00
 	db $00
 	db $00
-	db $01 ;Mushroom
-	db $02 ;Fire Flower
-	db $03 ;Feather
+	db $01 ; Mushroom
+	db $02 ; Fire Flower
+	db $03 ; Feather
 	db $00
 	db $00
 
@@ -3206,24 +3206,24 @@ tbl3_AFC3:
 	db $00
 
 ;----------------------------------------
-;SUBROUTINE ($B043)
-;$A8 = X Pos Hi
-;$A9 = X Pos Lo
-;$AA = Y Pos Hi
-;$AB = Y Pos Lo
-;$36 = Calculated X hitbox?
-;$38 = Calculated Y hitbox?
-;$32 - $33 = Movement data pointer
+; SUBROUTINE ($B043)
+; $A8 = X Pos Hi
+; $A9 = X Pos Lo
+; $AA = Y Pos Hi
+; $AB = Y Pos Lo
+; $36 = Calculated X hitbox?
+; $38 = Calculated Y hitbox?
+; $32 - $33 = Movement data pointer
 ;----------------------------------------
 sub3_B043:
-	STY $2B ;Backup Y register
-	LDX $A4 ;Get index for current object
+	STY $2B ; Backup Y register
+	LDX $A4 ; Get index for current object
 	LDY objSlot,X
 	LDA #$08
 	STA $36
 	LDA ObjectYHitBoxSizes,Y
 	CLC
-	ADC #$04 ;Object's hitbox height + 4
+	ADC #$04 ; Object's hitbox height + 4
 	JMP loc3_B08D
 
 sub3_B057:
@@ -3247,30 +3247,30 @@ bra3_B06C:
 	JMP loc3_B08D
 
 ;----------------------------------------
-;SUBROUTINE ($B077)
-;$A8 = X Pos Lo
-;$A9 = X Pos Hi
-;$AA = Y Pos Lo
-;$AB = Y Pos Hi
-;$36 = Calculated X hitbox?
-;$38 = Calculated Y hitbox?
-;$32 - $33 = Movement data pointer
+; SUBROUTINE ($B077)
+; $A8 = X Pos Lo
+; $A9 = X Pos Hi
+; $AA = Y Pos Lo
+; $AB = Y Pos Hi
+; $36 = Calculated X hitbox?
+; $38 = Calculated Y hitbox?
+; $32 - $33 = Movement data pointer
 ;----------------------------------------
 sub3_B077:
 	STY $2B
 	LDX $A4
-	LDY objSlot,X ;Load current object
-	LDA objState,X ;Get state of current object
+	LDY objSlot,X ; Load current object
+	LDA objState,X ; Get state of current object
 	AND #%01000000
-	BEQ @SetObjXPosOfs ;Offset position by 0 if the object isn't mirrored
-	LDA ObjectXHitBoxSizes,Y ;Offset the object by its hitbox width during the calculation if it's mirrored
+	BEQ @SetObjXPosOfs ; Offset position by 0 if the object isn't mirrored
+	LDA ObjectXHitBoxSizes,Y ; Offset the object by its hitbox width during the calculation if it's mirrored
 
 @SetObjXPosOfs:
 	STA $36
 	LDA ObjectYHitBoxSizes,Y
 
 loc3_B08D:
-	STA $38 ;Store vertical position offset
+	STA $38 ; Store vertical position offset
 
 ; Move object origin back to the left if mirrored
 	LDA objXLo,X
@@ -3290,20 +3290,20 @@ loc3_B08D:
 ; Move origin to bottom of object
 loc3_B0A8:
 	LDA $38
-	BMI bra3_B0C1 ;Perform subtraction instead of the offset is a negative value
+	BMI bra3_B0C1 ; Perform subtraction instead of the offset is a negative value
 	CLC
 	ADC $AA
 	STA $AA
-	BCS bra3_B0B7 ;Add 16 and carry if carry is needed
+	BCS bra3_B0B7 ; Add 16 and carry if carry is needed
 	CMP #256-16
-	BCC loc3_B0CF ;Branch if adding 16 wouldn't require a carry
+	BCC loc3_B0CF ; Branch if adding 16 wouldn't require a carry
 
 ; Add 16 to Y boundary and carry
 bra3_B0B7:
 	CLC
 	ADC #16
 	STA $AA
-	INC $AB ;Add 16 to vertical position and carry
+	INC $AB ; Add 16 to vertical position and carry
 	JMP loc3_B0CF
 
 bra3_B0C1:
@@ -3319,7 +3319,7 @@ bra3_B0C1:
 loc3_B0CF:
 	LDA $AA
 	CMP #256-40
-	BCC bra3_B0D8 ;Branch if object doesn't cross the vertical screen boundary? (assuming it's at least 8 units tall?)
+	BCC bra3_B0D8 ; Branch if object doesn't cross the vertical screen boundary? (assuming it's at least 8 units tall?)
 	LDA #$00
 	RTS
 
@@ -3327,44 +3327,44 @@ bra3_B0D8:
 	LDY $AB
 	LDA levelVerticalScreenOffs,Y
 	CLC
-	ADC $A9 ;Get level screen index of object's origin
+	ADC $A9 ; Get level screen index of object's origin
 	TAY
 
 	LDA prgDataBank2
 	STA M90_PRG0
 	LDA ($8C),Y
-	TAY ;Get the screen number of the object's origin
-	AND #31 ;Only 32 possible screens per level
+	TAY ; Get the screen number of the object's origin
+	AND #31 ; Only 32 possible screens per level
 	ORA #%10000000
 	STA $35
 	LDA #$00
 	STA $34
 	LDY $A8
 	LDA $AA
-	AND #%11110000 ;Get tile row of object origin
-	ORA tbl_51_FE00,Y ;Get tile X position
+	AND #%11110000 ; Get tile row of object origin
+	ORA tbl_51_FE00,Y ; Get tile X position
 	TAY
 
 ; Get the tile the object's origin is on
 	LDA prgDataBank1
 	STA M90_PRG0
-	LDA ($34),Y ;Get tile
+	LDA ($34),Y ; Get tile
 	TAY
 	LDA prgDataBank2
 	STA M90_PRG0
-	LDA ($DA),Y ;Get tile behavior
+	LDA ($DA),Y ; Get tile behavior
 	TAY
-	LDA tbl_51_FF00,Y ;Return upper nybble of behavior
+	LDA tbl_51_FF00,Y ; Return upper nybble of behavior
 	PHA
 	LDA curObjPrgBank
-	STA M90_PRG0 ;Switch the object's PRG bank back in
+	STA M90_PRG0 ; Switch the object's PRG bank back in
 	LDY $2B
 	PLA
 	RTS
 
 ;----------------------------------------
-;SUBROUTINE ($B11D)
-;Loads an object's movement vectors and stops at the last vector.
+; SUBROUTINE ($B11D)
+; Loads an object's movement vectors and stops at the last vector.
 ; Parameters:
 ; > A: Object ID
 ;----------------------------------------
@@ -3374,40 +3374,40 @@ jmp_54_B11D:
 	LDA tbl_51_E000,Y
 	STA $32
 	LDA tbl_51_E000+1,Y
-	STA $33 ;Get pointer for movement data
+	STA $33 ; Get pointer for movement data
 	JSR GetSpeedData
 	LDA curObjPrgBank
-	STA M90_PRG0 ;Swap object back into first 8K PRG bank
+	STA M90_PRG0 ; Swap object back into first 8K PRG bank
 	RTS
 
 ;----------------------------------------
-;SUBROUTINE ($B132)
-;Loads movement data from a table and updates the object's variable accordingly.
+; SUBROUTINE ($B132)
+; Loads movement data from a table and updates the object's variable accordingly.
 ; Parameters:
 ; > $0032: Movement table pointer
 ; > Object Variable: Used to determine which movement vectors to load from the table
 ;----------------------------------------
 GetSpeedData:
-	LDX $A4 ;Get index of current object
+	LDX $A4 ; Get index of current object
 	LDA objVar,X
-	AND #%01111111 ;Clear upper bit of object variable
+	AND #%01111111 ; Clear upper bit of object variable
 	ASL
-	TAY ;Get movement data index
+	TAY ; Get movement data index
 	LDA objState,X
 	AND #$40
-	BEQ LoadObjSpeedRight ;Branch if object is facing right
+	BEQ LoadObjSpeedRight ; Branch if object is facing right
 	; If the object is facing left, invert its X movement value
 		LDA ($32),Y
 		EOR #$FF
 		CLC
-		ADC #$01 ;(x XOR 255) + 1 == -x (Two's complement of X movement)
-		JMP StoreObjMovementData ;Continue
+		ADC #$01 ; (x XOR 255) + 1 == -x (Two's complement of X movement)
+		JMP StoreObjMovementData ; Continue
 	; If object is facing right, load X movement value as normal
 	LoadObjSpeedRight:
 		LDA ($32),Y
 
 StoreObjMovementData:
-	STA $06E2 ;Store X movement
+	STA $06E2 ; Store X movement
 
 ; Load Y movement from next byte in table
 	INY
@@ -3416,49 +3416,49 @@ StoreObjMovementData:
 
 	LDA interruptMode
 	CMP #$04
-	BEQ ChangeObjDirection ;Branch if in the bowser fight, which has one screen
+	BEQ ChangeObjDirection ; Branch if in the bowser fight, which has one screen
 	; Otherwise, add X movement to the object's position
 		LDA $06E2
-		PHA ;Backup object X movement
+		PHA ; Backup object X movement
 		CLC
 		ADC objXLo,X
-		STA objXLo,X ;Add X movement to object's horizontal position
-		PLA ;Get X movement
-		BMI ObjNegXSpeedCalcHi ;Branch if X movement value is negative, subtracting upper byte of X position
+		STA objXLo,X ; Add X movement to object's horizontal position
+		PLA ; Get X movement
+		BMI ObjNegXSpeedCalcHi ; Branch if X movement value is negative, subtracting upper byte of X position
 		LDA objXHi,X
-		ADC #$00 ;Otherwise, if X movement value is positive, carry to upper byte of the X position if needed
-		BPL StoreObjXSpeedCalc ;Continue if the position doesn't overflow
+		ADC #$00 ; Otherwise, if X movement value is positive, carry to upper byte of the X position if needed
+		BPL StoreObjXSpeedCalc ; Continue if the position doesn't overflow
 		; Borrow from upper byte of object's horizontal position if needed
 		ObjNegXSpeedCalcHi:
 			LDA objXHi,X
 			SBC #$00
 
 StoreObjXSpeedCalc:
-	STA objXHi,X ;Store upper byte of object's horizontal position
+	STA objXHi,X ; Store upper byte of object's horizontal position
 
 ; Add positive vertical movement
 	LDA $06E3
-	BMI ObjNegYSpeedCalc ;Branch if object's Y movement is negative (moving upwards)
+	BMI ObjNegYSpeedCalc ; Branch if object's Y movement is negative (moving upwards)
 	CLC
 	ADC objYLo,X
-	STA objYLo,X ;Otherwise, if movement is positive, add to low byte
-	BCS ObjYSpeedCalcHi ;Branch if it carries over (crossing vertical screen boundary)
+	STA objYLo,X ; Otherwise, if movement is positive, add to low byte
+	BCS ObjYSpeedCalcHi ; Branch if it carries over (crossing vertical screen boundary)
 	CMP #$F0
-	BCC ChangeObjDirection ;If adding 10 wouldn't carry over, branch
+	BCC ChangeObjDirection ; If adding 10 wouldn't carry over, branch
 	; Carry to high byte and move 16 bytes down if addition carries over
 	ObjYSpeedCalcHi:
 		CLC
 		ADC #$10
 		STA objYLo,X
-		INC objYHi,X ;Carry over addition and add 16 ($10)
+		INC objYHi,X ; Carry over addition and add 16 ($10)
 		JMP ChangeObjDirection
 
 ; Subtract negative vertical movement (if speed value is negative)
 ObjNegYSpeedCalc:
 	CLC
 	ADC objYLo,X
-	STA objYLo,X ;Subtract low byte
-	BCS ChangeObjDirection ;Branch if subtraction doesn't borrow from high byte
+	STA objYLo,X ; Subtract low byte
+	BCS ChangeObjDirection ; Branch if subtraction doesn't borrow from high byte
 	; Otherwise, borrow from high byte and subtract 16 ($10)
 		SEC
 		SBC #$10
@@ -3467,32 +3467,32 @@ ObjNegYSpeedCalc:
 
 ; Change object's direction if needed and update movement vector table index
 ChangeObjDirection:
-	INY ;Move to next byte
+	INY ; Move to next byte
 	LDA ($32),Y
 	CMP #$FF
-	BNE UpdateObjSpeedDataIndex ;Branch if delimiter byte isn't reached
+	BNE UpdateObjSpeedDataIndex ; Branch if delimiter byte isn't reached
 	; Turn the object around and stop if the delimiter byte is reached
 		LDA objState,X
 		EOR #%01000000
-		STA objState,X ;Turn object around
-		JMP GetSpeedDataDone ;Go to next vector and end routine
+		STA objState,X ; Turn object around
+		JMP GetSpeedDataDone ; Go to next vector and end routine
 	; If the X movement byte isn't the delimiter, check if it's an index change vector
 	UpdateObjSpeedDataIndex:
 		AND #%11110000
-		BEQ GetSpeedDataDone ;Stop if the X movement byte is normal
-		;Otherwise, check if it's a loop byte
+		BEQ GetSpeedDataDone ; Stop if the X movement byte is normal
+		; Otherwise, check if it's a loop byte
 			LDA ($32),Y
 			AND #%00111111
-			BNE SubObjXYSpeedIndex ;Stop if this is a normal movement value
-			STA objVar,X ;If they are clear, set the movement vector index directly
+			BNE SubObjXYSpeedIndex ; Stop if this is a normal movement value
+			STA objVar,X ; If they are clear, set the movement vector index directly
 			RTS
 		; If bits 0 - 5 of the next byte aren't clear, subtract the X/Y speed set index by the lower 6 bits of the next byte
 		SubObjXYSpeedIndex:
-			STA $32 ;Save lower 6 bits of next byte
+			STA $32 ; Save lower 6 bits of next byte
 			LDA objVar,X
 			SEC
 			SBC $32
-			STA objVar,X ;Move back the amount of X/Y speed sets in the lower 6 bits (highest bit of the subtrahend will be cleared)
+			STA objVar,X ; Move back the amount of X/Y speed sets in the lower 6 bits (highest bit of the subtrahend will be cleared)
 
 ; Move to next set of X/Y speeds in the table
 GetSpeedDataDone:
@@ -3500,18 +3500,18 @@ GetSpeedDataDone:
 	RTS
 
 ;----------------------------------------
-;SUBROUTINE ($B1DA)
-;Loads an object's movement vectors in a looping pattern.
+; SUBROUTINE ($B1DA)
+; Loads an object's movement vectors in a looping pattern.
 ; Parameters:
 ; > A: Object ID
 ;----------------------------------------
 GetMovementData:
 	ASL
-	TAY ;Get pointer index
+	TAY ; Get pointer index
 	LDA tbl_51_E000,Y
 	STA $32
 	LDA tbl_51_E000+1,Y
-	STA $33 ;Load movement data pointer
+	STA $33 ; Load movement data pointer
 	JSR sub3_B1EF
 	LDA curObjPrgBank
 	STA M90_PRG0
@@ -3520,7 +3520,7 @@ GetMovementData:
 sub3_B1EF:
 	LDX $A4
 	LDA objVar,X
-	AND #%01111111 ;Mask out upper bit to not affect carry
+	AND #%01111111 ; Mask out upper bit to not affect carry
 	ASL
 	TAY
 	LDA objState,X
@@ -3575,32 +3575,32 @@ loc3_B24C:
 	EOR #$40
 	STA objState,X
 bra3_B25D:
-	LDY #$00 ;Clear Y reg
-	LDA ($32),Y ;Load movement data
-	TAY ;Copy it to the Y reg
+	LDY #$00 ; Clear Y reg
+	LDA ($32),Y ; Load movement data
+	TAY ; Copy it to the Y reg
 	LDA objState,X
 	AND #$40
-	BEQ bra3_B26E ;Branch if the object is facing right
-	TYA ;Load the movement data
-	EOR #$FF ;Negate the value
-	TAY ;Copy it back to the Y register
-	INY ;Increase it by 1
+	BEQ bra3_B26E ; Branch if the object is facing right
+	TYA ; Load the movement data
+	EOR #$FF ; Negate the value
+	TAY ; Copy it back to the Y register
+	INY ; Increase it by 1
 bra3_B26E:
-	TYA ;Copy it back to the accumulator
-	PHA ;Push into stack
+	TYA ; Copy it back to the accumulator
+	PHA ; Push into stack
 	CLC
 	ADC objXLo,X
-	STA objXLo,X ;Move the object by adding to its position
-	PLA ;Pull the value that was just added
-	BMI bra3_B281 ;Branch if it's negative
+	STA objXLo,X ; Move the object by adding to its position
+	PLA ; Pull the value that was just added
+	BMI bra3_B281 ; Branch if it's negative
 	LDA objXHi,X
-	ADC #$00 ;Update the horizontal screen (if the object is going left?)
-	BPL bra3_B286 ;Branch if the screen is negative?
+	ADC #$00 ; Update the horizontal screen (if the object is going left?)
+	BPL bra3_B286 ; Branch if the screen is negative?
 bra3_B281:
 	LDA objXHi,X
-	SBC #$00 ;Update the horizontal screen (if the object is going right?)
+	SBC #$00 ; Update the horizontal screen (if the object is going right?)
 bra3_B286:
-	STA objXHi,X ;Update it in memory
+	STA objXHi,X ; Update it in memory
 	RTS
 loc3_B28A:
 	LDA $AA
@@ -3625,9 +3625,9 @@ bra3_B2A0:
 	RTS
 loc3_B2B4:
 	INY
-	LDA ($32),Y ;Load movement data
-	BMI bra3_B2D3 ;Branch if bit 7 of is set
-	JSR sub3_B077 ;Otherwise, jump
+	LDA ($32),Y ; Load movement data
+	BMI bra3_B2D3 ; Branch if bit 7 of is set
+	JSR sub3_B077 ; Otherwise, jump
 	BEQ bra3_B2C2
 	CMP #$02
 	BNE bra3_B2F8
@@ -3762,8 +3762,8 @@ bra3_B3B1:
 	JMP loc3_B3E4
 
 ;----------------------------------------
-;SUBROUTINE ($B3B4)
-;Loads an object's movement data and flips them when they reach a ledge.
+; SUBROUTINE ($B3B4)
+; Loads an object's movement data and flips them when they reach a ledge.
 ;----------------------------------------
 sub_54_B3B4:
 	ASL
@@ -3774,7 +3774,7 @@ sub_54_B3B4:
 	STA $33
 	JSR sub3_B3C9
 	LDA curObjPrgBank
-	STA M90_PRG0 ;Swap PRG bank out for current object
+	STA M90_PRG0 ; Swap PRG bank out for current object
 	RTS
 
 sub3_B3C9:
@@ -3791,12 +3791,12 @@ sub3_B3C9:
 loc3_B3DC:
 	LDA objState,X
 	EOR #$40
-	STA objState,X ;Flip the object horizontally
+	STA objState,X ; Flip the object horizontally
 
 loc3_B3E4:
 	LDA objState,X
 	AND #%01000000
-	BEQ bra3_B3F5 ;If the object is facing right, branch
+	BEQ bra3_B3F5 ; If the object is facing right, branch
 	LDA ($32),Y
 	EOR #$FF
 	CLC
@@ -3949,27 +3949,27 @@ bra3_B4F8:
 
 
 ;----------------------------------------
-;SUBROUTINE ($B4FC)
-;Handles vertical speed in the object's variable until it reaches 7.
+; SUBROUTINE ($B4FC)
+; Handles vertical speed in the object's variable until it reaches 7.
 ;----------------------------------------
 sub_54_B4FC:
 	LDA frameCount
 	AND #$01
-	BNE bra3_B556 ;Only continue every even frame, branching every odd frame
+	BNE bra3_B556 ; Only continue every even frame, branching every odd frame
 		LDA objVar,X
-		AND #%01111111 ;Ignore vertical speed mode flag
+		AND #%01111111 ; Ignore vertical speed mode flag
 		CMP #$07
 		BCS bra3_B50E
-			INC objVar,X ;Increase vertical speed until it's 7
+			INC objVar,X ; Increase vertical speed until it's 7
 	bra3_B50E:
 		TAY
-		BMI bra3_B52A ;Branch if vertical speed is negative (redundant? seems to never happen)
+		BMI bra3_B52A ; Branch if vertical speed is negative (redundant? seems to never happen)
 		CLC
 		ADC objYLo,X
-		STA objYLo,X ;Vertically offset the object by its speed
+		STA objYLo,X ; Vertically offset the object by its speed
 		BCS bra3_B51E
 		CMP #256-16
-		BCC loc3_B53C ;Branch if it goes more than 16 pixels below the vertical screen boundary
+		BCC loc3_B53C ; Branch if it goes more than 16 pixels below the vertical screen boundary
 
 	; Add 16 to the object's vertical position if it crosses a vertical screen boundary and doesn't carry over
 	bra3_B51E:
@@ -3983,12 +3983,12 @@ sub_54_B4FC:
 	bra3_B52A:
 		CLC
 		ADC objYLo,X
-		STA objYLo,X ;Add negative vertical offset
+		STA objYLo,X ; Add negative vertical offset
 		BCS loc3_B53C
 		SEC
 		SBC #16
-		STA objYLo,X ;Subtract 16 if it crosses the vertical screen boundary
-		DEC objYHi,X ;Borrow from high byte if needed
+		STA objYLo,X ; Subtract 16 if it crosses the vertical screen boundary
+		DEC objYHi,X ; Borrow from high byte if needed
 
 	; Despawn object if it crosses the death barrier
 	loc3_B53C:
@@ -3997,11 +3997,11 @@ sub_54_B4FC:
 		BCC bra3_B556
 		LDA objYLo,X
 		CMP #$E0
-		BCC bra3_B556 ;Don't clear object if it's above the death barrier
+		BCC bra3_B556 ; Don't clear object if it's above the death barrier
 			LDA #$00
 			STA objSlot,X
 			STA objState,X
-			STA objVar,X ;Clear object from memory
+			STA objVar,X ; Clear object from memory
 
 bra3_B556:
 	Obj_DistCalc bra3_B5BA_RTS
@@ -4010,19 +4010,19 @@ bra3_B5BA_RTS:
 	RTS
 
 ;----------------------------------------
-;SUBROUTINE ($B5BB)
-;Turns the object around in the direction of the player
+; SUBROUTINE ($B5BB)
+; Turns the object around in the direction of the player
 ;----------------------------------------
 Obj_FacePlayer:
 	LDA #$00
-	STA objVar,X ;Clear object variable
-	TAY ;Set object direction to right
+	STA objVar,X ; Clear object variable
+	TAY ; Set object direction to right
 	LDA objXDistHi,X
-	BMI @SetDirection ;Branch if the object is behind the player, setting its direction to right
-		LDY #$40 ;If the object is ahead of the player, set object direction to left
+	BMI @SetDirection ; Branch if the object is behind the player, setting its direction to right
+		LDY #$40 ; If the object is ahead of the player, set object direction to left
 @SetDirection:
 	TYA
-	STA objState,X ;Store object direction
+	STA objState,X ; Store object direction
 	RTS
 
 sub_54_B5CD:
@@ -4422,20 +4422,20 @@ jmp_54_B896:
 	STA $35
 	LDA objAction,X
 	ASL
-	ASL ;Multiply the object's action value by 4
-	STA $3F ;Back up in RAM
-	TAY ;Use as pointer index
-	LDA ($34),Y ;Load value pointer 
+	ASL ; Multiply the object's action value by 4
+	STA $3F ; Back up in RAM
+	TAY ; Use as pointer index
+	LDA ($34),Y ; Load value pointer 
 	ASL
-	TAY ;Get the index for the previously loaded value
+	TAY ; Get the index for the previously loaded value
 	LDA tbl3_B8BF,Y
 	STA $32
 	LDA tbl3_B8BF+1,Y
-	STA $33 ;Store the pointer in RAM
+	STA $33 ; Store the pointer in RAM
 	LDA #$00
 	STA $28
 	STA $2B
-	JMP ($32) ;Jump to the pointer
+	JMP ($32) ; Jump to the pointer
 tbl3_B8BF:
 	dw ptr11_B8DB
 	dw ptr11_B968
@@ -5009,48 +5009,48 @@ bra3_BCA6_RTS:
 	RTS
 
 ;----------------------------------------
-;SUBROUTINE ($BCA7)
-;Like the subroutine below it, except it gives more rebound speed and always turns the player right.
+; SUBROUTINE ($BCA7)
+; Like the subroutine below it, except it gives more rebound speed and always turns the player right.
 ;----------------------------------------
 Obj_StompReboundAlt:
 	LDA #sfx_EnemyHit2
-	STA sndSfx ;Play enemy hit sound
+	STA sndSfx ; Play enemy hit sound
 	LDA #48
 	STA playerYSpd
-	STA playerXSpd ;Set player's horizontal and vertical rebound speed
+	STA playerXSpd ; Set player's horizontal and vertical rebound speed
 	LDA playerMoveFlags
 	ORA #%00000100
-	AND #%10111110 ;This may be a bug
-	STA playerMoveFlags ;Make player move upwards and right
+	AND #%10111110 ; This may be a bug
+	STA playerMoveFlags ; Make player move upwards and right
 	LDA #$01
-	JMP RewardPoints ;Give player 200 points
+	JMP RewardPoints ; Give player 200 points
 
 ;----------------------------------------
-;SUBROUTINE ($BCBE)
-;Bounces the player back and gives them points while playing a sound effect 
+; SUBROUTINE ($BCBE)
+; Bounces the player back and gives them points while playing a sound effect 
 ;----------------------------------------
 Obj_StompRebound:
 	LDA #sfx_EnemyHit2
-	STA sndSfx ;Play hit sound effect
+	STA sndSfx ; Play hit sound effect
 
 ;----------------------------------------
-;SUBROUTINE ($BCC2)
-;Bounces the player back and gives them points
+; SUBROUTINE ($BCC2)
+; Bounces the player back and gives them points
 ;----------------------------------------
 Obj_StompReboundNoSFX:
 	LDA #8
-	STA playerYSpd ;Set vertical rebound speed
+	STA playerYSpd ; Set vertical rebound speed
 	LDA playerMoveFlags
-	ORA #%00000100 ;Make player move up
+	ORA #%00000100 ; Make player move up
 	EOR #%00000001
-	STA playerMoveFlags ;Reverse the player's horizontal direction
+	STA playerMoveFlags ; Reverse the player's horizontal direction
 	LDA #8
-	STA playerXSpd ;Set horizontal rebound speed
-	LDA #$01 ;Give player 200 points
+	STA playerXSpd ; Set horizontal rebound speed
+	LDA #$01 ; Give player 200 points
 
 ;----------------------------------------
-;SUBROUTINE ($BCD4)
-;Rewards one of 4 score values to the current player from a table based on the value of the accumulator.
+; SUBROUTINE ($BCD4)
+; Rewards one of 4 score values to the current player from a table based on the value of the accumulator.
 ; Parameters:
 ; > A = Score Value
 ;   > 0 = 100
@@ -5059,15 +5059,15 @@ Obj_StompReboundNoSFX:
 ;   > 3 = 1000
 ;----------------------------------------
 RewardPoints:
-	ASL ;Get score data index
+	ASL ; Get score data index
 	STY $2B
-	STX $28 ;Back up X and Y registers
+	STX $28 ; Back up X and Y registers
 	TAY
 	LDA curPlayer
 	ASL
-	TAX ;Get appropriate offset for current player's score
+	TAX ; Get appropriate offset for current player's score
 	LDA ScoreTbl+1,Y
-	STA $32 ;Get high byte
+	STA $32 ; Get high byte
 	
 ; Add to player's score
 	LDA ScoreTbl,Y
@@ -5105,17 +5105,17 @@ bra3_BD18:
 	STA $4B
 	LDA $4A
 	CMP #$06
-	BCC bra3_BD2C ;Branch if <6 enemies have been hit
+	BCC bra3_BD2C ; Branch if <6 enemies have been hit
 	LDX curPlayer
-	INC playerLives,X ;If 7 or more have been hit, give the current player a life
+	INC playerLives,X ; If 7 or more have been hit, give the current player a life
 	LDA #$07
-	BNE bra3_BD31 ;Play 1UP sound
+	BNE bra3_BD31 ; Play 1UP sound
 bra3_BD2C:
-	INC $4A ;Increment hit counter
+	INC $4A ; Increment hit counter
 	CLC
-	ADC #$11 ;Play next hit sound
+	ADC #$11 ; Play next hit sound
 bra3_BD31:
-	STA sndSfx ;Play appropriate sound
+	STA sndSfx ; Play appropriate sound
 	LDY $2B
 	LDX $28
 	LDA #$01
@@ -5214,12 +5214,12 @@ loc3_BDCE:
 	BNE bra3_BDE6
 bra3_BDE1:
 	LDA #$0B
-	STA objSlot,X ;Spawn a mushroom in
+	STA objSlot,X ; Spawn a mushroom in
 bra3_BDE6:
 	LDA #sfx_BlockRelease
-	STA sndSfx ;Play the block release sound
+	STA sndSfx ; Play the block release sound
 	LDY objCount
-	INC objCount ;Set the index for the new object
+	INC objCount ; Set the index for the new object
 	LDA objXLo,X
 	STA objXLo,Y
 	LDA objXHi,X
@@ -5227,9 +5227,9 @@ bra3_BDE6:
 	LDA objYLo,X
 	STA objYLo,Y
 	LDA objYHi,X
-	STA objYHi,Y ;Copy the coordinate data over to the spawned mushroom
+	STA objYHi,Y ; Copy the coordinate data over to the spawned mushroom
 	LDA objSlot,X
-	STA objSlot,Y ;Copy the slot value to the mushroom
+	STA objSlot,Y ; Copy the slot value to the mushroom
 	LDA #$00
 	STA objVar,Y
 	STA objAction,Y
@@ -5325,133 +5325,133 @@ bra3_BEB7:
 	JMP loc3_BDCE
 
 ;----------------------------------------
-;SUBROUTINE ($BEBC)
-;Checks if the player collides with the object's hitbox. If the player stomps the object, they are rewarded 200 points. Otherwise, if the player takes damage or isn't touching the object, it will stop the object's code.
+; SUBROUTINE ($BEBC)
+; Checks if the player collides with the object's hitbox. If the player stomps the object, they are rewarded 200 points. Otherwise, if the player takes damage or isn't touching the object, it will stop the object's code.
 ;----------------------------------------
 Obj_PlayerHitCheck:
-	LDX $A4 ;Get current object index
+	LDX $A4 ; Get current object index
 	LDY objSlot,X
 	LDA ObjectXHitBoxSizes,Y
 	STA $36
 	LDA ObjectYHitBoxSizes,Y
 	STA $38
-	LDY #$10 ;Set default player hitbox to 16 pixels high
+	LDY #$10 ; Set default player hitbox to 16 pixels high
 	LDA playerPowerup
-	BEQ @SetPlayerDuckingHeight ;Branch if the player is small, keeping their hitbox at 16 pixels high
-	LDY #$18 ;Otherwise, if they have a powerup, make their hitbox 24 pixels high
+	BEQ @SetPlayerDuckingHeight ; Branch if the player is small, keeping their hitbox at 16 pixels high
+	LDY #$18 ; Otherwise, if they have a powerup, make their hitbox 24 pixels high
 
 @SetPlayerDuckingHeight:
 	LDA playerAction
 	CMP #pAction_Duck
-	BNE @HorizHitboxCheck ;Don't change the player's hitbox size if they aren't ducking
-	LDY #$08 ;If the player is ducking, make their hitbox 8 pixels high
+	BNE @HorizHitboxCheck ; Don't change the player's hitbox size if they aren't ducking
+	LDY #$08 ; If the player is ducking, make their hitbox 8 pixels high
 
 @HorizHitboxCheck:
-	STY $32 ;Store player's hitbox height
+	STY $32 ; Store player's hitbox height
 	LDA objXDistHi,X
-	BPL @HorizHitboxCheckLeft ;Branch if the player is to the left of the object
+	BPL @HorizHitboxCheckLeft ; Branch if the player is to the left of the object
 	; If player is to the right of the object:
 		LDA #5
 		CLC
 		ADC $36
 		CLC
-		ADC objXDistLo,X ;5 + X Hitbox + X Distance > 255
-		BCS @VertHitboxCheck ;Move to the vertical check if player is within 5 pixels of the object's hitbox horizontally
-		BCC SkipPlayerObjectColl ;Otherwise, stop
+		ADC objXDistLo,X ; 5 + X Hitbox + X Distance > 255
+		BCS @VertHitboxCheck ; Move to the vertical check if player is within 5 pixels of the object's hitbox horizontally
+		BCC SkipPlayerObjectColl ; Otherwise, stop
 
 	; If player is to the left of the object:
 	@HorizHitboxCheckLeft:
 		LDA objXDistLo,X
 		CMP #5
-		BCS SkipPlayerObjectColl ;Stop if the player is more than 5 pixels away from the object
+		BCS SkipPlayerObjectColl ; Stop if the player is more than 5 pixels away from the object
 
 ; Otherwise, if the player is within the horizontal hitbox, move to the vertical hitbox check
 @VertHitboxCheck:
 	LDA objYDistHi,X
-	BEQ @VertHitboxCheckAbove ;Skip these checks if the player's origin is already above or at the object's origin
+	BEQ @VertHitboxCheckAbove ; Skip these checks if the player's origin is already above or at the object's origin
 	CMP #$FF
-	BNE SkipPlayerObjectColl ;Stop if the object is off-screen
+	BNE SkipPlayerObjectColl ; Stop if the object is off-screen
 	; If the player is at the same level as the object:
 		LDA $32
 		CLC
 		ADC $38
 		CLC
-		ADC objYDistLo,X ;Player Hitbox Height + Object Hitbox Height > 255
-		BCS @HandleCollision ;Handle collision with the player if they're within the object's vertical hitbox
-		BCC SkipPlayerObjectColl ;Otherwise, stop
+		ADC objYDistLo,X ; Player Hitbox Height + Object Hitbox Height > 255
+		BCS @HandleCollision ; Handle collision with the player if they're within the object's vertical hitbox
+		BCC SkipPlayerObjectColl ; Otherwise, stop
 
 	; If the player's origin is above or at the object's:
 	@VertHitboxCheckAbove:
 		LDA objYDistLo,X
 		CMP #$00
-		BCS SkipPlayerObjectColl ;Stop if the player is above the object
+		BCS SkipPlayerObjectColl ; Stop if the player is above the object
 	; Otherwise, continue and handle collision with player
 	@HandleCollision:
 		CLC
-		BCC CheckIfCollided ;Handle collision
+		BCC CheckIfCollided ; Handle collision
 
 SkipPlayerObjectColl:
-	SEC ;If set, the branch below will fail and collision with the player won't be handled
+	SEC ; If set, the branch below will fail and collision with the player won't be handled
 
 CheckIfCollided:
-	BCC ObjHandlePlayerColl ;If not set, handle collision accordingly
+	BCC ObjHandlePlayerColl ; If not set, handle collision accordingly
 bra3_BF1A:
 	LDA objState,X
 	AND #%11100000
-	STA objState,X ;Stop checking for collision
+	STA objState,X ; Stop checking for collision
 	PLA
 	PLA
-	RTS ;Go back two calls and stop running code for this object
+	RTS ; Go back two calls and stop running code for this object
 
 ; Check if the player can take damage
 ObjHandlePlayerColl:
 	LDA objYDistHi,X
-	BPL @InvincibilityCheck ;Only continue if the player isn't above the object's hitbox
+	BPL @InvincibilityCheck ; Only continue if the player isn't above the object's hitbox
 	LDA objYDistLo,X
 	CMP #-14
-	BCC @InvincibilityCheck ;AND only continue if the player is within 14 pixels of the object vertically
+	BCC @InvincibilityCheck ; AND only continue if the player is within 14 pixels of the object vertically
 		LDA playerAction
 		CMP #pAction_ClimbIdle
 		BEQ @GivePoints
 		CMP #pAction_ClimbMove
-		BEQ @GivePoints ;Give points if the player hits the object while climbing
+		BEQ @GivePoints ; Give points if the player hits the object while climbing
 		LDA playerMoveFlags
 		AND #%00000100
-		BNE @InvincibilityCheck ;Player can be assumed to be taking damage from the object if they are moving upwards
+		BNE @InvincibilityCheck ; Player can be assumed to be taking damage from the object if they are moving upwards
 
 ; Otherwise, if the player is falling downwards, it can be assumed that they're stomping on the object
 @GivePoints:
 	LDA invincibilityTimer
-	BNE @GivePointsContinue ;Reward points immediately if the player already has invulnerability frames
+	BNE @GivePointsContinue ; Reward points immediately if the player already has invulnerability frames
 	LDA #$F6
-	STA invincibilityTimer ;Otherwise, give them 12 frames of invulnerability without flickering
+	STA invincibilityTimer ; Otherwise, give them 12 frames of invulnerability without flickering
 @GivePointsContinue:
 	LDA #$01
-	JSR RewardPoints ;Give the player 200 points
+	JSR RewardPoints ; Give the player 200 points
 	RTS
 
 @InvincibilityCheck:
 	LDA invincibilityTimer
-	BEQ @DamagePlayer ;Deal damage if the player isn't invincible
+	BEQ @DamagePlayer ; Deal damage if the player isn't invincible
 	CMP #$D0
-	BCS bra3_BF1A ;Stop collision check if the player has invulnerability frames
+	BCS bra3_BF1A ; Stop collision check if the player has invulnerability frames
 	; Otherwise, if player has star power:
 		LDX $A4
 		LDA objState,X
-		AND #%11100000 ;Ignore function number bits
-		ORA #%00000100 ;Kill object
+		AND #%11100000 ; Ignore function number bits
+		ORA #%00000100 ; Kill object
 		STA objState,X
 		LDA #$00
-		STA objVar,X ;Clear object variables
+		STA objVar,X ; Clear object variables
 		PLA
 		PLA
-		RTS ;Go back two calls and stop running code for this object
+		RTS ; Go back two calls and stop running code for this object
 
 @DamagePlayer:
-	JSR DealDamage ;Deal damage
+	JSR DealDamage ; Deal damage
 	PLA
 	PLA
-	RTS ;Go back two calls and stop running code for this object
+	RTS ; Go back two calls and stop running code for this object
 
 jmp_54_BF74:
 	LDA invincibilityTimer
@@ -5459,8 +5459,8 @@ jmp_54_BF74:
 	RTS
 
 ;----------------------------------------
-;SUBROUTINE ($BF7A)
-;Deals damage to the player. This is only used within this bank
+; SUBROUTINE ($BF7A)
+; Deals damage to the player. This is only used within this bank
 ;----------------------------------------
 DealDamage:
 	LDX $A4
@@ -5468,14 +5468,14 @@ DealDamage:
 	CMP #$48
 	BCC @TurnObject
 	CMP #$4C
-	BCC @DamagePlayer ;Don't turn objects $48 - $4C around when they damage the player
+	BCC @DamagePlayer ; Don't turn objects $48 - $4C around when they damage the player
 
 ; Turn the object in the direction of the player when it damages them
 @TurnObject:
 	LDA objXDistHi,X
-	BMI @TurnObjectRight ;Turn object right if the player is damaged from the right
+	BMI @TurnObjectRight ; Turn object right if the player is damaged from the right
 	LDA objState,X
-	ORA #%01000000 ;Turn object left if the player is damaged from the left 
+	ORA #%01000000 ; Turn object left if the player is damaged from the left 
 	BNE @SetObjectDirection
 
 @TurnObjectRight:
@@ -5483,46 +5483,46 @@ DealDamage:
 	AND #%10111111
 
 @SetObjectDirection:
-	STA objState,X ;Turn object right
+	STA objState,X ; Turn object right
 
 @DamagePlayer:
 	LDA #$00
 	STA playerHoldFlag
 	LDA playerYoshiState
-	BEQ @DamageNoYoshi ;Branch if player isn't on Yoshi
-	;Otherwise, inflict damage to Yoshi
+	BEQ @DamageNoYoshi ; Branch if player isn't on Yoshi
+	; Otherwise, inflict damage to Yoshi
 		LDA #$01
 		STA playerHurtFlag
-		JMP @GiveIFrames ;Hurt player and give them invulnerability frames
+		JMP @GiveIFrames ; Hurt player and give them invulnerability frames
 
 ; Handle damage if the player isn't riding Yoshi
 @DamageNoYoshi:
 	LDA playerPowerup
-	BEQ @KillPlayer ;Kill the player if they're already small
-	;Otherwise, make the player small
+	BEQ @KillPlayer ; Kill the player if they're already small
+	; Otherwise, make the player small
 		LDA #$00
 		STA playerPowerup
 	LDA #$01
-	STA playerPowerupBuffer ;Make the game buffer while the player is taking damage
+	STA playerPowerupBuffer ; Make the game buffer while the player is taking damage
 	LDA #$07
-	STA gameState ;Pause game to change powerup
+	STA gameState ; Pause game to change powerup
 
 @GiveIFrames:
 	LDA #$D0
-	STA invincibilityTimer ;Give player (128) invulnerability frames
+	STA invincibilityTimer ; Give player (128) invulnerability frames
 	LDA #sfx_PowerDown
-	STA sndSfx ;Play hurt sound
+	STA sndSfx ; Play hurt sound
 	LDA objState,X
 	AND #%11100000
-	STA objState,X ;End collision check for this frame
+	STA objState,X ; End collision check for this frame
 	RTS
 
 @KillPlayer:
 	LDA #gameState_Death
-	STA gameState ;Trigger death event
+	STA gameState ; Trigger death event
 	LDA #$00
-	STA gameSubstate ;Go to first part of event
+	STA gameSubstate ; Go to first part of event
 	STA playerState
 	STA $06DC
-	STA $06DD ;Clear player variables
+	STA $06DD ; Clear player variables
 	RTS

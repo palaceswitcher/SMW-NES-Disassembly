@@ -1,43 +1,43 @@
-;disassembled with BZK 6502 Disassembler
+; disassembled with BZK 6502 Disassembler
 jmp_39_E000:
 	LDA playerState
-	CMP #$03 ;If the player isn't climbing,
-	BNE bra_E02C ;branch
+	CMP #$03 ; If the player isn't climbing,
+	BNE bra_E02C ; branch
 	LDA $06DC
 	BEQ bra_E01D
 	LDA $06DE
 	BEQ bra_E02C
 	LDA btnHeld
-	AND #dirDown ;If down isn't held,
-	BEQ bra_E02C ;branch
+	AND #dirDown ; If down isn't held,
+	BEQ bra_E02C ; branch
 	LDA playerBackColl
-	BNE bra_E023 ;Branch if player is behind a tile
-	BEQ bra_E02C ;Branch if player is behind air
+	BNE bra_E023 ; Branch if player is behind a tile
+	BEQ bra_E02C ; Branch if player is behind air
 bra_E01D:
 	LDA playerBackColl
 	CMP #$F8
-	BEQ bra_E02C ;Branch if the player is behind a climbable tile. Otherwise, continue and make the player fall off
+	BEQ bra_E02C ; Branch if the player is behind a climbable tile. Otherwise, continue and make the player fall off
 bra_E023:
 	LDA #$00
-	STA playerState ;Stop climbing
+	STA playerState ; Stop climbing
 	LDA #$0A
-	STA playerAction ;Make the player fall
+	STA playerAction ; Make the player fall
 	RTS
 bra_E02C:
 	LDA playerBackColl
-	TAX ;Copy the background tile collision ID into the X register
+	TAX ; Copy the background tile collision ID into the X register
 	AND #%00001111
-	TAY ;Use the lower nybble of the ID as the Y index
-	LDA tbl_EE19,Y ;Get the high nybble for the corresponding low byte (Why not just shift it right 4 times?)
-	STA $97 ;Move the low nybble of the back collision to the high nybble of this (most likely the bottom collision)
+	TAY ; Use the lower nybble of the ID as the Y index
+	LDA tbl_EE19,Y ; Get the high nybble for the corresponding low byte (Why not just shift it right 4 times?)
+	STA $97 ; Move the low nybble of the back collision to the high nybble of this (most likely the bottom collision)
 	TXA
-	AND #%11111110 ;Make the collision ID an even number so it will work as a pointer index
-	TAY ;Get pointer for collision ID
+	AND #%11111110 ; Make the collision ID an even number so it will work as a pointer index
+	TAY ; Get pointer for collision ID
 	LDA tbl_E048,Y
-	STA $34 ;Load lower byte of pointer
+	STA $34 ; Load lower byte of pointer
 	LDA tbl_E048+1,Y
-	STA $35 ;Load upper byte of pointer
-	JMP ($34) ;Jump to the loaded pointer
+	STA $35 ; Load upper byte of pointer
+	JMP ($34) ; Jump to the loaded pointer
 tbl_E048:
 	dw loc_E1F4
 	dw loc_E1F4
@@ -169,25 +169,25 @@ tbl_E048:
 	dw ptr8_E148
 ptr8_E148:
 	LDA invincibilityTimer
-	BEQ bra_E14E ;Skip this if the player has invincibility
+	BEQ bra_E14E ; Skip this if the player has invincibility
 	RTS
 bra_E14E:
 	LDA #$00
 	STA playerHoldFlag
 	LDA playerYoshiState
-	BEQ bra_E160 ;Branch ahead if the player doesn't have Yoshi
+	BEQ bra_E160 ; Branch ahead if the player doesn't have Yoshi
 	LDA #$01
-	STA playerHurtFlag ;Make the player take damage
-	JMP loc_E173 ;Jump ahead
+	STA playerHurtFlag ; Make the player take damage
+	JMP loc_E173 ; Jump ahead
 bra_E160:
 	LDA playerPowerup
-	BEQ bra_E185 ;Branch if the player is already small
+	BEQ bra_E185 ; Branch if the player is already small
 	LDA #$00
-	STA playerPowerup ;Take the player's powerup
+	STA playerPowerup ; Take the player's powerup
 	LDA #$01
-	STA playerPowerupBuffer ;Make the game pause while the player takes damage
+	STA playerPowerupBuffer ; Make the game pause while the player takes damage
 	LDA #$07
-	STA gameState ;Trigger powerup change event??
+	STA gameState ; Trigger powerup change event??
 loc_E173:
 	LDA #$D0
 	STA invincibilityTimer
@@ -199,41 +199,41 @@ loc_E173:
 	RTS
 bra_E185:
 	LDA #$04
-	STA gameState ;Trigger the death event
+	STA gameState ; Trigger the death event
 	LDA #$00
-	STA gameSubstate ;Go to the first part of the event
-	STA playerState ;Remove any powerups the player has
+	STA gameSubstate ; Go to the first part of the event
+	STA playerState ; Remove any powerups the player has
 	STA $06DC
 	STA $06DD
 	RTS
 ptr8_E196:
 	LDA playerBackColl
 	AND #$01
-	BNE bra_E1C2 ;Branch if the collision ID is an odd number?
+	BNE bra_E1C2 ; Branch if the collision ID is an odd number?
 	LDA playerClimbState
 	CMP #$03
-	BNE bra_E1C2 ;Branch if the player isn't climbing on the inside
+	BNE bra_E1C2 ; Branch if the player isn't climbing on the inside
 	LDA playerPrevAction
-	CMP #$0D ;(Check for climbing while still)
+	CMP #$0D ; (Check for climbing while still)
 	BEQ bra_E1C2
-	CMP #$0E ;(Check for climbing while moving)
-	BEQ bra_E1C2 ;Branch if the player was already climbing prior
+	CMP #$0E ; (Check for climbing while moving)
+	BEQ bra_E1C2 ; Branch if the player was already climbing prior
 	LDA btnHeld
 	AND #dirUp
-	BEQ bra_E1C2 ;Branch if the player is holding up
+	BEQ bra_E1C2 ; Branch if the player is holding up
 	LDA #$00
 	STA playerYSpd
-	STA playerXSpd ;Clear the player's vertical and horizontal speed
+	STA playerXSpd ; Clear the player's vertical and horizontal speed
 	LDA #$03
 	STA playerState
 	LDA #$0D
-	STA playerAction ;Set their state and action to climbing
+	STA playerAction ; Set their state and action to climbing
 bra_E1C1_RTS:
 	RTS
 bra_E1C2:
 	LDA playerYSpd
-	BEQ bra_E1C1_RTS ;Make sure the player has vertical speed
-	JMP loc_E1F4 ;Jump
+	BEQ bra_E1C1_RTS ; Make sure the player has vertical speed
+	JMP loc_E1F4 ; Jump
 ptr8_E1C9:
 	LDA prgDataBank2
 	CMP #$23
@@ -262,10 +262,10 @@ bra_E1F2_RTS:
 	RTS
 loc_E1F4:
 	LDA #$01
-	STA $95 ;Currently unknown flag
+	STA $95 ; Currently unknown flag
 	LDA playerMoveFlags
 	AND #$04
-	BNE bra_E224 ;Branch if the player is moving upwards
+	BNE bra_E224 ; Branch if the player is moving upwards
 	LDA playerCollXLo
 	AND #$0F
 	ORA $97
@@ -290,10 +290,10 @@ bra_E224:
 	SEC
 	SBC #$01
 	CMP #$F8
-	BCC bra_E22F ;Subtract the player's speed until it underflows to #$F8
+	BCC bra_E22F ; Subtract the player's speed until it underflows to #$F8
 	LDA #$00
 bra_E22F:
-	STA playerXSpd ;Clear the player's X speed if its greater than #$F8
+	STA playerXSpd ; Clear the player's X speed if its greater than #$F8
 	RTS
 tbl_E232:
 	db $FF
@@ -2808,45 +2808,45 @@ bra_EE3F:
 	TAY
 	LDA playerBackColl
 	CMP #$8E
-	BCC bra_EE78 ;Branch if not touching a yoshi coin tile
+	BCC bra_EE78 ; Branch if not touching a yoshi coin tile
 	LDA playerDragonCoins,X
 	CMP #$05
-	BCS bra_EE62 ;Branch if the player has more than 5 yoshi coins
+	BCS bra_EE62 ; Branch if the player has more than 5 yoshi coins
 	INC playerDragonCoins,X
-	LDA #$06 ;Load the yoshi coin sound effect
-	BNE bra_EEA1 ;Branch and play it
+	LDA #$06 ; Load the yoshi coin sound effect
+	BNE bra_EEA1 ; Branch and play it
 bra_EE62:
 	LDA #$01
-	STA playerDragonCoins,X ;Set the yoshi coin coin to 1
+	STA playerDragonCoins,X ; Set the yoshi coin coin to 1
 	LDA playerScores,Y
 	CLC
 	ADC #$E8
 	STA playerScores,Y
 	LDA playerScores+1,Y
-	ADC #$03 ;Give the player 10000 points
+	ADC #$03 ; Give the player 10000 points
 	JMP loc_EE99
 bra_EE78:
 	LDA playerCoins,X
 	CMP #$64
-	BCS bra_EE86 ;Branch if the player has 100 or more coins
-	INC playerCoins,X ;Otherwise, add to the coin counter
-	LDA #$08 ;Load the coin sound effect
-	BNE bra_EEA1 ;Branch and play it
+	BCS bra_EE86 ; Branch if the player has 100 or more coins
+	INC playerCoins,X ; Otherwise, add to the coin counter
+	LDA #$08 ; Load the coin sound effect
+	BNE bra_EEA1 ; Branch and play it
 bra_EE86:
 	LDA #$01
-	STA playerCoins,X ;Set the player's coin count to 1
+	STA playerCoins,X ; Set the player's coin count to 1
 	LDA playerScores,Y
 	CLC
 	ADC #$64
-	STA playerScores,Y ;Give the player 1000 points
+	STA playerScores,Y ; Give the player 1000 points
 	LDA playerScores+1,Y
-	ADC #$00 ;Add to high byte (if needed)
+	ADC #$00 ; Add to high byte (if needed)
 loc_EE99:
-	STA playerScores+1,Y ;Store added high byte
+	STA playerScores+1,Y ; Store added high byte
 	INC playerLives,X
-	LDA #$07 ;Load 1up sound effect
+	LDA #$07 ; Load 1up sound effect
 bra_EEA1:
-	STA sndSfx ;Play the loaded sound effect
+	STA sndSfx ; Play the loaded sound effect
 	LDA playerCollXLo
 	SEC
 	SBC $52
@@ -3881,7 +3881,7 @@ bra_F323:
 	ORA #$01
 	STA playerMoveFlags
 bra_F339:
-	LDA #$12 ;NOTE: slope related?
+	LDA #$12 ; NOTE: slope related?
 	STA playerXSpd
 bra_F33D:
 	LDA playerCollXLo
@@ -3936,7 +3936,7 @@ bra_F371:
 	AND playerMoveFlags
 	STA playerMoveFlags
 bra_F389:
-	LDA #$12 ;NOTE: slope related?
+	LDA #$12 ; NOTE: slope related?
 	STA playerXSpd
 bra_F38D:
 	LDA playerCollXLo

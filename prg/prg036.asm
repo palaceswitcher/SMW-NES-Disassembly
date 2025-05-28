@@ -1,15 +1,15 @@
 ; 0x048010-0x04A00F
 lda_36_C000: 
-	dw PlayerAnimTablesTbl   ;00 No Yoshi
-	dw YoshiAnimTablesTbl_1 ;01 If Yoshi present (all entries on this table point to the same thing)
-	dw YoshiAnimTablesTbl_2 ;02
-	dw YoshiAnimTablesTbl_2 ;03 Because Yoshi Status is doubled for use as an index this table is long
-	dw YoshiAnimTablesTbl_2 ;04
-	dw YoshiAnimTablesTbl_2 ;05
-	dw YoshiAnimTablesTbl_3 ;06 Used when Mario has a powerup (?)
-	dw YoshiAnimTablesTbl_3 ;07
-	dw YoshiAnimTablesTbl_3 ;08
-	dw YoshiAnimTablesTbl_3 ;09 As far as I can tell these are all identical unique copies, but this hasn't been fully investigated
+	dw PlayerAnimTablesTbl   ; 00 No Yoshi
+	dw YoshiAnimTablesTbl_1 ; 01 If Yoshi present (all entries on this table point to the same thing)
+	dw YoshiAnimTablesTbl_2 ; 02
+	dw YoshiAnimTablesTbl_2 ; 03 Because Yoshi Status is doubled for use as an index this table is long
+	dw YoshiAnimTablesTbl_2 ; 04
+	dw YoshiAnimTablesTbl_2 ; 05
+	dw YoshiAnimTablesTbl_3 ; 06 Used when Mario has a powerup (?)
+	dw YoshiAnimTablesTbl_3 ; 07
+	dw YoshiAnimTablesTbl_3 ; 08
+	dw YoshiAnimTablesTbl_3 ; 09 As far as I can tell these are all identical unique copies, but this hasn't been fully investigated
 PlayerAnimTablesTbl:
 	dw AnimTbl_PSmall
 	dw AnimTbl_PBig
@@ -21,25 +21,25 @@ PlayerAnimTablesTbl:
 	dw AnimTbl_PFire_Hold
 	dw AnimTbl_PCapeStatic_Hold
 	dw AnimTbl_PCapeMove_Hold
-AnimTbl_PSmall:	;Player Action (associated with animation)
-	dw Anim_PSmall_Stand	;Nothing 	00
-	dw Anim_PSmall_Walk		;Walking 	01
-	dw Anim_PSmall_Run		;Running 	02
-	dw Anim_PSmall_Walk		;Unused  	03
-	dw Anim_PSmall_Jump		;Jumping 	04
-	dw Anim_PSmall_Spin		;Spin    	05
-	dw Anim_PSmall_Turn		;Skid    	06
-	dw Anim_PSmall_Duck		;Duck    	07
-	dw Anim_PSmall_Up		;Look up 	08
-	dw Anim_PSmall_RunJump	;Run jump   09
-	dw Anim_PSmall_Fall		;Falling 	0A note that this is specifically for falling from a ledge, not a jump
-	dw Anim_PSmall_Sink		;Sink    	0B
-	dw Anim_PSmall_Swim		;Swim    	0C
-	dw Anim_PSmall_ClimbIdle;Climb   	0D
-	dw Anim_PSmall_Climb	;Climb move	0E
-	dw Anim_PSmall_RunJump		;Flying		0F
-	dw Anim_PSmall_Win		;Victory	10
-	dw Anim_PSmall_Die		;Dead		11
+AnimTbl_PSmall:	; Player Action (associated with animation)
+	dw Anim_PSmall_Stand	; Nothing 	00
+	dw Anim_PSmall_Walk		; Walking 	01
+	dw Anim_PSmall_Run		; Running 	02
+	dw Anim_PSmall_Walk		; Unused  	03
+	dw Anim_PSmall_Jump		; Jumping 	04
+	dw Anim_PSmall_Spin		; Spin    	05
+	dw Anim_PSmall_Turn		; Skid    	06
+	dw Anim_PSmall_Duck		; Duck    	07
+	dw Anim_PSmall_Up		; Look up 	08
+	dw Anim_PSmall_RunJump	; Run jump   09
+	dw Anim_PSmall_Fall		; Falling 	0A note that this is specifically for falling from a ledge, not a jump
+	dw Anim_PSmall_Sink		; Sink    	0B
+	dw Anim_PSmall_Swim		; Swim    	0C
+	dw Anim_PSmall_ClimbIdle; Climb   	0D
+	dw Anim_PSmall_Climb	; Climb move	0E
+	dw Anim_PSmall_RunJump		; Flying		0F
+	dw Anim_PSmall_Win		; Victory	10
+	dw Anim_PSmall_Die		; Dead		11
 AnimTbl_PSmall_Hold:
 	dw Anim_PSmall_Hold
 	dw Anim_PSmall_HoldWalk
@@ -1192,7 +1192,7 @@ AnimTbl_PFire:
 	dw Anim_PFire_Swim
 	dw Anim_PFire_Climb
 	dw Anim_PFire_ClimbMove
-	dw Anim_PFire_RunJump ;unused
+	dw Anim_PFire_RunJump ; unused
 	dw Anim_PFire_Win
 	dw Anim_PFire_ShootAir
 	dw Anim_PFire_ShootSwim
@@ -1208,7 +1208,7 @@ AnimTbl_PFire_Hold:
 	dw Anim_PFire_HoldDuck
 	dw Anim_PFire_Lookup
 	dw Anim_PFire_Sink
-	dw Anim_PFire_HoldSwim ;unused but fully implemented
+	dw Anim_PFire_HoldSwim ; unused but fully implemented
 	dw Anim_PFire_Sink
 	dw Anim_PFire_Swim
 	dw Anim_PFire_Climb
@@ -1795,11 +1795,11 @@ SprMap_PFire_HoldWalk2:
 	db $81, $83
 	db $A0, $A2
 	db $8B, $8D
-AnimTbl_PCapeStatic: ;player animations for when the cape isn't animating
-	dw Anim_PCape_Stand ;unique from normal sprite 
-	dw Anim_PCape_Walk  ;larger mapping but otherwise identical
-	dw Anim_PCape_Run	  ;this suggests that the cape may have originally been part of the player sprite
-	dw Anim_PBig_Walk	  ;in game the cape is mostly a separate sprite bar a few frames
+AnimTbl_PCapeStatic: ; player animations for when the cape isn't animating
+	dw Anim_PCape_Stand ; unique from normal sprite 
+	dw Anim_PCape_Walk  ; larger mapping but otherwise identical
+	dw Anim_PCape_Run	  ; this suggests that the cape may have originally been part of the player sprite
+	dw Anim_PBig_Walk	  ; in game the cape is mostly a separate sprite bar a few frames
 	dw Anim_PBig_Jump
 	dw Anim_PCape_Spin
 	dw Anim_PBig_Turn
@@ -2074,23 +2074,23 @@ YoshiAnimTablesTbl_1:
 	dw AnimTbl_Yoshi
 	dw AnimTbl_Yoshi
 AnimTbl_Yoshi:
-	dw Anim_Yoshi_Stand ;Standing
-	dw Anim_Yoshi_Walk ;Walking
-	dw Anim_Yoshi_Run ;Running
-	dw Anim_Yoshi_Walk ;The forbidden action
-	dw Anim_Yoshi_Jump ;Jumping
-	dw Anim_Yoshi_Jump ;Spinning. Unseen for obvious reasons
-	dw Anim_Yoshi_TongueDuck ;Tongue out (Ducking)
-	dw Anim_Yoshi_Ducking ;Ducking
-	dw Anim_Yoshi_Stand ;Looking up
-	dw Anim_Yoshi_Jump ;Running jump
-	dw Anim_Yoshi_Fall ;Falling
-	dw Anim_Yoshi_Fall ;Sinking
-	dw Anim_Yoshi_Swim ;Swimming
-	dw Anim_Yoshi_Tongue ;Tongue out (Idle)
-	dw Anim_Yoshi_TongueWalk ;Tongue out (While moving)
-	dw Anim_Yoshi_Jump ;Flying. Technically used, although rarely seen due to a control bug
-	dw Anim_Yoshi_Stand ;Victory pose.
+	dw Anim_Yoshi_Stand ; Standing
+	dw Anim_Yoshi_Walk ; Walking
+	dw Anim_Yoshi_Run ; Running
+	dw Anim_Yoshi_Walk ; The forbidden action
+	dw Anim_Yoshi_Jump ; Jumping
+	dw Anim_Yoshi_Jump ; Spinning. Unseen for obvious reasons
+	dw Anim_Yoshi_TongueDuck ; Tongue out (Ducking)
+	dw Anim_Yoshi_Ducking ; Ducking
+	dw Anim_Yoshi_Stand ; Looking up
+	dw Anim_Yoshi_Jump ; Running jump
+	dw Anim_Yoshi_Fall ; Falling
+	dw Anim_Yoshi_Fall ; Sinking
+	dw Anim_Yoshi_Swim ; Swimming
+	dw Anim_Yoshi_Tongue ; Tongue out (Idle)
+	dw Anim_Yoshi_TongueWalk ; Tongue out (While moving)
+	dw Anim_Yoshi_Jump ; Flying. Technically used, although rarely seen due to a control bug
+	dw Anim_Yoshi_Stand ; Victory pose.
 Anim_Yoshi_Stand:
 	dw SprMap_Yoshi_Stand
 	db $0A
@@ -2966,8 +2966,8 @@ pnt3_CF14:
 	db $00
 	db $00
 	db $00
-;SPECIAL WARP DATA
-;This is used for special warps such as the bonus room and cannon pipes.
+; SPECIAL WARP DATA
+; This is used for special warps such as the bonus room and cannon pipes.
 SpecialWarpSettings:
 	dw pnt3_D07C
 	dw pnt3_D080
@@ -3032,15 +3032,15 @@ SpecialWarpCoords:
 	dw SPWarp_BonusRoomPos
 	dw SPWarp_6_3_CannonPos
 	dw pnt3_D1DC
-;Warp Level Settings Format
-;Byte 1: Level flags and ID(?)
+; Warp Level Settings Format
+; Byte 1: Level flags and ID(?)
 ; Format: UUPLLLLL
 ; >UU: Underwater bits. Which one is set is irrelevant.
 ; >P: BG Priority bit. Player priority seems to be overriden by the level being warped to.
 ; >LLLLL: Destination level ID
-;Byte 2: Tileset
-;Byte 3: Second PRG Bank
-;Byte 4: Palette ID
+; Byte 2: Tileset
+; Byte 3: Second PRG Bank
+; Byte 4: Palette ID
 pnt3_D07C:
 	db $00
 	db $00
@@ -3475,7 +3475,7 @@ SPWarp_BonusRoomPos:
 	db $00
 	db $FF
 	db $01
-;End of special warp data
+; End of special warp data
 	db $00
 	db $00
 	db $00
@@ -6098,4 +6098,4 @@ SPWarp_BonusRoomPos:
 	db $00
 	db $00
 	db $00
-	db $80 ;Why the hell is this here? Seriously, why? All this does is prevent me from padding the rest of this bank.
+	db $80 ; Why the hell is this here? Seriously, why? All this does is prevent me from padding the rest of this bank.

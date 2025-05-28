@@ -1,22 +1,22 @@
-;disassembled by BZK 6502 Disassembler
+; disassembled by BZK 6502 Disassembler
 jmp_57_A000:
 	LDA playerAction
 	CMP playerPrevAction
-	BEQ bra4_A020 ;Branch here if the player's action stays the same
-	BNE bra4_A014 ;If it doesn't, branch here
-;Unused
-	LDA playerXSpd ;unlogged
-	ROR ;unlogged
-	ROR ;unlogged
-	ROR ;unlogged
-	ROR ;unlogged
-	AND #$0F ;unlogged
-	TAX ;unlogged
-	LDA tbl4_A095,X ;unlogged
+	BEQ bra4_A020 ; Branch here if the player's action stays the same
+	BNE bra4_A014 ; If it doesn't, branch here
+; Unused
+	LDA playerXSpd ; unlogged
+	ROR ; unlogged
+	ROR ; unlogged
+	ROR ; unlogged
+	ROR ; unlogged
+	AND #$0F ; unlogged
+	TAX ; unlogged
+	LDA tbl4_A095,X ; unlogged
 bra4_A014:
-	STA playerAnim ;Update the player's animation
+	STA playerAnim ; Update the player's animation
 	LDA #$00
-	STA playerAnimFrame ;Switch to first frame of animation
+	STA playerAnimFrame ; Switch to first frame of animation
 	JSR playerAnimSub
 	JMP loc4_A03E
 bra4_A020:
@@ -29,24 +29,24 @@ bra4_A020:
 	ROR
 	AND #$0F
 	TAX
-	LDA tbl4_A095,X ;load animation from table
-	TAY ;move it to the y reg
-	JMP loc4_A035 ;jump
+	LDA tbl4_A095,X ; load animation from table
+	TAY ; move it to the y reg
+	JMP loc4_A035 ; jump
 bra4_A034:
 	TAY
 loc4_A035:
-	CPY playerAnim ;compare current animation to frame loaded from table
-	BEQ bra4_A03E ;branch if they're equal
-	STY playerAnim ;unlogged
-	JSR playerAnimSub ;unlogged
+	CPY playerAnim ; compare current animation to frame loaded from table
+	BEQ bra4_A03E ; branch if they're equal
+	STY playerAnim ; unlogged
+	JSR playerAnimSub ; unlogged
 bra4_A03E:
 loc4_A03E:
 	LDA playerAction
 	STA playerAction+1
 	JSR DecPlayerFrameLength
 	JSR LoadPlayerSprite
-	LDA #$14 ;skip past first 5 sprites in OAM
-	STA $3C ;store in player OAM tracker byte
+	LDA #$14 ; skip past first 5 sprites in OAM
+	STA $3C ; store in player OAM tracker byte
 	JSR sub3_F176
 	LDA playerAction+1
 	CMP $062C
@@ -82,8 +82,8 @@ bra4_A07F:
 	STA $4B
 bra4_A094_RTS:
 	RTS
-tbl4_A095: ;Animation table 
-	db $01 ;player walk cycle
+tbl4_A095: ; Animation table 
+	db $01 ; player walk cycle
 	db $01
 	db $01
 	db $01
@@ -133,13 +133,13 @@ bra4_A0C2:
 	STA $E4
 	RTS
 sub4_A0CD:
-	LDA gameState ;
-	CMP #$04 ;if event is set to 04, death
-	BEQ bra4_A0DC ;branch
-	CMP #$07 ;if 07, using item box
-	BEQ bra4_A118_RTS ;branch to end
-	CMP #$08 ;if 08,
-	BNE bra4_A0E0 ;branch
+	LDA gameState ; 
+	CMP #$04 ; if event is set to 04, death
+	BEQ bra4_A0DC ; branch
+	CMP #$07 ; if 07, using item box
+	BEQ bra4_A118_RTS ; branch to end
+	CMP #$08 ; if 08,
+	BNE bra4_A0E0 ; branch
 	RTS
 bra4_A0DC:
 	LDA gameSubstate
@@ -147,16 +147,16 @@ bra4_A0DC:
 bra4_A0E0:
 	LDA playerState
 	CMP #$03
-	BEQ bra4_A118_RTS ;Branch if player is climbing
+	BEQ bra4_A118_RTS ; Branch if player is climbing
 	LDA #$03
 	LDX levelWaterFlag
 	BEQ bra4_A0EF
 	LDA #$01
 bra4_A0EF:
 	STA $32
-	LDA playerMoveFlags ;
-	AND #$04 ;if player isn't jumping/swimming,
-	BEQ bra4_A119 ;branch
+	LDA playerMoveFlags ; 
+	AND #$04 ; if player isn't jumping/swimming,
+	BEQ bra4_A119 ; branch
 	LDA playerXSpd
 	BEQ bra4_A101
 	CMP #$20
@@ -164,17 +164,17 @@ bra4_A0EF:
 	INC playerXSpd
 bra4_A101:
 	LDA playerYSpd
-	SEC ;set carry
-	SBC #$03 ;
-	STA playerYSpd ;subtract 3 from the player's y speed
-	LDA #$F8 ;
-	CMP playerYSpd ;if player's y speed exceeds #$F8,
-	BCS bra4_A118_RTS ;branch
-	LDA #$02 ;sets y speed
-	STA playerYSpd ;
-	LDA playerMoveFlags ;
-	AND #$73 ;sets player to be standing (regardless of direction)
-	STA playerMoveFlags ;
+	SEC ; set carry
+	SBC #$03 ; 
+	STA playerYSpd ; subtract 3 from the player's y speed
+	LDA #$F8 ; 
+	CMP playerYSpd ; if player's y speed exceeds #$F8,
+	BCS bra4_A118_RTS ; branch
+	LDA #$02 ; sets y speed
+	STA playerYSpd ; 
+	LDA playerMoveFlags ; 
+	AND #$73 ; sets player to be standing (regardless of direction)
+	STA playerMoveFlags ; 
 bra4_A118_RTS:
 	RTS
 bra4_A119:
@@ -182,12 +182,12 @@ bra4_A119:
 	CLC
 	ADC $32
 	STA playerYSpd
-	LDA #$F8 ;
-	CMP playerYSpd ;if player's y speed exceeds #$F8,
-	BCS bra4_A118_RTS ;branch
+	LDA #$F8 ; 
+	CMP playerYSpd ; if player's y speed exceeds #$F8,
+	BCS bra4_A118_RTS ; branch
 	STA playerYSpd
 	RTS
-;UNMARKED TABLE?
+; UNMARKED TABLE?
 	db $00
 	db $01
 	db $01
@@ -222,192 +222,192 @@ bra4_A119:
 	db $01
 	db $01
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-;PLAYER SPRITES AND ANIMATION
+; PLAYER SPRITES AND ANIMATION
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-;The following code is poorly commented due to the animation bank having 3 sets of pointers and being extremely hard to follow.
+; The following code is poorly commented due to the animation bank having 3 sets of pointers and being extremely hard to follow.
 sub4_A14A:	
 	LDA playerYoshiState
-	ASL ;Multiply current yoshi status by 2
-	TAX ;Move it to the x offset
+	ASL ; Multiply current yoshi status by 2
+	TAX ; Move it to the x offset
 	LDA #$24
-	STA M90_PRG2 ;Load animation bank into 3rd slot
-;Pick Animation table
+	STA M90_PRG2 ; Load animation bank into 3rd slot
+; Pick Animation table
 	LDA lda_36_C000,X
-	STA $32 ;Get lower pointer bytes
+	STA $32 ; Get lower pointer bytes
 	LDA lda_36_C000+1,X
-	STA $33 ;Get upper pointer bytes
+	STA $33 ; Get upper pointer bytes
 	LDA playerPowerup 
 	LDY playerYoshiState
-	BNE MakePlayerAnimPtr ;Branch if the player has Yoshi
+	BNE MakePlayerAnimPtr ; Branch if the player has Yoshi
 	LDY playerHoldFlag
-	BEQ MakePlayerAnimPtr ;Branch if the player isn't carrying anything
-	CLC ;If they are
-	ADC #$05 ;Make the player use the 2nd set of animations
+	BEQ MakePlayerAnimPtr ; Branch if the player isn't carrying anything
+	CLC ; If they are
+	ADC #$05 ; Make the player use the 2nd set of animations
 	
-MakePlayerAnimPtr: ;Select player animation set
-	AND #$0F ;Mask out the lower 4 bits of the Powerup value
-	ASL ;Multiply it by 2
-	TAY ;Move it to y offset
-	LDA ($32),Y ;Load lower byte of 2nd pointer
-	STA playerAnimPtr ;store it
+MakePlayerAnimPtr: ; Select player animation set
+	AND #$0F ; Mask out the lower 4 bits of the Powerup value
+	ASL ; Multiply it by 2
+	TAY ; Move it to y offset
+	LDA ($32),Y ; Load lower byte of 2nd pointer
+	STA playerAnimPtr ; store it
 	INY
-	LDA ($32),Y ;Load upper byte of 2nd pointer
-	STA playerAnimPtr+1 ;Store it
-	RTS ;End
-;**********************************************************************************
+	LDA ($32),Y ; Load upper byte of 2nd pointer
+	STA playerAnimPtr+1 ; Store it
+	RTS ; End
+; **********************************************************************************
 DecPlayerFrameLength:
-	LDA $18 ;get the current frame duration
-	BMI AdvNextPlayerFrame ;if it's underflown(?), branch ahead
-	DEC $18 ;else decrement frame length 
-	RTS ;end
-;**********************************************************************************
-AdvNextPlayerFrame: ;if Player frame ended:
-	INC playerAnimFrame ;advance to next frame
+	LDA $18 ; get the current frame duration
+	BMI AdvNextPlayerFrame ; if it's underflown(?), branch ahead
+	DEC $18 ; else decrement frame length 
+	RTS ; end
+; **********************************************************************************
+AdvNextPlayerFrame: ; if Player frame ended:
+	INC playerAnimFrame ; advance to next frame
 playerAnimSub:
-	LDA playerAnim ;Load player's animation value
-	ASL ;multiply it by 2
-	TAY ;copy to Y 
+	LDA playerAnim ; Load player's animation value
+	ASL ; multiply it by 2
+	TAY ; copy to Y 
 	LDA #$24 	
-	STA M90_PRG2 ;Load the animation bank into the 3rd PRG slot
-;Unsure exactly what pointer it's making here (pointer is later used to create the playerFramePtr									
-	LDA (playerAnimPtr),Y ;Load the low byte 
-	STA $32 ;store it
+	STA M90_PRG2 ; Load the animation bank into the 3rd PRG slot
+; Unsure exactly what pointer it's making here (pointer is later used to create the playerFramePtr									
+	LDA (playerAnimPtr),Y ; Load the low byte 
+	STA $32 ; store it
 	INY
-	LDA (playerAnimPtr),Y ;Load the high byte 
-	STA $33 ;store it
-;Make Player Frame Pointer
-	LDA playerAnimFrame ;Load player's current animation frame
+	LDA (playerAnimPtr),Y ; Load the high byte 
+	STA $33 ; store it
+; Make Player Frame Pointer
+	LDA playerAnimFrame ; Load player's current animation frame
 	ASL
-	ASL ;multiply it by 4
-	TAY ;move it to the Y reg
-	LDA ($32),Y ;Load the low byte of the player's mapping data pointer
+	ASL ; multiply it by 4
+	TAY ; move it to the Y reg
+	LDA ($32),Y ; Load the low byte of the player's mapping data pointer
 	STA playerFramePtr	
 	INY 
-	LDA ($32),Y ;Load the high byte of the player's mapping data pointer
+	LDA ($32),Y ; Load the high byte of the player's mapping data pointer
 	STA playerFramePtr+1
-;Get Frame duration
+; Get Frame duration
 	INY	
-	LDA ($32),Y ;if next byte is positive (below 7F)
-	BPL StorePlayerFrameLength ;Check bit 7. If it's cleared, treat this byte like a frame length byte and branch.
+	LDA ($32),Y ; if next byte is positive (below 7F)
+	BPL StorePlayerFrameLength ; Check bit 7. If it's cleared, treat this byte like a frame length byte and branch.
 	AND #$7F
-	STA playerAnimFrame ;If bit 7 is set, clear it and use the resulting value as the animation loop point.
-	JMP playerAnimSub ;Restart the routine to get the next frame 
+	STA playerAnimFrame ; If bit 7 is set, clear it and use the resulting value as the animation loop point.
+	JMP playerAnimSub ; Restart the routine to get the next frame 
 StorePlayerFrameLength:
-	STA $18 ;Store the animation frame length
-	RTS ;end
-;**********************************************************************************	
-LoadPlayerSprite: ;loads the player sprite
-;Prep 	
-	LDY #$00 ;Clear Y index/set to read first byte of sprite format (sprite width)
+	STA $18 ; Store the animation frame length
+	RTS ; end
+; **********************************************************************************	
+LoadPlayerSprite: ; loads the player sprite
+; Prep 	
+	LDY #$00 ; Clear Y index/set to read first byte of sprite format (sprite width)
 	LDA #$24
-	STA M90_PRG2 ;Load animation bank into 3rd PRG slot
-;Get sprite object size
-	LDA (playerFramePtr),Y ;get width byte
-	AND #$3F ;Remove attribute bits (%00111111)
+	STA M90_PRG2 ; Load animation bank into 3rd PRG slot
+; Get sprite object size
+	LDA (playerFramePtr),Y ; get width byte
+	AND #$3F ; Remove attribute bits (%00111111)
 	STA playerWidth	
-	LDA (playerFramePtr),Y ;reload width byte
-	AND #$C0 ;remove width bits (%11000000) 
-	STA playerSprAttrs ;get attributes from width mapping (This is used for sprites that mirror such as the front facing and climbing sprites)
+	LDA (playerFramePtr),Y ; reload width byte
+	AND #$C0 ; remove width bits (%11000000) 
+	STA playerSprAttrs ; get attributes from width mapping (This is used for sprites that mirror such as the front facing and climbing sprites)
 	INY
-	LDA (playerFramePtr),Y ;get height byte
+	LDA (playerFramePtr),Y ; get height byte
 	STA playerHeight	
 	INY 
-;Get attribute pointer for the sprite's CHR bank
-	LDA (playerFramePtr),Y ;get CHR bank byte
+; Get attribute pointer for the sprite's CHR bank
+	LDA (playerFramePtr),Y ; get CHR bank byte
 	ASL 
-	TAX ;double it and move it to X
+	TAX ; double it and move it to X
 	LDA #$2F
-	STA M90_PRG2 ;load palette mapping bank into 3rd PRG slot
+	STA M90_PRG2 ; load palette mapping bank into 3rd PRG slot
 	LDA CHRSprBankAttrs,X
-	STA playerPalMappingLo ;load low byte of palette mapping pointer
+	STA playerPalMappingLo ; load low byte of palette mapping pointer
 	LDA CHRSprBankAttrs+1,X
-	STA playerPalMappingHi ;load high byte of palette mapping pointer
-;Set base mirroring 
+	STA playerPalMappingHi ; load high byte of palette mapping pointer
+; Set base mirroring 
 	LDA #$24
-	STA M90_PRG2 ;load player animation bank (bank 36) back into 3rd PRG slot
+	STA M90_PRG2 ; load player animation bank (bank 36) back into 3rd PRG slot
 	LDA playerMoveFlags
-	AND #$F0 ;get the direction the player is facing
-	EOR #$40 ;reverse it
-	STA playerSpriteFlags ;set it to player sprite mirroring
+	AND #$F0 ; get the direction the player is facing
+	EOR #$40 ; reverse it
+	STA playerSpriteFlags ; set it to player sprite mirroring
 	LDA #$00
-	STA $24 ;clear UNKNOWN
+	STA $24 ; clear UNKNOWN
 	INY ; advance to next byte of mapping (Horizontal offset)
-;Get Horizontal Offset 
+; Get Horizontal Offset 
 	LDA playerSpriteFlags
-	AND #$40 ;if player's sprite is H mirrored (facing right)
-	BNE bra4_A208 ;branch
-;Else if sprite not mirrored (facing left)
+	AND #$40 ; if player's sprite is H mirrored (facing right)
+	BNE bra4_A208 ; branch
+; Else if sprite not mirrored (facing left)
 	LDA playerSprX
 	SEC
-	SBC (playerFramePtr),Y ;subtract x position by mapping offset
-	STA playerSprXOfs ;set it as sprite X offset
+	SBC (playerFramePtr),Y ; subtract x position by mapping offset
+	STA playerSprXOfs ; set it as sprite X offset
 	LDA #$00
-	SBC #$00 ;subtract carry if present
-	STA $20 ;store it
-	JMP loc4_A218 ;Skip past next section
+	SBC #$00 ; subtract carry if present
+	STA $20 ; store it
+	JMP loc4_A218 ; Skip past next section
 	
-bra4_A208: ;If Sprite H Mirrored
+bra4_A208: ; If Sprite H Mirrored
 	LDA (playerFramePtr),Y
 	SEC
-	SBC #$08 ;subtract loaded mapping offset by 8
+	SBC #$08 ; subtract loaded mapping offset by 8
 	CLC
-	ADC playerSprX  ;add player X position to modified mapping offset
-	STA playerSprXOfs ;set it as sprite X offset	
+	ADC playerSprX  ; add player X position to modified mapping offset
+	STA playerSprXOfs ; set it as sprite X offset	
 	LDA #$00
-	ADC #$00 ;add carry if present
-	STA $20 ;store it
-;get Vertical Offset
+	ADC #$00 ; add carry if present
+	STA $20 ; store it
+; get Vertical Offset
 loc4_A218:
-	LDX #$00 ;set X to #$00
-	LDY playerHeight ;Put player height into Y
-	LDA PlayerSpriteVOffset,Y ;Load players vertical offset based on sprite height 
-	BPL bra4_A223 ;branch if offset is positive (only happens if sprite height is 00, unsure when this would ever occur though)
-	LDX #$FF ;else if offset negative, set X to #$FF
+	LDX #$00 ; set X to #$00
+	LDY playerHeight ; Put player height into Y
+	LDA PlayerSpriteVOffset,Y ; Load players vertical offset based on sprite height 
+	BPL bra4_A223 ; branch if offset is positive (only happens if sprite height is 00, unsure when this would ever occur though)
+	LDX #$FF ; else if offset negative, set X to #$FF
 	
-bra4_A223: ;offset player vertically
+bra4_A223: ; offset player vertically
 	CLC
-	ADC playerSprY ;add player vertical position to loaded vertical offset
-	STA playerSprYOfs ;set it as sprite Y offset 
-	BCC bra4_A22B ;if carry clear (result less than 255) then branch to end of routine (leaves X untouched)
-	INX ;increment X (Result: 00 or 01) (if X is #$FF this will underflow to be #$00) 
+	ADC playerSprY ; add player vertical position to loaded vertical offset
+	STA playerSprYOfs ; set it as sprite Y offset 
+	BCC bra4_A22B ; if carry clear (result less than 255) then branch to end of routine (leaves X untouched)
+	INX ; increment X (Result: 00 or 01) (if X is #$FF this will underflow to be #$00) 
 bra4_A22B:
-	STX $22 ;Unknown purpose (possibly something to do with if the players V offset puts them off screen)
-	RTS ;end
+	STX $22 ; Unknown purpose (possibly something to do with if the players V offset puts them off screen)
+	RTS ; end
 	
-PlayerSpriteVOffset: ;This table adjusts the sprite offset based on the height of the player, listed next to the offsets are the respective heights
-	db $00 ;00 (unsure when this one is used)
-	db $F8 ;01 
-	db $F0 ;02
-	db $E8 ;03
-	db $E0 ;04
-	db $D8 ;05
-	db $D0 ;06
-	db $C8 ;07
-	db $C0 ;08
-	db $B8 ;09
-	db $B0 ;0A
-	db $A8 ;0B
-	db $A0 ;0C
+PlayerSpriteVOffset: ; This table adjusts the sprite offset based on the height of the player, listed next to the offsets are the respective heights
+	db $00 ; 00 (unsure when this one is used)
+	db $F8 ; 01 
+	db $F0 ; 02
+	db $E8 ; 03
+	db $E0 ; 04
+	db $D8 ; 05
+	db $D0 ; 06
+	db $C8 ; 07
+	db $C0 ; 08
+	db $B8 ; 09
+	db $B0 ; 0A
+	db $A8 ; 0B
+	db $A0 ; 0C
 	
 ;--------------------
 ; Bubble spawning
 ;--------------------
 jmp_57_A23B:
 	LDA levelWaterFlag
-	BEQ bra4_A29E ;Branch if not underwater
+	BEQ bra4_A29E ; Branch if not underwater
 	LDA bubbleSpawnPoint
 	CMP #$E8
-	BCC bra4_A25B ;Branch if bubble spawn point is beyond vertical screen edge
+	BCC bra4_A25B ; Branch if bubble spawn point is beyond vertical screen edge
 	LDA playerXLo
-	STA bubbleX ;Spawn bubble at same X position as the player
-	LDA #-16 ;Bubble Y spawn offset (without Yoshi)
-	LDX playerYoshiState ;if player doesn't have yoshi,
-	BEQ bra4_A255 ;branch
-		LDA #-32 ;Use different vertical bubble offset if the player doesn't have Yoshi
+	STA bubbleX ; Spawn bubble at same X position as the player
+	LDA #-16 ; Bubble Y spawn offset (without Yoshi)
+	LDX playerYoshiState ; if player doesn't have yoshi,
+	BEQ bra4_A255 ; branch
+		LDA #-32 ; Use different vertical bubble offset if the player doesn't have Yoshi
 bra4_A255:
 	CLC
 	ADC playerYLo
-	STA bubbleY ;Vertically offset the bubble from the player's position
+	STA bubbleY ; Vertically offset the bubble from the player's position
 bra4_A25B:
 	LDA bubbleX
 	SEC
@@ -424,11 +424,11 @@ bra4_A25B:
 	SBC #$10
 bra4_A275:
 	STA bubbleSpawnPoint
-	STA spriteMem ;spriteMem+0, Y position
+	STA spriteMem ; spriteMem+0, Y position
 	LDA #$3E
-	STA spriteMem+1 ;Set bubble tile
+	STA spriteMem+1 ; Set bubble tile
 	LDA #$00
-	STA spriteMem+2 ;Set bubble sprite attributes
+	STA spriteMem+2 ; Set bubble sprite attributes
 	DEC bubbleY
 	DEC bubbleY
 	JSR sub4_A0B0
@@ -453,11 +453,11 @@ bra4_A29E:
 bra4_A2AC:
 	LDA #$02
 	LDY invincibilityTimer
-	BEQ bra4_A2C2 ;branch if star/invincibility timer is cleared
-	CPY #$D0 ;if timer is below #$D0,
-	BCC bra4_A2BD ;branch
-	CPY #$F6 ;if timer goes over #$F6,
-	BCS bra4_A2C2 ;branch
+	BEQ bra4_A2C2 ; branch if star/invincibility timer is cleared
+	CPY #$D0 ; if timer is below #$D0,
+	BCC bra4_A2BD ; branch
+	CPY #$F6 ; if timer goes over #$F6,
+	BCS bra4_A2C2 ; branch
 	LDA #$01
 bra4_A2BD:
 	AND frameCount	
@@ -466,380 +466,380 @@ bra4_A2C1_RTS:
 	RTS
 
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
-;MARIO SPRITE LOADERS (Main player sprites and riding Yoshi)
+; MARIO SPRITE LOADERS (Main player sprites and riding Yoshi)
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
-;This section ONLY applies to the Mario object used when riding Yoshi
-;It does not affect standard Mario, Yoshi is drawn using the PlayerSpriteBuilder routine
-;for standard Mario, start at PlayerSpriteBuilder
+; This section ONLY applies to the Mario object used when riding Yoshi
+; It does not affect standard Mario, Yoshi is drawn using the PlayerSpriteBuilder routine
+; for standard Mario, start at PlayerSpriteBuilder
 bra4_A2C2:
-	LDA playerYoshiState ;if player doesn't have yoshi,
-	BEQ bra4_A2CD ;branch to jump 
+	LDA playerYoshiState ; if player doesn't have yoshi,
+	BEQ bra4_A2CD ; branch to jump 
 	LDA playerSprY		
-	CMP #$E0 ;if player has Yoshi, check if player is in a pit 
-	BCC GetPntrRidingSprite ;if they aren't, branch
-bra4_A2CD: ;else jump
-	JMP PlayerSpriteBuilder ;starts at X positioning of sprite tiles
-;*******************************************************************************	
-GetPntrRidingSprite: ;Only do this part if player sprite isn't in a pit
+	CMP #$E0 ; if player has Yoshi, check if player is in a pit 
+	BCC GetPntrRidingSprite ; if they aren't, branch
+bra4_A2CD: ; else jump
+	JMP PlayerSpriteBuilder ; starts at X positioning of sprite tiles
+; *******************************************************************************	
+GetPntrRidingSprite: ; Only do this part if player sprite isn't in a pit
 	LDA playerPowerup
-	ASL ;double it
-	TAX ;move it to X
-	LDA tbl4_A5E7,X ;(This table only has one entry but is followed by another table)
-	STA $38 ;store low byte
-	LDA tbl4_A5E7+1,X ;load the high byte from the next table 
-	STA $39  ;store high byte
-	LDX playerAction+1 ;get the previous player action as an offset
-	LDA PlayerRidingActionTable,X ;use that to select an action for the player whilst riding 
-	BNE bra4_A2E9 ;if loaded value not 00, branch to next check
-	JMP loc4_A4FC ;else, jump (checks Y speed and if down is held, unknown use)
+	ASL ; double it
+	TAX ; move it to X
+	LDA tbl4_A5E7,X ; (This table only has one entry but is followed by another table)
+	STA $38 ; store low byte
+	LDA tbl4_A5E7+1,X ; load the high byte from the next table 
+	STA $39  ; store high byte
+	LDX playerAction+1 ; get the previous player action as an offset
+	LDA PlayerRidingActionTable,X ; use that to select an action for the player whilst riding 
+	BNE bra4_A2E9 ; if loaded value not 00, branch to next check
+	JMP loc4_A4FC ; else, jump (checks Y speed and if down is held, unknown use)
 bra4_A2E9:
 	CMP #$01
-	BNE bra4_A2F0 ;if value not 01, branch to next check
-	JMP loc4_A50E ;if it is, jump (clears a variable and masks another for a check, unknown use)
+	BNE bra4_A2F0 ; if value not 01, branch to next check
+	JMP loc4_A50E ; if it is, jump (clears a variable and masks another for a check, unknown use)
 bra4_A2F0:
 	CMP #$02
-	BNE bra4_A2F7 ;if value not 02, branch to next check
-	JMP loc4_A523 ;if it is, jump
+	BNE bra4_A2F7 ; if value not 02, branch to next check
+	JMP loc4_A523 ; if it is, jump
 bra4_A2F7: 
-	LDY #$08 ;Set Y offset to #$08 (adjusts offset for loading CHR bank)
-;coderoll
-;*******************************************************************************
-LoadRidingSprite: ;Mario Riding sprite loader
-	LDA ($38),Y ;load CHR bank from pointer (Y is set before the code gets here from one of 3 locations)
-	STA chrSpriteBank1 ;Store in the first sprite bank slot (loads required CHR bank for player riding sprites)
+	LDY #$08 ; Set Y offset to #$08 (adjusts offset for loading CHR bank)
+; coderoll
+; *******************************************************************************
+LoadRidingSprite: ; Mario Riding sprite loader
+	LDA ($38),Y ; load CHR bank from pointer (Y is set before the code gets here from one of 3 locations)
+	STA chrSpriteBank1 ; Store in the first sprite bank slot (loads required CHR bank for player riding sprites)
 	TYA
-	PHA ;Push Y into the stack 
-;Get next pointer (unsure of exact use)
-	LDA playerPowerup ;Get player powerup
+	PHA ; Push Y into the stack 
+; Get next pointer (unsure of exact use)
+	LDA playerPowerup ; Get player powerup
 	ASL ; double it
-	TAY ;Move it to Y for use as new offset 
-	LDA tbl4_A60C,Y ;Load low byte from table
+	TAY ; Move it to Y for use as new offset 
+	LDA tbl4_A60C,Y ; Load low byte from table
 	STA $34 
-	LDA tbl4_A60C+1,Y ;Load high byte from table
+	LDA tbl4_A60C+1,Y ; Load high byte from table
 	STA $35 
 	
-	PLA ;retrive Y from earlier 
-	PHA ;put it back in the stack
-	ASL ;double it
-	TAY ;move it to Y
-;Make Mapping Pointer in scratch RAM
-	LDA ($34),Y ;offset loaded address by Y 
-	STA $32 ;store
+	PLA ; retrive Y from earlier 
+	PHA ; put it back in the stack
+	ASL ; double it
+	TAY ; move it to Y
+; Make Mapping Pointer in scratch RAM
+	LDA ($34),Y ; offset loaded address by Y 
+	STA $32 ; store
 	INY 
-	LDA ($34),Y ;offset loaded address by Y
-	STA $33 ;store
+	LDA ($34),Y ; offset loaded address by Y
+	STA $33 ; store
 	
 	LDA #$00
-	STA $2E ;clear $2E, used as mapping offset later
-	PLA ;retrive Y from earlier from stack 
-	TAY ;Move it back to Y 
-;Get Y offset	
+	STA $2E ; clear $2E, used as mapping offset later
+	PLA ; retrive Y from earlier from stack 
+	TAY ; Move it back to Y 
+; Get Y offset	
 	LDA playerSprY
 	SEC
-	SBC PlayerRidingSpriteYOffset,Y ;Load the players riding sprite offset and subtract it from the players sprite Y position
-	LDX playerAction+1 ;get previous player action as X offset
+	SBC PlayerRidingSpriteYOffset,Y ; Load the players riding sprite offset and subtract it from the players sprite Y position
+	LDX playerAction+1 ; get previous player action as X offset
 	CLC
-	ADC tbl4_A59B,X ;Get data from table and add it to the result of prior sum  (Unknown function, probably additional Y adjustment)
-	LDX playerPowerup ;get player powerup
-	BNE bra4_A336 ;Branch if the player has a powerup 
+	ADC tbl4_A59B,X ; Get data from table and add it to the result of prior sum  (Unknown function, probably additional Y adjustment)
+	LDX playerPowerup ; get player powerup
+	BNE bra4_A336 ; Branch if the player has a powerup 
 	SEC
-	SBC #$03 ;else subtract 03 from the Y offset	
+	SBC #$03 ; else subtract 03 from the Y offset	
 
 bra4_A336: 
-	STA playerMetaspriteVAlign ;store results of sum as the vertical alignment for the sprite
-	LDA playerMoveFlags ;get current movement direction
-	EOR playerSprAttrs ;flip bits against sprite attributes
-	AND #$40 ;determine sprite mirror direction
-	BNE bra4_A361 ;If player is facing left, branch
- ;else if sprite is mirrored (facing right)
+	STA playerMetaspriteVAlign ; store results of sum as the vertical alignment for the sprite
+	LDA playerMoveFlags ; get current movement direction
+	EOR playerSprAttrs ; flip bits against sprite attributes
+	AND #$40 ; determine sprite mirror direction
+	BNE bra4_A361 ; If player is facing left, branch
+ ; else if sprite is mirrored (facing right)
 	LDA playerSprX 
 	CLC
-	ADC RidingRightXoffset,Y ;using prior Y offset, get base X position and add to Player sprite X position 
-	STA playerMetaspriteHAlign ;store it as the horizontal alignment for the sprite
+	ADC RidingRightXoffset,Y ; using prior Y offset, get base X position and add to Player sprite X position 
+	STA playerMetaspriteHAlign ; store it as the horizontal alignment for the sprite
 	
-loc4_A348: ;load/store tile ID (facing right)
-	LDA $2E ;get mapping offset 
+loc4_A348: ; load/store tile ID (facing right)
+	LDA $2E ; get mapping offset 
 	CLC
-	ADC #$10 ;Add #$10 to $2E (note that it doesn't store this in $2E)
-	TAY ;move result to Y (selects reversed tile order for mirrored sprite)
-	LDX $3C ;Set X to OAM tracker byte
-	LDA ($32),Y ;Load tile ID from mapping
+	ADC #$10 ; Add #$10 to $2E (note that it doesn't store this in $2E)
+	TAY ; move result to Y (selects reversed tile order for mirrored sprite)
+	LDX $3C ; Set X to OAM tracker byte
+	LDA ($32),Y ; Load tile ID from mapping
 	CMP #$FF
-	BEQ bra4_A3BC ;if loaded a null tile branch to end section of routine
-	AND #$3F ;else, mask out attribute bits
-	STA spriteMem+1,X ;Store tile ID
-	PHA ;push A to stack
-	LDA #$40 ;set A for mirrored sprite
-	JMP loc4_A37B ;jump 
-;********************************************************	
-;If sprite not mirrored (facing left)
+	BEQ bra4_A3BC ; if loaded a null tile branch to end section of routine
+	AND #$3F ; else, mask out attribute bits
+	STA spriteMem+1,X ; Store tile ID
+	PHA ; push A to stack
+	LDA #$40 ; set A for mirrored sprite
+	JMP loc4_A37B ; jump 
+; ********************************************************	
+; If sprite not mirrored (facing left)
 bra4_A361: 
 	LDA playerSprX 
 	CLC
-	ADC RidingLeftXoffset,Y ;offset table by Y to get data and add to Player sprite X position
-	STA playerMetaspriteHAlign ;store it as the horizontal alignment for the sprite
+	ADC RidingLeftXoffset,Y ; offset table by Y to get data and add to Player sprite X position
+	STA playerMetaspriteHAlign ; store it as the horizontal alignment for the sprite
 
-bra4_A369: ;load/store tile ID (facing left)
-	LDY $2E ;Set Y to mapping offset
-	LDX $3C ;Set X to OAM tracker byte
-	LDA ($32),Y ;Load tile ID from mapping
+bra4_A369: ; load/store tile ID (facing left)
+	LDY $2E ; Set Y to mapping offset
+	LDX $3C ; Set X to OAM tracker byte
+	LDA ($32),Y ; Load tile ID from mapping
 	CMP #$FF
-	BEQ bra4_A3BC ;if loaded a null tile branch to end section of routine
-	AND #$3F ;else, mask out attribute bits
-	STA spriteMem+1,X ;Store the tile ID
-	PHA ;push A to stack
-	LDA #$00 ;set A for unmirrored sprite
-;********************************************************	
-;Get Attributes 	
+	BEQ bra4_A3BC ; if loaded a null tile branch to end section of routine
+	AND #$3F ; else, mask out attribute bits
+	STA spriteMem+1,X ; Store the tile ID
+	PHA ; push A to stack
+	LDA #$00 ; set A for unmirrored sprite
+; ********************************************************	
+; Get Attributes 	
 loc4_A37B:
-	STA $38 ;Store sprite mirroring in temp byte (#$40 or #$00)
+	STA $38 ; Store sprite mirroring in temp byte (#$40 or #$00)
 	LDA chrSpriteBank1
-	ASL ;double value CHR bank in Spritebank1 (Mario bank x 2)
-	TAY ;set as Y offset 
+	ASL ; double value CHR bank in Spritebank1 (Mario bank x 2)
+	TAY ; set as Y offset 
 	LDA #$2F 
-	STA M90_PRG2 ;load attribute bank into 2nd PRG slot
-;get attribute pointer	
+	STA M90_PRG2 ; load attribute bank into 2nd PRG slot
+; get attribute pointer	
 	LDA CHRSprBankAttrs,Y
-	STA $34 ;get lowbyte
+	STA $34 ; get lowbyte
 	LDA CHRSprBankAttrs+1,Y
-	STA $35 ;get highbyte
-	PLA ;retrieve A from earlier (tile ID)
-	TAY ;move it to Y
-	LDA ($34),Y ;use tile ID to select respective attribute data
-	ORA $38 ;ORA against sprite mirroring 						 
-	ORA $06E0 ;ORA again with UNKNOWN (This flips the tiles as needed)
-	STA spriteMem+2,X ;store tile attributes
-;********************************************************	
-;Position Tiles X
+	STA $35 ; get highbyte
+	PLA ; retrieve A from earlier (tile ID)
+	TAY ; move it to Y
+	LDA ($34),Y ; use tile ID to select respective attribute data
+	ORA $38 ; ORA against sprite mirroring 						 
+	ORA $06E0 ; ORA again with UNKNOWN (This flips the tiles as needed)
+	STA spriteMem+2,X ; store tile attributes
+; ********************************************************	
+; Position Tiles X
 	LDA #$24
-	STA M90_PRG2 ;load player animation bank into 2nd PRG slot
-	LDY $2E ;set Y offset to $2E (unknown use) Mapping offset?
+	STA M90_PRG2 ; load player animation bank into 2nd PRG slot
+	LDY $2E ; set Y offset to $2E (unknown use) Mapping offset?
 	LDA playerMetaspriteHAlign
 	CLC
-	ADC PlayerRidingTileHorizPos,Y ;add tile H position to sprite H alignment 
-	STA spriteMem+3,X ;store X position 
-;********************************************************	
-;Position Tiles Y	
+	ADC PlayerRidingTileHorizPos,Y ; add tile H position to sprite H alignment 
+	STA spriteMem+3,X ; store X position 
+; ********************************************************	
+; Position Tiles Y	
 	LDA playerMetaspriteVAlign
 	CLC
-	ADC PlayerRidingTileVertPos,Y ;add tile V position to sprite V alignment
-	STA spriteMem,X ;store Y position
-;********************************************************		
-	TXA ;move X ($3C) to A
+	ADC PlayerRidingTileVertPos,Y ; add tile V position to sprite V alignment
+	STA spriteMem,X ; store Y position
+; ********************************************************		
+	TXA ; move X ($3C) to A
 	CLC
 	ADC #$04
-	STA $3C ;add one tile to OAM tracker byte
+	STA $3C ; add one tile to OAM tracker byte
 bra4_A3BC: 
-	INC $2E ;increment Mapping offset
+	INC $2E ; increment Mapping offset
 	LDA $2E
-	CMP #$10 ;these sprites are forced to each have #$10 (16) tiles it would appear
-	BCS bra4_A3CF ;If it exceeds #$10, branch to PlayerSpriteBuilder (build Yoshi sprite)
-	LDA playerMoveFlags ;get current movement direction
-	EOR playerSprAttrs ;flip bits against sprite attributes
-	AND #$40 ;determine sprite mirror direction
-	BNE bra4_A369 ;If player facing left branch to respective get next tile ID
-	JMP loc4_A348 ;else if facing right, branch to respective get next tile ID
-;************************************************************************************************
-;End of Mario Riding sprite builder
-;************************************************************************************************	
+	CMP #$10 ; these sprites are forced to each have #$10 (16) tiles it would appear
+	BCS bra4_A3CF ; If it exceeds #$10, branch to PlayerSpriteBuilder (build Yoshi sprite)
+	LDA playerMoveFlags ; get current movement direction
+	EOR playerSprAttrs ; flip bits against sprite attributes
+	AND #$40 ; determine sprite mirror direction
+	BNE bra4_A369 ; If player facing left branch to respective get next tile ID
+	JMP loc4_A348 ; else if facing right, branch to respective get next tile ID
+; ************************************************************************************************
+; End of Mario Riding sprite builder
+; ************************************************************************************************	
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-===-=-=-=-==-=-=-=-=-=-=--
-;MAIN PLAYER SPRITE BUILDER
+; MAIN PLAYER SPRITE BUILDER
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-===-=-=-=-==-=-=-=-=-=-=--
 bra4_A3CF:
-PlayerSpriteBuilder: ;creates standard Mario or Yoshi sprites (riding sprites have their own routine)
+PlayerSpriteBuilder: ; creates standard Mario or Yoshi sprites (riding sprites have their own routine)
 	LDA playerSpriteFlags
-	AND #$40 ;determine player mirror direction
+	AND #$40 ; determine player mirror direction
 	BEQ bra4_A3F5 ; branch ahead if direction left
-;**************************************************************************************	
-;Else player facing RIGHT START (sprite mirrored as tiles face left)
-	LDA playerSprXOfs ;get X position offset for player sprite
-	LDX #$00 ;clear X (column storage buffer offset)
+; **************************************************************************************	
+; Else player facing RIGHT START (sprite mirrored as tiles face left)
+	LDA playerSprXOfs ; get X position offset for player sprite
+	LDX #$00 ; clear X (column storage buffer offset)
 	BEQ bra4_A3E2 ; branch, always
-;****************************************************
-;Ok so there are a total of two writes to $20
-;They store the carry bit when calculating the X offset for the sprite
-;As far as I can tell $20 is always #$00
-;Seems like a waste of a byte and I'm not sure of its use
-;****************************************************
-SpaceColumnNegative: ;This is for reversing sprite columns when facing right 
+; ****************************************************
+; Ok so there are a total of two writes to $20
+; They store the carry bit when calculating the X offset for the sprite
+; As far as I can tell $20 is always #$00
+; Seems like a waste of a byte and I'm not sure of its use
+; ****************************************************
+SpaceColumnNegative: ; This is for reversing sprite columns when facing right 
 	SEC
 	SBC #$08
-	BCS bra4_A3E2 ;if playerSprXOfs exceed #$08, skip ahead (only space columns by 8 pixels)
-	DEC $20 ;otherwise decrement $20 (unknown use)
-;****************************************************
-bra4_A3E2: ;if player facing right, it will jump here first
-	LDY $20 ;load $20 into Y (unknown use)
-	BEQ bra4_A3EC ;If #$00, branch to store column alignment
-;Else $20 not 00
-	LDY #$FF ;set Y to #$FF 
-	STY $41,X ;store #$FF in metaspriteColumnumnAlignment (unknown use, hide column??)
-	BMI bra4_A3EE ;branch on minus, always (advance to next column)
+	BCS bra4_A3E2 ; if playerSprXOfs exceed #$08, skip ahead (only space columns by 8 pixels)
+	DEC $20 ; otherwise decrement $20 (unknown use)
+; ****************************************************
+bra4_A3E2: ; if player facing right, it will jump here first
+	LDY $20 ; load $20 into Y (unknown use)
+	BEQ bra4_A3EC ; If #$00, branch to store column alignment
+; Else $20 not 00
+	LDY #$FF ; set Y to #$FF 
+	STY $41,X ; store #$FF in metaspriteColumnumnAlignment (unknown use, hide column??)
+	BMI bra4_A3EE ; branch on minus, always (advance to next column)
 	
-bra4_A3EC: ;store column alignment
+bra4_A3EC: ; store column alignment
 	STA $41,X ; store playerSprXOfs in metaspriteColumnumnAlignment 
-;****************************************************	
+; ****************************************************	
 bra4_A3EE: 
-	INX ;increment X (move to next column storage buffer byte)
-	CPX playerWidth ;compare X to player width
-	BCC SpaceColumnNegative  ;if X < Player width, branch to subtraction (reverse tile order for face right) (branch backwards)
-	BCS bra4_A413 ;if X > player width, branch to Y positioning 	(branch ahead)
-;****************************************************	
-bra4_A3F5: ;if player facing LEFT else START here
-	LDA playerSprXOfs ;get X position offset for player sprite
-	LDX #$00 ;clear X (column storage buffer offset)
-	BEQ bra4_A402 ;Always
-;****************************************************	
-SpaceColumnPositive: ;This is for spacing sprite columns when facing left ;not used on initialise of routine
+	INX ; increment X (move to next column storage buffer byte)
+	CPX playerWidth ; compare X to player width
+	BCC SpaceColumnNegative  ; if X < Player width, branch to subtraction (reverse tile order for face right) (branch backwards)
+	BCS bra4_A413 ; if X > player width, branch to Y positioning 	(branch ahead)
+; ****************************************************	
+bra4_A3F5: ; if player facing LEFT else START here
+	LDA playerSprXOfs ; get X position offset for player sprite
+	LDX #$00 ; clear X (column storage buffer offset)
+	BEQ bra4_A402 ; Always
+; ****************************************************	
+SpaceColumnPositive: ; This is for spacing sprite columns when facing left ; not used on initialise of routine
 	CLC
 	ADC #$08
-	BCC bra4_A402 ;if less than #$08, skip ahead (only space columns by 8 pixels)
-	INC $20 ;otherwise increment $20 (unknown use)
-;****************************************************		
+	BCC bra4_A402 ; if less than #$08, skip ahead (only space columns by 8 pixels)
+	INC $20 ; otherwise increment $20 (unknown use)
+; ****************************************************		
 bra4_A402:
-	LDY $20 ;load $20 into Y (unknown use)
-	BEQ bra4_A40C ;If #$00, branch ahead to store column alignment
-;Else $20 not 00
-	LDY #$FF ;set Y to #$FF 
-	STY $41,X ;store #$FF in metaspriteColumnumnAlignment (unknown use, hide column??)
-	BMI bra4_A40E ;branch on minus, always (advance to next column)
+	LDY $20 ; load $20 into Y (unknown use)
+	BEQ bra4_A40C ; If #$00, branch ahead to store column alignment
+; Else $20 not 00
+	LDY #$FF ; set Y to #$FF 
+	STY $41,X ; store #$FF in metaspriteColumnumnAlignment (unknown use, hide column??)
+	BMI bra4_A40E ; branch on minus, always (advance to next column)
 	
-bra4_A40C: ;store column alignment
+bra4_A40C: ; store column alignment
 	STA $41,X ; store playerSprXOfs in metaspriteColumnumnAlignment 
-;****************************************************
+; ****************************************************
 bra4_A40E:
-	INX ;increment X (move to next column storage buffer byte)
-	CPX playerWidth ;compare X to player width
-	BCC SpaceColumnPositive ;if X < Player width, branch to addition (tile order for face left) (branch backwards)
-;Else coderoll
-;****************************	
+	INX ; increment X (move to next column storage buffer byte)
+	CPX playerWidth ; compare X to player width
+	BCC SpaceColumnPositive ; if X < Player width, branch to addition (tile order for face left) (branch backwards)
+; Else coderoll
+; ****************************	
 ; Position Y
-;****************************	
-;equivalent code for Y positioning		
+; ****************************	
+; equivalent code for Y positioning		
 bra4_A413:
-	LDA playerSprYOfs ;get Y position offset for player sprite
-	LDX #$00 ;clear X (row storage buffer offset)
-	BEQ bra4_A422 ;always 
-;****************************************************
-SpaceRowsVertically: ;this spaces the rows of the sprite (starts from the top, adding moves the position downwards)
+	LDA playerSprYOfs ; get Y position offset for player sprite
+	LDX #$00 ; clear X (row storage buffer offset)
+	BEQ bra4_A422 ; always 
+; ****************************************************
+SpaceRowsVertically: ; this spaces the rows of the sprite (starts from the top, adding moves the position downwards)
 	CLC
-	ADC #$08 ;lower row position by 8 pixels
-	STA playerMetaspriteVAlign ;store playerSprYOfs as vertical tile alignment 
-	BCC bra4_A422 ;branch on carry clear
-	INC $22 ;else carry set, increment $22 (unknown use)
-;****************************************************	
-bra4_A422: ;START here
-	LDY $22 ;load $22 (unknown use)
-	BEQ bra4_A42C ;If #$00, branch ahead to immediate store
-;Else $22 not 00	
-	LDY #$FF ;set Y to #$FF 
-	STY $B2,X ;store #$FF in metaspriteRowAlignment (unknown use, hide row??)
-	BMI bra4_A438 ;branch on minus, always (advance to next row)
+	ADC #$08 ; lower row position by 8 pixels
+	STA playerMetaspriteVAlign ; store playerSprYOfs as vertical tile alignment 
+	BCC bra4_A422 ; branch on carry clear
+	INC $22 ; else carry set, increment $22 (unknown use)
+; ****************************************************	
+bra4_A422: ; START here
+	LDY $22 ; load $22 (unknown use)
+	BEQ bra4_A42C ; If #$00, branch ahead to immediate store
+; Else $22 not 00	
+	LDY #$FF ; set Y to #$FF 
+	STY $B2,X ; store #$FF in metaspriteRowAlignment (unknown use, hide row??)
+	BMI bra4_A438 ; branch on minus, always (advance to next row)
 	
 bra4_A42C:
-	STA playerMetaspriteVAlign ;store playerSprYOfs as vertical tile alignment 
+	STA playerMetaspriteVAlign ; store playerSprYOfs as vertical tile alignment 
 	CMP #$C0 
-	BCC bra4_A434 ;if it's less than #$C0, branch to store row 
-	LDA #$00 ;else if exceed #$C0, set row position to 00 (might be for screen wrapping tiles?)
+	BCC bra4_A434 ; if it's less than #$C0, branch to store row 
+	LDA #$00 ; else if exceed #$C0, set row position to 00 (might be for screen wrapping tiles?)
 bra4_A434:
-	STA $B2,X ;store in metaspriteColumnumnAlignment 
-	LDA playerMetaspriteVAlign ;get updated vertical tile alignment
-;****************************************************
+	STA $B2,X ; store in metaspriteColumnumnAlignment 
+	LDA playerMetaspriteVAlign ; get updated vertical tile alignment
+; ****************************************************
 bra4_A438:
-	INX ;increment X
+	INX ; increment X
 	CPX playerHeight 
-	BCC SpaceRowsVertically ;if X < Player height, repeat routine
-;Else X >= playerHeight	
+	BCC SpaceRowsVertically ; if X < Player height, repeat routine
+; Else X >= playerHeight	
 	LDA #$04 
-	STA $40 ;set $40 to #$04 (unknown use)
+	STA $40 ; set $40 to #$04 (unknown use)
 	LDA #$00
-	STA $3E ;clear $3E (width loop counter)
-	STA $3F ;clear $3F (height loop counter)
-	TAX ;set X to #$00
-;****************************************************
-;Align and store tiles
-bra4_A448: ;load row alignment 
-	LDA $B2,X ;get alignment for first row
+	STA $3E ; clear $3E (width loop counter)
+	STA $3F ; clear $3F (height loop counter)
+	TAX ; set X to #$00
+; ****************************************************
+; Align and store tiles
+bra4_A448: ; load row alignment 
+	LDA $B2,X ; get alignment for first row
 	CMP #$FF
-	BNE bra4_A458 ;if it's not #$FF, branch ahead
-	LDA $40 ;else if it is FF, load $40 (unknown use)
+	BNE bra4_A458 ; if it's not #$FF, branch ahead
+	LDA $40 ; else if it is FF, load $40 (unknown use)
 	CLC
-	ADC playerWidth ;add playerWidth to $40 
-	STA $40 ;store result in $40 (unknown use)
+	ADC playerWidth ; add playerWidth to $40 
+	STA $40 ; store result in $40 (unknown use)
 	JMP loc4_A4B2 ; Jump to increment height loop counter
 	
-bra4_A458: ;if row alignment not #$FF
-	STA playerMetaspriteVAlign ;store row aligment as metasprite V aligment
+bra4_A458: ; if row alignment not #$FF
+	STA playerMetaspriteVAlign ; store row aligment as metasprite V aligment
 	LDA #$00
-	STA $3E ;clear $3E (unknown use)
-	TAX ;set X to #$00
-;********************
-bra4_A45F: ;load column spacing
-	LDA $41,X ;load column spacing (X=0 first time we get here)
-	CMP #$FF  ;if loaded value is #$FF
-	BEQ bra4_A4A8 ;Branch to increment width loop counter
-;else if column spacing not #$FF
-	STA playerMetaspriteHAlign ;store column aligment as metasprite H aligment
-	LDX $3C ;load OAM tracker byte into X
-	LDY $40 ;load $40 (unknown use)
+	STA $3E ; clear $3E (unknown use)
+	TAX ; set X to #$00
+; ********************
+bra4_A45F: ; load column spacing
+	LDA $41,X ; load column spacing (X=0 first time we get here)
+	CMP #$FF  ; if loaded value is #$FF
+	BEQ bra4_A4A8 ; Branch to increment width loop counter
+; else if column spacing not #$FF
+	STA playerMetaspriteHAlign ; store column aligment as metasprite H aligment
+	LDX $3C ; load OAM tracker byte into X
+	LDY $40 ; load $40 (unknown use)
 	LDA #$24
-	STA M90_PRG2 ;load player animation bank into 3rd PRG slot
-	LDA (playerFramePtr),Y ;Load tile ID from mapping
-	CMP #$FF ;if loaded value is #$FF (null tile)
-	BEQ bra4_A4A8 ;branch to increment width loop counter
-	ORA $24 ;else set some bits against $24 (unknown use, might be for tile mirroring?)
-	AND #$3F ;Mask out mirroring bits
-	LDY playerYoshiState ;put Yoshi status into Y
-	BEQ PlayerOAMmanager ;branch to Player OAM manager if no Yoshi
-	ORA #$40 ;else set H mirroring bit (%01000000) (why?)
+	STA M90_PRG2 ; load player animation bank into 3rd PRG slot
+	LDA (playerFramePtr),Y ; Load tile ID from mapping
+	CMP #$FF ; if loaded value is #$FF (null tile)
+	BEQ bra4_A4A8 ; branch to increment width loop counter
+	ORA $24 ; else set some bits against $24 (unknown use, might be for tile mirroring?)
+	AND #$3F ; Mask out mirroring bits
+	LDY playerYoshiState ; put Yoshi status into Y
+	BEQ PlayerOAMmanager ; branch to Player OAM manager if no Yoshi
+	ORA #$40 ; else set H mirroring bit (%01000000) (why?)
 	
 PlayerOAMmanager: 
-	STA spriteMem+1,X ;store tile ID(/mirroring bit, though it's useless here)
-	AND #$3F ;Mask out mirroring bits
-	TAY ;transfer masked tile ID to Y
+	STA spriteMem+1,X ; store tile ID(/mirroring bit, though it's useless here)
+	AND #$3F ; Mask out mirroring bits
+	TAY ; transfer masked tile ID to Y
 	LDA #$2F
-	STA M90_PRG2 ;load attribute bank into 3rd PRG slot
+	STA M90_PRG2 ; load attribute bank into 3rd PRG slot
 	LDA (playerPalMappingLo),Y
-	ORA playerSpriteFlags ;set mirroring for whole sprite 
-	EOR playerSprAttrs ;flip mirroring bits against sprite attributes
-	ORA $06E0 ;set some bits against unknown
-	STA spriteMem+2,X ;store attributes
+	ORA playerSpriteFlags ; set mirroring for whole sprite 
+	EOR playerSprAttrs ; flip mirroring bits against sprite attributes
+	ORA $06E0 ; set some bits against unknown
+	STA spriteMem+2,X ; store attributes
 	LDA playerMetaspriteHAlign
-	STA spriteMem+3,X ;store horizontal position
+	STA spriteMem+3,X ; store horizontal position
 	LDA playerMetaspriteVAlign
-	STA spriteMem,X ;store vertical position 
-	TXA ;move X to A
+	STA spriteMem,X ; store vertical position 
+	TXA ; move X to A
 	CLC
-	ADC #$04 ;
-	STA $3C ;add one tile to OAM tracker byte
-;***********************************************	
+	ADC #$04 ; 
+	STA $3C ; add one tile to OAM tracker byte
+; ***********************************************	
 bra4_A4A8: 
-	INC $40 ;Increment $40 (unknown use)
-	INC $3E ;Increment $3E (width loop counter)
+	INC $40 ; Increment $40 (unknown use)
+	INC $3E ; Increment $3E (width loop counter)
 	LDX $3E 
-	CPX playerWidth ;Compare $3E with playerWidth
-	BCC bra4_A45F ;if X < playerWidth, go to load column spacing (repeat routine to build sprite)
+	CPX playerWidth ; Compare $3E with playerWidth
+	BCC bra4_A45F ; if X < playerWidth, go to load column spacing (repeat routine to build sprite)
 
-loc4_A4B2: ;else $3E >= playerWidth
-	INC $3F ;increment $3F (height loop counter)
+loc4_A4B2: ; else $3E >= playerWidth
+	INC $3F ; increment $3F (height loop counter)
 	LDX $3F
-	CPX playerHeight ;compare $3F with playerHeight
-	BCC bra4_A448 ;If X < playerHeight, got to load row alignment 
-;Else
-	LDY #$02 ;Offset for Mario's frame pointer (CHR bank byte)
+	CPX playerHeight ; compare $3F with playerHeight
+	BCC bra4_A448 ; If X < playerHeight, got to load row alignment 
+; Else
+	LDY #$02 ; Offset for Mario's frame pointer (CHR bank byte)
 	LDA #$24
-	STA M90_PRG2 ;Load player Animation bank 
-	LDA (playerFramePtr),Y ;load CHR bank from the mapping
+	STA M90_PRG2 ; Load player Animation bank 
+	LDA (playerFramePtr),Y ; load CHR bank from the mapping
 	LDY playerYoshiState
-	BEQ bra4_A4CA ;if no Yoshi, skip to store bank
-	LDY #$01 ;else if Yoshi, set to store in 2nd slot 
+	BEQ bra4_A4CA ; if no Yoshi, skip to store bank
+	LDY #$01 ; else if Yoshi, set to store in 2nd slot 
 bra4_A4CA:
-	STA chrSpriteBank1,Y ;Store selected CHR bank in slot 1 (Mario) or slot 2 (Yoshi)
-	RTS ;end
+	STA chrSpriteBank1,Y ; Store selected CHR bank in slot 1 (Mario) or slot 2 (Yoshi)
+	RTS ; end
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
 ; END OF MARIO SPRITE LOADER
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
 ;-=-=-=-=-=-==-=-=-=--=-=
-;Music to play after invincibility 
+; Music to play after invincibility 
 ;-=-=-=-=-=-==-=-=-=--=-=	
 sub4_A4CE:
 	LDA worldNumber
@@ -852,77 +852,77 @@ sub4_A4CE:
 	STA sndMusic
 	RTS
 LevelMusicQueue:
-	db mus_Overworld, mus_ForestofIllusion, mus_Title, mus_Castle ;World 1
-	db mus_Overworld, mus_ForestofIllusion, mus_GhostHouse, mus_Castle ;World 2
-	db mus_Underground, mus_Underwater, mus_GhostHouse, mus_Castle ;World 3
-	db mus_Overworld, mus_ForestofIllusion, mus_Title, mus_Castle ;World 4
-	db mus_Overworld, mus_GhostHouse, mus_Underwater, mus_Castle ;World 5
-	db mus_Overworld, mus_GhostHouse, mus_ForestofIllusion, mus_Castle ;World 6
-	db mus_Overworld, mus_ForestofIllusion, mus_GhostHouse, mus_Castle ;World 7
-	db mus_Overworld ;Yoshi's House
+	db mus_Overworld, mus_ForestofIllusion, mus_Title, mus_Castle ; World 1
+	db mus_Overworld, mus_ForestofIllusion, mus_GhostHouse, mus_Castle ; World 2
+	db mus_Underground, mus_Underwater, mus_GhostHouse, mus_Castle ; World 3
+	db mus_Overworld, mus_ForestofIllusion, mus_Title, mus_Castle ; World 4
+	db mus_Overworld, mus_GhostHouse, mus_Underwater, mus_Castle ; World 5
+	db mus_Overworld, mus_GhostHouse, mus_ForestofIllusion, mus_Castle ; World 6
+	db mus_Overworld, mus_ForestofIllusion, mus_GhostHouse, mus_Castle ; World 7
+	db mus_Overworld ; Yoshi's House
 	db $60
 ;-=-=-=-=-=--=-=-=-=-=-=-
-;END 
+; END 
 ;-=-=-=-=-=-==-=-=-=--=-=
-;**********************************
-;Related to player riding sprite loader
-;**********************************
-loc4_A4FC: ;Unsure of purpose
-	LDY #$00 ;clear Y
-	LDA playerYSpd ;if player is moving vertically,
-	BNE bra4_A50B ;branch to jump (LoadRidingSprite)
-	LDA btnHeld ;else
-	AND #dirDown ;if down not held,
-	BEQ bra4_A50B ;branch to jump (LoadRidingSprite)
-	LDY #$06 ;else if player isn't moving vertically and down is held set Y to #$06
+; **********************************
+; Related to player riding sprite loader
+; **********************************
+loc4_A4FC: ; Unsure of purpose
+	LDY #$00 ; clear Y
+	LDA playerYSpd ; if player is moving vertically,
+	BNE bra4_A50B ; branch to jump (LoadRidingSprite)
+	LDA btnHeld ; else
+	AND #dirDown ; if down not held,
+	BEQ bra4_A50B ; branch to jump (LoadRidingSprite)
+	LDY #$06 ; else if player isn't moving vertically and down is held set Y to #$06
 bra4_A50B:	
-	JMP LoadRidingSprite ;Jump to load Player riding sprite	
-;**********************************	
-loc4_A50E: ;Unsure of purpose
+	JMP LoadRidingSprite ; Jump to load Player riding sprite	
+; **********************************	
+loc4_A50E: ; Unsure of purpose
 	LDA #$00
-	STA $0629 ;clear Unknown
-	LDA objFrameCount ;get unknown2
-	AND #$08 ;Mask it (%00001000)
-	BEQ bra4_A51E ;if masked bit is 00, branch (set Y as 01)
-	LDY #$00 ;else set Y as 00 (adjusts offset for loading CHR bank)
-	BEQ bra4_A520 ;branch to jump (LoadRidingSprite)
+	STA $0629 ; clear Unknown
+	LDA objFrameCount ; get unknown2
+	AND #$08 ; Mask it (%00001000)
+	BEQ bra4_A51E ; if masked bit is 00, branch (set Y as 01)
+	LDY #$00 ; else set Y as 00 (adjusts offset for loading CHR bank)
+	BEQ bra4_A520 ; branch to jump (LoadRidingSprite)
 bra4_A51E:
-	LDY #$01 ;set Y as 01 (adjusts offset for loading CHR bank)
+	LDY #$01 ; set Y as 01 (adjusts offset for loading CHR bank)
 bra4_A520:
-	JMP LoadRidingSprite  ;Jump to load Player riding sprite
-;**********************************	
-loc4_A523: ;Unsure of purpose
+	JMP LoadRidingSprite  ; Jump to load Player riding sprite
+; **********************************	
+loc4_A523: ; Unsure of purpose
 	LDA playerYoshiState
 	CMP #$02
-	BCC bra4_A537 ;if Yoshi Status < #$02, branch ahead 
-	LDY #$00 ;else clear Y
+	BCC bra4_A537 ; if Yoshi Status < #$02, branch ahead 
+	LDY #$00 ; else clear Y
 	LDA btnHeld
 	AND #dirDown
-	BEQ bra4_A555 ;if down isn't held, branch 
-	LDY #$07 ;if it is, set Y to 07 (adjusts offset for loading CHR bank)
-	BNE bra4_A555 ;branch to jump, always (LoadRidingSprite)
+	BEQ bra4_A555 ; if down isn't held, branch 
+	LDY #$07 ; if it is, set Y to 07 (adjusts offset for loading CHR bank)
+	BNE bra4_A555 ; branch to jump, always (LoadRidingSprite)
 	
-bra4_A537: ;if Yoshi Status < #$02
-	LDY $0629 ;load unknown into Y
+bra4_A537: ; if Yoshi Status < #$02
+	LDY $0629 ; load unknown into Y
 	LDA btnHeld
 	AND #dirDown
-	BEQ bra4_A547 ;if down isn't held, branch 
-	LDX tbl4_A571,Y ;if it is, load from table (unknown use)
-	JMP loc4_A54A ;skip next instruction
-bra4_A547: ;if down isn't held
-	LDX tbl4_A558,Y ;load from table (unknown use)
-loc4_A54A: ;if down is held
-	BPL bra4_A553 ;if value loaded was positive, branch ahead
-	LDA #$00 ;else
-	STA $0629 ;clear unknown
-	LDX #$04 ;set X to #$04
+	BEQ bra4_A547 ; if down isn't held, branch 
+	LDX tbl4_A571,Y ; if it is, load from table (unknown use)
+	JMP loc4_A54A ; skip next instruction
+bra4_A547: ; if down isn't held
+	LDX tbl4_A558,Y ; load from table (unknown use)
+loc4_A54A: ; if down is held
+	BPL bra4_A553 ; if value loaded was positive, branch ahead
+	LDA #$00 ; else
+	STA $0629 ; clear unknown
+	LDX #$04 ; set X to #$04
 bra4_A553:
-	TXA ;move it to A
-	TAY ;move it to Y (why do it this way??)
+	TXA ; move it to A
+	TAY ; move it to Y (why do it this way??)
 bra4_A555:
 	JMP LoadRidingSprite
-;**********************************	
-tbl4_A558: ;loaded from by bra4_A547
+; **********************************	
+tbl4_A558: ; loaded from by bra4_A547
 	db $00
 	db $00
 	db $03
@@ -948,7 +948,7 @@ tbl4_A558: ;loaded from by bra4_A547
 	db $04
 	db $04
 	db $80
-tbl4_A571: ;loaded from by bra4_A537
+tbl4_A571: ; loaded from by bra4_A537
 	db $04
 	db $04
 	db $05
@@ -975,23 +975,23 @@ tbl4_A571: ;loaded from by bra4_A537
 	db $04
 	db $80
 PlayerRidingActionTable:
-	db $00 ;standing
-	db $01 ;walking
-	db $01 ;running
-	db $01 ;unused
-	db $00 ;jump
-	db $02 ;spinning (unused)
-	db $02 ;unused
-	db $00 ;ducking
-	db $00 ;looking up (unused)
-	db $00 ;leap
-	db $00 ;falling
-	db $00 ;falling (underwater)
-	db $00 ;swimming
-	db $02 ;yoshi tongue out
-	db $02 ;yoshi tongue out (while moving)
-	db $00 ;flying
-	db $03 ;victory pose
+	db $00 ; standing
+	db $01 ; walking
+	db $01 ; running
+	db $01 ; unused
+	db $00 ; jump
+	db $02 ; spinning (unused)
+	db $02 ; unused
+	db $00 ; ducking
+	db $00 ; looking up (unused)
+	db $00 ; leap
+	db $00 ; falling
+	db $00 ; falling (underwater)
+	db $00 ; swimming
+	db $02 ; yoshi tongue out
+	db $02 ; yoshi tongue out (while moving)
+	db $00 ; flying
+	db $03 ; victory pose
 tbl4_A59B:
 	db $00
 	db $00
@@ -1011,20 +1011,20 @@ tbl4_A59B:
 	db $00
 	db $00
 PlayerRidingTileHorizPos:
-	db $00, $08, $10, $18 ;1st row
-	db $00, $08, $10, $18 ;2nd row
-	db $00, $08, $10, $18 ;3rd row
-	db $00, $08, $10, $18 ;4th row
+	db $00, $08, $10, $18 ; 1st row
+	db $00, $08, $10, $18 ; 2nd row
+	db $00, $08, $10, $18 ; 3rd row
+	db $00, $08, $10, $18 ; 4th row
 PlayerRidingTileVertPos:
-	db $00, $00, $00, $00 ;1st column
-	db $08, $08, $08, $08 ;2nd column
-	db $10, $10, $10, $10 ;3rd column
-	db $18, $18, $18, $18 ;4th column
+	db $00, $00, $00, $00 ; 1st column
+	db $08, $08, $08, $08 ; 2nd column
+	db $10, $10, $10, $10 ; 3rd column
+	db $18, $18, $18, $18 ; 4th column
 PlayerRidingSpriteYOffset:
-	db $28, $29 ;walking
-	db $24, $28, $24, $24 ;pointing
-	db $2A ;ducking
-	db $25, $28 ;unknown
+	db $28, $29 ; walking
+	db $24, $28, $24, $24 ; pointing
+	db $2A ; ducking
+	db $25, $28 ; unknown
 RidingRightXoffset:
 	db $ED
 	db $ED
@@ -1512,7 +1512,7 @@ ofs_A7AC:
 	db $FF
 	db $4F
 	db $4E
-;ofs_A7CC: (Unused?)
+; ofs_A7CC: (Unused?)
 	db $FF
 	db $FF
 	db $50
@@ -1788,411 +1788,411 @@ ofs_A8BE:
 	db $E7
 	db $FF
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-;CAPE CODE START
+; CAPE CODE START
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-	
 jmp_57_A8DE:
 	LDA playerPowerup
 	CMP #$03 
-	BCS bra4_A8E6 ;if player has cape (static or moving), branch ahead
-	RTS ;else, end
-bra4_A8E6: ;if player has cape
+	BCS bra4_A8E6 ; if player has cape (static or moving), branch ahead
+	RTS ; else, end
+bra4_A8E6: ; if player has cape
 	LDA playerPowerupBuffer
-	BMI bra4_A909_RTS ;end if powerup buffer is negative (I think this prevents cape from appearing if the player is changing powerups)
-	BEQ bra4_A8F4 ;if it's 00, branch ahead 
-;else if it's positive but not 00	
+	BMI bra4_A909_RTS ; end if powerup buffer is negative (I think this prevents cape from appearing if the player is changing powerups)
+	BEQ bra4_A8F4 ; if it's 00, branch ahead 
+; else if it's positive but not 00	
 	LDA frameCount	
-	AND #$04 ;Mask framecount %00000100
-	BEQ bra4_A90A ;if 4 frames pass, branch ahead
-	RTS ;else end
+	AND #$04 ; Mask framecount %00000100
+	BEQ bra4_A90A ; if 4 frames pass, branch ahead
+	RTS ; else end
 	
-bra4_A8F4:;if powerup buffer 00
-	LDA #$02 ;set bitmask to #$02
+bra4_A8F4:; if powerup buffer 00
+	LDA #$02 ; set bitmask to #$02
 	LDY invincibilityTimer 
-	BEQ bra4_A90A ;if invincibility timer 00, go to pit check
-;If invincibility timer not 00
-	CPY #$D0 ;else compare timer to #$D0
-	BCC bra4_A905 ;if it's less than #$D0, branch ahead to frame check
-;else 
-	CPY #$F6 ;if Y >= #$D0, compare to #$F6
-	BCS bra4_A90A ;if Y >= to #$F6, branch to pit check
-;else
+	BEQ bra4_A90A ; if invincibility timer 00, go to pit check
+; If invincibility timer not 00
+	CPY #$D0 ; else compare timer to #$D0
+	BCC bra4_A905 ; if it's less than #$D0, branch ahead to frame check
+; else 
+	CPY #$F6 ; if Y >= #$D0, compare to #$F6
+	BCS bra4_A90A ; if Y >= to #$F6, branch to pit check
+; else
 	LDA #$01; else if Y < #$F6, set bitmask to #$01
 
 bra4_A905:
-	AND frameCount ;mask #$02 or #$01 against the frame count
-	BEQ bra4_A90A ;branch to pit check when they match (1 or 2 frames pass)
+	AND frameCount ; mask #$02 or #$01 against the frame count
+	BEQ bra4_A90A ; branch to pit check when they match (1 or 2 frames pass)
 bra4_A909_RTS:
-	RTS ;if they don't match, end
+	RTS ; if they don't match, end
 	
 bra4_A90A: 
-	LDA playerSprY ;
-	CMP #$E0 ;if player goes below screen/pit,
-	BCS bra4_A93D_RTS ;end
-;Else
-	LDY #$04 ;load "cape moving" state into y reg
-	LDX playerAction+1 ;load previous player action into X reg 
-	LDA playerYoshiState ;
-	CMP #$01 ;if player doesn't have yoshi (#$01= Yoshi with empty mouth)
-	BCC bra4_A929 ;branch to load animation (essentially if it's equal to 00, why write it like that?)
-;Else if Player has Yoshi
+	LDA playerSprY ; 
+	CMP #$E0 ; if player goes below screen/pit,
+	BCS bra4_A93D_RTS ; end
+; Else
+	LDY #$04 ; load "cape moving" state into y reg
+	LDX playerAction+1 ; load previous player action into X reg 
+	LDA playerYoshiState ; 
+	CMP #$01 ; if player doesn't have yoshi (#$01= Yoshi with empty mouth)
+	BCC bra4_A929 ; branch to load animation (essentially if it's equal to 00, why write it like that?)
+; Else if Player has Yoshi
 	LDA playerXSpd		
-	BNE bra4_A923 ;;if player has x speed, branch ahead
-	LDA playerYSpd ;
-	BEQ bra4_A929 ;if player has no y speed, branch ahead
-;if player has Y speed, coderoll	
+	BNE bra4_A923 ; ; if player has x speed, branch ahead
+	LDA playerYSpd ; 
+	BEQ bra4_A929 ; if player has no y speed, branch ahead
+; if player has Y speed, coderoll	
 
-bra4_A923: ;if player has Yoshi 
-	LDA YoshiCapeAnimTable,X;load action from table
-	JMP loc4_A92C ;jump to store animation value
+bra4_A923: ; if player has Yoshi 
+	LDA YoshiCapeAnimTable,X; load action from table
+	JMP loc4_A92C ; jump to store animation value
 	
-bra4_A929: ;if no Yoshi or Yoshi with no X speed or Y speed
-	LDA CapeAnimTable,X ;pick which cape animation to use
+bra4_A929: ; if no Yoshi or Yoshi with no X speed or Y speed
+	LDA CapeAnimTable,X ; pick which cape animation to use
 
 loc4_A92C: 
-	STA $34 ;store loaded animation value
-	BMI bra4_A936 ;branch ahead if a value above $7F is loaded
-	STY playerPowerup ;else, set cape to moving (#$04 loaded earlier)
-	JSR sub4_A14A ;jump to sub (check if Yoshi present or player carrying objects)
-;coderoll on return
+	STA $34 ; store loaded animation value
+	BMI bra4_A936 ; branch ahead if a value above $7F is loaded
+	STY playerPowerup ; else, set cape to moving (#$04 loaded earlier)
+	JSR sub4_A14A ; jump to sub (check if Yoshi present or player carrying objects)
+; coderoll on return
 bra4_A936:
-	LDY playerPowerup ;get player powerup
-	CPY #$04 ;if cape is moving,
-	BEQ CapeAnimCyclePick ;branch to pick which animation cycle to use
+	LDY playerPowerup ; get player powerup
+	CPY #$04 ; if cape is moving,
+	BEQ CapeAnimCyclePick ; branch to pick which animation cycle to use
 bra4_A93D_RTS:
-	RTS ;else if cape static, end
+	RTS ; else if cape static, end
 	
-;****************************************************	
-;Pick cape animation cycle to use
-CapeAnimCyclePick: ;CapeAnimCyclePick; If cape is moving
-	LDA $34 ;get cape animation frame (loaded from respective animation table)
-	AND #%00001111 ;mask out upper 4 bits
-	BNE bra4_A947 ;branch if not zero
-	JMP loc4_AB16 ;jump if it was (standing cape cycle code)
+; ****************************************************	
+; Pick cape animation cycle to use
+CapeAnimCyclePick: ; CapeAnimCyclePick; If cape is moving
+	LDA $34 ; get cape animation frame (loaded from respective animation table)
+	AND #%00001111 ; mask out upper 4 bits
+	BNE bra4_A947 ; branch if not zero
+	JMP loc4_AB16 ; jump if it was (standing cape cycle code)
 bra4_A947:
-	CMP #$01 ;if #$01 wasn't loaded,
-	BNE bra4_A94E ;branch
-	JMP loc4_AB3C ;jump if it was (jumping cape cycle code)
+	CMP #$01 ; if #$01 wasn't loaded,
+	BNE bra4_A94E ; branch
+	JMP loc4_AB3C ; jump if it was (jumping cape cycle code)
 bra4_A94E:
-	CMP #$02 ;if #$02 wasn't loaded,
-	BNE bra4_A955 ;branch
-	JMP loc4_AB70 ;jump if it was (set cape to static?? code)
+	CMP #$02 ; if #$02 wasn't loaded,
+	BNE bra4_A955 ; branch
+	JMP loc4_AB70 ; jump if it was (set cape to static?? code)
 bra4_A955:
-	CMP #$03 ;if #$03 wasn't loaded,
-	BNE bra4_A95C ;branch
-	JMP loc4_AB82 ;jump if it was (?? code)
+	CMP #$03 ; if #$03 wasn't loaded,
+	BNE bra4_A95C ; branch
+	JMP loc4_AB82 ; jump if it was (?? code)
 bra4_A95C:
-	CMP #$04 ;if #$04 wasn't loaded,
-	BNE bra4_A963 ;branch
-	JMP loc4_ABB0 ;jump if it was (?? code)
-bra4_A963: ;
-	LDY $0627 ;get cape frame picker for use as offset
-	LDA WalkCapeCycle,Y ;select frame from WalkCycle
-	JMP loc4_AB42 ;jump ahead (check if loaded value was positive like with the others)
-;****************************************************
-;(code returns to here from those above jumps using another jump)
+	CMP #$04 ; if #$04 wasn't loaded,
+	BNE bra4_A963 ; branch
+	JMP loc4_ABB0 ; jump if it was (?? code)
+bra4_A963: ; 
+	LDY $0627 ; get cape frame picker for use as offset
+	LDA WalkCapeCycle,Y ; select frame from WalkCycle
+	JMP loc4_AB42 ; jump ahead (check if loaded value was positive like with the others)
+; ****************************************************
+; (code returns to here from those above jumps using another jump)
 loc4_A96C: ; check for Yoshi 
 	LDX playerYoshiState
-	BEQ BuildCapeSprNoYoshi ;branch if no Yoshi
-	JMP BuildCapeSprYoshiVer ;else, jump to Yoshi segment
-;*********************************************************
-;If Player Doesn't Have Yoshi START here
-;;********************************************************	
-BuildCapeSprNoYoshi: ;if player doesn't have Yoshi
-	PHA ;push value from A to stack 
+	BEQ BuildCapeSprNoYoshi ; branch if no Yoshi
+	JMP BuildCapeSprYoshiVer ; else, jump to Yoshi segment
+; *********************************************************
+; If Player Doesn't Have Yoshi START here
+; ; ********************************************************	
+BuildCapeSprNoYoshi: ; if player doesn't have Yoshi
+	PHA ; push value from A to stack 
 	LDA playerPowerup 
 	ASL ; double player powerup (result should be 06 or 08 depending on cape state)
-	TAY ;transfer it to Y
-	LDA tbl4_AC41,Y ;this table has 5 identical entries, it simply points to the cape frame selection table   
-	STA $34 ;store the low byte
-	LDA tbl4_AC41+1,Y ;meaning this segment is probably redundant 
-	STA $35 ;store the high byte
+	TAY ; transfer it to Y
+	LDA tbl4_AC41,Y ; this table has 5 identical entries, it simply points to the cape frame selection table   
+	STA $34 ; store the low byte
+	LDA tbl4_AC41+1,Y ; meaning this segment is probably redundant 
+	STA $35 ; store the high byte
 	
-	PLA ;get value from stack
-	PHA ;copy it back to the stack again
-	ASL ;double it
-	TAY ;transfer it to Y
-	LDA ($34),Y ;get cape mapping pointer from table the above section pointed to
-	STA $32 ;store low byte
-	INY ;advance to next byte of mapping pointer
+	PLA ; get value from stack
+	PHA ; copy it back to the stack again
+	ASL ; double it
+	TAY ; transfer it to Y
+	LDA ($34),Y ; get cape mapping pointer from table the above section pointed to
+	STA $32 ; store low byte
+	INY ; advance to next byte of mapping pointer
 	LDA ($34),Y
-	STA $33 ; ;store high byte
-;**************************************************
-;Position cape vertically
-;**************************************************
+	STA $33 ; ; store high byte
+; **************************************************
+; Position cape vertically
+; **************************************************
 	LDA #$00 
-	STA $2E ;clear $2E UNKNOWN use
-	PLA ;get value from stack again
-	TAY ;move it to Y	
+	STA $2E ; clear $2E UNKNOWN use
+	PLA ; get value from stack again
+	TAY ; move it to Y	
 	LDA playerSprY  
 	SEC
-	SBC CapeVoffset,Y ;subtract value loaded from sprite Y position
-	LDX playerAction+1 ;Load previous player action 
+	SBC CapeVoffset,Y ; subtract value loaded from sprite Y position
+	LDX playerAction+1 ; Load previous player action 
 	CLC
-	ADC CapeVoffset2,X  ;add secondary vertical offset??? to playerSprY (this table is mostly 00 except for one entry of 06)
-;As far as I can tell both tables affect vertical position, I'm guessing this is a weird way of fixing something
+	ADC CapeVoffset2,X  ; add secondary vertical offset??? to playerSprY (this table is mostly 00 except for one entry of 06)
+; As far as I can tell both tables affect vertical position, I'm guessing this is a weird way of fixing something
 	LDX playerPowerup
-	BNE bra4_A9AB ;branch if the player has a powerup (?? not exactly sure the purpose of this)
-	SEC ;unlogged ;if they dont,
-	SBC #$03 ;unlogged  ;subtract 3 from the vertical offset
-;**************************************************	
-;Position Cape Horizontally
-;**************************************************
-bra4_A9AB: ;
-	STA playerMetaspriteVAlign ;This is being reused for the capes alignment since this is calculated per frame for both
+	BNE bra4_A9AB ; branch if the player has a powerup (?? not exactly sure the purpose of this)
+	SEC ; unlogged ; if they dont,
+	SBC #$03 ; unlogged  ; subtract 3 from the vertical offset
+; **************************************************	
+; Position Cape Horizontally
+; **************************************************
+bra4_A9AB: ; 
+	STA playerMetaspriteVAlign ; This is being reused for the capes alignment since this is calculated per frame for both
 	LDA playerMoveFlags
 	EOR playerSprAttrs 
-	AND #$40 ;determine mirror direction 
-	BNE bra4_A9D6 ;if player isn't H mirrored (facing left), branch
-;else player is mirrored (facing right)
+	AND #$40 ; determine mirror direction 
+	BNE bra4_A9D6 ; if player isn't H mirrored (facing left), branch
+; else player is mirrored (facing right)
 	LDA playerSprX
 	CLC
-	ADC tbl4_AC1D,Y ;calculate cape X position
-	STA playerMetaspriteHAlign ;store it 
-;**************************************************
-loc4_A9BD: ;If player H mirrored, (facing right) 
-	LDA $2E ;mapping byte offset
+	ADC tbl4_AC1D,Y ; calculate cape X position
+	STA playerMetaspriteHAlign ; store it 
+; **************************************************
+loc4_A9BD: ; If player H mirrored, (facing right) 
+	LDA $2E ; mapping byte offset
 	CLC
-	ADC #$04 ;add 4 (select mirrored mappings)
-	TAY ;move it to Y
-	LDX $3C ;put OAM tracker byte into X
-	LDA ($32),Y ;get tile ID from mapping
+	ADC #$04 ; add 4 (select mirrored mappings)
+	TAY ; move it to Y
+	LDX $3C ; put OAM tracker byte into X
+	LDA ($32),Y ; get tile ID from mapping
 	CMP #$FF 
-	BEQ bra4_AA31 ;branch if it's a null tile
-;Load tile ID
-	AND #$3F ;else strip attributes
-	STA spriteMem+1,X ;store tile ID 
-	PHA ;push masked tile ID to stack
-	LDA #$40 ;set mirroring for tile (mirrored)
-	JMP loc4_A9F0 ;go to Cape OAM manager 
-;**************************************************
-bra4_A9D6: ;If player not H mirrored (facing left)
+	BEQ bra4_AA31 ; branch if it's a null tile
+; Load tile ID
+	AND #$3F ; else strip attributes
+	STA spriteMem+1,X ; store tile ID 
+	PHA ; push masked tile ID to stack
+	LDA #$40 ; set mirroring for tile (mirrored)
+	JMP loc4_A9F0 ; go to Cape OAM manager 
+; **************************************************
+bra4_A9D6: ; If player not H mirrored (facing left)
 	LDA playerSprX
 	CLC
-	ADC tbl4_AC26,Y ;calculate cape X position
-	STA playerMetaspriteHAlign ;store it 
-;coderoll into load tile ID
-;**************************************************
-;Cape object OAM manager
-;**************************************************
-bra4_A9DE: ;get unmirrored tile ID (code loops back to here but starts ahead of it)
-	LDY $2E ;Unknown
-	LDX $3C ;OAM tracker byte
-	LDA ($32),Y ;get tile ID from mapping
+	ADC tbl4_AC26,Y ; calculate cape X position
+	STA playerMetaspriteHAlign ; store it 
+; coderoll into load tile ID
+; **************************************************
+; Cape object OAM manager
+; **************************************************
+bra4_A9DE: ; get unmirrored tile ID (code loops back to here but starts ahead of it)
+	LDY $2E ; Unknown
+	LDX $3C ; OAM tracker byte
+	LDA ($32),Y ; get tile ID from mapping
 	CMP #$FF
-	BEQ bra4_AA31 ;branch if it's a null tile
-	AND #$3F ;else strip attributes
-	STA spriteMem+1,X ;store tile ID
-	PHA ;push masked tile ID to stack
-	LDA #$00 ;set mirroing for tile (unmirrored)
-;**************************************************
-;
-;**************************************************
-loc4_A9F0: ;START HERE for cape OAM manager
-	STA $38 ;Store mirroring for tile in temp byte
-;Select attribute bank 	
+	BEQ bra4_AA31 ; branch if it's a null tile
+	AND #$3F ; else strip attributes
+	STA spriteMem+1,X ; store tile ID
+	PHA ; push masked tile ID to stack
+	LDA #$00 ; set mirroing for tile (unmirrored)
+; **************************************************
+; 
+; **************************************************
+loc4_A9F0: ; START HERE for cape OAM manager
+	STA $38 ; Store mirroring for tile in temp byte
+; Select attribute bank 	
 	LDA chrSpriteBank1	
-	ASL ;double bank ID
-	TAY ;move it to Y
+	ASL ; double bank ID
+	TAY ; move it to Y
 	LDA #$2F
-	STA M90_PRG2 ;put the attributes bank into the 2nd PRG slot
+	STA M90_PRG2 ; put the attributes bank into the 2nd PRG slot
 	LDA CHRSprBankAttrs,Y
-	STA $34 ;lowbyte of attribute pointer
+	STA $34 ; lowbyte of attribute pointer
 	LDA CHRSprBankAttrs+1,Y
-	STA $35 ;highbyte of attribute pointer 
-	PLA ;retrive masked tile ID from stack
-	TAY ;move it to Y
-	LDA ($34),Y ;load attributes 
-;probably to do with mirroring, not sure what these values contain
+	STA $35 ; highbyte of attribute pointer 
+	PLA ; retrive masked tile ID from stack
+	TAY ; move it to Y
+	LDA ($34),Y ; load attributes 
+; probably to do with mirroring, not sure what these values contain
 	ORA $38 ; use tile mirroring temp byte as bitmask to set some bits (00/40 bitmask: 1=set 0=ignore)
 	ORA $06E0 ; use ?? as bitmask to set some bits
-	STA spriteMem+2,X ;store attributes
+	STA spriteMem+2,X ; store attributes
 	
 	LDA #$24
-	STA M90_PRG2 ;load the player animation bank into the 2nd PRG slot
-	LDY $2E  ;put $2E into Y
+	STA M90_PRG2 ; load the player animation bank into the 2nd PRG slot
+	LDY $2E  ; put $2E into Y
 	LDA playerMetaspriteHAlign
 	CLC
-	ADC tbl4_AC03,Y ;add column spacing to horizontal alignment
-	STA spriteMem+3,X ;store X position
+	ADC tbl4_AC03,Y ; add column spacing to horizontal alignment
+	STA spriteMem+3,X ; store X position
 	
 	LDA playerMetaspriteVAlign
 	CLC
-	ADC tbl4_AC07,Y ;Add row spacing to vertical offset 
-	STA spriteMem,X ;store Y position
+	ADC tbl4_AC07,Y ; Add row spacing to vertical offset 
+	STA spriteMem,X ; store Y position
 	TXA
 	CLC
 	ADC #$04
-	STA $3C ;add one tile to the OAM tracker byte
+	STA $3C ; add one tile to the OAM tracker byte
 	
 bra4_AA31:
-	INC $2E ;add one to $2E (loop counter for routine)
+	INC $2E ; add one to $2E (loop counter for routine)
 	LDA $2E
 	CMP #$04 
-	BCS bra4_AA44_RTS ;if $2E >= #$04, branch to end 
+	BCS bra4_AA44_RTS ; if $2E >= #$04, branch to end 
 	LDA playerMoveFlags
 	EOR playerSprAttrs
-	AND #$40 ;determine sprite mirror
-	BNE bra4_A9DE ;if not mirrored, branch to load unmirrored tile ID
-	JMP loc4_A9BD ;if mirrored branch back to mirrored section
+	AND #$40 ; determine sprite mirror
+	BNE bra4_A9DE ; if not mirrored, branch to load unmirrored tile ID
+	JMP loc4_A9BD ; if mirrored branch back to mirrored section
 bra4_AA44_RTS:
 	RTS
-;*********************************************************
-;If Player has Yoshi START here
-;;********************************************************
-;most of this literally matches the code for if you don't have Yoshi so that's some grade A space efficiency right there
-BuildCapeSprYoshiVer: ;If the player has Yoshi 
-	PHA ;push value from A to stack 
+; *********************************************************
+; If Player has Yoshi START here
+; ; ********************************************************
+; most of this literally matches the code for if you don't have Yoshi so that's some grade A space efficiency right there
+BuildCapeSprYoshiVer: ; If the player has Yoshi 
+	PHA ; push value from A to stack 
 	LDA playerPowerup 
 	ASL ; double player powerup (result should be 06 or 08 depending on cape state)
-	TAY ;transfer it to Y
-	LDA tbl4_AC41,Y ;this table has 5 identical entries, it simply points to the cape frame selection table   
-	STA $34 ;store the low byte
-	LDA tbl4_AC41+1,Y ;meaning this segment is probably redundant 
-	STA $35 ;store the high byte
+	TAY ; transfer it to Y
+	LDA tbl4_AC41,Y ; this table has 5 identical entries, it simply points to the cape frame selection table   
+	STA $34 ; store the low byte
+	LDA tbl4_AC41+1,Y ; meaning this segment is probably redundant 
+	STA $35 ; store the high byte
 	
-	PLA ;get value from stack
-	PHA ;copy it back to the stack again
-	ASL ;double it
-	TAY ;transfer it to Y
-	LDA ($34),Y ;get cape mapping pointer from table the above section pointed to
-	STA $32 ;store low byte
-	INY ;advance to next byte of mapping pointer
+	PLA ; get value from stack
+	PHA ; copy it back to the stack again
+	ASL ; double it
+	TAY ; transfer it to Y
+	LDA ($34),Y ; get cape mapping pointer from table the above section pointed to
+	STA $32 ; store low byte
+	INY ; advance to next byte of mapping pointer
 	LDA ($34),Y
-	STA $33 ; ;store high byte
-;**************************************************
-;Position cape vertically
-;**************************************************	
+	STA $33 ; ; store high byte
+; **************************************************
+; Position cape vertically
+; **************************************************	
 	LDA #$00
-	STA $2E ;clear $2E UNKNOWN use
-	PLA ;retrive value from the stack again
-	TAY ;move it to Y
+	STA $2E ; clear $2E UNKNOWN use
+	PLA ; retrive value from the stack again
+	TAY ; move it to Y
 	LDA playerSprY
 	SEC
-	SBC CapeVoffsetYoshi,Y ;subtract Y offset 
-	LDX playerAction+1 ;get previous player action
+	SBC CapeVoffsetYoshi,Y ; subtract Y offset 
+	LDX playerAction+1 ; get previous player action
 	CLC
-	ADC CapeVoffset2,X ;add secondary vertical offset? to playerSprY (this table is mostly 00 except for one entry of 06)
+	ADC CapeVoffset2,X ; add secondary vertical offset? to playerSprY (this table is mostly 00 except for one entry of 06)
 	LDX playerPowerup
-	BNE bra4_AA7C ;branch if the player has a powerup (?? not exactly sure the purpose of this)
-	SEC ;unlogged ;if they dont,
-	SBC #$03 ;unlogged  ;subtract 3 from the vertical offset	
-;**************************************************	
-;Position Cape Horizontally
-;**************************************************
+	BNE bra4_AA7C ; branch if the player has a powerup (?? not exactly sure the purpose of this)
+	SEC ; unlogged ; if they dont,
+	SBC #$03 ; unlogged  ; subtract 3 from the vertical offset	
+; **************************************************	
+; Position Cape Horizontally
+; **************************************************
 bra4_AA7C:
-	STA playerMetaspriteVAlign ;This is being reused for the capes alignment since this is calculated per frame for both
+	STA playerMetaspriteVAlign ; This is being reused for the capes alignment since this is calculated per frame for both
 	LDA playerMoveFlags
 	EOR playerSprAttrs
-	AND #$40 ;determine mirror direction 
-	BNE bra4_AAA7 ;if player isn't H mirrored (facing left), branch
-;else player is mirrored (facing right)
+	AND #$40 ; determine mirror direction 
+	BNE bra4_AAA7 ; if player isn't H mirrored (facing left), branch
+; else player is mirrored (facing right)
 	LDA playerSprX
 	CLC
-	ADC tbl4_AC2F,Y ;calculate cape X position
-	STA playerMetaspriteHAlign ;store it 
-;**************************************************	
-loc4_AA8E: ;If player H mirrored, (facing right) 
-	LDA $2E ;mapping byte offset
+	ADC tbl4_AC2F,Y ; calculate cape X position
+	STA playerMetaspriteHAlign ; store it 
+; **************************************************	
+loc4_AA8E: ; If player H mirrored, (facing right) 
+	LDA $2E ; mapping byte offset
 	CLC
-	ADC #$04 ;add 4 (select mirrored mappings)
-	TAY ;move it to Y
-	LDX $3C ;put OAM tracker byte into X
-	LDA ($32),Y ;get tile ID from mapping
+	ADC #$04 ; add 4 (select mirrored mappings)
+	TAY ; move it to Y
+	LDX $3C ; put OAM tracker byte into X
+	LDA ($32),Y ; get tile ID from mapping
 	CMP #$FF 
-	BEQ bra4_AB02  ;branch if it's a null tile
-;Load tile ID	
-	AND #$3F ;else strip attributes
-	STA spriteMem+1,X ;store tile ID 
-	PHA ;push masked tile ID to stack
-	LDA #$40 ;set mirroring for tile (mirrored)
-	JMP loc4_AAC1 ;go to Yoshi Cape OAM manager
-;**************************************************
-bra4_AAA7: ;If player not H mirrored (facing left)
+	BEQ bra4_AB02  ; branch if it's a null tile
+; Load tile ID	
+	AND #$3F ; else strip attributes
+	STA spriteMem+1,X ; store tile ID 
+	PHA ; push masked tile ID to stack
+	LDA #$40 ; set mirroring for tile (mirrored)
+	JMP loc4_AAC1 ; go to Yoshi Cape OAM manager
+; **************************************************
+bra4_AAA7: ; If player not H mirrored (facing left)
 	LDA playerSprX
 	CLC
-	ADC tbl4_AC38,Y ;calculate cape X position
-	STA playerMetaspriteHAlign ;store it 
-;coderoll into load tile ID
-;**************************************************
-;Cape object OAM manager (Yoshi Version)
-;**************************************************	
-bra4_AAAF: ;get unmirrored tile ID (code loops back to here but starts ahead of it)
-	LDY $2E  ;Unknown
-	LDX $3C ;OAM tracker byte
-	LDA ($32),Y ;get tile ID from mapping
+	ADC tbl4_AC38,Y ; calculate cape X position
+	STA playerMetaspriteHAlign ; store it 
+; coderoll into load tile ID
+; **************************************************
+; Cape object OAM manager (Yoshi Version)
+; **************************************************	
+bra4_AAAF: ; get unmirrored tile ID (code loops back to here but starts ahead of it)
+	LDY $2E  ; Unknown
+	LDX $3C ; OAM tracker byte
+	LDA ($32),Y ; get tile ID from mapping
 	CMP #$FF
-	BEQ bra4_AB02 ;branch if it's a null tile
-	AND #$3F ;else strip attributes
-	STA spriteMem+1,X ;store tile ID
-	PHA ;push masked tile ID to stack
-	LDA #$00 ;set mirroing for tile (unmirrored)
-;**************************************************
-;
-;**************************************************
-loc4_AAC1: ;START HERE for cape OAM manager
-	STA $38 ;Store mirroring for tile in temp byte
-;Select attribute bank 	
+	BEQ bra4_AB02 ; branch if it's a null tile
+	AND #$3F ; else strip attributes
+	STA spriteMem+1,X ; store tile ID
+	PHA ; push masked tile ID to stack
+	LDA #$00 ; set mirroing for tile (unmirrored)
+; **************************************************
+; 
+; **************************************************
+loc4_AAC1: ; START HERE for cape OAM manager
+	STA $38 ; Store mirroring for tile in temp byte
+; Select attribute bank 	
 	LDA chrSpriteBank1	
-	ASL ;double bank ID
-	TAY ;move it to Y
+	ASL ; double bank ID
+	TAY ; move it to Y
 	LDA #$2F
-	STA M90_PRG2 ;put the attributes bank into the 2nd PRG slot
+	STA M90_PRG2 ; put the attributes bank into the 2nd PRG slot
 	LDA CHRSprBankAttrs,Y
-	STA $34 ;lowbyte of attribute pointer
+	STA $34 ; lowbyte of attribute pointer
 	LDA CHRSprBankAttrs+1,Y
-	STA $35 ;highbyte of attribute pointer 
-	PLA ;retrive masked tile ID from stack
-	TAY ;move it to Y
-	LDA ($34),Y ;load attributes 
-;probably to do with mirroring, not sure what these values contain
+	STA $35 ; highbyte of attribute pointer 
+	PLA ; retrive masked tile ID from stack
+	TAY ; move it to Y
+	LDA ($34),Y ; load attributes 
+; probably to do with mirroring, not sure what these values contain
 	ORA $38 ; use tile mirroring temp byte as bitmask to set some bits (00/40 bitmask: 1=set 0=ignore)
 	ORA $06E0 ; use ?? as bitmask to set some bits
-	STA spriteMem+2,X ;store attributes
+	STA spriteMem+2,X ; store attributes
 	
 	LDA #$24
-	STA M90_PRG2 ;load the player animation bank into the 2nd PRG slot
-	LDY $2E  ;put $2E into Y
+	STA M90_PRG2 ; load the player animation bank into the 2nd PRG slot
+	LDY $2E  ; put $2E into Y
 	LDA playerMetaspriteHAlign
 	CLC
-	ADC tbl4_AC03,Y ;add column spacing to horizontal alignment
-	STA spriteMem+3,X ;store X position
+	ADC tbl4_AC03,Y ; add column spacing to horizontal alignment
+	STA spriteMem+3,X ; store X position
 	
 	LDA playerMetaspriteVAlign
 	CLC
-	ADC tbl4_AC07,Y ;Add row spacing to vertical offset 
-	STA spriteMem,X ;store Y position
+	ADC tbl4_AC07,Y ; Add row spacing to vertical offset 
+	STA spriteMem,X ; store Y position
 	TXA
 	CLC
 	ADC #$04
-	STA $3C ;add one tile to the OAM tracker byte
+	STA $3C ; add one tile to the OAM tracker byte
 	
 bra4_AB02:
-	INC $2E ;add one to $2E (loop counter for routine)
+	INC $2E ; add one to $2E (loop counter for routine)
 	LDA $2E
 	CMP #$04 
-	BCS bra4_AB15_RTS ;if $2E >= #$04, branch to end 
+	BCS bra4_AB15_RTS ; if $2E >= #$04, branch to end 
 	LDA playerMoveFlags
 	EOR playerSprAttrs
-	AND #$40 ;determine sprite mirror
-	BNE bra4_AAAF ;if not mirrored, branch to load unmirrored tile ID
-	JMP loc4_AA8E ;if mirrored branch back to mirrored section
+	AND #$40 ; determine sprite mirror
+	BNE bra4_AAAF ; if not mirrored, branch to load unmirrored tile ID
+	JMP loc4_AA8E ; if mirrored branch back to mirrored section
 bra4_AB15_RTS:
 	RTS
-;******************************************************************
-;Standing cape cycle code
+; ******************************************************************
+; Standing cape cycle code
 loc4_AB16:
-	LDY $0627 ;put current cape frame offset into Y
-	LDA StandingCapeCycle,Y ;Use it to pick a frame of animation
-	BPL bra4_AB2D ;branch to jump if it's positive
-;Else if negative 
+	LDY $0627 ; put current cape frame offset into Y
+	LDA StandingCapeCycle,Y ; Use it to pick a frame of animation
+	BPL bra4_AB2D ; branch to jump if it's positive
+; Else if negative 
 	LDA #$00
-	STA $0627 ;Clear frame offset
+	STA $0627 ; Clear frame offset
 	LDA #$03
-	STA playerPowerup ;set cape to static 
-	JSR sub4_A14A ;Select if Yoshi is present or if carrying object
-	LDA #$08 ;load #$08 on return
+	STA playerPowerup ; set cape to static 
+	JSR sub4_A14A ; Select if Yoshi is present or if carrying object
+	LDA #$08 ; load #$08 on return
 bra4_AB2D:
-	JMP loc4_A96C ;jump to check for Yoshi
+	JMP loc4_A96C ; jump to check for Yoshi
 StandingCapeCycle:
 	db $07
 	db $07
@@ -2205,25 +2205,25 @@ StandingCapeCycle:
 	db $08
 	db $08
 	db $08
-	db $80 ;end of mapping (negative)
+	db $80 ; end of mapping (negative)
 	
-;******************************************************************
-;Jumping cape cycle code
+; ******************************************************************
+; Jumping cape cycle code
 loc4_AB3C:
-	LDY $0627 ;put current cape frame offset into Y
-	LDA JumpCapeCycle,Y ;Use it to pick a frame of animation
+	LDY $0627 ; put current cape frame offset into Y
+	LDA JumpCapeCycle,Y ; Use it to pick a frame of animation
 loc4_AB42:
-	BPL bra4_AB52 ;branch to jump if it's positive
-;Else if negative (end of mapping)
+	BPL bra4_AB52 ; branch to jump if it's positive
+; Else if negative (end of mapping)
 	LDA #$00
-	STA $0627 ;Clear frame offset
+	STA $0627 ; Clear frame offset
 	LDA playerXSpd
-	BNE bra4_AB50 ;branch if the player has X speed
-	STA $0628 ;if they don't, store X speed at $0628 (clear it)
+	BNE bra4_AB50 ; branch if the player has X speed
+	STA $0628 ; if they don't, store X speed at $0628 (clear it)
 bra4_AB50:
-	LDA #$00 ;clear A
+	LDA #$00 ; clear A
 bra4_AB52:
-	JMP loc4_A96C ;jump to check for Yoshi 
+	JMP loc4_A96C ; jump to check for Yoshi 
 JumpCapeCycle:
 	db $08
 	db $08
@@ -2236,7 +2236,7 @@ JumpCapeCycle:
 	db $00
 	db $00
 	db $80
-;******************************************************************	
+; ******************************************************************	
 WalkCapeCycle: 
 	db $08
 	db $08
@@ -2254,35 +2254,35 @@ WalkCapeCycle:
 	db $00
 	db $00
 	db $80
-;******************************************************************	
+; ******************************************************************	
 loc4_AB70:
 	LDA #$00
-	STA $0627 ;clear cape frame picker
+	STA $0627 ; clear cape frame picker
 	LDA #$03
-	STA playerPowerup ;set cape to static
-	JSR sub4_A14A ;;Select if Yoshi is present or if carrying object
-	LDA #$00 ;clear A
-	JMP loc4_A96C ;jump to check for Yoshi 
+	STA playerPowerup ; set cape to static
+	JSR sub4_A14A ; ; Select if Yoshi is present or if carrying object
+	LDA #$00 ; clear A
+	JMP loc4_A96C ; jump to check for Yoshi 
 loc4_AB82:
-	LDY $0627 ;Put frame picker into Y
+	LDY $0627 ; Put frame picker into Y
 	LDA playerMoveFlags
 	AND #$04 
 	BEQ bra4_AB8E
 	JMP loc4_AB3C
 bra4_AB8E:
-	LDA FallingCapeCycle,Y ;Pick a frame of animation
-	BPL bra4_ABA3 ;if it's positive branch to jump
-;Else if it's negative (end of mapping)
+	LDA FallingCapeCycle,Y ; Pick a frame of animation
+	BPL bra4_ABA3 ; if it's positive branch to jump
+; Else if it's negative (end of mapping)
 	LDA #$00
-	STA $0627 ;clear frame picker
+	STA $0627 ; clear frame picker
 	LDA playerYSpd
-	BNE bra4_ABA1 ;branch if the player has Y speed
-	LDA #$01 ;else,
-	STA $0628 ;set $0628 to #$01
+	BNE bra4_ABA1 ; branch if the player has Y speed
+	LDA #$01 ; else,
+	STA $0628 ; set $0628 to #$01
 bra4_ABA1:
-	LDA #$03 ;set A to 03
+	LDA #$03 ; set A to 03
 bra4_ABA3:
-	JMP loc4_A96C ;jump to check for Yoshi 
+	JMP loc4_A96C ; jump to check for Yoshi 
 FallingCapeCycle:
 	db $04
 	db $04
@@ -2294,12 +2294,12 @@ FallingCapeCycle:
 	db $03
 	db $03
 	db $80
-;******************************************************************	
+; ******************************************************************	
 loc4_ABB0:
 	LDA #$00
-	STA $0627 ;clear frame picker
-	LDY #$02 ;set Y to 02
-	LDA objFrameCount ;load UNKNOWN 
+	STA $0627 ; clear frame picker
+	LDY #$02 ; set Y to 02
+	LDA objFrameCount ; load UNKNOWN 
 	AND #$01 
 	BNE bra4_ABC0 
 	LDY #$07
@@ -2312,43 +2312,43 @@ bra4_ABC0:
 	LDY #$06
 bra4_ABCC:
 	TYA
-	JMP loc4_A96C ;jump to check for Yoshi 
+	JMP loc4_A96C ; jump to check for Yoshi 
 CapeAnimTable:
-	db $80 ;standing
-	db $05 ;walking
-	db $01 ;running
-	db $01 ;unused
-	db $03 ;jump
-	db $04 ;spinning
-	db $80 ;unused
-	db $80 ;ducking
-	db $80 ;looking up
-	db $01 ;leap
-	db $03 ;falling	
-	db $03 ;falling (underwater)
-	db $01 ;swimming
+	db $80 ; standing
+	db $05 ; walking
+	db $01 ; running
+	db $01 ; unused
+	db $03 ; jump
+	db $04 ; spinning
+	db $80 ; unused
+	db $80 ; ducking
+	db $80 ; looking up
+	db $01 ; leap
+	db $03 ; falling	
+	db $03 ; falling (underwater)
+	db $01 ; swimming
 	db $82	
 	db $82
-	db $01 ;flying
-	db $80 ;victory pose
+	db $01 ; flying
+	db $80 ; victory pose
 YoshiCapeAnimTable:
-	db $80 ;standing
-	db $05 ;walking
-	db $01 ;running
-	db $01 ;unused
-	db $03 ;jump
-	db $04 ;spinning
-	db $01 ;unused
-	db $80 ;ducking
-	db $80 ;looking up
-	db $01 ;leap
-	db $03 ;falling
-	db $03 ;falling (underwater)
-	db $01 ;swimming
-	db $01 ;yoshi tongue out
-	db $01 ;yoshi tongue out (while moving)
-	db $01 ;flying
-	db $80 ;victory pose
+	db $80 ; standing
+	db $05 ; walking
+	db $01 ; running
+	db $01 ; unused
+	db $03 ; jump
+	db $04 ; spinning
+	db $01 ; unused
+	db $80 ; ducking
+	db $80 ; looking up
+	db $01 ; leap
+	db $03 ; falling
+	db $03 ; falling (underwater)
+	db $01 ; swimming
+	db $01 ; yoshi tongue out
+	db $01 ; yoshi tongue out (while moving)
+	db $01 ; flying
+	db $80 ; victory pose
 CapeVoffset2:
 	db $00
 	db $00
@@ -2367,17 +2367,17 @@ CapeVoffset2:
 	db $00
 	db $00
 	db $00
-tbl4_AC03: ;Cape column spacing table
-	db $00 ;tile 1
-	db $08 ;tile 2
-	db $00 ;tile 3
-	db $08 ;tile 4
-tbl4_AC07: ;Cape row spacing table
-	db $00 ;tile 1
-	db $00 ;tile 2
-	db $08 ;tile 3
-	db $08 ;tile 4
-CapeVoffset: ;Cape vertical alignment table (Mario only)
+tbl4_AC03: ; Cape column spacing table
+	db $00 ; tile 1
+	db $08 ; tile 2
+	db $00 ; tile 3
+	db $08 ; tile 4
+tbl4_AC07: ; Cape row spacing table
+	db $00 ; tile 1
+	db $00 ; tile 2
+	db $08 ; tile 3
+	db $08 ; tile 4
+CapeVoffset: ; Cape vertical alignment table (Mario only)
 	db $11
 	db $19
 	db $11
@@ -2387,7 +2387,7 @@ CapeVoffset: ;Cape vertical alignment table (Mario only)
 	db $1E
 	db $19
 	db $17
-CapeVoffsetYoshi: ;Cape vertical alignment table (Mario riding Yoshi)
+CapeVoffsetYoshi: ; Cape vertical alignment table (Mario riding Yoshi)
 	db $1B
 	db $23
 	db $1B
@@ -2397,7 +2397,7 @@ CapeVoffsetYoshi: ;Cape vertical alignment table (Mario riding Yoshi)
 	db $29
 	db $23
 	db $21
-tbl4_AC1D: ;Cape X position offset for face right
+tbl4_AC1D: ; Cape X position offset for face right
 	db $EE
 	db $EE
 	db $EE
@@ -2407,7 +2407,7 @@ tbl4_AC1D: ;Cape X position offset for face right
 	db $EF
 	db $EE
 	db $EE
-tbl4_AC26: ;Cape X position offset for face left
+tbl4_AC26: ; Cape X position offset for face left
 	db $02
 	db $02
 	db $02
@@ -2437,13 +2437,13 @@ tbl4_AC38:
 	db $03
 	db $06
 	db $06
-tbl4_AC41: ;(Redundant?) table that just points to the cape mapping selection table
+tbl4_AC41: ; (Redundant?) table that just points to the cape mapping selection table
 	dw CapeMappingTbl
 	dw CapeMappingTbl
 	dw CapeMappingTbl
 	dw CapeMappingTbl
 	dw CapeMappingTbl
-CapeMappingTbl: ;Cape mapping selection table 1
+CapeMappingTbl: ; Cape mapping selection table 1
 	dw CapeFlap1
 	dw CapeFlap2
 	dw CapeFlap3
@@ -2451,117 +2451,117 @@ CapeMappingTbl: ;Cape mapping selection table 1
 	dw CapeFall2
 	dw CapeFall3
 	dw CapeFall4
-	dw CapeFlap4 ;also settle 1
+	dw CapeFlap4 ; also settle 1
 	dw CapeSettle2
-;Cape mappings 
-CapeFlap1: ;flapping 1
+; Cape mappings 
+CapeFlap1: ; flapping 1
 	db $01
 	db $02
 	db $03
 	db $04
-;Mirrored version	
+; Mirrored version	
 	db $02
 	db $01
 	db $04
 	db $03
-CapeFlap2: ;flapping 2
+CapeFlap2: ; flapping 2
 	db $05
 	db $06
 	db $07
 	db $08
-;Mirrored version	
+; Mirrored version	
 	db $06
 	db $05
 	db $08
 	db $07
-CapeFlap3: ;flapping 3
+CapeFlap3: ; flapping 3
 	db $0B
 	db $0C
 	db $FF
 	db $FF
-;Mirrored version	
+; Mirrored version	
 	db $0C
 	db $0B
 	db $FF
 	db $FF
-CapeFall1: ;Falling 1
+CapeFall1: ; Falling 1
 	db $0D
 	db $0E
 	db $0F
 	db $10
-;Mirrored version	
+; Mirrored version	
 	db $0E
 	db $0D
 	db $10
 	db $0F
-CapeFall2: ;Falling 2
+CapeFall2: ; Falling 2
 	db $11
 	db $12
 	db $13
 	db $14
-;Mirrored version	
+; Mirrored version	
 	db $12
 	db $11
 	db $14
 	db $13
-CapeFall3: ;Falling 3
+CapeFall3: ; Falling 3
 	db $15
 	db $16
 	db $17
 	db $18
-;Mirrored version	
+; Mirrored version	
 	db $16
 	db $15
 	db $18
 	db $17
-CapeFall4: ;Falling 4
+CapeFall4: ; Falling 4
 	db $19
 	db $1A
 	db $1B
 	db $1C
-;Mirrored version	
+; Mirrored version	
 	db $1A
 	db $19
 	db $1C
 	db $1B
-CapeFlap4: ;flapping 4 (frame 1 of settling)
+CapeFlap4: ; flapping 4 (frame 1 of settling)
 	db $FF
 	db $1D
 	db $09
 	db $0A
-;Mirrored version	
+; Mirrored version	
 	db $1D
 	db $FF
 	db $0A
 	db $09
-CapeSettle2: ;settle frame 2
+CapeSettle2: ; settle frame 2
 	db $20
 	db $FF
 	db $1E
 	db $1F
-;Mirrored version		
+; Mirrored version		
 	db $FF
 	db $20
 	db $1F
 	db $1E
-;***************************************
+; ***************************************
 jmp_57_ACA5: 
 	LDA playerState
 	CMP #$09
 	BCS bra4_ACCF
 	RTS
-jmp_57_ACAC: ;freeze flag
+jmp_57_ACAC: ; freeze flag
 	LDA freezeFlag
-	BEQ bra4_ACBE ;Branch if the game isn't frozen
+	BEQ bra4_ACBE ; Branch if the game isn't frozen
 	LDA playerMoveFlags
 	AND #$04
-	BNE bra4_ACBD_RTS ;Make sure the player isn't moving up
+	BNE bra4_ACBD_RTS ; Make sure the player isn't moving up
 	LDA #$00
 	STA playerAction
-	STA playerAnimFrame ;Reset the player's animation and action
+	STA playerAnimFrame ; Reset the player's animation and action
 bra4_ACBD_RTS:
 	RTS
-bra4_ACBE: ;If game not frozen, go through this list
+bra4_ACBE: ; If game not frozen, go through this list
 	JSR sub4_AD27
 	JSR playerItemBoxLogicSub
 	JSR sub4_AD8C
@@ -2575,14 +2575,14 @@ bra4_ACCF:
 	STA $32
 	LDA tbl4_ACDE+1,Y
 	STA $33
-	JMP ($32) ;jump to pointer
+	JMP ($32) ; jump to pointer
 tbl4_ACDE:
 	dw ofs_AE4F
 	dw ofs_AE4F
 	dw ofs_AE4F
 	dw ClimbingRoutines
 	dw ofs_B57C
-	dw ofs_B724 ;State 5 (currently unknown)
+	dw ofs_B724 ; State 5 (currently unknown)
 	dw ofs_B8DE
 	dw ofs_B8DE
 	dw ofs_B90C
@@ -2650,7 +2650,7 @@ bra4_AD49:
 	STA $0398
 	LDA playerYoshiState
 	BEQ bra4_AD76
-	JSR DismountYoshiRoutine ;unlogged
+	JSR DismountYoshiRoutine ; unlogged
 bra4_AD76:
 	LDA #$00
 	STA gameSubstate
@@ -2680,172 +2680,172 @@ bra4_AD9F:
 	BEQ bra4_ADB4_RTS
 	LDX #$00
 	LDA playerPowerup
-	CMP #$03 ;if the player doesn't have a cape,
-	BCC bra4_ADB0 ;branch
-	LDX #$04 ;set cape state
+	CMP #$03 ; if the player doesn't have a cape,
+	BCC bra4_ADB0 ; branch
+	LDX #$04 ; set cape state
 bra4_ADB0:
 	STX $E1
 bra4_ADB4_RTS:
 	RTS
 sub4_ADB3:
 	LDA playerYoshiState
-	BEQ bra4_ADE2 ;Branch if the player doesn't have Yoshi
+	BEQ bra4_ADE2 ; Branch if the player doesn't have Yoshi
 	LDA playerHurtFlag
-	BEQ bra4_ADE2 ;Branch if the damage flag isn't set
+	BEQ bra4_ADE2 ; Branch if the damage flag isn't set
 	LDA #$00
-	STA playerHurtFlag ;Otherwise, clear the damage flag
+	STA playerHurtFlag ; Otherwise, clear the damage flag
 	LDA #$40
-	STA playerYSpd ;Set player's vertical speed to 64
+	STA playerYSpd ; Set player's vertical speed to 64
 	LDA playerMoveFlags
 	ORA #$04
-	STA playerMoveFlags ;Set vertical movement upwards
+	STA playerMoveFlags ; Set vertical movement upwards
 	LDA #sfx_PowerDown
-	STA sndSfx ;Play damage sound
+	STA sndSfx ; Play damage sound
 	LDA #$03
-	STA playerAction ;Knock the player off Yoshi
+	STA playerAction ; Knock the player off Yoshi
 	LDA #$00
-	STA playerState ;Stop whatever the player was doing
+	STA playerState ; Stop whatever the player was doing
 	JSR DismountYoshiRoutine
 	LDA #$04
 	STA yoshiUnmountedState
 	STA $50
 bra4_ADE2:
 	LDA playerHoldFlag	
-	CMP playerHoldFlag2 ;if the player's carry flag is equal to its duplicate,
-	BEQ bra4_ADF0 ;branch
-	STA playerHoldFlag2 ;if not, make it equal
+	CMP playerHoldFlag2 ; if the player's carry flag is equal to its duplicate,
+	BEQ bra4_ADF0 ; branch
+	STA playerHoldFlag2 ; if not, make it equal
 	JSR sub4_A14A
 bra4_ADF0:
 	LDY invincibilityTimer
-	BEQ bra4_AE14_RTS ;Stop if the timer is empty
+	BEQ bra4_AE14_RTS ; Stop if the timer is empty
 	LDA frameCount
 	AND #$03
-	BNE bra4_AE14_RTS ;Only do this every 4 frames
+	BNE bra4_AE14_RTS ; Only do this every 4 frames
 	CPY #$01
 	BNE bra4_AE03
 	LDX #mus_ValleyofBowser
-	STX sndMusic ;Play the Valley of Bowser theme
+	STX sndMusic ; Play the Valley of Bowser theme
 bra4_AE03:
 	CPY #$F8
 	BCC bra4_AE0F
-	JSR sub4_A4CE ;Clear the timer if it goes over 248
+	JSR sub4_A4CE ; Clear the timer if it goes over 248
 	LDA #$FF
 	STA invincibilityTimer
 bra4_AE0F:
-	INC invincibilityTimer ;Increment timer
+	INC invincibilityTimer ; Increment timer
 bra4_AE14_RTS:
 	RTS 
-playerItemBoxLogicSub: ;X: Itembox, Y: Player Power
+playerItemBoxLogicSub: ; X: Itembox, Y: Player Power
 	LDA btnPressed
-	AND #btnSelect ;Continue if select pressed
+	AND #btnSelect ; Continue if select pressed
 	BEQ playerItemBoxLogicDone
 	
 	LDA #$07
-	STA gameState ;Set to event 7 (using lesser powerup from item box)
+	STA gameState ; Set to event 7 (using lesser powerup from item box)
 	
-	LDY playerPowerup ;Load current powerup into Y register
+	LDY playerPowerup ; Load current powerup into Y register
 	CPY #$04
-	BNE bra4_AE27 ;Branch if player doesn't have cape
-	LDY #$03 ;Load feather item to Y register
+	BNE bra4_AE27 ; Branch if player doesn't have cape
+	LDY #$03 ; Load feather item to Y register
 	
 bra4_AE27:
-	LDX playerItemBox ;Load item box contents into x register
-	BEQ playerItemBoxLogicDone ;If item box is empty, stop
+	LDX playerItemBox ; Load item box contents into x register
+	BEQ playerItemBoxLogicDone ; If item box is empty, stop
 	CPX #$02
-	BCS bra4_AE34 ;Branch if there's a flower in the item box
+	BCS bra4_AE34 ; Branch if there's a flower in the item box
 	CPY #$00
-	BNE bra4_AE45 ;Branch if not empty nor flower
+	BNE bra4_AE45 ; Branch if not empty nor flower
 	
 bra4_AE34:
-	STY playerItemBox ;Put powerup from from Y register in item box
+	STY playerItemBox ; Put powerup from from Y register in item box
 	LDA #$01
-	STX playerPowerup ;Use item box contents stored in the x register
-	CPX #$03 ;if the player doesn't have a cape,
-	BNE bra4_AE42 ;branch
+	STX playerPowerup ; Use item box contents stored in the x register
+	CPX #$03 ; if the player doesn't have a cape,
+	BNE bra4_AE42 ; branch
 	LDA #$81
 	
 bra4_AE42:
 	STA playerPowerupBuffer
 bra4_AE45:
 	LDA playerItemBoxSFX,X
-	STA sndSfx ;Play the corresponding sound effect for the item
+	STA sndSfx ; Play the corresponding sound effect for the item
 playerItemBoxLogicDone:
 	RTS
 playerItemBoxSFX:
-	db $00 ;Empty
-	db sfx_Powerup ;Mushroom
-	db sfx_Powerup ;Flower
-	db sfx_Feather ;Feather
+	db $00 ; Empty
+	db sfx_Powerup ; Mushroom
+	db sfx_Powerup ; Flower
+	db sfx_Feather ; Feather
 ofs_AE4F:
 	LDA playerPowerup
 	CMP #$03
-	BCC bra4_AE59 ;If the player doesn't have a cape, branch
-	JSR SpinCapeRoutine ;If they do, jump
+	BCC bra4_AE59 ; If the player doesn't have a cape, branch
+	JSR SpinCapeRoutine ; If they do, jump
 bra4_AE59:
 	LDA playerAction+1
 	ASL
-	TAY ;Get pointer for player's action value
+	TAY ; Get pointer for player's action value
 	LDA tbl4_AE6A,Y
-	STA $32 ;Load low byte of pointer
+	STA $32 ; Load low byte of pointer
 	LDA tbl4_AE6A+1,Y
-	STA $33 ;Load high byte of pointer
-	JMP ($32) ;Jump to loaded pointer location
+	STA $33 ; Load high byte of pointer
+	JMP ($32) ; Jump to loaded pointer location
 tbl4_AE6A:
-	dw PActIdle ;Idle
-	dw PActWalk ;Walking
-	dw PActRun ;Running
-	dw PActWalk ;Unused
-	dw PActJump ;Jumping
-	dw PActSpin ;Spinning/Spin Jump
-	dw PActIdle ;Unused, likely meant for turning around
-	dw PActDuck ;Ducking
-	dw PActIdle ;Looking up
-	dw PActJump ;Leaping (Run Jump)
-	dw PActJump ;Falling
-	dw PActSwim ;Sinking
-	dw PActSwim ;Swimming up
-	dw PActRun ;Climbing/Yoshi Tongue (Idle)
-	dw PActJump ;Climbing/Yoshi Tongue (Moving)
-	dw PActJump ;Flying
-	dw PActJump ;Victory Pose
+	dw PActIdle ; Idle
+	dw PActWalk ; Walking
+	dw PActRun ; Running
+	dw PActWalk ; Unused
+	dw PActJump ; Jumping
+	dw PActSpin ; Spinning/Spin Jump
+	dw PActIdle ; Unused, likely meant for turning around
+	dw PActDuck ; Ducking
+	dw PActIdle ; Looking up
+	dw PActJump ; Leaping (Run Jump)
+	dw PActJump ; Falling
+	dw PActSwim ; Sinking
+	dw PActSwim ; Swimming up
+	dw PActRun ; Climbing/Yoshi Tongue (Idle)
+	dw PActJump ; Climbing/Yoshi Tongue (Moving)
+	dw PActJump ; Flying
+	dw PActJump ; Victory Pose
 	dw pnt_AF86
 	dw PActSwim
 	dw pnt_AF92
 	
 PActIdle:
 	LDA playerYSpd
-	BNE PlayerIdleFallChk ;Branch if player is moving vertically
+	BNE PlayerIdleFallChk ; Branch if player is moving vertically
 	LDA playerMoveFlags
 	AND #$04
-	BNE PActIdleDone ;Make sure the player isn't moving up
+	BNE PActIdleDone ; Make sure the player isn't moving up
 	LDA btnHeld
-	BNE PActIdleChecks ;Branch if any button is held
-	STA playerAction ;Make the player stand still if none are held
+	BNE PActIdleChecks ; Branch if any button is held
+	STA playerAction ; Make the player stand still if none are held
 PActIdleChecks:
-	JSR LookUpDuckRoutine ;Check for ducking and looking up
-	JSR PlayerWalkRoutine ;Check for walking
-	JSR SwimHoldRoutine ;Check for swimming
-	JSR ShootFireball ;Check for shooting fireballs
+	JSR LookUpDuckRoutine ; Check for ducking and looking up
+	JSR PlayerWalkRoutine ; Check for walking
+	JSR SwimHoldRoutine ; Check for swimming
+	JSR ShootFireball ; Check for shooting fireballs
 PActIdleDone:
 	RTS
 PlayerIdleFallChk:
 	LDA playerMoveFlags
 	AND #$04
-	BNE PActIdleDone ;Branch if the player is already moving up
+	BNE PActIdleDone ; Branch if the player is already moving up
 	LDA #$0A
-	STA playerAction ;Trigger the "falling" action
+	STA playerAction ; Trigger the "falling" action
 	RTS
 PActDuck:
 	LDA playerYSpd
-	BNE PlayerDuckFallChk ;Branch if the player is moving vertically
-	LDA playerMoveFlags ;Continue if they aren't
+	BNE PlayerDuckFallChk ; Branch if the player is moving vertically
+	LDA playerMoveFlags ; Continue if they aren't
 	AND #$04
-	BNE PActDuckDone ;Branch if the player is moving up
-	LDA btnHeld ;Otherwise, continue
+	BNE PActDuckDone ; Branch if the player is moving up
+	LDA btnHeld ; Otherwise, continue
 	AND #dirDown
-	BNE bra4_AED0 ;Branch if down is held
+	BNE bra4_AED0 ; Branch if down is held
 	LDA #$00
-	STA playerAction ;If not, set action to standing still
+	STA playerAction ; If not, set action to standing still
 bra4_AED0:
 	JSR LookUpDuckRoutine
 	JSR SwimHoldRoutine
@@ -2855,15 +2855,15 @@ PActDuckDone:
 PlayerDuckFallChk:
 	LDA playerMoveFlags
 	AND #$04
-	BNE PActDuckDone ;If player not moving up,
+	BNE PActDuckDone ; If player not moving up,
 	LDA #$0A
-	STA playerAction ;Set action to falling
+	STA playerAction ; Set action to falling
 	RTS
 PActWalk:
-	JSR PlayerWalkFallRout ;Make sure player is on solid ground
+	JSR PlayerWalkFallRout ; Make sure player is on solid ground
 	LDA playerXSpd
 	BNE bra4_AEEE
-	STA playerAction ;Make the player stop when their horizontal speed reaches 0
+	STA playerAction ; Make the player stop when their horizontal speed reaches 0
 bra4_AEEE:
 	JSR PlayerWalkRoutine
 	JSR PlayerRunRoutine
@@ -2871,16 +2871,16 @@ bra4_AEEE:
 	JSR ShootFireball
 	LDA btnHeld
 	AND #dirDown
-	BEQ bra4_AF05_RTS ;Make sure down is held
+	BEQ bra4_AF05_RTS ; Make sure down is held
 	LDA #$07
-	STA playerAction ;Set action to ducking
+	STA playerAction ; Set action to ducking
 bra4_AF05_RTS:
 	RTS
 PActRun:
-	JSR PlayerWalkFallRout ;Make sure the player is on solid ground
+	JSR PlayerWalkFallRout ; Make sure the player is on solid ground
 	LDA playerXSpd
 	BNE bra4_AF0F
-	STA playerAction ;Make the player stop when their horizontal speed reaches 0
+	STA playerAction ; Make the player stop when their horizontal speed reaches 0
 bra4_AF0F:
 	JSR PlayerWalkRoutine
 	JSR PlayerRunRoutine
@@ -2891,31 +2891,31 @@ bra4_AF0F:
 PlayerWalkFallRout:
 	LDA playerYSpd
 	CMP #$07
-	BCC FallingChkDone ;Make sure the player's Y speed is greater than 7
-	LDX #$0A ;If it is, make the player fall
+	BCC FallingChkDone ; Make sure the player's Y speed is greater than 7
+	LDX #$0A ; If it is, make the player fall
 	LDA levelWaterFlag
 	BEQ SetPlayerFallingAct
-	LDX #$0B ;If underwater, make the player sink instead
+	LDX #$0B ; If underwater, make the player sink instead
 SetPlayerFallingAct:
-	STX playerAction ;Store loaded action
+	STX playerAction ; Store loaded action
 	PLA
 	PLA
 FallingChkDone:
 	RTS
 PActJump:
 	LDA playerYSpd
-	BNE bra4_AF41 ;Branch if the player is already moving vertically
+	BNE bra4_AF41 ; Branch if the player is already moving vertically
 	LDA playerMoveFlags
 	AND #$04
-	BNE bra4_AF41 ;Branch if the player is moving up
+	BNE bra4_AF41 ; Branch if the player is moving up
 	LDA #$01
-	STA playerAction ;Set action to walking
+	STA playerAction ; Set action to walking
 bra4_AF41:
-	JSR JumpYSpdRoutine ;Extend Y height if A is held
-	JSR MidAirFireShoot ;Shoot fire in mid air
-	JSR JumpXSpdRoutine ;X movement in mid air
+	JSR JumpYSpdRoutine ; Extend Y height if A is held
+	JSR MidAirFireShoot ; Shoot fire in mid air
+	JSR JumpXSpdRoutine ; X movement in mid air
 	LDA playerState
-	BEQ bra4_AF51 ;Skip the underwater object grab if the player isn't underwater
+	BEQ bra4_AF51 ; Skip the underwater object grab if the player isn't underwater
 	JSR SwimHoldRoutine
 bra4_AF51:
 	JSR SpinJumpRoutine
@@ -2924,36 +2924,36 @@ bra4_AF51:
 JumpYSpdRoutine:
 	LDA playerMoveFlags
 	AND #$04
-	BEQ JumpYSpdRtDone ;Make sure the player is moving up
+	BEQ JumpYSpdRtDone ; Make sure the player is moving up
 	LDA btnHeld
 	AND #btnA
-	BEQ JumpYSpdRtDone ;Make sure the A button is held
+	BEQ JumpYSpdRtDone ; Make sure the A button is held
 	LDA playerYSpd
 	CLC
 	ADC #$01
-	STA playerYSpd ;Increase the player's vertical speed by 1
+	STA playerYSpd ; Increase the player's vertical speed by 1
 JumpYSpdRtDone:
 	RTS
 PActSpin:
 	LDA playerYSpd
-	BNE bra4_AF78 ;Branch if the player is already moving vertically
+	BNE bra4_AF78 ; Branch if the player is already moving vertically
 	LDA playerMoveFlags
 	AND #$04
-	BNE bra4_AF78 ;Branch if the player is moving up
+	BNE bra4_AF78 ; Branch if the player is moving up
 	LDA #$01
-	STA playerAction ;Set action to walking
+	STA playerAction ; Set action to walking
 bra4_AF78:
 	JSR FireFlowerChk
 	JSR JumpXSpdRoutine
 	LDA playerState
-	BEQ bra4_AF85_RTS ;Skip the underwater object grab if the player isn't underwater
+	BEQ bra4_AF85_RTS ; Skip the underwater object grab if the player isn't underwater
 	JSR SwimHoldRoutine
 bra4_AF85_RTS:
 	RTS
 pnt_AF86:
 	LDX #$00
 	LDY #$10
-	JSR ActionTimerRoutine ;Wait for one 10 frame tick
+	JSR ActionTimerRoutine ; Wait for one 10 frame tick
 	LDA #$04
 	STA playerAction
 	RTS
@@ -2961,128 +2961,128 @@ pnt_AF92:
 	JSR SwimHoldRoutine
 	LDX #$00
 	LDY #$08
-	JSR ActionTimerRoutine ;Wait for one 8 frame tick
+	JSR ActionTimerRoutine ; Wait for one 8 frame tick
 	LDA #$00
-	STA playerAction ;set player action to nothing
+	STA playerAction ; set player action to nothing
 	RTS
 ;-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-==-=-=-=-=-=-=-=-
-;FIREBALL SPAWNING
+; FIREBALL SPAWNING
 ;-=-=-=-=-=-=-=-==-=-=-==-=-=-=-=-=-=-==-=-=-=-=-=-=-=-	
 ShootFireball:
 	LDA playerPowerup
 	CMP #$02
-	BNE ShootFireballDone ;Make sure the player has fire power
+	BNE ShootFireballDone ; Make sure the player has fire power
 	LDA fireballSlot
 	AND fireballSlot2
-	BNE ShootFireballDone ;Make sure there's an open fireball slot
+	BNE ShootFireballDone ; Make sure there's an open fireball slot
 	LDA btnHeld	
 	AND #dirDown
-	BNE ShootFireballDone ;Stop if down is held
+	BNE ShootFireballDone ; Stop if down is held
 	LDA btnPressed
 	AND #btnB
-	BEQ ShootFireballDone ;Wait until B is pressed
-	LDA #$13 ;norm fireball 
-	STA playerAction ;Set PAct to throwing fireball
-	JSR SetFireballDir ;Jump to set fireball direction
+	BEQ ShootFireballDone ; Wait until B is pressed
+	LDA #$13 ; norm fireball 
+	STA playerAction ; Set PAct to throwing fireball
+	JSR SetFireballDir ; Jump to set fireball direction
 ShootFireballDone:
 	RTS		
 MidAirFireShoot:
 	LDA playerPowerup
 	CMP #$02
-	BNE MidAirFireShootDone ;Make sure the player has fire power
+	BNE MidAirFireShootDone ; Make sure the player has fire power
 	LDA fireballSlot
 	AND fireballSlot2
-	BNE MidAirFireShootDone ;Stop if there aren't any open fireball slots
+	BNE MidAirFireShootDone ; Stop if there aren't any open fireball slots
 	LDA btnHeld
 	AND #dirDown
-	BNE MidAirFireShootDone ;Stop if down is held
+	BNE MidAirFireShootDone ; Stop if down is held
 	LDA btnPressed
 	AND #btnB
-	BEQ MidAirFireShootDone ;Wait until B is pressed
-	LDY #$11 ;Make the player shoot a mid-air fireball
+	BEQ MidAirFireShootDone ; Wait until B is pressed
+	LDY #$11 ; Make the player shoot a mid-air fireball
 	LDA levelWaterFlag
-	BEQ bra4_AFEB ;If not underwater, skip
-	INY ;If underwater, make the player shoot an underwater fireball instead
+	BEQ bra4_AFEB ; If not underwater, skip
+	INY ; If underwater, make the player shoot an underwater fireball instead
 bra4_AFEB:
-	STY playerAction ;Store loaded action (type of fire to throw)
-	JSR SetFireballDir ;Jump
+	STY playerAction ; Store loaded action (type of fire to throw)
+	JSR SetFireballDir ; Jump
 MidAirFireShootDone:
 	RTS
 ;-=-=--=-=		
-FireFlowerChk: ;START HERE if spin jumping
+FireFlowerChk: ; START HERE if spin jumping
 	LDA playerPowerup
 	CMP #$02
-	BEQ bra4_AFF9 ;Branch if the player has fire power
+	BEQ bra4_AFF9 ; Branch if the player has fire power
 FlowerChkDone:
-	RTS ;Otherwise, end the check
+	RTS ; Otherwise, end the check
 bra4_AFF9:
-	LDX usedFireballSlots ;Load the current fireball slot number into the X register
+	LDX usedFireballSlots ; Load the current fireball slot number into the X register
 	LDA fireballSlot,X
-	BNE FlowerChkDone ;Branch if the current slot is occupied
-	LDA #$40 ;Make fireball move left
+	BNE FlowerChkDone ; Branch if the current slot is occupied
+	LDA #$40 ; Make fireball move left
 	CPX #$00
-	BNE SetSpinFireDir ;Branch if currently on fireball slot 1, this sets the direction of the fireball in the second slot
-	TXA ;If the slot is zero, make fireball face right, sets the direction of the fireball in the first slot
+	BNE SetSpinFireDir ; Branch if currently on fireball slot 1, this sets the direction of the fireball in the second slot
+	TXA ; If the slot is zero, make fireball face right, sets the direction of the fireball in the first slot
 SetSpinFireDir:
-	STA $32 ;Store loaded fireball direction
+	STA $32 ; Store loaded fireball direction
 	JMP SpawnFireball
 ;-=-=-=-=-=-=	
-SetFireballDir:  ;Go here for normal or mid air fire
+SetFireballDir:  ; Go here for normal or mid air fire
 	LDA playerMoveFlags
-	AND #$C0 ;Get the player's direction
-	STA $32 ;Use it for the fireball's direction
+	AND #$C0 ; Get the player's direction
+	STA $32 ; Use it for the fireball's direction
 	LDX usedFireballSlots
 	LDA fireballSlot,X
-	BEQ SpawnFireball ;If the fireball slot is open, branch
-	RTS ;end and check other slot on next frame
+	BEQ SpawnFireball ; If the fireball slot is open, branch
+	RTS ; end and check other slot on next frame
 	
 SpawnFireball:
-	INC fireballSlot,X ;Set selected fire slot to occupied
-	LDY objCount ;Load next open object slot
+	INC fireballSlot,X ; Set selected fire slot to occupied
+	LDY objCount ; Load next open object slot
 	LDA $32
-	STA objState,Y ;Store the fireball direction in object memory
-	TXA ;set A to usedFireballSlots
+	STA objState,Y ; Store the fireball direction in object memory
+	TXA ; set A to usedFireballSlots
 	CLC
-	ADC #$06 ;add 6 to A (Used slots +6)
-	STA objSlot,Y ;Spawn the selected type of fireball (norm, mid-air, underwater)
+	ADC #$06 ; add 6 to A (Used slots +6)
+	STA objSlot,Y ; Spawn the selected type of fireball (norm, mid-air, underwater)
 	LDA $32
 	AND #$40
-	BNE FireSpawnLeft ;Branch if the fireball set to facing left
+	BNE FireSpawnLeft ; Branch if the fireball set to facing left
 	LDA playerXLoDup
 	CLC
-	ADC #$00 ;clear carry of playerXLoDup
-	STA objXLo,Y ;Spawn at player's x position
+	ADC #$00 ; clear carry of playerXLoDup
+	STA objXLo,Y ; Spawn at player's x position
 	LDA playerXHiDup
-	ADC #$00 ;add carry if present 
-	JMP FireSpawnY ;jump
-FireSpawnLeft: ;if player facing left
+	ADC #$00 ; add carry if present 
+	JMP FireSpawnY ; jump
+FireSpawnLeft: ; if player facing left
 	LDA playerXLoDup
 	SEC
 	SBC #$08
-	STA objXLo,Y ;Spawn it 1 tile to the left of the player
+	STA objXLo,Y ; Spawn it 1 tile to the left of the player
 	LDA playerXHiDup
-	SBC #$00 ;subtract carry
-FireSpawnY: ;set Y position of fireball 
+	SBC #$00 ; subtract carry
+FireSpawnY: ; set Y position of fireball 
 	STA objXHi,Y
 	LDA playerYHiDup
-	STA objYHi,Y ;Spawn it at same vertical screen as player
+	STA objYHi,Y ; Spawn it at same vertical screen as player
 	LDA #$EC
-	BMI bra4_B075 ;Branch
-;unused code:
-	CLC ;unlogged
-	ADC playerYLoDup ;unlogged
-	STA objYLo,Y ;unlogged
-	BCS bra4_B066 ;unlogged
-	CMP #$F0 ;unlogged
-	BCC bra4_B08C ;unlogged
+	BMI bra4_B075 ; Branch
+; unused code:
+	CLC ; unlogged
+	ADC playerYLoDup ; unlogged
+	STA objYLo,Y ; unlogged
+	BCS bra4_B066 ; unlogged
+	CMP #$F0 ; unlogged
+	BCC bra4_B08C ; unlogged
 bra4_B066:
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYLo,Y ;unlogged
-	LDA objYHi,Y ;unlogged
-	CLC ;unlogged
-	ADC #$01 ;unlogged
-	JMP loc4_B089 ;unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYLo,Y ; unlogged
+	LDA objYHi,Y ; unlogged
+	CLC ; unlogged
+	ADC #$01 ; unlogged
+	JMP loc4_B089 ; unlogged
 bra4_B075:
 	CLC
 	ADC playerYLoDup
@@ -3101,25 +3101,25 @@ bra4_B08C:
 	STA $058C,Y
 	STA objVar,Y
 	STA objAction,Y
-	INC objCount ;Add it to the total object count
+	INC objCount ; Add it to the total object count
 	LDA usedFireballSlots
 	EOR #$01
 	STA usedFireballSlots
 	RTS
 ;----------------------------------------
-;END OF FIREBALL SPAWNING
+; END OF FIREBALL SPAWNING
 ;----------------------------------------
-PActSwim: ;0C
+PActSwim: ; 0C
 	LDA playerMoveFlags
 	AND #$04
-	BNE bra4_B0B2 ;Branch if the player is moving up
-	LDX #$0B ;Set action to sinking
+	BNE bra4_B0B2 ; Branch if the player is moving up
+	LDX #$0B ; Set action to sinking
 	LDA playerYSpd
-	BNE bra4_B0B0 ;If the player has vertical speed, keep the previous action and branch
-	LDX #$01 ;If they don't, make them walk instead
+	BNE bra4_B0B0 ; If the player has vertical speed, keep the previous action and branch
+	LDX #$01 ; If they don't, make them walk instead
 bra4_B0B0:
-	STX playerAction ;Store action value
-bra4_B0B2: ;swimming action list
+	STX playerAction ; Store action value
+bra4_B0B2: ; swimming action list
 	JSR SwimMove
 	JSR SwimHoldRoutine
 	JSR MidAirFireShoot
@@ -3147,26 +3147,26 @@ loc4_B0D7:
 bra4_B0DA:
 	LDA btnPressed
 	AND #btnB
-	BEQ bra4_B11D_RTS ;Make sure B is pressed
+	BEQ bra4_B11D_RTS ; Make sure B is pressed
 	LDA #$00
 	STA swallowFrameCount
-	STA yoshiSwallowTimer ;Clear Yoshi's swallow timer
-	LDY #$0C ;Set player state
+	STA yoshiSwallowTimer ; Clear Yoshi's swallow timer
+	LDY #$0C ; Set player state
 	LDA btnHeld
 	AND #dirDown
-	BEQ bra4_B0F4 ;Branch if down isn't held
-	LDY #$0E ;If down is held, set the player's state
+	BEQ bra4_B0F4 ; Branch if down isn't held
+	LDY #$0E ; If down is held, set the player's state
 bra4_B0F4:
 	LDA btnHeld
 	AND #dirRight+dirLeft
-	BEQ bra4_B0FD ;Branch if left or right aren't held
-	LDY #$0D ;If left are right are held, set the player's state
+	BEQ bra4_B0FD ; Branch if left or right aren't held
+	LDY #$0D ; If left are right are held, set the player's state
 bra4_B0FD:
-	STY playerState ;Store the player's state
+	STY playerState ; Store the player's state
 	LDA playerYoshiState
 	CMP #$07
-	BCC bra4_B113 ;Branch if not about to swallow stored item
-	SEC ;If about to swallow item, continue
+	BCC bra4_B113 ; Branch if not about to swallow stored item
+	SEC ; If about to swallow item, continue
 	SBC #$05
 	STA playerYoshiState
 	JSR sub4_A14A
@@ -3205,20 +3205,20 @@ loc4_B144:
 	STA objYHi,Y
 	LDA #$E4
 	BMI bra4_B16B
-	CLC ;unlogged
-	ADC playerYLoDup ;unlogged
-	STA objYLo,Y ;unlogged
-	BCS bra4_B15C ;unlogged
-	CMP #$F0 ;unlogged
-	BCC bra4_B182 ;unlogged
+	CLC ; unlogged
+	ADC playerYLoDup ; unlogged
+	STA objYLo,Y ; unlogged
+	BCS bra4_B15C ; unlogged
+	CMP #$F0 ; unlogged
+	BCC bra4_B182 ; unlogged
 bra4_B15C:
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYLo,Y ;unlogged
-	LDA objYHi,Y ;unlogged
-	CLC ;unlogged
-	ADC #$01 ;unlogged
-	JMP loc4_B17F ;unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYLo,Y ; unlogged
+	LDA objYHi,Y ; unlogged
+	CLC ; unlogged
+	ADC #$01 ; unlogged
+	JMP loc4_B17F ; unlogged
 bra4_B16B:
 	CLC
 	ADC playerYLoDup
@@ -3296,39 +3296,39 @@ sub4_B1DE:
 	JSR sub4_A14A
 	RTS
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
-;YOSHI FIRE SPAWN
+; YOSHI FIRE SPAWN
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
-;This is unoptimised, it duplicates the code for calculating the exact same offsets for all 3 fireballs 
+; This is unoptimised, it duplicates the code for calculating the exact same offsets for all 3 fireballs 
 SpawnYoshiFire:
-	LDY objCount ;Get slot index based on object count
+	LDY objCount ; Get slot index based on object count
 	LDA #$08
-	STA objSlot,Y ;Load middle fireball
+	STA objSlot,Y ; Load middle fireball
 	LDA #$09
-	STA objSlot+1,Y ;Load bottom fireball
+	STA objSlot+1,Y ; Load bottom fireball
 	LDA #$0A
-	STA objSlot+2,Y ;Load top fireball
+	STA objSlot+2,Y ; Load top fireball
 	LDA playerMoveFlags
 	STA objState,Y
 	STA objState+1,Y
-	STA objState+2,Y ;Set fireballs to the player's direction
+	STA objState+2,Y ; Set fireballs to the player's direction
 	
-	AND #$40 ;bitmask playerMoveFlags 
+	AND #$40 ; bitmask playerMoveFlags 
 	BNE bra4_B225
 	LDA playerXLoDup
 	CLC
-	ADC #$08 ;add 08 to duplicate player X position
-	STA objXLo,Y ;store it as the object X position offset by object count (set spawn location)
+	ADC #$08 ; add 08 to duplicate player X position
+	STA objXLo,Y ; store it as the object X position offset by object count (set spawn location)
 	LDA playerXHiDup
-	ADC #$00 ;apply carry if present to X screen duplicate (unknown function)
-	JMP loc4_B231 ;Jump ahead
+	ADC #$00 ; apply carry if present to X screen duplicate (unknown function)
+	JMP loc4_B231 ; Jump ahead
 	
-bra4_B225: ;set X spawn offset for middle fireball for left facing (the other 2 seem to adjust in some other way)
+bra4_B225: ; set X spawn offset for middle fireball for left facing (the other 2 seem to adjust in some other way)
 	LDA playerXLoDup
 	SEC
-	SBC #$10 ;subtract 10 from duplicate player X position
-	STA objXLo,Y ;store it as the X position for the middle fireball
+	SBC #$10 ; subtract 10 from duplicate player X position
+	STA objXLo,Y ; store it as the X position for the middle fireball
 	LDA playerXHiDup 
-	SBC #$00 ;subtract carry from duplicate player X screen (unknown function)
+	SBC #$00 ; subtract carry from duplicate player X screen (unknown function)
 	
 loc4_B231:
 	STA objXHi,Y
@@ -3336,40 +3336,40 @@ loc4_B231:
 	STA objYHi,Y
 	LDA #$E4
 	BMI bra4_B258
-	CLC ;unlogged
-	ADC playerYLoDup ;unlogged
-	STA objYLo,Y ;unlogged
-	BCS bra4_B249 ;unlogged
-	CMP #$F0 ;unlogged
-	BCC bra4_B26F ;unlogged
+	CLC ; unlogged
+	ADC playerYLoDup ; unlogged
+	STA objYLo,Y ; unlogged
+	BCS bra4_B249 ; unlogged
+	CMP #$F0 ; unlogged
+	BCC bra4_B26F ; unlogged
 bra4_B249:
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYLo,Y ;unlogged
-	LDA objYHi,Y ;unlogged
-	CLC ;unlogged
-	ADC #$01 ;unlogged
-	JMP loc4_B26C ;unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYLo,Y ; unlogged
+	LDA objYHi,Y ; unlogged
+	CLC ; unlogged
+	ADC #$01 ; unlogged
+	JMP loc4_B26C ; unlogged
 bra4_B258:
 	CLC
-	ADC playerYLoDup ;add #$E4 to duplicate Y pos
+	ADC playerYLoDup ; add #$E4 to duplicate Y pos
 	STA objYLo,Y ; store it as Y position for middle fireball (final position)
 
-	BCS bra4_B26F ;Branch on carry set
-	SEC ;else, set carry
-	SBC #$10 ;subtract 10
-	STA objYLo,Y ;store it as the Y pos for middle fireball
+	BCS bra4_B26F ; Branch on carry set
+	SEC ; else, set carry
+	SBC #$10 ; subtract 10
+	STA objYLo,Y ; store it as the Y pos for middle fireball
 	LDA objYHi,Y 
 	SEC
-	SBC #$01 ;subtract 1 from (middle fireball) object Y screen 
+	SBC #$01 ; subtract 1 from (middle fireball) object Y screen 
 loc4_B26C:
-	STA objYHi,Y ;store it
+	STA objYHi,Y ; store it
 	
-bra4_B26F: ;Bottom Fireball
+bra4_B26F: ; Bottom Fireball
 	LDA #$00 
-	STA $058C,Y ;clear UNKNOWN offset by Object count 
+	STA $058C,Y ; clear UNKNOWN offset by Object count 
 	STA objAction,Y ; clear object action of middle firebaall
-	INY ;increment Y offset (select bottom fireball)
+	INY ; increment Y offset (select bottom fireball)
 	LDA playerMoveFlags
 	AND #$40
 	BNE bra4_B28D
@@ -3393,20 +3393,20 @@ loc4_B299:
 	STA objYHi,Y
 	LDA #$E4
 	BMI bra4_B2C0
-	CLC ;unlogged
-	ADC playerYLoDup ;unlogged
-	STA objYLo,Y ;unlogged
-	BCS bra4_B2B1 ;unlogged
-	CMP #$F0 ;unlogged
-	BCC bra4_B2D7 ;unlogged
+	CLC ; unlogged
+	ADC playerYLoDup ; unlogged
+	STA objYLo,Y ; unlogged
+	BCS bra4_B2B1 ; unlogged
+	CMP #$F0 ; unlogged
+	BCC bra4_B2D7 ; unlogged
 bra4_B2B1:
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYLo,Y ;unlogged
-	LDA objYHi,Y ;unlogged
-	CLC ;unlogged
-	ADC #$01 ;unlogged
-	JMP loc4_B2D4 ;unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYLo,Y ; unlogged
+	LDA objYHi,Y ; unlogged
+	CLC ; unlogged
+	ADC #$01 ; unlogged
+	JMP loc4_B2D4 ; unlogged
 	
 bra4_B2C0:
 	CLC
@@ -3422,11 +3422,11 @@ bra4_B2C0:
 loc4_B2D4:
 	STA objYHi,Y
 	
-bra4_B2D7: ;Top fireball
+bra4_B2D7: ; Top fireball
 	LDA #$00
 	STA $058C,Y
 	STA objAction,Y
-	INY ;select top fireball
+	INY ; select top fireball
 	LDA playerMoveFlags
 	AND #$40
 	BNE bra4_B2F5
@@ -3450,20 +3450,20 @@ loc4_B301:
 	STA objYHi,Y
 	LDA #$E4
 	BMI bra4_B328
-	CLC ;unlogged
-	ADC playerYLoDup ;unlogged
-	STA objYLo,Y ;unlogged
-	BCS bra4_B319 ;unlogged
-	CMP #$F0 ;unlogged
-	BCC bra4_B33F ;unlogged
+	CLC ; unlogged
+	ADC playerYLoDup ; unlogged
+	STA objYLo,Y ; unlogged
+	BCS bra4_B319 ; unlogged
+	CMP #$F0 ; unlogged
+	BCC bra4_B33F ; unlogged
 bra4_B319:
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYLo,Y ;unlogged
-	LDA objYHi,Y ;unlogged
-	CLC ;unlogged
-	ADC #$01 ;unlogged
-	JMP loc4_B33C ;unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYLo,Y ; unlogged
+	LDA objYHi,Y ; unlogged
+	CLC ; unlogged
+	ADC #$01 ; unlogged
+	JMP loc4_B33C ; unlogged
 bra4_B328:
 	CLC
 	ADC playerYLoDup
@@ -3482,228 +3482,228 @@ bra4_B33F:
 	LDA #$00
 	STA $058C,Y
 	STA objAction,Y
-	INY ;increment Y
-	STY objCount ;Update object count
+	INY ; increment Y
+	STY objCount ; Update object count
 	LDA #sfx_YoshiFireSpit
-	STA sndSfx ;Play Yoshi fire sound
-	RTS ;end
+	STA sndSfx ; Play Yoshi fire sound
+	RTS ; end
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
-;END OF YOSHI FIRE SPAWN
+; END OF YOSHI FIRE SPAWN
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
 	
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
-;WALKING AND RUNNING
+; WALKING AND RUNNING
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
 PlayerWalkRoutine:
 	LDA btnHeld
 	AND #dirRight
-	BEQ PlayerWalkLeft ;Branch if right isn't held
-	LDA playerMoveFlags ;If it is, continue
-	AND #$BE ;Make the player face right
-	JMP loc4_B368 ;Jump
+	BEQ PlayerWalkLeft ; Branch if right isn't held
+	LDA playerMoveFlags ; If it is, continue
+	AND #$BE ; Make the player face right
+	JMP loc4_B368 ; Jump
 PlayerWalkLeft:
 	LDA btnHeld
 	AND #dirLeft
-	BEQ PlayerWalkDone ;Make sure left is held
+	BEQ PlayerWalkDone ; Make sure left is held
 	LDA playerMoveFlags
-	ORA #$41 ;Make the player face left
+	ORA #$41 ; Make the player face left
 loc4_B368:
-	STA playerMoveFlags ;Store movement value
+	STA playerMoveFlags ; Store movement value
 	LDA playerXSpd
 	CMP #$10
-	BCS SetWalking ;Set walking speed at #$10, or 16 decimal
+	BCS SetWalking ; Set walking speed at #$10, or 16 decimal
 	LDA playerXSpd
 	CLC
 	ADC #$04
-	STA playerXSpd ;Accelerate the player's speed by 4
+	STA playerXSpd ; Accelerate the player's speed by 4
 SetWalking:
 	LDA #$01
-	STA playerAction ;Trigger "walking" action
+	STA playerAction ; Trigger "walking" action
 PlayerWalkDone:
 	RTS
 SwimMove:
 	LDA btnHeld	
 	AND #dirRight
-	BEQ SwimLeft ;If right is held,
+	BEQ SwimLeft ; If right is held,
 	LDA playerMoveFlags
-	AND #$BE ;Make the player face right
-	JMP loc4_B395 ;Jump
+	AND #$BE ; Make the player face right
+	JMP loc4_B395 ; Jump
 SwimLeft:
 	LDA btnHeld
 	AND #dirLeft
-	BEQ SwimMoveDone ;If left is held,
+	BEQ SwimMoveDone ; If left is held,
 	LDA playerMoveFlags
-	ORA #$41 ;Make the player face left
+	ORA #$41 ; Make the player face left
 loc4_B395:
-	STA playerMoveFlags ;Store movement value
+	STA playerMoveFlags ; Store movement value
 	LDA playerXSpd
 	CMP #$10
-	BCS SwimMoveDone ;If X speed < 16,
+	BCS SwimMoveDone ; If X speed < 16,
 	LDA playerXSpd
 	CLC
 	ADC #$04
-	STA playerXSpd ;Increase the player's X speed by 4
+	STA playerXSpd ; Increase the player's X speed by 4
 SwimMoveDone:
 	RTS
 JumpXSpdRoutine:
 	LDA playerMoveFlags
-	STA $26 ;Copy movement value
+	STA $26 ; Copy movement value
 	LDA btnHeld
 	AND #dirRight
-	BEQ DoLeftJump ;Branch if the player isn't holding right
+	BEQ DoLeftJump ; Branch if the player isn't holding right
 	LDA playerMoveFlags
-	AND #$BE ;Set player's direction to right
-	JMP JumpDirectnChk ;Jump
+	AND #$BE ; Set player's direction to right
+	JMP JumpDirectnChk ; Jump
 DoLeftJump:
 	LDA btnHeld
 	AND #dirLeft
-	BNE PlayerSetLeft ;Branch if left is held
-	LDA #$01 ;Set acceleration
-	BNE JumpXSpdCap ;Branch
+	BNE PlayerSetLeft ; Branch if left is held
+	LDA #$01 ; Set acceleration
+	BNE JumpXSpdCap ; Branch
 PlayerSetLeft:
 	LDA playerMoveFlags
-	ORA #$41 ;Set player's direction to left
+	ORA #$41 ; Set player's direction to left
 JumpDirectnChk:
-	STA playerMoveFlags ;Store loaded direction
+	STA playerMoveFlags ; Store loaded direction
 	EOR $26	
 	AND #$40
-	BEQ SetJumpXAccel ;If the player stays in the same direction while jumping, branch
+	BEQ SetJumpXAccel ; If the player stays in the same direction while jumping, branch
 	LDA #$00
-	STA playerXSpd ;Clear X speed
+	STA playerXSpd ; Clear X speed
 	RTS
 SetJumpXAccel:
-	LDA #$03 ;Set acceleration
+	LDA #$03 ; Set acceleration
 JumpXSpdCap:
 	CLC
-	ADC playerXSpd ;Acceleration + Speed
+	ADC playerXSpd ; Acceleration + Speed
 	CMP #$20
-	BCS JumpXSpdRtDone ;Keep adding it until the cap is reached
-	STA playerXSpd ;Store the sum
+	BCS JumpXSpdRtDone ; Keep adding it until the cap is reached
+	STA playerXSpd ; Store the sum
 JumpXSpdRtDone:
 	RTS
 SwimHoldRoutine:
 	LDA levelWaterFlag
-	BEQ JumpingRoutine ;If player isn't underwater, branch
+	BEQ JumpingRoutine ; If player isn't underwater, branch
 	LDA playerHoldFlag
-	BEQ SwimChk ;If player isn't carrying anything, branch
+	BEQ SwimChk ; If player isn't carrying anything, branch
 	LDA #$20
-	STA playerYSpd ;Set vertical speed to 32
+	STA playerYSpd ; Set vertical speed to 32
 	LDA btnHeld	
 	AND #dirDown
-	BEQ HoldFloatUp ;Make the player float if down isn't held
+	BEQ HoldFloatUp ; Make the player float if down isn't held
 	LDA playerMoveFlags
 	AND #$FB
-	STA playerMoveFlags ;If it is held, make player swim down
+	STA playerMoveFlags ; If it is held, make player swim down
 	RTS
 HoldFloatUp:
 	LDA playerMoveFlags
 	ORA #$04
-	STA playerMoveFlags ;Make player float up
+	STA playerMoveFlags ; Make player float up
 	RTS
 SwimChk:
 	LDA btnPressed
 	AND #btnA
-	BEQ SwimmingDone ;Make sure A is pressed
+	BEQ SwimmingDone ; Make sure A is pressed
 	LDA btnHeld
 	AND #dirUp
-	BEQ DoSwim ;Dismount Yoshi if up is held 
+	BEQ DoSwim ; Dismount Yoshi if up is held 
 	JSR DismountYoshiRoutine
 DoSwim:
 	LDA #$30
-	STA playerYSpd ;Set vertical speed to 48
+	STA playerYSpd ; Set vertical speed to 48
 	LDA playerMoveFlags
 	ORA #$04
-	STA playerMoveFlags ;Set movement to moving up
+	STA playerMoveFlags ; Set movement to moving up
 	LDA #sfx_Swim
-	STA sndSfx ;Play swim sound
+	STA sndSfx ; Play swim sound
 	LDA #$0C
-	STA playerAction ;Set action to swimming up
+	STA playerAction ; Set action to swimming up
 SwimmingDone:
 	RTS
 JumpingRoutine:
 	LDA btnPressed
 	AND #btnA
-	BEQ SwimmingDone ;Make sure the A button is pressed
+	BEQ SwimmingDone ; Make sure the A button is pressed
 	LDA playerYSpd
-	BNE SwimmingDone ;Make sure that the player has no leftover vertical speed
+	BNE SwimmingDone ; Make sure that the player has no leftover vertical speed
 	LDA playerHoldFlag
-	BNE DoBJump ;Branch if the player is carrying something
+	BNE DoBJump ; Branch if the player is carrying something
 	LDA btnHeld
 	AND #dirUp
-	BNE ExecuteSpinJump ;If up is held, do a spin jump instead
+	BNE ExecuteSpinJump ; If up is held, do a spin jump instead
 DoBJump:
-	LDY #$48 ;Set vertical speed to $48
+	LDY #$48 ; Set vertical speed to $48
 	LDA btnHeld
 	AND #btnB
 	BEQ DoLowJump
-	LDY #$58 ;If B is held, set vertical speed to $58
+	LDY #$58 ; If B is held, set vertical speed to $58
 DoLowJump:
 	LDA btnHeld
 	AND #dirDown
 	BEQ ExecuteJump
-	LDY #$28 ;If down is held, set vertical speed to $28
+	LDY #$28 ; If down is held, set vertical speed to $28
 ExecuteJump:
-	STY playerYSpd ;Store the jump height
+	STY playerYSpd ; Store the jump height
 	LDA playerMoveFlags
 	ORA #$04
-	STA playerMoveFlags ;Set vertical movement upwards
+	STA playerMoveFlags ; Set vertical movement upwards
 	LDA #$04
-	STA playerAction ;Trigger jumping animation/action
+	STA playerAction ; Trigger jumping animation/action
 	LDA #sfx_Jump
-	STA sndSfx ;Play the jump sound
+	STA sndSfx ; Play the jump sound
 	RTS
 SpinJumpRoutine:
 	LDA playerYoshiState
-	BEQ SpinJumpDone ;Make sure the player isn't riding Yoshi
+	BEQ SpinJumpDone ; Make sure the player isn't riding Yoshi
 	LDA btnPressed
 	AND #btnA
-	BEQ SpinJumpDone ;Make sure A is held
+	BEQ SpinJumpDone ; Make sure A is held
 	LDA btnHeld
 	AND #dirUp
-	BEQ SpinJumpDone ;Make sure up is held
+	BEQ SpinJumpDone ; Make sure up is held
 ExecuteSpinJump:
 	JSR DismountYoshiRoutine
 	LDA #$50
-	STA playerYSpd ;Set vertical speed to $50
+	STA playerYSpd ; Set vertical speed to $50
 	LDA playerMoveFlags
 	ORA #$04
-	STA playerMoveFlags ;Set vertical movement upwards
+	STA playerMoveFlags ; Set vertical movement upwards
 	LDA #$05
-	STA playerAction ;Trigger spinning action
+	STA playerAction ; Trigger spinning action
 	LDA #sfx_SpinJump
-	STA sndSfx ;Play the spin sound
+	STA sndSfx ; Play the spin sound
 SpinJumpDone:
 	RTS
 DismountYoshiRoutine:
-	LDA playerYoshiState ;if player isn't riding yoshi,
-	BEQ DismountYoshiRtDone ;stop
+	LDA playerYoshiState ; if player isn't riding yoshi,
+	BEQ DismountYoshiRtDone ; stop
 	LDA playerMoveFlags
 	STA yoshiIdleMovement
 	LDA playerYoshiState
-	STA yoshiIdleStorage ;backup whatever yoshi had in his mouth
+	STA yoshiIdleStorage ; backup whatever yoshi had in his mouth
 	LDA #$00
-	STA playerYoshiState ;get off yoshi
+	STA playerYoshiState ; get off yoshi
 	STA yoshiExitStatus
 	JSR sub4_A14A
 	LDA #$04
 	STA yoshiUnmountedState
-	LDA playerYLoDup ;get player y position
+	LDA playerYLoDup ; get player y position
 	SEC
-	SBC #$20 ;subtract it by $20
-	STA yoshiYLo ;store result as yoshi's y position
+	SBC #$20 ; subtract it by $20
+	STA yoshiYLo ; store result as yoshi's y position
 	LDA playerYHiDup
-	SBC #$00 ;subtract player y screen by nothing (why?)
-	STA yoshiYHi ;store result as yoshi's y screen
+	SBC #$00 ; subtract player y screen by nothing (why?)
+	STA yoshiYHi ; store result as yoshi's y screen
 	LDA yoshiIdleMovement
-	AND #$40 ;if yoshi is facing left,
-	BNE bra4_B4D2 ;branch
+	AND #$40 ; if yoshi is facing left,
+	BNE bra4_B4D2 ; branch
 	LDA playerMoveFlags
 	ORA #$01
 	STA playerMoveFlags
-	LDA playerXLoDup ;get player x position
+	LDA playerXLoDup ; get player x position
 	SEC
-	SBC #$08 ;subtract it by 8
-	STA yoshiXLo ;store result as yoshi's x position
+	SBC #$08 ; subtract it by 8
+	STA yoshiXLo ; store result as yoshi's x position
 	JMP loc4_B4E0
 bra4_B4D2:
 	LDA playerMoveFlags
@@ -3714,9 +3714,9 @@ bra4_B4D2:
 	SBC #$18
 	STA yoshiXLo
 loc4_B4E0:
-	LDA playerXHiDup ;Get player X screen
-	SBC #$00 ;subtract carry if present
-	STA yoshiXHi ;Set as Yoshi's X screen
+	LDA playerXHiDup ; Get player X screen
+	SBC #$00 ; subtract carry if present
+	STA yoshiXHi ; Set as Yoshi's X screen
 	LDA #$00
 	STA $05F6
 	LDA #$30
@@ -3726,97 +3726,97 @@ DismountYoshiRtDone:
 	RTS
 LeapRoutine:
 	LDA playerAnimFrame
-	CMP #$10 ;if animation frame is lower than 10,
-	BCC LeapingDone ;branch
-	LDA btnPressed ;
-	AND #btnA ;if A not pressed,
-	BEQ LeapingDone ;branch
-	LDA #$60 ;
-	STA playerYSpd ;set y speed to $60
-	LDA #$09 ;
-	STA playerAction ;set action to leap
+	CMP #$10 ; if animation frame is lower than 10,
+	BCC LeapingDone ; branch
+	LDA btnPressed ; 
+	AND #btnA ; if A not pressed,
+	BEQ LeapingDone ; branch
+	LDA #$60 ; 
+	STA playerYSpd ; set y speed to $60
+	LDA #$09 ; 
+	STA playerAction ; set action to leap
 LeapingDone:
 	RTS
 PlayerRunRoutine:
 	LDA levelWaterFlag
-	BNE bra4_B55B_RTS ;Make sure the player isn't underwater
+	BNE bra4_B55B_RTS ; Make sure the player isn't underwater
 	LDA btnHeld
 	AND #$03
-	BEQ bra4_B55C ;Make sure either left or right are held. If they aren't, skip ahead.
-	LDA btnHeld ;Otherwise, continue
+	BEQ bra4_B55C ; Make sure either left or right are held. If they aren't, skip ahead.
+	LDA btnHeld ; Otherwise, continue
 	AND #btnB
-	BNE SetupPlayerRun ;Switch to running if B is held
-	STA $0314 ;Likely an unused or residual opcode. Does nothing.
+	BNE SetupPlayerRun ; Switch to running if B is held
+	STA $0314 ; Likely an unused or residual opcode. Does nothing.
 	LDA playerXSpd
 	CMP #$10
-	BCS PlayerWalk2Done ;Limit the player's X speed to #$10, or 16 decimal
+	BCS PlayerWalk2Done ; Limit the player's X speed to #$10, or 16 decimal
 	LDA playerXSpd
 	CLC
 	ADC #$04
-	STA playerXSpd ;Increment the player's X speed by 4
+	STA playerXSpd ; Increment the player's X speed by 4
 PlayerWalk2Done:
 	RTS
 unused_func1:
-	LDA $0314 ;unlogged
-	CMP #$30 ;unlogged
-	BCS SetupPlayerRun ;unlogged
-	INC $0314 ;unlogged
-	RTS ;unlogged
+	LDA $0314 ; unlogged
+	CMP #$30 ; unlogged
+	BCS SetupPlayerRun ; unlogged
+	INC $0314 ; unlogged
+	RTS ; unlogged
 SetupPlayerRun:
-	LDA playerMoveFlags ;Load the player's movement info
-	AND #$01 ;Test the horizontal movement bit
-	CMP $4F ;Compare with the previous direction
-	BEQ DoPlayerRun ;If the player stays in the same direction, have them run like normal
-	STA $4F ;Otherwise, make the player turn around
+	LDA playerMoveFlags ; Load the player's movement info
+	AND #$01 ; Test the horizontal movement bit
+	CMP $4F ; Compare with the previous direction
+	BEQ DoPlayerRun ; If the player stays in the same direction, have them run like normal
+	STA $4F ; Otherwise, make the player turn around
 	LDA #$10
-	STA playerXSpd ;Set their horizontal speed to #$10
+	STA playerXSpd ; Set their horizontal speed to #$10
 	LDA #$00
-	STA playerAction ;Reset their action to standing still
+	STA playerAction ; Reset their action to standing still
 DoPlayerRun:
 	LDA #$02
-	STA playerAction ;Set action to running
+	STA playerAction ; Set action to running
 	LDA playerXSpd
 	CMP #$40
-	BCS bra4_B55B_RTS ;Set running speed cap at #$40, or 64 decimal
+	BCS bra4_B55B_RTS ; Set running speed cap at #$40, or 64 decimal
 	LDA playerXSpd
 	CLC
 	ADC #$04
-	STA playerXSpd ;Accelerate the player's speed by 4 until the cap is reached
+	STA playerXSpd ; Accelerate the player's speed by 4 until the cap is reached
 bra4_B55B_RTS:
 	RTS
 bra4_B55C:
 	LDA playerXSpd
-	BEQ bra4_B55B_RTS ;Make sure the player is moving horizontally
+	BEQ bra4_B55B_RTS ; Make sure the player is moving horizontally
 	LDA #$01
-	STA playerAction ;Set action to walking
+	STA playerAction ; Set action to walking
 	RTS
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
-;END OF WALKING AND RUNNING
+; END OF WALKING AND RUNNING
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
 LookUpDuckRoutine:
 	LDA btnHeld
 	AND #dirDown
-	BEQ DoLookUp ;If down isn't held, move to the next check
+	BEQ DoLookUp ; If down isn't held, move to the next check
 	LDA #$07
-	STA playerAction ;Otherwise, set the player's action to ducking
+	STA playerAction ; Otherwise, set the player's action to ducking
 DoLookUp:
 	LDA btnHeld
 	AND #dirUp
-	BEQ LookupDuckDone ;Make sure up is held
+	BEQ LookupDuckDone ; Make sure up is held
 	LDA #$08
-	STA playerAction ;Set the player's action to looking up
+	STA playerAction ; Set the player's action to looking up
 LookupDuckDone:
 	RTS
 ofs_B57C:
 	JSR SpinCapeRoutine
 	LDA playerAction+1
 	ASL
-	TAY ;Get the pointer for player's action value
+	TAY ; Get the pointer for player's action value
 	LDA tbl4_B590,Y
-	STA $32 ;Load lower byte of pointer
+	STA $32 ; Load lower byte of pointer
 	LDA tbl4_B590+1,Y
-	STA $33 ;Load upper byte of pointer
-	JMP ($32) ;Jump to loaded pointer
+	STA $33 ; Load upper byte of pointer
+	JMP ($32) ; Jump to loaded pointer
 tbl4_B590:
 	dw PActIdle
 	dw PActWalk
@@ -3835,33 +3835,33 @@ tbl4_B590:
 	dw PActJump
 	dw pnt_B5DC
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-;P SPEED ROUTINE
+; P SPEED ROUTINE
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 PSpeedTimer:
-	INC flightTakeoffTimer ;Increment takeoff timer
+	INC flightTakeoffTimer ; Increment takeoff timer
 	LDA flightTakeoffTimer
 	CMP #$50
-	BCC bra4_B5C4 ;Branch if less than 80 frames have passed
+	BCC bra4_B5C4 ; Branch if less than 80 frames have passed
 	LDA #$00
-	STA flightTakeoffTimer ;Clear takeoff timer
+	STA flightTakeoffTimer ; Clear takeoff timer
 	LDA #$0F
-	STA playerAction ;Set action to flying
+	STA playerAction ; Set action to flying
 	RTS
-bra4_B5C4: ;if P speed timer not reached
+bra4_B5C4: ; if P speed timer not reached
 	LDA playerYSpd
-	BNE bra4_B5D2 ;Branch if Y speed isn't empty
+	BNE bra4_B5D2 ; Branch if Y speed isn't empty
 	LDA playerMoveFlags
 	AND #$04
-	BNE bra4_B5D2 ;Branch if moving upwards
+	BNE bra4_B5D2 ; Branch if moving upwards
 	LDA #$01
-	STA playerAction ;Set action to walking
+	STA playerAction ; Set action to walking
 bra4_B5D2:
 	JSR SwimMove
 	JSR sub4_B616
 	JSR sub4_B669
 	RTS
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=	
-;END OF P SPEED ROUTINE
+; END OF P SPEED ROUTINE
 ;--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=		
 pnt_B5DC:
 	LDA playerYoshiState
@@ -3878,22 +3878,22 @@ loc4_B5EA:
 	LDA playerYSpd
 	BNE bra4_B5FB_RTS
 	LDA #$01
-	STA playerAction ;Set player action to walking
+	STA playerAction ; Set player action to walking
 bra4_B5FB_RTS:
 	RTS
 	
 SpinCapeRoutine:
 	LDA playerYoshiState
-	BNE SpinCapeDone ;Make sure the player isn't riding Yoshi
+	BNE SpinCapeDone ; Make sure the player isn't riding Yoshi
 	LDA playerHoldFlag
-	BNE SpinCapeDone ;Make sure the player isn't carrying anything
+	BNE SpinCapeDone ; Make sure the player isn't carrying anything
 	LDA btnPressed
 	AND #btnB
-	BEQ SpinCapeDone ;Make sure B is pressed
+	BEQ SpinCapeDone ; Make sure B is pressed
 	LDA #$08
-	STA playerState ;Set player state
+	STA playerState ; Set player state
 	LDA #sfx_SpinJump
-	STA sndSfx ;Play spin sound
+	STA sndSfx ; Play spin sound
 SpinCapeDone:
 	RTS
 sub4_B616:
@@ -3901,11 +3901,11 @@ sub4_B616:
 	STA playerXSpd
 	RTS
 sub4_B61B:
-	LDA btnHeld ;
-	AND #btnB ;if b still held,
-	BNE bra4_B627 ;branch
-	LDA #$0A ;
-	STA playerAction ;set action to falling
+	LDA btnHeld ; 
+	AND #btnB ; if b still held,
+	BNE bra4_B627 ; branch
+	LDA #$0A ; 
+	STA playerAction ; set action to falling
 	RTS
 bra4_B627:
 	LDX #$00
@@ -3946,85 +3946,85 @@ bra4_B653:
 bra4_B668_RTS:
 	RTS
 sub4_B669:
-	LDA btnHeld ;
-	AND #btnB ;if B not held,
-	BEQ bra4_B67B_RTS ;branch
-	LDA btnHeld ;
-	AND #btnA ;if A not held,
-	BEQ bra4_B67B_RTS ;branch
-	LDA #$40 ;
-	STA playerYSpd ;set Y speed to $40
+	LDA btnHeld ; 
+	AND #btnB ; if B not held,
+	BEQ bra4_B67B_RTS ; branch
+	LDA btnHeld ; 
+	AND #btnA ; if A not held,
+	BEQ bra4_B67B_RTS ; branch
+	LDA #$40 ; 
+	STA playerYSpd ; set Y speed to $40
 bra4_B67B_RTS:
 	RTS
 ;-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-;Climbing 
+; Climbing 
 ;-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-	
-ClimbingRoutines: ;This section locks the player in place if no directions are held (suspend player in mid air)
+ClimbingRoutines: ; This section locks the player in place if no directions are held (suspend player in mid air)
 	LDA btnHeld
 	AND #$0F
-	BNE ClimbingActionList ;If a direction is held, branch
-	LDA #$00 ;else
+	BNE ClimbingActionList ; If a direction is held, branch
+	LDA #$00 ; else
 	STA playerYSpd
-	STA playerXSpd ;Stop the player's movement
+	STA playerXSpd ; Stop the player's movement
 	LDA #$0D
-	STA playerAction ;Make the player climb
-;************************************************************
+	STA playerAction ; Make the player climb
+; ************************************************************
 ClimbingActionList:
 	JSR ClimbJoyUpChk
 	JSR PlayerClimbJump
 	RTS
-PlayerClimbJump: ;Jump from climbing
+PlayerClimbJump: ; Jump from climbing
 	LDA btnPressed
 	AND #btnA
-	BEQ PlayerClimbJumpRTS ;If A button not pressed, branch
-	LDA btnHeld ;else
+	BEQ PlayerClimbJumpRTS ; If A button not pressed, branch
+	LDA btnHeld ; else
 	AND #dirUp
-	BNE PlayerClimbJumpRTS ;Make sure that up isn't being held
+	BNE PlayerClimbJumpRTS ; Make sure that up isn't being held
 	LDA #$50
-	STA playerYSpd ;Set Y speed to $50
+	STA playerYSpd ; Set Y speed to $50
 	LDA playerMoveFlags
 	ORA #$04
-	STA playerMoveFlags ;Set vertical movement to up
+	STA playerMoveFlags ; Set vertical movement to up
 	LDA #$04
-	STA playerAction ;Make the player jump
+	STA playerAction ; Make the player jump
 	LDA #sfx_Jump
-	STA sndSfx ;Play the jump sound
+	STA sndSfx ; Play the jump sound
 	LDA #$00
-	STA playerState ;Make the player stop climbing
-	STA $06DC ;Clear Unknown 1
-	STA $06DD ;Clear Unknown 2
+	STA playerState ; Make the player stop climbing
+	STA $06DC ; Clear Unknown 1
+	STA $06DD ; Clear Unknown 2
 PlayerClimbJumpRTS:
 	RTS
-;********************
+; ********************
 ClimbJoyUpChk:
 	LDA btnHeld
-	AND #dirUp ;if up isn't held,
-	BEQ ClimbJoyDownChk ;branch ahead to down Dpad check
-;Else
+	AND #dirUp ; if up isn't held,
+	BEQ ClimbJoyDownChk ; branch ahead to down Dpad check
+; Else
 	LDA $06DD; load Unknown 2
-	BEQ bra4_B6D1 ;if Unknown2 empty, branch ahead
-	LDA #$00 ;else
-	STA playerYSpd;clear y speed
-	BEQ ClimbJoyDownChk ;branch ahead, always
+	BEQ bra4_B6D1 ; if Unknown2 empty, branch ahead
+	LDA #$00 ; else
+	STA playerYSpd; clear y speed
+	BEQ ClimbJoyDownChk ; branch ahead, always
 	
-bra4_B6D1: ;unknown, mirroring related maybe?
+bra4_B6D1: ; unknown, mirroring related maybe?
 	LDA playerMoveFlags
-	ORA #$04 ;flip some bits
-	BNE bra4_B6E7 ;If result non zero, branch
+	ORA #$04 ; flip some bits
+	BNE bra4_B6E7 ; If result non zero, branch
 	
 ClimbJoyDownChk:
 	LDA btnHeld
-	AND #dirDown ;if down isn't held,
-	BEQ bra4_B6EF ;branch
+	AND #dirDown ; if down isn't held,
+	BEQ bra4_B6EF ; branch
 	LDA #$00
-	STA $06DD ;Clear Unknown 2
+	STA $06DD ; Clear Unknown 2
 	LDA playerMoveFlags
 	AND #$7B
 	
-bra4_B6E7: ;Move player Up/Down
+bra4_B6E7: ; Move player Up/Down
 	STA playerMoveFlags
 	LDA #$10
-	STA playerYSpd ;set Y speed to #$10
+	STA playerYSpd ; set Y speed to #$10
 	BNE PlayerClimbDone
 	
 bra4_B6EF:
@@ -4037,24 +4037,24 @@ bra4_B6EF:
 	RTS
 	
 ClimbJoyLeftChk:
-	LDA btnHeld ;
-	AND #dirLeft ;if left isn't pressed,
-	BEQ ClimbJoyRightChk ;branch to check right
+	LDA btnHeld ; 
+	AND #dirLeft ; if left isn't pressed,
+	BEQ ClimbJoyRightChk ; branch to check right
 	LDA playerMoveFlags
 	ORA #$41
 	BNE bra4_B716
 	
 ClimbJoyRightChk:
-	LDA btnHeld ;
-	AND #dirRight ;if right isn't pressed,
-	BEQ bra4_B71E_RTS ;branch to RTS
+	LDA btnHeld ; 
+	AND #dirRight ; if right isn't pressed,
+	BEQ bra4_B71E_RTS ; branch to RTS
 	LDA playerMoveFlags
 	AND #$BE
 	
-bra4_B716: ;Move player Left/Right
-	STA playerMoveFlags  ;Store it
+bra4_B716: ; Move player Left/Right
+	STA playerMoveFlags  ; Store it
 	LDA #$10
-	STA playerXSpd ;set Player X speed to #$10
+	STA playerXSpd ; set Player X speed to #$10
 	BNE PlayerClimbDone
 	
 bra4_B71E_RTS:
@@ -4070,8 +4070,8 @@ ofs_B724:
 	JSR TongueSwimChk
 	LDX #$0D
 	LDY #$00
-	LDA playerYSpd ;If player not moving
-	BEQ bra4_B734 ;branch
+	LDA playerYSpd ; If player not moving
+	BEQ bra4_B734 ; branch
 	LDY #$0A
 bra4_B734:
 	LDA btnHeld
@@ -4090,7 +4090,7 @@ sub4_B741:
 	LDY #$01
 	LDA playerYoshiState
 	CMP #$01
-	BNE bra4_B75C ;Branch if the player isn't riding Yoshi
+	BNE bra4_B75C ; Branch if the player isn't riding Yoshi
 	LDY yoshiTongueState
 	LDA #$01
 	STA yoshiTongueState
@@ -4205,7 +4205,7 @@ ofs_B821:
 	LDX #$00
 	LDA btnHeld
 	AND #$03
-	BEQ bra4_B835 ;Branch if left/right aren't held
+	BEQ bra4_B835 ; Branch if left/right aren't held
 	LDA playerYSpd
 	BNE bra4_B835
 	INX
@@ -4215,29 +4215,29 @@ bra4_B835:
 	LDY #$40
 	JSR sub4_B8C0
 	LDA #$06
-	STA playerYoshiState ;Make Yoshi swallow
+	STA playerYoshiState ; Make Yoshi swallow
 	JSR sub4_A14A
 	LDA #sfx_YoshiSwallow
-	STA sndSfx ;Play swallow sound
+	STA sndSfx ; Play swallow sound
 	RTS
 TongueSpeedBoost:
 	LDA btnHeld
-	AND #dirRight ;Make sure right is held
+	AND #dirRight ; Make sure right is held
 	BEQ bra4_B859
 	LDA playerMoveFlags
-	AND #$FE ;Make the player face right
+	AND #$FE ; Make the player face right
 	JMP loc4_B864
 bra4_B859:
 	LDA btnHeld
-	AND #dirLeft ;Make sure left is held
+	AND #dirLeft ; Make sure left is held
 	BEQ TongueSpdBoostDone
 	LDA playerMoveFlags
-	ORA #$01 ;Set movement leftwards
+	ORA #$01 ; Set movement leftwards
 loc4_B864:
 	STA playerMoveFlags
 	LDA playerXSpd
-	CMP #$10 ;caps speed for when Yoshi sticks his tongue out
-	BCS TongueSpdBoostDone ;Branch if x speed goes over 16 (this is basically a speed cap)
+	CMP #$10 ; caps speed for when Yoshi sticks his tongue out
+	BCS TongueSpdBoostDone ; Branch if x speed goes over 16 (this is basically a speed cap)
 	LDA playerXSpd
 	CLC
 	ADC #$04
@@ -4247,38 +4247,38 @@ TongueSpdBoostDone:
 TongueSwimChk:
 	LDA btnPressed
 	AND #btnA
-	BEQ TongueSwimChkDone ;Make sure the A button is pressed
+	BEQ TongueSwimChkDone ; Make sure the A button is pressed
 	LDA levelWaterFlag
-	BEQ bra4_B886 ;Branch if not underwater
-	LDX #sfx_Swim ;Load swim sound in x reg
+	BEQ bra4_B886 ; Branch if not underwater
+	LDX #sfx_Swim ; Load swim sound in x reg
 	LDY #$20
-	BNE bra4_B897 ;Branch
+	BNE bra4_B897 ; Branch
 bra4_B886:	
-	LDX #sfx_Jump ;Load jump sound into X reg
+	LDX #sfx_Jump ; Load jump sound into X reg
 	LDA playerYSpd
-	BNE TongueSwimChkDone ;Make sure the player has vertical speed
+	BNE TongueSwimChkDone ; Make sure the player has vertical speed
 	LDY #$60
 	LDA btnHeld	
 	AND #dirDown
-	BEQ bra4_B897 ;Branch if down isn't held
+	BEQ bra4_B897 ; Branch if down isn't held
 	LDY #$30
 bra4_B897:
 	STY playerYSpd
-	STX sndSfx ;Play whatever sound was loaded into the X reg
+	STX sndSfx ; Play whatever sound was loaded into the X reg
 	LDA playerMoveFlags
 	ORA #$04
-	STA playerMoveFlags ;Set movement to jumping/swimming
+	STA playerMoveFlags ; Set movement to jumping/swimming
 TongueSwimChkDone:
 	RTS
 ActionTimerRoutine:
-	INC playerActionFrameCount ;Increase action timer
+	INC playerActionFrameCount ; Increase action timer
 	CPY playerActionFrameCount
-	BCS bra4_B8B7 ;Wait until the set tick length (in frames) is reached
+	BCS bra4_B8B7 ; Wait until the set tick length (in frames) is reached
 	LDA #$00
-	STA playerActionFrameCount ;Clear timer
-	INC playerActionTicks ;Increase by one tick
+	STA playerActionFrameCount ; Clear timer
+	INC playerActionTicks ; Increase by one tick
 	CPX playerActionTicks
-	BCC bra4_B8BA ;Branch when the set tick number is reached
+	BCC bra4_B8BA ; Branch when the set tick number is reached
 bra4_B8B7:
 	PLA
 	PLA
@@ -4318,11 +4318,11 @@ ofs_B8DE:
 	LDA #$01
 	STA yoshiExitStatus
 	LDA #$07
-	STA playerAction ;set to ducking
+	STA playerAction ; set to ducking
 	JSR sub4_A14A
 	LDX #$00
 	LDY #$14
-	JSR ActionTimerRoutine ;Wait one 20 frame tick
+	JSR ActionTimerRoutine ; Wait one 20 frame tick
 	LDA #$00
 	STA playerState
 bra4_B90B_RTS:
@@ -4331,341 +4331,341 @@ ofs_B90C:
 	JSR SwimMove
 	JSR unknownrout1
 	LDA #$05
-	STA playerAction ;set player action to spinning
+	STA playerAction ; set player action to spinning
 	LDX #$00
 	LDY #$14
-	JSR ActionTimerRoutine ;Wait one 20 frame tick
+	JSR ActionTimerRoutine ; Wait one 20 frame tick
 	LDA #$00
 	STA playerState
 	RTS
 unknownrout1:
-		LDA playerYSpd ;if player's y speed isn't empty,
-		BNE rout1done ;stop
-		LDA btnPressed ;
-		AND #btnA ;make sure A is pressed
-		BEQ rout1done ;
-		LDA #$60 ;
-		STA playerYSpd ;set y speed to 60 (hex)
-		LDA playerMoveFlags ;
-		ORA #$04 ;set movement to jumping
-		STA playerMoveFlags ;
+		LDA playerYSpd ; if player's y speed isn't empty,
+		BNE rout1done ; stop
+		LDA btnPressed ; 
+		AND #btnA ; make sure A is pressed
+		BEQ rout1done ; 
+		LDA #$60 ; 
+		STA playerYSpd ; set y speed to 60 (hex)
+		LDA playerMoveFlags ; 
+		ORA #$04 ; set movement to jumping
+		STA playerMoveFlags ; 
 rout1done:		RTS
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-;SPEED SCALING AND SPRITE ALIGNMENT 
+; SPEED SCALING AND SPRITE ALIGNMENT 
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-sub4_B938: ;determine if player is walking or running 
+sub4_B938: ; determine if player is walking or running 
 	LDA playerXSpd	
 	CMP #$10	
-	BCS GetPlayerTrueXSpd ;if player's x speed exceeds #$10 (walking speed), branch
-	LDA frameCount ;else
-	AND #$01 ;bitmask the frame count and use it as the scaled speed instead 
-	JMP loc4_B94F ;skip ahead to walking section
+	BCS GetPlayerTrueXSpd ; if player's x speed exceeds #$10 (walking speed), branch
+	LDA frameCount ; else
+	AND #$01 ; bitmask the frame count and use it as the scaled speed instead 
+	JMP loc4_B94F ; skip ahead to walking section
 	
 GetPlayerTrueXSpd: ; this is used when the player is moving faster than #$10, reads from a running speed table
 	ROR
 	ROR
 	ROR
-	ROR ;rotate bits right 4 times to divide speed
-	AND #$0F ;mask out the upper 4 bits of the result
-	TAY ;move it to Y as an offset
-	LDA PlayerXSpdTbl,Y ;use that to load a movement speed for the player
+	ROR ; rotate bits right 4 times to divide speed
+	AND #$0F ; mask out the upper 4 bits of the result
+	TAY ; move it to Y as an offset
+	LDA PlayerXSpdTbl,Y ; use that to load a movement speed for the player
 	
-loc4_B94F: ;Decide if player should start walking
-	STA playerMetaspriteHAlign ;store the loaded scaled speed value
+loc4_B94F: ; Decide if player should start walking
+	STA playerMetaspriteHAlign ; store the loaded scaled speed value
 	LDA playerXSpd
 	CMP #$03
-	BCS bra4_B95B ;if player X speed exceeds 3, branch (exits static/standing state)
+	BCS bra4_B95B ; if player X speed exceeds 3, branch (exits static/standing state)
 	LDA #$00
-	STA playerMetaspriteHAlign ;else set scaled speed to 00 (Standing speed)
+	STA playerMetaspriteHAlign ; else set scaled speed to 00 (Standing speed)
 	
 bra4_B95B:
 	LDA playerXSpdScaled
-	BNE MovePlayerLeft ;if scaled speed isn't zero, branch
-;else if player is static
+	BNE MovePlayerLeft ; if scaled speed isn't zero, branch
+; else if player is static
 	LDA playerXHi
-	STA playerXHiDup ;copy the players X screen
+	STA playerXHiDup ; copy the players X screen
 	LDA playerXLo
-	STA playerXLoDup ;copy the players X position
-	JMP loc4_B993 ;skip ahead to Y speed section
-;***************************************************************
-;Ok, so this next part is for if the player is moving
-;It handles left and right movements as well as screen positions 
-;It converts the speed to a vector
-;If the player positioning sum creates a carry that is used to update the screen ID
-;***************************************************************
-MovePlayerLeft: ;If metasprite alignment not 00 (player moving)
+	STA playerXLoDup ; copy the players X position
+	JMP loc4_B993 ; skip ahead to Y speed section
+; ***************************************************************
+; Ok, so this next part is for if the player is moving
+; It handles left and right movements as well as screen positions 
+; It converts the speed to a vector
+; If the player positioning sum creates a carry that is used to update the screen ID
+; ***************************************************************
+MovePlayerLeft: ; If metasprite alignment not 00 (player moving)
 	LDA playerMoveFlags
-	AND #$01 ;if Player movement set to right (0=right 1=left)
-	BEQ MovePlayerRight ;go to rightward movement section
-;Move Player Left	
+	AND #$01 ; if Player movement set to right (0=right 1=left)
+	BEQ MovePlayerRight ; go to rightward movement section
+; Move Player Left	
 	LDA playerXLo
 	SEC
-	SBC playerXSpdScaled ;Subtract scaled speed from X position
-	STA playerXLoDup ;store it in duplicate X position
-;Move player between X screens if necessary (left)
+	SBC playerXSpdScaled ; Subtract scaled speed from X position
+	STA playerXLoDup ; store it in duplicate X position
+; Move player between X screens if necessary (left)
 	LDA playerXHi
-	SBC #$00 ;subtract carry if present
-	STA playerXHiDup ;set as new X screen
-	JMP loc4_B993 ;go to Y speed section
+	SBC #$00 ; subtract carry if present
+	STA playerXHiDup ; set as new X screen
+	JMP loc4_B993 ; go to Y speed section
 	
-MovePlayerRight: ;X position check (prevents player from wrapping around from the right side of the screen in scroll locked areas)
+MovePlayerRight: ; X position check (prevents player from wrapping around from the right side of the screen in scroll locked areas)
 	LDA playerSprX
 	CMP #$F0
-	BCS bra4_B993 ;If player's X sprite position exceeds #$F0, go to Y speed
-;Move player Right	
+	BCS bra4_B993 ; If player's X sprite position exceeds #$F0, go to Y speed
+; Move player Right	
 	LDA playerXLo
 	CLC
-	ADC playerXSpdScaled ;Add scaled speed to X position
-	STA playerXLoDup ;store it in duplicate X position
-;Move player between X screens if necessary (right)
+	ADC playerXSpdScaled ; Add scaled speed to X position
+	STA playerXLoDup ; store it in duplicate X position
+; Move player between X screens if necessary (right)
 	LDA playerXHi
-	ADC #$00 ;add carry if present
-	STA playerXHiDup ;set as new X screen
-;***************************************************************
-;Now for the Y speed 
-;***************************************************************	
+	ADC #$00 ; add carry if present
+	STA playerXHiDup ; set as new X screen
+; ***************************************************************
+; Now for the Y speed 
+; ***************************************************************	
 bra4_B993: 
 loc4_B993:
 	LDA playerYSpd
 	LSR			
 	LSR			
 	LSR			
-	LSR ;divide Y speed value by 16,
-	TAX ;transfer modified Y speed to X reg
-	LDA tbl4_BAE1,X ;Load a Y speed value from table
-	STA playerYSpdScaled ;Store the scaled speed
-;decide if player should start moving
+	LSR ; divide Y speed value by 16,
+	TAX ; transfer modified Y speed to X reg
+	LDA tbl4_BAE1,X ; Load a Y speed value from table
+	STA playerYSpdScaled ; Store the scaled speed
+; decide if player should start moving
 	LDA playerYSpd
 	CMP #$04
-	BCS bra4_B9A9 ;If Y speed exceeds #$04, branch ahead
+	BCS bra4_B9A9 ; If Y speed exceeds #$04, branch ahead
 	LDA #$00 
 	STA playerYSpdScaled ; else set Y speed to #$00 (static)
 	
-bra4_B9A9: ;Make player move vertically
+bra4_B9A9: ; Make player move vertically
 	LDA playerYSpdScaled
-	BNE MovePlayerUp ;If player isn't static, branch ahead
-;else if player vertically static
+	BNE MovePlayerUp ; If player isn't static, branch ahead
+; else if player vertically static
 	LDA playerYHi 
-	STA playerYHiDup ;copy Y screen
+	STA playerYHiDup ; copy Y screen
 	LDA playerYLo
-	STA playerYLoDup ;copy Y position 
-	JMP loc4_BA24 ;go to check current event
+	STA playerYLoDup ; copy Y position 
+	JMP loc4_BA24 ; go to check current event
 	
-MovePlayerUp: ;Go here if player has Y speed 
+MovePlayerUp: ; Go here if player has Y speed 
 	LDA playerMoveFlags		
-	AND #$04 ;if player isn't jumping
-	BEQ CliffDeathCheck ;branch to check if they're dying 
-;If player jumping	
+	AND #$04 ; if player isn't jumping
+	BEQ CliffDeathCheck ; branch to check if they're dying 
+; If player jumping	
 	LDA playerSprY		
-	CMP #$08 ;if the player's sprite Y position is less than #$08
-	BCC CliffDeathCheck ;branch
-;else if it's higher 
-;Move player vertically upwards
+	CMP #$08 ; if the player's sprite Y position is less than #$08
+	BCC CliffDeathCheck ; branch
+; else if it's higher 
+; Move player vertically upwards
 	LDA playerYLo
 	SEC
-	SBC playerYSpdScaled ;subtract scaled Y speed from Y position
-	STA playerYLoDup ;store it in the duplicate
-;Move player between vertical screens if necessary (upwards)
+	SBC playerYSpdScaled ; subtract scaled Y speed from Y position
+	STA playerYLoDup ; store it in the duplicate
+; Move player between vertical screens if necessary (upwards)
 	LDA playerYHi
-	SBC #$00 ;subtract carry if present 
-	STA playerYHiDup ;set as new Y screen
-;Unsure on exact purpose of this part
+	SBC #$00 ; subtract carry if present 
+	STA playerYHiDup ; set as new Y screen
+; Unsure on exact purpose of this part
 	LDA playerYLoDup
-	CMP #$F0 ;if Y position is < #$F0 (top of the screen)
-	BCC bra4_B9DC ;branch to a jump (go to check current event)
-;else
-;***************************************************************	
-;Ok, this seems to be subtracting distance from the player when moving between vertical screens
-;Not exactly sure why, my guess is that it doesn't like you sitting on screen boarders
-;Lowering the value to be subtracted prevents the player from moving between screens
-;Increasing it largely does nothing unless you overflow the math
-;***************************************************************	
+	CMP #$F0 ; if Y position is < #$F0 (top of the screen)
+	BCC bra4_B9DC ; branch to a jump (go to check current event)
+; else
+; ***************************************************************	
+; Ok, this seems to be subtracting distance from the player when moving between vertical screens
+; Not exactly sure why, my guess is that it doesn't like you sitting on screen boarders
+; Lowering the value to be subtracted prevents the player from moving between screens
+; Increasing it largely does nothing unless you overflow the math
+; ***************************************************************	
 	SEC
-	SBC #$10 ;subtract #$10 from new Y position (move player upwards)
-	STA playerYLoDup  ;Update duplicate position 
+	SBC #$10 ; subtract #$10 from new Y position (move player upwards)
+	STA playerYLoDup  ; Update duplicate position 
 bra4_B9DC:
-	JMP loc4_BA24 ;go to check current event
-;*******************************
-;Check if player dying from pit
-;*******************************	
+	JMP loc4_BA24 ; go to check current event
+; *******************************
+; Check if player dying from pit
+; *******************************	
 CliffDeathCheck:
 	LDA playerSprY		
-	CMP #$E0 ;If player's sprite is below this (or above it, basically not going off screen in a pit)
-	BCC MovePlayerDown ;If above this point, continue falling as normal
-	;Otherwise, kill the player
+	CMP #$E0 ; If player's sprite is below this (or above it, basically not going off screen in a pit)
+	BCC MovePlayerDown ; If above this point, continue falling as normal
+	; Otherwise, kill the player
 	LDA #mus_Death	
-	STA sndMusic ;Play death music
+	STA sndMusic ; Play death music
 	LDA #$00		
-	STA playerPowerup ;Remove any powerups
-	STA playerYoshiState ;Remove yoshi
+	STA playerPowerup ; Remove any powerups
+	STA playerYoshiState ; Remove yoshi
 	LDA levelNumber	
 	CMP #$03
-	BEQ DeathTrigger ;Skip ahead and don't kill Yoshi if in a castle
+	BEQ DeathTrigger ; Skip ahead and don't kill Yoshi if in a castle
 	LDA #$00
-	STA yoshiExitStatus ;Otherwise, remove him completely
+	STA yoshiExitStatus ; Otherwise, remove him completely
 DeathTrigger:
 	LDA #$04		
-	STA gameState ;Trigger death event
+	STA gameState ; Trigger death event
 	LDA #$02		
-	STA gameSubstate ;Set map transition
+	STA gameSubstate ; Set map transition
 	LDA #$07		
-	STA playerAction ;Make player duck
+	STA playerAction ; Make player duck
 	RTS
-;************************************************
-MovePlayerDown: ;If player not dying in pit (IE player falling but not dead)
-;Move player vertically downwards
+; ************************************************
+MovePlayerDown: ; If player not dying in pit (IE player falling but not dead)
+; Move player vertically downwards
 	LDA playerYLo
 	CLC
-	ADC playerMetaspriteVAlign ;add scaled Y speed to Y position
-	STA playerYLoDup ;store it in the duplicate
-;Move between Y screens if necessary (downwards)
+	ADC playerMetaspriteVAlign ; add scaled Y speed to Y position
+	STA playerYLoDup ; store it in the duplicate
+; Move between Y screens if necessary (downwards)
 	LDA playerYHi
-	ADC #$00 ;add carry if present
-	STA playerYHiDup ;set it as new Y screen
-;Again unsure of the exact purpose here	
+	ADC #$00 ; add carry if present
+	STA playerYHiDup ; set it as new Y screen
+; Again unsure of the exact purpose here	
 	LDA playerYLoDup
-	CMP #$F0 ;if player's y coords are below this (pit)
-	BCC bra4_BA24 ;branch to check current event
-;else add some distance when moving between V screens (seems to prevent player screen wrapping in pits)
+	CMP #$F0 ; if player's y coords are below this (pit)
+	BCC bra4_BA24 ; branch to check current event
+; else add some distance when moving between V screens (seems to prevent player screen wrapping in pits)
 	CLC
 	ADC #$10
-	STA playerYLoDup ;add #$10 to new Y position 
-;Not really sure why it only does this for moving downwards
-	INC playerYHiDup ;increment the new Y screen
+	STA playerYLoDup ; add #$10 to new Y position 
+; Not really sure why it only does this for moving downwards
+	INC playerYHiDup ; increment the new Y screen
 
-;***************************************************************
-;Check event	
-;***************************************************************
+; ***************************************************************
+; Check event	
+; ***************************************************************
 bra4_BA24:
 loc4_BA24:
 	LDA playerSprY
 	CMP #$D0
-	BCS bra4_BA42 ;if exceed this, branch to X positioning
+	BCS bra4_BA42 ; if exceed this, branch to X positioning
 	LDA gameState
-	CMP #$04 ;death 
-	BEQ bra4_BA42 ;if player dying, branch to X positioning 
-	CMP #$0B ;going down pipe
-	BEQ bra4_BA42 ;else if going down pipe, branch to X positioning
-	CMP #$0D ;(event range: 0C: walk out pipe, 0D: enter level from pipe)
-	BCC bra4_BA3C ;else if event > 0B but < than or == to #$0D, skip last event check, go to JSRs 
-	CMP #$15 ;(event range: a whole bunch of pipe related things)
-	BCC bra4_BA42 ;else if event > #$0D but < or == to #$15, branch to X Positioning
-bra4_BA3C: ;if event > #$15, jump to these routines 
+	CMP #$04 ; death 
+	BEQ bra4_BA42 ; if player dying, branch to X positioning 
+	CMP #$0B ; going down pipe
+	BEQ bra4_BA42 ; else if going down pipe, branch to X positioning
+	CMP #$0D ; (event range: 0C: walk out pipe, 0D: enter level from pipe)
+	BCC bra4_BA3C ; else if event > 0B but < than or == to #$0D, skip last event check, go to JSRs 
+	CMP #$15 ; (event range: a whole bunch of pipe related things)
+	BCC bra4_BA42 ; else if event > #$0D but < or == to #$15, branch to X Positioning
+bra4_BA3C: ; if event > #$15, jump to these routines 
 	JSR sub4_BAF1
 	JSR sub4_BC50
-;***************************************************************
-;Player Sprite Positioning?
-;***************************************************************	
+; ***************************************************************
+; Player Sprite Positioning?
+; ***************************************************************	
 bra4_BA42:
 	LDA playerXLoDup
 	SEC
-	SBC playerXLo ;Subtract previous X position from new X position
-	STA playerMetaspriteHAlign ;store result
-;
+	SBC playerXLo ; Subtract previous X position from new X position
+	STA playerMetaspriteHAlign ; store result
+; 
 	LDA playerXHiDup
-	SBC playerXHi ;subtract previous screen value from current screen value 
-	BPL bra4_BA6A ;if result positive, branch (moved forward one screen)
-;else player moved back a screen
-	LDA playerMetaspriteHAlign ;get result of positioning sum
-	EOR #$FF ;Flip all the bits 
+	SBC playerXHi ; subtract previous screen value from current screen value 
+	BPL bra4_BA6A ; if result positive, branch (moved forward one screen)
+; else player moved back a screen
+	LDA playerMetaspriteHAlign ; get result of positioning sum
+	EOR #$FF ; Flip all the bits 
 	SEC ; set carry
-	ADC #$00 ;add the carry
+	ADC #$00 ; add the carry
 	CMP #$07
-	BCC bra4_BA67 ;if result < #$07, branch to jump (go to Y positioning)
-;if it's > 7
+	BCC bra4_BA67 ; if result < #$07, branch to jump (go to Y positioning)
+; if it's > 7
 	LDA playerXLo 
 	SEC
-	SBC #$07 ;subtract #$07 from previous X position
-	STA playerXLoDup ;set it as new X position
-;move between X screens if necessary (left)
+	SBC #$07 ; subtract #$07 from previous X position
+	STA playerXLoDup ; set it as new X position
+; move between X screens if necessary (left)
 	LDA playerXHi
-	SBC #$00 ;subtract carry if present  
-	STA playerXHiDup ;Set as new X screen
+	SBC #$00 ; subtract carry if present  
+	STA playerXHiDup ; Set as new X screen
 bra4_BA67:
-	JMP loc4_BA7D ;go to Y positioning 
-;***************************************************************	
-bra4_BA6A: ;Go here if X screen sum result postive
-	LDA playerMetaspriteHAlign ;get result of positoning sum
-	CMP #$07 ;If < 7
-	BCC bra4_BA7D ;branch to Y positioning 
-;if it's > 7
+	JMP loc4_BA7D ; go to Y positioning 
+; ***************************************************************	
+bra4_BA6A: ; Go here if X screen sum result postive
+	LDA playerMetaspriteHAlign ; get result of positoning sum
+	CMP #$07 ; If < 7
+	BCC bra4_BA7D ; branch to Y positioning 
+; if it's > 7
 	LDA playerXLo
 	CLC
-	ADC #$07 ;Add #$07 to previous X position
-	STA playerXLoDup ;set it as new X position
+	ADC #$07 ; Add #$07 to previous X position
+	STA playerXLoDup ; set it as new X position
 ; Move between X screens if necessary (right)
 	LDA playerXHi
-	ADC #$00 ;add carry if present 
-	STA playerXHiDup ;set as new X screen
-;***************************************************************	
-bra4_BA7D: ;Y positioning
+	ADC #$00 ; add carry if present 
+	STA playerXHiDup ; set as new X screen
+; ***************************************************************	
+bra4_BA7D: ; Y positioning
 loc4_BA7D:
 	LDA playerYLoDup
 	SEC
-	SBC playerYLo ;subtract old Y position from new Y position
-	STA playerMetaspriteHAlign ;Store result 
-;check if screen is positive
+	SBC playerYLo ; subtract old Y position from new Y position
+	STA playerMetaspriteHAlign ; Store result 
+; check if screen is positive
 	LDA playerYHiDup
-	SBC playerYHi ;subtract old Y screen from new Y screen
-	BPL bra4_BAB0 ;if result positive, branch ahead (moved down one screen)
-;else player moved up a screen
-	LDA playerMetaspriteHAlign ;get result of positioning sum
-	EOR #$FF ;flip all bits
-	SEC ;set carry
-	ADC #$00 ;apply carry
+	SBC playerYHi ; subtract old Y screen from new Y screen
+	BPL bra4_BAB0 ; if result positive, branch ahead (moved down one screen)
+; else player moved up a screen
+	LDA playerMetaspriteHAlign ; get result of positioning sum
+	EOR #$FF ; flip all bits
+	SEC ; set carry
+	ADC #$00 ; apply carry
 	CMP #$07
-	BCC bra4_BAAD ;if result less than #$07, branch to jump (go to RTS)
-;else, Subtract a value from Y position
+	BCC bra4_BAAD ; if result less than #$07, branch to jump (go to RTS)
+; else, Subtract a value from Y position
 	LDA playerYLo
 	SEC
-	SBC #$07 ;subtract #$07 from old Y position
-	STA playerYLoDup ;set it as new Y position 
-;Move player between Y screens if necessary (upwards)
+	SBC #$07 ; subtract #$07 from old Y position
+	STA playerYLoDup ; set it as new Y position 
+; Move player between Y screens if necessary (upwards)
 	LDA playerYHi
-	SBC #$00 ;subtract carry if present 
-	STA playerYHiDup ;store result as new Y screen
-;
+	SBC #$00 ; subtract carry if present 
+	STA playerYHiDup ; store result as new Y screen
+; 
 	LDA playerYLoDup
-	CMP #$F0 ;If duplicate Y position less than #$F0 (pit)
-	BCC bra4_BAAD ;branch to RTS
-;if greater than #$F0 (in pit)	
+	CMP #$F0 ; If duplicate Y position less than #$F0 (pit)
+	BCC bra4_BAAD ; branch to RTS
+; if greater than #$F0 (in pit)	
 	SEC
-	SBC #$10 ;subtract #$10 from duplicate Y position
-	STA playerYLoDup ;update new position
+	SBC #$10 ; subtract #$10 from duplicate Y position
+	STA playerYLoDup ; update new position
 bra4_BAAD:
-	JMP loc4_BAD0_RTS ;go to RTS
-;***************************************************************
-bra4_BAB0: ;Go here if Y screen sum result positive 
-	LDA playerMetaspriteHAlign ;get result of positioning sum
-	CMP #$07 ;If it's < #$07 
-	BCC bra4_BAD0_RTS ;branch to RTS
-;Else > #$07
+	JMP loc4_BAD0_RTS ; go to RTS
+; ***************************************************************
+bra4_BAB0: ; Go here if Y screen sum result positive 
+	LDA playerMetaspriteHAlign ; get result of positioning sum
+	CMP #$07 ; If it's < #$07 
+	BCC bra4_BAD0_RTS ; branch to RTS
+; Else > #$07
 	LDA playerYLo
 	CLC
-	ADC #$07 ;Add #$07 to old Y position
-	STA playerYLoDup ;set it as new Y position
-;move between vertical screens if necessary (downwards)
+	ADC #$07 ; Add #$07 to old Y position
+	STA playerYLoDup ; set it as new Y position
+; move between vertical screens if necessary (downwards)
 	LDA playerYHi
-	ADC #$00 ;add carry if present 
-	STA playerYHiDup ;store result as new Y screen
-;
+	ADC #$00 ; add carry if present 
+	STA playerYHiDup ; store result as new Y screen
+; 
 	LDA playerYLoDup
-	CMP #$F0 ;If new Y position less than #$F0 (pit)
-	BCC bra4_BAD0_RTS ;end 
-;else if player in pit
+	CMP #$F0 ; If new Y position less than #$F0 (pit)
+	BCC bra4_BAD0_RTS ; end 
+; else if player in pit
 	CLC
 	ADC #$10 
-	STA playerYLoDup ;add #$10 to new Y position
-;
-	INC playerYHiDup ;increment new Y screen
+	STA playerYLoDup ; add #$10 to new Y position
+; 
+	INC playerYHiDup ; increment new Y screen
 bra4_BAD0_RTS:
 loc4_BAD0_RTS:
-	RTS ;end
-;***************************************************************
-;Tables
-;***************************************************************
-PlayerXSpdTbl: ;X speed table
-;the higher the playerXSpd, the further through the table you can move
+	RTS ; end
+; ***************************************************************
+; Tables
+; ***************************************************************
+PlayerXSpdTbl: ; X speed table
+; the higher the playerXSpd, the further through the table you can move
 	db $00
 	db $01
 	db $02
@@ -4682,7 +4682,7 @@ PlayerXSpdTbl: ;X speed table
 	db $07
 	db $07
 	db $07
-tbl4_BAE1: ;Mid Air hang time table?? might affect Y speed in general
+tbl4_BAE1: ; Mid Air hang time table?? might affect Y speed in general
 	db $01
 	db $01
 	db $02
@@ -4700,70 +4700,70 @@ tbl4_BAE1: ;Mid Air hang time table?? might affect Y speed in general
 	db $05
 	db $05
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-;
+; 
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-;***************************************************************
-;Collision stuff 
-;***************************************************************	
+; ***************************************************************
+; Collision stuff 
+; ***************************************************************	
 sub4_BAF1:
 	LDX playerAction
-	LDA tbl4_BC2F,X ;Load the player's horizontal collision offset based on their current action
+	LDA tbl4_BC2F,X ; Load the player's horizontal collision offset based on their current action
 	CLC
-	ADC playerXLoDup ;add collision offset to new X position
-	STA playerCollXLo ;set as colision X postion
-	LDA playerXHiDup ;get new X screen
-	ADC #$00 ;if prior sum made a carry, apply it
-	STA playerCollXHi ;store as collision X screen
-	LDA playerYHiDup ;get new Y screen
-	STA playerCollYHi ;set as collision Y screen
-	LDA playerYLoDup ;get new Y position
-	STA playerCollYLo ;Set the player's vertical collision position
+	ADC playerXLoDup ; add collision offset to new X position
+	STA playerCollXLo ; set as colision X postion
+	LDA playerXHiDup ; get new X screen
+	ADC #$00 ; if prior sum made a carry, apply it
+	STA playerCollXHi ; store as collision X screen
+	LDA playerYHiDup ; get new Y screen
+	STA playerCollYHi ; set as collision Y screen
+	LDA playerYLoDup ; get new Y position
+	STA playerCollYLo ; Set the player's vertical collision position
 loc4_BB09:
 	LDA #$00
-	STA $26 ;clear $26
+	STA $26 ; clear $26
 	LDY playerCollYHi
-	LDA levelVerticalScreenOffs,Y ;Get screen offset for the vertical hitbox screen
+	LDA levelVerticalScreenOffs,Y ; Get screen offset for the vertical hitbox screen
 	CLC
-	ADC playerCollXHi ;Add hitbox X screen to get total screen number (Y screen offset + X screen = total screen)
-	TAY ;move result to Y
+	ADC playerCollXHi ; Add hitbox X screen to get total screen number (Y screen offset + X screen = total screen)
+	TAY ; move result to Y
 	LDA prgDataBank2
-	STA M90_PRG0 ;Load tileset bank in
-	LDA ($9F),Y ;load UNKNOWN offset by X collision offset
-	STA $9E ;store loaded value
+	STA M90_PRG0 ; Load tileset bank in
+	LDA ($9F),Y ; load UNKNOWN offset by X collision offset
+	STA $9E ; store loaded value
 	LDA (levelScreenOrderPtr),Y
-	STA playerScreenId ;Get the ID of the screen the player is on
-	TAY ;Back up in Y register
+	STA playerScreenId ; Get the ID of the screen the player is on
+	TAY ; Back up in Y register
 	AND #%00011111
-	ORA #%10000000 ;Clear lower 5 bits and add 80 to determine the address
+	ORA #%10000000 ; Clear lower 5 bits and add 80 to determine the address
 	STA $33
 	LDA #$00
-	STA $32 ;Zero page high byte
-	TYA ;Get screen ID the player is on
+	STA $32 ; Zero page high byte
+	TYA ; Get screen ID the player is on
 	AND #%00100000
-	BNE bra4_BB3D ;Branch if bit 5 is set for the screen ID (this is seemingly unused)
+	BNE bra4_BB3D ; Branch if bit 5 is set for the screen ID (this is seemingly unused)
 	LDA prgDataBank1
 	STA M90_PRG0
 	JMP loc4_BB43
 bra4_BB3D:
 	LDA $04F4
-	STA M90_PRG0 ;Likely an unused function
+	STA M90_PRG0 ; Likely an unused function
 loc4_BB43:
-	LDY playerCollXLo ;Get the horizontal hitbox position (will be reused soon)
+	LDY playerCollXLo ; Get the horizontal hitbox position (will be reused soon)
 	LDA playerCollYLo
-	AND #%11110000 ;Get the vertical metatile number of the player's hitbox
-	ORA UpperNybbleShiftTable,Y ;Pack the horizontal and vertical metatile numbers into one byte, with the horizontal metatile being in the lower nybble and the vertical metatile in the upper nybble
+	AND #%11110000 ; Get the vertical metatile number of the player's hitbox
+	ORA UpperNybbleShiftTable,Y ; Pack the horizontal and vertical metatile numbers into one byte, with the horizontal metatile being in the lower nybble and the vertical metatile in the upper nybble
 	TAY
 	LDA ($32),Y
 	TAY
 	LDA prgDataBank2
-	STA M90_PRG0 ;Swap in tileset PRG bank
-	LDA ($DA),Y ;Get current metatile's behavior
+	STA M90_PRG0 ; Swap in tileset PRG bank
+	LDA ($DA),Y ; Get current metatile's behavior
 	STA playerBackColl
 	LDA #$27
-	STA M90_PRG3 ;Swap the collision bank into the 4th PRG slot
-	JSR jmp_39_E000 ;Jump
+	STA M90_PRG3 ; Swap the collision bank into the 4th PRG slot
+	JSR jmp_39_E000 ; Jump
 	LDA #$3F
-	STA M90_PRG3 ;Swap the IRQ bank back in
+	STA M90_PRG3 ; Swap the IRQ bank back in
 	LDA playerBackColl
 	CMP #$F8
 	BNE bra4_BB73
@@ -4817,8 +4817,8 @@ loc4_BB95:
 	STA M90_PRG0
 	JMP loc4_BBCF
 bra4_BBC9:
-	LDA $04F4 ;unlogged
-	STA M90_PRG0 ;unlogged
+	LDA $04F4 ; unlogged
+	STA M90_PRG0 ; unlogged
 loc4_BBCF:
 	LDY playerCollXLo
 	LDA playerCollYLo
@@ -4838,25 +4838,25 @@ loc4_BBCF:
 	STA playerBackColl
 bra4_BBF0:
 	LDA #$27
-	STA M90_PRG3 ;Swap bank 39 into 4th PRG slot
-	JSR jmp_39_E000 ;Jump
+	STA M90_PRG3 ; Swap bank 39 into 4th PRG slot
+	JSR jmp_39_E000 ; Jump
 	LDA #$3F
-	STA M90_PRG3 ;Swap the IRQ bank back in
+	STA M90_PRG3 ; Swap the IRQ bank back in
 	LDA playerBackColl
 	CMP #$F8
-	BNE bra4_BC09 ;Branch if the player isn't in front of a fence tile
+	BNE bra4_BC09 ; Branch if the player isn't in front of a fence tile
 	LDA $49
-	ORA #$02 ;Set bit 1 of the player's climbing state??
-	BNE bra4_BC0D ;Branch ahead (always)
+	ORA #$02 ; Set bit 1 of the player's climbing state??
+	BNE bra4_BC0D ; Branch ahead (always)
 bra4_BC09:
 	LDA $49
-	AND #$FD ;Clear bit 1 of the player's climbing state??
+	AND #$FD ; Clear bit 1 of the player's climbing state??
 bra4_BC0D:
 	STA $49
 	LDA $26
 	BEQ bra4_BC16
 	JMP loc4_BB95
-bra4_BC16: ;affects movement between horizontal screens
+bra4_BC16: ; affects movement between horizontal screens
 	LDX playerAction
 	LDA playerCollXLo
 	CLC
@@ -4906,8 +4906,8 @@ tbl4_BC2F:
 	db $0A
 sub4_BC50:
 	LDY #$10
-	LDA playerPowerup ;if player is small,
-	BEQ bra4_BC59 ;branch
+	LDA playerPowerup ; if player is small,
+	BEQ bra4_BC59 ; branch
 	LDY #$18
 bra4_BC59:
 	STY $2B
@@ -4933,17 +4933,17 @@ bra4_BC59:
 bra4_BC7E:
 	LDA #$00
 	STA $26
-	LDY playerCollYHi ;Use the vertical screen of the player's collision as the index
-	LDA levelVerticalScreenOffs,Y ;Determines what to offset the player's collision X screen number based on what vertical screen they're on. If they're on the top screen, offset it by #$12. If they're on the bottom, don't offset it.
+	LDY playerCollYHi ; Use the vertical screen of the player's collision as the index
+	LDA levelVerticalScreenOffs,Y ; Determines what to offset the player's collision X screen number based on what vertical screen they're on. If they're on the top screen, offset it by #$12. If they're on the bottom, don't offset it.
 	CLC
-	ADC playerCollXHi ;Player X Screen + Offset = Absolute Screen
-	TAY ;Set the ordered screen value as the index
+	ADC playerCollXHi ; Player X Screen + Offset = Absolute Screen
+	TAY ; Set the ordered screen value as the index
 	LDA prgDataBank2
-	STA M90_PRG0 ;Move the second bank into the first bank slot ($8000-$9FFF)
-	LDA ($9F),Y ;(This value is seemingly always zero anyways)
-	STA $9E ;(This is stored but doesn't seem to be used anywhere)
-	LDA (levelScreenOrderPtr),Y ;Find the screen the player is on from the screen order table
-	STA playerScreenId ;Set the player's current screen ID
+	STA M90_PRG0 ; Move the second bank into the first bank slot ($8000-$9FFF)
+	LDA ($9F),Y ; (This value is seemingly always zero anyways)
+	STA $9E ; (This is stored but doesn't seem to be used anywhere)
+	LDA (levelScreenOrderPtr),Y ; Find the screen the player is on from the screen order table
+	STA playerScreenId ; Set the player's current screen ID
 	TAY
 	AND #$1F
 	ORA #$80
@@ -5004,7 +5004,7 @@ loc4_BCB8:
 	AND #$20
 	BNE bra4_BD17
 	LDA prgDataBank1
-	STA M90_PRG0 ;swap data bank into $8000
+	STA M90_PRG0 ; swap data bank into $8000
 	JMP loc4_BD1D
 bra4_BD17:
 	LDA $04F4
@@ -5017,8 +5017,8 @@ loc4_BD1D:
 	TAY
 	LDA ($32),Y
 	TAY
-	LDA prgDataBank2 ;get 2nd data bank
-	STA M90_PRG0 ;swap into to first prg bank ($8000)
+	LDA prgDataBank2 ; get 2nd data bank
+	STA M90_PRG0 ; swap into to first prg bank ($8000)
 	LDA ($DA),Y
 	STA playerBackColl
 	JSR sub4_BE6D
@@ -5032,8 +5032,8 @@ loc4_BD1D:
 	ADC #$00
 	STA playerXHiDup
 	LDY #$10
-	LDA playerPowerup ;if player is small,
-	BEQ bra4_BD53 ;branch
+	LDA playerPowerup ; if player is small,
+	BEQ bra4_BD53 ; branch
 	LDY #$18
 bra4_BD53:
 	STY $2B
@@ -5053,7 +5053,7 @@ bra4_BD62:
 	STY playerYHiDup
 bra4_BD6C_RTS:
 	RTS
-;Contains the high nybble shifted to the low nybble for every possible 8-bit value. This is technically faster than bit shifting right 4 times.
+; Contains the high nybble shifted to the low nybble for every possible 8-bit value. This is technically faster than bit shifting right 4 times.
 UpperNybbleShiftTable:
 	.dsb 16, $00
 	.dsb 16, $01
@@ -5086,10 +5086,10 @@ bra4_BE84_RTS:
 	RTS
 bra4_BE83:
 	LDA #$27
-	STA M90_PRG3 ;Swap bank 39 into the 4th PRG slot ($E000-$FFFF)
+	STA M90_PRG3 ; Swap bank 39 into the 4th PRG slot ($E000-$FFFF)
 	JSR jmp_39_E000
 	LDA #$3F
-	STA M90_PRG3 ;Swap bank 63 into the 4th PRG slot ($E000-$FFFF)
+	STA M90_PRG3 ; Swap bank 63 into the 4th PRG slot ($E000-$FFFF)
 	RTS
 sub4_BE91:
 	LDA $06DE
@@ -5110,18 +5110,18 @@ bra4_BEAD_RTS:
 	RTS
 bra4_BEAE:
 	LDA playerAction+1
-	CMP #$08 ;if player not spinning cape,
-	BNE bra4_BEAD_RTS ;stop
+	CMP #$08 ; if player not spinning cape,
+	BNE bra4_BEAD_RTS ; stop
 	LDA playerBackColl
 	CMP #$F8
 	BNE bra4_BEAD_RTS
 	LDA #$00
-	STA playerYSpd ;clear player's y speed
-	STA playerXSpd ;clear player's x speed
+	STA playerYSpd ; clear player's y speed
+	STA playerXSpd ; clear player's x speed
 	LDA #$03
-	STA playerState ;set action to 'climbing'
+	STA playerState ; set action to 'climbing'
 	RTS
-tbl4_BEC5: ;Vertical collision table for stage objects?? seems to affect collision with objects from below when jumping
+tbl4_BEC5: ; Vertical collision table for stage objects?? seems to affect collision with objects from below when jumping
 	db $01
 	db $01
 	db $00
@@ -5138,22 +5138,22 @@ tbl4_BEC5: ;Vertical collision table for stage objects?? seems to affect collisi
 	db $00
 	db $00
 	db $00
-loc4_BED5: ;Player bumped head on ceiling
-	LDA playerMoveFlags ;
-	AND #$04 ;if player isn't moving up,
-	BEQ bra4_BF06 ;branch
+loc4_BED5: ; Player bumped head on ceiling
+	LDA playerMoveFlags ; 
+	AND #$04 ; if player isn't moving up,
+	BEQ bra4_BF06 ; branch
 	LDA #$04
-	EOR #$FF ;XOR #$04 by #$FF to get #$FB
-	AND playerMoveFlags ;do AND operation
-	STA playerMoveFlags ;store result (player stops moving up)
-	LDA #$10 ;downward force
-	STA playerYSpd ;set y speed to 16
+	EOR #$FF ; XOR #$04 by #$FF to get #$FB
+	AND playerMoveFlags ; do AND operation
+	STA playerMoveFlags ; store result (player stops moving up)
+	LDA #$10 ; downward force
+	STA playerYSpd ; set y speed to 16
 	LDA playerState
-	CMP #$03 ;if player is climbing,
-	BEQ bra4_BEF1 ;branch
+	CMP #$03 ; if player is climbing,
+	BEQ bra4_BEF1 ; branch
 	LDA #sfx_Thud
-	STA sndSfx ;play "thud" sound
-bra4_BEF1: ;If player bumps head whilst climbing
+	STA sndSfx ; play "thud" sound
+bra4_BEF1: ; If player bumps head whilst climbing
 	LDA playerCollYLo
 	CLC
 	ADC #$10
@@ -5169,21 +5169,21 @@ bra4_BF05_RTS:
 	RTS
 bra4_BF06:
 	LDA #$00
-	STA playerXSpd ;Clear player X Speed
+	STA playerXSpd ; Clear player X Speed
 	LDA playerXLoDup
 	SEC
-	SBC playerCollXLo ;Subtract from duplicate X position
+	SBC playerCollXLo ; Subtract from duplicate X position
 	LDA playerXHiDup
-	SBC playerCollXHi ;Subtract value from duplicate X screen
-	BMI bra4_BF25 ;if result negative, branch
-	LDA playerCollXLo  ;otherwise get player X collision position
+	SBC playerCollXHi ; Subtract value from duplicate X screen
+	BMI bra4_BF25 ; if result negative, branch
+	LDA playerCollXLo  ; otherwise get player X collision position
 	CLC
-	ADC #$10 ;add #$10
-	AND #$F0 ;mask it
-	STA playerCollXLo ;update player X collision position
+	ADC #$10 ; add #$10
+	AND #$F0 ; mask it
+	STA playerCollXLo ; update player X collision position
 	LDA playerCollXHi
-	ADC #$00 ;apply carry if present 
-	STA playerCollXHi ;update player X collision screen
+	ADC #$00 ; apply carry if present 
+	STA playerCollXHi ; update player X collision screen
 	RTS
 bra4_BF25:
 	LDA playerCollXLo
@@ -5196,7 +5196,7 @@ bra4_BF25:
 bra4_BF32:
 	STA playerCollXHi
 	RTS
-	LDA ($32),Y ;everything below here is useless/leftover
+	LDA ($32),Y ; everything below here is useless/leftover
 	STA PPUDATA
 	DEC playerMetaspriteVAlign
 	BNE bra4_BF32
@@ -5287,4 +5287,4 @@ bra4_BFD2:
 	STA playerState
 	STA $06DC
 	STA $06DD
-	RTS ;unlogged code end
+	RTS ; unlogged code end

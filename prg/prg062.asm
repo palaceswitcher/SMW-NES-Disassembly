@@ -1,13 +1,13 @@
-;disassembled by BZK 6502 Disassembler
+; disassembled by BZK 6502 Disassembler
 	db $C8
-	db $C0 ;these are logged but i dont know what they're for
-	db $08 ;
-	db $C1 ;
-	db $48 ;
-	db $C1 ;
-	db $88 ;
+	db $C0 ; these are logged but i dont know what they're for
+	db $08 ; 
+	db $C1 ; 
+	db $48 ; 
+	db $C1 ; 
+	db $88 ; 
 	db $C1	
-	db $C8 ;(nothing else here is logged unless stated otherwise)
+	db $C8 ; (nothing else here is logged unless stated otherwise)
 	db $C1
 	db $08
 	db $C2
@@ -4095,10 +4095,10 @@
 	db $00
 	db $00
 	db $00
-	db $00 ;these are logged too
-	db $00 ;for whatever reason
-	db $00 ;
-	db $00 ;
+	db $00 ; these are logged too
+	db $00 ; for whatever reason
+	db $00 ; 
+	db $00 ; 
 	db $00
 	db $00
 	db $00

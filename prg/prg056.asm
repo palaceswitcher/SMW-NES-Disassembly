@@ -1,4 +1,4 @@
-;disassembled by BZK 6502 Disassembler
+; disassembled by BZK 6502 Disassembler
 sub9_8000:
 	LDX $A4
 	LDA objVar,X
@@ -8,7 +8,7 @@ sub9_8000:
 	LDA objState,X
 	AND #%00100000
 	BNE bra9_8013
-	JMP loc9_80A2 ;Jump if goomba is moving up
+	JMP loc9_80A2 ; Jump if goomba is moving up
 
 bra9_8013:
 	JSR sub3_B077
@@ -16,8 +16,8 @@ bra9_8013:
 	LDA objVar,X
 	AND #%01111111
 	CMP #$07
-	BCS bra9_8024 ;No goomba has more than 7 movement vectors
-	INC objVar,X ;Go to next movement vector
+	BCS bra9_8024 ; No goomba has more than 7 movement vectors
+	INC objVar,X ; Go to next movement vector
 
 bra9_8024:
 	PHA
@@ -678,20 +678,20 @@ ptr6_8544:
 	JSR jmp_54_A118
 	RTS
 
-;Animation attributes
-;=====Format=====
-;Frame number, attributes
+; Animation attributes
+; =====Format=====
+; Frame number, attributes
 tbl9_8548:
-;Still
+; Still
 	db $00
 	db $00
-;Tilted left
+; Tilted left
 	db $01
 	db $00
-;Still
+; Still
 	db $00
 	db $00
-;Titled right
+; Titled right
 	db $01
 	db $40
 
@@ -727,7 +727,7 @@ bra9_85DD:
 
 bra9_85E0:
 	LDA #$06
-	STA $25 ;Swallow when eaten by yoshi
+	STA $25 ; Swallow when eaten by yoshi
 	LDX $A4
 	Obj_DistCalc bra9_864A
 
@@ -744,31 +744,31 @@ bra9_864A:
 tbl9_865E:
 	dw Obj_YoshiTongueCheck
 	dw ptr_AA7B
-	dw Obj_PowerupEatCheck ;Check if eaten as a powerup?
-	dw ptr2_8668 ;Collision handling
-	dw Obj_FlipKill ;Flip object when killed
+	dw Obj_PowerupEatCheck ; Check if eaten as a powerup?
+	dw ptr2_8668 ; Collision handling
+	dw Obj_FlipKill ; Flip object when killed
 
 ptr2_8668:
 	JSR sub9_8698
-	JSR Obj_PlayerHitCheck ;Handle collision with the player
-	JSR Obj_KillOnSpinJump ;Kill if spinjumped on
+	JSR Obj_PlayerHitCheck ; Handle collision with the player
+	JSR Obj_KillOnSpinJump ; Kill if spinjumped on
 	LDA #16
-	STA playerYSpd ;Give player vertical speed boost
+	STA playerYSpd ; Give player vertical speed boost
 	LDA playerMoveFlags
-	ORA #%00000100 ;Boost player upwards
-	EOR #%00000001 ;Move player in opposite direction
+	ORA #%00000100 ; Boost player upwards
+	EOR #%00000001 ; Move player in opposite direction
 	STA playerMoveFlags
 	LDA #16
-	STA playerXSpd ;Move player backwards a bit
+	STA playerXSpd ; Move player backwards a bit
 	LDA #1
-	JSR RewardPoints ;Reward 200 points
+	JSR RewardPoints ; Reward 200 points
 	LDA #sfx_EnemyHit2
-	STA sndSfx ;Play hit sound
+	STA sndSfx ; Play hit sound
 	LDX $A4
 	INC objSlot,X
-	INC objSlot,X ;Knock goomba over
+	INC objSlot,X ; Knock goomba over
 	LDA #$80
-	STA objVar,X ;Face the player
+	STA objVar,X ; Face the player
 	RTS
 
 sub9_8698:
@@ -780,7 +780,7 @@ bra9_86A2:
 	LDA objFrameCount
 	AND #$00
 	BNE bra9_86BA_RTS
-	LDA #$85 ;Hardcoded straight line movement
+	LDA #$85 ; Hardcoded straight line movement
 	ASL
 	TAY
 	LDA tbl9_9C5E,Y
@@ -1282,9 +1282,9 @@ ptr6_8A5E:
 	LSR
 	LSR
 	LSR
-	AND #$01 ;Check if on an 8th frame
+	AND #$01 ; Check if on an 8th frame
 	ASL
-	TAX ;Get pointer index for odd/even frame
+	TAX ; Get pointer index for odd/even frame
 	LDA tbl9_8A8A,X
 	STA $32
 	LDA tbl9_8A8A+1,X
@@ -1314,7 +1314,7 @@ SpinyWalk2:
 	db $A6
 	db $14, $15
 	db $18, $19
-;Unused ball sprites --->
+; Unused ball sprites --->
 	db $02
 	db $02
 	db $A6
@@ -1326,7 +1326,7 @@ SpinyWalk2:
 	db $A6
 	db $1C, $1D
 	db $20, $21
-;<---
+; <---
 Obj_h80:
 	LDX $A4
 	LDA objVar,X
@@ -1512,9 +1512,9 @@ bra9_8C16:
 SprPtrs_BulletBill:
 	dw SprMap_BulletBill
 SprMap_BulletBill:
-	db $02 ;Tile Width
-	db $02 ;Tile Height
-	db $A6 ;1K CHR Bank
+	db $02 ; Tile Width
+	db $02 ; Tile Height
+	db $A6 ; 1K CHR Bank
 	db $2A, $2B
 	db $2C, $2D
 	LDY #$00
@@ -1547,15 +1547,15 @@ SprPtrs_VBulletBill:
 	dw SprMap_VBulletBill1
 	dw SprMap_VBulletBill2
 SprMap_VBulletBill1:
-	db $02 ;Tile Width
-	db $02 ;Tile Height
-	db $A6 ;1K CHR Bank
+	db $02 ; Tile Width
+	db $02 ; Tile Height
+	db $A6 ; 1K CHR Bank
 	db $2E, $2F
 	db $30, $31
 SprMap_VBulletBill2:
-	db $02 ;Tile Width
-	db $02 ;Tile Height
-	db $A6 ;1K CHR Bank
+	db $02 ; Tile Width
+	db $02 ; Tile Height
+	db $A6 ; 1K CHR Bank
 	db $30, $31
 	db $2E, $2F
 Obj_h9C:
@@ -1897,9 +1897,9 @@ tbl9_8EE9:
 	dw ptr2_8EF3
 	dw Obj_FlipKill
 ptr2_8EF3:
-	JSR sub9_8EFC ;unlogged
-	JSR jmp_54_BC3E ;unlogged
-	JMP jmp_54_BF74 ;unlogged
+	JSR sub9_8EFC ; unlogged
+	JSR jmp_54_BC3E ; unlogged
+	JMP jmp_54_BF74 ; unlogged
 sub9_8EFC:
 	LDA frameCount
 	AND #$04
@@ -2682,7 +2682,7 @@ bra9_9470:
 	BEQ bra9_9492
 	CMP #$FF
 	BEQ bra9_9492
-	JMP Obj_RemoveObject ;unlogged?
+	JMP Obj_RemoveObject ; unlogged?
 bra9_9492:
 	LDA objYLo,X
 	SEC
@@ -2763,7 +2763,7 @@ ptr6_9519:
 	BNE bra9_9536
 	LDY #$01
 	LDA objFrameCount
-	AND #$04 ;Set animation speed to per 4 frames
+	AND #$04 ; Set animation speed to per 4 frames
 	BNE bra9_9536
 	INY
 bra9_9536:
@@ -2789,8 +2789,8 @@ tbl9_9556:
 	dw FishBones2
 	dw FishBones3
 FishBones1:
-	db $03 ;Tile Width
-	db $02 ;Tile Height
+	db $03 ; Tile Width
+	db $02 ; Tile Height
 	db $AD
 	db $1B, $1C, $1D
 	db $1E, $1F, $20
@@ -4425,7 +4425,7 @@ ofs_9E87:
 	db $81
 	db $9E
 	STA $33
-	JMP ($32) ;This code seems to be cut off/overwritten
+	JMP ($32) ; This code seems to be cut off/overwritten
 	db $BB
 	db $A7
 	db $7B
@@ -4434,7 +4434,7 @@ ofs_9E87:
 	db $AB
 	db $B8
 	db $9E
-	LDA objXDistHi,X ;The rest of the code in this is unused
+	LDA objXDistHi,X ; The rest of the code in this is unused
 	BPL bra9_9EE4_RTS
 	LDA #$23
 	STA sndMusic

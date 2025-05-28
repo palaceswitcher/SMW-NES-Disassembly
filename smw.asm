@@ -5,11 +5,11 @@
 ; Assembles with morskoyzmey's fork of ASM6.
 
 ;----------------------------------------
-db "NES", $1A	;NES Header
-db 32			;32 x 16k PRG banks
-db 32			;32 x 8k CHR banks
-db $A1, $50		;Mapper: 90
-dsb 8, $00		;Header Tail
+db "NES", $1A	; NES Header
+db 32			; 32 x 16k PRG banks
+db 32			; 32 x 8k CHR banks
+db $A1, $50		; Mapper: 90
+dsb 8, $00		; Header Tail
 ;----------------------------------------
 
 ; Constants
@@ -93,7 +93,7 @@ hudDisplay = $0607
 chrBgBank1 = $03C5
 chrBgBank2 = $03CB
 chrBgBank3 = $03C6
-chrBgBank4 = $03CC ;Unused
+chrBgBank4 = $03CC ; Unused
 chrBgBankAnimation = $03CD
 chrSpriteBank1 = $03C7
 chrSpriteBank2 = $03C8
@@ -127,7 +127,7 @@ playerAnim = $16
 playerAnimFrame = $17
 playerMoveFlags = $19
 playerPrevDirection = $4F
-playerSprAttrs = $1A ;Not sure what else to call this
+playerSprAttrs = $1A ; Not sure what else to call this
 playerFramePtr = $1B
 playerAction = $1D
 playerPrevAction = $1E
@@ -274,8 +274,8 @@ clownCarFace = $06E8
 pauseFlag = $0709
 
 ; Sound Driver RAM Defines
-sndMusic = $8E ;ID of the music track being played
-sndSfx = $8F ;ID of the sound effect being played
+sndMusic = $8E ; ID of the music track being played
+sndSfx = $8F ; ID of the sound effect being played
 sndMusicBackup = $90
 sndDataPtr = $FE
 sndMuteFlag = $0700
@@ -378,7 +378,7 @@ M90_CHR_CTRL1 = $D003
 incbin levels/lvl_1-1.bin
 incbin levels/lvl_1-2.bin
 incbin levels/lvl_1-3.bin
-incbin levels/lvl_1-4_1.bin ;1-4 is split up by special levels
+incbin levels/lvl_1-4_1.bin ; 1-4 is split up by special levels
 incbin levels/lvl_GhostHouseIntro.bin
 incbin levels/lvl_CastleIntro.bin
 incbin levels/lvl_YoshiHouse.bin

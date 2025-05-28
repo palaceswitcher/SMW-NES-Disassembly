@@ -1,9 +1,9 @@
-;Disassembled with BZK 6502 Disassembler
+; Disassembled with BZK 6502 Disassembler
 tbl11_8000:
-	db $00 ;logged, not sure what these do
-	db $81 ;
-	db $04 ;
-	db $81 ;of course, nothing else here is logged unless stated otherwise
+	db $00 ; logged, not sure what these do
+	db $81 ; 
+	db $04 ; 
+	db $81 ; of course, nothing else here is logged unless stated otherwise
 	db $10
 	db $81
 	db $16
@@ -1470,7 +1470,7 @@ tbl11_8000:
 	db $00
 	db $FF
 	db $F6
-	LDA $8F ;seems like a copy of the sound driver, useless afaik
+	LDA $8F ; seems like a copy of the sound driver, useless afaik
 	BMI bra11_85C4
 	BNE bra11_85CE
 bra11_85C4:
@@ -2925,7 +2925,7 @@ tbl11_8EC1:
 	db $00
 	db $02
 	db $00
-	db $F5 ;music data is here for some reason
+	db $F5 ; music data is here for some reason
 	db $01
 	db $F6
 	db $00

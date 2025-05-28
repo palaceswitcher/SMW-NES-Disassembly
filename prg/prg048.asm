@@ -1,4 +1,4 @@
-;disassembled by BZK 6502 Disassembler
+; disassembled by BZK 6502 Disassembler
 sub4_8000:
 	LDX $A4
 	LDA objVar,X
@@ -28,8 +28,8 @@ bra4_8024:
 	ADC #$00
 	BPL bra4_803B
 bra4_8036:
-	LDA objYHi,X ;unlogged
-	SBC #$00 ;unlogged
+	LDA objYHi,X ; unlogged
+	SBC #$00 ; unlogged
 bra4_803B:
 	STA objYHi,X
 	JSR sub3_B057
@@ -71,9 +71,9 @@ bra4_8070:
 	SEC
 	SBC $25
 	BCS bra4_8086
-	DEC objYHi,X ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
+	DEC objYHi,X ; unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
 bra4_8086:
 	STA objYLo,X
 	LDA objState,X
@@ -150,20 +150,20 @@ bra4_8109:
 	LDA ($32),Y
 	CMP #$FF
 	BNE bra4_811E
-	LDA objState,X ;unlogged
-	EOR #$40 ;unlogged
-	STA objState,X ;unlogged
-	JMP loc4_813C ;unlogged
+	LDA objState,X ; unlogged
+	EOR #$40 ; unlogged
+	STA objState,X ; unlogged
+	JMP loc4_813C ; unlogged
 bra4_811E:
 	AND #$F0
 	BEQ bra4_813C
 	LDA ($32),Y
 	AND #$3F
 	BNE bra4_8131
-	LDA objVar,X ;unlogged
-	AND #$80 ;unlogged
-	STA objVar,X ;unlogged
-	RTS ;unlogged
+	LDA objVar,X ; unlogged
+	AND #$80 ; unlogged
+	STA objVar,X ; unlogged
+	RTS ; unlogged
 bra4_8131:
 	STA $32
 	LDA objVar,X
@@ -351,54 +351,54 @@ bra4_8282:
 	BEQ bra4_8289
 	JMP sub_54_B4FC
 bra4_8289:
-	LDA objXLo,X ;unlogged
-	SEC ;unlogged
-	SBC playerXLoDup ;unlogged
-	STA objXDistLo,X ;unlogged
-	LDA objXHi,X ;unlogged
-	SBC playerXHiDup ;unlogged
-	STA objXDistHi,X ;unlogged
-	STA $28 ;unlogged
-	BEQ bra4_82A5 ;unlogged
-	CMP #$FF ;unlogged
-	BEQ bra4_82A5 ;unlogged
-	JMP Obj_RemoveObject ;unlogged
+	LDA objXLo,X ; unlogged
+	SEC ; unlogged
+	SBC playerXLoDup ; unlogged
+	STA objXDistLo,X ; unlogged
+	LDA objXHi,X ; unlogged
+	SBC playerXHiDup ; unlogged
+	STA objXDistHi,X ; unlogged
+	STA $28 ; unlogged
+	BEQ bra4_82A5 ; unlogged
+	CMP #$FF ; unlogged
+	BEQ bra4_82A5 ; unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra4_82A5:
-	LDA objYLo,X ;unlogged
-	SEC ;unlogged
-	SBC playerYLoDup ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYHi,X ;unlogged
-	SBC playerYHiDup ;unlogged
-	STA objYDistHi,X ;unlogged
-	LDA playerYHiDup ;unlogged
-	CMP objYHi,X ;unlogged
-	BEQ bra4_82E7 ;unlogged
-	LDA objYDistHi,X ;unlogged
-	BPL bra4_82D6 ;unlogged
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc4_82E7 ;unlogged
+	LDA objYLo,X ; unlogged
+	SEC ; unlogged
+	SBC playerYLoDup ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYHi,X ; unlogged
+	SBC playerYHiDup ; unlogged
+	STA objYDistHi,X ; unlogged
+	LDA playerYHiDup ; unlogged
+	CMP objYHi,X ; unlogged
+	BEQ bra4_82E7 ; unlogged
+	LDA objYDistHi,X ; unlogged
+	BPL bra4_82D6 ; unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc4_82E7 ; unlogged
 bra4_82D6:
-	LDA objYDistLo,X ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	SBC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
+	LDA objYDistLo,X ; unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	SBC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
 bra4_82E7:
 loc4_82E7:
-	LDA freezeFlag ;unlogged
-	BEQ bra4_82ED ;unlogged
-	RTS ;unlogged
+	LDA freezeFlag ; unlogged
+	BEQ bra4_82ED ; unlogged
+	RTS ; unlogged
 bra4_82ED:
-	JMP Obj_FacePlayer ;unlogged
+	JMP Obj_FacePlayer ; unlogged
 loc4_82F0:
 	LDA #$07
 	STA $25
@@ -428,14 +428,14 @@ bra4_8312:
 	BEQ bra4_8354
 	LDA objYDistHi,X
 	BPL bra4_8343
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc4_8354 ;unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc4_8354 ; unlogged
 bra4_8343:
 	LDA objYDistLo,X
 	SEC
@@ -448,7 +448,7 @@ bra4_8354:
 loc4_8354:
 	LDA freezeFlag
 	BEQ bra4_835A
-	RTS ;unlogged
+	RTS ; unlogged
 bra4_835A:
 	LDA objState,X
 	AND #$1F
@@ -501,19 +501,19 @@ sub4_83B3:
 	LDA objState,X
 	AND #$20
 	BEQ bra4_83DC
-	LDA objFrameCount ;unlogged
-	AND #$00 ;unlogged
-	BNE bra4_83D9 ;unlogged
-	LDA #$80 ;unlogged
-	ASL ;unlogged
-	TAY ;unlogged
-	LDA tbl4_9A83,Y ;unlogged
-	STA $32 ;unlogged
-	LDA tbl4_9A83+1,Y ;unlogged
-	STA $33 ;unlogged
-	JSR sub4_8140 ;unlogged
+	LDA objFrameCount ; unlogged
+	AND #$00 ; unlogged
+	BNE bra4_83D9 ; unlogged
+	LDA #$80 ; unlogged
+	ASL ; unlogged
+	TAY ; unlogged
+	LDA tbl4_9A83,Y ; unlogged
+	STA $32 ; unlogged
+	LDA tbl4_9A83+1,Y ; unlogged
+	STA $33 ; unlogged
+	JSR sub4_8140 ; unlogged
 bra4_83D9:
-	JMP loc4_83F4 ;unlogged
+	JMP loc4_83F4 ; unlogged
 bra4_83DC:
 	LDA objFrameCount
 	AND #$0E
@@ -610,7 +610,7 @@ Obj_hC0:
 bra4_8488:
 	CMP #$80
 	BEQ bra4_848F
-	JMP sub_54_B4FC ;unlogged
+	JMP sub_54_B4FC ; unlogged
 bra4_848F:
 	LDA objXLo,X
 	SEC
@@ -623,7 +623,7 @@ bra4_848F:
 	BEQ bra4_84AB
 	CMP #$FF
 	BEQ bra4_84AB
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra4_84AB:
 	LDA objYLo,X
 	SEC
@@ -637,14 +637,14 @@ bra4_84AB:
 	BEQ bra4_84ED
 	LDA objYDistHi,X
 	BPL bra4_84DC
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc4_84ED ;unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc4_84ED ; unlogged
 bra4_84DC:
 	LDA objYDistLo,X
 	SEC
@@ -657,7 +657,7 @@ bra4_84ED:
 loc4_84ED:
 	LDA freezeFlag
 	BEQ bra4_84F3
-	RTS ;unlogged
+	RTS ; unlogged
 bra4_84F3:
 	JMP Obj_FacePlayer
 loc4_84F6:
@@ -689,14 +689,14 @@ bra4_8518:
 	BEQ bra4_855A
 	LDA objYDistHi,X
 	BPL bra4_8549
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc4_855A ;unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc4_855A ; unlogged
 bra4_8549:
 	LDA objYDistLo,X
 	SEC
@@ -709,7 +709,7 @@ bra4_855A:
 loc4_855A:
 	LDA freezeFlag
 	BEQ bra4_8560
-	RTS ;unlogged
+	RTS ; unlogged
 bra4_8560:
 	LDA objState,X
 	AND #$1F
@@ -857,54 +857,54 @@ Obj_hC2:
 	BMI bra4_867F
 	JMP loc4_86E6
 bra4_867F:
-	LDA objXLo,X ;unlogged
-	SEC ;unlogged
-	SBC playerXLoDup ;unlogged
-	STA objXDistLo,X ;unlogged
-	LDA objXHi,X ;unlogged
-	SBC playerXHiDup ;unlogged
-	STA objXDistHi,X ;unlogged
-	STA $28 ;unlogged
-	BEQ bra4_869B ;unlogged
-	CMP #$FF ;unlogged
-	BEQ bra4_869B ;unlogged
-	JMP Obj_RemoveObject ;unlogged
+	LDA objXLo,X ; unlogged
+	SEC ; unlogged
+	SBC playerXLoDup ; unlogged
+	STA objXDistLo,X ; unlogged
+	LDA objXHi,X ; unlogged
+	SBC playerXHiDup ; unlogged
+	STA objXDistHi,X ; unlogged
+	STA $28 ; unlogged
+	BEQ bra4_869B ; unlogged
+	CMP #$FF ; unlogged
+	BEQ bra4_869B ; unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra4_869B:
-	LDA objYLo,X ;unlogged
-	SEC ;unlogged
-	SBC playerYLoDup ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYHi,X ;unlogged
-	SBC playerYHiDup ;unlogged
-	STA objYDistHi,X ;unlogged
-	LDA playerYHiDup ;unlogged
-	CMP objYHi,X ;unlogged
-	BEQ bra4_86DD ;unlogged
-	LDA objYDistHi,X ;unlogged
-	BPL bra4_86CC ;unlogged
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc4_86DD ;unlogged
+	LDA objYLo,X ; unlogged
+	SEC ; unlogged
+	SBC playerYLoDup ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYHi,X ; unlogged
+	SBC playerYHiDup ; unlogged
+	STA objYDistHi,X ; unlogged
+	LDA playerYHiDup ; unlogged
+	CMP objYHi,X ; unlogged
+	BEQ bra4_86DD ; unlogged
+	LDA objYDistHi,X ; unlogged
+	BPL bra4_86CC ; unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc4_86DD ; unlogged
 bra4_86CC:
-	LDA objYDistLo,X ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	SBC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
+	LDA objYDistLo,X ; unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	SBC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
 bra4_86DD:
 loc4_86DD:
-	LDA freezeFlag ;unlogged
-	BEQ bra4_86E3 ;unlogged
-	RTS ;unlogged
+	LDA freezeFlag ; unlogged
+	BEQ bra4_86E3 ; unlogged
+	RTS ; unlogged
 bra4_86E3:
-	JMP Obj_FacePlayer ;unlogged
+	JMP Obj_FacePlayer ; unlogged
 loc4_86E6:
 	LDA #$07
 	STA $25
@@ -920,7 +920,7 @@ loc4_86E6:
 	BEQ bra4_8708
 	CMP #$FF
 	BEQ bra4_8708
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra4_8708:
 	LDA objYLo,X
 	SEC
@@ -934,14 +934,14 @@ bra4_8708:
 	BEQ bra4_874A
 	LDA objYDistHi,X
 	BPL bra4_8739
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc4_874A ;unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc4_874A ; unlogged
 bra4_8739:
 	LDA objYDistLo,X
 	SEC
@@ -954,7 +954,7 @@ bra4_874A:
 loc4_874A:
 	LDA freezeFlag
 	BEQ bra4_8750
-	RTS ;unlogged
+	RTS ; unlogged
 bra4_8750:
 	LDA objState,X
 	AND #$1F
@@ -1022,11 +1022,11 @@ ptr6_87C8:
 	LDX $A4
 	LDA objVar,X
 	BPL bra4_87DC
-	LDA objState,X ;unlogged
-	AND #$40 ;unlogged
-	STA $05F0 ;unlogged
-	LDA #$03 ;unlogged
-	JMP loc4_9104 ;unlogged
+	LDA objState,X ; unlogged
+	AND #$40 ; unlogged
+	STA $05F0 ; unlogged
+	LDA #$03 ; unlogged
+	JMP loc4_9104 ; unlogged
 bra4_87DC:
 	CMP #$0A
 	BCS bra4_87F1
@@ -1081,7 +1081,7 @@ bra4_881E:
 	BEQ bra4_883A
 	CMP #$FF
 	BEQ bra4_883A
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra4_883A:
 	LDA objYLo,X
 	SEC
@@ -1095,14 +1095,14 @@ bra4_883A:
 	BEQ bra4_887C
 	LDA objYDistHi,X
 	BPL bra4_886B
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc4_887C ;unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc4_887C ; unlogged
 bra4_886B:
 	LDA objYDistLo,X
 	SEC
@@ -1115,7 +1115,7 @@ bra4_887C:
 loc4_887C:
 	LDA freezeFlag
 	BEQ bra4_8882
-	RTS ;unlogged
+	RTS ; unlogged
 bra4_8882:
 	JSR Obj_FacePlayer
 	LDY #$50
@@ -1150,7 +1150,7 @@ loc4_88AB:
 	BEQ bra4_88CA
 	CMP #$FF
 	BEQ bra4_88CA
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra4_88CA:
 	LDA objYLo,X
 	SEC
@@ -1164,14 +1164,14 @@ bra4_88CA:
 	BEQ bra4_890C
 	LDA objYDistHi,X
 	BPL bra4_88FB
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc4_890C ;unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc4_890C ; unlogged
 bra4_88FB:
 	LDA objYDistLo,X
 	SEC
@@ -1184,7 +1184,7 @@ bra4_890C:
 loc4_890C:
 	LDA freezeFlag
 	BEQ bra4_8912
-	RTS ;unlogged
+	RTS ; unlogged
 bra4_8912:
 	LDA objSlot,X
 	AND #$01
@@ -1221,14 +1221,14 @@ bra4_8942:
 	BEQ bra4_8984
 	LDA objYDistHi,X
 	BPL bra4_8973
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc4_8984 ;unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc4_8984 ; unlogged
 bra4_8973:
 	LDA objYDistLo,X
 	SEC
@@ -1241,7 +1241,7 @@ bra4_8984:
 loc4_8984:
 	LDA freezeFlag
 	BEQ bra4_898A
-	RTS ;unlogged
+	RTS ; unlogged
 bra4_898A:
 	LDA objState,X
 	AND #$1F
@@ -1441,14 +1441,14 @@ bra4_8AE9:
 	BEQ bra4_8B2B
 	LDA objYDistHi,X
 	BPL bra4_8B1A
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc4_8B2B ;unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc4_8B2B ; unlogged
 bra4_8B1A:
 	LDA objYDistLo,X
 	SEC
@@ -1461,7 +1461,7 @@ bra4_8B2B:
 loc4_8B2B:
 	LDA freezeFlag
 	BEQ bra4_8B31
-	RTS ;unlogged
+	RTS ; unlogged
 bra4_8B31:
 	LDA objState,X
 	AND #$0F
@@ -1520,9 +1520,9 @@ bra4_8B90:
 	STA objXDistHi,X
 	STA $28
 	BEQ bra4_8BAC
-	CMP #$FF ;unlogged
-	BEQ bra4_8BAC ;unlogged
-	JMP Obj_RemoveObject ;unlogged
+	CMP #$FF ; unlogged
+	BEQ bra4_8BAC ; unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra4_8BAC:
 	LDA objYLo,X
 	SEC
@@ -1533,30 +1533,30 @@ bra4_8BAC:
 	STA objYDistHi,X
 	LDA playerYHiDup
 	CMP objYHi,X
-	BEQ bra4_8BEE ;unlogged
-	LDA objYDistHi,X ;unlogged
-	BPL bra4_8BDD ;unlogged
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc4_8BEE ;unlogged
+	BEQ bra4_8BEE ; unlogged
+	LDA objYDistHi,X ; unlogged
+	BPL bra4_8BDD ; unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc4_8BEE ; unlogged
 bra4_8BDD:
-	LDA objYDistLo,X ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	SBC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
+	LDA objYDistLo,X ; unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	SBC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
 bra4_8BEE:
 loc4_8BEE:
 	LDA freezeFlag
 	BEQ bra4_8BF4
-	RTS ;unlogged
+	RTS ; unlogged
 bra4_8BF4:
 	JMP Obj_FacePlayer
 loc4_8BF7:
@@ -1586,29 +1586,29 @@ bra4_8C19:
 	LDA playerYHiDup
 	CMP objYHi,X
 	BEQ bra4_8C5B
-	LDA objYDistHi,X ;unlogged
-	BPL bra4_8C4A ;unlogged
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc4_8C5B ;unlogged
+	LDA objYDistHi,X ; unlogged
+	BPL bra4_8C4A ; unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc4_8C5B ; unlogged
 bra4_8C4A:
-	LDA objYDistLo,X ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	SBC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
+	LDA objYDistLo,X ; unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	SBC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
 bra4_8C5B:
 loc4_8C5B:
 	LDA freezeFlag
 	BEQ bra4_8C61
-	RTS ;unlogged
+	RTS ; unlogged
 bra4_8C61:
 	LDA objState,X
 	AND #$1F
@@ -1792,7 +1792,7 @@ bra4_8DE0:
 loc4_8DE0:
 	LDA freezeFlag
 	BEQ bra4_8DE6
-	RTS ;unlogged
+	RTS ; unlogged
 bra4_8DE6:
 	JSR jmp_54_BC3E
 	JMP jmp_54_BF74
@@ -1857,7 +1857,7 @@ bra4_8E47:
 	BEQ bra4_8E63
 	CMP #$FF
 	BEQ bra4_8E63
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra4_8E63:
 	LDA objYLo,X
 	SEC
@@ -1869,29 +1869,29 @@ bra4_8E63:
 	LDA playerYHiDup
 	CMP objYHi,X
 	BEQ bra4_8EA5
-	LDA objYDistHi,X ;unlogged
-	BPL bra4_8E94 ;unlogged
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc4_8EA5 ;unlogged
+	LDA objYDistHi,X ; unlogged
+	BPL bra4_8E94 ; unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc4_8EA5 ; unlogged
 bra4_8E94:
-	LDA objYDistLo,X ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	SBC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
+	LDA objYDistLo,X ; unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	SBC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
 bra4_8EA5:
 loc4_8EA5:
 	LDA freezeFlag
 	BEQ bra4_8EAB
-	RTS ;unlogged
+	RTS ; unlogged
 bra4_8EAB:
 	LDA objXDistHi,X
 	AND #$40
@@ -1947,29 +1947,29 @@ bra4_8F05:
 	LDA playerYHiDup
 	CMP objYHi,X
 	BEQ bra4_8F47
-	LDA objYDistHi,X ;unlogged
-	BPL bra4_8F36 ;unlogged
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc4_8F47 ;unlogged
+	LDA objYDistHi,X ; unlogged
+	BPL bra4_8F36 ; unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc4_8F47 ; unlogged
 bra4_8F36:
-	LDA objYDistLo,X ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	SBC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
+	LDA objYDistLo,X ; unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	SBC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
 bra4_8F47:
 loc4_8F47:
 	LDA freezeFlag
 	BEQ bra4_8F4D
-	RTS ;unlogged
+	RTS ; unlogged
 bra4_8F4D:
 	LDA objState,X
 	AND #$1F
@@ -2041,10 +2041,10 @@ bra4_8FBA:
 	STA objXHi,Y
 	JMP loc4_8FEE
 bra4_8FE2:
-	LDA objXLo,X ;unlogged
-	STA objXLo,Y ;unlogged
-	LDA objXHi,X ;unlogged
-	STA objXHi,Y ;unlogged
+	LDA objXLo,X ; unlogged
+	STA objXLo,Y ; unlogged
+	LDA objXHi,X ; unlogged
+	STA objXHi,Y ; unlogged
 loc4_8FEE:
 	LDA objYLo,X
 	CLC
@@ -2150,7 +2150,7 @@ bra4_90B8:
 loc4_90B8:
 	LDA freezeFlag
 	BEQ bra4_90BE
-	RTS ;unlogged
+	RTS ; unlogged
 bra4_90BE:
 	JSR jmp_54_BC3E
 	JMP jmp_54_BF74
@@ -2178,7 +2178,7 @@ bra4_90E7:
 SprPtrs_ChuckProjectiles:
 	dw SprMap_Baseball
 	dw SprMap_Football
-	dw SprMap_Rock ;Unused
+	dw SprMap_Rock ; Unused
 SprMap_Baseball:
 	db $01
 	db $01
@@ -2296,7 +2296,7 @@ SprMap_CharginChuck_Stun4:
 	db $11, $12, $13
 	db $1F, $20, $21
 	db $28, $29, $27
-;Unused Clappin' Chuck Mappings
+; Unused Clappin' Chuck Mappings
 	db $04
 	db $04
 	db $A8
@@ -2305,7 +2305,7 @@ SprMap_CharginChuck_Stun4:
 	db $27, $28, $29, $2A
 	db $2F, $30, $31, $32
 SprMap_DigginChuck_Idle:
-	db $04 ;digging chuck (unused) mappings
+	db $04 ; digging chuck (unused) mappings
 	db $03
 	db $AF
 	db $FF, $0B, $0C, $0D
@@ -2348,7 +2348,7 @@ SprMap_PassinChuck_Kick:
 	db $2F, $30, $31
 	db $32, $33, $34
 	db $35, $36, $37
-	db $37, $38 ;Excess bytes
+	db $37, $38 ; Excess bytes
 SprMap_BaseballChuck_Idle:
 	db $03
 	db $04
@@ -2422,7 +2422,7 @@ bra4_92C1:
 	LDA booBuddiesFlag
 	CMP #$FF
 	BNE bra4_92CA
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra4_92CA:
 	LDA #$FF
 	STA booBuddiesFlag
@@ -2635,14 +2635,14 @@ bra4_942A:
 	BEQ bra4_946C
 	LDA objYDistHi,X
 	BPL bra4_945B
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc4_946C ;unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc4_946C ; unlogged
 bra4_945B:
 	LDA objYDistLo,X
 	SEC
@@ -2655,7 +2655,7 @@ bra4_946C:
 loc4_946C:
 	LDA freezeFlag
 	BEQ bra4_9472
-	RTS ;unlogged
+	RTS ; unlogged
 bra4_9472:
 	JMP Obj_FacePlayer
 loc4_9475:
@@ -2752,7 +2752,7 @@ bra4_951E:
 	BEQ bra4_953A
 	CMP #$FF
 	BEQ bra4_953A
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra4_953A:
 	LDA objYLo,X
 	SEC
@@ -2786,7 +2786,7 @@ bra4_957C:
 loc4_957C:
 	LDA freezeFlag
 	BEQ bra4_9582
-	RTS ;unlogged
+	RTS ; unlogged
 bra4_9582:
 	LDA objVar,X
 	CMP #$20
@@ -2918,16 +2918,16 @@ bra4_9671:
 	RTS
 
 ;----------------------------------------
-;Boo object code
+; Boo object code
 ;----------------------------------------
 Obj_hDA:
-	LDX $A4 ;Get object index
+	LDX $A4 ; Get object index
 	LDA objVar,X
 	CMP #$80
-	BEQ bra4_9691 ;Branch if variable is $80? This never seems to occur in-game
+	BEQ bra4_9691 ; Branch if variable is $80? This never seems to occur in-game
 	JMP loc4_9703
 bra4_9691:
-;Boo X position - player X position = horizontal distance between Boo and player
+; Boo X position - player X position = horizontal distance between Boo and player
 	LDA objXLo,X
 	SEC
 	SBC playerXLoDup
@@ -2935,14 +2935,14 @@ bra4_9691:
 	LDA objXHi,X
 	SBC playerXHiDup
 	STA objXDistHi,X
-	STA $28 ;Backup X screen distance?
+	STA $28 ; Backup X screen distance?
 
-	BEQ bra4_96AD ;Branch if the player and Boo are on the screen
+	BEQ bra4_96AD ; Branch if the player and Boo are on the screen
 	CMP #$FF
-	BEQ bra4_96AD ;Branch if the Boo is within one screen behind the player
-	JMP Obj_RemoveObject ;Otherwise, unload the boo if it's ahead of the player
+	BEQ bra4_96AD ; Branch if the Boo is within one screen behind the player
+	JMP Obj_RemoveObject ; Otherwise, unload the boo if it's ahead of the player
 bra4_96AD:
-;Boo Y position - player Y position = vertical distance between Boo and player
+; Boo Y position - player Y position = vertical distance between Boo and player
 	LDA objYLo,X
 	SEC
 	SBC playerYLoDup
@@ -2953,11 +2953,11 @@ bra4_96AD:
 
 	LDA playerYHiDup
 	CMP objYHi,X
-	BEQ loc4_96EF ;Branch if the player and boo are on the same vertical screen
+	BEQ loc4_96EF ; Branch if the player and boo are on the same vertical screen
 	LDA objYDistHi,X
-	BPL bra4_96DE ;Branch if the Boo is ahead of the player
+	BPL bra4_96DE ; Branch if the Boo is ahead of the player
 
-;Otherwise, if the Boo is behind the player, subtract 16 pixels from the distance between it and the player
+; Otherwise, if the Boo is behind the player, subtract 16 pixels from the distance between it and the player
 	LDA objYDistLo,X
 	CLC
 	ADC #$10
@@ -2977,12 +2977,12 @@ bra4_96DE:
 	STA objYDistHi,X
 loc4_96EF:
 	LDA freezeFlag
-	BEQ bra4_96F5 ;Only continue if the game isn't frozen
-	RTS ;Stop if it is frozen
+	BEQ bra4_96F5 ; Only continue if the game isn't frozen
+	RTS ; Stop if it is frozen
 bra4_96F5:
 	JSR Obj_FacePlayer
 	LDA $A4
-	AND #$03 ;Mask out lower 2 bits of current object index
+	AND #$03 ; Mask out lower 2 bits of current object index
 	ORA objState,X
 	STA objState,X
 	RTS
@@ -3034,13 +3034,13 @@ bra4_9764:
 loc4_9764:
 	LDA freezeFlag
 	BEQ bra4_976A_RTS
-	RTS ;unlogged
+	RTS ; unlogged
 bra4_976A_RTS:
 	RTS
 sub4_976B:
 	LDA objFrameCount
 	AND #$04
-	BNE bra4_9783 ;Branch if not on a 4th frame
+	BNE bra4_9783 ; Branch if not on a 4th frame
 	LDA #$89
 	ASL
 	TAY
@@ -3052,18 +3052,18 @@ sub4_976B:
 bra4_9783:
 	LDA objState,X
 	AND #$40
-	BNE bra4_97A7 ;Branch if Boo is already facing left
+	BNE bra4_97A7 ; Branch if Boo is already facing left
 	LDA objXDistHi,X
-	BMI bra4_97A4 ;Branch if Boo is behind the player
+	BMI bra4_97A4 ; Branch if Boo is behind the player
 	LDA objXDistLo,X
 	CMP #$43
-	BCC bra4_97A4 ;Branch if the Boo is within 67 ($43) pixels ahead of the player
+	BCC bra4_97A4 ; Branch if the Boo is within 67 ($43) pixels ahead of the player
 	LDA frameCount
 	AND #$1F
-	BNE bra4_97A4 ;Branch if not on a 32nd frame
+	BNE bra4_97A4 ; Branch if not on a 32nd frame
 	LDA objState,X 
 	EOR #$40
-	STA objState,X ;Turn Boo around
+	STA objState,X ; Turn Boo around
 bra4_97A4:
 	JMP loc4_97C1
 bra4_97A7:
@@ -3074,27 +3074,27 @@ bra4_97A7:
 	BCS loc4_97C1
 	LDA frameCount
 	AND #$7E
-	BNE loc4_97C1 ;Continue every 2 frames for every 128 frames
+	BNE loc4_97C1 ; Continue every 2 frames for every 128 frames
 	LDA objState,X
 	EOR #$40
-	STA objState,X ;Turn Boo around
+	STA objState,X ; Turn Boo around
 loc4_97C1:
 	LDA frameCount
 	AND #$7F
-	BNE bra4_97E7_RTS ;Only continue every 128th frame
+	BNE bra4_97E7_RTS ; Only continue every 128th frame
 	LDA objXDistHi,X
 	EOR objState,X
 	AND #$40
-	BEQ bra4_97E7_RTS ;Stop if player is facing left?
+	BEQ bra4_97E7_RTS ; Stop if player is facing left?
 	LDA objSlot,X
 	CLC
 	ADC #$02
-	STA objSlot,X ;Turn Boo into Boo Crew Boo
+	STA objSlot,X ; Turn Boo into Boo Crew Boo
 	LDA #$00
-	STA objVar,X ;Clear variable
+	STA objVar,X ; Clear variable
 	LDA objState,X
 	AND #%11011111
-	STA objState,X ;Mask out bit 5 of Boo's state
+	STA objState,X ; Mask out bit 5 of Boo's state
 bra4_97E7_RTS:
 	RTS
 
@@ -3145,7 +3145,7 @@ bra4_9848:
 loc4_9848:
 	LDA freezeFlag
 	BEQ bra4_984E
-	RTS ;unlogged
+	RTS ; unlogged
 bra4_984E:
 	JSR sub4_9857
 	JSR jmp_54_BC3E
@@ -3279,19 +3279,19 @@ loc4_992B:
 	LDA objSlot,X
 	AND #$01
 	BEQ bra4_9944
-	LDY #$C0 ;unlogged
+	LDY #$C0 ; unlogged
 bra4_9944:
 	STY $36
 	JMP jmp_54_A118
 SprPtrs_Boo:
 	dw SprMap_Boo_Tease1
 	dw SprMap_Boo_Tease2
-	dw SprMap_Boo_ChaseAlt ;Only used by Boo Buddies
+	dw SprMap_Boo_ChaseAlt ; Only used by Boo Buddies
 	dw SprMap_Boo_Chase
-	dw SprMap_Boo_MouthOpen ;Only used by Boo Buddies
+	dw SprMap_Boo_MouthOpen ; Only used by Boo Buddies
 	dw SprMap_Boo_Hide
-	dw SprMap_Boo_Tease1 ;Unused
-	dw SprMap_Boo_Tease2 ;Unused
+	dw SprMap_Boo_Tease1 ; Unused
+	dw SprMap_Boo_Tease2 ; Unused
 SprMap_Boo_Tease1:
 	db $02
 	db $02
@@ -3329,9 +3329,9 @@ SprMap_Boo_Hide:
 	db $08, $0A
 	db $11, $12
 	
-;Boo Buddies sine/cosine lookup table
-;Roughly equivalent to 79cos((pi/64)*x) rounded up with a few values being one off.
-;Sine values are obtained by shifting 32 values ahead
+; Boo Buddies sine/cosine lookup table
+; Roughly equivalent to 79cos((pi/64)*x) rounded up with a few values being one off.
+; Sine values are obtained by shifting 32 values ahead
 booBuddiesSineTable:
 	db $4F
 	db $4F
@@ -3460,7 +3460,7 @@ booBuddiesSineTable:
 	db $4F
 	db $4F
 	db $4F
-	db $4F ;end of boo circle movement thing
+	db $4F ; end of boo circle movement thing
 	db $00
 	db $00
 	db $00
@@ -3598,7 +3598,7 @@ tbl4_9A83:
 	dw ofs_9C05
 	dw ofs_9C20
 	dw ofs_9C8E
-	dw ofs_9CB0 ;Used for normal Boo
+	dw ofs_9CB0 ; Used for normal Boo
 	dw ofs_9CF4
 	dw ofs_9D33
 	dw ofs_9A9B

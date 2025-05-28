@@ -1,10 +1,10 @@
-;disassembled with BZK 6502 Disassembler
+; disassembled with BZK 6502 Disassembler
 TilemapPointers:
 	dw TitleLogo
 	dw EndingScreen
 	dw ThankYouScreen
 	dw CopyrightScreen
-	dw YoshiHouse ;Unused
+	dw YoshiHouse ; Unused
 TitleLogo:
 	incbin screens/TitleLogo.bin
 EndingScreen:
@@ -14,7 +14,7 @@ ThankYouScreen:
 CopyrightScreen:
 	incbin screens/CopyrightScreen.bin
 YoshiHouse:
-	incbin screens/YoshiHouse.bin ;Unused
+	incbin screens/YoshiHouse.bin ; Unused
 	db $11, $30, $2A, $0E
 	db $11, $38, $26, $0E
 	db $11, $37, $2A, $1A
@@ -58,75 +58,75 @@ YoshiHouse:
 	db $60
 TilemapDecompSub:
 	LDA #$00
-	STA PPUMASK ;Clear PPU mask, disabling rendering
-	STA PPUCTRL ;Clear PPU control, disabling NMI
-	TAY ;Clear Y register
-	LDA PPUSTATUS ;Clear PPU address latch
-	LDA curRleTilemap ;Get current tilemap
+	STA PPUMASK ; Clear PPU mask, disabling rendering
+	STA PPUCTRL ; Clear PPU control, disabling NMI
+	TAY ; Clear Y register
+	LDA PPUSTATUS ; Clear PPU address latch
+	LDA curRleTilemap ; Get current tilemap
 	ASL
-	TAX ;Get the pointer for it
+	TAX ; Get the pointer for it
 	LDA TilemapPointers,X
-	STA $38 ;Load lower byte of pointer
+	STA $38 ; Load lower byte of pointer
 	LDA TilemapPointers+1,X
-	STA $39 ;Load upper byte of pointer
+	STA $39 ; Load upper byte of pointer
 	LDA ($38),Y
-	STA PPUADDR ;Get upper byte of PPU address from tilemap header
+	STA PPUADDR ; Get upper byte of PPU address from tilemap header
 	JSR GoToNextByte
 	LDA ($38),Y
-	STA PPUADDR ;Get lower byte of PPU address from tilemap header
+	STA PPUADDR ; Get lower byte of PPU address from tilemap header
 ByteTypeCheck:
 	JSR GoToNextByte
-	LDA ($38),Y ;Read next byte
-	BPL bra2_87F1 ;Branch if it isn't a byte count (aka bit 7 cleared)
+	LDA ($38),Y ; Read next byte
+	BPL bra2_87F1 ; Branch if it isn't a byte count (aka bit 7 cleared)
 	CMP #$FF
-	BEQ bra2_8801_RTS ;Stop if a null byte is reached
+	BEQ bra2_8801_RTS ; Stop if a null byte is reached
 	AND #%01111111
-	STA rleRepeatBytesLeft ;Mask out bit 7 and get the amount of bytes until the next repeat
+	STA rleRepeatBytesLeft ; Mask out bit 7 and get the amount of bytes until the next repeat
 bra2_87E3:
 	JSR GoToNextByte
-	LDA ($38),Y ;Read next byte
-	STA PPUDATA ;Store tile data
-	DEC rleRepeatBytesLeft ;Decrement byte count
-	BNE bra2_87E3 ;Keep looping until byte count reached
-	BEQ ByteTypeCheck ;Branch once it is reached
+	LDA ($38),Y ; Read next byte
+	STA PPUDATA ; Store tile data
+	DEC rleRepeatBytesLeft ; Decrement byte count
+	BNE bra2_87E3 ; Keep looping until byte count reached
+	BEQ ByteTypeCheck ; Branch once it is reached
 bra2_87F1:
-	STA rleRepeatCount ;Store repeat count
+	STA rleRepeatCount ; Store repeat count
 	JSR GoToNextByte
-	LDA ($38),Y ;Read next byte
+	LDA ($38),Y ; Read next byte
 RepeatTileRender:
-	STA PPUDATA ;Store tile data
+	STA PPUDATA ; Store tile data
 	DEC rleRepeatCount
-	BNE RepeatTileRender ;Repeatedly render that tile until the repeat count is reached
-	BEQ ByteTypeCheck ;Branch once the repeat count is reached
+	BNE RepeatTileRender ; Repeatedly render that tile until the repeat count is reached
+	BEQ ByteTypeCheck ; Branch once the repeat count is reached
 bra2_8801_RTS:
 	RTS
 GoToNextByte:
-	INC $38 ;Go to next byte of data
+	INC $38 ; Go to next byte of data
 	BNE NextByteDone
-	INC $39 ;Go to next memory page if needed
+	INC $39 ; Go to next memory page if needed
 NextByteDone:
 	RTS
 
-	LDX #$00 ;Clear X offset
+	LDX #$00 ; Clear X offset
 	LDA #$00
 bra2_880D:
-	STA metaspriteRowAlignment,X ;Clear metasprite row position
+	STA metaspriteRowAlignment,X ; Clear metasprite row position
 	INX
-	CPX #$09 ;Keep clearing all 9 of them
+	CPX #$09 ; Keep clearing all 9 of them
 	BCC bra2_880D
 	RTS
-	LDX #$00 ;Clear X index
-	LDA #$F8 ;Set off-screen Y position
+	LDX #$00 ; Clear X index
+	LDA #$F8 ; Set off-screen Y position
 bra2_8819:
-	STA spriteMem,X ;Put sprite at off-screen Y position
+	STA spriteMem,X ; Put sprite at off-screen Y position
 	INX
 	INX
 	INX
-	INX ;Go to next sprite
-	BNE bra2_8819 ;Keep going until all sprites are off-screen
+	INX ; Go to next sprite
+	BNE bra2_8819 ; Keep going until all sprites are off-screen
 	RTS
 ClearOtherSprites:
-	LDX #$10 ;Set the X index to $10 and ignore the first 4 sprites
+	LDX #$10 ; Set the X index to $10 and ignore the first 4 sprites
 	LDA #$F8
 bra2_8827:
 	STA spriteMem,X
@@ -134,7 +134,7 @@ bra2_8827:
 	INX
 	INX
 	INX
-	BNE bra2_8827 ;Hide all sprites (excluding the player)
+	BNE bra2_8827 ; Hide all sprites (excluding the player)
 	LDX #$00
 	STX $2C
 	LDA #$00
@@ -257,24 +257,24 @@ tbl2_8900:
 	dw SprMap_PlayerCursor
 	dw SprMap_TitleCloud
 	dw SprMap_TitleEnemyPop
-	dw pnt3_8B0C ;unused 05
-	dw pnt3_8B16 ;unused 06
+	dw pnt3_8B0C ; unused 05
+	dw pnt3_8B16 ; unused 06
 	dw SprMap_TitleKoopa1
 	dw SprMap_TitleKoopa2
 	dw SprMap_TitleRex1
 	dw SprMap_TitleRex2
-	dw pnt3_8B74 ;unused 0B
-	dw pnt3_8B80 ;unused 0C
+	dw pnt3_8B74 ; unused 0B
+	dw pnt3_8B80 ; unused 0C
 	dw SprMap_TitleSuperKoopa1
 	dw SprMap_TitleSuperKoopa2
-	dw pnt3_8B9E ;unused 0F
-	dw pnt3_8BC2 ;unused 10
+	dw pnt3_8B9E ; unused 0F
+	dw pnt3_8BC2 ; unused 10
 	dw SprMap_TitleMario1
 	dw SprMap_TitleMario2
 	dw SprMap_TitleYoshi_Walk1
 	dw SprMap_TitleYoshi_Walk2
 	dw SprMap_TitleYoshi_Jump
-;Map sprites (starts at hex 16)
+; Map sprites (starts at hex 16)
 	dw SprMap_MapplayerDown1
 	dw SprMap_MapplayerDown2
 	dw SprMap_MapplayerDown3
@@ -288,11 +288,11 @@ tbl2_8900:
 	dw SprMap_MapplayerSwimDown1
 	dw SprMap_MapplayerSwimDown2
 	dw SprMap_MapplayerSwimLeft1
-	dw SprMap_MapplayerSwimLeft2 ;unused
+	dw SprMap_MapplayerSwimLeft2 ; unused
 	dw SprMap_MapplayerSwimUp1
 	dw SprMap_MapplayerSwimUp2
-	dw SprMap_MapBoo ;unused
-	dw SprMap_MapHalo ;unused
+	dw SprMap_MapBoo ; unused
+	dw SprMap_MapHalo ; unused
 	dw SprMap_MapYoshi_Down1
 	dw SprMap_MapYoshi_Down2
 	dw SprMap_MapYoshi_Left1
@@ -302,7 +302,7 @@ tbl2_8900:
 	dw SprMap_MapYoshi_SwimDown1
 	dw SprMap_MapYoshi_SwimDown2
 	dw SprMap_MapYoshi_SwimLeft1
-	dw SprMap_MapYoshi_SwimLeft2 ;unused
+	dw SprMap_MapYoshi_SwimLeft2 ; unused
 	dw SprMap_MapYoshi_SwimUp1
 	dw SprMap_MapYoshi_SwimUp2
 	dw SprMap_MapplayerStart
@@ -314,12 +314,12 @@ tbl2_8900:
 	dw SprMap_MapplayerSwimStart2
 	dw SprMap_MapplayerRight1
 	dw SprMap_MapplayerRight2
-	dw SprMap_MapplayerSwimRight1 ;unused
-	dw SprMap_MapplayerSwimRight2 ;unused
+	dw SprMap_MapplayerSwimRight1 ; unused
+	dw SprMap_MapplayerSwimRight2 ; unused
 	dw SprMap_MapYoshi_Right1
 	dw SprMap_MapYoshi_Right2
-	dw SprMap_MapYoshi_SwimRight1 ;unused
-	dw SprMap_MapYoshi_SwimRight2 ;unused
+	dw SprMap_MapYoshi_SwimRight1 ; unused
+	dw SprMap_MapYoshi_SwimRight2 ; unused
 tbl2_8986:
 	dw pnt3_8ACC
 	dw pnt3_8ACC
@@ -391,10 +391,10 @@ tbl2_8986:
 tbl2_8A0C:
 	db $00
 	db $00
-	db $A0, $80 ;1/2 Player Text X/Y Position
-	db $90, $80 ;Cursor X/Y Position
-	db $40 ;Unknown
-	db $20 ;Unknown
+	db $A0, $80 ; 1/2 Player Text X/Y Position
+	db $90, $80 ; Cursor X/Y Position
+	db $40 ; Unknown
+	db $20 ; Unknown
 	db $50
 	db $AA
 	db $50
@@ -407,7 +407,7 @@ tbl2_8A0C:
 	db $AA
 
 ;----------------------------------------
-;Title Screen Sprites
+; Title Screen Sprites
 TitleSpriteFrameTypes:
 	db $00, $00
 	db $00, $00
@@ -415,20 +415,20 @@ TitleSpriteFrameTypes:
 	db $01, $0B
 	db $01, $03
 	db $01, $03
-	db $01, $03 ;Koopa Walk 1
-	db $01, $01 ;Koopa Walk 2
-	db $01, $01 ;Rex Walk 1
-	db $01, $05 ;Rex Walk 2
+	db $01, $03 ; Koopa Walk 1
+	db $01, $01 ; Koopa Walk 2
+	db $01, $01 ; Rex Walk 1
+	db $01, $05 ; Rex Walk 2
 	db $01, $05
 	db $01, $07
-	db $01, $07 ;Super Koopa Fly 1
-	db $01, $02 ;Super Koopa Fly 2
+	db $01, $07 ; Super Koopa Fly 1
+	db $01, $02 ; Super Koopa Fly 2
 	db $01, $02
 	db $01, $06
-	db $01, $06 ;Mario Walk 1
-	db $01, $08 ;Mario Walk 2
-	db $01, $08 ;Yoshi Walk 1
-	db $01, $09 ;Yoshi Walk 2
+	db $01, $06 ; Mario Walk 1
+	db $01, $08 ; Mario Walk 2
+	db $01, $08 ; Yoshi Walk 1
+	db $01, $09 ; Yoshi Walk 2
 	db $01, $0A
 	db $01, $0A
 	db $01, $0A
@@ -436,25 +436,25 @@ TitleSpriteFrameTypes:
 	db $01, $0A
 
 ;----------------------------------------
-;Animation Format
-;Sprite1, Sprite2, Bank, Speed, Index
-;Sprite1 - 1st frame of animation
-;Sprite2 - 2nd frame of animation 
-;Bank - 1K CHR bank
-;Speed - Animation speed in frames
-;Index - 1K CHR slot used. Can be $00, $40, $80, or $C0 for slots 1 through 4 respectively.
+; Animation Format
+; Sprite1, Sprite2, Bank, Speed, Index
+; Sprite1 - 1st frame of animation
+; Sprite2 - 2nd frame of animation 
+; Bank - 1K CHR bank
+; Speed - Animation speed in frames
+; Index - 1K CHR slot used. Can be $00, $40, $80, or $C0 for slots 1 through 4 respectively.
 TitleSpriteAnimations:
 	dw pnt3_8A6C
 	dw SprMap_TitleKoopaAnim
 	dw SprMap_TitleSuperKoopaAnim
 	dw TitlePopEffectAnim
-	dw pnt3_8A80 ;Unknown
+	dw pnt3_8A80 ; Unknown
 	dw SprMap_TitleRexAnim
-	dw pnt3_8A8A ;Unknown
+	dw pnt3_8A8A ; Unknown
 	dw pnt3_8A8F
-	dw SprMap_TitleMarioAnim ;Useless, hardcoded
-	dw SprMap_TitleYoshi_WalkAnim ;Useless, hardcoded
-	dw pnt3_8A9E ;Yoshi duplicate
+	dw SprMap_TitleMarioAnim ; Useless, hardcoded
+	dw SprMap_TitleYoshi_WalkAnim ; Useless, hardcoded
+	dw pnt3_8A9E ; Yoshi duplicate
 	dw pnt3_8AA3
 	dw pnt3_8AA8
 	dw pnt3_8AAD
@@ -597,11 +597,11 @@ pnt3_8ACC:
 	db $03
 	db $03
 
-;=====Mapping Format=====
-;Width, Height, [data]
-;	Width - Width in 8x8 tiles
-;	Height - Height in 8x8 tiles
-;	[data] - Mapping data. Size is height times width.
+; =====Mapping Format=====
+; Width, Height, [data]
+; 	Width - Width in 8x8 tiles
+; 	Height - Height in 8x8 tiles
+; 	[data] - Mapping data. Size is height times width.
 SprMap_PlayerCursor:
 	db $01
 	db $01
@@ -1473,54 +1473,54 @@ SprMap_MapYoshi_SwimRight2:
 	db $6B
 
 ;----------------------------------------
-;SUBROUTINE ($8DF8)
+; SUBROUTINE ($8DF8)
 ;----------------------------------------
 sub_42_8DF8:
-;Load sprite into memory
-	STA gs0SpriteFrame,X ;Load sprite frame
+; Load sprite into memory
+	STA gs0SpriteFrame,X ; Load sprite frame
 	ASL
-	TAY ;Get pointer for it
+	TAY ; Get pointer for it
 	LDA tbl2_8A0C,Y
-	STA gs0SpriteX,X ;Set X position for sprite (only works for menu?)
+	STA gs0SpriteX,X ; Set X position for sprite (only works for menu?)
 	LDA tbl2_8A0C+1,Y
-	STA gs0SpriteY,X ;Set Y position for sprite (only used for menu?)
+	STA gs0SpriteY,X ; Set Y position for sprite (only used for menu?)
 	LDA TitleSpriteFrameTypes,Y
-	STA gs0SpriteFlags,X ;Store flags for animation frame (useless/unknown?)
+	STA gs0SpriteFlags,X ; Store flags for animation frame (useless/unknown?)
 	LDA TitleSpriteFrameTypes+1,Y
-	STA gs0SpriteSlot,X ;Load sprite
+	STA gs0SpriteSlot,X ; Load sprite
 	
-;Load sprite animation and bank
+; Load sprite animation and bank
 	ASL
-	TAX ;Get index for current sprite
-	;Load sprite animation pointer
+	TAX ; Get index for current sprite
+	; Load sprite animation pointer
 	LDA TitleSpriteAnimations,X
 	STA gs0SpriteAnimPtr
 	LDA TitleSpriteAnimations+1,X
 	STA gs0SpriteAnimPtr+1
-	;Load sprite's bank
+	; Load sprite's bank
 	LDY #$02
 	LDA (gs0SpriteAnimPtr),Y
-	STA gs0chrSpriteBank ;Load sprite bank
-	;Account for sprite's CHR bank
+	STA gs0chrSpriteBank ; Load sprite bank
+	; Account for sprite's CHR bank
 	LDY #$04
-	LDA (gs0SpriteAnimPtr),Y ;Load 5th byte of animation data
+	LDA (gs0SpriteAnimPtr),Y ; Load 5th byte of animation data
 	LSR
 	LSR
 	LSR
 	LSR
 	LSR
-	LSR ;Shift out 6 bits to get sprite bank index
-	TAX ;Set 1K bank to swap
+	LSR ; Shift out 6 bits to get sprite bank index
+	TAX ; Set 1K bank to swap
 	LDA gs0chrSpriteBank
-	STA chrSpriteBank1,X ;Swap the bank out in the set bank
+	STA chrSpriteBank1,X ; Swap the bank out in the set bank
 	RTS
 
 ;----------------------------------------
-;Unused code
-;Seems to be an earlier, more robust version of the transition screen code, plus a blank HUD. The first screen is identical to the "GAME OVER" tilemap, although the rest are pretty garbled.
+; Unused code
+; Seems to be an earlier, more robust version of the transition screen code, plus a blank HUD. The first screen is identical to the "GAME OVER" tilemap, although the rest are pretty garbled.
 	TAX
 	LDA tbl2_8E62,X
-	STA $32 ;Get length of each table
+	STA $32 ; Get length of each table
 	TXA
 	ASL
 	TAX
@@ -2007,7 +2007,7 @@ bra2_905B:
 	STA sndMusic
 	RTS
 tbl2_9071:
-	db $25 ;overworld map music settings
+	db $25 ; overworld map music settings
 	db $25
 	db $25
 	db $25
@@ -3522,9 +3522,9 @@ bra2_96E6:
 bra2_96F5_RTS:
 	RTS
 sub2_96F6:
-	INC gs0SpriteX,X ;Move sprite one pixel ahead
+	INC gs0SpriteX,X ; Move sprite one pixel ahead
 	BNE bra2_96FD_RTS
-	INC gs0SpriteFlags,X ;Make sprite visible?
+	INC gs0SpriteFlags,X ; Make sprite visible?
 bra2_96FD_RTS:
 	RTS
 sub_42_96FE:
@@ -3556,25 +3556,25 @@ tbl2_9721:
 AnimateMapPlayer:
 	LDA frameCount
 	AND #$07
-	BNE bra2_9752_RTS ;Only do this every 8th frame
+	BNE bra2_9752_RTS ; Only do this every 8th frame
 	LDA playerMapAnim
 	ASL
-	TAX ;Get pointer for the player's map animation
+	TAX ; Get pointer for the player's map animation
 	LDA tbl2_9753,X
 	STA scratchRam
 	LDA tbl2_9753+1,X
-	STA scratchRam+1 ;Load pointer
+	STA scratchRam+1 ; Load pointer
 	LDY playerMapFrame
 bra2_9740:
 	LDA (scratchRam),Y
 	CMP #$FF
-	BNE bra2_974D ;Continue until terminating byte is reached
+	BNE bra2_974D ; Continue until terminating byte is reached
 	LDY #$00
 	STY playerMapFrame
-	BEQ bra2_9740 ;Loop back to the start of the animation
+	BEQ bra2_9740 ; Loop back to the start of the animation
 bra2_974D:
-	STA gs0SpriteFrame ;Update the player's sprite
-	INC playerMapFrame ;Go to the next animation frame
+	STA gs0SpriteFrame ; Update the player's sprite
+	INC playerMapFrame ; Go to the next animation frame
 bra2_9752_RTS:
 	RTS
 tbl2_9753:
@@ -3842,27 +3842,27 @@ bra2_97DF:
 	db $00
 TransitionScreenSub:
 	LDX #$21
-	STX PPUADDR ;Set upper byte of address
+	STX PPUADDR ; Set upper byte of address
 	LDX #$80
-	STX PPUADDR ;Set lower byte of address
-	LDY #$00 ;Clear Y register
+	STX PPUADDR ; Set lower byte of address
+	LDY #$00 ; Clear Y register
 	ASL
 	ASL
 	ASL
 	ASL
 	ASL
-	ASL ;Get index for transition screen
+	ASL ; Get index for transition screen
 	TAX
 RenderTransitionScreen:
 	LDA TransitionScreenData,X
 	STA PPUDATA
 	INX
 	INY
-	CPY #$40 ;Render 2 rows of tiles
+	CPY #$40 ; Render 2 rows of tiles
 	BCC RenderTransitionScreen
 	RTS
 TransitionScreenData:
-;"GAME OVER" Tilemap
+; "GAME OVER" Tilemap
 	db $00
 	db $00
 	db $00
@@ -3927,7 +3927,7 @@ TransitionScreenData:
 	db $00
 	db $00
 	db $00
-;"MARIO START!" Tilemap
+; "MARIO START!" Tilemap
 	db $00
 	db $00
 	db $00
@@ -3992,7 +3992,7 @@ TransitionScreenData:
 	db $00
 	db $00
 	db $00
-;"TIME UP!" Tilemap
+; "TIME UP!" Tilemap
 	db $00
 	db $00
 	db $00
@@ -4057,7 +4057,7 @@ TransitionScreenData:
 	db $00
 	db $00
 	db $00
-;"LUIGI START!" Tilemap
+; "LUIGI START!" Tilemap
 	db $00
 	db $00
 	db $00
@@ -4240,15 +4240,15 @@ tbl2_9A2F:
 	db $30
 CHRBankSub:
 	ASL
-	TAY ;Get pointer for value
+	TAY ; Get pointer for value
 	LDA BankPointers,Y
-	STA $32 ;Load lower byte of pointer
+	STA $32 ; Load lower byte of pointer
 	LDA BankPointers+1,Y
-	STA $33 ;Load upper byte of pointer
+	STA $33 ; Load upper byte of pointer
 	LDY #$00
 bra2_9A52:
-	LDA ($32),Y ;Load banks from pointer location
-	STA chrBgBank1,Y ;Set CHR banks
+	LDA ($32),Y ; Load banks from pointer location
+	STA chrBgBank1,Y ; Set CHR banks
 	INY
 	CPY #$06
 	BCC bra2_9A52
@@ -4260,13 +4260,13 @@ BankPointers:
 	dw CopyrightBanks
 	dw OverworldBanks
 	dw TransitionBanks
-TitleLogoBanks: ;Format:
-	db $FC ;1st+2nd BG Bank
-	db $FE ;3rd+4th BG Bank
-	db $80 ;1st Sprite Bank
-	db $81 ;2nd Sprite Bank
-	db $94 ;3rd Sprite Bank
-	db $95 ;4th Sprite Bank
+TitleLogoBanks: ; Format:
+	db $FC ; 1st+2nd BG Bank
+	db $FE ; 3rd+4th BG Bank
+	db $80 ; 1st Sprite Bank
+	db $81 ; 2nd Sprite Bank
+	db $94 ; 3rd Sprite Bank
+	db $95 ; 4th Sprite Bank
 EndingBanks:
 	db $F8
 	db $FA
@@ -4436,18 +4436,18 @@ ClearNametable:
 	ASL
 	ASL
 	CLC
-	ADC #$20 ;Add $20 to upper byte
-	LDX #$00 ;Set lower byte of address and nametable size
+	ADC #$20 ; Add $20 to upper byte
+	LDX #$00 ; Set lower byte of address and nametable size
 	STA PPUADDR
 	STX PPUADDR
-	LDY #$03 ;Set upper byte of nametable size (in tiles)
+	LDY #$03 ; Set upper byte of nametable size (in tiles)
 	LDA #$FF
 ClearNTLoop:
 	STA PPUDATA
 	DEX
 	BNE ClearNTLoop
 	DEY
-	BPL ClearNTLoop ;Clear the entire screen
+	BPL ClearNTLoop ; Clear the entire screen
 	RTS
 pnt5_9B28:
 	LDA #$00
@@ -4627,100 +4627,100 @@ tbl_9B83:
 	db $00
 	db $00
 MapDirections:
-;1-Yoshi House
-	db dirDown ;Next level
-	db $00 ;Previous level
-;1-1
+; 1-Yoshi House
+	db dirDown ; Next level
+	db $00 ; Previous level
+; 1-1
 	db dirDown
 	db dirUp
-;1-2
+; 1-2
 	db dirRight
 	db dirLeft
-;1-3
+; 1-3
 	db dirUp
 	db dirDown
-;1-4
+; 1-4
 	db dirUp
 	db dirDown
-;2-1
+; 2-1
 	db dirLeft
 	db dirDown
-;2-Yoshi House
-	db dirLeft
-	db dirRight
-;2-2
-	db dirUp
-	db dirLeft
-;2-3
-	db dirDown
-	db dirUp
-;2-4
-	db dirUp
-	db dirDown
-;3-1
-	db dirRight
-	db dirDown
-;3-2
-	db dirUp
-	db dirDown
-;3-3
-	db dirDown
-	db dirUp
-;3-4
-	db dirRight
-	db dirDown
-;4-1
-	db dirDown
-	db dirLeft
-;4-2
-	db dirRight
-	db dirLeft
-;4-3
-	db dirRight
-	db dirLeft
-;4-4
-	db dirDown
-	db dirUp
-;5-1
-	db dirDown
-	db dirLeft
-;5-2
-	db dirDown
-	db dirUp
-;5-Yoshi House
-	db dirDown
-	db dirLeft
-;5-3
-	db dirDown
-	db dirUp
-;5-4
-	db dirDown
-	db dirUp
-;6-1
-	db dirDown
-	db dirUp
-;6-2
-	db dirDown
-	db dirUp
-;6-3
+; 2-Yoshi House
 	db dirLeft
 	db dirRight
-;6-4
+; 2-2
+	db dirUp
+	db dirLeft
+; 2-3
+	db dirDown
+	db dirUp
+; 2-4
 	db dirUp
 	db dirDown
-;7-1
+; 3-1
+	db dirRight
+	db dirDown
+; 3-2
+	db dirUp
+	db dirDown
+; 3-3
+	db dirDown
+	db dirUp
+; 3-4
+	db dirRight
+	db dirDown
+; 4-1
+	db dirDown
+	db dirLeft
+; 4-2
+	db dirRight
+	db dirLeft
+; 4-3
+	db dirRight
+	db dirLeft
+; 4-4
+	db dirDown
+	db dirUp
+; 5-1
+	db dirDown
+	db dirLeft
+; 5-2
+	db dirDown
+	db dirUp
+; 5-Yoshi House
+	db dirDown
+	db dirLeft
+; 5-3
+	db dirDown
+	db dirUp
+; 5-4
+	db dirDown
+	db dirUp
+; 6-1
+	db dirDown
+	db dirUp
+; 6-2
+	db dirDown
+	db dirUp
+; 6-3
+	db dirLeft
+	db dirRight
+; 6-4
+	db dirUp
+	db dirDown
+; 7-1
 	db dirLeft
 	db dirUp
-;7-2
+; 7-2
 	db dirUp
 	db dirLeft
-;7-3
+; 7-3
 	db dirUp
 	db dirLeft
-;7-4
+; 7-4
 	db $00
 	db dirDown
-;Unused
+; Unused
 	db $00
 	db $00
 sub_42_9C43:
@@ -5084,49 +5084,49 @@ tbl2_9D78:
 	db $00
 DrawDestroyedCastle:
 	LDA #$00
-	STA $25 ;Set castle number/index
+	STA $25 ; Set castle number/index
 bra2_9DFC:
 	LDA $25
 	TAX
-	INX ;Set index for player #1
+	INX ; Set index for player #1
 	LDA curPlayer
-	BEQ bra2_9E0B ;Branch if player #1 is playing
-	LDA $25 ;Otherwise, continue
+	BEQ bra2_9E0B ; Branch if player #1 is playing
+	LDA $25 ; Otherwise, continue
 	CLC
 	ADC #$09
-	TAX ;Set index for player #2
+	TAX ; Set index for player #2
 bra2_9E0B:
 	LDA castlesDestroyed,X
-	BEQ bra2_9E53 ;Branch if the castle isn't destroyed
-	LDA $25 ;Otherwise, continue
+	BEQ bra2_9E53 ; Branch if the castle isn't destroyed
+	LDA $25 ; Otherwise, continue
 	TAX
 	LDA DestroyedCastleAttr,X
-	STA $29 ;Assign attributes to the destroyed castle sprite
+	STA $29 ; Assign attributes to the destroyed castle sprite
 	LDA $25
 	ASL
 	ASL
-	TAX ;Get table index for castle
+	TAX ; Get table index for castle
 	ASL
 	ASL
 	TAY
 	LDA tbl2_9E5C,X
-	STA $32 ;Set the horizontal screen
+	STA $32 ; Set the horizontal screen
 	SEC
 	LDA tbl2_9E5C+1,X
 	SBC $52
-	STA scratchRam+8 ;Location - camera position = screen position
+	STA scratchRam+8 ; Location - camera position = screen position
 	BCS bra2_9E31
 	DEC $32
 bra2_9E31:
 	LDA $32
 	CMP $51
-	BNE bra2_9E4C ;If the sprite is off-screen, stop rendering it
+	BNE bra2_9E4C ; If the sprite is off-screen, stop rendering it
 	LDA tbl2_9E5C+2,X
-	STA $32 ;Set the sprite's vertical screen
+	STA $32 ; Set the sprite's vertical screen
 	SEC
 	LDA tbl2_9E5C+3,X
 	SBC scrollY
-	STA $38 ;Location - camera position = screen position
+	STA $38 ; Location - camera position = screen position
 	BCS bra2_9E48
 	DEC $32
 bra2_9E48:
@@ -5134,7 +5134,7 @@ bra2_9E48:
 	BEQ bra2_9E50
 bra2_9E4C:
 	LDA #$F8
-	STA $38 ;Hide the castle sprite
+	STA $38 ; Hide the castle sprite
 bra2_9E50:
 	JSR sub2_9E7A
 bra2_9E53:
@@ -5144,32 +5144,32 @@ bra2_9E53:
 	BCC bra2_9DFC
 	RTS
 tbl2_9E5C:
-;Castle #1
-	db $05 ;X Screen
-	db $70 ;X Position
-	db $01 ;Y Screen
-	db $1F ;Y Position
-;Castle #2
+; Castle #1
+	db $05 ; X Screen
+	db $70 ; X Position
+	db $01 ; Y Screen
+	db $1F ; Y Position
+; Castle #2
 	db $09
 	db $F0
 	db $00
 	db $EF
-;Castle #3
+; Castle #3
 	db $0A
 	db $40
 	db $00
 	db $6F
-;Castle #4
+; Castle #4
 	db $0B
 	db $80
 	db $00
 	db $5F
-;Castle #5
+; Castle #5
 	db $07
 	db $60
 	db $00
 	db $FF
-;Castle #6
+; Castle #6
 	db $06
 	db $A0
 	db $01

@@ -1,6 +1,6 @@
 ;------------------------------------------------------------
-;MOVEMENT DATA BANK
-;This bank contains the series of movement vectors used by objects
+; MOVEMENT DATA BANK
+; This bank contains the series of movement vectors used by objects
 ;------------------------------------------------------------
 tbl_51_E000:
 	dw ofs_E815
@@ -19,14 +19,14 @@ tbl_51_E000:
 	dw ofs_E8D4
 	dw ofs_E915
 	dw Move_QuadUpwardsArc
-	dw Move_HLine ;Koopa movement data
+	dw Move_HLine ; Koopa movement data
 	dw Move_HLine
-	dw Move_QuadUpwardsArc ;0x12
-	dw Move_HLine ;0x13 (Rex)
-	dw Move_HLineFast ;0x14 (Squashed Rex)
+	dw Move_QuadUpwardsArc ; 0x12
+	dw Move_HLine ; 0x13 (Rex)
+	dw Move_HLineFast ; 0x14 (Squashed Rex)
 	dw ofs_E9C5
 	dw ofs_EA36
-	dw ofs_EA36 ;0x17 (Super Koopa)
+	dw ofs_EA36 ; 0x17 (Super Koopa)
 	dw ofs_EA36
 	dw ofs_EA5F
 	dw ofs_EA92
@@ -61,7 +61,7 @@ tbl_51_E000:
 	dw ofs_E522
 	dw ofs_E534
 	dw ofs_E595
-	dw ofs_E445 ;0x3A
+	dw ofs_E445 ; 0x3A
 	dw ofs_E63F
 	dw ofs_E6F4
 	dw ofs_E3EB
@@ -2292,7 +2292,7 @@ Move_QuadUpwardsArc:
 	movedata 0, 0
 	db $80
 
-;Move in a stright, horizontal line
+; Move in a stright, horizontal line
 Move_HLine:
 	movedata 1, 0
 	movedata 1, 0

@@ -1,8 +1,8 @@
 ;----------------------------------------
-;KOOPA OBJECT CODE ($8000)
+; KOOPA OBJECT CODE ($8000)
 ;----------------------------------------
 Obj_Koopa:
-	LDX $A4 ;Get index of current object
+	LDX $A4 ; Get index of current object
 	Obj_DistCalc bra8_8066
 
 ; Animate the Koopa
@@ -11,52 +11,52 @@ bra8_8066:
 	LDY #$03
 	LDA objFrameCount
 	AND #$08
-	BEQ @Continue ;Alternate between Koopa frames 3 and 4 every 8 frames
+	BEQ @Continue ; Alternate between Koopa frames 3 and 4 every 8 frames
 		INY
 
 @Continue:
 	TYA
-	STA enemyAnimFrame,X ;Set animation frame
+	STA enemyAnimFrame,X ; Set animation frame
 	LDA objSlot,X
 	CMP #$36
-	BCC GetRedKoopaMovementData ;Run different code if Koopa isn't green (walks off ledges)
-	;This seems redundant as the green Koopa has it's own code
+	BCC GetRedKoopaMovementData ; Run different code if Koopa isn't green (walks off ledges)
+	; This seems redundant as the green Koopa has it's own code
 		LDA frameCount
 		AND #$01
-		BNE @Stop ;Only continue every even frame
+		BNE @Stop ; Only continue every even frame
 			LDA #$10
-			JSR GetMovementData ;Get movement data for Koopa
+			JSR GetMovementData ; Get movement data for Koopa
 	@Stop:
 		RTS
 
 GetRedKoopaMovementData:
 	LDA frameCount
 	AND #$01
-	BNE @Stop ;Only continue every even frame
+	BNE @Stop ; Only continue every even frame
 		LDA #$10
-		JSR sub_54_B3B4 ;Load movement data for Koopa
+		JSR sub_54_B3B4 ; Load movement data for Koopa
 @Stop:
 	RTS
 
 ;----------------------------------------
-;SUBROUTINE ($8096)
-;Generic code for all Koopas, used only by the red Koopa
+; SUBROUTINE ($8096)
+; Generic code for all Koopas, used only by the red Koopa
 ;----------------------------------------
 GenObj_Koopa:
 	LDA #$04
-	STA $25 ;Spit fire when eaten
-	LDX $A4 ;Get index of current object
-	Obj_DistCalc Koopa_GetFunction ;Only continue if the game isn't frozen
+	STA $25 ; Spit fire when eaten
+	LDX $A4 ; Get index of current object
+	Obj_DistCalc Koopa_GetFunction ; Only continue if the game isn't frozen
 
 Koopa_GetFunction:
 	LDA objState,X
-	AND #%00011111 ;Mask out upper 3 bits of object's state
+	AND #%00011111 ; Mask out upper 3 bits of object's state
 	ASL
-	TAY ;Get pointer index
+	TAY ; Get pointer index
 	LDA FuncTbl_Koopa,Y
 	STA $32
 	LDA FuncTbl_Koopa+1,Y
-	STA $33 ;Get function pointer
+	STA $33 ; Get function pointer
 	JMP ($32)
 FuncTbl_Koopa:
 	dw Obj_YoshiTongueCheck
@@ -66,19 +66,19 @@ FuncTbl_Koopa:
 	dw Koopa_HitRespond
 
 Koopa_HitCheck:
-	JSR Obj_CapeHitCheck ;Kill if hit by cape
-	JSR Obj_PlayerHitCheck ;Check for collision with player
-	JSR Obj_KillOnSpinJump ;Kill if spin-jumped on
-	JSR Obj_StompRebound ;Make player bounce if they stomp on it
-	Obj_VertOffset 16, loc8_8159 ;Position the Beach Koopa 16 pixels lower
+	JSR Obj_CapeHitCheck ; Kill if hit by cape
+	JSR Obj_PlayerHitCheck ; Check for collision with player
+	JSR Obj_KillOnSpinJump ; Kill if spin-jumped on
+	JSR Obj_StompRebound ; Make player bounce if they stomp on it
+	Obj_VertOffset 16, loc8_8159 ; Position the Beach Koopa 16 pixels lower
 
 loc8_8159:
-	Obj_DistCalc Koopa_SpawnBeachKoopa ;Calculate the distance between the Beach Koopa and player
+	Obj_DistCalc Koopa_SpawnBeachKoopa ; Calculate the distance between the Beach Koopa and player
 
 Koopa_SpawnBeachKoopa:
-	LDY objCount ;Set index for the newly-spawned Beach Koopa
-	INC objCount ;Add to object slot
-	;Copy coordinates to new object
+	LDY objCount ; Set index for the newly-spawned Beach Koopa
+	INC objCount ; Add to object slot
+	; Copy coordinates to new object
 	LDA objXLo,X
 	STA objXLo,Y
 	LDA objXHi,X
@@ -89,58 +89,58 @@ Koopa_SpawnBeachKoopa:
 	STA objYHi,Y
 	
 	LDA objState,X
-	AND #%01000000 ;Spawn the Beach Koopa in the same direction
-	ORA #%10000000 ;Set bit 7 (unsure of what this does)
+	AND #%01000000 ; Spawn the Beach Koopa in the same direction
+	ORA #%10000000 ; Set bit 7 (unsure of what this does)
 	STA objState,Y
 	LDA #$80
-	STA objVar,Y ;Set speed to 128?
-	STA objAction,Y ;Spawn shell-less koopa sliding
+	STA objVar,Y ; Set speed to 128?
+	STA objAction,Y ; Spawn shell-less koopa sliding
 	LDA objSlot,X
 	AND #$01
 	CLC
 	ADC #$12
-	STA objSlot,Y ;Spawn the appropriate shell-less Koopa for the Koopa variant(?)
+	STA objSlot,Y ; Spawn the appropriate shell-less Koopa for the Koopa variant(?)
 	LDA #objID_Shell
-	STA objSlot,X ;Spawn a shell in place of the Koopa
+	STA objSlot,X ; Spawn a shell in place of the Koopa
 	LDA #$08
-	STA objState,X ;Make shell bounce off
+	STA objState,X ; Make shell bounce off
 	RTS
 
 ; Spawn a shell in place of the Koopa when hit
 Koopa_HitRespond:
-	LDX $A4 ;Get index for previous object?
+	LDX $A4 ; Get index for previous object?
 	LDA #objID_Shell
-	STA objSlot,X ;Spawn shell in place of Koopa
+	STA objSlot,X ; Spawn shell in place of Koopa
 	LDA #$00
-	STA objVar,X ;Clear speed?
+	STA objVar,X ; Clear speed?
 	RTS
 
 ;----------------------------------------
-;KOOPA GRAPHICAL CODE ($820E)
-;Used by every Koopa variant
+; KOOPA GRAPHICAL CODE ($820E)
+; Used by every Koopa variant
 ;----------------------------------------
 ptr6_820E:
-	LDX $A4 ;Get current object index
+	LDX $A4 ; Get current object index
 	LDA enemyAnimFrame,X
 	ASL
-	TAX ;Get index for current frame
+	TAX ; Get index for current frame
 	LDA SprMapTbl_Koopa,X
 	STA $32
 	LDA SprMapTbl_Koopa+1,X
-	STA $33 ;Load mapping pointer
-	LDY #$80 ;Use CHR sprite bank 2 by default
+	STA $33 ; Load mapping pointer
+	LDY #$80 ; Use CHR sprite bank 2 by default
 	LDX $A4
 	LDA objSlot,X
 	AND #$01
 	BEQ @Continue
-		LDY #$C0 ;Use CHR sprite bank 3 if lower bit of ID is set
+		LDY #$C0 ; Use CHR sprite bank 3 if lower bit of ID is set
 
 @Continue:
-	STY $36 ;Set bank number
+	STY $36 ; Set bank number
 	LDA objState,X
 	AND #%01000000
-	STA objAttrs ;Store object's horizontal direction
-	JSR jmp_52_A118 ;Render mapping data
+	STA objAttrs ; Store object's horizontal direction
+	JSR jmp_52_A118 ; Render mapping data
 	RTS
 
 SprMapTbl_Koopa:
@@ -203,10 +203,10 @@ SprMap_ParatroopaWalk2:
 	db $FF, $3E, $3F, $FF
 
 ;----------------------------------------
-;BOUNCING PARATROOPA OBJECT CODE ($8299)
+; BOUNCING PARATROOPA OBJECT CODE ($8299)
 ;----------------------------------------
 Obj_h14:
-	LDX $A4 ;Get index of current object
+	LDX $A4 ; Get index of current object
 	Obj_DistCalc bra8_82FF
 
 bra8_82FF:
@@ -221,25 +221,25 @@ bra8_8308:
 	AND #$01
 	BNE bra8_8316
 	LDA #$12
-	JSR GetMovementData ;Get jump arc
+	JSR GetMovementData ; Get jump arc
 
 bra8_8316:
 	LDY #$05
 	LDA objFrameCount
 	AND #$08
-	BEQ bra8_8320 ;Alternate between Koopa frames 5 and 6 every 8 frames
+	BEQ bra8_8320 ; Alternate between Koopa frames 5 and 6 every 8 frames
 	INY
 
 bra8_8320:
 	TYA
-	STA enemyAnimFrame,X ;Set animation frame
+	STA enemyAnimFrame,X ; Set animation frame
 	RTS
 
 ;----------------------------------------
-;HORIZONTAL PARATROOPA OBJECT CODE ($8325)
+; HORIZONTAL PARATROOPA OBJECT CODE ($8325)
 ;----------------------------------------
 Obj_h58:
-	LDX $A4 ;Get index of current object
+	LDX $A4 ; Get index of current object
 	Obj_DistCalc bra8_838B
 
 bra8_838B:
@@ -250,12 +250,12 @@ bra8_838B:
 bra8_8394:
 	JSR GenObj_Paratroopa
 	LDA objSlot,X
-	BMI bra8_83B6 ;Branch if paratroopa is vertical
+	BMI bra8_83B6 ; Branch if paratroopa is vertical
 	LDA frameCount
 	AND #$03
 	BNE bra8_83A7
 	LDA #$3A
-	JSR jmp_54_B11D ;Use oscillating movement pattern
+	JSR jmp_54_B11D ; Use oscillating movement pattern
 bra8_83A7:
 	LDY #$05
 	LDA objFrameCount
@@ -284,24 +284,24 @@ bra8_83CB:
 	RTS
 
 ;----------------------------------------
-;SUBROUTINE ($83D0)
-;Generic code for all paratroopas
+; SUBROUTINE ($83D0)
+; Generic code for all paratroopas
 ;----------------------------------------
 GenObj_Paratroopa:
 	LDA #$04
 	STA $25
-	LDX $A4 ;Get index of current object
+	LDX $A4 ; Get index of current object
 	Obj_DistCalc Paratroopa_GetFunction
 
 Paratroopa_GetFunction:
 	LDA objState,X
-	AND #%00011111 ;Mask out upper 3 bits
+	AND #%00011111 ; Mask out upper 3 bits
 	ASL
-	TAY ;Get index for object's state
+	TAY ; Get index for object's state
 	LDA FuncTbl_Paratroopa,Y
 	STA $32
 	LDA FuncTbl_Paratroopa+1,Y
-	STA $33 ;Load function pointer
+	STA $33 ; Load function pointer
 	JMP ($32)
 FuncTbl_Paratroopa:
 	dw Obj_YoshiTongueCheck
@@ -311,58 +311,58 @@ FuncTbl_Paratroopa:
 	dw Paratroopa_HitRespond
 
 Paratroopa_HitCheck:
-	JSR Obj_PlayerHitCheck ;Check for collision with player
-	JSR Obj_KillOnSpinJump ;Kill if spin jumped on
+	JSR Obj_PlayerHitCheck ; Check for collision with player
+	JSR Obj_KillOnSpinJump ; Kill if spin jumped on
 	LDA invincibilityTimer
 	CMP #$F7
-	BCS @Stop ;Only continue if the player's invincibility is about to end
-		JSR Obj_StompReboundAlt ;The player must be stomping on it if the code reached this point, so knock them back
-		LDX $A4 ;Get current object's slot
+	BCS @Stop ; Only continue if the player's invincibility is about to end
+		JSR Obj_StompReboundAlt ; The player must be stomping on it if the code reached this point, so knock them back
+		LDX $A4 ; Get current object's slot
 		LDA objSlot,X
-		AND #$01 ;Get paratroopa's CHR slot
+		AND #$01 ; Get paratroopa's CHR slot
 		CLC
 		ADC #objID_GreenKoopa
-		STA objSlot,X ;Turn into green Koopa with same CHR slot
+		STA objSlot,X ; Turn into green Koopa with same CHR slot
 		LDA #$00
-		STA objState,X ;Clear state
+		STA objState,X ; Clear state
 @Stop:
 	RTS
 
-;This is only used when the Paratroopa is killed completely
+; This is only used when the Paratroopa is killed completely
 Paratroopa_HitRespond:
-	LDX $A4 ;Get current object's slot
+	LDX $A4 ; Get current object's slot
 	LDA #objID_Shell
-	STA objSlot,X ;Replace current object with shell
+	STA objSlot,X ; Replace current object with shell
 	LDA #$00
-	STA objVar,X ;Clear object's variables
+	STA objVar,X ; Clear object's variables
 	RTS
 
 ;----------------------------------------
-;REX OBJECT CODE ($8488)
+; REX OBJECT CODE ($8488)
 ;----------------------------------------
 Obj_h16:
-	LDX $A4 ;Get index for current object
+	LDX $A4 ; Get index for current object
 	LDA objVar,X
 	BPL Rex_Init
 		Obj_DistCalc Rex_TurnAround
 	Rex_TurnAround:
-		JSR Obj_FacePlayer ;Turn in the direction of the player if upper bit of variable is set? Seems to be unused
+		JSR Obj_FacePlayer ; Turn in the direction of the player if upper bit of variable is set? Seems to be unused
 		RTS
 
 Rex_Init:
 	LDA #$06
-	STA $25 ;Swallow when eaten
-	LDX $A4 ;Get index for object
+	STA $25 ; Swallow when eaten
+	LDX $A4 ; Get index for object
 	Obj_DistCalc Rex_GetFunction
 Rex_GetFunction:
 	LDA objState,X
-	AND #%00011111 ;Mask out upper 3 bits for function number
+	AND #%00011111 ; Mask out upper 3 bits for function number
 	ASL
-	TAY ;Get function index
+	TAY ; Get function index
 	LDA tbl8_8575,Y
 	STA $32
 	LDA tbl8_8575+1,Y
-	STA $33 ;Load function pointer
+	STA $33 ; Load function pointer
 	JMP ($32)
 tbl8_8575:
 	dw Obj_YoshiTongueCheck
@@ -372,38 +372,38 @@ tbl8_8575:
 	dw Obj_FlipKill
 
 ptr3_857F:
-	LDY #$13 ;Use normal Rex movement by default
+	LDY #$13 ; Use normal Rex movement by default
 	LDA objSlot,X
 	CMP #objID_RexSquashed
-	BCC bra8_8589 ;Branch if Rex isn't already squished
-		INY ;Move faster if Rex is squished
+	BCC bra8_8589 ; Branch if Rex isn't already squished
+		INY ; Move faster if Rex is squished
 
 bra8_8589:
-	STY $25 ;Store movement data ID
+	STY $25 ; Store movement data ID
 	LDA frameCount
 	AND #%00000000
-	BNE bra8_8596 ;Get the movement data every frame? (Possibly a bug)
+	BNE bra8_8596 ; Get the movement data every frame? (Possibly a bug)
 	LDA $25
-	JSR GetMovementData ;Get movement data for Rex
+	JSR GetMovementData ; Get movement data for Rex
 
 bra8_8596:
-	JSR Obj_CapeHitCheck ;Kill if hit by cape
-	JSR Obj_PlayerHitCheck ;Check for collision with player
-	JSR Obj_KillOnSpinJump ;Kill if spin-jumped on
+	JSR Obj_CapeHitCheck ; Kill if hit by cape
+	JSR Obj_PlayerHitCheck ; Check for collision with player
+	JSR Obj_KillOnSpinJump ; Kill if spin-jumped on
 	LDA objSlot,X
-	LSR ;Ignore lower bit of Rex ID
+	LSR ; Ignore lower bit of Rex ID
 	CMP #objID_RexSquashed/2
-	BCC bra8_85B5 ;Branch if Rex isn't already squished
-	;If Rex was already squished:
+	BCC bra8_85B5 ; Branch if Rex isn't already squished
+	; If Rex was already squished:
 		LDA #objID_Pop
-		STA objSlot,X ;Make Rex pop
+		STA objSlot,X ; Make Rex pop
 		LDA #$00
-		STA objState,X ;Start at default function
-		JSR Obj_StompReboundNoSFX ;Make player bounce off the Rex without playing a sound
+		STA objState,X ; Start at default function
+		JSR Obj_StompReboundNoSFX ; Make player bounce off the Rex without playing a sound
 		RTS
 
 bra8_85B5:
-	Obj_VertOffset 16,loc8_85E4 ;Position the squished Rex 16 pixels lower
+	Obj_VertOffset 16,loc8_85E4 ; Position the squished Rex 16 pixels lower
 
 ; Calculate horizontal distance between the squished Rex and player
 loc8_85E4:
@@ -411,57 +411,57 @@ loc8_85E4:
 
 bra8_8648:
 	INC objSlot,X
-	INC objSlot,X ;Make Rex squished
+	INC objSlot,X ; Make Rex squished
 	LDA #$00
-	STA objState,X ;Clear object's state
-	JSR Obj_StompRebound ;Make player bounce off the Rex
+	STA objState,X ; Clear object's state
+	JSR Obj_StompRebound ; Make player bounce off the Rex
 	RTS
 
 ;----------------------------------------
-;REX & SQUISHED REX GRAPHICAL CODE ($8657, $865B)
-;Sprite loading code used by both variants of the Rex
+; REX & SQUISHED REX GRAPHICAL CODE ($8657, $865B)
+; Sprite loading code used by both variants of the Rex
 ;----------------------------------------
 ptr6_8657:
 	LDY #$00
-	BEQ bra8_865F ;Start from frame 0 for normal Rex
+	BEQ bra8_865F ; Start from frame 0 for normal Rex
 
 ptr6_865B:
 	LDX $A4
-	LDY #$03 ;Use squished frames for squished Rex
+	LDY #$03 ; Use squished frames for squished Rex
 
 bra8_865F:
 	LDA objFrameCount
 	AND #$08
-	BEQ bra8_8667 ;Alternate between walking sprites every 8 frames
+	BEQ bra8_8667 ; Alternate between walking sprites every 8 frames
 	INY
 
 bra8_8667:
 	TYA
 	ASL
-	TAX ;Get pointer index for current sprite
+	TAX ; Get pointer index for current sprite
 	LDA SprMapTbl_Rex,X
 	STA $32
 	LDA SprMapTbl_Rex+1,X
-	STA $33 ;Load sprite pointer
-	LDY #$80 ;Use bank 2 by default
+	STA $33 ; Load sprite pointer
+	LDY #$80 ; Use bank 2 by default
 	LDX $A4
 	LDA objSlot,X
 	AND #$01
 	BEQ bra8_8681
-		LDY #$C0 ;Use bank 3 if lower bit of ID is set
+		LDY #$C0 ; Use bank 3 if lower bit of ID is set
 
 bra8_8681:
 	STY $36
 	LDA objState,X
 	AND #%01000000
-	STA objAttrs ;Store object's horizontal direction
+	STA objAttrs ; Store object's horizontal direction
 	JSR jmp_54_A118
 	RTS
 
 SprMapTbl_Rex:
 	dw SprMap_Rex_Walk1
 	dw SprMap_Rex_Walk2
-	dw SprMap_Rex_Flattened ;Unused
+	dw SprMap_Rex_Flattened ; Unused
 	dw SprMap_RexSquished_Walk1
 	dw SprMap_RexSquished_Walk2
 SprMap_Rex_Walk1:
@@ -499,11 +499,11 @@ SprMap_RexSquished_Walk2:
 	db $3D, $3E
 
 ;----------------------------------------
-;PIRANHA PLANT OBJECT CODE ($86CA)
+; PIRANHA PLANT OBJECT CODE ($86CA)
 ;----------------------------------------
 Obj_h1A:
 	LDX $A4
-	Obj_DistCalc bra8_8730 ;Calculate distance between Piranha Plant and player
+	Obj_DistCalc bra8_8730 ; Calculate distance between Piranha Plant and player
 
 bra8_8730:
 	LDA objVar,X
@@ -549,7 +549,7 @@ bra8_8776:
 	BEQ bra8_8798
 	CMP #$FF
 	BEQ bra8_8798
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra8_8798:
 	LDA objYLo,X
 	SEC
@@ -563,14 +563,14 @@ bra8_8798:
 	BEQ bra8_87DA
 	LDA objYDistHi,X
 	BPL bra8_87C9
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP bra8_87DA ;unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP bra8_87DA ; unlogged
 bra8_87C9:
 	LDA objYDistLo,X
 	SEC
@@ -604,9 +604,9 @@ ptr3_87FE:
 	AND #$03
 	BNE bra8_8809
 	LDA #$15
-	JSR jmp_54_B11D ;Use movement data string #$15 (21 in decimal), which is used for the piranha plant
+	JSR jmp_54_B11D ; Use movement data string #$15 (21 in decimal), which is used for the piranha plant
 bra8_8809:
-	JSR Obj_YoshiTongueCheck ;Handle edibility
+	JSR Obj_YoshiTongueCheck ; Handle edibility
 	RTS
 ptr3_880D:
 	LDA frameCount
@@ -719,32 +719,32 @@ JumpPiranha4:
 	db $1B
 
 ;----------------------------------------
-;PIRANHA PLANT MASK OBJECT CODE ($88AB)
+; PIRANHA PLANT MASK OBJECT CODE ($88AB)
 ;----------------------------------------
 Obj_h1C:
 	LDX $A4
 	Obj_DistCalc bra8_8911_RTS
 
 bra8_8911_RTS:
-	;This object has no behavior
+	; This object has no behavior
 	RTS
 ptr6_8912:
-	;Unimplemented or empty function
+	; Unimplemented or empty function
 	RTS
 
 
 
 ;----------------------------------------
-;SUPER KOOPA W/ FEATHER OBJECT CODE ($8913)
+; SUPER KOOPA W/ FEATHER OBJECT CODE ($8913)
 ;----------------------------------------
 Obj_h1E:
-	LDX $A4 ;Get index for Super Koopa
+	LDX $A4 ; Get index for Super Koopa
 	Obj_DistCalc bra8_8979
 
 bra8_8979:
 	LDA objVar,X
 	CMP #$80
-	BNE @ObjectNotHit ;Branch if Super Koopa is either not in vertical speed mode or doesn't have vertical speed of 0? (Vertical speed is never this low so this should always branch)
+	BNE @ObjectNotHit ; Branch if Super Koopa is either not in vertical speed mode or doesn't have vertical speed of 0? (Vertical speed is never this low so this should always branch)
 	; If Super Koopa has no vertical speed but is in vertical speed mode:
 		LDA objYLo,X
 		SEC
@@ -752,15 +752,15 @@ bra8_8979:
 		STA objYLo,X
 		LDA objYHi,X
 		SBC #$00
-		STA objYHi,X ;Position the Super Koopa 8 units higher
-		JSR Obj_FacePlayer ;Turn object to face the player
+		STA objYHi,X ; Position the Super Koopa 8 units higher
+		JSR Obj_FacePlayer ; Turn object to face the player
 		RTS
 
 @ObjectNotHit:
 	LDA objAction,X
-	BEQ bra8_89CF ;Branch if the Super Koopa is flying forward
+	BEQ bra8_89CF ; Branch if the Super Koopa is flying forward
 	CMP #$02
-	BEQ @HandleVertSpeed ;Branch if it was killed
+	BEQ @HandleVertSpeed ; Branch if it was killed
 ; Otherwise, if it was just hit, spawn feather
 	LDY objCount
 	INC objCount
@@ -771,17 +771,17 @@ bra8_8979:
 	LDA objYLo,X
 	STA objYLo,Y
 	LDA objYHi,X
-	STA objYHi,Y ;Spawn in the same place as the Super Koopa
+	STA objYHi,Y ; Spawn in the same place as the Super Koopa
 	LDA #$00
 	STA objVar,Y
 	STA objState,Y
 	LDA #objID_Feather
-	STA objSlot,Y ;Spawn feather
-	INC objAction,X ;Set Super Koopa to "killed" state
+	STA objSlot,Y ; Spawn feather
+	INC objAction,X ; Set Super Koopa to "killed" state
 	RTS
 
 @HandleVertSpeed:
-	JSR sub_54_B4FC ;Handle vertical speed when falling off-stage
+	JSR sub_54_B4FC ; Handle vertical speed when falling off-stage
 	RTS
 
 bra8_89CF:
@@ -790,7 +790,7 @@ bra8_89CF:
 	LDA objState,X
 	AND #%00001111
 	CMP #$04
-	BNE bra8_89DE ;Stop if Super Koopa was defeated
+	BNE bra8_89DE ; Stop if Super Koopa was defeated
 	RTS
 bra8_89DE:
 	LDA objSlot,X
@@ -799,22 +799,22 @@ bra8_89DE:
 	LSR
 	CLC
 	ADC #16
-	STA $25 ;Subtract 7 ignoring the lowest bit to get the movement data??
+	STA $25 ; Subtract 7 ignoring the lowest bit to get the movement data??
 	LDA frameCount
 	AND #$01
-	BNE bra8_89F6_RTS ;Continue every even frame
+	BNE bra8_89F6_RTS ; Continue every even frame
 	LDA $25
 	JSR jmp_54_B11D
 bra8_89F6_RTS:
 	RTS
 
 ;----------------------------------------
-;SUBROUTINE ($89F6)
-;Generic code for all Super Koopas
+; SUBROUTINE ($89F6)
+; Generic code for all Super Koopas
 ;----------------------------------------
 GenObj_SuperKoopa:
 	LDA #$06
-	STA $25 ;Swallow when eaten by Yoshi
+	STA $25 ; Swallow when eaten by Yoshi
 	LDX $A4
 	Obj_DistCalc SuperKoopa_GetFunction
 
@@ -822,11 +822,11 @@ SuperKoopa_GetFunction:
 	LDA objState,X
 	AND #%00011111
 	ASL
-	TAY ;Get pointer index
+	TAY ; Get pointer index
 	LDA FuncTbl_SuperKoopa,Y
 	STA $32
 	LDA FuncTbl_SuperKoopa+1,Y
-	STA $33 ;Get function pointer
+	STA $33 ; Get function pointer
 	JMP ($32)
 FuncTbl_SuperKoopa:
 	dw Obj_YoshiTongueCheck
@@ -836,76 +836,76 @@ FuncTbl_SuperKoopa:
 	dw Obj_FlipKill
 
 SuperKoopa_HitCheck:
-	JSR Obj_CapeHitCheck ;Kill if hit by cape
-	JSR Obj_PlayerHitCheck ;Check for collision with player
-	JSR Obj_KillOnSpinJump ;Kill if spin-jumped on
-	JSR Obj_StompRebound ;Make player bounce if they stomp on it
-	LDX $A4 ;Get current object index
-	LDY #$01 ;If the code has reached this point, the player must have hit the Super Koopa, so update its state accordingly
+	JSR Obj_CapeHitCheck ; Kill if hit by cape
+	JSR Obj_PlayerHitCheck ; Check for collision with player
+	JSR Obj_KillOnSpinJump ; Kill if spin-jumped on
+	JSR Obj_StompRebound ; Make player bounce if they stomp on it
+	LDX $A4 ; Get current object index
+	LDY #$01 ; If the code has reached this point, the player must have hit the Super Koopa, so update its state accordingly
 	LDA objSlot,X
 	CMP #objID_SuperKoopaJump
 	BCC @SetobjState
-		INY ;Skip feather spawning state if this Super Koopa doesn't have a feather
+		INY ; Skip feather spawning state if this Super Koopa doesn't have a feather
 
 @SetobjState:
 	TYA
-	STA objAction,X ;Set object's state
+	STA objAction,X ; Set object's state
 	LDA #$81
-	STA objVar,X ;Start using motion data as Y speed (high bit set)
+	STA objVar,X ; Start using motion data as Y speed (high bit set)
 	RTS
 
 ;----------------------------------------
-;SUPER KOOPA GRAPHICAL CODE ($8AA0)
-;Used by every Super Koopa variant
+; SUPER KOOPA GRAPHICAL CODE ($8AA0)
+; Used by every Super Koopa variant
 ;----------------------------------------
 ptr6_8AA0:
-	LDX $A4 ;Get index for current object
+	LDX $A4 ; Get index for current object
 	LDA objVar,X
-	BPL bra8_8AAB ;Branch if object isn't using it's variable for speed (during defeat)
-	LDY #$0C ;Use defeated frame
-	BNE bra8_8AC9 ;Render sprite
+	BPL bra8_8AAB ; Branch if object isn't using it's variable for speed (during defeat)
+	LDY #$0C ; Use defeated frame
+	BNE bra8_8AC9 ; Render sprite
 bra8_8AAB:
-	AND #%01111111 ;Ignore high byte of variable
-	TAY ;Get index for current animation
+	AND #%01111111 ; Ignore high byte of variable
+	TAY ; Get index for current animation
 	LDA SuperKoopa_AnimStartFrames,Y
-	TAY ;Get animation starting frame
+	TAY ; Get animation starting frame
 	LDA objSlot,X
 	CMP #objID_SuperKoopaJump
-	BCC bra8_8AC1 ;Use flashing animation if this is the feather variant
+	BCC bra8_8AC1 ; Use flashing animation if this is the feather variant
 		CMP #objID_SuperKoopaAlt
-		BCC bra8_8ABF ;Branch if Super Koopa is a non-feather variant
-			LDY #$08 ;Set takeoff starting frame for feather variants
+		BCC bra8_8ABF ; Branch if Super Koopa is a non-feather variant
+			LDY #$08 ; Set takeoff starting frame for feather variants
 	bra8_8ABF:
 		INY
-		INY ;Use starting frame for non-feather variants
+		INY ; Use starting frame for non-feather variants
 
 bra8_8AC1:
 	LDA objFrameCount
 	AND #$04
 	BNE bra8_8AC9
-		INY ;Alternate between frames every 4 frames
+		INY ; Alternate between frames every 4 frames
 
 bra8_8AC9:
 	TYA
 	ASL
-	TAX ;Get pointer index for frame
+	TAX ; Get pointer index for frame
 	LDA SprMapTbl_SuperKoopa,X
 	STA $32
 	LDA SprMapTbl_SuperKoopa+1,X
-	STA $33 ;Load sprite mapping pointer
-	LDY #$80 ;Use CHR sprite bank 2 by default
+	STA $33 ; Load sprite mapping pointer
+	LDY #$80 ; Use CHR sprite bank 2 by default
 	LDX $A4
 	LDA objSlot,X
 	AND #$01
 	BEQ bra8_8AE3
-		LDY #$C0 ;Use CHR sprite bank 3 if lower bit of ID is set
+		LDY #$C0 ; Use CHR sprite bank 3 if lower bit of ID is set
 
 bra8_8AE3:
-	STY $36 ;Set bank number
+	STY $36 ; Set bank number
 	LDA objState,X
 	AND #%01000000
-	STA objAttrs ;Store object's horizontal direction
-	JSR jmp_54_A118 ;Render mapping data
+	STA objAttrs ; Store object's horizontal direction
+	JSR jmp_54_A118 ; Render mapping data
 	RTS
 
 ; Animation starting frame for each motion vector
@@ -932,20 +932,20 @@ SuperKoopa_AnimStartFrames:
 	db $08
 
 SprMapTbl_SuperKoopa:
-	dw SprMap_SuperKoopa_Walk1		;Walking animation (Feather)
-	dw SprMap_SuperKoopa_Walk2		;
-	dw SprMap_SuperKoopa_Walk1		;Walking animation (Normal)
-	dw SprMap_SuperKoopa_Walk2		;
+	dw SprMap_SuperKoopa_Walk1		; Walking animation (Feather)
+	dw SprMap_SuperKoopa_Walk2		; 
+	dw SprMap_SuperKoopa_Walk1		; Walking animation (Normal)
+	dw SprMap_SuperKoopa_Walk2		; 
 
-	dw SprMap_SuperKoopa_Takeoff2	;Takeoff animation (Feather)
-	dw SprMap_SuperKoopaRed_Takeoff	;
-	dw SprMap_SuperKoopa_Takeoff2	;Takeoff animation (Normal)
-	dw SprMap_SuperKoopa_Takeoff1	;
+	dw SprMap_SuperKoopa_Takeoff2	; Takeoff animation (Feather)
+	dw SprMap_SuperKoopaRed_Takeoff	; 
+	dw SprMap_SuperKoopa_Takeoff2	; Takeoff animation (Normal)
+	dw SprMap_SuperKoopa_Takeoff1	; 
 
-	dw SprMap_SuperKoopa_Fly2		;Fly animation (Feather)
-	dw SprMap_SuperKoopaRed_Fly		;
-	dw SprMap_SuperKoopa_Fly2		;Fly animation (Normal)
-	dw SprMap_SuperKoopa_Fly1		;
+	dw SprMap_SuperKoopa_Fly2		; Fly animation (Feather)
+	dw SprMap_SuperKoopaRed_Fly		; 
+	dw SprMap_SuperKoopa_Fly2		; Fly animation (Normal)
+	dw SprMap_SuperKoopa_Fly1		; 
 
 	dw SprMap_SuperKoopa_Defeated
 SprMap_SuperKoopa_Walk1:
@@ -1013,25 +1013,25 @@ SprMap_SuperKoopa_Defeated:
 	db $26, $27, $28
 
 Obj_h24:
-	LDX objLowerSlot ;Get the index for the current object slot
+	LDX objLowerSlot ; Get the index for the current object slot
 	LDA objState,X
 	CMP #$04
 	BCS bra8_8BB3
 	LDA objFrameCount
 	AND #$07
-	BNE bra8_8BB3 ;Increment the object's timer every 8th frame
+	BNE bra8_8BB3 ; Increment the object's timer every 8th frame
 	LDA objVar,X
 	CMP #$1F
 	BCC bra8_8BA9
 	LDA #$00
-	STA objVar,X ;Clear the lotus timer if it goes above #$1F
+	STA objVar,X ; Clear the lotus timer if it goes above #$1F
 	BEQ bra8_8BB3
 bra8_8BA9:
 	CMP #$04
-	BNE bra8_8BB0 ;Continue each time the timer is at 4. 8 frames x 32 ticks = 256 frames (~4s NTSC)
-	JSR SpawnLotusPollen ;Spawns 4 seeds when the timer is at 4
+	BNE bra8_8BB0 ; Continue each time the timer is at 4. 8 frames x 32 ticks = 256 frames (~4s NTSC)
+	JSR SpawnLotusPollen ; Spawns 4 seeds when the timer is at 4
 bra8_8BB0:
-	INC objVar,X ;Increments lotus timer
+	INC objVar,X ; Increments lotus timer
 bra8_8BB3:
 	LDA #$06
 	STA $25
@@ -1039,10 +1039,10 @@ bra8_8BB3:
 	LDA objXLo,X
 	SEC
 	SBC playerXLoDup
-	STA objXDistLo,X ;Calculate x distance from player
+	STA objXDistLo,X ; Calculate x distance from player
 	LDA objXHi,X
 	SBC playerXHiDup
-	STA objXDistHi,X ;Calculate x screen distance from player
+	STA objXDistHi,X ; Calculate x screen distance from player
 	STA $28
 	BEQ bra8_8BD5
 	CMP #$FF
@@ -1061,14 +1061,14 @@ bra8_8BD5:
 	BEQ bra8_8C17
 	LDA objYDistHi,X
 	BPL bra8_8C06
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc8_8C17 ;unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc8_8C17 ; unlogged
 bra8_8C06:
 	LDA objYDistLo,X
 	SEC
@@ -1081,7 +1081,7 @@ bra8_8C17:
 loc8_8C17:
 	LDA freezeFlag
 	BEQ bra8_8C1D
-	RTS ;unlogged
+	RTS ; unlogged
 bra8_8C1D:
 	LDA objState,X
 	AND #$1F
@@ -1113,35 +1113,35 @@ ptr3_8C48:
 ;-----
 	
 SpawnLotusPollen:
-	LDY objCount ;Load index for starting pollen slot
+	LDY objCount ; Load index for starting pollen slot
 	INC objCount
 	INC objCount
 	INC objCount
-	INC objCount ;Update the object count
+	INC objCount ; Update the object count
 	LDA objXLo,X
 	CLC
 	ADC #$0C
 	STA objXLo,Y
 	STA objXLo+1,Y
 	STA objXLo+2,Y
-	STA objXLo+3,Y ;Spawn the pollen pellets 12 x pixels from the base of the lotus
+	STA objXLo+3,Y ; Spawn the pollen pellets 12 x pixels from the base of the lotus
 	LDA objXHi,X
 	STA objXHi,Y 
 	STA objXHi+1,Y
 	STA objXHi+2,Y
-	STA objXHi+3,Y ;Spawn them on the same screen as the lotus
+	STA objXHi+3,Y ; Spawn them on the same screen as the lotus
 	LDA objYLo,X
 	STA objYLo,Y
 	STA objYLo+1,Y
 	STA objYLo+2,Y
-	STA objYLo+3,Y ;Spawn them on the same y position as the lotus
+	STA objYLo+3,Y ; Spawn them on the same y position as the lotus
 	LDA objYHi,X
 	STA objYHi,Y
 	STA objYHi+1,Y
 	STA objYHi+2,Y
-	STA objYHi+3,Y ;Spawn them on the same y screen as the lotus
+	STA objYHi+3,Y ; Spawn them on the same y screen as the lotus
 	
-;This piece of code moves two object IDs up by two starting form 24, which spawns in each pollen pellet in order
+; This piece of code moves two object IDs up by two starting form 24, which spawns in each pollen pellet in order
 	LDA objSlot,X
 	CLC
 	ADC #$02
@@ -1156,7 +1156,7 @@ SpawnLotusPollen:
 	ADC #$02
 	STA objSlot+3,Y
 ;-----
-;Initialize the pellet variables
+; Initialize the pellet variables
 	LDA #$00
 	STA objState,Y
 	STA objState+1,Y
@@ -1270,7 +1270,7 @@ ofs_8D47:
 	db $0B
 	db $0C
 ;----------------------------------------
-;VOLCANO LOTUS UPPER LEFT POLLEN CODE ($8D52)
+; VOLCANO LOTUS UPPER LEFT POLLEN CODE ($8D52)
 ;----------------------------------------
 Obj_h26:
 	LDA #$07
@@ -1301,14 +1301,14 @@ bra8_8D74:
 	BEQ bra8_8DB6
 	LDA objYDistHi,X
 	BPL bra8_8DA5
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc8_8DB6 ;unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc8_8DB6 ; unlogged
 bra8_8DA5:
 	LDA objYDistLo,X
 	SEC
@@ -1321,7 +1321,7 @@ bra8_8DB6:
 loc8_8DB6:
 	LDA freezeFlag
 	BEQ bra8_8DBC
-	RTS ;unlogged
+	RTS ; unlogged
 bra8_8DBC:
 	LDA objState,X
 	AND #$1F
@@ -1426,7 +1426,7 @@ bra8_8E5C:
 	BEQ bra8_8E78
 	CMP #$FF
 	BEQ bra8_8E78
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra8_8E78:
 	LDA objYLo,X
 	SEC
@@ -1438,29 +1438,29 @@ bra8_8E78:
 	LDA playerYHiDup
 	CMP objYHi,X
 	BEQ bra8_8EBA
-	LDA objYDistHi,X ;unlogged
-	BPL bra8_8EA9 ;unlogged
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc8_8EBA ;unlogged
+	LDA objYDistHi,X ; unlogged
+	BPL bra8_8EA9 ; unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc8_8EBA ; unlogged
 bra8_8EA9:
-	LDA objYDistLo,X ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	SBC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
+	LDA objYDistLo,X ; unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	SBC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
 bra8_8EBA:
 loc8_8EBA:
 	LDA freezeFlag
 	BEQ bra8_8EC0
-	RTS ;unlogged
+	RTS ; unlogged
 bra8_8EC0:
 	LDA objVar,X
 	CMP #$80
@@ -1513,29 +1513,29 @@ bra8_8F0B:
 	LDA playerYHiDup
 	CMP objYHi,X
 	BEQ bra8_8F4D
-	LDA objYDistHi,X ;unlogged
-	BPL bra8_8F3C ;unlogged
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc8_8F4D ;unlogged
+	LDA objYDistHi,X ; unlogged
+	BPL bra8_8F3C ; unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc8_8F4D ; unlogged
 bra8_8F3C:
-	LDA objYDistLo,X ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	SBC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
+	LDA objYDistLo,X ; unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	SBC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
 bra8_8F4D:
 loc8_8F4D:
 	LDA freezeFlag
 	BEQ bra8_8F53
-	RTS ;unlogged
+	RTS ; unlogged
 bra8_8F53:
 	LDA objState,X
 	AND #$1F
@@ -1652,7 +1652,7 @@ Obj_h30:
 	BEQ bra8_9017
 	CMP #$FF
 	BEQ bra8_9017
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra8_9017:
 	LDA objYLo,X
 	SEC
@@ -1686,7 +1686,7 @@ bra8_9059:
 loc8_9059:
 	LDA freezeFlag
 	BEQ bra8_905F
-	RTS ;unlogged
+	RTS ; unlogged
 bra8_905F:
 	JSR Obj_FacePlayer
 	RTS
@@ -1876,7 +1876,7 @@ bra8_9189:
 	BEQ bra8_91B6
 	CMP #$FF
 	BEQ bra8_91B6
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra8_91B6:
 	LDA objYLo,X
 	SEC
@@ -1910,7 +1910,7 @@ bra8_91F8:
 loc8_91F8:
 	LDA freezeFlag
 	BEQ bra8_91FE
-	RTS ;unlogged
+	RTS ; unlogged
 bra8_91FE:
 	JSR Obj_FacePlayer
 	RTS
@@ -1943,7 +1943,7 @@ bra8_9222:
 	BEQ bra8_923E
 	CMP #$FF
 	BEQ bra8_923E
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra8_923E:
 	LDA objYLo,X
 	SEC
@@ -1955,29 +1955,29 @@ bra8_923E:
 	LDA playerYHiDup
 	CMP objYHi,X
 	BEQ bra8_9280
-	LDA objYDistHi,X ;unlogged
-	BPL bra8_926F ;unlogged
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc8_9280 ;unlogged
+	LDA objYDistHi,X ; unlogged
+	BPL bra8_926F ; unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc8_9280 ; unlogged
 bra8_926F:
-	LDA objYDistLo,X ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	SBC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
+	LDA objYDistLo,X ; unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	SBC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
 bra8_9280:
 loc8_9280:
 	LDA freezeFlag
 	BEQ bra8_9286_RTS
-	RTS ;unlogged
+	RTS ; unlogged
 bra8_9286_RTS:
 	RTS
 loc8_9287:
@@ -2185,27 +2185,27 @@ Obj_h3C:
 	STA $0641,X
 	LDA #$F8
 	BMI bra8_9406
-	CLC ;unlogged
-	ADC objYLo,X ;unlogged
-	STA objYLo,X ;unlogged
-	BCS bra8_93FA ;unlogged
-	CMP #$F0 ;unlogged
-	BCC bra8_9418_RTS ;unlogged
+	CLC ; unlogged
+	ADC objYLo,X ; unlogged
+	STA objYLo,X ; unlogged
+	BCS bra8_93FA ; unlogged
+	CMP #$F0 ; unlogged
+	BCC bra8_9418_RTS ; unlogged
 bra8_93FA:
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYLo,X ;unlogged
-	INC objYHi,X ;unlogged
-	JMP loc8_9418_RTS ;unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYLo,X ; unlogged
+	INC objYHi,X ; unlogged
+	JMP loc8_9418_RTS ; unlogged
 bra8_9406:
 	CLC
 	ADC objYLo,X
 	STA objYLo,X
 	BCS bra8_9418_RTS
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYLo,X ;unlogged
-	DEC objYHi,X ;unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYLo,X ; unlogged
+	DEC objYHi,X ; unlogged
 bra8_9418_RTS:
 loc8_9418_RTS:
 	RTS
@@ -2263,7 +2263,7 @@ bra8_9487:
 loc8_9487:
 	LDA freezeFlag
 	BEQ bra8_948D
-	RTS ;unlogged
+	RTS ; unlogged
 bra8_948D:
 	LDA objState,X
 	AND #$1F
@@ -2306,7 +2306,7 @@ bra8_94C5:
 	BEQ bra8_94E1
 	CMP #$FF
 	BEQ bra8_94E1
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra8_94E1:
 	LDA objYLo,X
 	SEC
@@ -2634,14 +2634,14 @@ bra8_96FD:
 	BEQ loc8_973F
 	LDA objYDistHi,X
 	BPL bra8_972E
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc8_973F ;unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc8_973F ; unlogged
 bra8_972E:
 	LDA objYDistLo,X
 	SEC
@@ -2653,7 +2653,7 @@ bra8_972E:
 loc8_973F:
 	LDA freezeFlag
 	BEQ bra8_9745
-	RTS ;unlogged
+	RTS ; unlogged
 bra8_9745:
 	LDA objVar,X
 	CMP #$F0
@@ -2731,7 +2731,7 @@ sub8_97B6:
 	BEQ bra8_97D8
 	CMP #$FF
 	BEQ bra8_97D8
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra8_97D8:
 	LDA objYLo,X
 	SEC
@@ -2764,7 +2764,7 @@ bra8_9809:
 loc8_981A:
 	LDA freezeFlag
 	BEQ bra8_9820
-	RTS ;unlogged
+	RTS ; unlogged
 bra8_9820:
 	LDA objState,X
 	AND #$1F
@@ -2835,7 +2835,7 @@ Obj_h7A:
 	BEQ bra8_98AB
 	CMP #$FF
 	BEQ bra8_98AB
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra8_98AB:
 	LDA objYLo,X
 	SEC
@@ -2847,29 +2847,29 @@ bra8_98AB:
 	LDA playerYHiDup
 	CMP objYHi,X
 	BEQ bra8_98ED
-	LDA objYDistHi,X ;unlogged
-	BPL bra8_98DC ;unlogged
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc8_98ED ;unlogged
+	LDA objYDistHi,X ; unlogged
+	BPL bra8_98DC ; unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc8_98ED ; unlogged
 bra8_98DC:
-	LDA objYDistLo,X ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	SBC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
+	LDA objYDistLo,X ; unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	SBC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
 bra8_98ED:
 loc8_98ED:
 	LDA freezeFlag
 	BEQ bra8_98F3
-	RTS ;unlogged
+	RTS ; unlogged
 bra8_98F3:
 	LDA objVar,X
 	CMP #$F0
@@ -2924,7 +2924,7 @@ Obj_h7D:
 	BEQ bra8_9961
 	CMP #$FF
 	BEQ bra8_9961
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra8_9961:
 	LDA objYLo,X
 	SEC
@@ -2938,14 +2938,14 @@ bra8_9961:
 	BEQ bra8_99A3
 	LDA objYDistHi,X
 	BPL bra8_9992
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc8_99A3 ;unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc8_99A3 ; unlogged
 bra8_9992:
 	LDA objYDistLo,X
 	SEC
@@ -2958,7 +2958,7 @@ bra8_99A3:
 loc8_99A3:
 	LDA freezeFlag
 	BEQ bra8_99A9
-	RTS ;unlogged
+	RTS ; unlogged
 bra8_99A9:
 	LDY #$00
 	LDA objXDistHi,X
@@ -2980,7 +2980,7 @@ Obj_hF0:
 	BEQ bra8_99D4
 	CMP #$FF
 	BEQ bra8_99D4
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra8_99D4:
 	LDA objYLo,X
 	SEC
@@ -3014,7 +3014,7 @@ bra8_9A16:
 loc8_9A16:
 	LDA freezeFlag
 	BEQ bra8_9A1C
-	RTS ;unlogged
+	RTS ; unlogged
 bra8_9A1C:
 	LDA objYHi,X
 	CMP playerYHiDup
@@ -3036,20 +3036,20 @@ bra8_9A1C:
 	CMP #$F0
 	BCC bra8_9A66_RTS
 bra8_9A47:
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYLo,X ;unlogged
-	INC objYHi,X ;unlogged
-	JMP loc8_9A66_RTS ;unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYLo,X ; unlogged
+	INC objYHi,X ; unlogged
+	JMP loc8_9A66_RTS ; unlogged
 bra8_9A53:
-	CLC ;unlogged
-	ADC objYLo,X ;unlogged
-	STA objYLo,X ;unlogged
-	BCS bra8_9A66_RTS ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYLo,X ;unlogged
-	DEC objYHi,X ;unlogged
+	CLC ; unlogged
+	ADC objYLo,X ; unlogged
+	STA objYLo,X ; unlogged
+	BCS bra8_9A66_RTS ; unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYLo,X ; unlogged
+	DEC objYHi,X ; unlogged
 bra8_9A66_RTS:
 loc8_9A66_RTS:
 	RTS
@@ -3067,24 +3067,24 @@ bra8_9A74:
 bra8_9A77_RTS:
 	RTS
 
-	BEQ bra8_9A7F ;unlogged
-	ASL ;unlogged
-	TAX ;unlogged
-	LDA tbl8_9A99,X ;unlogged
+	BEQ bra8_9A7F ; unlogged
+	ASL ; unlogged
+	TAX ; unlogged
+	LDA tbl8_9A99,X ; unlogged
 bra8_9A7F:
-	STA $32 ;unlogged
-	LDA tbl8_9A99+1,X ;unlogged
-	STA $33 ;unlogged
-	LDY #$80 ;unlogged
-	LDX $A4 ;unlogged
-	LDA objSlot,X ;unlogged
-	AND #$01 ;unlogged
-	BEQ bra8_9A93 ;unlogged
-	LDY #$C0 ;unlogged
+	STA $32 ; unlogged
+	LDA tbl8_9A99+1,X ; unlogged
+	STA $33 ; unlogged
+	LDY #$80 ; unlogged
+	LDX $A4 ; unlogged
+	LDA objSlot,X ; unlogged
+	AND #$01 ; unlogged
+	BEQ bra8_9A93 ; unlogged
+	LDY #$C0 ; unlogged
 bra8_9A93:
-	STY $36 ;unlogged
-	JSR jmp_54_A118 ;unlogged
-	RTS ;unlogged
+	STY $36 ; unlogged
+	JSR jmp_54_A118 ; unlogged
+	RTS ; unlogged
 tbl8_9A99:
 	dw tbl8_9AA3
 	dw tbl8_9AAA

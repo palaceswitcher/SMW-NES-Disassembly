@@ -1,4 +1,4 @@
-;disassembled by BZK 6502 Disassembler
+; disassembled by BZK 6502 Disassembler
 Obj_h88:
 	LDX $A4
 	LDA objVar,X
@@ -39,18 +39,18 @@ bra6_8026:
 	STA objYDistHi,X
 	JMP loc6_8068
 bra6_8057:
-	LDA objYDistLo,X ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	SBC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
+	LDA objYDistLo,X ; unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	SBC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
 bra6_8068:
 loc6_8068:
 	LDA freezeFlag
 	BEQ bra6_806E
-	RTS ;unlogged
+	RTS ; unlogged
 bra6_806E:
 	LDA objVar,X
 	CMP #$81
@@ -112,18 +112,18 @@ bra6_80BE:
 	STA objYDistHi,X
 	JMP loc6_8100
 bra6_80EF:
-	LDA objYDistLo,X ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	SBC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
+	LDA objYDistLo,X ; unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	SBC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
 bra6_8100:
 loc6_8100:
 	LDA freezeFlag
 	BEQ bra6_8106
-	RTS ;unlogged
+	RTS ; unlogged
 bra6_8106:
 	LDA objState,X
 	AND #$1F
@@ -219,15 +219,15 @@ SprPtrs_Ninji:
 	dw SprMap_Ninji_Idle
 	dw SprMap_Ninji_Jump
 SprMap_Ninji_Idle:
-	db $02 ;Tile Width
-	db $02 ;Tile Height
-	db $A6 ;1K CHR Bank
+	db $02 ; Tile Width
+	db $02 ; Tile Height
+	db $A6 ; 1K CHR Bank
 	db $22, $23
 	db $24, $25
 SprMap_Ninji_Jump:
-	db $02 ;Tile Width
-	db $02 ;Tile Height
-	db $A6 ;1K CHR Bank
+	db $02 ; Tile Width
+	db $02 ; Tile Height
+	db $A6 ; 1K CHR Bank
 	db $26, $27
 	db $28, $29
 Obj_h84:
@@ -356,7 +356,7 @@ ptr6_82A8
 	BEQ bra6_82C6
 	CMP #$FF
 	BEQ bra6_82D4
-	BNE bra6_82E0 ;unlogged
+	BNE bra6_82E0 ; unlogged
 bra6_82C6:
 	LDA objXDistLo,X
 	SEC
@@ -394,19 +394,19 @@ ptr6_82EA:
 	INC objYHi,X
 	JMP loc6_8324
 bra6_8305:
-	CLC ;unlogged
-	ADC objYLo,X ;unlogged
-	STA objYLo,X ;unlogged
-	LDA objYHi,X ;unlogged
-	SBC #$00 ;unlogged
-	STA objYHi,X ;unlogged
-	LDA objYLo,X ;unlogged
-	CMP #$F0 ;unlogged
-	BCC bra6_8324 ;unlogged
-	LDA objYLo,X ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYLo,X ;unlogged
+	CLC ; unlogged
+	ADC objYLo,X ; unlogged
+	STA objYLo,X ; unlogged
+	LDA objYHi,X ; unlogged
+	SBC #$00 ; unlogged
+	STA objYHi,X ; unlogged
+	LDA objYLo,X ; unlogged
+	CMP #$F0 ; unlogged
+	BCC bra6_8324 ; unlogged
+	LDA objYLo,X ; unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYLo,X ; unlogged
 bra6_8324:
 loc6_8324:
 	JSR sub_54_BB59
@@ -446,16 +446,16 @@ bra6_8365_RTS:
 ptr6_8366:
 	LDA #$FC
 	BMI bra6_8381
-	CLC ;unlogged
-	ADC objYLo,X ;unlogged
-	STA objYLo,X ;unlogged
-	CMP #$F0 ;unlogged
-	BCC bra6_83A0 ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYLo,X ;unlogged
-	INC objYHi,X ;unlogged
-	JMP loc6_83A0 ;unlogged
+	CLC ; unlogged
+	ADC objYLo,X ; unlogged
+	STA objYLo,X ; unlogged
+	CMP #$F0 ; unlogged
+	BCC bra6_83A0 ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYLo,X ; unlogged
+	INC objYHi,X ; unlogged
+	JMP loc6_83A0 ; unlogged
 bra6_8381:
 	CLC
 	ADC objYLo,X
@@ -511,9 +511,9 @@ SprPtrs_Thwomp:
 	dw SprMap_Thwomp_Attack
 	dw SprMap_Thwomp_Attack
 SprMap_Thwomp_Idle:
-	db $03 ;Tile Width
-	db $04 ;Tile Height
-	db $AB ;1K CHR Bank
+	db $03 ; Tile Width
+	db $04 ; Tile Height
+	db $AB ; 1K CHR Bank
 	db $21, $22, $23
 	db $24, $25, $26
 	db $2C, $2D, $2E
@@ -534,7 +534,7 @@ SprMap_Thwomp_Attack:
 	db $27, $28, $29
 	db $2F, $30, $31
 	db $35, $36, $37
-	LDX $A4 ;unlogged code start
+	LDX $A4 ; unlogged code start
 	LDA objXLo,X
 	SEC
 	SBC playerXLoDup
@@ -701,10 +701,10 @@ bra6_8550:
 bra6_856A:
 	STY $36
 	JSR jmp_54_A118
-	RTS ;unlogged code end
+	RTS ; unlogged code end
 tbl6_8570:
-	dw Unknown1 ;Unused (Fuzzy)
-	dw Unknown2 ;Unused (Fuzzy)
+	dw Unknown1 ; Unused (Fuzzy)
+	dw Unknown2 ; Unused (Fuzzy)
 Unknown1:
 	db $03
 	db $02
@@ -798,7 +798,7 @@ ptr6_860C:
 sub6_8616:
 	LDX $A4
 	LDA objVar,X
-	STA playerScores ;Likely a leftover debugging function
+	STA playerScores ; Likely a leftover debugging function
 	AND #$0F
 	ASL
 	TAY
@@ -815,16 +815,16 @@ tbl6_862F:
 ptr6_8637:
 	LDA #$FF
 	BMI bra6_8652
-	CLC ;unlogged
-	ADC objYLo,X ;unlogged
-	STA objYLo,X ;unlogged
-	CMP #$F0 ;unlogged
-	BCC bra6_8671 ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYLo,X ;unlogged
-	INC objYHi,X ;unlogged
-	JMP loc6_8671 ;unlogged
+	CLC ; unlogged
+	ADC objYLo,X ; unlogged
+	STA objYLo,X ; unlogged
+	CMP #$F0 ; unlogged
+	BCC bra6_8671 ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYLo,X ; unlogged
+	INC objYHi,X ; unlogged
+	JMP loc6_8671 ; unlogged
 bra6_8652:
 	CLC
 	ADC objYLo,X
@@ -863,19 +863,19 @@ ptr6_8682:
 	INC objYHi,X
 	JMP loc6_86BC
 bra6_869D:
-	CLC ;unlogged
-	ADC objYLo,X ;unlogged
-	STA objYLo,X ;unlogged
-	LDA objYHi,X ;unlogged
-	SBC #$00 ;unlogged
-	STA objYHi,X ;unlogged
-	LDA objYLo,X ;unlogged
-	CMP #$F0 ;unlogged
-	BCC bra6_86BC ;unlogged
-	LDA objYLo,X ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYLo,X ;unlogged
+	CLC ; unlogged
+	ADC objYLo,X ; unlogged
+	STA objYLo,X ; unlogged
+	LDA objYHi,X ; unlogged
+	SBC #$00 ; unlogged
+	STA objYHi,X ; unlogged
+	LDA objYLo,X ; unlogged
+	CMP #$F0 ; unlogged
+	BCC bra6_86BC ; unlogged
+	LDA objYLo,X ; unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYLo,X ; unlogged
 bra6_86BC:
 loc6_86BC:
 	JSR sub_54_BB59
@@ -955,8 +955,8 @@ tbl6_874D:
 ptr6_8755:
 	JSR sub6_875F
 	JSR Obj_PlayerHitCheck
-	JSR jmp_54_BF74 ;unlogged
-	RTS ;unlogged
+	JSR jmp_54_BF74 ; unlogged
+	RTS ; unlogged
 sub6_875F:
 	LDX $A4
 	LDA objVar,X
@@ -982,9 +982,9 @@ ptr6_8780:
 	STA objXLo,X
 	PLA
 	BMI bra6_8794
-	LDA objXHi,X ;unlogged
-	ADC #$00 ;unlogged
-	BPL bra6_8799 ;unlogged
+	LDA objXHi,X ; unlogged
+	ADC #$00 ; unlogged
+	BPL bra6_8799 ; unlogged
 bra6_8794:
 	LDA objXHi,X
 	SBC #$00
@@ -1010,8 +1010,8 @@ ptr6_87AD:
 	ADC #$00
 	BPL bra6_87C6
 bra6_87C1:
-	LDA objXHi,X ;unlogged
-	SBC #$00 ;unlogged
+	LDA objXHi,X ; unlogged
+	SBC #$00 ; unlogged
 bra6_87C6:
 	STA objXHi,X
 	JSR sub_54_BB8E
@@ -1071,9 +1071,9 @@ SprPtrs_Urchin:
 	dw SprMap_Urchin_Open
 	dw SprMap_Urchin_Close
 SprMap_Urchin_Open:
-	db $04 ;Tile Width
-	db $04 ;Tile Height
-	db $A8 ;1K CHR Bank
+	db $04 ; Tile Width
+	db $04 ; Tile Height
+	db $A8 ; 1K CHR Bank
 	db $09, $0A, $0B, $0C
 	db $0D, $0E, $0F, $10
 	db $13, $14, $15, $16
@@ -1086,7 +1086,7 @@ SprMap_Urchin_Close:
 	db $0D, $11, $12, $10
 	db $13, $17, $18, $16
 	db $19, $1A, $1B, $1C
-	db $00 ;unlogged data start
+	db $00 ; unlogged data start
 	db $00
 	db $00
 	db $00
@@ -1213,10 +1213,10 @@ SprMap_Urchin_Close:
 	db $01
 	db $01
 	db $01
-	db $01 ;unlogged data end
+	db $01 ; unlogged data end
 tbl6_88D9:
 	dw ofs_88E5
-	dw ofs_88DF ;unlogged data start
+	dw ofs_88DF ; unlogged data start
 	dw ofs_88E2
 ofs_88DF:
 	db $03
@@ -1229,7 +1229,7 @@ ofs_88E2:
 ofs_88E5:
 	db $00
 	db $00	
-	db $00 ;unlogged data end
+	db $00 ; unlogged data end
 	db $00
 	db $00
 	db $FA
@@ -1260,7 +1260,7 @@ ofs_88E5:
 	db $00
 	db $00
 	db $00
-	db $00 ;unlogged
+	db $00 ; unlogged
 	db $00
 	db $F8
 	db $00
@@ -1292,7 +1292,7 @@ ofs_88E5:
 	db $00
 	db $00
 	db $00
-	db $00 ;unlogged
+	db $00 ; unlogged
 	db $00
 	db $F8
 	db $00
@@ -1324,7 +1324,7 @@ ofs_88E5:
 	db $00
 	db $08
 	db $00
-	db $00 ;unlogged
+	db $00 ; unlogged
 	db $00
 	db $F6
 	db $00
@@ -1699,7 +1699,7 @@ sub6_8BCA:
 	BEQ bra6_8BEC
 	CMP #$FF
 	BEQ bra6_8BEC
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra6_8BEC:
 	LDA objYLo,X
 	SEC
@@ -1711,24 +1711,24 @@ bra6_8BEC:
 	LDA playerYHiDup
 	CMP objYHi,X
 	BEQ bra6_8C2E
-	LDA objYDistHi,X ;unlogged
-	BPL bra6_8C1D ;unlogged
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc6_8C2E ;unlogged
+	LDA objYDistHi,X ; unlogged
+	BPL bra6_8C1D ; unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc6_8C2E ; unlogged
 bra6_8C1D:
-	LDA objYDistLo,X ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	SBC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
+	LDA objYDistLo,X ; unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	SBC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
 bra6_8C2E:
 loc6_8C2E:
 	LDA freezeFlag
@@ -1807,7 +1807,7 @@ ptr6_8CA2:
 	LDA objSlot,X
 	AND #$01
 	BEQ bra6_8CC2
-	LDY #$C0 ;unlogged
+	LDY #$C0 ; unlogged
 bra6_8CC2:
 	STY $36
 	LDA enemyAnimFrame,X
@@ -1880,17 +1880,17 @@ tbl6_8D45:
 	dw ofs_90FC
 	dw ofs_9129
 	dw ofs_9135
-	dw ofs_9159 ;unlogged
-	dw ofs_9168 ;unlogged
-	dw ofs_9177 ;unlogged
-	dw ofs_90DE ;unlogged
+	dw ofs_9159 ; unlogged
+	dw ofs_9168 ; unlogged
+	dw ofs_9177 ; unlogged
+	dw ofs_90DE ; unlogged
 	dw ofs_910B
 	dw ofs_911A
 	dw ofs_9141
 	dw ofs_914D
-	dw ofs_9186 ;unlogged
-	dw ofs_9195 ;unlogged
-	dw ofs_91A4 ;unlogged
+	dw ofs_9186 ; unlogged
+	dw ofs_9195 ; unlogged
+	dw ofs_91A4 ; unlogged
 	dw ofs_91B3
 	dw ofs_91C6
 	dw ofs_91E2
@@ -1911,7 +1911,7 @@ tbl6_8D45:
 	dw ofs_8F96
 	dw ofs_8FA9
 	dw ofs_8FBC
-	dw ofs_8FCF ;unlogged
+	dw ofs_8FCF ; unlogged
 	dw ofs_8FE2
 	dw ofs_8FF5
 	dw ofs_9008
@@ -1921,10 +1921,10 @@ tbl6_8D45:
 	dw ofs_9058
 	dw ofs_9067
 	dw ofs_9076
-	dw ofs_90CF ;unlogged
-	dw ofs_90CF ;unlogged
-	dw ofs_90CF ;unlogged
-	dw ofs_90CF ;unlogged
+	dw ofs_90CF ; unlogged
+	dw ofs_90CF ; unlogged
+	dw ofs_90CF ; unlogged
+	dw ofs_90CF ; unlogged
 	dw ofs_9089
 	dw ofs_909C
 	dw ofs_90AF
@@ -1950,16 +1950,16 @@ tbl6_8DB7:
 	dw ofs_8F02
 	dw ofs_8F02
 	dw ofs_8F11
-	dw ofs_8F37 ;unlogged
-	dw ofs_8F37 ;unlogged
-	dw ofs_8F37 ;unlogged
-	dw ofs_8F37 ;unlogged
+	dw ofs_8F37 ; unlogged
+	dw ofs_8F37 ; unlogged
+	dw ofs_8F37 ; unlogged
+	dw ofs_8F37 ; unlogged
 	dw ofs_8F24
 	dw ofs_8F37
 WendyLook1:
-	db $04 ;Tile Width
-	db $04 ;Tile Height
-	db $B8 ;1K CHR Bank
+	db $04 ; Tile Width
+	db $04 ; Tile Height
+	db $B8 ; 1K CHR Bank
 	db $FF, $FF, $FF, $FF
 	db $FF, $0F, $10, $FF
 	db $22, $26, $27, $25
@@ -2141,13 +2141,13 @@ ofs_8ECD:
 	db $7C
 	db $7D
 ofs_8EE4:
-	db $04 ;wendy dummy mappings
+	db $04 ; wendy dummy mappings
 	db $03
 	db $B9
 	db $FF, $FF, $FF, $FF
 	db $4A, $4B, $4C, $4D
 	db $58, $59, $5A, $5B
-;Unused Wendy dummy frame
+; Unused Wendy dummy frame
 	db $04
 	db $03
 	db $B8
@@ -2538,7 +2538,7 @@ ofs_909C:
 	db $CB
 	db $CC
 ofs_90AF:
-	db $02 ;diagonal podoboo mappings
+	db $02 ; diagonal podoboo mappings
 	db $02
 	db $A7
 	db $2B
@@ -2575,7 +2575,7 @@ ofs_90CB:
 	db $A7
 	db $FF
 ofs_90CF:
-	db $03 ;morton mappings (7 unused frames)
+	db $03 ; morton mappings (7 unused frames)
 	db $04
 	db $B0
 	db $01
@@ -3165,7 +3165,7 @@ bra6_9334:
 loc6_9334:
 	LDA freezeFlag
 	BEQ bra6_933A
-	RTS ;unlogged
+	RTS ; unlogged
 bra6_933A:
 	LDA objState,X
 	AND #$1F
@@ -3627,7 +3627,7 @@ sub6_9670:
 	BEQ bra6_9692
 	CMP #$FF
 	BEQ bra6_9692
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra6_9692:
 	LDA objYLo,X
 	SEC
@@ -3639,29 +3639,29 @@ bra6_9692:
 	LDA playerYHiDup
 	CMP objYHi,X
 	BEQ bra6_96D4
-	LDA objYDistHi,X ;unlogged
-	BPL bra6_96C3 ;unlogged
-	LDA objYDistLo,X ;unlogged
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	ADC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
-	JMP loc6_96D4 ;unlogged
+	LDA objYDistHi,X ; unlogged
+	BPL bra6_96C3 ; unlogged
+	LDA objYDistLo,X ; unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	ADC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
+	JMP loc6_96D4 ; unlogged
 bra6_96C3:
-	LDA objYDistLo,X ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYDistLo,X ;unlogged
-	LDA objYDistHi,X ;unlogged
-	SBC #$00 ;unlogged
-	STA objYDistHi,X ;unlogged
+	LDA objYDistLo,X ; unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYDistLo,X ; unlogged
+	LDA objYDistHi,X ; unlogged
+	SBC #$00 ; unlogged
+	STA objYDistHi,X ; unlogged
 bra6_96D4:
 loc6_96D4:
 	LDA freezeFlag
 	BEQ bra6_96DA
-	RTS ;unlogged
+	RTS ; unlogged
 bra6_96DA:
 	LDA objState,X
 	AND #$1F
@@ -3743,32 +3743,32 @@ bra6_9763:
 bra6_9767:
 	LDA invincibilityTimer
 	CMP #$F7
-	BCS bra6_97A3_RTS ;If the invincibility timer is above this, stop
+	BCS bra6_97A3_RTS ; If the invincibility timer is above this, stop
 	LDA #$30
-	STA playerYSpd ;Give player vertical height when hitting them
+	STA playerYSpd ; Give player vertical height when hitting them
 	LDA playerMoveFlags
 	ORA #$04
-	STA playerMoveFlags ;Make player move upwards
+	STA playerMoveFlags ; Make player move upwards
 	LDA #$04
-	STA playerAction ;Make player jump off
+	STA playerAction ; Make player jump off
 	LDA #sfx_Feather
-	STA sndSfx ;Play feather/hit sound
-	LDY #$04 ;Load "hit" action into Y register
+	STA sndSfx ; Play feather/hit sound
+	LDY #$04 ; Load "hit" action into Y register
 	LDA objSlot,X
 	CMP #$72
 	BNE bra6_979A
-	INC objVar,X ;Add to hit count
+	INC objVar,X ; Add to hit count
 	LDA objVar,X
-	AND #%01111111 ;Mask out bit 7
+	AND #%01111111 ; Mask out bit 7
 	CMP #$03
-	BCC bra6_979A ;If Lemmy/Wendy hasn't been hit 3 times, branch
-	LDY #$05 ;If they have, load "defeat" action into Y register
-	STY reznorsDefeated ;Also store here (why??)
+	BCC bra6_979A ; If Lemmy/Wendy hasn't been hit 3 times, branch
+	LDY #$05 ; If they have, load "defeat" action into Y register
+	STY reznorsDefeated ; Also store here (why??)
 bra6_979A:
 	TYA
-	STA objAction,X ;Trigger loaded action
+	STA objAction,X ; Trigger loaded action
 	LDA #$00
-	STA objActionTimer,X ;Clear action timer
+	STA objActionTimer,X ; Clear action timer
 bra6_97A3_RTS:
 	RTS
 Obj_h64:
@@ -3780,65 +3780,65 @@ bra6_97AE:
 	LDA objXLo,X
 	SEC
 	SBC playerXLoDup
-	STA objXDistLo,X ;Subtract the object's X position by the player's to get its distance from it
+	STA objXDistLo,X ; Subtract the object's X position by the player's to get its distance from it
 	LDA objXHi,X
 	SBC playerXHiDup
-	STA objXDistHi,X ;Calculate object's horizontal screen distance from the player
+	STA objXDistHi,X ; Calculate object's horizontal screen distance from the player
 	STA $28
 	BEQ bra6_97CA
 	CMP #$FF
 	BEQ bra6_97CA
-	JMP Obj_RemoveObject ;unlogged
+	JMP Obj_RemoveObject ; unlogged
 bra6_97CA:
 	LDA objYLo,X
 	SEC
 	SBC playerYLoDup
-	STA objYDistLo,X ;Subtract the object's Y position by the player's to get its distance from them
+	STA objYDistLo,X ; Subtract the object's Y position by the player's to get its distance from them
 	LDA objYHi,X
 	SBC playerYHiDup
-	STA objYDistHi,X ;Do the same for the object's Y screen
+	STA objYDistHi,X ; Do the same for the object's Y screen
 	LDA playerYHiDup
 	CMP objYHi,X
-	BEQ bra6_980C ;If the player and the object are on the same vertical screen, branch
+	BEQ bra6_980C ; If the player and the object are on the same vertical screen, branch
 	LDA objYDistHi,X
-	BPL bra6_97FB ;Branch if the vertical screen difference is lower than 80h
+	BPL bra6_97FB ; Branch if the vertical screen difference is lower than 80h
 	LDA objYDistLo,X
 	CLC
 	ADC #$10
-	STA objYDistLo,X ;Add to the object's distance
+	STA objYDistLo,X ; Add to the object's distance
 	LDA objYDistHi,X
 	ADC #$00
-	STA objYDistHi,X ;Add (nothing?) to the object's distance
+	STA objYDistHi,X ; Add (nothing?) to the object's distance
 	JMP loc6_980C
 bra6_97FB:
 	LDA objYDistLo,X
 	SEC
 	SBC #$10
-	STA objYDistLo,X ;Subtract from the object's distance
+	STA objYDistLo,X ; Subtract from the object's distance
 	LDA objYDistHi,X
 	SBC #$00
-	STA objYDistHi,X ;Subtract (nothing?) from the object's distance
+	STA objYDistHi,X ; Subtract (nothing?) from the object's distance
 bra6_980C:
 loc6_980C:
 	LDA freezeFlag
-	BEQ bra6_9812 ;Branch if the game currently isn't frozen
+	BEQ bra6_9812 ; Branch if the game currently isn't frozen
 	RTS
 bra6_9812:
 	LDA objSlot,X
 	CMP #$71
-	BNE bra6_981E ;If a diagonal podoboo isn't in the object slot, branch
+	BNE bra6_981E ; If a diagonal podoboo isn't in the object slot, branch
 	LDA #$A7
-	STA chrSpriteBank2 ;Swap 1K CHR bank into second bank slot
+	STA chrSpriteBank2 ; Swap 1K CHR bank into second bank slot
 bra6_981E:
 	LDA #$00
-	STA objVar,X ;Clear any variables for the object
-	LDY #$80 ;Load down-right direction
+	STA objVar,X ; Clear any variables for the object
+	LDY #$80 ; Load down-right direction
 	LDA objXDistHi,X
-	BMI bra6_982C ;Branch if the player is a screen or more ahead of it
-	LDY #$C0 ;If the player isn't, load down-left direction
+	BMI bra6_982C ; Branch if the player is a screen or more ahead of it
+	LDY #$C0 ; If the player isn't, load down-left direction
 bra6_982C:
 	TYA
-	STA objAction,X ;Store loaded direction
+	STA objAction,X ; Store loaded direction
 	RTS
 loc6_9831:
 	JSR sub6_92D0
@@ -3848,7 +3848,7 @@ loc6_9831:
 	BEQ bra6_9845
 	LDA objAction,X
 	EOR #$40
-	STA objAction,X ;Horizontally flip the podoboo
+	STA objAction,X ; Horizontally flip the podoboo
 bra6_9845:
 	JSR sub6_9997
 	BEQ bra6_9856
@@ -3856,40 +3856,40 @@ bra6_9845:
 	BEQ bra6_9856
 	LDA objAction,X
 	EOR #$80
-	STA objAction,X ;Vertically flip the podoboo
+	STA objAction,X ; Vertically flip the podoboo
 bra6_9856:
 	LDA objAction,X
-	AND #$40 ;Get the horizontal direction of the podoboo
-	BEQ bra6_9860 ;If it's facing right, branch
-	JMP loc6_98EB ;If it's facing left, jump
+	AND #$40 ; Get the horizontal direction of the podoboo
+	BEQ bra6_9860 ; If it's facing right, branch
+	JMP loc6_98EB ; If it's facing left, jump
 bra6_9860:
-	LDA #$01 ;Load speed value of 1
-	PHA ;Store the value in the stack
+	LDA #$01 ; Load speed value of 1
+	PHA ; Store the value in the stack
 	CLC
 	ADC objXLo,X
-	STA objXLo,X ;Add that speed value to the object's X position	
-	PLA ;Load the previously stored speed value
-	BMI bra6_9874 ;Branch if it's over 80h/negative
+	STA objXLo,X ; Add that speed value to the object's X position	
+	PLA ; Load the previously stored speed value
+	BMI bra6_9874 ; Branch if it's over 80h/negative
 	LDA objXHi,X
-	ADC #$00 ;Add (nothing?) to it's X screen value
-	BPL bra6_9879 ;Branch if it's less than 80h/positive
+	ADC #$00 ; Add (nothing?) to it's X screen value
+	BPL bra6_9879 ; Branch if it's less than 80h/positive
 bra6_9874:
 	LDA objXHi,X
-	SBC #$00 ;Subtract (nothing?) from it's X screen value
+	SBC #$00 ; Subtract (nothing?) from it's X screen value
 bra6_9879:
 	STA objXHi,X
 	LDA objAction,X
-	AND #$80 ;Get the vertical diagonal of the podoboo
-	BNE bra6_98B7 ;If facing up, branch
+	AND #$80 ; Get the vertical diagonal of the podoboo
+	BNE bra6_98B7 ; If facing up, branch
 	LDA #$FF
-	BMI bra6_98A0 ;If facing down, load speed value of -1 and branch
-	CLC ;unused
+	BMI bra6_98A0 ; If facing down, load speed value of -1 and branch
+	CLC ; unused
 	ADC objYLo,X
 	STA objYLo,X
 	BCS bra6_9894
 	CMP #$F0
 	BCC bra6_98B2
-bra6_9894: ;unused
+bra6_9894: ; unused
 	CLC
 	ADC #$10
 	STA objYLo,X
@@ -3898,15 +3898,15 @@ bra6_9894: ;unused
 bra6_98A0:
 	CLC
 	ADC objYLo,X
-	STA objYLo,X ;Add loaded speed value to it's Y position
+	STA objYLo,X ; Add loaded speed value to it's Y position
 	BCS bra6_98B2
 	SEC
 	SBC #$10
-	STA objYLo,X ;Move the podoboo down 16 units
-	DEC objYHi,X ;Move it to the lower horizontal screen
+	STA objYLo,X ; Move the podoboo down 16 units
+	DEC objYHi,X ; Move it to the lower horizontal screen
 bra6_98B2:
-	LDY #$34 ;Load animation frame 34h
-	JMP loc6_9972 ;Jump
+	LDY #$34 ; Load animation frame 34h
+	JMP loc6_9972 ; Jump
 bra6_98B7:
 	LDA #$01
 	BMI bra6_98D4
@@ -3923,14 +3923,14 @@ bra6_98C8:
 	INC objYHi,X
 	JMP loc6_98E6
 bra6_98D4:
-	CLC ;unlogged
-	ADC objYLo,X ;unlogged
-	STA objYLo,X ;unlogged
-	BCS bra6_98E6 ;unlogged
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYLo,X ;unlogged
-	DEC objYHi,X ;unlogged
+	CLC ; unlogged
+	ADC objYLo,X ; unlogged
+	STA objYLo,X ; unlogged
+	BCS bra6_98E6 ; unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYLo,X ; unlogged
+	DEC objYHi,X ; unlogged
 bra6_98E6:
 loc6_98E6:
 	LDY #$B6
@@ -3943,9 +3943,9 @@ loc6_98EB:
 	STA objXLo,X
 	PLA
 	BMI bra6_98FF
-	LDA objXHi,X ;unlogged
-	ADC #$00 ;unlogged
-	BPL bra6_9904 ;unlogged
+	LDA objXHi,X ; unlogged
+	ADC #$00 ; unlogged
+	BPL bra6_9904 ; unlogged
 bra6_98FF:
 	LDA objXHi,X
 	SBC #$00
@@ -3956,18 +3956,18 @@ bra6_9904:
 	BNE bra6_9941
 	LDA #$FF
 	BMI bra6_992B
-	CLC ;unlogged
-	ADC objYLo,X ;unlogged
-	STA objYLo,X ;unlogged
-	BCS bra6_991F ;unlogged
-	CMP #$F0 ;unlogged
-	BCC bra6_993D ;unlogged
+	CLC ; unlogged
+	ADC objYLo,X ; unlogged
+	STA objYLo,X ; unlogged
+	BCS bra6_991F ; unlogged
+	CMP #$F0 ; unlogged
+	BCC bra6_993D ; unlogged
 bra6_991F:
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYLo,X ;unlogged
-	INC objYHi,X ;unlogged
-	JMP bra6_993D ;unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYLo,X ; unlogged
+	INC objYHi,X ; unlogged
+	JMP bra6_993D ; unlogged
 bra6_992B:
 	CLC
 	ADC objYLo,X
@@ -3996,7 +3996,7 @@ bra6_9952:
 	INC objYHi,X
 	JMP loc6_9970
 bra6_995E:
-	CLC ;unlogged routine
+	CLC ; unlogged routine
 	ADC objYLo,X
 	STA objYLo,X
 	BCS bra6_9970
@@ -4010,13 +4010,13 @@ loc6_9970:
 bra6_9972:
 loc6_9972:
 	LDA objFrameCount
-	AND #$04 ;Set frequency to 4 frames using a bitmask
-	BEQ bra6_997A ;If the bits are masked out, use the 1st sprite and branch
-	INY ;Otherwise, continue and go to the 2nd podoboo sprite
+	AND #$04 ; Set frequency to 4 frames using a bitmask
+	BEQ bra6_997A ; If the bits are masked out, use the 1st sprite and branch
+	INY ; Otherwise, continue and go to the 2nd podoboo sprite
 bra6_997A:
 	TYA
-	STA enemyAnimFrame,X ;Store loaded podoboo sprite
-	JMP loc6_9BEA ;Jump
+	STA enemyAnimFrame,X ; Store loaded podoboo sprite
+	JMP loc6_9BEA ; Jump
 sub6_9981:
 	STY $2B
 	LDA objAction,X
@@ -4168,27 +4168,27 @@ tbl6_9A81:
 ptr6_9A87:
 	LDA #$FF
 	BMI bra6_9AA4
-	CLC ;unlogged
-	ADC objYLo,X ;unlogged
-	STA objYLo,X ;unlogged
-	BCS bra6_9A98 ;unlogged
-	CMP #$F0 ;unlogged
-	BCC bra6_9AB6 ;unlogged
+	CLC ; unlogged
+	ADC objYLo,X ; unlogged
+	STA objYLo,X ; unlogged
+	BCS bra6_9A98 ; unlogged
+	CMP #$F0 ; unlogged
+	BCC bra6_9AB6 ; unlogged
 bra6_9A98:
-	CLC ;unlogged
-	ADC #$10 ;unlogged
-	STA objYLo,X ;unlogged
-	INC objYHi,X ;unlogged
-	JMP bra6_9AB6 ;unlogged
+	CLC ; unlogged
+	ADC #$10 ; unlogged
+	STA objYLo,X ; unlogged
+	INC objYHi,X ; unlogged
+	JMP bra6_9AB6 ; unlogged
 bra6_9AA4:
 	CLC
 	ADC objYLo,X
 	STA objYLo,X
 	BCS bra6_9AB6
-	SEC ;unlogged
-	SBC #$10 ;unlogged
-	STA objYLo,X ;unlogged
-	DEC objYHi,X ;unlogged
+	SEC ; unlogged
+	SBC #$10 ; unlogged
+	STA objYLo,X ; unlogged
+	DEC objYHi,X ; unlogged
 bra6_9AB6:
 	LDA #$01
 	STA freezeFlag
@@ -4214,7 +4214,7 @@ bra6_9ADE_RTS:
 ptr6_9ADF:
 	LDA #$FF
 	BMI bra6_9AFC
-	CLC ;unlogged start
+	CLC ; unlogged start
 	ADC objYLo,X
 	STA objYLo,X
 	BCS bra6_9AF0
@@ -4225,7 +4225,7 @@ bra6_9AF0:
 	ADC #$10
 	STA objYLo,X
 	INC objYHi,X
-	JMP bra6_9B0E ;unlogged end
+	JMP bra6_9B0E ; unlogged end
 bra6_9AFC:
 	CLC
 	ADC objYLo,X
@@ -4401,7 +4401,7 @@ bra6_9C48:
 loc6_9C48:
 	LDA freezeFlag
 	BEQ bra6_9C4E_RTS
-	RTS ;unlogged
+	RTS ; unlogged
 bra6_9C4E_RTS:
 	RTS
 sub6_9C4F:

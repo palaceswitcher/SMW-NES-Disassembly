@@ -91,8 +91,8 @@ Description blocks refer to a comment "block" that marks the start of something 
 
  ```asm
 ;----------------------------------------
-;SUBROUTINE ($A6D4)
-;Checks if an object is being hit by a cape and kills it accordingly.
+; SUBROUTINE ($A6D4)
+; Checks if an object is being hit by a cape and kills it accordingly.
 ;----------------------------------------
 ```
 

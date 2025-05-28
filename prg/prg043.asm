@@ -1,4 +1,4 @@
-;disassembled by BZK 6502 Disassembler
+; disassembled by BZK 6502 Disassembler
 incbin tilesets/ts_Bonus.bin
 	db $18
 	db $00
@@ -88,7 +88,7 @@ incbin tilesets/ts_Bonus.bin
 	db $00
 	db $10
 	CMP objYHi,X
-	BEQ bra3_8694 ;not sure why its jumping to blank data
+	BEQ bra3_8694 ; not sure why its jumping to blank data
 	LDA objYDistHi,X
 	BPL bra3_8683
 	LDA objYDistLo,X
@@ -136,7 +136,7 @@ bra3_8694:
 	db $00
 	db $00
 	db $00
-;Everything below here is (probably) duplicate padding garbage, so it can be ignored.
+; Everything below here is (probably) duplicate padding garbage, so it can be ignored.
 	LDA tbl3_86B1,Y
 	STA $32
 	LDA tbl3_86B2,Y

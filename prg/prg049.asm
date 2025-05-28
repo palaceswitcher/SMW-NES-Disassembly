@@ -1,4 +1,4 @@
-;disassembled by BZK 6502 Disassembler
+; disassembled by BZK 6502 Disassembler
 ptr6_8000:
 	LDA objFrameCount
 	AND #$01
@@ -83,11 +83,11 @@ tbl5_805E:
 	dw LongRope1
 	dw LongRope2
 	dw LongRope3
-;Unused upside-down sprites--->
+; Unused upside-down sprites--->
 	dw Chainsaw_VMir1
 	dw Chainsaw_VMir2
 	dw Chainsaw_VMir3
-;<---
+; <---
 	dw Chainsaw1
 	dw Chainsaw2
 	dw Chainsaw3
@@ -141,7 +141,7 @@ Chainsaw3:
 	db $11, $12
 	db $15, $16
 
-;These 3 go unused
+; These 3 go unused
 Chainsaw_VMir1:
 	db $02
 	db $05
@@ -343,14 +343,14 @@ SpikeTop_SideWalk2:
 	db $97
 	db $3A, $3B
 	db $3E, $3F
-;Unused--->
+; Unused--->
 SpikeTop_Diag:
 	db $02
 	db $02
 	db $97
 	db $30, $31
 	db $36, $37
-;<---
+; <---
 SpikeTop_Walk1_VMir:
 	db $02
 	db $02
@@ -375,14 +375,14 @@ SpikeTop_SideWalk2_VMir:
 	db $97
 	db $3E, $3F
 	db $3A, $3B
-;Unused--->
+; Unused--->
 SpikeTop_Diag_VMir:
 	db $02
 	db $02
 	db $97
 	db $36, $37
 	db $30, $31
-;<---
+; <---
 ofs2_8261:
 	db $04
 	db $05
@@ -1728,7 +1728,7 @@ bra5_8C8B:
 loc5_8C8B:
 	LDA freezeFlag
 	BEQ bra5_8C91
-	RTS ;unlogged
+	RTS ; unlogged
 bra5_8C91:
 	LDA objState,X
 	AND #$1F
@@ -3577,7 +3577,7 @@ bra5_9971:
 	JSR sub_52_ADAF
 	RTS
 tbl5_997F:
-	dw ofs_9989 ;Bonus ? Block
+	dw ofs_9989 ; Bonus ? Block
 	dw ofs_9990
 	dw ofs_9997
 	dw ofs_999E
@@ -3703,14 +3703,14 @@ ptr10_9A45:
 	STA objSlot,X
 	RTS
 Obj_hE8:
-	LDX $A4 ;Get index for current object?
+	LDX $A4 ; Get index for current object?
 	LDA objXLo,X
 	SEC
 	SBC playerXLoDup
 	STA objXDistLo,X
 	LDA objXHi,X
 	SBC playerXHiDup
-	STA objXDistHi,X ;Calculate horizontal distance between the player and the object
+	STA objXDistHi,X ; Calculate horizontal distance between the player and the object
 	STA $28
 	BEQ bra5_9A69
 	CMP #$FF
@@ -3723,7 +3723,7 @@ bra5_9A69:
 	STA objYDistLo,X
 	LDA objYHi,X
 	SBC playerYHiDup
-	STA objYDistHi,X ;Calculate vertical distance between the player and the object
+	STA objYDistHi,X ; Calculate vertical distance between the player and the object
 	LDA playerYHiDup
 	CMP objYHi,X
 	BEQ bra5_9AAB
@@ -3753,12 +3753,12 @@ loc5_9AAB:
 bra5_9AB1:
 	LDA objAction,X
 	ASL
-	TAY ;Get pointer for current action
+	TAY ; Get pointer for current action
 	LDA tbl5_9AC3,Y
-	STA $32 ;Load lower byte
+	STA $32 ; Load lower byte
 	LDA tbl5_9AC3+1,Y
-	STA $33 ;Load upper byte
-	JMP ($32) ;Jump to loaded pointer
+	STA $33 ; Load upper byte
+	JMP ($32) ; Jump to loaded pointer
 tbl5_9AC3:
 	dw ptr10_9AD1
 	dw ptr10_9B30
@@ -3772,9 +3772,9 @@ ptr10_9AD1:
 	STA enemyAnimFrame,X
 	LDY #$22
 	LDA playerPowerup
-	BNE bra5_9AE4 ;Branch ahead if the player has no powerup
+	BNE bra5_9AE4 ; Branch ahead if the player has no powerup
 	LDA playerYoshiState
-	BNE bra5_9AE4 ;Branch ahead if the player is riding Yoshi
+	BNE bra5_9AE4 ; Branch ahead if the player is riding Yoshi
 	LDY #$18
 bra5_9AE4:
 	STY $25
@@ -3905,17 +3905,17 @@ ptr10_9B8C:
 	CMP #$03
 	BNE bra5_9BDA
 	LDA #sfx_BlockRelease
-	STA sndSfx ;Play block release sound
+	STA sndSfx ; Play block release sound
 	LDA #$E8
-	BNE bra5_9BE5 ;Spawn 1UP
+	BNE bra5_9BE5 ; Spawn 1UP
 bra5_9BDA:
 	LDA #$00
-	JSR RewardPoints ;Give the player 100 points
+	JSR RewardPoints ; Give the player 100 points
 	LDA #sfx_Coin
-	STA sndSfx ;Play coin sound
-	LDA #$E9 ;Spawn coin sprite
+	STA sndSfx ; Play coin sound
+	LDA #$E9 ; Spawn coin sprite
 bra5_9BE5:
-	STA objSlot,Y ;Store sprite in memory
+	STA objSlot,Y ; Store sprite in memory
 	INC objAction,X
 	RTS
 ptr10_9BEC:

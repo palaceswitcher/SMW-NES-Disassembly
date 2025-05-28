@@ -192,11 +192,11 @@ Vol_LongEcho1:
 	instrle 1, 2
 	Vol_LongEcho1Loop:
 	instrle 1, 254
-	instjump Vol_LongEcho1Loop ;Repeat previous RLE command
+	instjump Vol_LongEcho1Loop ; Repeat previous RLE command
 
-;This was likely encoded wrong
+; This was likely encoded wrong
 ofs_81C2:
-	db $00 ;This probably shouldn't be here
+	db $00 ; This probably shouldn't be here
 	dutyrle 1, 1
 	dutyrle 2, 1
 	dutyrle 1, 1
@@ -564,7 +564,7 @@ ofs_831B:
 	dutyrle 1, 1
 	dutyrle 0 ,1
 	dutyrle 1, 1
-	instjump ofs_831BLoop ;Loop at start
+	instjump ofs_831BLoop ; Loop at start
 ofs_8327:
 	db $01
 	db $0E
@@ -866,7 +866,7 @@ ofs_844E:
 	instrle 1, 15
 	instjump ofs_844ELoop
 
-;volume
+; volume
 ofs_845E:
 	instrle 15, 254
 	ofs_845ELoop:
@@ -1060,7 +1060,7 @@ ofs_8520:
 	ofs_8520Loop:
 	dutyrle 0, 4
 	dutyrle 0, 3
-	instjump ofs_8520Loop,1 ;This seems to be encoded wrong
+	instjump ofs_8520Loop,1 ; This seems to be encoded wrong
 ofs_8528:
 	instrle 8, 3
 	instrle 7, 3
