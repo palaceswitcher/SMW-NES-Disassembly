@@ -1749,7 +1749,7 @@ ptr10_8CAF:
 	JSR Obj_CapeHitCheck
 	JSR Obj_PlayerHitCheck
 	JSR Obj_KillOnSpinJump
-	LDA #sfx_EnemyHit2
+	LDA #SFX_ENEMYHIT2
 	STA sndSfx
 	LDA #$01
 	JSR RewardPoints
@@ -2348,7 +2348,7 @@ bra5_913D:
 	LDA objFrameCount
 	AND #$07
 	BNE bra5_9148
-	LDA #sfx_Cutter
+	LDA #SFX_CUTTER
 	STA sndSfx
 bra5_9148:
 	JSR sub5_82EC
@@ -3904,14 +3904,14 @@ ptr10_9B8C:
 	LDA $25
 	CMP #$03
 	BNE bra5_9BDA
-	LDA #sfx_BlockRelease
+	LDA #SFX_BLOCKRELEASE
 	STA sndSfx ; Play block release sound
 	LDA #$E8
 	BNE bra5_9BE5 ; Spawn 1UP
 bra5_9BDA:
 	LDA #$00
 	JSR RewardPoints ; Give the player 100 points
-	LDA #sfx_Coin
+	LDA #SFX_COIN
 	STA sndSfx ; Play coin sound
 	LDA #$E9 ; Spawn coin sprite
 bra5_9BE5:

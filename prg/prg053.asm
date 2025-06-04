@@ -648,7 +648,7 @@ loc7_84B3:
 	LDA objYHi,X
 	SBC #$00
 	STA yoshiYHi
-	LDA #sfx_YoshiMount
+	LDA #SFX_YOSHIMOUNT
 	STA sndSfx
 bra7_84C2_RTS:
 	RTS
@@ -1275,7 +1275,7 @@ bra7_89A0:
 	STA playerMoveFlags ; Make player move upwards
 	LDY #$50 ; Set speed to $50
 	LDA btnHeld
-	AND #btnA
+	AND #BTN_A
 	BEQ bra7_89B1 ; If A isn't held, branch and keep the speed
 	LDY #$70 ; If it is held, set the speed to $70 instead
 bra7_89B1:
@@ -1284,7 +1284,7 @@ bra7_89B1:
 	STA playerAction
 	LDX $A4
 	INC objState,X
-	LDA #sfx_Swim
+	LDA #SFX_SWIM
 	STA sndSfx ; Play bounce sound
 	RTS
 ptr5_89C1:
@@ -1835,7 +1835,7 @@ tbl7_8E02:
 ptr5_8E0C:
 	JSR jmp_54_A773
 	INC playerLives
-	LDA #sfx_1UP
+	LDA #SFX_1UP
 	STA sndSfx ; Play 1UP sound
 	LDA #$00
 	STA objSlot,X ; Despawn 1UP
@@ -4062,7 +4062,7 @@ tbl7_9EB0:
 ptr5_9EB8:
 	LDA objXDistHi,X
 	BPL bra7_9EE4_RTS
-	LDA #mus_Victory
+	LDA #MUS_VICTORY
 	STA sndMusic ; Play level complete music
 	LDA #$06
 	STA gameState ; Trigger goal tape event

@@ -762,7 +762,7 @@ ptr2_8668:
 	STA playerXSpd ; Move player backwards a bit
 	LDA #1
 	JSR RewardPoints ; Reward 200 points
-	LDA #sfx_EnemyHit2
+	LDA #SFX_ENEMYHIT2
 	STA sndSfx ; Play hit sound
 	LDX $A4
 	INC objSlot,X

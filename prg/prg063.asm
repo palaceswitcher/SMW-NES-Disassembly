@@ -285,7 +285,7 @@ ClearMemory:
 	LDA #59
 	STA M90_PRG1 ; Swap music banks into first and second PRG banks
 	JSR sndInit ; Initizialize sound driver
-	LDA #mus_Title
+	LDA #MUS_TITLE
 	STA sndMusic ; Play the title screen music
 	JSR sub_58_8E23+1 ; Jumps inbetween an opcode. Probably an error.
 	INC sndMuteFlag ; Enable audio
@@ -368,7 +368,7 @@ tbl3_E2DB:
 	dw pnt2_E316
 pnt2_E2E5:
 	LDA btnPressed
-	AND #btnA
+	AND #BTN_A
 	BEQ bra3_E2FE ; If the A button is pressed,
 	INC levelNumber ; Increment level number
 	LDA levelNumber
@@ -379,7 +379,7 @@ pnt2_E2E5:
 	INC worldNumber ; Carry over world number (1-5 would become 2-1)
 bra3_E2FE:
 	LDA btnPressed
-	AND #btnStart
+	AND #BTN_START
 	BEQ bra3_E315 ; If start is pressed,
 	INC a:inLvlFlag ; Set game state to 'in level'
 	LDA #$00
@@ -563,7 +563,7 @@ loc3_E45F:
 	BNE bra3_E47C ; Don't let the player unpause at the ending cutscene
 	; If not in ending cutscene:
 		LDA btnPressed
-		AND #btnStart
+		AND #BTN_START
 		BEQ bra3_E47C
 		; If start was pressed:
 			LDA #$00
@@ -571,7 +571,7 @@ loc3_E45F:
 			LDA pauseFlag
 			EOR #$01
 			STA pauseFlag ; Toggle pause flag
-			LDA #sfx_Pause
+			LDA #SFX_PAUSE
 			STA sndSfx ; Play pause/unpause sound
 
 bra3_E47C:
@@ -580,7 +580,7 @@ bra3_E47C:
 	; If game is paused:
 		JSR JYButtonComboCheck ; Check for Easter egg button combo
 		LDA btnPressed
-		AND #btnSelect
+		AND #BTN_SELECT
 		BEQ bra3_E494 ; Stop if select isn't pressed
 		; If select pressed:
 			INC a:gameSubstate ; Enter level exit state if
@@ -601,7 +601,7 @@ loc3_E498:
 	STA pauseFlag ; Unpause the game
 	STA a:inLvlFlag ; Not in a level anymore
 	STA a:gameSubstate
-	LDA #gameState_MapExitLevelTransition
+	LDA #GAMESTATE_MAPEXITLEVEL_TRANS
 	STA a:gameState ; Set to transition state for exiting a level
 	JSR BackupplayerPowerups
 	RTS
@@ -633,7 +633,7 @@ tbl3_E4DC:
 	dw pnt2_E4F7
 	dw pnt2_E509
 pnt2_E4E4:
-	LDA #sfx_Warp
+	LDA #SFX_WARP
 	STA sndSfx ; Play warp sound
 	INC a:gameSubstate
 	RTS
@@ -691,7 +691,7 @@ pnt2_E54E:
 	STA playerXSpd ; Clear player's X speed
 	STA playerYSpd ; Clear player's Y speed
 	JSR sub3_E5D4 ; Jump
-	LDA #mus_Death
+	LDA #MUS_DEATH
 	STA sndMusic ; Play death music
 	LDX #$00 ; Set action tick count to 1
 	LDY #$28 ; Set tick length to 40 frames
@@ -777,7 +777,7 @@ pnt2_E610:
 	JSR sub3_ED14 ; Jump
 	JSR HUD_Update ; Jump
 	LDA btnPressed
-	AND #btnA|btnB
+	AND #BTN_A|BTN_B
 	BEQ bra3_E62F ; If A or B are pressed,
 	LDA #$00
 	STA playerYoshiState ; Remove Yoshi
@@ -825,7 +825,7 @@ pnt2_E649:
 	STA playerMoveFlags ; Set movement to 'moving up'
 	LDA #$05
 	STA playerAction ; Do spin jump
-	LDA #sfx_SpinJump
+	LDA #SFX_SPINJUMP
 	STA sndSfx ; Play spin jump sound
 	RTS
 bra3_E681:
@@ -1262,7 +1262,7 @@ sub3_E9C4:
 	RTS
 JYButtonComboCheck:
 	LDA btnPressed
-	CMP #btnStart
+	CMP #BTN_START
 	BEQ JYTriggerDone ; Stop if the game is unpaused.
 	LDA btnPressed
 	BEQ JYTriggerDone ; If any button is being pressed,
@@ -1285,7 +1285,7 @@ ClearJYInputs:
 	
 ; This is the 8 button code needed to trigger the JY easter egg screen
 JYScreenInputs:
-	db dirUp, dirRight, btnA, dirDown, dirRight, btnB, dirUp, dirLeft
+	db BTN_UP, BTN_RIGHT, BTN_A, BTN_DOWN, BTN_RIGHT, BTN_B, BTN_UP, BTN_LEFT
 tbl3_EA10:
 	dw pnt2_EA48
 	dw pnt2_EA48
@@ -2090,7 +2090,7 @@ pnt2_ED93:
 	LDA #$00
 	STA playerAction ; Make player stand still
 	JSR sub3_E5D4 ; Jump
-	LDA #sfx_Warp
+	LDA #SFX_WARP
 	STA sndSfx ; Play warp sound
 	JSR HUD_Update ; Jump
 	INC a:gameSubstate ; Go to next part of event
@@ -2200,7 +2200,7 @@ bra3_EE72:
 	LDA playerActionFrameCount
 	CMP #$02
 	BNE bra3_EE84
-	LDA #sfx_Warp
+	LDA #SFX_WARP
 	STA sndSfx
 bra3_EE84:
 	LDX #$00

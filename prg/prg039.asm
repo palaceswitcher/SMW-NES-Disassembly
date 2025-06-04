@@ -8,7 +8,7 @@ jmp_39_E000:
 	LDA $06DE
 	BEQ bra_E02C
 	LDA btnHeld
-	AND #dirDown ; If down isn't held,
+	AND #BTN_DOWN ; If down isn't held,
 	BEQ bra_E02C ; branch
 	LDA playerBackColl
 	BNE bra_E023 ; Branch if player is behind a tile
@@ -191,7 +191,7 @@ bra_E160:
 loc_E173:
 	LDA #$D0
 	STA invincibilityTimer
-	LDA #sfx_PowerDown
+	LDA #SFX_POWERDOWN
 	STA sndSfx
 	LDA objState,X
 	AND #$E0
@@ -219,7 +219,7 @@ ptr8_E196:
 	CMP #$0E ; (Check for climbing while moving)
 	BEQ bra_E1C2 ; Branch if the player was already climbing prior
 	LDA btnHeld
-	AND #dirUp
+	AND #BTN_UP
 	BEQ bra_E1C2 ; Branch if the player is holding up
 	LDA #$00
 	STA playerYSpd

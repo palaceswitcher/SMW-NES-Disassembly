@@ -1814,7 +1814,7 @@ bra_8C6B:
 	LDX $A4
 	JSR sub_82EA
 	JSR jmp_54_BF74
-	LDA #sfx_EnemyHit3
+	LDA #SFX_ENEMYHIT3
 	STA sndSfx
 	RTS
 Obj_hDE:
@@ -3262,7 +3262,7 @@ ptr7_970C:
 	LDY #$00
 bra_975B:
 	STY playerMoveFlags
-	LDA #mus_Ending
+	LDA #MUS_ENDING
 	STA sndMusic
 	RTS
 bra_9762_RTS:

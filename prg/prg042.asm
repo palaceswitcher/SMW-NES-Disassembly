@@ -4628,98 +4628,98 @@ tbl_9B83:
 	db $00
 MapDirections:
 ; 1-Yoshi House
-	db dirDown ; Next level
+	db BTN_DOWN ; Next level
 	db $00 ; Previous level
 ; 1-1
-	db dirDown
-	db dirUp
+	db BTN_DOWN
+	db BTN_UP
 ; 1-2
-	db dirRight
-	db dirLeft
+	db BTN_RIGHT
+	db BTN_LEFT
 ; 1-3
-	db dirUp
-	db dirDown
+	db BTN_UP
+	db BTN_DOWN
 ; 1-4
-	db dirUp
-	db dirDown
+	db BTN_UP
+	db BTN_DOWN
 ; 2-1
-	db dirLeft
-	db dirDown
+	db BTN_LEFT
+	db BTN_DOWN
 ; 2-Yoshi House
-	db dirLeft
-	db dirRight
+	db BTN_LEFT
+	db BTN_RIGHT
 ; 2-2
-	db dirUp
-	db dirLeft
+	db BTN_UP
+	db BTN_LEFT
 ; 2-3
-	db dirDown
-	db dirUp
+	db BTN_DOWN
+	db BTN_UP
 ; 2-4
-	db dirUp
-	db dirDown
+	db BTN_UP
+	db BTN_DOWN
 ; 3-1
-	db dirRight
-	db dirDown
+	db BTN_RIGHT
+	db BTN_DOWN
 ; 3-2
-	db dirUp
-	db dirDown
+	db BTN_UP
+	db BTN_DOWN
 ; 3-3
-	db dirDown
-	db dirUp
+	db BTN_DOWN
+	db BTN_UP
 ; 3-4
-	db dirRight
-	db dirDown
+	db BTN_RIGHT
+	db BTN_DOWN
 ; 4-1
-	db dirDown
-	db dirLeft
+	db BTN_DOWN
+	db BTN_LEFT
 ; 4-2
-	db dirRight
-	db dirLeft
+	db BTN_RIGHT
+	db BTN_LEFT
 ; 4-3
-	db dirRight
-	db dirLeft
+	db BTN_RIGHT
+	db BTN_LEFT
 ; 4-4
-	db dirDown
-	db dirUp
+	db BTN_DOWN
+	db BTN_UP
 ; 5-1
-	db dirDown
-	db dirLeft
+	db BTN_DOWN
+	db BTN_LEFT
 ; 5-2
-	db dirDown
-	db dirUp
+	db BTN_DOWN
+	db BTN_UP
 ; 5-Yoshi House
-	db dirDown
-	db dirLeft
+	db BTN_DOWN
+	db BTN_LEFT
 ; 5-3
-	db dirDown
-	db dirUp
+	db BTN_DOWN
+	db BTN_UP
 ; 5-4
-	db dirDown
-	db dirUp
+	db BTN_DOWN
+	db BTN_UP
 ; 6-1
-	db dirDown
-	db dirUp
+	db BTN_DOWN
+	db BTN_UP
 ; 6-2
-	db dirDown
-	db dirUp
+	db BTN_DOWN
+	db BTN_UP
 ; 6-3
-	db dirLeft
-	db dirRight
+	db BTN_LEFT
+	db BTN_RIGHT
 ; 6-4
-	db dirUp
-	db dirDown
+	db BTN_UP
+	db BTN_DOWN
 ; 7-1
-	db dirLeft
-	db dirUp
+	db BTN_LEFT
+	db BTN_UP
 ; 7-2
-	db dirUp
-	db dirLeft
+	db BTN_UP
+	db BTN_LEFT
 ; 7-3
-	db dirUp
-	db dirLeft
+	db BTN_UP
+	db BTN_LEFT
 ; 7-4
 	db $00
-	db dirDown
+	db BTN_DOWN
 ; Unused
 	db $00
 	db $00

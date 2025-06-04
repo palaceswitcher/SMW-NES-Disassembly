@@ -178,7 +178,7 @@ bra6_8151:
 	STA playerXSpd
 	LDA #$01
 	JSR RewardPoints
-	LDA #sfx_EnemyHit2
+	LDA #SFX_ENEMYHIT2
 	STA sndSfx
 	LDX $A4
 	LDA #$81
@@ -423,7 +423,7 @@ loc6_8324:
 bra6_833F:
 	LDA #$01
 	STA screenShake
-	LDA #sfx_Thud
+	LDA #SFX_THUD
 	STA sndSfx
 bra6_8348:
 	INC objVar,X
@@ -1462,7 +1462,7 @@ bra6_8A31:
 	LDA #$01
 	STA screenShake
 	STA freezeFlag
-	LDA #sfx_Thud
+	LDA #SFX_THUD
 	STA sndSfx
 	LDA objYLo,X
 	AND #$F8
@@ -1590,7 +1590,7 @@ bra6_8B13:
 	INC objActionTimer,X
 	RTS
 bra6_8B17:
-	LDA #mus_Victory
+	LDA #MUS_VICTORY
 	STA sndMusic
 	LDA #$09
 	STA gameState
@@ -1777,7 +1777,7 @@ bra6_8C78:
 	ORA #$45
 	BNE bra6_8C9B
 bra6_8C86:
-	LDA #sfx_Feather
+	LDA #SFX_FEATHER
 	STA sndSfx
 	LDA #$06
 	STA objAction,X
@@ -3751,7 +3751,7 @@ bra6_9767:
 	STA playerMoveFlags ; Make player move upwards
 	LDA #$04
 	STA playerAction ; Make player jump off
-	LDA #sfx_Feather
+	LDA #SFX_FEATHER
 	STA sndSfx ; Play feather/hit sound
 	LDY #$04 ; Load "hit" action into Y register
 	LDA objSlot,X

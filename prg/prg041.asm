@@ -104,7 +104,7 @@ pnt5_A0A2:
 	CLC
 	ADC levelNumber ; Then add it to the level number to get the level ID
 	STA bgCurPalette ; Use palette for corresponding level ID
-	LDA #mus_Title
+	LDA #MUS_TITLE
 	STA sndMusic ; Play title screen music
 	LDA #$00
 	STA fadeoutMode ; Set fadeout mode
@@ -1051,7 +1051,7 @@ bra_A735:
 	STA gs0SpriteY+1
 	LDA #$00
 	STA numPlayers
-	LDA #sfx_Beep
+	LDA #SFX_BEEP
 	STA sndSfx
 	RTS
 bra_A74B:
@@ -1460,7 +1460,7 @@ bra_AA23:
 	LDA #$0D ; Use normal "start" animation
 bra_AA25:
 	STA playerMapAnim
-	LDA #sfx_Beep
+	LDA #SFX_BEEP
 	STA sndSfx ; Play "beep" sound
 	LDA #$00
 	STA overworldMapTimer ; Clear overworld timer
@@ -1488,7 +1488,7 @@ bra_AA52:
 	RTS
 sub_AA5F:
 	LDA btnPressed
-	AND #btnA+btnStart ; Check if A or start is pressed
+	AND #BTN_A+BTN_START ; Check if A or start is pressed
 	BEQ bra_AA6A ; If not, branch
 	JSR PlayLevel ; If they are, jump
 	RTS
@@ -1569,7 +1569,7 @@ WorldSelectCheck:
 	LDA worldSelectTrigger
 	BEQ bra_AAFA ; Branch if the world select trigger is set to zero
 	LDA btnPressed
-	AND #btnSelect ; Check if select is pressed
+	AND #BTN_SELECT ; Check if select is pressed
 	BEQ bra_AB0C_RTS ; If not, stop
 bra_AAFA:
 	LDA #$04
@@ -1603,7 +1603,7 @@ pnt5_AB1D:
 	LDA btnPressed
 	AND #$02
 	BEQ bra_AB30
-	LDA #sfx_Beep
+	LDA #SFX_BEEP
 	STA sndSfx
 	LDA worldSelectNum
 	BEQ bra_AB45
@@ -1612,7 +1612,7 @@ bra_AB30:
 	LDA btnPressed
 	AND #$01
 	BEQ bra_AB45
-	LDA #sfx_Beep
+	LDA #SFX_BEEP
 	STA sndSfx
 	LDA worldSelectNum
 	CMP #$06
@@ -1622,7 +1622,7 @@ bra_AB45:
 	LDA btnHeld
 	AND #$90
 	BEQ bra_AB79
-	LDA #sfx_Beep
+	LDA #SFX_BEEP
 	STA sndSfx
 	LDX worldSelectNum
 	LDA tbl_AB95,X
@@ -2040,7 +2040,7 @@ bra_ADBF:
 	RTS
 pnt5_ADC5:
 	JSR sub_AE96
-	LDA #mus_Ending
+	LDA #MUS_ENDING
 	STA sndMusic
 	LDA #$2A
 	STA M90_PRG0
@@ -2228,7 +2228,7 @@ pnt5_AF4C:
 	JSR sub_AEA3
 	LDA #$00
 	JSR TransitionScreenSub
-	LDA #mus_GameOver
+	LDA #MUS_GAMEOVER
 	STA sndMusic
 	JSR ClearGS0Sprites
 	JSR ClearSprites

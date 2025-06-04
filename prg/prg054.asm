@@ -1415,7 +1415,7 @@ CheckIfCapeKill:
 		STA objVar,X ; Reset object animation(?)
 		LDA #$01
 		JSR RewardPoints ; Give 200 points
-		LDA #sfx_EnemyHit2
+		LDA #SFX_ENEMYHIT2
 		STA sndSfx ; Play hit sound
 		PLA
 		PLA ; Go back two calls and stop running code for this object
@@ -2298,7 +2298,7 @@ Obj_PowerupEatCheck:
 	CMP #$06
 	BNE @Continue ; Skip ahead if object can't be swallowed
 	; If the object can be swallowed:
-		LDA #sfx_YoshiSwallow
+		LDA #SFX_YOSHISWALLOW
 		STA sndSfx ; Play swallow sound
 
 @Continue:
@@ -2311,7 +2311,7 @@ Obj_PowerupEatCheck:
 		CLC
 		ADC #1
 		STA playerLives,Y ; Add 1 to the player's life counter if Yoshi ate a 1UP
-		LDA #sfx_1UP
+		LDA #SFX_1UP
 		STA sndSfx ; Play 1UP sound
 		BNE @RemoveObject ; Continue and remove object
 	; If Yoshi ate a star:
@@ -2348,7 +2348,7 @@ SetObjectCarryState:
 	CMP #$04
 	BCS SetObjectCarryStateDone ; Only continue if player is either walking, running, or doing nothing
 	LDA btnHeld
-	AND #btnB
+	AND #BTN_B
 	BEQ SetObjectCarryStateDone ; Make sure the B button is held
 	STA playerHoldFlag
 	LDY $A4 ; Get index for current object
@@ -2373,7 +2373,7 @@ PositionCarriedObject:
 		RTS
 bra3_AB9C:
 	LDA btnHeld
-	AND #btnB
+	AND #BTN_B
 	STA playerHoldFlag ; Set the player's carrying flag if the B button is held
 	BEQ bra3_AC08 ; Branch if the B button isn't being held
 	LDA playerMoveFlags
@@ -2821,13 +2821,13 @@ GetPowerupFromObject:
 
 ; Plays the powerup sound and buffers the game
 @SetPowerupEffect:
-	LDA #sfx_Powerup
+	LDA #SFX_POWERUP
 	STA sndSfx
 	LDA #$01 ; Set powerup buffer time for fire flower
 	CPX #objID_Feather
 	BNE @NotFeather
 	; If Yoshi ate a feather:
-		LDA #sfx_Feather
+		LDA #SFX_FEATHER
 		STA sndSfx ; Play feather sound
 		LDA #$81 ; Set powerup buffer time for feather
 	; If Yoshi ate a mushroom or fire flower:
@@ -5013,7 +5013,7 @@ bra3_BCA6_RTS:
 ; Like the subroutine below it, except it gives more rebound speed and always turns the player right.
 ;----------------------------------------
 Obj_StompReboundAlt:
-	LDA #sfx_EnemyHit2
+	LDA #SFX_ENEMYHIT2
 	STA sndSfx ; Play enemy hit sound
 	LDA #48
 	STA playerYSpd
@@ -5030,7 +5030,7 @@ Obj_StompReboundAlt:
 ; Bounces the player back and gives them points while playing a sound effect 
 ;----------------------------------------
 Obj_StompRebound:
-	LDA #sfx_EnemyHit2
+	LDA #SFX_ENEMYHIT2
 	STA sndSfx ; Play hit sound effect
 
 ;----------------------------------------
@@ -5216,7 +5216,7 @@ bra3_BDE1:
 	LDA #$0B
 	STA objSlot,X ; Spawn a mushroom in
 bra3_BDE6:
-	LDA #sfx_BlockRelease
+	LDA #SFX_BLOCKRELEASE
 	STA sndSfx ; Play the block release sound
 	LDY objCount
 	INC objCount ; Set the index for the new object
@@ -5342,7 +5342,7 @@ Obj_PlayerHitCheck:
 
 @SetPlayerDuckingHeight:
 	LDA playerAction
-	CMP #pAction_Duck
+	CMP #PACT_DUCK
 	BNE @HorizHitboxCheck ; Don't change the player's hitbox size if they aren't ducking
 	LDY #$08 ; If the player is ducking, make their hitbox 8 pixels high
 
@@ -5411,9 +5411,9 @@ ObjHandlePlayerColl:
 	CMP #-14
 	BCC @InvincibilityCheck ; AND only continue if the player is within 14 pixels of the object vertically
 		LDA playerAction
-		CMP #pAction_ClimbIdle
+		CMP #PACT_CLIMBIDLE
 		BEQ @GivePoints
-		CMP #pAction_ClimbMove
+		CMP #PACT_CLIMBMOVE
 		BEQ @GivePoints ; Give points if the player hits the object while climbing
 		LDA playerMoveFlags
 		AND #%00000100
@@ -5510,7 +5510,7 @@ DealDamage:
 @GiveIFrames:
 	LDA #$D0
 	STA invincibilityTimer ; Give player (128) invulnerability frames
-	LDA #sfx_PowerDown
+	LDA #SFX_POWERDOWN
 	STA sndSfx ; Play hurt sound
 	LDA objState,X
 	AND #%11100000
@@ -5518,7 +5518,7 @@ DealDamage:
 	RTS
 
 @KillPlayer:
-	LDA #gameState_Death
+	LDA #GAMESTATE_DEATH
 	STA gameState ; Trigger death event
 	LDA #$00
 	STA gameSubstate ; Go to first part of event
