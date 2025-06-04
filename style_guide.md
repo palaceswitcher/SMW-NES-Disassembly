@@ -18,7 +18,7 @@
 
 ### Constant Styling
 
-- Constant values should be written in all caps with an underscore separating the first word or phrase.
+- Constant values should be written in all caps with an underscore separating the word describing their type.
 - Constants should have their names abbreviated, if possible.
 	- Examples: `SFX_JUMP`, `GAMESTATE_DOOR`, `OBJ_KOOPA`
 
