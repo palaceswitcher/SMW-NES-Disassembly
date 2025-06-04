@@ -100,7 +100,7 @@ Koopa_SpawnBeachKoopa:
 	CLC
 	ADC #$12
 	STA objSlot,Y ; Spawn the appropriate shell-less Koopa for the Koopa variant(?)
-	LDA #objID_Shell
+	LDA #OBJ_SHELL
 	STA objSlot,X ; Spawn a shell in place of the Koopa
 	LDA #$08
 	STA objState,X ; Make shell bounce off
@@ -109,7 +109,7 @@ Koopa_SpawnBeachKoopa:
 ; Spawn a shell in place of the Koopa when hit
 Koopa_HitRespond:
 	LDX $A4 ; Get index for previous object?
-	LDA #objID_Shell
+	LDA #OBJ_SHELL
 	STA objSlot,X ; Spawn shell in place of Koopa
 	LDA #$00
 	STA objVar,X ; Clear speed?
@@ -321,7 +321,7 @@ Paratroopa_HitCheck:
 		LDA objSlot,X
 		AND #$01 ; Get paratroopa's CHR slot
 		CLC
-		ADC #objID_GreenKoopa
+		ADC #OBJ_GREENKOOPA
 		STA objSlot,X ; Turn into green Koopa with same CHR slot
 		LDA #$00
 		STA objState,X ; Clear state
@@ -331,7 +331,7 @@ Paratroopa_HitCheck:
 ; This is only used when the Paratroopa is killed completely
 Paratroopa_HitRespond:
 	LDX $A4 ; Get current object's slot
-	LDA #objID_Shell
+	LDA #OBJ_SHELL
 	STA objSlot,X ; Replace current object with shell
 	LDA #$00
 	STA objVar,X ; Clear object's variables
@@ -374,7 +374,7 @@ tbl8_8575:
 ptr3_857F:
 	LDY #$13 ; Use normal Rex movement by default
 	LDA objSlot,X
-	CMP #objID_RexSquashed
+	CMP #OBJ_REX_STOMPED
 	BCC bra8_8589 ; Branch if Rex isn't already squished
 		INY ; Move faster if Rex is squished
 
@@ -392,10 +392,10 @@ bra8_8596:
 	JSR Obj_KillOnSpinJump ; Kill if spin-jumped on
 	LDA objSlot,X
 	LSR ; Ignore lower bit of Rex ID
-	CMP #objID_RexSquashed/2
+	CMP #OBJ_REX_STOMPED/2
 	BCC bra8_85B5 ; Branch if Rex isn't already squished
 	; If Rex was already squished:
-		LDA #objID_Pop
+		LDA #OBJ_POP
 		STA objSlot,X ; Make Rex pop
 		LDA #$00
 		STA objState,X ; Start at default function
@@ -775,7 +775,7 @@ bra8_8979:
 	LDA #$00
 	STA objVar,Y
 	STA objState,Y
-	LDA #objID_Feather
+	LDA #OBJ_FEATHER
 	STA objSlot,Y ; Spawn feather
 	INC objAction,X ; Set Super Koopa to "killed" state
 	RTS
@@ -843,7 +843,7 @@ SuperKoopa_HitCheck:
 	LDX $A4 ; Get current object index
 	LDY #$01 ; If the code has reached this point, the player must have hit the Super Koopa, so update its state accordingly
 	LDA objSlot,X
-	CMP #objID_SuperKoopaJump
+	CMP #OBJ_SUPERKOOPA_JUMP
 	BCC @SetobjState
 		INY ; Skip feather spawning state if this Super Koopa doesn't have a feather
 
@@ -870,9 +870,9 @@ bra8_8AAB:
 	LDA SuperKoopa_AnimStartFrames,Y
 	TAY ; Get animation starting frame
 	LDA objSlot,X
-	CMP #objID_SuperKoopaJump
+	CMP #OBJ_SUPERKOOPA_JUMP
 	BCC bra8_8AC1 ; Use flashing animation if this is the feather variant
-		CMP #objID_SuperKoopaAlt
+		CMP #OBJ_SUPERKOOPA_ALT
 		BCC bra8_8ABF ; Branch if Super Koopa is a non-feather variant
 			LDY #$08 ; Set takeoff starting frame for feather variants
 	bra8_8ABF:

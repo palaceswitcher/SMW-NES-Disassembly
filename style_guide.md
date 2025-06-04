@@ -19,6 +19,7 @@
 ### Constant Styling
 
 - Constant values should be written in all caps with an underscore separating the word describing their type.
+- Additional underscores to break up subtypes or related constants is highly encouraged. Such as using `OBJ_CHAINSAW_UPALT` instead of `OBJ_CHAINSAWUPALT`.
 - Constants should have their names abbreviated, if possible.
 	- Examples: `SFX_JUMP`, `GAMESTATE_DOOR`, `OBJ_KOOPA`
 

@@ -233,294 +233,294 @@ bra3_A1AD:
 tbl3_A1B5:
 	dw ptr4_A0D8
 	
-	objID_Yoshi = ($-tbl3_A1B5)/2
+	OBJ_YOSHI = ($-tbl3_A1B5)/2
 	dw Obj_YoshiBox
 
-	objID_PSwitch = ($-tbl3_A1B5)/2
+	OBJ_PSWITCH = ($-tbl3_A1B5)/2
 	dw Obj_PSwitch
 
-	objID_Spring = ($-tbl3_A1B5)/2
+	OBJ_SPRING = ($-tbl3_A1B5)/2
 	dw Obj_Spring
 
-	objID_Shell = ($-tbl3_A1B5)/2
+	OBJ_SHELL = ($-tbl3_A1B5)/2
 	dw Obj_Shell
 
-	objID_1UP = ($-tbl3_A1B5)/2
+	OBJ_1UP = ($-tbl3_A1B5)/2
 	dw Obj_1UP
 
-	objID_PFireball1 = ($-tbl3_A1B5)/2
+	OBJ_PFIREBALL1 = ($-tbl3_A1B5)/2
 	dw Obj_h06
 
-	objID_PFireball2 = ($-tbl3_A1B5)/2
+	OBJ_PFIREBALL2 = ($-tbl3_A1B5)/2
 	dw Obj_h07
 
-	objID_YoshiFireTop = ($-tbl3_A1B5)/2
+	OBJ_YOSHIFIRE_TOP = ($-tbl3_A1B5)/2
 	dw Obj_h08
 
-	objID_YoshiFireMiddle = ($-tbl3_A1B5)/2
+	OBJ_YOSHIFIRE_MIDDLE = ($-tbl3_A1B5)/2
 	dw Obj_h09
 
-	objID_YoshiFireBottom = ($-tbl3_A1B5)/2
+	OBJ_YOSHIFIRE_BOTTOM = ($-tbl3_A1B5)/2
 	dw Obj_h0A
 
-	objID_Mushroom = ($-tbl3_A1B5)/2
+	OBJ_MUSHROOM = ($-tbl3_A1B5)/2
 	dw Obj_h0B
 
-	objID_FireFlower = ($-tbl3_A1B5)/2
+	OBJ_FIREFLOWER = ($-tbl3_A1B5)/2
 	dw Obj_h0C
 
-	objID_Feather = ($-tbl3_A1B5)/2
+	OBJ_FEATHER = ($-tbl3_A1B5)/2
 	dw Obj_h0D
 
-	objID_Star = ($-tbl3_A1B5)/2
+	OBJ_STAR = ($-tbl3_A1B5)/2
 	dw Obj_h0E
 
-	objID_Pop = ($-tbl3_A1B5)/2
+	OBJ_POP = ($-tbl3_A1B5)/2
 	dw Obj_h0F
 
-	objID_Koopa = ($-tbl3_A1B5)/2
+	OBJ_KOOPA = ($-tbl3_A1B5)/2
 	dw Obj_Koopa
 	dw Obj_Koopa
 
-	objID_RedBeachKoopa = ($-tbl3_A1B5)/2
+	OBJ_BEACHKOOPA = ($-tbl3_A1B5)/2
 	dw Obj_h12
 	dw Obj_h12
 
-	objID_BouncingParatroopa = ($-tbl3_A1B5)/2
+	OBJ_PARATROOPA_BOUNCING = ($-tbl3_A1B5)/2
 	dw Obj_h14
 	dw Obj_h14
 
-	objID_Rex = ($-tbl3_A1B5)/2
+	OBJ_REX = ($-tbl3_A1B5)/2
 	dw Obj_h16
 	dw Obj_h16
 
-	objID_RexSquashed = ($-tbl3_A1B5)/2
+	OBJ_REX_STOMPED = ($-tbl3_A1B5)/2
 	dw Obj_h16
 	dw Obj_h16
 
-	objID_PiranhaPlant = ($-tbl3_A1B5)/2
+	OBJ_PIRANHAPLANT = ($-tbl3_A1B5)/2
 	dw Obj_h1A
 	dw Obj_h1A
 
-	objID_PiranhaPlantMask = ($-tbl3_A1B5)/2
+	OBJ_PIRANHAPLANTMASK = ($-tbl3_A1B5)/2
 	dw Obj_h1C
 	dw Obj_h1C
 
-	objID_SuperKoopaCape = ($-tbl3_A1B5)/2
+	OBJ_SUPERKOOPA_CAPE = ($-tbl3_A1B5)/2
 	dw Obj_h1E
 	dw Obj_h1E
 
-	objID_SuperKoopaJump = ($-tbl3_A1B5)/2
+	OBJ_SUPERKOOPA_JUMP = ($-tbl3_A1B5)/2
 	dw Obj_h1E
 
-	objID_SuperKoopaStraight = ($-tbl3_A1B5)/2 ; Verify this
+	OBJ_SUPERKOOPA_STRAIGHT = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h1E
 
-	objID_SuperKoopaAlt = ($-tbl3_A1B5)/2 ; Verify this
+	OBJ_SUPERKOOPA_ALT = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h1E
 
-	objID_SuperKoopaFlyUp = ($-tbl3_A1B5)/2 ; Verify this
+	OBJ_SUPERKOOPA_FLYUP = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h1E
 
-	objID_VolcanoLotus = ($-tbl3_A1B5)/2
+	OBJ_VOLCANOLOTUS = ($-tbl3_A1B5)/2
 	dw Obj_h24
 	dw Obj_h24
 
-	objID_LotusPollen1 = ($-tbl3_A1B5)/2
+	OBJ_LOTUSPOLLEN1 = ($-tbl3_A1B5)/2
 	dw Obj_h26
 	dw Obj_h26
 
-	objID_LotusPollen2 = ($-tbl3_A1B5)/2
+	OBJ_LOTUSPOLLEN2 = ($-tbl3_A1B5)/2
 	dw Obj_h26
 	dw Obj_h26
 
-	objID_LotusPollen3 = ($-tbl3_A1B5)/2
+	OBJ_LOTUSPOLLEN3 = ($-tbl3_A1B5)/2
 	dw Obj_h26
 	dw Obj_h26
 
-	objID_LotusPollen4 = ($-tbl3_A1B5)/2
+	OBJ_LOTUSPOLLEN4 = ($-tbl3_A1B5)/2
 	dw Obj_h26
 	dw Obj_h26
 
-	objID_Swooper = ($-tbl3_A1B5)/2
+	OBJ_SWOOPER = ($-tbl3_A1B5)/2
 	dw Obj_h2E
 	dw Obj_h2E
 
-	objID_BlurpHorizontal = ($-tbl3_A1B5)/2
+	OBJ_BLURP_HORIZONTAL = ($-tbl3_A1B5)/2
 	dw Obj_h30
 	dw Obj_h30
 
-	objID_BlurpVertical = ($-tbl3_A1B5)/2
+	OBJ_BLURP_VERTICAL = ($-tbl3_A1B5)/2
 	dw Obj_h30
 	dw Obj_h30
 
-	objID_BlurpAlt = ($-tbl3_A1B5)/2 ; Verify this
+	OBJ_BLURP_ALT = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h30
 
-	objID_BlurpRight = ($-tbl3_A1B5)/2 ; Verify this
+	OBJ_BLURP_RIGHT = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h30
 
-	objID_GreenKoopa = ($-tbl3_A1B5)/2
+	OBJ_GREENKOOPA = ($-tbl3_A1B5)/2
 	dw Obj_h36
 	dw Obj_h36
 
-	objID_KoopaShellAlt = ($-tbl3_A1B5)/2 ; Verify this
+	OBJ_KOOPASHELL_ALT = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h38
 
-	objID_MushroomHidden = ($-tbl3_A1B5)/2
+	OBJ_MUSHROOM_HIDDEN = ($-tbl3_A1B5)/2
 	dw Obj_h0B
 
-	objID_Mechakoopa = ($-tbl3_A1B5)/2
+	OBJ_MECHAKOOPA = ($-tbl3_A1B5)/2
 	dw Obj_h3A
 	dw Obj_h3A
 
-	objID_StompedMechakoopa1 = ($-tbl3_A1B5)/2
+	OBJ_MECHAKOOPA_STOMPED1 = ($-tbl3_A1B5)/2
 	dw Obj_h3C
 	dw Obj_h3C
 
-	objID_StompedMechakoopa2 = ($-tbl3_A1B5)/2
+	OBJ_MECHAKOOPA_STOMPED2 = ($-tbl3_A1B5)/2
 	dw Obj_h3C
 	dw Obj_h3C
 
-	objID_StompedMechakoopa3 = ($-tbl3_A1B5)/2
+	OBJ_MECHAKOOPA_STOMPED3 = ($-tbl3_A1B5)/2
 	dw Obj_h3C
 	dw Obj_h3C
 
-	objID_BuzzyBeetle = ($-tbl3_A1B5)/2
+	OBJ_BUZZYBEETLE = ($-tbl3_A1B5)/2
 	dw Obj_h42
 	dw Obj_h42
 
-	objID_BuzzyShell = ($-tbl3_A1B5)/2
+	OBJ_BUZZYSHELL = ($-tbl3_A1B5)/2
 	dw Obj_h44
 	dw Obj_h44
 
-	objID_BuzzyShellKicked = ($-tbl3_A1B5)/2
+	OBJ_BUZZYSHELL_KICKED = ($-tbl3_A1B5)/2
 	dw Obj_h38
 	dw Obj_h38
 
-	objID_HorizontalPodoboo = ($-tbl3_A1B5)/2
+	OBJ_PODOBOO_HORIZONTAL = ($-tbl3_A1B5)/2
 	dw Obj_h48
 
-	objID_1UPAlt = ($-tbl3_A1B5)/2 ; Verify this
+	OBJ_1UP_ALT = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h49
 
-	objID_SpikeTop = ($-tbl3_A1B5)/2
+	OBJ_SPIKETOP = ($-tbl3_A1B5)/2
 	dw Obj_h4A
 	dw Obj_h4A
 
-	objID_GoalTape = ($-tbl3_A1B5)/2
+	OBJ_GOALTAPE = ($-tbl3_A1B5)/2
 	dw Obj_h4C
 	dw Obj_h4C
 
-	objID_ClimbingKoopaHoriz = ($-tbl3_A1B5)/2
+	OBJ_CLIMBINGKOOPA_HORIZONTAL = ($-tbl3_A1B5)/2
 	dw Obj_h4E
 	dw Obj_h4E
 
-	objID_ClimbingKoopaVert = ($-tbl3_A1B5)/2
+	OBJ_CLIMBINGKOOPA_VERTICAL = ($-tbl3_A1B5)/2
 	dw Obj_h4E ; 50
 	dw Obj_h4E ; 51
 
-	objID_BlurpStill = ($-tbl3_A1B5)/2
+	OBJ_BLURPSTILL = ($-tbl3_A1B5)/2
 	dw Obj_h30 ; 52 (Blurp)
 	dw Obj_h30
 
-	objID_LinePlatform = ($-tbl3_A1B5)/2
+	OBJ_LINEPLATFORM = ($-tbl3_A1B5)/2
 	dw Obj_h54 ; 54 (Line Platform)
 	dw Obj_h54
 
-	objID_ShortPlatform = ($-tbl3_A1B5)/2
+	OBJ_SHORTPLATFORM = ($-tbl3_A1B5)/2
 	dw Obj_h54
 	dw Obj_h54
 
-	objID_GreenParatroopa = ($-tbl3_A1B5)/2 ; Verify this
+	OBJ_PARATROOPA_GREEN = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h58
 	dw Obj_h58
 
-	objID_ChainsawUp = ($-tbl3_A1B5)/2
+	OBJ_CHAINSAW_UP = ($-tbl3_A1B5)/2
 	dw Obj_h5A
 	dw Obj_h5A
 
-	objID_Rope = ($-tbl3_A1B5)/2
+	OBJ_ROPE = ($-tbl3_A1B5)/2
 	dw Obj_h5C
 	dw Obj_h5C
 	dw Obj_h5C
 
-	objID_RopeLong = ($-tbl3_A1B5)/2
+	OBJ_ROPE_LONG = ($-tbl3_A1B5)/2
 	dw Obj_h5C
 
-	objID_ChainsawDown = ($-tbl3_A1B5)/2
+	OBJ_CHAINSAW_DOWN = ($-tbl3_A1B5)/2
 	dw Obj_h5A
 	dw Obj_h5A
 
-	objID_ChainsawUpAlt = ($-tbl3_A1B5)/2 ; Verify this
+	OBJ_CHAINSAW_UP_ALT = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h5A
 	dw Obj_h5A
 
-	objID_DiagonalPodoboo = ($-tbl3_A1B5)/2
+	OBJ_PODOBOO_DIAG = ($-tbl3_A1B5)/2
 	dw Obj_h64
 	dw Obj_h64
 
-	objID_NA = ($-tbl3_A1B5)/2 ; Verify this
+	OBJ_NA = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h66
 	dw Obj_h66
 	dw Obj_h66
 	dw Obj_h66
 
-	objID_PSwitchDropped = ($-tbl3_A1B5)/2
+	OBJ_PSWITCH_BOXED = ($-tbl3_A1B5)/2
 	dw Obj_h6A
 
-	objID_MushroomStanding = ($-tbl3_A1B5)/2
+	OBJ_MUSHROOM_IDLE = ($-tbl3_A1B5)/2
 	dw Obj_h6B
 
-	objID_Vine = ($-tbl3_A1B5)/2
+	OBJ_VINE = ($-tbl3_A1B5)/2
 	dw Obj_h6C
 	dw Obj_h6C
 
-	objID_BeachKoopaSliding = ($-tbl3_A1B5)/2
+	OBJ_BEACHKOOPA_SLIDING = ($-tbl3_A1B5)/2
 	dw Obj_h6E
 	dw Obj_h6E
 
-	objID_MortonRoy = ($-tbl3_A1B5)/2
+	OBJ_MORTONROY = ($-tbl3_A1B5)/2
 	dw Obj_h70
 
-	objID_DiagonalPodobooBoss = ($-tbl3_A1B5)/2
+	OBJ_PODOBOO_DIAG_BOSS = ($-tbl3_A1B5)/2
 	dw Obj_h64
 
-	objID_LemmyWendy = ($-tbl3_A1B5)/2
+	OBJ_LEMMYWENDY = ($-tbl3_A1B5)/2
 	dw Obj_h72
 
-	objID_LemmyWendyDummy1 = ($-tbl3_A1B5)/2
+	OBJ_LEMMYWENDYDUMMY1 = ($-tbl3_A1B5)/2
 	dw Obj_h72
 
-	objID_MidwayPoint = ($-tbl3_A1B5)/2
+	OBJ_MIDWAYPOINT = ($-tbl3_A1B5)/2
 	dw Obj_h74
 
-	objID_LemmyWendyDummy2 = ($-tbl3_A1B5)/2
+	OBJ_LEMMYWENDYDUMMY2 = ($-tbl3_A1B5)/2
 	dw Obj_h72
 
-	objID_OnOffBlock = ($-tbl3_A1B5)/2
+	OBJ_ONOFFBLOCK = ($-tbl3_A1B5)/2
 	dw Obj_h76
 
-	objID_Reznor = ($-tbl3_A1B5)/2
+	OBJ_REZNOR = ($-tbl3_A1B5)/2
 	dw Obj_h77
 
-	objID_ReznorFire = ($-tbl3_A1B5)/2
+	OBJ_REZNORFIRE = ($-tbl3_A1B5)/2
 	dw Obj_h78 ; Object 0x78 (Reznor Fire)
 
-	objID_Fuzzy = ($-tbl3_A1B5)/2
+	OBJ_FUZZY = ($-tbl3_A1B5)/2
 	dw Obj_h54 ; Object 0x79 (Fuzzy)
 
-	objID_BeachKoopaSlidingAlt = ($-tbl3_A1B5)/2 ; Verify this
+	OBJ_BEACHKOOPA_SLIDING_ALT = ($-tbl3_A1B5)/2 ; Verify this
 	dw Obj_h7A
 	dw Obj_h7A
 
-	objID_LevelExit = ($-tbl3_A1B5)/2
+	OBJ_LEVELEXIT = ($-tbl3_A1B5)/2
 	dw Obj_h7C
 
-	objID_CastleCanvas = ($-tbl3_A1B5)/2
+	OBJ_CASTLECANVAS = ($-tbl3_A1B5)/2
 	dw Obj_h7D
 
-	objID_Urchin = ($-tbl3_A1B5)/2
+	OBJ_URCHIN = ($-tbl3_A1B5)/2
 	dw Obj_h7E
 	dw Obj_h7E ; Object 0x7F (Urchin)
 
@@ -790,265 +790,265 @@ tbl3_A3B5:
 ;----------------------------------------
 ; OBJECTS 80-FF ($A435)
 tbl3_A435:
-	objID_BulletBill = ($-tbl3_A435)/2 + $80
+	OBJ_BULLETBILL = ($-tbl3_A435)/2 + $80
 	dw Obj_h80
 	dw Obj_h80
 
-	objID_Eerie = ($-tbl3_A435)/2 + $80
+	OBJ_EERIE = ($-tbl3_A435)/2 + $80
 	dw Obj_h82
 	dw Obj_h82
 
-	objID_Thwomp = ($-tbl3_A435)/2 + $80
+	OBJ_THWOMP = ($-tbl3_A435)/2 + $80
 	dw Obj_h84
 	dw Obj_h84
 
-	objID_UrchinVertical = ($-tbl3_A435)/2 + $80
+	OBJ_URCHIN_VERTICAL = ($-tbl3_A435)/2 + $80
 	dw Obj_h86
 	dw Obj_h86
 
-	objID_Ninji = ($-tbl3_A435)/2 + $80
+	OBJ_NINJI = ($-tbl3_A435)/2 + $80
 	dw Obj_h88
 	dw Obj_h88
 
-	objID_FishBone = ($-tbl3_A435)/2 + $80
+	OBJ_FISHBONE = ($-tbl3_A435)/2 + $80
 	dw Obj_h8A
 	dw Obj_h8A
 
-	objID_SpikeBall = ($-tbl3_A435)/2 + $80
+	OBJ_SPIKEBALL = ($-tbl3_A435)/2 + $80
 	dw Obj_h8C
 	dw Obj_h8C
 
-	objID_ParachuteGoombaAlt = ($-tbl3_A435)/2 + $80 ; Verify this
+	OBJ_PARACHUTEGOOMBA_ALT = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw Obj_h8E
 	dw Obj_h8E
 
-	objID_FuzzyAlt = ($-tbl3_A435)/2 + $80 ; Verify this
+	OBJ_FUZZY_ALT = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw Obj_h90
 	dw Obj_h90
 
-	objID_UrchinHorizontal = ($-tbl3_A435)/2 + $80
+	OBJ_URCHIN_HORIZONTAL = ($-tbl3_A435)/2 + $80
 	dw Obj_h92
 	dw Obj_h92
 
-	objID_Goomba = ($-tbl3_A435)/2 + $80
+	OBJ_GOOMBA = ($-tbl3_A435)/2 + $80
 	dw Obj_h94
 	dw Obj_h94
 
-	objID_GoombaUpsideDown = ($-tbl3_A435)/2 + $80
+	OBJ_GOOMBA_FLIPPED = ($-tbl3_A435)/2 + $80
 	dw Obj_h96
 	dw Obj_h96
 
-	objID_ParachuteGoomba = ($-tbl3_A435)/2 + $80
+	OBJ_PARACHUTEGOOMBA = ($-tbl3_A435)/2 + $80
 	dw Obj_h98
 	dw Obj_h98
 
-	objID_Spiny = ($-tbl3_A435)/2 + $80
+	OBJ_SPINY = ($-tbl3_A435)/2 + $80
 	dw Obj_h9A
 	dw Obj_h9A
 
-	objID_VerticalPodoboo = ($-tbl3_A435)/2 + $80
+	OBJ_PODOBOO_VERTICAL = ($-tbl3_A435)/2 + $80
 	dw Obj_h9C
 	dw Obj_h9C
 
-	objID_DiagonalPodobooAlt = ($-tbl3_A435)/2 + $80 ; Verify this
+	OBJ_PODOBOO_DIAG_ALT = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw Obj_h9E
 	dw Obj_h9E
 
-	objID_Paragoomba = ($-tbl3_A435)/2 + $80
+	OBJ_PARAGOOMBA = ($-tbl3_A435)/2 + $80
 	dw Obj_hA0
 	dw Obj_hA0
 
-	objID_DryBonesThrowing = ($-tbl3_A435)/2 + $80
+	OBJ_DRYBONES_THROWING = ($-tbl3_A435)/2 + $80
 	dw Obj_hA2
 	dw Obj_hA2
 
-	objID_DryBones = ($-tbl3_A435)/2 + $80
+	OBJ_DRYBONES = ($-tbl3_A435)/2 + $80
 	dw Obj_hA4
 	dw Obj_hA4
 
-	objID_Bone = ($-tbl3_A435)/2 + $80
+	OBJ_BONE = ($-tbl3_A435)/2 + $80
 	dw Obj_hA6
 	dw Obj_hA6
 
-	objID_DryBonesThrowingBroken = ($-tbl3_A435)/2 + $80
+	OBJ_DRYBONES_THROW_BROKEN = ($-tbl3_A435)/2 + $80
 	dw Obj_hA8
 	dw Obj_hA8
 
-	objID_DryBonesBroken = ($-tbl3_A435)/2 + $80
+	OBJ_DRYBONES_BROKEN = ($-tbl3_A435)/2 + $80
 	dw Obj_hA8 ; AA
 	dw Obj_hA8 ; AB
 
-	objID_BonyBeetle = ($-tbl3_A435)/2 + $80
+	OBJ_BONYBEETLE = ($-tbl3_A435)/2 + $80
 	dw Obj_hAA ; AC
 	dw Obj_hAA ; AD
 
-	objID_BonyBeetleBroken = ($-tbl3_A435)/2 + $80
+	OBJ_BONYBEETLE_BROKEN = ($-tbl3_A435)/2 + $80
 	dw Obj_hAC ; AE
 	dw Obj_hAC ; AF
 
-	objID_Thing = ($-tbl3_A435)/2 + $80 ; Verify this
+	OBJ_THING = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw Obj_hAE
 	dw Obj_hAE
 
-	objID_Football = ($-tbl3_A435)/2 + $80
+	OBJ_FOOTBALL = ($-tbl3_A435)/2 + $80
 	dw Obj_hB0
 	dw Obj_hB0
 
-	objID_Rock = ($-tbl3_A435)/2 + $80
+	OBJ_ROCK = ($-tbl3_A435)/2 + $80
 	dw Obj_hB2
 	dw Obj_hB2
 
-	objID_booBuddiesBoo = ($-tbl3_A435)/2 + $80
+	OBJ_BOOBUDDY = ($-tbl3_A435)/2 + $80
 	dw Obj_hB4
 	dw Obj_hB4
 
-	objID_PrincessPeach = ($-tbl3_A435)/2 + $80
+	OBJ_PRINCESSPEACH = ($-tbl3_A435)/2 + $80
 	dw Obj_hB6
 	dw ptr4_A0D8
 
-	objID_Smoke = ($-tbl3_A435)/2 + $80 ; Verify this
+	OBJ_SMOKE = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw Obj_hB8
 	dw ptr4_A0D8
 	dw Obj_hBA
 
-	objID_NA2 = ($-tbl3_A435)/2 + $80 ; Verify this
+	OBJ_NA2 = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw ptr4_A0D8
 	dw ptr4_A0D8
 
-	objID_MushroomPrincess = ($-tbl3_A435)/2 + $80
+	OBJ_MUSHROOM_PRINCESS = ($-tbl3_A435)/2 + $80
 	dw Obj_hBD
 
-	objID_CharginChuck = ($-tbl3_A435)/2 + $80
+	OBJ_CHARGINCHUCK = ($-tbl3_A435)/2 + $80
 	dw Obj_hBE
 	dw Obj_hBE
 
-	objID_CharginChuckChase = ($-tbl3_A435)/2 + $80
+	OBJ_CHARGINCHUCK_CHASE = ($-tbl3_A435)/2 + $80
 	dw Obj_hC0
 	dw Obj_hC0 ; Actually C2
 
-	objID_CharginChuckStunned = ($-tbl3_A435)/2 + $80
+	OBJ_CHARGINCHUCK_STUNNED = ($-tbl3_A435)/2 + $80
 	dw Obj_hC2
 	dw Obj_hC2
 
-	objID_CharginChuck_Hit = ($-tbl3_A435)/2 + $80
+	OBJ_CHARGINCHUCK_HIT = ($-tbl3_A435)/2 + $80
 	dw Obj_hBE
 	dw Obj_hBE
 
-	objID_CharginChuckChase_Hit = ($-tbl3_A435)/2 + $80
+	OBJ_CHARGINCHUCK_CHASE_HIT = ($-tbl3_A435)/2 + $80
 	dw Obj_hC0
 	dw Obj_hC0
 
-	objID_CharginChuckStunned_Hit = ($-tbl3_A435)/2 + $80
+	OBJ_CHARGINCHUCK_STUNNED_HIT = ($-tbl3_A435)/2 + $80
 	dw Obj_hC2
 	dw Obj_hC2
 
-	objID_CharginChuck_Hit2 = ($-tbl3_A435)/2 + $80
+	OBJ_CHARGINCHUCK_HIT2 = ($-tbl3_A435)/2 + $80
 	dw Obj_hBE
 	dw Obj_hBE
 
-	objID_CharginChuckChase_Hit2 = ($-tbl3_A435)/2 + $80
+	OBJ_CHARGINCHUCK_CHASE_HIT2 = ($-tbl3_A435)/2 + $80
 	dw Obj_hC0
 	dw Obj_hC0
 
-	objID_BaseballChuck = ($-tbl3_A435)/2 + $80
+	OBJ_BASEBALLCHUCK = ($-tbl3_A435)/2 + $80
 	dw Obj_hCE
 	dw Obj_hCE
 
-	objID_FootballChuck = ($-tbl3_A435)/2 + $80
+	OBJ_FOOTBALLCHUCK = ($-tbl3_A435)/2 + $80
 	dw Obj_hD0
 	dw Obj_hD0
 
-	objID_DigginChuck = ($-tbl3_A435)/2 + $80
+	OBJ_DIGGINCHUCK = ($-tbl3_A435)/2 + $80
 	dw Obj_hD2
 	dw Obj_hD2
 
-	objID_booBuddiesCenterAlt = ($-tbl3_A435)/2 + $80 ; Verify this
+	OBJ_BOOBUDDIESCENTER_ALT = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw Obj_hD4
 	dw Obj_hD5
 
-	objID_booBuddiesCenter = ($-tbl3_A435)/2 + $80 ; Verify this
+	OBJ_BOOBUDDIESCENTER = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw Obj_hD6 ; D8
 	dw Obj_hD6
 
-	objID_Boo = ($-tbl3_A435)/2 + $80
+	OBJ_BOO = ($-tbl3_A435)/2 + $80
 	dw Obj_hD8 ; DA
 	dw Obj_hD8
 
-	objID_BooCrewBoo = ($-tbl3_A435)/2 + $80 ; Verify this
+	OBJ_BOOCREWBOO = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw Obj_hDA ; DC
 	dw Obj_hDA
 
-	objID_BooFlyAway = ($-tbl3_A435)/2 + $80 ; Verify this
+	OBJ_BOO_FLYAWAY = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw Obj_hDC ; DE
 	dw Obj_hDC
 
-	objID_Propeller = ($-tbl3_A435)/2 + $80
+	OBJ_PROPELLER = ($-tbl3_A435)/2 + $80
 	dw Obj_hDE ; E0
 
-	objID_Bowser = ($-tbl3_A435)/2 + $80
+	OBJ_BOWSER = ($-tbl3_A435)/2 + $80
 	dw Obj_hDF
 
-	objID_SpikeUp = ($-tbl3_A435)/2 + $80
+	OBJ_SPIKE_UP = ($-tbl3_A435)/2 + $80
 	dw Obj_hE0
 	dw Obj_hE0
 
-	objID_DinoRhino = ($-tbl3_A435)/2 + $80
+	OBJ_DINORHINO = ($-tbl3_A435)/2 + $80
 	dw Obj_hE2 ; E4
 	dw Obj_hE2
 
-	objID_DinoTorch = ($-tbl3_A435)/2 + $80
+	OBJ_DINOTORCH = ($-tbl3_A435)/2 + $80
 	dw Obj_hE4
 	dw Obj_hE4
 
-	objID_BonusBlock1UP = ($-tbl3_A435)/2 + $80
+	OBJ_1UP_BONUS = ($-tbl3_A435)/2 + $80
 	dw Obj_hE6
 
-	objID_BonusBlockCoin = ($-tbl3_A435)/2 + $80
+	OBJ_BONUSBLOCKCOIN = ($-tbl3_A435)/2 + $80
 	dw Obj_hE7
 
-	objID_BonusBlock1 = ($-tbl3_A435)/2 + $80
+	OBJ_BONUSBLOCK1 = ($-tbl3_A435)/2 + $80
 	dw Obj_hE8 ; 1st bonus block (EA)
 	dw Obj_hE8
 
-	objID_BonusBlock2 = ($-tbl3_A435)/2 + $80
+	OBJ_BONUSBLOCK2 = ($-tbl3_A435)/2 + $80
 	dw Obj_hE8 ; 2nd bonus block (EC)
 	dw Obj_hE8
 
-	objID_BonusBlock3 = ($-tbl3_A435)/2 + $80
+	OBJ_BONUSBLOCK3 = ($-tbl3_A435)/2 + $80
 	dw Obj_hE8 ; 3rd bonus block (EE)
 	dw Obj_hED
 
-	objID_NA3 = ($-tbl3_A435)/2 + $80 ; Verify this
+	OBJ_NA3 = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw Obj_hED ; F0
 	dw Obj_hED
 
-	objID_BGPriorityAbove = ($-tbl3_A435)/2 + $80
+	OBJ_BGPRIORITY_ABOVE = ($-tbl3_A435)/2 + $80
 	dw Obj_hF0 ; F2
 	dw Obj_hF0
 
-	objID_BGPriorityBelow = ($-tbl3_A435)/2 + $80
+	OBJ_BGPRIORITY_BELOW = ($-tbl3_A435)/2 + $80
 	dw Obj_hED
 
-	objID_PipeExit = ($-tbl3_A435)/2 + $80
+	OBJ_PIPEEXIT = ($-tbl3_A435)/2 + $80
 	dw Obj_hED ; F5
 
-	objID_SpikeDown = ($-tbl3_A435)/2 + $80
+	OBJ_SPIKE_DOWN = ($-tbl3_A435)/2 + $80
 	dw Obj_hF4 ; F6
 	dw Obj_hF4
 
-	objID_SpikeUpAlt = ($-tbl3_A435)/2 + $80 ; Verify this
+	OBJ_SPIKE_UP_ALT = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw Obj_hF4 ; F8
 	dw Obj_hF4
 
-	objID_VerticalParatroopa = ($-tbl3_A435)/2 + $80
+	OBJ_PARATROOPA_VERTICAL = ($-tbl3_A435)/2 + $80
 	dw Obj_h58
 	dw Obj_h58
 
-	objID_CountdownPlatform_1s = ($-tbl3_A435)/2 + $80
+	OBJ_COUNTDOWNPLATFORM_1S = ($-tbl3_A435)/2 + $80
 	dw Obj_hFA ; FC
 	dw Obj_hFA
 
-	objID_CountdownPlatform_4s = ($-tbl3_A435)/2 + $80
+	OBJ_COUNTDOWNPLATFORM_4S = ($-tbl3_A435)/2 + $80
 	dw Obj_hFA ; FE
 	dw Obj_hFA
 
@@ -2303,7 +2303,7 @@ Obj_PowerupEatCheck:
 
 @Continue:
 	JSR Obj_GetEdiblePowerup ; Check if Yoshi ate a generic powerup (mushroom, fire flower, or feather)
-	CPX #objID_1UP
+	CPX #OBJ_1UP
 	BNE @CheckIfStar ; Check if Yoshi ate a star if he didn't eat a 1UP
 	; If Yoshi ate a 1UP:
 		LDY curPlayer
@@ -2316,7 +2316,7 @@ Obj_PowerupEatCheck:
 		BNE @RemoveObject ; Continue and remove object
 	; If Yoshi ate a star:
 	@CheckIfStar:
-		CPX #objID_Star
+		CPX #OBJ_STAR
 		BNE @RemoveObject ; Continue and remove object if Yoshi didn't eat a star
 			LDA #$01
 			STA invincibilityTimer ; Give the player invincibility
@@ -2786,18 +2786,18 @@ jmp_54_AE3D:
 @Continue:
 	STA $32 ; Copy player powerup status to scratch memory
 	LDX objSlot,Y ; Get index for current object
-	CPX #objID_Koopa
+	CPX #OBJ_KOOPA
 	BCC GetPowerupFromObject ; Branch if object's ID is between 1 and 15
 	; Otherwise, check if the object is a mushroom variant
-		CPX #objID_MushroomStanding
+		CPX #OBJ_MUSHROOM_IDLE
 		BEQ SetToMushroom ; Give powerup for standing mushroom
-		CPX #objID_MushroomPrincess
+		CPX #OBJ_MUSHROOM_PRINCESS
 		BEQ SetToMushroom ; Give powerup for princess-thrown mushroom
-		CPX #objID_MushroomHidden
+		CPX #OBJ_MUSHROOM_HIDDEN
 		BNE bra3_AE97_RTS ; Give power up if mushroom was hidden. Otherwise, don't give the player a powerup at all
 
 SetToMushroom:
-	LDX #objID_Mushroom ; Replace with ID for normal mushroom
+	LDX #OBJ_MUSHROOM ; Replace with ID for normal mushroom
 
 GetPowerupFromObject:
 	LDA ObjectPowerupTbl,X ; Get powerup for swallowing current object
@@ -2824,7 +2824,7 @@ GetPowerupFromObject:
 	LDA #SFX_POWERUP
 	STA sndSfx
 	LDA #$01 ; Set powerup buffer time for fire flower
-	CPX #objID_Feather
+	CPX #OBJ_FEATHER
 	BNE @NotFeather
 	; If Yoshi ate a feather:
 		LDA #SFX_FEATHER
@@ -2861,7 +2861,7 @@ ObjectPowerupTbl:
 sub3_AEA8:
 	STA $38
 	LDX #$FF
-bra3_AEAC:
+
 loc3_AEAC:
 	INX
 	LDY objSlot,X
@@ -2869,7 +2869,7 @@ loc3_AEAC:
 	LDA tbl3_AF43,Y
 	BNE bra3_AECF
 	CPX objCount
-	BCC bra3_AEAC
+	BCC loc3_AEAC
 	PLA
 	PLA
 	RTS
@@ -2881,7 +2881,7 @@ bra3_AEBE:
 	LDA tbl3_AFC3,Y
 	BNE bra3_AECF
 	CPX objCount
-	BCC bra3_AEAC
+	BCC loc3_AEAC
 	PLA
 	PLA
 	RTS
@@ -2893,7 +2893,7 @@ bra3_AECF:
 	LDY $A4
 	STY $32
 	CPX $32
-	BEQ bra3_AEAC
+	BEQ loc3_AEAC
 	LDA objXLo,X
 	SEC
 	SBC objXLo,Y
@@ -2911,24 +2911,24 @@ bra3_AECF:
 	LDA $33
 	BPL bra3_AF17
 	CMP #$FF
-	BNE bra3_AEAC
+	BNE loc3_AEAC
 	LDA #$00
 	CLC
 	ADC $36
 	CLC
 	ADC $32
 	BCS bra3_AF1F
-	BCC bra3_AEAC
+	BCC loc3_AEAC
 bra3_AF17:
-	BNE bra3_AEAC
+	BNE loc3_AEAC
 	LDA $32
 	CMP $38
-	BCS bra3_AEAC
+	BCS loc3_AEAC
 bra3_AF1F:
 	LDA $35
 	BPL bra3_AF34
 	CMP #$FF
-	BNE bra3_AEAC
+	BNE loc3_AEAC
 	LDA #$00
 	CLC
 	ADC $37

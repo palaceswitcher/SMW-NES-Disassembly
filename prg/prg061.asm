@@ -1965,51 +1965,51 @@ EntitySetPtrs:
 BonusEntitySet:
 	dw BonusLevel_EntitySet ; (Also used for Yoshi's house)
 EntitySet_World1:
-	db objID_MidwayPoint, 0, objID_RedBeachKoopa, objID_Rex+1, objID_CharginChuckChase, objID_PiranhaPlant, objID_Mushroom, objID_Shell, objID_1UPAlt, objID_FireFlower, objID_HorizontalPodoboo, objID_MushroomHidden, objID_BeachKoopaSliding, 0, 0, objID_GoalTape+1
-	db objID_MidwayPoint, objID_Vine+1, objID_Shell, objID_Mushroom, objID_PiranhaPlant+1, objID_Yoshi, objID_Koopa, objID_CharginChuckChase+1, objID_PSwitchDropped, objID_BouncingParatroopa, objID_Paragoomba, objID_ParachuteGoomba, objID_NA, objID_Star, 0, objID_GoalTape+1
-	db objID_MidwayPoint, objID_ShortPlatform+1, objID_ShortPlatform, objID_Koopa+1, objID_GreenParatroopa+1, objID_Yoshi, objID_FireFlower, objID_Mushroom, 0, 0, 0, 0, 0, 0, 0, objID_GoalTape+1
-	db objID_MidwayPoint, objID_ClimbingKoopaHoriz, objID_ClimbingKoopaVert, objID_VerticalPodoboo+1, objID_Thwomp, objID_DiagonalPodoboo+1, objID_Mushroom, 0, 0, 0, 0, 0, 0, 0, 0, objID_Reznor
+	db OBJ_MIDWAYPOINT, 0, OBJ_BEACHKOOPA, OBJ_REX+1, OBJ_CHARGINCHUCK_CHASE, OBJ_PIRANHAPLANT, OBJ_MUSHROOM, OBJ_SHELL, OBJ_1UP_ALT, OBJ_FIREFLOWER, OBJ_PODOBOO_HORIZONTAL, OBJ_MUSHROOM_HIDDEN, OBJ_BEACHKOOPA_SLIDING, 0, 0, OBJ_GOALTAPE+1
+	db OBJ_MIDWAYPOINT, OBJ_VINE+1, OBJ_SHELL, OBJ_MUSHROOM, OBJ_PIRANHAPLANT+1, OBJ_YOSHI, OBJ_KOOPA, OBJ_CHARGINCHUCK_CHASE+1, OBJ_PSWITCH_BOXED, OBJ_PARATROOPA_BOUNCING, OBJ_PARAGOOMBA, OBJ_PARACHUTEGOOMBA, OBJ_NA, OBJ_STAR, 0, OBJ_GOALTAPE+1
+	db OBJ_MIDWAYPOINT, OBJ_SHORTPLATFORM+1, OBJ_SHORTPLATFORM, OBJ_KOOPA+1, OBJ_PARATROOPA_GREEN+1, OBJ_YOSHI, OBJ_FIREFLOWER, OBJ_MUSHROOM, 0, 0, 0, 0, 0, 0, 0, OBJ_GOALTAPE+1
+	db OBJ_MIDWAYPOINT, OBJ_CLIMBINGKOOPA_HORIZONTAL, OBJ_CLIMBINGKOOPA_VERTICAL, OBJ_PODOBOO_VERTICAL+1, OBJ_THWOMP, OBJ_PODOBOO_DIAG+1, OBJ_MUSHROOM, 0, 0, 0, 0, 0, 0, 0, 0, OBJ_REZNOR
 
 EntitySet_World2:
-	db objID_MidwayPoint, objID_SuperKoopaCape, objID_SuperKoopaJump, objID_SuperKoopaAlt, objID_VolcanoLotus+1, objID_BouncingParatroopa, objID_PiranhaPlant, objID_Yoshi, objID_Vine, objID_BaseballChuck+1, objID_MushroomHidden, objID_Star, objID_BGPriorityBelow, 0, 0, objID_GoalTape
-	db objID_MidwayPoint, objID_LinePlatform, objID_LinePlatform+1, objID_ShortPlatform, objID_Koopa+1, objID_GreenParatroopa+1, objID_Feather, objID_BouncingParatroopa+1, objID_Fuzzy, objID_OnOffBlock, objID_Vine, 0, 0, 0, 0, objID_GoalTape+1
-	db 0, objID_booBuddiesCenter, objID_Boo, objID_BooCrewBoo, objID_PSwitchDropped, objID_VerticalPodoboo+1, objID_DiagonalPodoboo, objID_1UPAlt, objID_FireFlower, objID_NA+2, objID_Vine+1, 0, 0, 0, 0, objID_GoalTape+1
-	db objID_MortonRoy, objID_Thwomp, objID_Ninji, objID_VerticalPodoboo+1, objID_DryBones, objID_SpikeBall+1, objID_Mushroom, objID_Feather, objID_FireFlower, objID_1UPAlt, objID_DiagonalPodoboo+1, objID_DryBones+1, objID_MushroomHidden, objID_MushroomStanding, 0, objID_GoalTape+1
+	db OBJ_MIDWAYPOINT, OBJ_SUPERKOOPA_CAPE, OBJ_SUPERKOOPA_JUMP, OBJ_SUPERKOOPA_ALT, OBJ_VOLCANOLOTUS+1, OBJ_PARATROOPA_BOUNCING, OBJ_PIRANHAPLANT, OBJ_YOSHI, OBJ_VINE, OBJ_BASEBALLCHUCK+1, OBJ_MUSHROOM_HIDDEN, OBJ_STAR, OBJ_BGPRIORITY_BELOW, 0, 0, OBJ_GOALTAPE
+	db OBJ_MIDWAYPOINT, OBJ_LINEPLATFORM, OBJ_LINEPLATFORM+1, OBJ_SHORTPLATFORM, OBJ_KOOPA+1, OBJ_PARATROOPA_GREEN+1, OBJ_FEATHER, OBJ_PARATROOPA_BOUNCING+1, OBJ_FUZZY, OBJ_ONOFFBLOCK, OBJ_VINE, 0, 0, 0, 0, OBJ_GOALTAPE+1
+	db 0, OBJ_BOOBUDDIESCENTER, OBJ_BOO, OBJ_BOOCREWBOO, OBJ_PSWITCH_BOXED, OBJ_PODOBOO_VERTICAL+1, OBJ_PODOBOO_DIAG, OBJ_1UP_ALT, OBJ_FIREFLOWER, OBJ_NA+2, OBJ_VINE+1, 0, 0, 0, 0, OBJ_GOALTAPE+1
+	db OBJ_MORTONROY, OBJ_THWOMP, OBJ_NINJI, OBJ_PODOBOO_VERTICAL+1, OBJ_DRYBONES, OBJ_SPIKEBALL+1, OBJ_MUSHROOM, OBJ_FEATHER, OBJ_FIREFLOWER, OBJ_1UP_ALT, OBJ_PODOBOO_DIAG+1, OBJ_DRYBONES+1, OBJ_MUSHROOM_HIDDEN, OBJ_MUSHROOM_IDLE, 0, OBJ_GOALTAPE+1
 
 EntitySet_World3:
-	db objID_MidwayPoint, objID_SpikeTop, objID_Swooper+1, objID_BuzzyBeetle, objID_Shell, objID_Mushroom, objID_BouncingParatroopa+1, objID_PiranhaPlant, objID_FootballChuck+1, objID_FireFlower, objID_1UPAlt, objID_MushroomHidden, objID_BonusBlock3+1, 0, 0, objID_GoalTape
-	db 0, objID_BlurpVertical, objID_BlurpHorizontal, objID_BlurpAlt, objID_BlurpStill, objID_FireFlower, objID_UrchinVertical+1, objID_UrchinHorizontal+1, objID_BonusBlock3+1, 0, 0, 0, 0, 0, 0, objID_GoalTape+1
-	db 0, objID_booBuddiesCenter, objID_Boo, objID_BooCrewBoo, objID_Eerie, objID_NA+1, objID_PSwitch, objID_1UPAlt, objID_FireFlower, objID_NA+2, objID_Vine+1, 0, 0, 0, 0, objID_GoalTape+1
-	db objID_DiagonalPodobooBoss, objID_LemmyWendy, objID_SpikeTop+1, objID_Mushroom, objID_PSwitch, objID_VerticalPodoboo, objID_DiagonalPodoboo, objID_DryBones+1, objID_MushroomStanding, 0, 0, 0, 0, 0, 0, objID_GoalTape+1
+	db OBJ_MIDWAYPOINT, OBJ_SPIKETOP, OBJ_SWOOPER+1, OBJ_BUZZYBEETLE, OBJ_SHELL, OBJ_MUSHROOM, OBJ_PARATROOPA_BOUNCING+1, OBJ_PIRANHAPLANT, OBJ_FOOTBALLCHUCK+1, OBJ_FIREFLOWER, OBJ_1UP_ALT, OBJ_MUSHROOM_HIDDEN, OBJ_BONUSBLOCK3+1, 0, 0, OBJ_GOALTAPE
+	db 0, OBJ_BLURP_VERTICAL, OBJ_BLURP_HORIZONTAL, OBJ_BLURP_ALT, OBJ_BLURPSTILL, OBJ_FIREFLOWER, OBJ_URCHIN_VERTICAL+1, OBJ_URCHIN_HORIZONTAL+1, OBJ_BONUSBLOCK3+1, 0, 0, 0, 0, 0, 0, OBJ_GOALTAPE+1
+	db 0, OBJ_BOOBUDDIESCENTER, OBJ_BOO, OBJ_BOOCREWBOO, OBJ_EERIE, OBJ_NA+1, OBJ_PSWITCH, OBJ_1UP_ALT, OBJ_FIREFLOWER, OBJ_NA+2, OBJ_VINE+1, 0, 0, 0, 0, OBJ_GOALTAPE+1
+	db OBJ_PODOBOO_DIAG_BOSS, OBJ_LEMMYWENDY, OBJ_SPIKETOP+1, OBJ_MUSHROOM, OBJ_PSWITCH, OBJ_PODOBOO_VERTICAL, OBJ_PODOBOO_DIAG, OBJ_DRYBONES+1, OBJ_MUSHROOM_IDLE, 0, 0, 0, 0, 0, 0, OBJ_GOALTAPE+1
 
 EntitySet_World4:
-	db objID_MidwayPoint, objID_SuperKoopaAlt, objID_SuperKoopaStraight, objID_RedBeachKoopa+1, objID_Shell, objID_Feather, objID_Yoshi, objID_BGPriorityBelow, 0, 0, 0, 0, 0, 0, 0, objID_GoalTape+1
-	db objID_MidwayPoint, objID_ShortPlatform+1, objID_Rope+1, objID_RopeLong, objID_ChainsawDown+1, objID_ChainsawUpAlt+1, objID_ChainsawUp+1, objID_Feather, objID_BGPriorityBelow, 0, 0, 0, 0, 0, 0, objID_GoalTape
-	db objID_MidwayPoint, objID_RedBeachKoopa, objID_Koopa, objID_CharginChuckChase+1, objID_Shell, objID_PiranhaPlant, objID_BGPriorityBelow, objID_Yoshi, objID_Feather, objID_1UPAlt, objID_MushroomHidden, objID_BouncingParatroopa+1, objID_Vine, objID_BeachKoopaSliding, objID_BeachKoopaSlidingAlt, objID_GoalTape
-	db objID_MidwayPoint, objID_BonyBeetle+1, objID_FireFlower, objID_SpikeBall, objID_ClimbingKoopaHoriz, objID_ClimbingKoopaVert, 0, objID_DiagonalPodoboo+1, objID_MushroomStanding, 0, 0, 0, 0, 0, 0, objID_Reznor
+	db OBJ_MIDWAYPOINT, OBJ_SUPERKOOPA_ALT, OBJ_SUPERKOOPA_STRAIGHT, OBJ_BEACHKOOPA+1, OBJ_SHELL, OBJ_FEATHER, OBJ_YOSHI, OBJ_BGPRIORITY_BELOW, 0, 0, 0, 0, 0, 0, 0, OBJ_GOALTAPE+1
+	db OBJ_MIDWAYPOINT, OBJ_SHORTPLATFORM+1, OBJ_ROPE+1, OBJ_ROPE_LONG, OBJ_CHAINSAW_DOWN+1, OBJ_CHAINSAW_UP_ALT+1, OBJ_CHAINSAW_UP+1, OBJ_FEATHER, OBJ_BGPRIORITY_BELOW, 0, 0, 0, 0, 0, 0, OBJ_GOALTAPE
+	db OBJ_MIDWAYPOINT, OBJ_BEACHKOOPA, OBJ_KOOPA, OBJ_CHARGINCHUCK_CHASE+1, OBJ_SHELL, OBJ_PIRANHAPLANT, OBJ_BGPRIORITY_BELOW, OBJ_YOSHI, OBJ_FEATHER, OBJ_1UP_ALT, OBJ_MUSHROOM_HIDDEN, OBJ_PARATROOPA_BOUNCING+1, OBJ_VINE, OBJ_BEACHKOOPA_SLIDING, OBJ_BEACHKOOPA_SLIDING_ALT, OBJ_GOALTAPE
+	db OBJ_MIDWAYPOINT, OBJ_BONYBEETLE+1, OBJ_FIREFLOWER, OBJ_SPIKEBALL, OBJ_CLIMBINGKOOPA_HORIZONTAL, OBJ_CLIMBINGKOOPA_VERTICAL, 0, OBJ_PODOBOO_DIAG+1, OBJ_MUSHROOM_IDLE, 0, 0, 0, 0, 0, 0, OBJ_REZNOR
 
 EntitySet_World5:
-	db objID_FireFlower, objID_Star, objID_Koopa, objID_Yoshi, objID_Goomba+1, objID_CharginChuckChase+1, objID_Spring, objID_RedBeachKoopa, objID_CharginChuckChase, objID_BouncingParatroopa, objID_FootballChuck+1, objID_BGPriorityBelow, 0, 0, 0, objID_GoalTape+1
-	db objID_Boo, objID_NA+2, objID_PSwitch, objID_1UPAlt, objID_Feather, objID_FireFlower, objID_Eerie, objID_BooCrewBoo, 0, 0, 0, 0, 0, 0, 0, objID_GoalTape+1
-	db objID_BlurpAlt, objID_BlurpVertical, objID_BlurpHorizontal, objID_UrchinHorizontal+1, objID_Feather, objID_FireFlower, objID_Mushroom, objID_BlurpStill, objID_UrchinVertical+1, objID_CharginChuckChase+1, objID_Urchin+1, 0, 0, 0, 0, objID_GoalTape
-	db objID_MortonRoy, objID_Fuzzy, objID_MushroomStanding, objID_FireFlower, objID_Feather, objID_1UPAlt, objID_VerticalPodoboo+1, objID_DryBones, objID_BonyBeetle+1, objID_LinePlatform, 0, 0, 0, 0, 0, objID_GoalTape+1
+	db OBJ_FIREFLOWER, OBJ_STAR, OBJ_KOOPA, OBJ_YOSHI, OBJ_GOOMBA+1, OBJ_CHARGINCHUCK_CHASE+1, OBJ_SPRING, OBJ_BEACHKOOPA, OBJ_CHARGINCHUCK_CHASE, OBJ_PARATROOPA_BOUNCING, OBJ_FOOTBALLCHUCK+1, OBJ_BGPRIORITY_BELOW, 0, 0, 0, OBJ_GOALTAPE+1
+	db OBJ_BOO, OBJ_NA+2, OBJ_PSWITCH, OBJ_1UP_ALT, OBJ_FEATHER, OBJ_FIREFLOWER, OBJ_EERIE, OBJ_BOOCREWBOO, 0, 0, 0, 0, 0, 0, 0, OBJ_GOALTAPE+1
+	db OBJ_BLURP_ALT, OBJ_BLURP_VERTICAL, OBJ_BLURP_HORIZONTAL, OBJ_URCHIN_HORIZONTAL+1, OBJ_FEATHER, OBJ_FIREFLOWER, OBJ_MUSHROOM, OBJ_BLURPSTILL, OBJ_URCHIN_VERTICAL+1, OBJ_CHARGINCHUCK_CHASE+1, OBJ_URCHIN+1, 0, 0, 0, 0, OBJ_GOALTAPE
+	db OBJ_MORTONROY, OBJ_FUZZY, OBJ_MUSHROOM_IDLE, OBJ_FIREFLOWER, OBJ_FEATHER, OBJ_1UP_ALT, OBJ_PODOBOO_VERTICAL+1, OBJ_DRYBONES, OBJ_BONYBEETLE+1, OBJ_LINEPLATFORM, 0, 0, 0, 0, 0, OBJ_GOALTAPE+1
 
 EntitySet_World6:
-	db objID_BouncingParatroopa+1, objID_PSwitch, objID_CharginChuckChase+1, objID_PiranhaPlant, objID_Shell, objID_Koopa+1, objID_Mushroom, objID_FireFlower, objID_GreenParatroopa+1, objID_SpikeTop, objID_VolcanoLotus, 0, 0, 0, objID_MidwayPoint, objID_GoalTape
-	db objID_Eerie, objID_Boo, objID_Feather, objID_FireFlower, objID_1UPAlt, objID_PSwitch, objID_NA, 0, 0, 0, 0, 0, 0, 0, objID_MidwayPoint, objID_GoalTape+1
-	db objID_VerticalParatroopa, objID_PiranhaPlant, objID_PSwitch, objID_CharginChuckChase+1, objID_Yoshi, objID_MushroomHidden, objID_Mushroom, objID_Spring, objID_NA3, objID_NA3+1, objID_DinoTorch+1, objID_DinoRhino+1, 0, 0, objID_MidwayPoint, objID_GoalTape+1
-	db objID_DiagonalPodobooBoss, objID_LemmyWendy, objID_Ninji, objID_Feather, objID_DryBones, objID_Thwomp+1, objID_SpikeUp+1, objID_SpikeDown+1, objID_SpikeUpAlt+1, 0, 0, 0, 0, 0, objID_MidwayPoint, objID_GoalTape+1
+	db OBJ_PARATROOPA_BOUNCING+1, OBJ_PSWITCH, OBJ_CHARGINCHUCK_CHASE+1, OBJ_PIRANHAPLANT, OBJ_SHELL, OBJ_KOOPA+1, OBJ_MUSHROOM, OBJ_FIREFLOWER, OBJ_PARATROOPA_GREEN+1, OBJ_SPIKETOP, OBJ_VOLCANOLOTUS, 0, 0, 0, OBJ_MIDWAYPOINT, OBJ_GOALTAPE
+	db OBJ_EERIE, OBJ_BOO, OBJ_FEATHER, OBJ_FIREFLOWER, OBJ_1UP_ALT, OBJ_PSWITCH, OBJ_NA, 0, 0, 0, 0, 0, 0, 0, OBJ_MIDWAYPOINT, OBJ_GOALTAPE+1
+	db OBJ_PARATROOPA_VERTICAL, OBJ_PIRANHAPLANT, OBJ_PSWITCH, OBJ_CHARGINCHUCK_CHASE+1, OBJ_YOSHI, OBJ_MUSHROOM_HIDDEN, OBJ_MUSHROOM, OBJ_SPRING, OBJ_NA3, OBJ_NA3+1, OBJ_DINOTORCH+1, OBJ_DINORHINO+1, 0, 0, OBJ_MIDWAYPOINT, OBJ_GOALTAPE+1
+	db OBJ_PODOBOO_DIAG_BOSS, OBJ_LEMMYWENDY, OBJ_NINJI, OBJ_FEATHER, OBJ_DRYBONES, OBJ_THWOMP+1, OBJ_SPIKE_UP+1, OBJ_SPIKE_DOWN+1, OBJ_SPIKE_UP_ALT+1, 0, 0, 0, 0, 0, OBJ_MIDWAYPOINT, OBJ_GOALTAPE+1
 
 EntitySet_World7:
-	db objID_Koopa+1, objID_Feather, objID_VerticalParatroopa+1, objID_ShortPlatform, objID_Fuzzy, objID_Star, 0, 0, 0, 0, 0, 0, 0, 0, objID_MidwayPoint, objID_GoalTape+1
-	db objID_CountdownPlatform_1s, objID_CountdownPlatform_4s, objID_Spring, objID_Feather, objID_FireFlower, objID_MushroomStanding, objID_BouncingParatroopa+1, objID_HorizontalPodoboo, objID_VerticalParatroopa+1, objID_GreenParatroopa+1, objID_Koopa+1, objID_BGPriorityBelow, objID_BonusBlock3+1, 0, objID_MidwayPoint, objID_GoalTape+1
-	db objID_Mushroom, objID_PSwitch, objID_Boo, objID_Eerie, objID_NA, 0, 0, 0, 0, 0, 0, 0, 0, 0, objID_MidwayPoint, objID_GoalTape+1
-	db 0, objID_CastleCanvas, objID_Mechakoopa, objID_Propeller, objID_ClimbingKoopaHoriz, objID_HorizontalPodoboo, objID_MushroomStanding, objID_Ninji+1, objID_VerticalPodoboo, objID_DryBonesThrowing+1, objID_Bowser, 0, 0, 0, 0, objID_GoalTape+1
+	db OBJ_KOOPA+1, OBJ_FEATHER, OBJ_PARATROOPA_VERTICAL+1, OBJ_SHORTPLATFORM, OBJ_FUZZY, OBJ_STAR, 0, 0, 0, 0, 0, 0, 0, 0, OBJ_MIDWAYPOINT, OBJ_GOALTAPE+1
+	db OBJ_COUNTDOWNPLATFORM_1S, OBJ_COUNTDOWNPLATFORM_4S, OBJ_SPRING, OBJ_FEATHER, OBJ_FIREFLOWER, OBJ_MUSHROOM_IDLE, OBJ_PARATROOPA_BOUNCING+1, OBJ_PODOBOO_HORIZONTAL, OBJ_PARATROOPA_VERTICAL+1, OBJ_PARATROOPA_GREEN+1, OBJ_KOOPA+1, OBJ_BGPRIORITY_BELOW, OBJ_BONUSBLOCK3+1, 0, OBJ_MIDWAYPOINT, OBJ_GOALTAPE+1
+	db OBJ_MUSHROOM, OBJ_PSWITCH, OBJ_BOO, OBJ_EERIE, OBJ_NA, 0, 0, 0, 0, 0, 0, 0, 0, 0, OBJ_MIDWAYPOINT, OBJ_GOALTAPE+1
+	db 0, OBJ_CASTLECANVAS, OBJ_MECHAKOOPA, OBJ_PROPELLER, OBJ_CLIMBINGKOOPA_HORIZONTAL, OBJ_PODOBOO_HORIZONTAL, OBJ_MUSHROOM_IDLE, OBJ_NINJI+1, OBJ_PODOBOO_VERTICAL, OBJ_DRYBONES_THROWING+1, OBJ_BOWSER, 0, 0, 0, 0, OBJ_GOALTAPE+1
 
 EntitySet_World8:
-	db objID_LevelExit, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, objID_GoalTape+1
+	db OBJ_LEVELEXIT, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, OBJ_GOALTAPE+1
 BonusLevel_EntitySet:
-	db objID_BGPriorityAbove, objID_BGPriorityAbove+1, objID_PipeExit, objID_BonusBlock1, objID_BonusBlock1+1, objID_BonusBlock2, objID_BonusBlock2+1, objID_BonusBlock3, 0, 0, 0, 0, 0, 0, 0, 0
+	db OBJ_BGPRIORITY_ABOVE, OBJ_BGPRIORITY_ABOVE+1, OBJ_PIPEEXIT, OBJ_BONUSBLOCK1, OBJ_BONUSBLOCK1+1, OBJ_BONUSBLOCK2, OBJ_BONUSBLOCK2+1, OBJ_BONUSBLOCK3, 0, 0, 0, 0, 0, 0, 0, 0
 tbl6_AA3A:
 	db $00
 	db $00
