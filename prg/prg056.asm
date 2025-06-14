@@ -719,7 +719,7 @@ Obj_h94:
 	LDX $A4
 	LDA objVar,X
 	BPL bra9_85E0
-	Obj_DistCalc bra9_85DD
+	objDistCalc bra9_85DD
 
 ; Make goomba face player if bit 7 of variable is set
 bra9_85DD:
@@ -729,7 +729,7 @@ bra9_85E0:
 	LDA #$06
 	STA $25 ; Swallow when eaten by yoshi
 	LDX $A4
-	Obj_DistCalc bra9_864A
+	objDistCalc bra9_864A
 
 bra9_864A:
 	LDA objState,X

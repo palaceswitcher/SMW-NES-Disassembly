@@ -833,7 +833,7 @@ bra7_862A:
 	LDA #$01
 	STA $0633
 	LDA #$1E
-	STA $0635
+	STA pSwitchTimer
 	LDA #$0F
 	STA sndSfx
 	LDA #$00

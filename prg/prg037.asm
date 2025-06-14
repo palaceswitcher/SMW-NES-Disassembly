@@ -627,7 +627,7 @@ DinoTorchFlat:
 
 Obj_hE4:
 	LDX $A4
-	Obj_DistCalc bra_854E
+	objDistCalc bra_854E
 
 bra_854E:
 	LDA objAction,X
@@ -745,7 +745,7 @@ ptr7_861A:
 
 Obj_hE2:
 	LDX $A4
-	Obj_DistCalc bra_869A
+	objDistCalc bra_869A
 
 bra_869A:
 	JSR sub_879B

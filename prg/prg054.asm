@@ -460,9 +460,11 @@ tbl3_A1B5:
 	dw Obj_h64
 	dw Obj_h64
 
-	OBJ_NA = ($-tbl3_A1B5)/2 ; Verify this
+	OBJ_PSWITCHPLATFORM = ($-tbl3_A1B5)/2
 	dw Obj_h66
 	dw Obj_h66
+
+	OBJ_PDOOR = ($-tbl3_A1B5)/2
 	dw Obj_h66
 	dw Obj_h66
 
@@ -911,7 +913,7 @@ tbl3_A435:
 	dw ptr4_A0D8
 	dw Obj_hBA
 
-	OBJ_NA2 = ($-tbl3_A435)/2 + $80 ; Verify this
+	OBJ_PSWITCHPLATFORM2 = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw ptr4_A0D8
 	dw ptr4_A0D8
 
@@ -1018,7 +1020,7 @@ tbl3_A435:
 	dw Obj_hE8 ; 3rd bonus block (EE)
 	dw Obj_hED
 
-	OBJ_NA3 = ($-tbl3_A435)/2 + $80 ; Verify this
+	OBJ_PSWITCHPLATFORM3 = ($-tbl3_A435)/2 + $80 ; Verify this
 	dw Obj_hED ; F0
 	dw Obj_hED
 
@@ -4004,7 +4006,7 @@ sub_54_B4FC:
 			STA objVar,X ; Clear object from memory
 
 bra3_B556:
-	Obj_DistCalc bra3_B5BA_RTS
+	objDistCalc bra3_B5BA_RTS
 
 bra3_B5BA_RTS:
 	RTS

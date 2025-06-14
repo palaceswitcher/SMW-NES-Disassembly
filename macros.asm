@@ -2,7 +2,7 @@
 ; OBJECT MACROS
 
 ; Calculate the distance between the object and the player
-macro Obj_DistCalc start
+macro objDistCalc start
 	LDA objXLo,X
 	SEC
 	SBC playerXLoDup
@@ -12,13 +12,13 @@ macro Obj_DistCalc start
 	STA objXDistHi,X
 	STA $28
 
-	BEQ @CalcVertDist ; Continue if the player is to the left of the object (within one screen)
+	BEQ @calcVertDist ; Continue if the player is to the left of the object (within one screen)
 	CMP #$FF
-	BEQ @CalcVertDist ; Continue if the player is to the right of the object (within one screne)
+	BEQ @calcVertDist ; Continue if the player is to the right of the object (within one screne)
 		JMP Obj_RemoveObject ; Otherwise, remove the off-screen object
 
 ; Calculate vertical distance between the player and object
-@CalcVertDist:
+@calcVertDist:
 	LDA objYLo,X
 	SEC
 	SBC playerYLoDup
@@ -28,9 +28,9 @@ macro Obj_DistCalc start
 	STA objYDistHi,X ; Get object's vertical distance from player
 	LDA playerYHiDup
 	CMP objYHi,X
-	BEQ @CheckIfFrozen ; Branch if the object and player are on the same vertical screen
+	BEQ @checkIfFrozen ; Branch if the object and player are on the same vertical screen
 	LDA objYDistHi,X
-	BPL @OffsetObjDistance ; Branch if the player is on a higher vertical screen than the object
+	BPL @offsetObjDistance ; Branch if the player is on a higher vertical screen than the object
 	; Add 16 to the object's vertical distance if they're below the object
 		LDA objYDistLo,X
 		CLC
@@ -39,10 +39,10 @@ macro Obj_DistCalc start
 		LDA objYDistHi,X
 		ADC #$00
 		STA objYDistHi,X ; Increase the vertical screen distance if needed
-		JMP @CheckIfFrozen
+		JMP @checkIfFrozen
 
 	; Subtract the object's vertical distance by 16 if they're above the object
-	@OffsetObjDistance:
+	@offsetObjDistance:
 		LDA objYDistLo,X
 		SEC
 		SBC #16
@@ -51,7 +51,7 @@ macro Obj_DistCalc start
 		SBC #$00
 		STA objYDistHi,X
 
-@CheckIfFrozen:
+@checkIfFrozen:
 	LDA freezeFlag
 	BEQ start ; Only continue if the game isn't frozen
 	RTS

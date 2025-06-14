@@ -3,7 +3,7 @@
 ;----------------------------------------
 Obj_Koopa:
 	LDX $A4 ; Get index of current object
-	Obj_DistCalc bra8_8066
+	objDistCalc bra8_8066
 
 ; Animate the Koopa
 bra8_8066:
@@ -46,7 +46,7 @@ GenObj_Koopa:
 	LDA #$04
 	STA $25 ; Spit fire when eaten
 	LDX $A4 ; Get index of current object
-	Obj_DistCalc Koopa_GetFunction ; Only continue if the game isn't frozen
+	objDistCalc Koopa_GetFunction ; Only continue if the game isn't frozen
 
 Koopa_GetFunction:
 	LDA objState,X
@@ -73,7 +73,7 @@ Koopa_HitCheck:
 	Obj_VertOffset 16, loc8_8159 ; Position the Beach Koopa 16 pixels lower
 
 loc8_8159:
-	Obj_DistCalc Koopa_SpawnBeachKoopa ; Calculate the distance between the Beach Koopa and player
+	objDistCalc Koopa_SpawnBeachKoopa ; Calculate the distance between the Beach Koopa and player
 
 Koopa_SpawnBeachKoopa:
 	LDY objCount ; Set index for the newly-spawned Beach Koopa
@@ -207,7 +207,7 @@ SprMap_ParatroopaWalk2:
 ;----------------------------------------
 Obj_h14:
 	LDX $A4 ; Get index of current object
-	Obj_DistCalc bra8_82FF
+	objDistCalc bra8_82FF
 
 bra8_82FF:
 	LDA objVar,X
@@ -240,7 +240,7 @@ bra8_8320:
 ;----------------------------------------
 Obj_h58:
 	LDX $A4 ; Get index of current object
-	Obj_DistCalc bra8_838B
+	objDistCalc bra8_838B
 
 bra8_838B:
 	LDA objVar,X
@@ -291,7 +291,7 @@ GenObj_Paratroopa:
 	LDA #$04
 	STA $25
 	LDX $A4 ; Get index of current object
-	Obj_DistCalc Paratroopa_GetFunction
+	objDistCalc Paratroopa_GetFunction
 
 Paratroopa_GetFunction:
 	LDA objState,X
@@ -344,7 +344,7 @@ Obj_h16:
 	LDX $A4 ; Get index for current object
 	LDA objVar,X
 	BPL Rex_Init
-		Obj_DistCalc Rex_TurnAround
+		objDistCalc Rex_TurnAround
 	Rex_TurnAround:
 		JSR Obj_FacePlayer ; Turn in the direction of the player if upper bit of variable is set? Seems to be unused
 		RTS
@@ -353,7 +353,7 @@ Rex_Init:
 	LDA #$06
 	STA $25 ; Swallow when eaten
 	LDX $A4 ; Get index for object
-	Obj_DistCalc Rex_GetFunction
+	objDistCalc Rex_GetFunction
 Rex_GetFunction:
 	LDA objState,X
 	AND #%00011111 ; Mask out upper 3 bits for function number
@@ -407,7 +407,7 @@ bra8_85B5:
 
 ; Calculate horizontal distance between the squished Rex and player
 loc8_85E4:
-	Obj_DistCalc bra8_8648
+	objDistCalc bra8_8648
 
 bra8_8648:
 	INC objSlot,X
@@ -503,7 +503,7 @@ SprMap_RexSquished_Walk2:
 ;----------------------------------------
 Obj_h1A:
 	LDX $A4
-	Obj_DistCalc bra8_8730 ; Calculate distance between Piranha Plant and player
+	objDistCalc bra8_8730 ; Calculate distance between Piranha Plant and player
 
 bra8_8730:
 	LDA objVar,X
@@ -723,7 +723,7 @@ JumpPiranha4:
 ;----------------------------------------
 Obj_h1C:
 	LDX $A4
-	Obj_DistCalc bra8_8911_RTS
+	objDistCalc bra8_8911_RTS
 
 bra8_8911_RTS:
 	; This object has no behavior
@@ -739,7 +739,7 @@ ptr6_8912:
 ;----------------------------------------
 Obj_h1E:
 	LDX $A4 ; Get index for Super Koopa
-	Obj_DistCalc bra8_8979
+	objDistCalc bra8_8979
 
 bra8_8979:
 	LDA objVar,X
@@ -816,7 +816,7 @@ GenObj_SuperKoopa:
 	LDA #$06
 	STA $25 ; Swallow when eaten by Yoshi
 	LDX $A4
-	Obj_DistCalc SuperKoopa_GetFunction
+	objDistCalc SuperKoopa_GetFunction
 
 SuperKoopa_GetFunction:
 	LDA objState,X

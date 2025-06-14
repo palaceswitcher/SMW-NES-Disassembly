@@ -2166,7 +2166,7 @@ bra5_8FC7:
 	STA objYDistHi,X
 	LDA playerYHiDup
 	CMP objYHi,X
-	BEQ bra5_9009
+	BEQ loc5_9009
 	LDA objYDistHi,X
 	BPL bra5_8FF8
 	LDA objYDistLo,X
@@ -2185,7 +2185,7 @@ bra5_8FF8:
 	LDA objYDistHi,X
 	SBC #$00
 	STA objYDistHi,X
-bra5_9009:
+
 loc5_9009:
 	LDA freezeFlag
 	BEQ bra5_900F
@@ -2367,77 +2367,39 @@ bra5_915B:
 	JSR jmp_54_B896
 	JSR sub5_9056
 	RTS
+
+;----------------------------------------
+; P-SWITCH GENERATED OBJECTS CODE ($9164)
+;----------------------------------------
 Obj_h66:
-	LDX $A4
-	LDA objXLo,X
-	SEC
-	SBC playerXLoDup
-	STA objXDistLo,X
-	LDA objXHi,X
-	SBC playerXHiDup
-	STA objXDistHi,X
-	STA $28
-	BEQ bra5_9182
-	CMP #$FF
-	BEQ bra5_9182
-	JMP Obj_RemoveObject
-bra5_9182:
-	LDA objYLo,X
-	SEC
-	SBC playerYLoDup
-	STA objYDistLo,X
-	LDA objYHi,X
-	SBC playerYHiDup
-	STA objYDistHi,X
-	LDA playerYHiDup
-	CMP objYHi,X
-	BEQ bra5_91C4
-	LDA objYDistHi,X
-	BPL bra5_91B3
-	LDA objYDistLo,X
-	CLC
-	ADC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	ADC #$00
-	STA objYDistHi,X
-	JMP loc5_91C4
-bra5_91B3:
-	LDA objYDistLo,X
-	SEC
-	SBC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	SBC #$00
-	STA objYDistHi,X
-bra5_91C4:
-loc5_91C4:
-	LDA freezeFlag
-	BEQ bra5_91CA
-	RTS
+	LDX $A4 ; Get object index
+	objDistCalc bra5_91CA
+
 bra5_91CA:
-	LDA $0635
-	BNE bra5_91D5
-	LDA #$00
-	STA enemyAnimFrame,X
-	RTS
+	LDA pSwitchTimer
+	BNE bra5_91D5 ; Branch if timer is still running
+		LDA #$00
+		STA enemyAnimFrame,X ; Make platform invisible if the P-Switch Timer runs out
+		RTS
+
 bra5_91D5:
-	INC $067C
+	INC $067C ; Unused timer
 	LDA objSlot,X
-	CMP #$68
-	BCS bra5_91F2
-	LDA #$69
-	STA enemyAnimFrame,X
-	LDA #$00
-	STA $28
-	STA $2B
-	LDA #$CA
-	STA $25
-	JSR sub5_93A8
-	RTS
+	CMP #OBJ_PDOOR
+	BCS bra5_91F2 ; Branch if object is a P-Door
+		LDA #OBJ_PSWITCHPLATFORM+3
+		STA enemyAnimFrame,X ; Use turn block platform sprite if this object isn't a P-Door
+		LDA #$00
+		STA $28
+		STA $2B
+		LDA #$CA
+		STA $25
+		JSR sub5_93A8
+		RTS
+
 bra5_91F2:
 	LDA #$6A
-	STA enemyAnimFrame,X
+	STA enemyAnimFrame,X ; Use P-door sprite
 	LDA objXDistHi,X
 	BPL bra5_9209
 	LDA #$00
@@ -2501,6 +2463,7 @@ bra5_9231:
 	STA warpNumber
 bra5_9262_RTS:
 	RTS
+
 tbl5_9263:
 	db $26
 	db $01
@@ -2744,6 +2707,7 @@ bra5_939F:
 	STA playerAction
 bra5_93A7_RTS:
 	RTS
+
 sub5_93A8:
 	LDX $A4
 	LDA objState,X
@@ -2771,7 +2735,7 @@ loc5_93C8:
 	STA playerYLoDup
 	BCS bra5_93D9
 	CMP #$F0
-	BCC bra5_93FF
+	BCC loc5_93FF
 bra5_93D9:
 	CLC
 	ADC #$10
@@ -2782,66 +2746,21 @@ bra5_93E3:
 	CLC
 	ADC playerYLoDup
 	STA playerYLoDup
-	BCS bra5_93FF
+	BCS loc5_93FF
 	SEC
 	SBC #$10
 	STA playerYLoDup
 	DEC playerYHiDup
 	LDY vertScrollLock
 	CPY playerYHiDup
-	BNE bra5_93FF
+	BNE loc5_93FF
 	INY
 	STY playerYHiDup
 	LDA #$00
 	STA playerYLoDup
-bra5_93FF:
 loc5_93FF:
-	LDA objXLo,X
-	SEC
-	SBC playerXLoDup
-	STA objXDistLo,X
-	LDA objXHi,X
-	SBC playerXHiDup
-	STA objXDistHi,X
-	STA $28
-	BEQ bra5_941B
-	CMP #$FF
-	BEQ bra5_941B
-	JMP Obj_RemoveObject
-bra5_941B:
-	LDA objYLo,X
-	SEC
-	SBC playerYLoDup
-	STA objYDistLo,X
-	LDA objYHi,X
-	SBC playerYHiDup
-	STA objYDistHi,X
-	LDA playerYHiDup
-	CMP objYHi,X
-	BEQ bra5_945D
-	LDA objYDistHi,X
-	BPL bra5_944C
-	LDA objYDistLo,X
-	CLC
-	ADC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	ADC #$00
-	STA objYDistHi,X
-	JMP loc5_945D
-bra5_944C:
-	LDA objYDistLo,X
-	SEC
-	SBC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	SBC #$00
-	STA objYDistHi,X
-bra5_945D:
-loc5_945D:
-	LDA freezeFlag
-	BEQ bra5_9463
-	RTS
+	objDistCalc bra5_9463
+
 bra5_9463:
 	LDA #$00
 	STA objState,X
@@ -4182,382 +4101,6 @@ bra5_9CF3_RTS:
 	db $01
 	db $FE
 	db $81
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
 	db $00
 	db $00
 	db $00
