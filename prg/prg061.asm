@@ -4583,6 +4583,7 @@ ofs_B77C:
 	db $11
 	db $FF
 	db $01
+
 	db $09
 	db $01
 	db $50
@@ -4591,6 +4592,7 @@ ofs_B77C:
 	db $11
 	db $FF
 	db $01
+
 	db $09
 	db $01
 	db $50
@@ -4599,6 +4601,7 @@ ofs_B77C:
 	db $11
 	db $FF
 	db $01
+
 	db $07
 	db $00
 	db $60
@@ -4607,6 +4610,7 @@ ofs_B77C:
 	db $07
 	db $FF
 	db $00
+
 ofs_B79C:
 	db $08
 	db $01
@@ -4616,6 +4620,7 @@ ofs_B79C:
 	db $11
 	db $FF
 	db $01
+
 	db $09
 	db $01
 	db $90
@@ -4624,6 +4629,7 @@ ofs_B79C:
 	db $11
 	db $FF
 	db $01
+
 	db $00
 	db $00
 	db $40
@@ -4632,6 +4638,7 @@ ofs_B79C:
 	db $00
 	db $FF
 	db $00
+
 	db $00
 	db $00
 	db $40
@@ -4640,6 +4647,7 @@ ofs_B79C:
 	db $00
 	db $FF
 	db $00
+
 ofs_B7BC:
 	db $08
 	db $00
@@ -4649,6 +4657,7 @@ ofs_B7BC:
 	db $11
 	db $FF
 	db $00
+
 	db $00
 	db $00
 	db $20
@@ -4657,6 +4666,7 @@ ofs_B7BC:
 	db $0C
 	db $FF
 	db $00
+
 	db $00
 	db $00
 	db $40
@@ -4665,6 +4675,7 @@ ofs_B7BC:
 	db $00
 	db $FF
 	db $00
+
 	db $00
 	db $00
 	db $40
@@ -4673,6 +4684,7 @@ ofs_B7BC:
 	db $00
 	db $FF
 	db $00
+
 ofs_B7DC:
 	db $09
 	db $01
@@ -4682,6 +4694,7 @@ ofs_B7DC:
 	db $11
 	db $FF
 	db $01
+
 	db $09
 	db $01
 	db $90
@@ -4690,6 +4703,7 @@ ofs_B7DC:
 	db $11
 	db $00
 	db $01
+
 	db $08
 	db $01
 	db $90
@@ -4698,6 +4712,7 @@ ofs_B7DC:
 	db $11
 	db $FF
 	db $01
+
 	db $00
 	db $00
 	db $40
@@ -4706,6 +4721,7 @@ ofs_B7DC:
 	db $00
 	db $FF
 	db $00
+
 ofs_B7FC:
 	db $00
 	db $00
@@ -4715,6 +4731,7 @@ ofs_B7FC:
 	db $11
 	db $FF
 	db $01
+
 	db $00
 	db $00
 	db $80
@@ -4723,6 +4740,7 @@ ofs_B7FC:
 	db $11
 	db $FF
 	db $01
+
 	db $00
 	db $00
 	db $80
@@ -4731,6 +4749,7 @@ ofs_B7FC:
 	db $11
 	db $FF
 	db $01
+
 	db $00
 	db $00
 	db $40
@@ -4739,6 +4758,7 @@ ofs_B7FC:
 	db $00
 	db $FF
 	db $00
+
 ofs_B81C:
 	db $08
 	db $01
@@ -4748,6 +4768,7 @@ ofs_B81C:
 	db $11
 	db $00
 	db $01
+
 	db $08
 	db $01
 	db $90
@@ -4756,6 +4777,7 @@ ofs_B81C:
 	db $11
 	db $00
 	db $01
+
 	db $08
 	db $01
 	db $90
@@ -4764,6 +4786,7 @@ ofs_B81C:
 	db $11
 	db $00
 	db $01
+
 	db $08
 	db $01
 	db $40
@@ -4772,6 +4795,7 @@ ofs_B81C:
 	db $08
 	db $00
 	db $01
+
 ofs_B83C:
 	db $09
 	db $01
@@ -4781,6 +4805,7 @@ ofs_B83C:
 	db $11
 	db $00
 	db $01
+
 	db $08
 	db $01
 	db $40
@@ -4789,6 +4814,7 @@ ofs_B83C:
 	db $11
 	db $00
 	db $01
+
 	db $00
 	db $00
 	db $80
@@ -4797,6 +4823,7 @@ ofs_B83C:
 	db $11
 	db $FF
 	db $01
+
 	db $00
 	db $00
 	db $40
@@ -4805,6 +4832,7 @@ ofs_B83C:
 	db $00
 	db $FF
 	db $00
+
 sub6_B85C:
 	LDA playerXLoDup
 	SEC

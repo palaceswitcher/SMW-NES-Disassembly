@@ -61,31 +61,30 @@ endm
 macro Obj_VertOffset ofs,stop
 	LDA #ofs
 	BMI bra8_8147 ; Redundant branch (16 isn't negative)
-	CLC
-	ADC objYLo,X
-	STA objYLo,X ; Position the object 16 pixels lower
-	BCS bra8_813B ; Add 16 if the vertical screen is crossed
-	CMP #256-ofs
-	BCC stop ; Branch if it spawns more than 16 pixels below the screen boundary
+		CLC
+		ADC objYLo,X
+		STA objYLo,X ; Position the object 16 pixels lower
+		BCS bra8_813B
+			CMP #256-ofs
+			BCC stop ; Branch if it spawns more than 16 pixels below the screen boundary
+		; Add 16 to the object's vertical position if it crosses a vertical screen boundary and doesn't carry over
+		bra8_813B:
+			CLC
+			ADC #ofs
+			STA objYLo,X
+			INC objYHi,X ; Add 16 to vertical position (assuming carry over)
+			JMP stop
 
-; Add 16 to the object's vertical position if it crosses a vertical screen boundary and doesn't carry over
-bra8_813B:
-	CLC
-	ADC #ofs
-	STA objYLo,X
-	INC objYHi,X ; Add 16 to vertical position (assuming carry over)
-	JMP stop
-
-; Subtracts 16 from the object's vertical position, goes unused
-bra8_8147:
-	CLC
-	ADC objYLo,X
-	STA objYLo,X ; Add negative vertical offset
-	BCS stop
-	SEC
-	SBC #ofs
-	STA objYLo,X ; Subtract 16 if it crosses the vertical screen barrier
-	DEC objYHi,X ; Borrow from high byte if needed
+	; Subtracts 16 from the object's vertical position, goes unused
+	bra8_8147:
+		CLC
+		ADC objYLo,X
+		STA objYLo,X ; Add negative vertical offset
+		BCS stop
+		SEC
+		SBC #ofs
+		STA objYLo,X ; Subtract 16 if it crosses the vertical screen barrier
+		DEC objYHi,X ; Borrow from high byte if needed
 endm
 
 ; Big endian word

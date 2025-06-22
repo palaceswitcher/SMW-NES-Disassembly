@@ -2111,7 +2111,7 @@ bra5_8F62:
 	TAY
 bra5_8F78:
 	STY $25
-	JSR sub5_93A8
+	JSR objPlatformStand
 	RTS
 bra5_8F7E:
 	JSR sub5_82EC
@@ -2379,7 +2379,7 @@ bra5_91CA:
 	LDA pSwitchTimer
 	BNE bra5_91D5 ; Branch if timer is still running
 		LDA #$00
-		STA enemyAnimFrame,X ; Make platform invisible if the P-Switch Timer runs out
+		STA enemyAnimFrame,X ; Make platform invisible if the P-Switch timer runs out
 		RTS
 
 bra5_91D5:
@@ -2392,9 +2392,9 @@ bra5_91D5:
 		LDA #$00
 		STA $28
 		STA $2B
-		LDA #$CA
+		LDA #255-53 ; Platform width (53)
 		STA $25
-		JSR sub5_93A8
+		JSR objPlatformStand ; Check if player can stand on object
 		RTS
 
 bra5_91F2:
@@ -2708,11 +2708,21 @@ bra5_939F:
 bra5_93A7_RTS:
 	RTS
 
-sub5_93A8:
+;----------------------------------------
+; SUBROUTINE ($93A8)
+; Checks if player can stand on a platform object and makes them stand on it.
+; Parameters:
+; > $25: 
+; > $28: Player X Offset
+; > $2B: Player Y Offset
+;----------------------------------------
+objPlatformStand:
 	LDX $A4
 	LDA objState,X
 	BMI bra5_93B2
 	JMP loc5_94B2
+
+; Horizontally offset player
 bra5_93B2:
 	LDA playerXLoDup
 	CLC
@@ -2720,44 +2730,53 @@ bra5_93B2:
 	STA playerXLoDup
 	LDA $28
 	BMI bra5_93C4
-	LDA playerXHiDup
-	ADC #$00
-	JMP loc5_93C8
-bra5_93C4:
-	LDA playerXHiDup
-	SBC #$00
+	; If X offset is positive
+		LDA playerXHiDup
+		ADC #$00
+		JMP loc5_93C8
+	; If X offset is negative 
+	bra5_93C4:
+		LDA playerXHiDup
+		SBC #$00
 loc5_93C8:
 	STA playerXHiDup
+
+; Vertically offset player
 	LDA $2B
-	BMI bra5_93E3
-	CLC
-	ADC playerYLoDup
-	STA playerYLoDup
-	BCS bra5_93D9
-	CMP #$F0
-	BCC loc5_93FF
-bra5_93D9:
-	CLC
-	ADC #$10
-	STA playerYLoDup
-	INC playerYHiDup
-	JMP loc5_93FF
-bra5_93E3:
-	CLC
-	ADC playerYLoDup
-	STA playerYLoDup
-	BCS loc5_93FF
-	SEC
-	SBC #$10
-	STA playerYLoDup
-	DEC playerYHiDup
-	LDY vertScrollLock
-	CPY playerYHiDup
-	BNE loc5_93FF
-	INY
-	STY playerYHiDup
-	LDA #$00
-	STA playerYLoDup
+	BMI bra5_93E3 ; Branch if offset is negative
+
+	; If Y offset is positive
+		CLC
+		ADC playerYLoDup
+		STA playerYLoDup
+		BCS bra5_93D9
+		CMP #256-16
+		BCC loc5_93FF ; Branch if adding 16 wouldn't require carry
+	bra5_93D9:
+		CLC
+		ADC #16
+		STA playerYLoDup
+		INC playerYHiDup ; Add 16 and carry
+		JMP loc5_93FF
+	; If Y offset is negative
+	bra5_93E3:
+		CLC
+		ADC playerYLoDup
+		STA playerYLoDup
+		BCS loc5_93FF ; Branch if borrow not needed
+			SEC
+			SBC #16
+			STA playerYLoDup
+			DEC playerYHiDup ; Subtract 16 and borrow if needed
+			LDY vertScrollLock
+			CPY playerYHiDup
+			BNE loc5_93FF
+			; If player goes above level boundaries
+				INY
+				STY playerYHiDup
+				LDA #$00
+				STA playerYLoDup ; Cap player to top of level
+
 loc5_93FF:
 	objDistCalc bra5_9463
 
@@ -2766,44 +2785,54 @@ bra5_9463:
 	STA objState,X
 	LDA objXDistHi,X
 	BEQ bra5_947A
-	CMP #$FF
-	BNE bra5_9481_RTS
-	LDA objXDistLo,X
-	CMP $25
-	BCC bra5_9481_RTS
-	BCS bra5_9482
-bra5_947A:
-	LDA objXDistLo,X
-	CMP #$05
-	BCC bra5_9482
+		CMP #$FF
+		BNE bra5_9481_RTS
+			LDA objXDistLo,X
+			CMP $25
+			BCC bra5_9481_RTS
+			BCS bra5_9482
+	bra5_947A:
+		LDA objXDistLo,X
+		CMP #$05
+		BCC bra5_9482
+
 bra5_9481_RTS:
 	RTS
+
+; Check if player is moving down is within the bounds of the object
 bra5_9482:
 	LDA playerMoveFlags
-	AND #$04
-	BNE bra5_94A1_RTS
-	LDA objYDistHi,X
-	BNE bra5_9496
-	LDA objYDistLo,X
-	CMP #$08
-	BCC bra5_94A2
-	BCS bra5_94A1_RTS
-bra5_9496:
-	CMP #$FF
-	BNE bra5_94A1_RTS
-	LDA objYDistLo,X
-	CMP #$FA
-	BCS bra5_94A2
-bra5_94A1_RTS:
+	AND #%00000100
+	BNE @stop
+	; If player is moving up
+		LDA objYDistHi,X
+		BNE @continue
+		; If player is within a vertical screen of the object
+			LDA objYDistLo,X
+			CMP #8
+			BCC @standOnObj ; Make player stand on object if it's 8 pixels above the object origin
+			BCS @stop
+	@continue:
+		CMP #$FF
+		BNE @stop
+		; If player is within a vertical screen of the object
+			LDA objYDistLo,X
+			CMP #-6
+			BCS @standOnObj ; Make player stand on object if it's at least 6 pixels below the object origin
+
+@stop:
 	RTS
-bra5_94A2:
+
+; Respond to being stood on
+@standOnObj:
 	LDA #$00
-	STA playerYSpd
+	STA playerYSpd ; Reset the player's vertical speed
 	STA objYDistLo,X
 	STA objYDistHi,X
-	LDA #$80
-	STA objState,X
+	LDA #%10000000
+	STA objState,X ; Set state to being stood on
 	RTS
+
 loc5_94B2:
 	LDA objXDistHi,X
 	BEQ bra5_94C4
@@ -3267,7 +3296,7 @@ bra5_97E3:
 	JSR jmp_54_B896
 	LDA #$DA
 	STA $25
-	JSR sub5_93A8
+	JSR objPlatformStand
 	RTS
 tbl5_97F0:
 	db $40
