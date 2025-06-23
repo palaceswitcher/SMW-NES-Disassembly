@@ -149,7 +149,8 @@ Below is a list of every type of constant currently used.\
 `EVT0_`: Game state 0 event\
 `EVT1_`: Game state 1 event
 
-## Macros
+## Directives and Macros
 
-- Avoid creating macros for something that can reasonably done with a existing directive like `db`.
+- Built-in directives should always have a "." before them, and should be the most widely compatible directives. Such as `.word` and `.byte` rather than `dw` and `db`.
+- Avoid creating macros for something that can reasonably done with a existing directive like `.word`.
 - Use macros for specialized data formats that would otherwise be tedious or impossible to do with existing directives. Macros should also be used for chunks of code that are repeated frequently (preferably over 10 times).
