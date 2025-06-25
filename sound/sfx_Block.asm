@@ -5,13 +5,13 @@ Block_Tri:
 	pitch $39
 	volenv $11
 	notelen 3
-	db G3
-	db NRest
-	db A3
-	db NRest
-	db B3
-	db NRest
-	db $FF
+	.byte G3
+	.byte NRest
+	.byte A3
+	.byte NRest
+	.byte B3
+	.byte NRest
+	.byte $FF
 Block_Footer:
 	sfxtri Block_Tri
-	db $FF
+	.byte $FF

@@ -1,55 +1,55 @@
 GameOver_P1:
-	db $F5
-	db $01
-	db Transpose
-	db $11
-	db DutySet
-	db $5B
-	db PitchSet
-	db $39
-	db VolSet
-	db $11
-	db $D0
-	db D3
-	db $A8
-	db D3
-	db B2
-	db B2
-	db $94
-	db D3
-	db E3
-	db $D0
-	db D4
-	db $FF
+	.byte $F5
+	.byte $01
+	.byte Transpose
+	.byte $11
+	.byte DutySet
+	.byte $5B
+	.byte PitchSet
+	.byte $39
+	.byte VolSet
+	.byte $11
+	.byte $D0
+	.byte D3
+	.byte $A8
+	.byte D3
+	.byte B2
+	.byte B2
+	.byte $94
+	.byte D3
+	.byte E3
+	.byte $D0
+	.byte D4
+	.byte $FF
 GameOver_P2:
-	db Transpose
-	db $11
-	db DutySet
-	db $5B
-	db PitchSet
-	db $39
-	db VolSet
-	db $11
-	db $85
-	db NRest
-	db $D0
-	db E3
-	db $A8
-	db E3
-	db D3
-	db D3
-	db $94
-	db E3
-	db A3
-	db $D0
-	db D4
-	db $FF
+	.byte Transpose
+	.byte $11
+	.byte DutySet
+	.byte $5B
+	.byte PitchSet
+	.byte $39
+	.byte VolSet
+	.byte $11
+	.byte $85
+	.byte NRest
+	.byte $D0
+	.byte E3
+	.byte $A8
+	.byte E3
+	.byte D3
+	.byte D3
+	.byte $94
+	.byte E3
+	.byte A3
+	.byte $D0
+	.byte D4
+	.byte $FF
 GameOver_End:
-	db $FF
+	.byte $FF
 GameOver_Footer:
 	mussq1 GameOver_P1
 	mussq2 GameOver_P2
 	mustri GameOver_End
 	musnoise GameOver_End
 	musdpcm GameOver_End
-	db $FF
+	.byte $FF

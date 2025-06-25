@@ -1538,134 +1538,134 @@ tbl2_A71F:
 	db $95
 ; Extra (sprite animation?) code for objects $00-7F
 tbl2_A83B:
-	dw ptr6_A005 ; 0
-	dw ptr6_9562 ; 1
-	dw ptr6_9590 ; 2
-	dw ptr6_9630 ; 3
-	dw ptr6_9660 ; 4
-	dw ptr6_96B7 ; 5
-	dw ptr6_96D5 ; 6
-	dw ptr6_96D5 ; 7
-	dw ptr7_96F8 ; 8
-	dw ptr7_96F8 ; 9
-	dw ptr7_96F8 ; a
-	dw ptr6_9724 ; b
-	dw ptr6_9742 ; c
-	dw ptr6_9769 ; d
-	dw ptr6_979C ; e
-	dw ptr6_97C3 ; f
-	dw ptr6_820E ; 10
-	dw ptr6_820E ; 11
-	dw ptr6_820E ; 12
-	dw ptr6_820E ; 13
-	dw ptr6_820E ; 14
-	dw ptr6_820E ; 15
-	dw ptr6_8657 ; 16
-	dw ptr6_8657 ; 17
-	dw ptr6_865B ; 18
-	dw ptr6_865B ; 19
-	dw ptr6_884B ; 1a
-	dw ptr6_884B ; 1b
-	dw ptr6_8912 ; 1c
-	dw ptr6_8912 ; 1d
-	dw ptr6_8AA0 ; 1e
-	dw ptr6_8AA0 ; 1f
-	dw ptr6_8AA0 ; 20
-	dw ptr6_8AA0 ; 21
-	dw ptr6_8AA0 ; 22
-	dw ptr6_8AA0 ; 23
-	dw ptr6_8CDE ; 24
-	dw ptr6_8CDE ; 25
-	dw ptr6_8E17 ; 26
-	dw ptr6_8E17 ; 27
-	dw ptr6_8E17 ; 28
-	dw ptr6_8E17 ; 29
-	dw ptr6_8E17 ; 2a
-	dw ptr6_8E17 ; 2b
-	dw ptr6_8E17 ; 2c
-	dw ptr6_8E17 ; 2d
-	dw ptr6_8F90 ; 2e
-	dw ptr6_8F90 ; 2f
-	dw ptr6_9118 ; 30
-	dw ptr6_9118 ; 31
-	dw ptr6_9118 ; 32
-	dw ptr6_9118 ; 33
-	dw ptr6_9118 ; 34
-	dw ptr6_9118 ; 35
-	dw ptr6_820E ; 36
-	dw ptr6_820E ; 37
-	dw ptr6_9660 ; 38
-	dw ptr6_9724 ; 39
-	dw ptr6_9349 ; 3a
-	dw ptr6_9349 ; 3b
-	dw ptr6_95B5 ; 3c
-	dw ptr6_95B5 ; 3d
-	dw ptr6_95B5 ; 3e
-	dw ptr6_95B5 ; 3f
-	dw ptr6_95B5 ; 40
-	dw ptr6_95B5 ; 41
-	dw ptr6_99CD ; 42
-	dw ptr6_99CD ; 43
-	dw ptr6_9A11 ; 44
-	dw ptr6_9A11 ; 45
-	dw ptr6_9A68 ; 46
-	dw ptr6_9A68 ; 47
-	dw ptr5_9DA5 ; 48
-	dw ptr6_96B7 ; 49
-	dw bra5_8008 ; 4a
-	dw bra5_8008 ; 4b
-	dw ptr6_9BFB ; 4c
-	dw ptr6_9BFB ; 4d
-	dw bra5_8008 ; 4e
-	dw bra5_8008 ; 4f
-	dw bra5_8008 ; 50
-	dw bra5_8008 ; 51
-	dw ptr6_9118 ; 52
-	dw ptr6_9118 ; 53
-	dw ptr6_8039 ; 54
-	dw ptr6_8039 ; 55
-	dw ptr6_8039 ; 56
-	dw ptr6_8039 ; 57
-	dw ptr6_820E ; 58
-	dw ptr6_820E ; 59
-	dw bra5_8008 ; 5a
-	dw bra5_8008 ; 5b
-	dw bra5_8008 ; 5c
-	dw bra5_8008 ; 5d
-	dw bra5_8008 ; 5e
-	dw bra5_8008 ; 5f
-	dw bra5_8008 ; 60
-	dw bra5_8008 ; 61
-	dw bra5_8008 ; 62
-	dw bra5_8008 ; 63
-	dw ptr6_9389 ; 64
-	dw ptr6_9389 ; 65
-	dw bra5_8008 ; 66
-	dw bra5_8008 ; 67
-	dw bra5_8008 ; 68
-	dw bra5_8008 ; 69
-	dw ptr6_958D ; 6a
-	dw ptr6_9727 ; 6b
-	dw ptr6_99A9 ; 6c
-	dw ptr6_99A9 ; 6d
-	dw ptr6_820E ; 6e
-	dw ptr6_820E ; 6f
-	dw ptr6_8CA2 ; 70
-	dw ptr6_9364 ; 71
-	dw ptr6_8CDB ; 72
-	dw ptr6_8CDB ; 73
-	dw ptr6_9BDB ; 74
-	dw ptr6_8CDB ; 75
-	dw ptr6_8039 ; 76
-	dw ptr6_8000 ; 77
-	dw ptr6_8000 ; 78
-	dw ptr6_8039 ; 79
-	dw ptr6_820E ; 7a
-	dw ptr6_820E ; 7b
-	dw ptr6_A005 ; 7c
-	dw ptr6_A005 ; 7d
-	dw ptr6_9670 ; 7e
-	dw ptr6_9670 ; 7f
+	.word ptr6_A005 ; 0
+	.word ptr6_9562 ; 1
+	.word ptr6_9590 ; 2
+	.word ptr6_9630 ; 3
+	.word ptr6_9660 ; 4
+	.word ptr6_96B7 ; 5
+	.word ptr6_96D5 ; 6
+	.word ptr6_96D5 ; 7
+	.word ptr7_96F8 ; 8
+	.word ptr7_96F8 ; 9
+	.word ptr7_96F8 ; a
+	.word ptr6_9724 ; b
+	.word ptr6_9742 ; c
+	.word ptr6_9769 ; d
+	.word ptr6_979C ; e
+	.word ptr6_97C3 ; f
+	.word ptr6_820E ; 10
+	.word ptr6_820E ; 11
+	.word ptr6_820E ; 12
+	.word ptr6_820E ; 13
+	.word ptr6_820E ; 14
+	.word ptr6_820E ; 15
+	.word ptr6_8657 ; 16
+	.word ptr6_8657 ; 17
+	.word ptr6_865B ; 18
+	.word ptr6_865B ; 19
+	.word ptr6_884B ; 1a
+	.word ptr6_884B ; 1b
+	.word ptr6_8912 ; 1c
+	.word ptr6_8912 ; 1d
+	.word ptr6_8AA0 ; 1e
+	.word ptr6_8AA0 ; 1f
+	.word ptr6_8AA0 ; 20
+	.word ptr6_8AA0 ; 21
+	.word ptr6_8AA0 ; 22
+	.word ptr6_8AA0 ; 23
+	.word ptr6_8CDE ; 24
+	.word ptr6_8CDE ; 25
+	.word ptr6_8E17 ; 26
+	.word ptr6_8E17 ; 27
+	.word ptr6_8E17 ; 28
+	.word ptr6_8E17 ; 29
+	.word ptr6_8E17 ; 2a
+	.word ptr6_8E17 ; 2b
+	.word ptr6_8E17 ; 2c
+	.word ptr6_8E17 ; 2d
+	.word ptr6_8F90 ; 2e
+	.word ptr6_8F90 ; 2f
+	.word ptr6_9118 ; 30
+	.word ptr6_9118 ; 31
+	.word ptr6_9118 ; 32
+	.word ptr6_9118 ; 33
+	.word ptr6_9118 ; 34
+	.word ptr6_9118 ; 35
+	.word ptr6_820E ; 36
+	.word ptr6_820E ; 37
+	.word ptr6_9660 ; 38
+	.word ptr6_9724 ; 39
+	.word ptr6_9349 ; 3a
+	.word ptr6_9349 ; 3b
+	.word ptr6_95B5 ; 3c
+	.word ptr6_95B5 ; 3d
+	.word ptr6_95B5 ; 3e
+	.word ptr6_95B5 ; 3f
+	.word ptr6_95B5 ; 40
+	.word ptr6_95B5 ; 41
+	.word ptr6_99CD ; 42
+	.word ptr6_99CD ; 43
+	.word ptr6_9A11 ; 44
+	.word ptr6_9A11 ; 45
+	.word ptr6_9A68 ; 46
+	.word ptr6_9A68 ; 47
+	.word ptr5_9DA5 ; 48
+	.word ptr6_96B7 ; 49
+	.word bra5_8008 ; 4a
+	.word bra5_8008 ; 4b
+	.word ptr6_9BFB ; 4c
+	.word ptr6_9BFB ; 4d
+	.word bra5_8008 ; 4e
+	.word bra5_8008 ; 4f
+	.word bra5_8008 ; 50
+	.word bra5_8008 ; 51
+	.word ptr6_9118 ; 52
+	.word ptr6_9118 ; 53
+	.word ptr6_8039 ; 54
+	.word ptr6_8039 ; 55
+	.word ptr6_8039 ; 56
+	.word ptr6_8039 ; 57
+	.word ptr6_820E ; 58
+	.word ptr6_820E ; 59
+	.word bra5_8008 ; 5a
+	.word bra5_8008 ; 5b
+	.word bra5_8008 ; 5c
+	.word bra5_8008 ; 5d
+	.word bra5_8008 ; 5e
+	.word bra5_8008 ; 5f
+	.word bra5_8008 ; 60
+	.word bra5_8008 ; 61
+	.word bra5_8008 ; 62
+	.word bra5_8008 ; 63
+	.word ptr6_9389 ; 64
+	.word ptr6_9389 ; 65
+	.word bra5_8008 ; 66
+	.word bra5_8008 ; 67
+	.word bra5_8008 ; 68
+	.word bra5_8008 ; 69
+	.word ptr6_958D ; 6a
+	.word ptr6_9727 ; 6b
+	.word ptr6_99A9 ; 6c
+	.word ptr6_99A9 ; 6d
+	.word ptr6_820E ; 6e
+	.word ptr6_820E ; 6f
+	.word ptr6_8CA2 ; 70
+	.word ptr6_9364 ; 71
+	.word ptr6_8CDB ; 72
+	.word ptr6_8CDB ; 73
+	.word ptr6_9BDB ; 74
+	.word ptr6_8CDB ; 75
+	.word ptr6_8039 ; 76
+	.word ptr6_8000 ; 77
+	.word ptr6_8000 ; 78
+	.word ptr6_8039 ; 79
+	.word ptr6_820E ; 7a
+	.word ptr6_820E ; 7b
+	.word ptr6_A005 ; 7c
+	.word ptr6_A005 ; 7d
+	.word ptr6_9670 ; 7e
+	.word ptr6_9670 ; 7f
 tbl2_A93B:
 	db $35
 	db $35
@@ -1798,265 +1798,265 @@ tbl2_A93B:
 
 ;----------------------------------------
 ; Unused, duplicate pointers for objects 80-FF. Can be found in bank 54
-	dw Obj_h80
-	dw Obj_h80
-	dw Obj_h82
-	dw Obj_h82
-	dw Obj_h84
-	dw Obj_h84
-	dw Obj_h86
-	dw Obj_h86
-	dw Obj_h88
-	dw Obj_h88
-	dw Obj_h8A
-	dw Obj_h8A
-	dw Obj_h8C
-	dw Obj_h8C
-	dw Obj_h8E
-	dw Obj_h8E
-	dw Obj_h90
-	dw Obj_h90
-	dw Obj_h92
-	dw Obj_h92
-	dw Obj_h94
-	dw Obj_h94
-	dw Obj_h96
-	dw Obj_h96
-	dw Obj_h98
-	dw Obj_h98
-	dw Obj_h9A
-	dw Obj_h9A
-	dw Obj_h9C
-	dw Obj_h9C
-	dw Obj_h9E
-	dw Obj_h9E
-	dw Obj_hA0
-	dw Obj_hA0
-	dw Obj_hA2
-	dw Obj_hA2
-	dw Obj_hA4
-	dw Obj_hA4
-	dw Obj_hA6
-	dw Obj_hA6
-	dw Obj_hA8
-	dw Obj_hA8
-	dw Obj_hA8
-	dw Obj_hA8
-	dw Obj_hAA
-	dw Obj_hAA
-	dw Obj_hAC
-	dw Obj_hAC
-	dw Obj_hAE
-	dw Obj_hAE
-	dw Obj_hB0
-	dw Obj_hB0
-	dw Obj_hB2
-	dw Obj_hB2
-	dw Obj_hB4
-	dw Obj_hB4
-	dw Obj_hB6
-	dw ptr6_A005 ; (different)
-	dw Obj_hB8
-	dw ptr6_A005 ; (different)
-	dw Obj_hBA
-	dw ptr6_A005 ; (different)
-	dw ptr6_A005 ; (different)
-	dw Obj_hBD
-	dw Obj_hBE
-	dw Obj_hBE
-	dw Obj_hC0
-	dw Obj_hC0
-	dw Obj_hC2
-	dw Obj_hC2
-	dw Obj_hBE
-	dw Obj_hBE
-	dw Obj_hC0
-	dw Obj_hC0
-	dw Obj_hC2
-	dw Obj_hC2
-	dw Obj_hBE
-	dw Obj_hBE
-	dw Obj_hC0
-	dw Obj_hC0
-	dw Obj_hCE
-	dw Obj_hCE
-	dw Obj_hD0
-	dw Obj_hD0
-	dw Obj_hD2
-	dw Obj_hD2
-	dw Obj_hD4
-	dw Obj_hD5
-	dw Obj_hD6
-	dw Obj_hD6
-	dw Obj_hD8
-	dw Obj_hD8
-	dw Obj_hDA
-	dw Obj_hDA
-	dw Obj_hDC
-	dw Obj_hDC
-	dw Obj_hDE
-	dw Obj_hDF
-	dw Obj_hE0
-	dw Obj_hE0
-	dw Obj_hE2
-	dw Obj_hE2
-	dw Obj_hE4
-	dw Obj_hE4
-	dw Obj_hE6
-	dw Obj_hE7
-	dw Obj_hE8
-	dw Obj_hE8
-	dw Obj_hE8 ; 1st bonus block
-	dw Obj_hE8
-	dw Obj_hE8 ; 2nd bonus block
-	dw Obj_hED
-	dw Obj_hED ; 3rd bonus block
-	dw Obj_hED
-	dw Obj_hF0
-	dw Obj_hF0
-	dw Obj_hED
-	dw Obj_hED
-	dw Obj_hF4
-	dw Obj_hF4
-	dw Obj_hF4
-	dw Obj_hF4
-	dw Obj_h58
-	dw Obj_h58
-	dw Obj_hFA
-	dw Obj_hFA
-	dw Obj_hFA
-	dw Obj_hFA
+	.word obj0x80
+	.word obj0x80
+	.word obj0x82
+	.word obj0x82
+	.word obj0x84
+	.word obj0x84
+	.word obj0x86
+	.word obj0x86
+	.word obj0x88
+	.word obj0x88
+	.word obj0x8A
+	.word obj0x8A
+	.word obj0x8C
+	.word obj0x8C
+	.word obj0x8E
+	.word obj0x8E
+	.word obj0x90
+	.word obj0x90
+	.word obj0x92
+	.word obj0x92
+	.word obj0x94
+	.word obj0x94
+	.word obj0x96
+	.word obj0x96
+	.word obj0x98
+	.word obj0x98
+	.word obj0x9A
+	.word obj0x9A
+	.word obj0x9C
+	.word obj0x9C
+	.word obj0x9E
+	.word obj0x9E
+	.word obj0xA0
+	.word obj0xA0
+	.word obj0xA2
+	.word obj0xA2
+	.word obj0xA4
+	.word obj0xA4
+	.word obj0xA6
+	.word obj0xA6
+	.word obj0xA8
+	.word obj0xA8
+	.word obj0xA8
+	.word obj0xA8
+	.word obj0xAA
+	.word obj0xAA
+	.word obj0xAC
+	.word obj0xAC
+	.word obj0xAE
+	.word obj0xAE
+	.word obj0xB0
+	.word obj0xB0
+	.word obj0xB2
+	.word obj0xB2
+	.word obj0xB4
+	.word obj0xB4
+	.word obj0xB6
+	.word ptr6_A005 ; (different)
+	.word obj0xB8
+	.word ptr6_A005 ; (different)
+	.word obj0xBA
+	.word ptr6_A005 ; (different)
+	.word ptr6_A005 ; (different)
+	.word obj0xBD
+	.word obj0xBE
+	.word obj0xBE
+	.word obj0xC0
+	.word obj0xC0
+	.word obj0xC2
+	.word obj0xC2
+	.word obj0xBE
+	.word obj0xBE
+	.word obj0xC0
+	.word obj0xC0
+	.word obj0xC2
+	.word obj0xC2
+	.word obj0xBE
+	.word obj0xBE
+	.word obj0xC0
+	.word obj0xC0
+	.word obj0xCE
+	.word obj0xCE
+	.word obj0xD0
+	.word obj0xD0
+	.word obj0xD2
+	.word obj0xD2
+	.word obj0xD4
+	.word obj0xD5
+	.word obj0xD6
+	.word obj0xD6
+	.word obj0xD8
+	.word obj0xD8
+	.word obj0xDA
+	.word obj0xDA
+	.word obj0xDC
+	.word obj0xDC
+	.word obj0xDE
+	.word obj0xDF
+	.word obj0xE0
+	.word obj0xE0
+	.word obj0xE2
+	.word obj0xE2
+	.word obj0xE4
+	.word obj0xE4
+	.word obj0xE6
+	.word obj0xE7
+	.word obj0xE8
+	.word obj0xE8
+	.word obj0xE8 ; 1st bonus block
+	.word obj0xE8
+	.word obj0xE8 ; 2nd bonus block
+	.word obj0xED
+	.word obj0xED ; 3rd bonus block
+	.word obj0xED
+	.word obj0xF0
+	.word obj0xF0
+	.word obj0xED
+	.word obj0xED
+	.word obj0xF4
+	.word obj0xF4
+	.word obj0xF4
+	.word obj0xF4
+	.word obj0x58
+	.word obj0x58
+	.word obj0xFA
+	.word obj0xFA
+	.word obj0xFA
+	.word obj0xFA
 
 ; Extra (perhaps sprite handling?) code for objects 80-FF
 tbl2_AABB:
-	dw ptr6_8BF1 ; 80
-	dw ptr6_8BF1 ; 81
-	dw ptr6_9093 ; 82
-	dw ptr6_9093 ; 83
-	dw ptr6_83B3 ; 84
-	dw ptr6_83B3 ; 85
-	dw ptr6_87FE ; 86
-	dw ptr6_87FE ; 87
-	dw ptr6_817B ; 88
-	dw ptr6_817B ; 89
-	dw ptr6_9519 ; 8a
-	dw ptr6_9519 ; 8b
-	dw ptr7_9632 ; 8c
-	dw ptr7_9632 ; 8d
-	dw ptr6_8544 ; 8e
-	dw ptr6_8544 ; 8f
-	dw ptr7_8544 ; 90
-	dw ptr7_8544 ; 91
-	dw ptr6_87FE ; 92
-	dw ptr6_87FE ; 93
-	dw ptr6_88E0 ; 94
-	dw ptr6_88E0 ; 95
-	dw ptr6_8897 ; 96
-	dw ptr6_8897 ; 97
-	dw ptr6_8517 ; 98
-	dw ptr6_8517 ; 99
-	dw ptr6_8A5E ; 9a
-	dw ptr6_8A5E ; 9b
-	dw ptr6_8D95 ; 9c
-	dw ptr6_8D95 ; 9d
-	dw ptr6_8F15 ; 9e
-	dw ptr6_8F15 ; 9f
-	dw ptr6_82C7 ; a0
-	dw ptr6_82C7 ; a1
-	dw ptr6_9980 ; a2
-	dw ptr6_9980 ; a3
-	dw ptr6_9980 ; a4
-	dw ptr6_9980 ; a5
-	dw ptr6_9B79 ; a6
-	dw ptr6_9B79 ; a7
-	dw ptr7_9A87 ; a8
-	dw ptr7_9A87 ; a9
-	dw ptr7_9A87 ; aa
-	dw ptr7_9A87 ; ab
-	dw ptr6_9279 ; ac
-	dw ptr6_9279 ; ad
-	dw ptr6_93B7 ; ae
-	dw ptr6_93B7 ; af
-	dw ptr6_8B71 ; b0
-	dw ptr6_8B71 ; b1
-	dw ptr6_8E28 ; b2
-	dw ptr6_8E28 ; b3
-	dw ptr6_90C4 ; b4
-	dw ptr6_90C4 ; b5
-	dw ptr6_990E ; b6
-	dw ptr6_990E ; b7
-	dw ptr6_8ECE ; b8
-	dw ptr6_A005 ; b9
-	dw ptr6_8F2E ; ba
-	dw ptr6_A005 ; bb
-	dw ptr6_8F2E ; bc
-	dw ptr6_A005 ; bd
-	dw ptr6_A005 ; be
-	dw ptr6_8349 ; bf
-	dw ptr9_843B ; c0
-	dw ptr9_843B ; c1
-	dw ptr6_8640 ; c2
-	dw ptr6_8640 ; c3
-	dw ptr6_87C8 ; c4
-	dw ptr6_87C8 ; c5
-	dw ptr9_843B ; c6
-	dw ptr9_843B ; c7
-	dw ptr6_8640 ; c8
-	dw ptr6_8640 ; c9
-	dw ptr6_87C8 ; ca
-	dw ptr6_87C8 ; cb
-	dw ptr9_843B ; cc
-	dw ptr9_843B ; cd
-	dw ptr6_8640 ; ce
-	dw ptr6_8640 ; cf
-	dw ptr6_8A81 ; d0
-	dw ptr6_8A81 ; d1
-	dw ptr6_8D59 ; d2
-	dw ptr6_8D59 ; d3
-	dw ptr6_901A ; d4
-	dw ptr6_901A ; d5
-	dw ptr6_A005 ; d6
-	dw ptr6_A005 ; d7
-	dw ptr6_9286 ; d8
-	dw ptr6_9286 ; d9
-	dw ptr6_98E1 ; da
-	dw ptr6_98E1 ; db
-	dw ptr6_98B7 ; dc
-	dw ptr6_98B7 ; dd
-	dw bra4_98BE ; de
-	dw bra4_98BE ; df
-	dw ptr6_88D1 ; e0
-	dw ptr6_88F9 ; e1
-	dw ptr7_8000 ; e2
-	dw ptr7_8000 ; e3
-	dw ptr6_8475 ; e4
-	dw ptr6_8475 ; e5
-	dw ptr6_8475 ; e6
-	dw ptr6_8475 ; e7
-	dw ptr6_9BED ; e8
-	dw ptr6_9951 ; e9
-	dw ptr6_9951 ; ea
-	dw ptr6_9951 ; eb
-	dw ptr6_9951 ; ec
-	dw ptr6_9951 ; ed
-	dw ptr6_9951 ; ee
-	dw ptr6_A005 ; ef
-	dw ptr6_A005 ; f0
-	dw ptr6_A005 ; f1
-	dw ptr6_A005 ; f2
-	dw ptr6_A005 ; f3
-	dw ptr6_A005 ; f4
-	dw ptr6_A005 ; f5
-	dw ptr7_8000 ; f6
-	dw ptr7_8000 ; f7
-	dw ptr7_8000 ; f8
-	dw ptr7_8000 ; f9
-	dw ptr6_820E ; fa
-	dw ptr6_820E ; fb
-	dw ptr6_96CB ; fc
-	dw ptr6_96CB ; fd
-	dw ptr6_96CB ; fe
-	dw ptr6_96CB ; ff
+	.word ptr6_8BF1 ; 80
+	.word ptr6_8BF1 ; 81
+	.word ptr6_9093 ; 82
+	.word ptr6_9093 ; 83
+	.word ptr6_83B3 ; 84
+	.word ptr6_83B3 ; 85
+	.word ptr6_87FE ; 86
+	.word ptr6_87FE ; 87
+	.word ptr6_817B ; 88
+	.word ptr6_817B ; 89
+	.word ptr6_9519 ; 8a
+	.word ptr6_9519 ; 8b
+	.word ptr7_9632 ; 8c
+	.word ptr7_9632 ; 8d
+	.word ptr6_8544 ; 8e
+	.word ptr6_8544 ; 8f
+	.word ptr7_8544 ; 90
+	.word ptr7_8544 ; 91
+	.word ptr6_87FE ; 92
+	.word ptr6_87FE ; 93
+	.word ptr6_88E0 ; 94
+	.word ptr6_88E0 ; 95
+	.word ptr6_8897 ; 96
+	.word ptr6_8897 ; 97
+	.word ptr6_8517 ; 98
+	.word ptr6_8517 ; 99
+	.word ptr6_8A5E ; 9a
+	.word ptr6_8A5E ; 9b
+	.word ptr6_8D95 ; 9c
+	.word ptr6_8D95 ; 9d
+	.word ptr6_8F15 ; 9e
+	.word ptr6_8F15 ; 9f
+	.word ptr6_82C7 ; a0
+	.word ptr6_82C7 ; a1
+	.word ptr6_9980 ; a2
+	.word ptr6_9980 ; a3
+	.word ptr6_9980 ; a4
+	.word ptr6_9980 ; a5
+	.word ptr6_9B79 ; a6
+	.word ptr6_9B79 ; a7
+	.word ptr7_9A87 ; a8
+	.word ptr7_9A87 ; a9
+	.word ptr7_9A87 ; aa
+	.word ptr7_9A87 ; ab
+	.word ptr6_9279 ; ac
+	.word ptr6_9279 ; ad
+	.word ptr6_93B7 ; ae
+	.word ptr6_93B7 ; af
+	.word ptr6_8B71 ; b0
+	.word ptr6_8B71 ; b1
+	.word ptr6_8E28 ; b2
+	.word ptr6_8E28 ; b3
+	.word ptr6_90C4 ; b4
+	.word ptr6_90C4 ; b5
+	.word ptr6_990E ; b6
+	.word ptr6_990E ; b7
+	.word ptr6_8ECE ; b8
+	.word ptr6_A005 ; b9
+	.word ptr6_8F2E ; ba
+	.word ptr6_A005 ; bb
+	.word ptr6_8F2E ; bc
+	.word ptr6_A005 ; bd
+	.word ptr6_A005 ; be
+	.word ptr6_8349 ; bf
+	.word ptr9_843B ; c0
+	.word ptr9_843B ; c1
+	.word ptr6_8640 ; c2
+	.word ptr6_8640 ; c3
+	.word ptr6_87C8 ; c4
+	.word ptr6_87C8 ; c5
+	.word ptr9_843B ; c6
+	.word ptr9_843B ; c7
+	.word ptr6_8640 ; c8
+	.word ptr6_8640 ; c9
+	.word ptr6_87C8 ; ca
+	.word ptr6_87C8 ; cb
+	.word ptr9_843B ; cc
+	.word ptr9_843B ; cd
+	.word ptr6_8640 ; ce
+	.word ptr6_8640 ; cf
+	.word ptr6_8A81 ; d0
+	.word ptr6_8A81 ; d1
+	.word ptr6_8D59 ; d2
+	.word ptr6_8D59 ; d3
+	.word ptr6_901A ; d4
+	.word ptr6_901A ; d5
+	.word ptr6_A005 ; d6
+	.word ptr6_A005 ; d7
+	.word ptr6_9286 ; d8
+	.word ptr6_9286 ; d9
+	.word ptr6_98E1 ; da
+	.word ptr6_98E1 ; db
+	.word ptr6_98B7 ; dc
+	.word ptr6_98B7 ; dd
+	.word bra4_98BE ; de
+	.word bra4_98BE ; df
+	.word ptr6_88D1 ; e0
+	.word ptr6_88F9 ; e1
+	.word ptr7_8000 ; e2
+	.word ptr7_8000 ; e3
+	.word ptr6_8475 ; e4
+	.word ptr6_8475 ; e5
+	.word ptr6_8475 ; e6
+	.word ptr6_8475 ; e7
+	.word ptr6_9BED ; e8
+	.word ptr6_9951 ; e9
+	.word ptr6_9951 ; ea
+	.word ptr6_9951 ; eb
+	.word ptr6_9951 ; ec
+	.word ptr6_9951 ; ed
+	.word ptr6_9951 ; ee
+	.word ptr6_A005 ; ef
+	.word ptr6_A005 ; f0
+	.word ptr6_A005 ; f1
+	.word ptr6_A005 ; f2
+	.word ptr6_A005 ; f3
+	.word ptr6_A005 ; f4
+	.word ptr6_A005 ; f5
+	.word ptr7_8000 ; f6
+	.word ptr7_8000 ; f7
+	.word ptr7_8000 ; f8
+	.word ptr7_8000 ; f9
+	.word ptr6_820E ; fa
+	.word ptr6_820E ; fb
+	.word ptr6_96CB ; fc
+	.word ptr6_96CB ; fd
+	.word ptr6_96CB ; fe
+	.word ptr6_96CB ; ff
 tbl2_ABBB:
 	db $38
 	db $38

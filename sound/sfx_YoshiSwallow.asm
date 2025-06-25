@@ -5,9 +5,9 @@ YoshiSwallow_P2:
 	pitch $5E
 	volenv $61
 	notelen 12
-	db C#3-13
-	db C#2-13
-	db $FF
+	.byte C#3-13
+	.byte C#2-13
+	.byte $FF
 YoshiSwallow_Footer:
 	sfxsq2 YoshiSwallow_P2
-	db $FF
+	.byte $FF

@@ -1,5 +1,5 @@
 ; disassembled by BZK 6502 Disassembler
-	incbin levels/lvl_Map.bin ; include tilemap data for the overworld map
+	.incbin levels/lvl_Map.bin ; .include tilemap data for the overworld map
 	
 	db $2D
 	db $00
@@ -228,7 +228,7 @@ bra13_9A22:
 	BCC bra13_9A22
 	RTS
 tbl13_9A2E:
-	dw ofs_9A30
+	.word ofs_9A30
 ofs_9A30:
 	db $3F
 	db $10

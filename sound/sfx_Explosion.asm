@@ -5,8 +5,8 @@ Explosion_Noise:
 	pitch $39
 	volenv $46
 	notelen 24
-	db A#3-1
-	db $FF
+	.byte A#3-1
+	.byte $FF
 Explosion_Footer:
 	sfxnoise Explosion_Noise
-	db $FF
+	.byte $FF

@@ -1,174 +1,174 @@
 Victory_P1:
-	db $F5
-	db $01
-	db Transpose
-	db $05
-	db DutySet
-	db $12
-	db PitchSet
-	db NRest
-	db VolSet
-	db $11
+	.byte $F5
+	.byte $01
+	.byte Transpose
+	.byte $05
+	.byte DutySet
+	.byte $12
+	.byte PitchSet
+	.byte NRest
+	.byte VolSet
+	.byte $11
 	notelen 24
-	db C4
-	db C4
+	.byte C4
+	.byte C4
 	notelen 12
-	db A3
+	.byte A3
 	notelen 24
-	db C4
+	.byte C4
 	notelen 12
-	db A3
-	db C4
-	db A3
-	db $2B
+	.byte A3
+	.byte C4
+	.byte A3
+	.byte $2B
 	notelen 48
-	db C4
+	.byte C4
 	notelen 12
-	db A3
-	db G4
-	db $39
-	db G4
-	db $39
-	db $92
-	db G4
-	db $86
-	db $2B
-	db F4
-	db E4
+	.byte A3
+	.byte G4
+	.byte $39
+	.byte G4
+	.byte $39
+	.byte $92
+	.byte G4
+	.byte $86
+	.byte $2B
+	.byte F4
+	.byte E4
 	notelen 12
-	db D4
+	.byte D4
 	notelen 48
-	db C4
+	.byte C4
 	notelen 12
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db $FF
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte $FF
 Victory_P2:
-	db Transpose
-	db $05
-	db DutySet
-	db $12
-	db PitchSet
-	db NRest
-	db VolSet
-	db $11
+	.byte Transpose
+	.byte $05
+	.byte DutySet
+	.byte $12
+	.byte PitchSet
+	.byte NRest
+	.byte VolSet
+	.byte $11
 	notelen 24
-	db C3
-	db C3
-	db B2
-	db B2
-	db $22
-	db $22
-	db A2
-	db A2
+	.byte C3
+	.byte C3
+	.byte B2
+	.byte B2
+	.byte $22
+	.byte $22
+	.byte A2
+	.byte A2
 	notelen 12
-	db C3
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db G2
-	db A2
-	db B2
+	.byte C3
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte G2
+	.byte A2
+	.byte B2
 	notelen 24
-	db C3
-	db G2
+	.byte C3
+	.byte G2
 	notelen 48
-	db C2
-	db $FF
+	.byte C2
+	.byte $FF
 Victory_Tri:
-	db Transpose
-	db $05
-	db DutySet
-	db $12
-	db PitchSet
-	db NRest
-	db VolSet
-	db $11
+	.byte Transpose
+	.byte $05
+	.byte DutySet
+	.byte $12
+	.byte PitchSet
+	.byte NRest
+	.byte VolSet
+	.byte $11
 	notelen 24
-	db C3
-	db C3
-	db B2
-	db B2
-	db A2
-	db A2
-	db G2
-	db G2
+	.byte C3
+	.byte C3
+	.byte B2
+	.byte B2
+	.byte A2
+	.byte A2
+	.byte G2
+	.byte G2
 	notelen 12
-	db C3
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db G2
-	db A2
-	db B2
+	.byte C3
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte G2
+	.byte A2
+	.byte B2
 	notelen 24
-	db C3
-	db G2
+	.byte C3
+	.byte G2
 	notelen 48
-	db C3
-	db $FF
+	.byte C3
+	.byte $FF
 Victory_Noise:
-	db Transpose
-	db $00
-	db DutySet
-	db $00
-	db PitchSet
-	db $00
-	db VolSet
-	db $53
+	.byte Transpose
+	.byte $00
+	.byte DutySet
+	.byte $00
+	.byte PitchSet
+	.byte $00
+	.byte VolSet
+	.byte $53
 	notelen 12
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db $86
-	db D3
-	db D3
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte $86
+	.byte D3
+	.byte D3
 	notelen 12
-	db F3
-	db $86
-	db C3
-	db C3
-	db C3
-	db C3
-	db C3
-	db C3
-	db C3
-	db C3
-	db D3
-	db D3
-	db D3
-	db D3
-	db D3
-	db D3
-	db D3
-	db D3
-	db F3
-	db F3
+	.byte F3
+	.byte $86
+	.byte C3
+	.byte C3
+	.byte C3
+	.byte C3
+	.byte C3
+	.byte C3
+	.byte C3
+	.byte C3
+	.byte D3
+	.byte D3
+	.byte D3
+	.byte D3
+	.byte D3
+	.byte D3
+	.byte D3
+	.byte D3
+	.byte F3
+	.byte F3
 	notelen 12
-	db F3
-	db NRest
-	db $FF
+	.byte F3
+	.byte NRest
+	.byte $FF
 Victory_End:
-	db $FF
+	.byte $FF
 Victory_Footer:
 	mussq1 Victory_P1
 	mussq2 Victory_P2
 	mustri Victory_Tri
 	musnoise Victory_Noise
 	musdpcm Victory_End
-	db $FF
+	.byte $FF

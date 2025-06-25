@@ -5,8 +5,8 @@ Jump_P1:
 	pitch $63
 	volenv $11
 	notelen 8
-	db A3
-	db $FF
+	.byte A3
+	.byte $FF
 Jump_Footer:
 	sfxsq1 Jump_P1
-	db $FF
+	.byte $FF

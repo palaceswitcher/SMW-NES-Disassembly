@@ -5,728 +5,728 @@ Title_P1:
 	pitch $00
 	volenv $11
 	notelen 12
-	db G3, G3, G3, G2, G3, G3, G3, G2, NLen+48, G#3, NLen+36, G3, NLen+12, G2
+	.byte G3, G3, G3, G2, G3, G3, G3, G2, NLen+48, G#3, NLen+36, G3, NLen+12, G2
 Title_P1Loop:
 	transpose $13
 	duty $38
 	pitch $39
 	volenv E5
 	notelen 12
-	db E3
-	db E3
-	db E3
-	db G2
-	db E3
-	db E3
-	db E3
-	db G2
-	db E3
-	db E3
-	db E3
+	.byte E3
+	.byte E3
+	.byte E3
+	.byte G2
+	.byte E3
+	.byte E3
+	.byte E3
+	.byte G2
+	.byte E3
+	.byte E3
+	.byte E3
 	notelen 6
-	db E3
-	db F3
+	.byte E3
+	.byte F3
 	notelen 24
-	db E3
+	.byte E3
 	notelen 12
-	db D3
-	db G2
-	db D3
-	db D3
-	db D3
-	db G2
-	db D3
-	db D3
-	db D3
-	db G2
-	db D3
-	db D3
-	db D3
+	.byte D3
+	.byte G2
+	.byte D3
+	.byte D3
+	.byte D3
+	.byte G2
+	.byte D3
+	.byte D3
+	.byte D3
+	.byte G2
+	.byte D3
+	.byte D3
+	.byte D3
 	notelen 6
-	db D3
-	db E3
+	.byte D3
+	.byte E3
 	notelen 24
-	db D3
+	.byte D3
 	notelen 12
-	db C3
-	db G2
-	db E3
-	db E3
-	db E3
-	db G2
-	db E3
-	db E3
-	db E3
-	db G2
-	db E3
-	db E3
-	db E3
+	.byte C3
+	.byte G2
+	.byte E3
+	.byte E3
+	.byte E3
+	.byte G2
+	.byte E3
+	.byte E3
+	.byte E3
+	.byte G2
+	.byte E3
+	.byte E3
+	.byte E3
 	notelen 6
-	db D3
-	db E3
+	.byte D3
+	.byte E3
 	notelen 24
-	db F3
+	.byte F3
 	notelen 12
-	db A3
-	db G2
-	db G3
-	db G3
-	db G3
-	db G2
-	db F3
-	db F3
-	db F3
-	db B2
+	.byte A3
+	.byte G2
+	.byte G3
+	.byte G3
+	.byte G3
+	.byte G2
+	.byte F3
+	.byte F3
+	.byte F3
+	.byte B2
 	notelen 48
-	db C3
+	.byte C3
 	notelen 12
-	db NRest
-	db NRest
-	db Transpose
-	db $07
-	db DutySet
-	db $12
-	db PitchSet
-	db NRest
-	db VolSet
-	db $11
-	db G3
-	db F3
+	.byte NRest
+	.byte NRest
+	.byte Transpose
+	.byte $07
+	.byte DutySet
+	.byte $12
+	.byte PitchSet
+	.byte NRest
+	.byte VolSet
+	.byte $11
+	.byte G3
+	.byte F3
 	notelen 24
-	db E3
-	db G3
+	.byte E3
+	.byte G3
 	notelen 36
-	db C4
+	.byte C4
 	notelen 12
-	db B3
+	.byte B3
 	notelen 24
-	db G#3
-	db A3
+	.byte G#3
+	.byte A3
 	notelen 36
-	db D4
+	.byte D4
 	notelen 12
-	db C4
-	db DutySet
-	db $07
-	db PitchSet
-	db $05
-	db VolSet
-	db $02
+	.byte C4
+	.byte DutySet
+	.byte $07
+	.byte PitchSet
+	.byte $05
+	.byte VolSet
+	.byte $02
 	notelen 24
-	db B3
-	db C4
-	db D4
-	db F4
+	.byte B3
+	.byte C4
+	.byte D4
+	.byte F4
 	notelen 48
-	db E4
+	.byte E4
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	duty $12
 	pitch $00
 	volenv $11
-	db G3
-	db F3
+	.byte G3
+	.byte F3
 	notelen 24
-	db E3
-	db G3
+	.byte E3
+	.byte G3
 	notelen 36
-	db C4
+	.byte C4
 	notelen 12
-	db B3
+	.byte B3
 	notelen 24
-	db G#3
-	db A3
+	.byte G#3
+	.byte A3
 	notelen 36
-	db D4
+	.byte D4
 	notelen 12
-	db C4
+	.byte C4
 	duty $07
 	pitch $05
 	volenv $02
 	notelen 24
-	db B3
+	.byte B3
 	notelen 12
-	db A#3
-	db B3
+	.byte A#3
+	.byte B3
 	notelen 36
-	db F4
+	.byte F4
 	notelen 12
-	db B3
+	.byte B3
 	notelen 48
-	db C4
+	.byte C4
 	notelen 12
-	db NRest
-	db NRest
-	db NRest
-	db G3
-	db A3
-	db A3
-	db A3
-	db B3
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte G3
+	.byte A3
+	.byte A3
+	.byte A3
+	.byte B3
 	notelen 24
-	db C4
-	db F4
+	.byte C4
+	.byte F4
 	duty $12
 	pitch $00
 	volenv $11
 	notelen 12
-	db E4
+	.byte E4
 	notelen 6
-	db F4
-	db E4
+	.byte F4
+	.byte E4
 	notelen 12
-	db D4
+	.byte D4
 	notelen 6
-	db E4
-	db D4
+	.byte E4
+	.byte D4
 	notelen 36
-	db C4
+	.byte C4
 	duty $07
 	pitch $05
 	volenv $02
 	notelen 12
-	db G3
-	db A3
-	db A3
-	db A3
-	db B3
+	.byte G3
+	.byte A3
+	.byte A3
+	.byte A3
+	.byte B3
 	notelen 24
-	db C4
-	db F4
+	.byte C4
+	.byte F4
 	duty $12
 	pitch $00
 	volenv $11
 	notelen 12
-	db E4
+	.byte E4
 	notelen 6
-	db F4
-	db E4
+	.byte F4
+	.byte E4
 	notelen 12
-	db D4
+	.byte D4
 	notelen 6
-	db E4
-	db D4
+	.byte E4
+	.byte D4
 	notelen 36
-	db C4
+	.byte C4
 	duty $07
 	pitch $05
 	volenv $02
 	notelen 12
-	db G3
-	db A3
-	db A3
-	db A3
-	db B3
+	.byte G3
+	.byte A3
+	.byte A3
+	.byte A3
+	.byte B3
 	notelen 24
-	db C4
-	db F4
+	.byte C4
+	.byte F4
 	duty $12
 	pitch $00
 	volenv $11
 	notelen 12
-	db G4
-	db F#4
-	db G4
-	db D4
-	db D4
-	db C#4
-	db D4
-	db G3
+	.byte G4
+	.byte F#4
+	.byte G4
+	.byte D4
+	.byte D4
+	.byte C#4
+	.byte D4
+	.byte G3
 	notelen 48
-	db G#3
-	db G3
+	.byte G#3
+	.byte G3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db C2
-	db SongJump
+	.byte C2
+	.byte SongJump
 	.word Title_P1Loop
-	db $FF
+	.byte $FF
 Title_P2:
 	transpose $13
 	duty $17
 	pitch $16
 	volenv $14
 	notelen 12
-	db G3
-	db G3
-	db G3
-	db G2
-	db G3
-	db G3
-	db G3
-	db G2
+	.byte G3
+	.byte G3
+	.byte G3
+	.byte G2
+	.byte G3
+	.byte G3
+	.byte G3
+	.byte G2
 	notelen 48
-	db G#3
+	.byte G#3
 	notelen 36
-	db G3
+	.byte G3
 	notelen 12
-	db NRest
+	.byte NRest
 Title_P2Loop:
 	duty $12
 	pitch $00
 	volenv $11
 	notelen 12
-	db E3
-	db E3
-	db E3
-	db G2
-	db E3
-	db E3
-	db E3
-	db G2
-	db E3
-	db E3
-	db E3
+	.byte E3
+	.byte E3
+	.byte E3
+	.byte G2
+	.byte E3
+	.byte E3
+	.byte E3
+	.byte G2
+	.byte E3
+	.byte E3
+	.byte E3
 	notelen 6
-	db E3
-	db F3
+	.byte E3
+	.byte F3
 	notelen 24
-	db E3
+	.byte E3
 	notelen 12
-	db D3
-	db G2
-	db D3
-	db D3
-	db D3
-	db G2
-	db D3
-	db D3
-	db D3
-	db G2
-	db D3
-	db D3
-	db D3
+	.byte D3
+	.byte G2
+	.byte D3
+	.byte D3
+	.byte D3
+	.byte G2
+	.byte D3
+	.byte D3
+	.byte D3
+	.byte G2
+	.byte D3
+	.byte D3
+	.byte D3
 	notelen 6
-	db D3
-	db E3
+	.byte D3
+	.byte E3
 	notelen 24
-	db D3
+	.byte D3
 	notelen 12
-	db C3
-	db G2
-	db E3
-	db E3
-	db E3
-	db G2
-	db E3
-	db E3
-	db E3
-	db G2
-	db E3
-	db E3
-	db E3
+	.byte C3
+	.byte G2
+	.byte E3
+	.byte E3
+	.byte E3
+	.byte G2
+	.byte E3
+	.byte E3
+	.byte E3
+	.byte G2
+	.byte E3
+	.byte E3
+	.byte E3
 	notelen 6
-	db D3
-	db E3
+	.byte D3
+	.byte E3
 	notelen 24
-	db F3
+	.byte F3
 	notelen 12
-	db A3
-	db G2
-	db G3
-	db G3
-	db G3
-	db G2
-	db F3
-	db F3
-	db F3
-	db B2
+	.byte A3
+	.byte G2
+	.byte G3
+	.byte G3
+	.byte G3
+	.byte G2
+	.byte F3
+	.byte F3
+	.byte F3
+	.byte B2
 	notelen 48
-	db C3
+	.byte C3
 	notelen 12
-	db NRest
-	db NRest
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
 	duty $17
 	pitch $16
 	volenv $15
-	db C3
-	db E3
-	db G3
-	db E3
-	db C3
-	db E3
-	db G3
-	db E3
-	db F3
-	db A3
-	db C4
-	db A3
-	db F3
-	db A3
-	db C4
-	db A3
-	db G3
-	db B3
-	db D3
-	db B3
-	db G3
-	db B3
-	db D3
-	db B3
-	db C3
-	db E3
-	db G3
-	db E3
-	db C3
-	db E3
-	db G3
-	db E3
-	db C3
-	db E3
-	db G3
-	db E3
-	db C4
-	db E3
-	db G3
-	db E3
-	db F3
-	db A3
-	db C4
-	db A3
-	db F4
-	db A3
-	db C4
-	db A3
-	db G3
-	db B3
-	db D3
-	db B3
-	db G3
-	db B3
-	db D3
-	db B3
-	db E3
-	db G3
-	db D3
-	db G3
+	.byte C3
+	.byte E3
+	.byte G3
+	.byte E3
+	.byte C3
+	.byte E3
+	.byte G3
+	.byte E3
+	.byte F3
+	.byte A3
+	.byte C4
+	.byte A3
+	.byte F3
+	.byte A3
+	.byte C4
+	.byte A3
+	.byte G3
+	.byte B3
+	.byte D3
+	.byte B3
+	.byte G3
+	.byte B3
+	.byte D3
+	.byte B3
+	.byte C3
+	.byte E3
+	.byte G3
+	.byte E3
+	.byte C3
+	.byte E3
+	.byte G3
+	.byte E3
+	.byte C3
+	.byte E3
+	.byte G3
+	.byte E3
+	.byte C4
+	.byte E3
+	.byte G3
+	.byte E3
+	.byte F3
+	.byte A3
+	.byte C4
+	.byte A3
+	.byte F4
+	.byte A3
+	.byte C4
+	.byte A3
+	.byte G3
+	.byte B3
+	.byte D3
+	.byte B3
+	.byte G3
+	.byte B3
+	.byte D3
+	.byte B3
+	.byte E3
+	.byte G3
+	.byte D3
+	.byte G3
 	notelen 48
-	db C3
+	.byte C3
 	duty $38
 	pitch $39
 	volenv $41
 	notelen 3
-	db C4
-	db E4
-	db G4
-	db B4
-	db C5
-	db E5
-	db G5
-	db B5
+	.byte C4
+	.byte E4
+	.byte G4
+	.byte B4
+	.byte C5
+	.byte E5
+	.byte G5
+	.byte B5
 	notelen 12
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
 	duty $17
 	pitch $16
 	volenv $14
-	db E4
+	.byte E4
 	notelen 6
-	db F4
-	db E4
+	.byte F4
+	.byte E4
 	notelen 12
-	db D4
+	.byte D4
 	notelen 6
-	db E4
-	db D4
+	.byte E4
+	.byte D4
 	notelen 48
-	db C4
+	.byte C4
 	duty $38
 	pitch $39
 	volenv $41
 	notelen 3
-	db C4
-	db E4
-	db G4
-	db B4
-	db C5
-	db E5
-	db G5
-	db B5
+	.byte C4
+	.byte E4
+	.byte G4
+	.byte B4
+	.byte C5
+	.byte E5
+	.byte G5
+	.byte B5
 	notelen 12
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
 	duty $17
 	pitch $16
 	volenv $14
-	db E4
+	.byte E4
 	notelen 6
-	db F4
-	db E4
+	.byte F4
+	.byte E4
 	notelen 12
-	db D4
+	.byte D4
 	notelen 6
-	db E4
-	db D4
+	.byte E4
+	.byte D4
 	notelen 48
-	db C4
+	.byte C4
 	duty $38
 	pitch $39
 	volenv $41
 	notelen 3
-	db C4
-	db E4
-	db G4
-	db B4
-	db C5
-	db E5
-	db G5
-	db B5
+	.byte C4
+	.byte E4
+	.byte G4
+	.byte B4
+	.byte C5
+	.byte E5
+	.byte G5
+	.byte B5
 	notelen 12
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
 	duty $17
 	pitch $16
 	volenv $14
-	db G4
-	db F#4
-	db G4
-	db D4
-	db D4
-	db C#4
-	db D4
-	db G3
+	.byte G4
+	.byte F#4
+	.byte G4
+	.byte D4
+	.byte D4
+	.byte C#4
+	.byte D4
+	.byte G3
 	notelen 48
-	db G#3
+	.byte G#3
 	transpose $13
 	duty $38
 	pitch $39
 	volenv $40
 	notelen 12
-	db G3
-	db F#3
-	db C4
-	db E4
-	db G4
-	db NRest
+	.byte G3
+	.byte F#3
+	.byte C4
+	.byte E4
+	.byte G4
+	.byte NRest
 	duty $12
 	pitch $00
 	volenv $11
 	notelen 24
-	db G2
-	db SongJump
+	.byte G2
+	.byte SongJump
 	.word Title_P2Loop
-	db $FF
+	.byte $FF
 Title_Tri:
 	transpose $07
 	duty $07
 	pitch $05
 	volenv $02
 	notelen 12
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
 Title_TriLoop:
 	notelen 24
-	db C3
+	.byte C3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db C3
+	.byte C3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db C3
+	.byte C3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db G2
+	.byte G2
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db G2
+	.byte G2
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db G2
+	.byte G2
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db G2
+	.byte G2
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db C3
+	.byte C3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db C3
+	.byte C3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db E3
+	.byte E3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db F3
+	.byte F3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db F#3
+	.byte F#3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db G3
+	.byte G3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db B2
+	.byte B2
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db C3
-	db G2
-	db C3
+	.byte C3
+	.byte G2
+	.byte C3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 48
-	db C3
-	db E3
-	db F3
-	db F#3
-	db G3
-	db D3
-	db E3
-	db C3
-	db C3
-	db E3
-	db F3
-	db F#3
-	db G3
-	db B2
-	db C3
+	.byte C3
+	.byte E3
+	.byte F3
+	.byte F#3
+	.byte G3
+	.byte D3
+	.byte E3
+	.byte C3
+	.byte C3
+	.byte E3
+	.byte F3
+	.byte F#3
+	.byte G3
+	.byte B2
+	.byte C3
 	notelen 12
-	db NRest
-	db NRest
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db F3
+	.byte F3
 	notelen 12
-	db NRest
-	db F3
+	.byte NRest
+	.byte F3
 	notelen 24
-	db F3
+	.byte F3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db E3
+	.byte E3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db C3
+	.byte C3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db F3
+	.byte F3
 	notelen 12
-	db NRest
-	db F3
+	.byte NRest
+	.byte F3
 	notelen 24
-	db F3
+	.byte F3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db E3
+	.byte E3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db C3
+	.byte C3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db F3
+	.byte F3
 	notelen 12
-	db NRest
-	db F3
+	.byte NRest
+	.byte F3
 	notelen 24
-	db F3
+	.byte F3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db G3
+	.byte G3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db D3
+	.byte D3
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db G2
+	.byte G2
 	notelen 12
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db F2
+	.byte F2
 	notelen 12
-	db NRest
-	db NRest
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
 	notelen 24
-	db G2
-	db SongJump
+	.byte G2
+	.byte SongJump
 	.word Title_TriLoop
-	db $FF
+	.byte $FF
 Title_End:
-	db $FF
+	.byte $FF
 Title_Footer:
 	mussq1 Title_P1
 	mussq2 Title_P2
 	mustri Title_Tri
 	musnoise Title_End
 	musdpcm Title_End
-	db $FF
+	.byte $FF

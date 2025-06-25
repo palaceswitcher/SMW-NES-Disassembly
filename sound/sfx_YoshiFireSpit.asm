@@ -5,14 +5,14 @@ YoshiFireSpit_Noise:
 	pitch $51
 	volenv $52
 	notelen 10
-	db C4-24
+	.byte C4-24
 
 	duty $12
 	pitch 0
 	volenv $11
 	notelen 15
-	db C5-24
-	db $FF
+	.byte C5-24
+	.byte $FF
 YoshiFireSpit_Footer:
 	sfxnoise YoshiFireSpit_Noise
-	db $FF
+	.byte $FF

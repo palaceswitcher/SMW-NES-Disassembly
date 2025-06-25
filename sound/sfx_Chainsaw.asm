@@ -4,9 +4,9 @@ Chainsaw_Noise:
 	duty $38
 	pitch $39
 	volenv $41
-	db $46-1
-	db $FF
+	.byte $46-1
+	.byte $FF
 
 Chainsaw_Footer:
 	sfxnoise Chainsaw_Noise
-	db $FF
+	.byte $FF

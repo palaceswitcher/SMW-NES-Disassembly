@@ -5,11 +5,11 @@ Swim_Tri:
 	pitch $63
 	volenv $11
 	notelen 4
-	db C4
+	.byte C4
 
 	notelen 8
-	db D5
-	db $FF
+	.byte D5
+	.byte $FF
 Swim_Footer:
 	sfxtri Swim_Tri
-	db $FF
+	.byte $FF

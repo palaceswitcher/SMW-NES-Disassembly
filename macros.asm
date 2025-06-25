@@ -15,7 +15,7 @@ macro objDistCalc start
 	BEQ @calcVertDist ; Continue if the player is to the left of the object (within one screen)
 	CMP #$FF
 	BEQ @calcVertDist ; Continue if the player is to the right of the object (within one screne)
-		JMP Obj_RemoveObject ; Otherwise, remove the off-screen object
+		JMP objRemoveObject ; Otherwise, remove the off-screen object
 
 ; Calculate vertical distance between the player and object
 @calcVertDist:
@@ -58,7 +58,7 @@ macro objDistCalc start
 endm
 
 ; Vertically offsets an object
-macro Obj_VertOffset ofs,stop
+macro objVertOffset ofs,stop
 	LDA #ofs
 	BMI bra8_8147 ; Redundant branch (16 isn't negative)
 		CLC
@@ -89,121 +89,126 @@ endm
 
 ; Big endian word
 macro dwb x
-	db >x, <x
+	.byte >x, <x
 endm
 
 macro sprmap w,h,bank
-	db w>>3, h>>3
+	.byte w>>3, h>>3
 	ifdef bank
-		db bank
+		.byte bank
 	endif
 endm
 
 ; Player title action trigger
 macro titleact x,action,dur
 	dwb x
-	db action, dur
+	.byte action, dur
 endm
 ; Title screen sprite animation data
 macro titlespr x,y,frame
 	dwb x
-	db frame, y
+	.byte frame, y
 endm
 
 ; Movement data
 macro movedata x,y
-	db x, y
+	.byte x, y
+endm
+
+; Spawn data
+macro spawndata x,y,xscreens,yscreens,xlock,ylock
+	.byte >x, >y, <x, <y, xlock, xscreens, ylock, yscreens
 endm
 
 ; Instrument RLE commands
 macro instrle vol,len
-	db len, vol
+	.byte len, vol
 endm
 macro dutyrle duty,len
-	db len, duty<<6
+	.byte len, duty<<6
 endm
 macro instjump loc,ofs
 	ifndef ofs
 		ofs = 0 ; Default offset
 	endif
 	d = loc-$ ; Distance
-	db $FF
-	db <d+ofs
+	.byte $FF
+	.byte <d+ofs
 endm
 
 ; Sound commands
 macro notelen x
-	db $80+x
+	.byte $80+x
 endm
 macro sndjump x
-	db $F4
-	dw x
+	.byte $F4
+	.word x
 endm
 macro playsegment x
-	db $F0
-	dw x
+	.byte $F0
+	.word x
 endm
 macro endsegment
-	db $F1, $FF
+	.byte $F1, $FF
 endm
 macro sndspeed x
-	db $F5, x
+	.byte $F5, x
 endm
 
 macro transpose x
-	db $F6, x
+	.byte $F6, x
 endm
 
 macro volenv x
-	db $F8, x
+	.byte $F8, x
 endm
 
 macro duty x
-	db $F9, x
+	.byte $F9, x
 endm
 
 macro pitch x
-	db $FA, x
+	.byte $FA, x
 endm
 
 ; Channel pointers
 macro mussq1 x
-	db 0
-	dw x
+	.byte 0
+	.word x
 endm
 macro mussq2 x
-	db 1
-	dw x
+	.byte 1
+	.word x
 endm
 macro mustri x
-	db 2
-	dw x
+	.byte 2
+	.word x
 endm
 macro musnoise x
-	db 3
-	dw x
+	.byte 3
+	.word x
 endm
 macro musdpcm x
-	db 4
-	dw x
+	.byte 4
+	.word x
 endm
 macro sfxsq1 x
-	db $80
-	dw x
+	.byte $80
+	.word x
 endm
 macro sfxsq2 x
-	db $81
-	dw x
+	.byte $81
+	.word x
 endm
 macro sfxtri x
-	db $82
-	dw x
+	.byte $82
+	.word x
 endm
 macro sfxnoise x
-	db $83
-	dw x
+	.byte $83
+	.word x
 endm
 macro sfxdpcm x
-	db $84
-	dw x
+	.byte $84
+	.word x
 endm

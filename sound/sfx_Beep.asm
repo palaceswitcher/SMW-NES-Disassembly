@@ -5,9 +5,9 @@ Beep_P1:
 	pitch $39
 	volenv $41
 	notelen 2
-	db F#6-9
-	db G#6-9
-	db $FF
+	.byte F#6-9
+	.byte G#6-9
+	.byte $FF
 Beep_Footer:
 	sfxsq1 Beep_P1
-	db $FF
+	.byte $FF

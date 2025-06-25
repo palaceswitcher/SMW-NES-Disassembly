@@ -5,10 +5,10 @@ Coin_P1:
 	pitch $39
 	volenv $40
 	notelen 3
-	db B5-7
+	.byte B5-7
 	notelen 6
-	db E6-7
-	db $FF
+	.byte E6-7
+	.byte $FF
 Coin_Footer:
 	sfxsq1 Coin_P1
-	db $FF
+	.byte $FF

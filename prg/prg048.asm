@@ -341,7 +341,7 @@ bra4_8274:
 loc4_8274:
 	INC objVar,X
 	RTS
-Obj_hBE:
+obj0xBE:
 	LDX $A4
 	LDA objVar,X
 	BMI bra4_8282
@@ -362,7 +362,7 @@ bra4_8289:
 	BEQ bra4_82A5 ; unlogged
 	CMP #$FF ; unlogged
 	BEQ bra4_82A5 ; unlogged
-	JMP Obj_RemoveObject ; unlogged
+	JMP objRemoveObject ; unlogged
 bra4_82A5:
 	LDA objYLo,X ; unlogged
 	SEC ; unlogged
@@ -398,7 +398,7 @@ loc4_82E7:
 	BEQ bra4_82ED ; unlogged
 	RTS ; unlogged
 bra4_82ED:
-	JMP Obj_FacePlayer ; unlogged
+	JMP objFacePlayer ; unlogged
 loc4_82F0:
 	LDA #$07
 	STA $25
@@ -414,7 +414,7 @@ loc4_82F0:
 	BEQ bra4_8312
 	CMP #$FF
 	BEQ bra4_8312
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra4_8312:
 	LDA objYLo,X
 	SEC
@@ -460,15 +460,15 @@ bra4_835A:
 	STA $33
 	JMP ($32)
 tbl4_836E:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr9_8378
-	dw Obj_FlipKill
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr9_8378
+	.word objFlipKill
 ptr9_8378:
 	JSR sub4_83B3
-	JSR Obj_CapeHitCheck
-	JSR Obj_PlayerHitCheck
+	JSR objCapeHitCheck
+	JSR objPlayerHitCheck
 	LDA #$30
 	STA playerYSpd
 	LDA playerMoveFlags
@@ -478,7 +478,7 @@ ptr9_8378:
 	LDA #$30
 	STA playerXSpd
 	LDA #$01
-	JSR RewardPoints
+	JSR rewardPoints
 	LDA #$12
 	STA sndSfx
 	LDA objSlot,X
@@ -593,15 +593,15 @@ bra4_8468:
 	STA $05F0
 	TYA
 	JMP loc4_9104
-	db $00
-	db $00
-	db $01
-	db $00
-	db $00
-	db $40
-	db $01
-	db $00
-Obj_hC0:
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $40
+	.byte $01
+	.byte $00
+obj0xC0:
 	LDX $A4
 	LDA objVar,X
 	CMP #$80
@@ -623,7 +623,7 @@ bra4_848F:
 	BEQ bra4_84AB
 	CMP #$FF
 	BEQ bra4_84AB
-	JMP Obj_RemoveObject ; unlogged
+	JMP objRemoveObject ; unlogged
 bra4_84AB:
 	LDA objYLo,X
 	SEC
@@ -659,7 +659,7 @@ loc4_84ED:
 	BEQ bra4_84F3
 	RTS ; unlogged
 bra4_84F3:
-	JMP Obj_FacePlayer
+	JMP objFacePlayer
 loc4_84F6:
 	LDA #$07
 	STA $25
@@ -675,7 +675,7 @@ loc4_84F6:
 	BEQ bra4_8518
 	CMP #$FF
 	BEQ bra4_8518
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra4_8518:
 	LDA objYLo,X
 	SEC
@@ -721,15 +721,15 @@ bra4_8560:
 	STA $33
 	JMP ($32)
 tbl4_8574:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr9_857E
-	dw Obj_FlipKill
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr9_857E
+	.word objFlipKill
 ptr9_857E:
 	JSR sub4_85B9
-	JSR Obj_CapeHitCheck
-	JSR Obj_PlayerHitCheck
+	JSR objCapeHitCheck
+	JSR objPlayerHitCheck
 	LDA #$30
 	STA playerYSpd
 	LDA playerMoveFlags
@@ -739,7 +739,7 @@ ptr9_857E:
 	LDA #$30
 	STA playerXSpd
 	LDA #$01
-	JSR RewardPoints
+	JSR rewardPoints
 	LDA #$12
 	STA sndSfx
 	LDA objSlot,X
@@ -851,7 +851,7 @@ loc4_8669:
 	STA $05F0
 	TYA
 	JMP loc4_9104
-Obj_hC2:
+obj0xC2:
 	LDX $A4
 	LDA objVar,X
 	BMI bra4_867F
@@ -868,7 +868,7 @@ bra4_867F:
 	BEQ bra4_869B ; unlogged
 	CMP #$FF ; unlogged
 	BEQ bra4_869B ; unlogged
-	JMP Obj_RemoveObject ; unlogged
+	JMP objRemoveObject ; unlogged
 bra4_869B:
 	LDA objYLo,X ; unlogged
 	SEC ; unlogged
@@ -904,7 +904,7 @@ loc4_86DD:
 	BEQ bra4_86E3 ; unlogged
 	RTS ; unlogged
 bra4_86E3:
-	JMP Obj_FacePlayer ; unlogged
+	JMP objFacePlayer ; unlogged
 loc4_86E6:
 	LDA #$07
 	STA $25
@@ -920,7 +920,7 @@ loc4_86E6:
 	BEQ bra4_8708
 	CMP #$FF
 	BEQ bra4_8708
-	JMP Obj_RemoveObject ; unlogged
+	JMP objRemoveObject ; unlogged
 bra4_8708:
 	LDA objYLo,X
 	SEC
@@ -966,14 +966,14 @@ bra4_8750:
 	STA $33
 	JMP ($32)
 tbl4_8764:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr9_876E
-	dw Obj_FlipKill
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr9_876E
+	.word objFlipKill
 ptr9_876E:
 	JSR sub4_8778
-	JSR Obj_CapeHitCheck
+	JSR objCapeHitCheck
 	JSR jmp_54_BC3E
 	RTS
 sub4_8778:
@@ -1048,23 +1048,23 @@ bra4_87FC:
 	LDA #$07
 	JMP loc4_9104
 tbl4_8804:
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $05
-	db $06
-	db $06
-	db $06
-	db $07
-	db $07
-	db $07
-	db $07
-	db $07
-Obj_hCE:
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $05
+	.byte $06
+	.byte $06
+	.byte $06
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+obj0xCE:
 	LDX $A4
 	LDA objVar,X
 	BMI bra4_881E
@@ -1081,7 +1081,7 @@ bra4_881E:
 	BEQ bra4_883A
 	CMP #$FF
 	BEQ bra4_883A
-	JMP Obj_RemoveObject ; unlogged
+	JMP objRemoveObject ; unlogged
 bra4_883A:
 	LDA objYLo,X
 	SEC
@@ -1117,7 +1117,7 @@ loc4_887C:
 	BEQ bra4_8882
 	RTS ; unlogged
 bra4_8882:
-	JSR Obj_FacePlayer
+	JSR objFacePlayer
 	LDY #$50
 	LDA objState,X
 	AND #$40
@@ -1150,7 +1150,7 @@ loc4_88AB:
 	BEQ bra4_88CA
 	CMP #$FF
 	BEQ bra4_88CA
-	JMP Obj_RemoveObject ; unlogged
+	JMP objRemoveObject ; unlogged
 bra4_88CA:
 	LDA objYLo,X
 	SEC
@@ -1207,7 +1207,7 @@ loc4_8920:
 	BEQ bra4_8942
 	CMP #$FF
 	BEQ bra4_8942
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra4_8942:
 	LDA objYLo,X
 	SEC
@@ -1253,15 +1253,15 @@ bra4_898A:
 	STA $33
 	JMP ($32)
 tbl4_899E:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr9_89A8
-	dw Obj_FlipKill
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr9_89A8
+	.word objFlipKill
 ptr9_89A8:
 	JSR sub4_89DA
-	JSR Obj_CapeHitCheck
-	JSR Obj_PlayerHitCheck
+	JSR objCapeHitCheck
+	JSR objPlayerHitCheck
 	LDA #$30
 	STA playerYSpd
 	LDA playerMoveFlags
@@ -1271,7 +1271,7 @@ ptr9_89A8:
 	LDA #$30
 	STA playerXSpd
 	LDA #$01
-	JSR RewardPoints
+	JSR rewardPoints
 	LDA #$12
 	STA sndSfx
 	LDA objSlot,X
@@ -1382,39 +1382,39 @@ bra4_8A9F:
 	TYA
 	JMP loc4_9104
 tbl4_8AAB:
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $09
-	db $09
-	db $0A
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $09
-	db $09
-	db $0A
-	db $08
-	db $08
-	db $08
-	db $08
-Obj_hAE:
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $09
+	.byte $09
+	.byte $0A
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $09
+	.byte $09
+	.byte $0A
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+obj0xAE:
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -1427,7 +1427,7 @@ Obj_hAE:
 	BEQ bra4_8AE9
 	CMP #$FF
 	BEQ bra4_8AE9
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra4_8AE9:
 	LDA objYLo,X
 	SEC
@@ -1489,10 +1489,10 @@ bra4_8B45:
 	STA $32
 	LDA tbl4_9A83+1,Y
 	STA $33
-	JSR GetSpeedData
+	JSR getSpeedData
 bra4_8B68:
-	JSR Obj_CapeHitCheck
-	JSR Obj_PlayerHitCheck
+	JSR objCapeHitCheck
+	JSR objPlayerHitCheck
 	JMP jmp_54_BF74
 ptr6_8B71:
 	LDY #$00
@@ -1505,7 +1505,7 @@ bra4_8B7E:
 	STY $05F0
 	LDA #$00
 	JMP loc4_90CE
-Obj_hD0:
+obj0xD0:
 	LDX $A4
 	LDA objVar,X
 	BMI bra4_8B90
@@ -1522,7 +1522,7 @@ bra4_8B90:
 	BEQ bra4_8BAC
 	CMP #$FF ; unlogged
 	BEQ bra4_8BAC ; unlogged
-	JMP Obj_RemoveObject ; unlogged
+	JMP objRemoveObject ; unlogged
 bra4_8BAC:
 	LDA objYLo,X
 	SEC
@@ -1558,7 +1558,7 @@ loc4_8BEE:
 	BEQ bra4_8BF4
 	RTS ; unlogged
 bra4_8BF4:
-	JMP Obj_FacePlayer
+	JMP objFacePlayer
 loc4_8BF7:
 	LDA #$07
 	STA $25
@@ -1574,7 +1574,7 @@ loc4_8BF7:
 	BEQ bra4_8C19
 	CMP #$FF
 	BEQ bra4_8C19
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra4_8C19:
 	LDA objYLo,X
 	SEC
@@ -1620,15 +1620,15 @@ bra4_8C61:
 	STA $33
 	JMP ($32)
 tbl4_8C75:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr9_8C7F
-	dw Obj_FlipKill
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr9_8C7F
+	.word objFlipKill
 ptr9_8C7F:
 	JSR sub4_8CB1
-	JSR Obj_CapeHitCheck
-	JSR Obj_PlayerHitCheck
+	JSR objCapeHitCheck
+	JSR objPlayerHitCheck
 	LDA #$30
 	STA playerYSpd
 	LDA playerMoveFlags
@@ -1638,7 +1638,7 @@ ptr9_8C7F:
 	LDA #$30
 	STA playerXSpd
 	LDA #$01
-	JSR RewardPoints
+	JSR rewardPoints
 	LDA #$12
 	STA sndSfx
 	LDA objSlot,X
@@ -1744,7 +1744,7 @@ bra4_8D71:
 	STA $05F0
 	TYA
 	JMP loc4_9104
-Obj_hB0:
+obj0xB0:
 	LDX $A4
 	JSR sub4_8DEC
 	LDA objXLo,X
@@ -1758,7 +1758,7 @@ Obj_hB0:
 	BEQ bra4_8D9E
 	CMP #$FF
 	BEQ bra4_8D9E
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra4_8D9E:
 	LDA objYLo,X
 	SEC
@@ -1825,10 +1825,10 @@ bra4_8E0B:
 bra4_8E23_RTS:
 	RTS
 tbl4_8E24:
-	db $0E
-	db $31
-	db $31
-	db $20
+	.byte $0E
+	.byte $31
+	.byte $31
+	.byte $20
 ptr6_8E28:
 	LDY #$00
 	LDX $A4
@@ -1840,7 +1840,7 @@ bra4_8E35:
 	STY $05F0
 	LDA #$01
 	JMP loc4_90CE
-Obj_hD2:
+obj0xD2:
 	LDX $A4
 	LDA objVar,X
 	BMI bra4_8E47
@@ -1857,7 +1857,7 @@ bra4_8E47:
 	BEQ bra4_8E63
 	CMP #$FF
 	BEQ bra4_8E63
-	JMP Obj_RemoveObject ; unlogged
+	JMP objRemoveObject ; unlogged
 bra4_8E63:
 	LDA objYLo,X
 	SEC
@@ -1935,7 +1935,7 @@ loc4_8EE3:
 	BEQ bra4_8F05
 	CMP #$FF
 	BEQ bra4_8F05
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra4_8F05:
 	LDA objYLo,X
 	SEC
@@ -1981,15 +1981,15 @@ bra4_8F4D:
 	STA $33
 	JMP ($32)
 tbl4_8F61:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr9_8F6B
-	dw Obj_FlipKill
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr9_8F6B
+	.word objFlipKill
 ptr9_8F6B:
 	JSR sub4_8F9D
-	JSR Obj_CapeHitCheck
-	JSR Obj_PlayerHitCheck
+	JSR objCapeHitCheck
+	JSR objPlayerHitCheck
 	LDA #$30
 	STA playerYSpd
 	LDA playerMoveFlags
@@ -1999,7 +1999,7 @@ ptr9_8F6B:
 	LDA #$30
 	STA playerXSpd
 	LDA #$01
-	JSR RewardPoints
+	JSR rewardPoints
 	LDA #$12
 	STA sndSfx
 	LDA objSlot,X
@@ -2083,15 +2083,15 @@ bra4_9034:
 	TYA
 	JMP loc4_9104
 tbl4_9038:
-	db $0F
-	db $10
-	db $11
-	db $11
-	db $12
-	db $0F
-	db $0F
-	db $0F
-Obj_hB2:
+	.byte $0F
+	.byte $10
+	.byte $11
+	.byte $11
+	.byte $12
+	.byte $0F
+	.byte $0F
+	.byte $0F
+obj0xB2:
 	LDX $A4
 	LDA objFrameCount
 	AND #$02
@@ -2116,7 +2116,7 @@ bra4_905A:
 	BEQ bra4_9076
 	CMP #$FF
 	BEQ bra4_9076
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra4_9076:
 	LDA objYLo,X
 	SEC
@@ -2162,9 +2162,9 @@ ptr6_90C4:
 loc4_90CE:
 	ASL
 	TAX
-	LDA SprPtrs_ChuckProjectiles,X
+	LDA sprTblChuckProjectiles,X
 	STA $32
-	LDA SprPtrs_ChuckProjectiles+1,X
+	LDA sprTblChuckProjectiles+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -2175,27 +2175,29 @@ loc4_90CE:
 bra4_90E7:
 	STY $36
 	JMP jmp_52_AC3B
-SprPtrs_ChuckProjectiles:
-	dw SprMap_Baseball
-	dw SprMap_Football
-	dw SprMap_Rock ; Unused
-SprMap_Baseball:
-	db $01
-	db $01
-	db $AA
-	db $01
-SprMap_Football:
-	db $02
-	db $02
-	db $AA
-	db $02, $03
-	db $06, $07
-SprMap_Rock:
-	db $02
-	db $02
-	db $AF
-	db $04, $05
-	db $08, $00
+
+sprTblChuckProjectiles:
+	.word sprBaseball
+	.word sprFootball
+	.word sprRock ; Unused
+sprBaseball:
+	.byte $01
+	.byte $01
+	.byte $AA
+	.byte $01
+sprFootball:
+	.byte $02
+	.byte $02
+	.byte $AA
+	.byte $02, $03
+	.byte $06, $07
+sprRock:
+	.byte $02
+	.byte $02
+	.byte $AF
+	.byte $04, $05
+	.byte $08, $00
+
 loc4_9104:
 	ASL
 	TAX
@@ -2212,186 +2214,187 @@ loc4_9104:
 bra4_911D:
 	STY $36
 	JMP jmp_54_A118
+
 tbl4_9122:
-	dw SprMap_CharginChuck_Idle
-	dw SprMap_CharginChuck_Run1
-	dw SprMap_CharginChuck_Run2
-	dw SprMap_CharginChuck_Jump
-	dw SprMap_CharginChuck_Stun1
-	dw SprMap_CharginChuck_Stun2
-	dw SprMap_CharginChuck_Stun3
-	dw SprMap_CharginChuck_Stun4
-	dw SprMap_BaseballChuck_Idle
-	dw SprMap_BaseballChuck_Hold
-	dw SprMap_BaseballChuck_Throw1
-	dw SprMap_BaseballChuck_JumpHold
-	dw SprMap_BaseballChuck_Throw2
-	dw SprMap_PassinChuck_Idle
-	dw SprMap_PassinChuck_Kick
-	dw SprMap_DigginChuck_Idle
-	dw SprMap_DigginChuck_Dig
-	dw SprMap_DigginChuck_Throw1
-	dw SprMap_DigginChuck_Throw2
-SprMap_CharginChuck_Idle:
-	db $03
-	db $04
-	db $A9
-	db $FF, $FF, $FF
-	db $14, $15, $16
-	db $22, $23, $24
-	db $2A, $2B, $2C
-SprMap_CharginChuck_Run1:
-	db $04
-	db $04
-	db $AA
-	db $09, $0A, $FF, $FF
-	db $0D, $0E, $0F, $10
-	db $1A, $1D, $1E, $FF
-	db $2C, $2D, $2E, $FF
-SprMap_CharginChuck_Run2:
-	db $04
-	db $04
-	db $AA
-	db $09, $0A, $FF, $FF
-	db $0D, $0E, $0F, $10
-	db $1A, $1B, $1C, $FF
-	db $28, $29, $2A, $2B
-SprMap_CharginChuck_Jump:
-	db $04
-	db $04
-	db $A8
-	db $FF, $1F, $20, $FF
-	db $23, $24, $25, $26
-	db $2B, $2C, $2D, $2E
-	db $33, $34, $35, $36
-SprMap_CharginChuck_Stun1:
-	db $03
-	db $04
-	db $A9
-	db $FF, $FF, $FF
-	db $09, $0A, $FF
-	db $1A, $0F, $1B
-	db $25, $26, $27
-SprMap_CharginChuck_Stun2:
-	db $03
-	db $04
-	db $A9
-	db $09, $0A, $FF
-	db $0E, $0F, $10
-	db $1C, $1D, $1E
-	db $25, $26, $27
-SprMap_CharginChuck_Stun3:
-	db $03
-	db $04
-	db $A9
-	db $FF, $FF, $FF
-	db $0B, $0C, $0D
-	db $17, $18, $19
-	db $25, $26, $27
-SprMap_CharginChuck_Stun4:
-	db $03
-	db $04
-	db $A9
-	db $FF, $FF, $FF
-	db $11, $12, $13
-	db $1F, $20, $21
-	db $28, $29, $27
+	.word sprCharginChuckIdle
+	.word sprCharginChuckRun1
+	.word sprCharginChuckRun2
+	.word sprCharginChuckRun
+	.word sprCharginChuckStun1
+	.word sprCharginChuckStun2
+	.word sprCharginChuckStun3
+	.word sprCharginChuckStun4
+	.word sprBaseballChuckIdle
+	.word sprBaseballChuckHold
+	.word sprBaseballChuckThrow1
+	.word sprBaseballChuckRunHold
+	.word sprBaseballChuckThrow2
+	.word sprPassinChuckIdle
+	.word sprPassinChuckKick
+	.word sprDigginChuckIdle
+	.word sprDigginChuckDig
+	.word sprDigginChuckThrow1
+	.word sprDigginChuckThrow2
+sprCharginChuckIdle:
+	.byte $03
+	.byte $04
+	.byte $A9
+	.byte $FF, $FF, $FF
+	.byte $14, $15, $16
+	.byte $22, $23, $24
+	.byte $2A, $2B, $2C
+sprCharginChuckRun1:
+	.byte $04
+	.byte $04
+	.byte $AA
+	.byte $09, $0A, $FF, $FF
+	.byte $0D, $0E, $0F, $10
+	.byte $1A, $1D, $1E, $FF
+	.byte $2C, $2D, $2E, $FF
+sprCharginChuckRun2:
+	.byte $04
+	.byte $04
+	.byte $AA
+	.byte $09, $0A, $FF, $FF
+	.byte $0D, $0E, $0F, $10
+	.byte $1A, $1B, $1C, $FF
+	.byte $28, $29, $2A, $2B
+sprCharginChuckRun:
+	.byte $04
+	.byte $04
+	.byte $A8
+	.byte $FF, $1F, $20, $FF
+	.byte $23, $24, $25, $26
+	.byte $2B, $2C, $2D, $2E
+	.byte $33, $34, $35, $36
+sprCharginChuckStun1:
+	.byte $03
+	.byte $04
+	.byte $A9
+	.byte $FF, $FF, $FF
+	.byte $09, $0A, $FF
+	.byte $1A, $0F, $1B
+	.byte $25, $26, $27
+sprCharginChuckStun2:
+	.byte $03
+	.byte $04
+	.byte $A9
+	.byte $09, $0A, $FF
+	.byte $0E, $0F, $10
+	.byte $1C, $1D, $1E
+	.byte $25, $26, $27
+sprCharginChuckStun3:
+	.byte $03
+	.byte $04
+	.byte $A9
+	.byte $FF, $FF, $FF
+	.byte $0B, $0C, $0D
+	.byte $17, $18, $19
+	.byte $25, $26, $27
+sprCharginChuckStun4:
+	.byte $03
+	.byte $04
+	.byte $A9
+	.byte $FF, $FF, $FF
+	.byte $11, $12, $13
+	.byte $1F, $20, $21
+	.byte $28, $29, $27
 ; Unused Clappin' Chuck Mappings
-	db $04
-	db $04
-	db $A8
-	db $FF, $1D, $1E, $FF
-	db $FF, $21, $22, $FF
-	db $27, $28, $29, $2A
-	db $2F, $30, $31, $32
-SprMap_DigginChuck_Idle:
-	db $04 ; digging chuck (unused) mappings
-	db $03
-	db $AF
-	db $FF, $0B, $0C, $0D
-	db $FF, $16, $17, $18
-	db $23, $24, $25, $26
-SprMap_DigginChuck_Dig:
-	db $04
-	db $03
-	db $AF
-	db $FF, $12, $13, $14
-	db $FF, $1D, $1E, $1F
-	db $2A, $2B, $2C, $2D
-SprMap_DigginChuck_Throw1:
-	db $04
-	db $03
-	db $AF
-	db $FF, $12, $13, $15
-	db $FF, $20, $21, $22
-	db $23, $24, $25, $26
-SprMap_DigginChuck_Throw2:
-	db $04
-	db $03
-	db $AF
-	db $0E, $0F, $10, $11
-	db $19, $1A, $1B, $1C
-	db $FF, $27, $28, $29
-SprMap_PassinChuck_Idle:
-	db $03
-	db $04
-	db $A9
-	db $FF, $FF, $FF
-	db $30, $31, $32
-	db $36, $37, $38
-	db $3C, $3D, $3E
-SprMap_PassinChuck_Kick:
-	db $03
-	db $04
-	db $AF
-	db $FF, $2E, $FF
-	db $2F, $30, $31
-	db $32, $33, $34
-	db $35, $36, $37
-	db $37, $38 ; Excess bytes
-SprMap_BaseballChuck_Idle:
-	db $03
-	db $04
-	db $AA
-	db $FF, $FF, $FF
-	db $11, $12, $FF
-	db $1F, $20, $21
-	db $2F, $30, $31
-SprMap_BaseballChuck_Hold:
-	db $03
-	db $04
-	db $AA
-	db $09, $0A, $FF
-	db $38, $39, $FF
-	db $3A, $3B, $3C
-	db $3D, $3E, $3F
-SprMap_BaseballChuck_Throw1:
-	db $03
-	db $04
-	db $AA
-	db $0B, $0C, $FF
-	db $16, $18, $19
-	db $25, $26, $27
-	db $35, $36, $37
-SprMap_BaseballChuck_JumpHold:
-	db $03
-	db $04
-	db $AA
-	db $0B, $0C, $FF
-	db $16, $17, $FF
-	db $25, $26, $27
-	db $35, $36, $37
-SprMap_BaseballChuck_Throw2:
-	db $03
-	db $04
-	db $AA
-	db $FF, $FF, $FF
-	db $13, $14, $15
-	db $22, $23, $24
-	db $32, $33, $34
+	.byte $04
+	.byte $04
+	.byte $A8
+	.byte $FF, $1D, $1E, $FF
+	.byte $FF, $21, $22, $FF
+	.byte $27, $28, $29, $2A
+	.byte $2F, $30, $31, $32
+sprDigginChuckIdle:
+	.byte $04 ; digging chuck (unused) mappings
+	.byte $03
+	.byte $AF
+	.byte $FF, $0B, $0C, $0D
+	.byte $FF, $16, $17, $18
+	.byte $23, $24, $25, $26
+sprDigginChuckDig:
+	.byte $04
+	.byte $03
+	.byte $AF
+	.byte $FF, $12, $13, $14
+	.byte $FF, $1D, $1E, $1F
+	.byte $2A, $2B, $2C, $2D
+sprDigginChuckThrow1:
+	.byte $04
+	.byte $03
+	.byte $AF
+	.byte $FF, $12, $13, $15
+	.byte $FF, $20, $21, $22
+	.byte $23, $24, $25, $26
+sprDigginChuckThrow2:
+	.byte $04
+	.byte $03
+	.byte $AF
+	.byte $0E, $0F, $10, $11
+	.byte $19, $1A, $1B, $1C
+	.byte $FF, $27, $28, $29
+sprPassinChuckIdle:
+	.byte $03
+	.byte $04
+	.byte $A9
+	.byte $FF, $FF, $FF
+	.byte $30, $31, $32
+	.byte $36, $37, $38
+	.byte $3C, $3D, $3E
+sprPassinChuckKick:
+	.byte $03
+	.byte $04
+	.byte $AF
+	.byte $FF, $2E, $FF
+	.byte $2F, $30, $31
+	.byte $32, $33, $34
+	.byte $35, $36, $37
+	.byte $37, $38 ; Excess bytes
+sprBaseballChuckIdle:
+	.byte $03
+	.byte $04
+	.byte $AA
+	.byte $FF, $FF, $FF
+	.byte $11, $12, $FF
+	.byte $1F, $20, $21
+	.byte $2F, $30, $31
+sprBaseballChuckHold:
+	.byte $03
+	.byte $04
+	.byte $AA
+	.byte $09, $0A, $FF
+	.byte $38, $39, $FF
+	.byte $3A, $3B, $3C
+	.byte $3D, $3E, $3F
+sprBaseballChuckThrow1:
+	.byte $03
+	.byte $04
+	.byte $AA
+	.byte $0B, $0C, $FF
+	.byte $16, $18, $19
+	.byte $25, $26, $27
+	.byte $35, $36, $37
+sprBaseballChuckRunHold:
+	.byte $03
+	.byte $04
+	.byte $AA
+	.byte $0B, $0C, $FF
+	.byte $16, $17, $FF
+	.byte $25, $26, $27
+	.byte $35, $36, $37
+sprBaseballChuckThrow2:
+	.byte $03
+	.byte $04
+	.byte $AA
+	.byte $FF, $FF, $FF
+	.byte $13, $14, $15
+	.byte $22, $23, $24
+	.byte $32, $33, $34
 ptr6_9286:
 	RTS
-Obj_hD6:
+obj0xD6:
 	LDX $A4
 	LDA objVar,X
 	BMI bra4_92C1
@@ -2415,14 +2418,14 @@ Obj_hD6:
 	BEQ bra4_92C0_RTS
 	LDA #$00
 	STA booBuddiesFlag
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra4_92C0_RTS:
 	RTS
 bra4_92C1:
 	LDA booBuddiesFlag
 	CMP #$FF
 	BNE bra4_92CA
-	JMP Obj_RemoveObject ; unlogged
+	JMP objRemoveObject ; unlogged
 bra4_92CA:
 	LDA #$FF
 	STA booBuddiesFlag
@@ -2490,37 +2493,37 @@ bra4_933E:
 	BPL bra4_92F4
 	RTS
 tbl4_934B:
-	db $0B
-	db $16
-	db $21
-	db $2C
-	db $37
-	db $42
-	db $4D
-	db $58
-	db $63
-	db $6E
+	.byte $0B
+	.byte $16
+	.byte $21
+	.byte $2C
+	.byte $37
+	.byte $42
+	.byte $4D
+	.byte $58
+	.byte $63
+	.byte $6E
 tbl4_9355:
-	db $2B
-	db $36
-	db $41
-	db $4C
-	db $57
-	db $62
-	db $6D
-	db $78
-	db $03
-	db $0E
+	.byte $2B
+	.byte $36
+	.byte $41
+	.byte $4C
+	.byte $57
+	.byte $62
+	.byte $6D
+	.byte $78
+	.byte $03
+	.byte $0E
 tbl4_935F:
-	db $00
-	db $40
-	db $80
-	db $00
-	db $40
-	db $80
-	db $00
-	db $40
-Obj_hB4:
+	.byte $00
+	.byte $40
+	.byte $80
+	.byte $00
+	.byte $40
+	.byte $80
+	.byte $00
+	.byte $40
+obj0xB4:
 	LDX $A4
 	LDA booBuddiesFlag
 	CMP #$FF
@@ -2603,7 +2606,7 @@ bra4_93FA:
 bra4_93FE:
 	STA objYHi,X
 	RTS
-Obj_hD8:
+obj0xD8:
 	LDX $A4
 	LDA objVar,X
 	CMP #$80
@@ -2621,7 +2624,7 @@ bra4_940E:
 	BEQ bra4_942A
 	CMP #$FF
 	BEQ bra4_942A
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra4_942A:
 	LDA objYLo,X
 	SEC
@@ -2657,7 +2660,7 @@ loc4_946C:
 	BEQ bra4_9472
 	RTS ; unlogged
 bra4_9472:
-	JMP Obj_FacePlayer
+	JMP objFacePlayer
 loc4_9475:
 	LDA #$07
 	STA $25
@@ -2673,7 +2676,7 @@ loc4_9475:
 	BEQ bra4_9497
 	CMP #$FF
 	BEQ bra4_9497
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra4_9497:
 	LDA objYLo,X
 	SEC
@@ -2719,11 +2722,11 @@ bra4_94DF:
 	STA $33
 	JMP ($32)
 tbl4_94F3:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr9_94FD
-	dw Obj_FlipKill
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr9_94FD
+	.word objFlipKill
 ptr9_94FD:
 	JSR sub4_9506
 	JSR jmp_54_BC3E
@@ -2739,7 +2742,7 @@ sub4_9506:
 	STA $32
 	LDA tbl4_9A83+1,Y
 	STA $33
-	JSR GetSpeedData
+	JSR getSpeedData
 bra4_951E:
 	LDA objXLo,X
 	SEC
@@ -2752,7 +2755,7 @@ bra4_951E:
 	BEQ bra4_953A
 	CMP #$FF
 	BEQ bra4_953A
-	JMP Obj_RemoveObject ; unlogged
+	JMP objRemoveObject ; unlogged
 bra4_953A:
 	LDA objYLo,X
 	SEC
@@ -2920,7 +2923,7 @@ bra4_9671:
 ;----------------------------------------
 ; Boo object code
 ;----------------------------------------
-Obj_hDA:
+obj0xDA:
 	LDX $A4 ; Get object index
 	LDA objVar,X
 	CMP #$80
@@ -2940,7 +2943,7 @@ bra4_9691:
 	BEQ bra4_96AD ; Branch if the player and Boo are on the screen
 	CMP #$FF
 	BEQ bra4_96AD ; Branch if the Boo is within one screen behind the player
-	JMP Obj_RemoveObject ; Otherwise, unload the boo if it's ahead of the player
+	JMP objRemoveObject ; Otherwise, unload the boo if it's ahead of the player
 bra4_96AD:
 ; Boo Y position - player Y position = vertical distance between Boo and player
 	LDA objYLo,X
@@ -2980,7 +2983,7 @@ loc4_96EF:
 	BEQ bra4_96F5 ; Only continue if the game isn't frozen
 	RTS ; Stop if it is frozen
 bra4_96F5:
-	JSR Obj_FacePlayer
+	JSR objFacePlayer
 	LDA $A4
 	AND #$03 ; Mask out lower 2 bits of current object index
 	ORA objState,X
@@ -3000,7 +3003,7 @@ loc4_9703:
 	BEQ bra4_9722
 	CMP #$FF
 	BEQ bra4_9722
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra4_9722:
 	LDA objYLo,X
 	SEC
@@ -3048,7 +3051,7 @@ sub4_976B:
 	STA $32
 	LDA tbl4_9A83+1,Y
 	STA $33
-	JSR GetSpeedData
+	JSR getSpeedData
 bra4_9783:
 	LDA objState,X
 	AND #$40
@@ -3098,7 +3101,7 @@ loc4_97C1:
 bra4_97E7_RTS:
 	RTS
 
-Obj_hDC:
+obj0xDC:
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -3111,7 +3114,7 @@ Obj_hDC:
 	BEQ bra4_9806
 	CMP #$FF
 	BEQ bra4_9806
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra4_9806:
 	LDA objYLo,X
 	SEC
@@ -3161,7 +3164,7 @@ sub4_9857:
 	STA $32
 	LDA tbl4_9A83+1,Y
 	STA $33
-	JSR GetSpeedData
+	JSR getSpeedData
 bra4_986F:
 	LDA objState,X
 	AND #$20
@@ -3222,10 +3225,10 @@ bra4_98D9:
 	TYA
 	JMP loc4_992B
 tbl4_98DD:
-	db $00
-	db $02
-	db $04
-	db $02
+	.byte $00
+	.byte $02
+	.byte $04
+	.byte $02
 ptr6_98E1:
 	LDX $A4
 	LDA objState,X
@@ -3270,9 +3273,9 @@ bra4_9923:
 loc4_992B:
 	ASL
 	TAX
-	LDA SprPtrs_Boo,X
+	LDA sprTblBoo,X
 	STA $32
-	LDA SprPtrs_Boo+1,X
+	LDA sprTblBoo+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -3283,1715 +3286,1715 @@ loc4_992B:
 bra4_9944:
 	STY $36
 	JMP jmp_54_A118
-SprPtrs_Boo:
-	dw SprMap_Boo_Tease1
-	dw SprMap_Boo_Tease2
-	dw SprMap_Boo_ChaseAlt ; Only used by Boo Buddies
-	dw SprMap_Boo_Chase
-	dw SprMap_Boo_MouthOpen ; Only used by Boo Buddies
-	dw SprMap_Boo_Hide
-	dw SprMap_Boo_Tease1 ; Unused
-	dw SprMap_Boo_Tease2 ; Unused
-SprMap_Boo_Tease1:
-	db $02
-	db $02
-	db $AB
-	db $01, $02
-	db $04, $05
-SprMap_Boo_Tease2:
-	db $02
-	db $02
-	db $AB
-	db $01, $03
-	db $06, $07
-SprMap_Boo_ChaseAlt:
-	db $02
-	db $2
-	db $AB
-	db $17, $18
-	db $1D, $1E
-SprMap_Boo_Chase:
-	db $02
-	db $02
-	db $AB
-	db $17, $19
-	db $1F, $20
-SprMap_Boo_MouthOpen:
-	db $02
-	db $02
-	db $AB
-	db $08, $09
-	db $0F, $10
-SprMap_Boo_Hide:
-	db $02
-	db $02
-	db $AB
-	db $08, $0A
-	db $11, $12
+sprTblBoo:
+	.word sprBoo_Tease1
+	.word sprBoo_Tease2
+	.word sprBoo_ChaseAlt ; Only used by Boo Buddies
+	.word sprBoo_Chase
+	.word sprBoo_MouthOpen ; Only used by Boo Buddies
+	.word sprBoo_Hide
+	.word sprBoo_Tease1 ; Unused
+	.word sprBoo_Tease2 ; Unused
+sprBoo_Tease1:
+	.byte $02
+	.byte $02
+	.byte $AB
+	.byte $01, $02
+	.byte $04, $05
+sprBoo_Tease2:
+	.byte $02
+	.byte $02
+	.byte $AB
+	.byte $01, $03
+	.byte $06, $07
+sprBoo_ChaseAlt:
+	.byte $02
+	.byte $2
+	.byte $AB
+	.byte $17, $18
+	.byte $1D, $1E
+sprBoo_Chase:
+	.byte $02
+	.byte $02
+	.byte $AB
+	.byte $17, $19
+	.byte $1F, $20
+sprBoo_MouthOpen:
+	.byte $02
+	.byte $02
+	.byte $AB
+	.byte $08, $09
+	.byte $0F, $10
+sprBoo_Hide:
+	.byte $02
+	.byte $02
+	.byte $AB
+	.byte $08, $0A
+	.byte $11, $12
 	
 ; Boo Buddies sine/cosine lookup table
 ; Roughly equivalent to 79cos((pi/64)*x) rounded up with a few values being one off.
 ; Sine values are obtained by shifting 32 values ahead
 booBuddiesSineTable:
-	db $4F
-	db $4F
-	db $4F
-	db $4E
-	db $4D
-	db $4C
-	db $4B
-	db $49
-	db $48
-	db $46
-	db $44
-	db $42
-	db $40
-	db $3D
-	db $3B
-	db $38
-	db $35
-	db $32
-	db $2F
-	db $2C
-	db $29
-	db $25
-	db $22
-	db $1E
-	db $1A
-	db $17
-	db $13
-	db $0F
-	db $0B
-	db $07
-	db $03
-	db $00
-	db $FD
-	db $F9
-	db $F5
-	db $F1
-	db $ED
-	db $E9
-	db $E6
-	db $E2
-	db $DE
-	db $DB
-	db $D7
-	db $D4
-	db $D1
-	db $CE
-	db $CB
-	db $C8
-	db $C5
-	db $C3
-	db $C0
-	db $BE
-	db $BC
-	db $BA
-	db $B8
-	db $B7
-	db $B5
-	db $B4
-	db $B3
-	db $B2
-	db $B1
-	db $B1
-	db $B1
-	db $B1
-	db $B1
-	db $B1
-	db $B1
-	db $B2
-	db $B3
-	db $B4
-	db $B5
-	db $B7
-	db $B8
-	db $BA
-	db $BC
-	db $BE
-	db $C0
-	db $C3
-	db $C5
-	db $C8
-	db $CB
-	db $CE
-	db $D1
-	db $D4
-	db $D7
-	db $DB
-	db $DE
-	db $E2
-	db $E6
-	db $E9
-	db $ED
-	db $F1
-	db $F5
-	db $F9
-	db $FD
-	db $00
-	db $03
-	db $07
-	db $0B
-	db $0F
-	db $13
-	db $17
-	db $1A
-	db $1E
-	db $22
-	db $25
-	db $29
-	db $2C
-	db $2F
-	db $32
-	db $35
-	db $38
-	db $3B
-	db $3D
-	db $40
-	db $42
-	db $44
-	db $46
-	db $48
-	db $49
-	db $4B
-	db $4C
-	db $4D
-	db $4E
-	db $4F
-	db $4F
-	db $4F
-	db $4F ; end of boo circle movement thing
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
+	.byte $4F
+	.byte $4F
+	.byte $4F
+	.byte $4E
+	.byte $4D
+	.byte $4C
+	.byte $4B
+	.byte $49
+	.byte $48
+	.byte $46
+	.byte $44
+	.byte $42
+	.byte $40
+	.byte $3D
+	.byte $3B
+	.byte $38
+	.byte $35
+	.byte $32
+	.byte $2F
+	.byte $2C
+	.byte $29
+	.byte $25
+	.byte $22
+	.byte $1E
+	.byte $1A
+	.byte $17
+	.byte $13
+	.byte $0F
+	.byte $0B
+	.byte $07
+	.byte $03
+	.byte $00
+	.byte $FD
+	.byte $F9
+	.byte $F5
+	.byte $F1
+	.byte $ED
+	.byte $E9
+	.byte $E6
+	.byte $E2
+	.byte $DE
+	.byte $DB
+	.byte $D7
+	.byte $D4
+	.byte $D1
+	.byte $CE
+	.byte $CB
+	.byte $C8
+	.byte $C5
+	.byte $C3
+	.byte $C0
+	.byte $BE
+	.byte $BC
+	.byte $BA
+	.byte $B8
+	.byte $B7
+	.byte $B5
+	.byte $B4
+	.byte $B3
+	.byte $B2
+	.byte $B1
+	.byte $B1
+	.byte $B1
+	.byte $B1
+	.byte $B1
+	.byte $B1
+	.byte $B1
+	.byte $B2
+	.byte $B3
+	.byte $B4
+	.byte $B5
+	.byte $B7
+	.byte $B8
+	.byte $BA
+	.byte $BC
+	.byte $BE
+	.byte $C0
+	.byte $C3
+	.byte $C5
+	.byte $C8
+	.byte $CB
+	.byte $CE
+	.byte $D1
+	.byte $D4
+	.byte $D7
+	.byte $DB
+	.byte $DE
+	.byte $E2
+	.byte $E6
+	.byte $E9
+	.byte $ED
+	.byte $F1
+	.byte $F5
+	.byte $F9
+	.byte $FD
+	.byte $00
+	.byte $03
+	.byte $07
+	.byte $0B
+	.byte $0F
+	.byte $13
+	.byte $17
+	.byte $1A
+	.byte $1E
+	.byte $22
+	.byte $25
+	.byte $29
+	.byte $2C
+	.byte $2F
+	.byte $32
+	.byte $35
+	.byte $38
+	.byte $3B
+	.byte $3D
+	.byte $40
+	.byte $42
+	.byte $44
+	.byte $46
+	.byte $48
+	.byte $49
+	.byte $4B
+	.byte $4C
+	.byte $4D
+	.byte $4E
+	.byte $4F
+	.byte $4F
+	.byte $4F
+	.byte $4F ; end of boo circle movement thing
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
 tbl4_9A83:
-	dw ofs_9B1C
-	dw ofs_9B7B
-	dw ofs_9BA1
-	dw ofs_9BC2
-	dw ofs_9C02
-	dw ofs_9C05
-	dw ofs_9C20
-	dw ofs_9C8E
-	dw ofs_9CB0 ; Used for normal Boo
-	dw ofs_9CF4
-	dw ofs_9D33
-	dw ofs_9A9B
+	.word ofs_9B1C
+	.word ofs_9B7B
+	.word ofs_9BA1
+	.word ofs_9BC2
+	.word ofs_9C02
+	.word ofs_9C05
+	.word ofs_9C20
+	.word ofs_9C8E
+	.word ofs_9CB0 ; Used for normal Boo
+	.word ofs_9CF4
+	.word ofs_9D33
+	.word ofs_9A9B
 ofs_9A9B:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $FA
-	db $00
-	db $FC
-	db $00
-	db $FD
-	db $00
-	db $FE
-	db $00
-	db $FF
-	db $00
-	db $00
-	db $00
-	db $01
-	db $00
-	db $02
-	db $00
-	db $03
-	db $00
-	db $04
-	db $00
-	db $06
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $F8
-	db $00
-	db $FA
-	db $00
-	db $FC
-	db $00
-	db $FD
-	db $00
-	db $FE
-	db $00
-	db $FF
-	db $00
-	db $00
-	db $00
-	db $01
-	db $00
-	db $02
-	db $00
-	db $03
-	db $00
-	db $04
-	db $00
-	db $06
-	db $00
-	db $08
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $F8
-	db $00
-	db $F8
-	db $00
-	db $F9
-	db $00
-	db $FB
-	db $00
-	db $FD
-	db $00
-	db $FE
-	db $00
-	db $FF
-	db $00
-	db $00
-	db $00
-	db $01
-	db $00
-	db $02
-	db $00
-	db $03
-	db $00
-	db $05
-	db $00
-	db $07
-	db $00
-	db $08
-	db $00
-	db $08
-	db $00
-	db $00
-	db $00
-	db $F6
-	db $00
-	db $F7
-	db $00
-	db $F8
-	db $00
-	db $F9
-	db $00
-	db $FA
-	db $00
-	db $FB
-	db $00
-	db $FE
-	db $00
-	db $00
-	db $00
-	db $02
-	db $00
-	db $05
-	db $00
-	db $06
-	db $00
-	db $07
-	db $00
-	db $08
-	db $00
-	db $09
-	db $00
-	db $0A
-	db $80
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $FA
+	.byte $00
+	.byte $FC
+	.byte $00
+	.byte $FD
+	.byte $00
+	.byte $FE
+	.byte $00
+	.byte $FF
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $03
+	.byte $00
+	.byte $04
+	.byte $00
+	.byte $06
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $F8
+	.byte $00
+	.byte $FA
+	.byte $00
+	.byte $FC
+	.byte $00
+	.byte $FD
+	.byte $00
+	.byte $FE
+	.byte $00
+	.byte $FF
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $03
+	.byte $00
+	.byte $04
+	.byte $00
+	.byte $06
+	.byte $00
+	.byte $08
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $F8
+	.byte $00
+	.byte $F8
+	.byte $00
+	.byte $F9
+	.byte $00
+	.byte $FB
+	.byte $00
+	.byte $FD
+	.byte $00
+	.byte $FE
+	.byte $00
+	.byte $FF
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $03
+	.byte $00
+	.byte $05
+	.byte $00
+	.byte $07
+	.byte $00
+	.byte $08
+	.byte $00
+	.byte $08
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $F6
+	.byte $00
+	.byte $F7
+	.byte $00
+	.byte $F8
+	.byte $00
+	.byte $F9
+	.byte $00
+	.byte $FA
+	.byte $00
+	.byte $FB
+	.byte $00
+	.byte $FE
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $05
+	.byte $00
+	.byte $06
+	.byte $00
+	.byte $07
+	.byte $00
+	.byte $08
+	.byte $00
+	.byte $09
+	.byte $00
+	.byte $0A
+	.byte $80
 ofs_9B1C:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $FF
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $02
-	db $00
-	db $00
-	db $00
-	db $80
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $FF
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $80
 ofs_9B7B:
-	db $04
-	db $00
-	db $04
-	db $F8
-	db $04
-	db $F8
-	db $04
-	db $F8
-	db $04
-	db $FA
-	db $04
-	db $FA
-	db $04
-	db $FC
-	db $04
-	db $FC
-	db $04
-	db $FC
-	db $04
-	db $FD
-	db $04
-	db $FD
-	db $04
-	db $FE
-	db $04
-	db $FE
-	db $04
-	db $FF
-	db $04
-	db $00
-	db $00
-	db $00
-	db $81
-	db $00
-	db $03
-	db $00
-	db $81
-	db $00
+	.byte $04
+	.byte $00
+	.byte $04
+	.byte $F8
+	.byte $04
+	.byte $F8
+	.byte $04
+	.byte $F8
+	.byte $04
+	.byte $FA
+	.byte $04
+	.byte $FA
+	.byte $04
+	.byte $FC
+	.byte $04
+	.byte $FC
+	.byte $04
+	.byte $FC
+	.byte $04
+	.byte $FD
+	.byte $04
+	.byte $FD
+	.byte $04
+	.byte $FE
+	.byte $04
+	.byte $FE
+	.byte $04
+	.byte $FF
+	.byte $04
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $81
+	.byte $00
+	.byte $03
+	.byte $00
+	.byte $81
+	.byte $00
 ofs_9BA1:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $81
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $81
 ofs_9BC2:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $F8
-	db $00
-	db $F8
-	db $00
-	db $FA
-	db $00
-	db $FA
-	db $00
-	db $FC
-	db $00
-	db $FC
-	db $00
-	db $FD
-	db $00
-	db $FE
-	db $00
-	db $FF
-	db $00
-	db $FF
-	db $00
-	db $00
-	db $81
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $80
-	db $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $F8
+	.byte $00
+	.byte $F8
+	.byte $00
+	.byte $FA
+	.byte $00
+	.byte $FA
+	.byte $00
+	.byte $FC
+	.byte $00
+	.byte $FC
+	.byte $00
+	.byte $FD
+	.byte $00
+	.byte $FE
+	.byte $00
+	.byte $FF
+	.byte $00
+	.byte $FF
+	.byte $00
+	.byte $00
+	.byte $81
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $00
 ofs_9C02:
-	db $01
-	db $00
-	db $80
+	.byte $01
+	.byte $00
+	.byte $80
 ofs_9C05:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $80
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $80
 ofs_9C20:
-	db $03
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $03
-	db $FA
-	db $03
-	db $FB
-	db $03
-	db $FC
-	db $03
-	db $FD
-	db $03
-	db $FE
-	db $03
-	db $FF
-	db $03
-	db $00
-	db $81
-	db $00
-	db $03
-	db $F8
-	db $03
-	db $F8
-	db $03
-	db $F8
-	db $03
-	db $F8
-	db $03
-	db $F8
-	db $03
-	db $F8
-	db $03
-	db $FA
-	db $03
-	db $FA
-	db $03
-	db $FA
-	db $03
-	db $FA
-	db $03
-	db $FC
-	db $03
-	db $FC
-	db $03
-	db $FC
-	db $03
-	db $FD
-	db $03
-	db $FE
-	db $03
-	db $FF
-	db $03
-	db $00
-	db $81
-	db $00
-	db $03
-	db $F8
-	db $03
-	db $F8
-	db $03
-	db $F8
-	db $03
-	db $FA
-	db $03
-	db $FA
-	db $03
-	db $FA
-	db $03
-	db $FB
-	db $03
-	db $FC
-	db $03
-	db $FC
-	db $03
-	db $FC
-	db $03
-	db $FD
-	db $03
-	db $FD
-	db $03
-	db $FE
-	db $03
-	db $FE
-	db $03
-	db $FF
-	db $03
-	db $00
-	db $81
-	db $00
-	db $03
-	db $FC
-	db $03
-	db $FD
-	db $03
-	db $FE
-	db $03
-	db $FF
-	db $03
-	db $00
-	db $81
-	db $00
+	.byte $03
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $03
+	.byte $FA
+	.byte $03
+	.byte $FB
+	.byte $03
+	.byte $FC
+	.byte $03
+	.byte $FD
+	.byte $03
+	.byte $FE
+	.byte $03
+	.byte $FF
+	.byte $03
+	.byte $00
+	.byte $81
+	.byte $00
+	.byte $03
+	.byte $F8
+	.byte $03
+	.byte $F8
+	.byte $03
+	.byte $F8
+	.byte $03
+	.byte $F8
+	.byte $03
+	.byte $F8
+	.byte $03
+	.byte $F8
+	.byte $03
+	.byte $FA
+	.byte $03
+	.byte $FA
+	.byte $03
+	.byte $FA
+	.byte $03
+	.byte $FA
+	.byte $03
+	.byte $FC
+	.byte $03
+	.byte $FC
+	.byte $03
+	.byte $FC
+	.byte $03
+	.byte $FD
+	.byte $03
+	.byte $FE
+	.byte $03
+	.byte $FF
+	.byte $03
+	.byte $00
+	.byte $81
+	.byte $00
+	.byte $03
+	.byte $F8
+	.byte $03
+	.byte $F8
+	.byte $03
+	.byte $F8
+	.byte $03
+	.byte $FA
+	.byte $03
+	.byte $FA
+	.byte $03
+	.byte $FA
+	.byte $03
+	.byte $FB
+	.byte $03
+	.byte $FC
+	.byte $03
+	.byte $FC
+	.byte $03
+	.byte $FC
+	.byte $03
+	.byte $FD
+	.byte $03
+	.byte $FD
+	.byte $03
+	.byte $FE
+	.byte $03
+	.byte $FE
+	.byte $03
+	.byte $FF
+	.byte $03
+	.byte $00
+	.byte $81
+	.byte $00
+	.byte $03
+	.byte $FC
+	.byte $03
+	.byte $FD
+	.byte $03
+	.byte $FE
+	.byte $03
+	.byte $FF
+	.byte $03
+	.byte $00
+	.byte $81
+	.byte $00
 ofs_9C8E:
-	db $03
-	db $F8
-	db $03
-	db $F8
-	db $03
-	db $F8
-	db $03
-	db $FA
-	db $03
-	db $FA
-	db $03
-	db $FA
-	db $03
-	db $FB
-	db $03
-	db $FC
-	db $03
-	db $FC
-	db $03
-	db $FC
-	db $03
-	db $FD
-	db $03
-	db $FD
-	db $03
-	db $FE
-	db $03
-	db $FE
-	db $03
-	db $FF
-	db $03
-	db $00
-	db $81
-	db $00
+	.byte $03
+	.byte $F8
+	.byte $03
+	.byte $F8
+	.byte $03
+	.byte $F8
+	.byte $03
+	.byte $FA
+	.byte $03
+	.byte $FA
+	.byte $03
+	.byte $FA
+	.byte $03
+	.byte $FB
+	.byte $03
+	.byte $FC
+	.byte $03
+	.byte $FC
+	.byte $03
+	.byte $FC
+	.byte $03
+	.byte $FD
+	.byte $03
+	.byte $FD
+	.byte $03
+	.byte $FE
+	.byte $03
+	.byte $FE
+	.byte $03
+	.byte $FF
+	.byte $03
+	.byte $00
+	.byte $81
+	.byte $00
 ofs_9CB0:
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $FF
-	db $81
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $01
-	db $81
-	db $00
-	db $00
-	db $00
-	db $81
-	db $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $FF
+	.byte $81
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $81
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $81
+	.byte $00
 ofs_9CF4:
-	db $01
-	db $00
-	db $01
-	db $FF
-	db $01
-	db $FF
-	db $01
-	db $FF
-	db $01
-	db $FF
-	db $01
-	db $FF
-	db $01
-	db $FF
-	db $01
-	db $FF
-	db $01
-	db $FF
-	db $01
-	db $FF
-	db $01
-	db $FF
-	db $01
-	db $FF
-	db $01
-	db $FF
-	db $01
-	db $FE
-	db $01
-	db $FE
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $02
-	db $01
-	db $02
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $80
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $FF
+	.byte $01
+	.byte $FF
+	.byte $01
+	.byte $FF
+	.byte $01
+	.byte $FF
+	.byte $01
+	.byte $FF
+	.byte $01
+	.byte $FF
+	.byte $01
+	.byte $FF
+	.byte $01
+	.byte $FF
+	.byte $01
+	.byte $FF
+	.byte $01
+	.byte $FF
+	.byte $01
+	.byte $FF
+	.byte $01
+	.byte $FF
+	.byte $01
+	.byte $FE
+	.byte $01
+	.byte $FE
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $02
+	.byte $01
+	.byte $02
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $80
 ofs_9D33:
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $02
-	db $81
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $FE
-	db $81
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $02
+	.byte $81
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $FE
+	.byte $81
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00

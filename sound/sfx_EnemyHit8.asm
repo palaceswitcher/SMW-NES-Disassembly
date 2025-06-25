@@ -5,8 +5,8 @@ EnemyHit8_P1:
 	pitch $39
 	volenv $41
 	notelen 4
-	db A5-9, A#5-9
-	db $FF
+	.byte A5-9, A#5-9
+	.byte $FF
 EnemyHit8_Footer:
 	sfxsq1 EnemyHit8_P1
-	db $FF
+	.byte $FF

@@ -1,386 +1,386 @@
 ; 0x048010-0x04A00F
 lda_36_C000: 
-	dw PlayerAnimTablesTbl   ; 00 No Yoshi
-	dw YoshiAnimTablesTbl_1 ; 01 If Yoshi present (all entries on this table point to the same thing)
-	dw YoshiAnimTablesTbl_2 ; 02
-	dw YoshiAnimTablesTbl_2 ; 03 Because Yoshi Status is doubled for use as an index this table is long
-	dw YoshiAnimTablesTbl_2 ; 04
-	dw YoshiAnimTablesTbl_2 ; 05
-	dw YoshiAnimTablesTbl_3 ; 06 Used when Mario has a powerup (?)
-	dw YoshiAnimTablesTbl_3 ; 07
-	dw YoshiAnimTablesTbl_3 ; 08
-	dw YoshiAnimTablesTbl_3 ; 09 As far as I can tell these are all identical unique copies, but this hasn't been fully investigated
+	.word PlayerAnimTablesTbl   ; 00 No Yoshi
+	.word YoshiAnimTablesTbl_1 ; 01 If Yoshi present (all entries on this table point to the same thing)
+	.word YoshiAnimTablesTbl_2 ; 02
+	.word YoshiAnimTablesTbl_2 ; 03 Because Yoshi Status is doubled for use as an index this table is long
+	.word YoshiAnimTablesTbl_2 ; 04
+	.word YoshiAnimTablesTbl_2 ; 05
+	.word YoshiAnimTablesTbl_3 ; 06 Used when Mario has a powerup (?)
+	.word YoshiAnimTablesTbl_3 ; 07
+	.word YoshiAnimTablesTbl_3 ; 08
+	.word YoshiAnimTablesTbl_3 ; 09 As far as I can tell these are all identical unique copies, but this hasn't been fully investigated
 PlayerAnimTablesTbl:
-	dw AnimTbl_PSmall
-	dw AnimTbl_PBig
-	dw AnimTbl_PFire
-	dw AnimTbl_PCapeStatic
-	dw AnimTbl_PCapeMove
-	dw AnimTbl_PSmall_Hold
-	dw AnimTbl_PBig_Hold
-	dw AnimTbl_PFire_Hold
-	dw AnimTbl_PCapeStatic_Hold
-	dw AnimTbl_PCapeMove_Hold
+	.word AnimTbl_PSmall
+	.word AnimTbl_PBig
+	.word AnimTbl_PFire
+	.word AnimTbl_PCapeStatic
+	.word AnimTbl_PCapeMove
+	.word AnimTbl_PSmall_Hold
+	.word AnimTbl_PBig_Hold
+	.word AnimTbl_PFire_Hold
+	.word AnimTbl_PCapeStatic_Hold
+	.word AnimTbl_PCapeMove_Hold
 AnimTbl_PSmall:	; Player Action (associated with animation)
-	dw Anim_PSmall_Stand	; Nothing 	00
-	dw Anim_PSmall_Walk		; Walking 	01
-	dw Anim_PSmall_Run		; Running 	02
-	dw Anim_PSmall_Walk		; Unused  	03
-	dw Anim_PSmall_Jump		; Jumping 	04
-	dw Anim_PSmall_Spin		; Spin    	05
-	dw Anim_PSmall_Turn		; Skid    	06
-	dw Anim_PSmall_Duck		; Duck    	07
-	dw Anim_PSmall_Up		; Look up 	08
-	dw Anim_PSmall_RunJump	; Run jump   09
-	dw Anim_PSmall_Fall		; Falling 	0A note that this is specifically for falling from a ledge, not a jump
-	dw Anim_PSmall_Sink		; Sink    	0B
-	dw Anim_PSmall_Swim		; Swim    	0C
-	dw Anim_PSmall_ClimbIdle; Climb   	0D
-	dw Anim_PSmall_Climb	; Climb move	0E
-	dw Anim_PSmall_RunJump		; Flying		0F
-	dw Anim_PSmall_Win		; Victory	10
-	dw Anim_PSmall_Die		; Dead		11
+	.word Anim_PSmall_Stand	; Nothing 	00
+	.word Anim_PSmall_Walk		; Walking 	01
+	.word Anim_PSmall_Run		; Running 	02
+	.word Anim_PSmall_Walk		; Unused  	03
+	.word Anim_PSmall_Jump		; Jumping 	04
+	.word Anim_PSmall_Spin		; Spin    	05
+	.word Anim_PSmall_Turn		; Skid    	06
+	.word Anim_PSmall_Duck		; Duck    	07
+	.word Anim_PSmall_Up		; Look up 	08
+	.word Anim_PSmall_RunJump	; Run jump   09
+	.word Anim_PSmall_Fall		; Falling 	0A note that this is specifically for falling from a ledge, not a jump
+	.word Anim_PSmall_Sink		; Sink    	0B
+	.word Anim_PSmall_Swim		; Swim    	0C
+	.word Anim_PSmall_ClimbIdle; Climb   	0D
+	.word Anim_PSmall_Climb	; Climb move	0E
+	.word Anim_PSmall_RunJump		; Flying		0F
+	.word Anim_PSmall_Win		; Victory	10
+	.word Anim_PSmall_Die		; Dead		11
 AnimTbl_PSmall_Hold:
-	dw Anim_PSmall_Hold
-	dw Anim_PSmall_HoldWalk
-	dw Anim_PSmall_HoldRun
-	dw Anim_PSmall_HoldWalk
-	dw Anim_PSmall_HoldJump
-	dw Anim_PSmall_Spin
-	dw Anim_PSmall_Turn
-	dw Anim_PSmall_HoldDuck
-	dw Anim_PSmall_Up
-	dw Anim_PSmall_HoldJump
-	dw Anim_PSmall_HoldFall
-	dw Anim_PSmall_HoldSink
-	dw Anim_PSmall_HoldSwim
-	dw Anim_PSmall_ClimbIdle
-	dw Anim_PSmall_Climb
-	dw Anim_PSmall_HoldJump
-	dw Anim_PSmall_Win
-	dw Anim_PSmall_Die
+	.word Anim_PSmall_Hold
+	.word Anim_PSmall_HoldWalk
+	.word Anim_PSmall_HoldRun
+	.word Anim_PSmall_HoldWalk
+	.word Anim_PSmall_HoldJump
+	.word Anim_PSmall_Spin
+	.word Anim_PSmall_Turn
+	.word Anim_PSmall_HoldDuck
+	.word Anim_PSmall_Up
+	.word Anim_PSmall_HoldJump
+	.word Anim_PSmall_HoldFall
+	.word Anim_PSmall_HoldSink
+	.word Anim_PSmall_HoldSwim
+	.word Anim_PSmall_ClimbIdle
+	.word Anim_PSmall_Climb
+	.word Anim_PSmall_HoldJump
+	.word Anim_PSmall_Win
+	.word Anim_PSmall_Die
 Anim_PSmall_Stand:
-	dw SprMap_PSmall_Stand
+	.word SprMap_PSmall_Stand
 	db $0A
 	db $00
-	dw SprMap_PSmall_Stand
+	.word SprMap_PSmall_Stand
 	db $80
 	db $00
 Anim_PSmall_Walk:
-	dw SprMap_PSmall_Stand
+	.word SprMap_PSmall_Stand
 	db $04
 	db $00
-	dw SprMap_PSmall_Walk1
+	.word SprMap_PSmall_Walk1
 	db $04
 	db $00
-	dw SprMap_PSmall_Stand
+	.word SprMap_PSmall_Stand
 	db $80
 	db $00
 Anim_PSmall_Run:
-	dw SprMap_PSmall_Stand
+	.word SprMap_PSmall_Stand
 	db $02
 	db $00
-	dw SprMap_PSmall_Walk1
+	.word SprMap_PSmall_Walk1
 	db $02
 	db $00
-	dw SprMap_PSmall_Stand
+	.word SprMap_PSmall_Stand
 	db $02
 	db $00
-	dw SprMap_PSmall_Walk1
+	.word SprMap_PSmall_Walk1
 	db $02
 	db $00
-	dw SprMap_PSmall_Stand
+	.word SprMap_PSmall_Stand
 	db $02
 	db $00
-	dw SprMap_PSmall_Walk1
+	.word SprMap_PSmall_Walk1
 	db $02
 	db $00
-	dw SprMap_PSmall_Stand
+	.word SprMap_PSmall_Stand
 	db $02
 	db $00
-	dw SprMap_PSmall_Walk1
+	.word SprMap_PSmall_Walk1
 	db $02
 	db $00
-	dw SprMap_PSmall_Stand
+	.word SprMap_PSmall_Stand
 	db $02
 	db $00
-	dw SprMap_PSmall_Walk1
+	.word SprMap_PSmall_Walk1
 	db $02
 	db $00
-	dw SprMap_PSmall_Stand
+	.word SprMap_PSmall_Stand
 	db $02
 	db $00
-	dw SprMap_PSmall_Walk1
+	.word SprMap_PSmall_Walk1
 	db $02
 	db $00
-	dw SprMap_PSmall_Stand
+	.word SprMap_PSmall_Stand
 	db $02
 	db $00
-	dw SprMap_PSmall_Walk1
+	.word SprMap_PSmall_Walk1
 	db $02
 	db $00
-	dw SprMap_PSmall_Stand
+	.word SprMap_PSmall_Stand
 	db $02
 	db $00
-	dw SprMap_PSmall_Walk1
+	.word SprMap_PSmall_Walk1
 	db $02
 	db $00
-	dw SprMap_PSmall_Run1
+	.word SprMap_PSmall_Run1
 	db $02
 	db $00
-	dw SprMap_PSmall_Run2
+	.word SprMap_PSmall_Run2
 	db $02
 	db $00
-	dw SprMap_PSmall_Run1
+	.word SprMap_PSmall_Run1
 	db $02
 	db $00
-	dw SprMap_PSmall_Run2
+	.word SprMap_PSmall_Run2
 	db $02
 	db $00
-	dw SprMap_PSmall_Run1
+	.word SprMap_PSmall_Run1
 	db $90
 	db $00
 Anim_PSmall_Jump:
-	dw SprMap_PSmall_Jump
+	.word SprMap_PSmall_Jump
 	db $23
 	db $00
-	dw SprMap_PSmall_Fall
+	.word SprMap_PSmall_Fall
 	db $02
 	db $00
-	dw SprMap_PSmall_Fall
+	.word SprMap_PSmall_Fall
 	db $81
 	db $00
 Anim_PSmall_RunJump:
-	dw SprMap_PSmall_RunJump
+	.word SprMap_PSmall_RunJump
 	db $0A
 	db $00
-	dw SprMap_PSmall_RunJump
+	.word SprMap_PSmall_RunJump
 	db $80
 	db $00
 Anim_PSmall_Spin:
-	dw SprMap_PSmall_Stand
+	.word SprMap_PSmall_Stand
 	db $01
 	db $00
-	dw SprMap_PSmall_Back
+	.word SprMap_PSmall_Back
 	db $01
 	db $00
-	dw SprMap_PSmall_Flipped
+	.word SprMap_PSmall_Flipped
 	db $01
 	db $00
-	dw SprMap_PSmall_Front
+	.word SprMap_PSmall_Front
 	db $01
 	db $00
-	dw SprMap_PSmall_Stand
+	.word SprMap_PSmall_Stand
 	db $80
 	db $00
 Anim_PSmall_Turn:
-	dw SprMap_PSmall_Turn
+	.word SprMap_PSmall_Turn
 	db $0A
 	db $00
-	dw SprMap_PSmall_Turn
+	.word SprMap_PSmall_Turn
 	db $80
 	db $00
 Anim_PSmall_Duck:
-	dw SprMap_PSmall_Duck
+	.word SprMap_PSmall_Duck
 	db $08
 	db $00
-	dw SprMap_PSmall_Duck
+	.word SprMap_PSmall_Duck
 	db $80
 	db $00
 Anim_PSmall_Up:
-	dw SprMap_PSmall_LookUp
+	.word SprMap_PSmall_LookUp
 	db $02
 	db $00
-	dw SprMap_PSmall_LookUp
+	.word SprMap_PSmall_LookUp
 	db $80
 	db $00
 Anim_PSmall_Fall:
-	dw SprMap_PSmall_Fall
+	.word SprMap_PSmall_Fall
 	db $02
 	db $00
-	dw SprMap_PSmall_Fall
+	.word SprMap_PSmall_Fall
 	db $80
 	db $00
 Anim_PSmall_Sink:
-	dw SprMap_PSmall_Swim1
+	.word SprMap_PSmall_Swim1
 	db $01
 	db $00
-	dw SprMap_PSmall_Swim1
+	.word SprMap_PSmall_Swim1
 	db $80
 	db $00
 Anim_PSmall_Swim:
-	dw SprMap_PSmall_RunJump
+	.word SprMap_PSmall_RunJump
 	db $03
 	db $00
-	dw SprMap_PSmall_Swim1
+	.word SprMap_PSmall_Swim1
 	db $03
 	db $00
-	dw SprMap_PSmall_RunJump
+	.word SprMap_PSmall_RunJump
 	db $80
 	db $00
 Anim_PSmall_ClimbIdle:
-	dw SprMap_PSmall_Climb1
+	.word SprMap_PSmall_Climb1
 	db $08
 	db $00
-	dw SprMap_PSmall_Climb1
+	.word SprMap_PSmall_Climb1
 	db $80
 	db $00
 Anim_PSmall_Climb:
-	dw SprMap_PSmall_Climb1
+	.word SprMap_PSmall_Climb1
 	db $08
 	db $00
-	dw SprMap_PSmall_Climb2
+	.word SprMap_PSmall_Climb2
 	db $08
 	db $00
-	dw SprMap_PSmall_Climb1
+	.word SprMap_PSmall_Climb1
 	db $80
 	db $00
 Anim_PSmall_Win:
-	dw SprMap_PSmall_Victory
+	.word SprMap_PSmall_Victory
 	db $0A
 	db $00
-	dw SprMap_PSmall_Victory
+	.word SprMap_PSmall_Victory
 	db $80
 	db $00
 Anim_PSmall_Die:
-	dw SprMap_PSmall_Death1
+	.word SprMap_PSmall_Death1
 	db $28
 	db $00
-	dw SprMap_PSmall_Death1
+	.word SprMap_PSmall_Death1
 	db $08
 	db $00
-	dw SprMap_PSmall_Death2
+	.word SprMap_PSmall_Death2
 	db $08
 	db $00
-	dw SprMap_PSmall_Death1
+	.word SprMap_PSmall_Death1
 	db $81
 	db $00
 Anim_PSmall_Hold:
-	dw SprMap_PSmall_Hold
+	.word SprMap_PSmall_Hold
 	db $0A
 	db $00
-	dw SprMap_PSmall_Hold
+	.word SprMap_PSmall_Hold
 	db $80
 	db $00
 Anim_PSmall_HoldWalk:
-	dw SprMap_PSmall_Hold
+	.word SprMap_PSmall_Hold
 	db $04
 	db $00
-	dw SprMap_PSmall_HoldWalk
+	.word SprMap_PSmall_HoldWalk
 	db $04
 	db $00
-	dw SprMap_PSmall_Hold
+	.word SprMap_PSmall_Hold
 	db $80
 	db $00
 Anim_PSmall_HoldRun:
-	dw SprMap_PSmall_Hold
+	.word SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw SprMap_PSmall_HoldWalk
+	.word SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw SprMap_PSmall_Hold
+	.word SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw SprMap_PSmall_HoldWalk
+	.word SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw SprMap_PSmall_Hold
+	.word SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw SprMap_PSmall_HoldWalk
+	.word SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw SprMap_PSmall_Hold
+	.word SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw SprMap_PSmall_HoldWalk
+	.word SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw SprMap_PSmall_Hold
+	.word SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw SprMap_PSmall_HoldWalk
+	.word SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw SprMap_PSmall_Hold
+	.word SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw SprMap_PSmall_HoldWalk
+	.word SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw SprMap_PSmall_Hold
+	.word SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw SprMap_PSmall_HoldWalk
+	.word SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw SprMap_PSmall_Hold
+	.word SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw SprMap_PSmall_HoldWalk
+	.word SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw SprMap_PSmall_Hold
+	.word SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw SprMap_PSmall_HoldWalk
+	.word SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw SprMap_PSmall_Hold
+	.word SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw SprMap_PSmall_HoldWalk
+	.word SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw SprMap_PSmall_Hold
+	.word SprMap_PSmall_Hold
 	db $90
 	db $00
 Anim_PSmall_HoldJump:
-	dw SprMap_PSmall_HoldWalk
+	.word SprMap_PSmall_HoldWalk
 	db $23
 	db $00
-	dw SprMap_PSmall_HoldWalk
+	.word SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw SprMap_PSmall_HoldWalk
+	.word SprMap_PSmall_HoldWalk
 	db $81
 	db $00
 Anim_PSmall_HoldDuck:
-	dw SprMap_PSmall_DuckHold
+	.word SprMap_PSmall_DuckHold
 	db $08
 	db $00
-	dw SprMap_PSmall_DuckHold
+	.word SprMap_PSmall_DuckHold
 	db $80
 	db $00
-	dw SprMap_PSmall_Hold
+	.word SprMap_PSmall_Hold
 	db $02
 	db $00
-	dw SprMap_PSmall_Hold
+	.word SprMap_PSmall_Hold
 	db $80
 	db $00
 Anim_PSmall_HoldFall:
-	dw SprMap_PSmall_HoldWalk
+	.word SprMap_PSmall_HoldWalk
 	db $02
 	db $00
-	dw SprMap_PSmall_HoldWalk
+	.word SprMap_PSmall_HoldWalk
 	db $80
 	db $00
 Anim_PSmall_HoldSink:
-	dw pnt3_C2D8
+	.word pnt3_C2D8
 	db $01
 	db $00
-	dw pnt3_C2D8
+	.word pnt3_C2D8
 	db $80
 	db $00
 Anim_PSmall_HoldSwim:
-	dw pnt3_C2D8
+	.word pnt3_C2D8
 	db $03
 	db $00
-	dw pnt3_C2D8
+	.word pnt3_C2D8
 	db $03
 	db $00
-	dw pnt3_C2D8
+	.word pnt3_C2D8
 	db $80
 	db $00
 SprMap_PSmall_Stand:
@@ -566,391 +566,391 @@ pnt3_C2D8:
 	db $66, $7F
 	db $62, $63
 AnimTbl_PBig:
-	dw Anim_PBig_Stand
-	dw Anim_PBig_Walk
-	dw Anim_PBig_Run
-	dw Anim_PBig_Walk
-	dw Anim_PBig_Jump
-	dw Anim_PBig_Spin
-	dw Anim_PBig_Turn
-	dw Anim_PBig_Duck
-	dw Anim_PBig_LookUp
-	dw Anim_PBig_RunJump
-	dw Anim_PBig_Fall
-	dw Anim_PBig_Sink
-	dw Anim_PBig_Swim
-	dw Anim_PBig_Climb
-	dw Anim_PBig_ClimbMove
-	dw Anim_PBig_RunJump
-	dw Anim_PBig_Win
+	.word Anim_PBig_Stand
+	.word Anim_PBig_Walk
+	.word Anim_PBig_Run
+	.word Anim_PBig_Walk
+	.word Anim_PBig_Jump
+	.word Anim_PBig_Spin
+	.word Anim_PBig_Turn
+	.word Anim_PBig_Duck
+	.word Anim_PBig_LookUp
+	.word Anim_PBig_RunJump
+	.word Anim_PBig_Fall
+	.word Anim_PBig_Sink
+	.word Anim_PBig_Swim
+	.word Anim_PBig_Climb
+	.word Anim_PBig_ClimbMove
+	.word Anim_PBig_RunJump
+	.word Anim_PBig_Win
 AnimTbl_PBig_Hold:
-	dw Anim_PBig_Hold
-	dw Anim_PBig_HoldWalk
-	dw Anim_PBig_HoldRun
-	dw Anim_PBig_HoldWalk
-	dw Anim_PBig_HoldJump
-	dw Anim_PBig_Spin
-	dw Anim_PBig_Turn
-	dw Anim_PBig_HoldDuck
-	dw Anim_PBig_LookUp
-	dw Anim_PBig_Sink
-	dw Anim_PBig_HoldFall
-	dw Anim_PBig_Sink
-	dw Anim_PBig_HoldSwim
-	dw Anim_PBig_Climb
-	dw Anim_PBig_ClimbMove
-	dw Anim_PBig_Sink
-	dw Anim_PBig_Win
+	.word Anim_PBig_Hold
+	.word Anim_PBig_HoldWalk
+	.word Anim_PBig_HoldRun
+	.word Anim_PBig_HoldWalk
+	.word Anim_PBig_HoldJump
+	.word Anim_PBig_Spin
+	.word Anim_PBig_Turn
+	.word Anim_PBig_HoldDuck
+	.word Anim_PBig_LookUp
+	.word Anim_PBig_Sink
+	.word Anim_PBig_HoldFall
+	.word Anim_PBig_Sink
+	.word Anim_PBig_HoldSwim
+	.word Anim_PBig_Climb
+	.word Anim_PBig_ClimbMove
+	.word Anim_PBig_Sink
+	.word Anim_PBig_Win
 Anim_PBig_Stand:
-	dw SprMap_PBig_Stand
+	.word SprMap_PBig_Stand
 	db $0A
 	db $00
-	dw SprMap_PBig_Stand
+	.word SprMap_PBig_Stand
 	db $80
 	db $00
 Anim_PBig_Walk:
-	dw SprMap_PBig_Walk1
+	.word SprMap_PBig_Walk1
 	db $04
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $04
 	db $00
-	dw SprMap_PBig_Stand
+	.word SprMap_PBig_Stand
 	db $04
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $04
 	db $00
-	dw SprMap_PBig_Walk1
+	.word SprMap_PBig_Walk1
 	db $04
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $04
 	db $00
-	dw SprMap_PBig_Stand
+	.word SprMap_PBig_Stand
 	db $04
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $04
 	db $00
-	dw SprMap_PBig_Walk1
+	.word SprMap_PBig_Walk1
 	db $80
 	db $00
 Anim_PBig_Run:
-	dw SprMap_PBig_Walk1
+	.word SprMap_PBig_Walk1
 	db $02
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw SprMap_PBig_Stand
+	.word SprMap_PBig_Stand
 	db $02
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw SprMap_PBig_Walk1
+	.word SprMap_PBig_Walk1
 	db $02
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw SprMap_PBig_Stand
+	.word SprMap_PBig_Stand
 	db $02
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw SprMap_PBig_Walk1
+	.word SprMap_PBig_Walk1
 	db $02
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw SprMap_PBig_Stand
+	.word SprMap_PBig_Stand
 	db $02
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw SprMap_PBig_Walk1
+	.word SprMap_PBig_Walk1
 	db $02
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw SprMap_PBig_Stand
+	.word SprMap_PBig_Stand
 	db $02
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw SprMap_PBig_Run1
+	.word SprMap_PBig_Run1
 	db $02
 	db $00
-	dw SprMap_PBig_Run2
+	.word SprMap_PBig_Run2
 	db $02
 	db $00
-	dw SprMap_PBig_Run3
+	.word SprMap_PBig_Run3
 	db $02
 	db $00
-	dw SprMap_PBig_Run2
+	.word SprMap_PBig_Run2
 	db $02
 	db $00
-	dw SprMap_PBig_Run1
+	.word SprMap_PBig_Run1
 	db $90
 	db $00
 Anim_PBig_Jump:
-	dw SprMap_PBig_Jump
+	.word SprMap_PBig_Jump
 	db $23
 	db $00
-	dw SprMap_PBig_Fall
+	.word SprMap_PBig_Fall
 	db $02
 	db $00
-	dw SprMap_PBig_Fall
+	.word SprMap_PBig_Fall
 	db $81
 	db $00
 Anim_PBig_RunJump:
-	dw SprMap_PBig_RunJump
+	.word SprMap_PBig_RunJump
 	db $0A
 	db $00
-	dw SprMap_PBig_RunJump
+	.word SprMap_PBig_RunJump
 	db $80
 	db $00
 Anim_PBig_Spin:
-	dw SprMap_PBig_Front
+	.word SprMap_PBig_Front
 	db $01
 	db $00
-	dw SprMap_PBig_Back
+	.word SprMap_PBig_Back
 	db $01
 	db $00
-	dw SprMap_PBig_Side1
+	.word SprMap_PBig_Side1
 	db $01
 	db $00
-	dw SprMap_PBig_Side2
+	.word SprMap_PBig_Side2
 	db $01
 	db $00
-	dw SprMap_PBig_Front
+	.word SprMap_PBig_Front
 	db $80
 	db $00
 Anim_PBig_Turn:
-	dw SprMap_PBig_Turn
+	.word SprMap_PBig_Turn
 	db $0A
 	db $00
-	dw SprMap_PBig_Turn
+	.word SprMap_PBig_Turn
 	db $80
 	db $00
 Anim_PBig_Duck:
-	dw SprMap_PBig_Duck
+	.word SprMap_PBig_Duck
 	db $08
 	db $00
-	dw SprMap_PBig_Duck
+	.word SprMap_PBig_Duck
 	db $80
 	db $00
 Anim_PBig_LookUp:
-	dw SprMap_PBig_LookUp
+	.word SprMap_PBig_LookUp
 	db $02
 	db $00
-	dw SprMap_PBig_LookUp
+	.word SprMap_PBig_LookUp
 	db $80
 	db $00
 Anim_PBig_Fall:
-	dw SprMap_PBig_Fall
+	.word SprMap_PBig_Fall
 	db $02
 	db $00
-	dw SprMap_PBig_Fall
+	.word SprMap_PBig_Fall
 	db $80
 	db $00
 Anim_PBig_Sink:
-	dw SprMap_PBig_Swim1
+	.word SprMap_PBig_Swim1
 	db $01
 	db $00
-	dw SprMap_PBig_Swim1
+	.word SprMap_PBig_Swim1
 	db $80
 	db $00
 Anim_PBig_Swim:
-	dw SprMap_PBig_RunJump
+	.word SprMap_PBig_RunJump
 	db $03
 	db $00
-	dw SprMap_PBig_Swim2
+	.word SprMap_PBig_Swim2
 	db $03
 	db $00
-	dw SprMap_PBig_Swim1
+	.word SprMap_PBig_Swim1
 	db $03
 	db $00
-	dw SprMap_PBig_Swim2
+	.word SprMap_PBig_Swim2
 	db $03
 	db $00
-	dw SprMap_PBig_Fall
+	.word SprMap_PBig_Fall
 	db $80
 	db $00
 Anim_PBig_Climb:
-	dw SprMap_PBig_Climb1
+	.word SprMap_PBig_Climb1
 	db $08
 	db $00
-	dw SprMap_PBig_Climb1
+	.word SprMap_PBig_Climb1
 	db $80
 	db $00
 Anim_PBig_ClimbMove:
-	dw SprMap_PBig_Climb1
+	.word SprMap_PBig_Climb1
 	db $08
 	db $00
-	dw SprMap_PBig_Climb2
+	.word SprMap_PBig_Climb2
 	db $08
 	db $00
-	dw SprMap_PBig_Climb1
+	.word SprMap_PBig_Climb1
 	db $80
 	db $00
 Anim_PBig_Win:
-	dw SprMap_PBig_Victory
+	.word SprMap_PBig_Victory
 	db $0A
 	db $00
-	dw SprMap_PBig_Victory
+	.word SprMap_PBig_Victory
 	db $80
 	db $00
 Anim_PBig_Hold:
-	dw SprMap_PBig_Hold
+	.word SprMap_PBig_Hold
 	db $0A
 	db $00
-	dw SprMap_PBig_Hold
+	.word SprMap_PBig_Hold
 	db $80
 	db $00
 Anim_PBig_HoldWalk:
-	dw SprMap_PBig_HoldWalk1
+	.word SprMap_PBig_HoldWalk1
 	db $04
 	db $00
-	dw SprMap_PBig_HoldWalk2
+	.word SprMap_PBig_HoldWalk2
 	db $04
 	db $00
-	dw SprMap_PBig_Hold
+	.word SprMap_PBig_Hold
 	db $04
 	db $00
-	dw SprMap_PBig_HoldWalk2
+	.word SprMap_PBig_HoldWalk2
 	db $04
 	db $00
-	dw SprMap_PBig_HoldWalk1
+	.word SprMap_PBig_HoldWalk1
 	db $04
 	db $00
-	dw SprMap_PBig_HoldWalk2
+	.word SprMap_PBig_HoldWalk2
 	db $04
 	db $00
-	dw SprMap_PBig_Hold
+	.word SprMap_PBig_Hold
 	db $04
 	db $00
-	dw SprMap_PBig_HoldWalk2
+	.word SprMap_PBig_HoldWalk2
 	db $04
 	db $00
-	dw SprMap_PBig_HoldWalk1
+	.word SprMap_PBig_HoldWalk1
 	db $80
 	db $00
 Anim_PBig_HoldRun:
-	dw SprMap_PBig_HoldWalk1
+	.word SprMap_PBig_HoldWalk1
 	db $02
 	db $00
-	dw SprMap_PBig_HoldWalk2
+	.word SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PBig_Hold
+	.word SprMap_PBig_Hold
 	db $02
 	db $00
-	dw SprMap_PBig_HoldWalk2
+	.word SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PBig_HoldWalk1
+	.word SprMap_PBig_HoldWalk1
 	db $02
 	db $00
-	dw SprMap_PBig_HoldWalk2
+	.word SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PBig_Hold
+	.word SprMap_PBig_Hold
 	db $02
 	db $00
-	dw SprMap_PBig_HoldWalk2
+	.word SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PBig_HoldWalk1
+	.word SprMap_PBig_HoldWalk1
 	db $02
 	db $00
-	dw SprMap_PBig_HoldWalk2
+	.word SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PBig_Hold
+	.word SprMap_PBig_Hold
 	db $02
 	db $00
-	dw SprMap_PBig_HoldWalk2
+	.word SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PBig_HoldWalk1
+	.word SprMap_PBig_HoldWalk1
 	db $02
 	db $00
-	dw SprMap_PBig_HoldWalk2
+	.word SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PBig_Hold
+	.word SprMap_PBig_Hold
 	db $02
 	db $00
-	dw SprMap_PBig_HoldWalk2
+	.word SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PBig_HoldWalk1
+	.word SprMap_PBig_HoldWalk1
 	db $02
 	db $00
-	dw SprMap_PBig_HoldWalk2
+	.word SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PBig_Hold
+	.word SprMap_PBig_Hold
 	db $02
 	db $00
-	dw SprMap_PBig_HoldWalk2
+	.word SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PBig_HoldWalk1
+	.word SprMap_PBig_HoldWalk1
 	db $90
 	db $00
 Anim_PBig_HoldJump:
-	dw SprMap_PBig_HoldWalk1
+	.word SprMap_PBig_HoldWalk1
 	db $23
 	db $00
-	dw SprMap_PBig_HoldWalk1
+	.word SprMap_PBig_HoldWalk1
 	db $02
 	db $00
-	dw SprMap_PBig_HoldWalk1
+	.word SprMap_PBig_HoldWalk1
 	db $81
 	db $00
 Anim_PBig_HoldDuck:
-	dw SprMap_PBig_DuckHold
+	.word SprMap_PBig_DuckHold
 	db $08
 	db $00
-	dw SprMap_PBig_DuckHold
+	.word SprMap_PBig_DuckHold
 	db $80
 	db $00
-	dw SprMap_PBig_LookUp
+	.word SprMap_PBig_LookUp
 	db $02
 	db $00
-	dw SprMap_PBig_LookUp
+	.word SprMap_PBig_LookUp
 	db $80
 	db $00
 Anim_PBig_HoldFall:
-	dw SprMap_PBig_HoldWalk2
+	.word SprMap_PBig_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PBig_HoldWalk2
+	.word SprMap_PBig_HoldWalk2
 	db $80
 	db $00
 Anim_PBig_HoldSwim:
-	dw SprMap_PBig_Swim1
+	.word SprMap_PBig_Swim1
 	db $03
 	db $00
-	dw SprMap_PBig_Swim1
+	.word SprMap_PBig_Swim1
 	db $03
 	db $00
-	dw SprMap_PBig_Swim1
+	.word SprMap_PBig_Swim1
 	db $03
 	db $00
-	dw SprMap_PBig_Swim1
+	.word SprMap_PBig_Swim1
 	db $03
 	db $00
-	dw SprMap_PBig_Swim1
+	.word SprMap_PBig_Swim1
 	db $80
 	db $00
 SprMap_PBig_Stand:
@@ -1177,399 +1177,399 @@ SprMap_PBig_DuckHold:
 	db $B6, $B7
 	db $B8, $B9
 AnimTbl_PFire:
-	dw Anim_PFire_Stand
-	dw Anim_PFire_Walk
-	dw Anim_PFire_Run
-	dw Anim_PFire_Walk
-	dw Anim_PFire_Jump
-	dw Anim_PFire_Spin
-	dw Anim_PFire_Turn
-	dw Anim_PFire_Duck
-	dw Anim_PFire_Lookup
-	dw Anim_PFire_RunJump
-	dw Anim_PFire_Fall
-	dw Anim_PFire_Sink
-	dw Anim_PFire_Swim
-	dw Anim_PFire_Climb
-	dw Anim_PFire_ClimbMove
-	dw Anim_PFire_RunJump ; unused
-	dw Anim_PFire_Win
-	dw Anim_PFire_ShootAir
-	dw Anim_PFire_ShootSwim
-	dw Anim_PFire_Shoot
+	.word Anim_PFire_Stand
+	.word Anim_PFire_Walk
+	.word Anim_PFire_Run
+	.word Anim_PFire_Walk
+	.word Anim_PFire_Jump
+	.word Anim_PFire_Spin
+	.word Anim_PFire_Turn
+	.word Anim_PFire_Duck
+	.word Anim_PFire_Lookup
+	.word Anim_PFire_RunJump
+	.word Anim_PFire_Fall
+	.word Anim_PFire_Sink
+	.word Anim_PFire_Swim
+	.word Anim_PFire_Climb
+	.word Anim_PFire_ClimbMove
+	.word Anim_PFire_RunJump ; unused
+	.word Anim_PFire_Win
+	.word Anim_PFire_ShootAir
+	.word Anim_PFire_ShootSwim
+	.word Anim_PFire_Shoot
 AnimTbl_PFire_Hold:
-	dw Anim_PFire_Hold
-	dw Anim_PFire_HoldWalk
-	dw Anim_PFire_HoldRun
-	dw Anim_PFire_HoldWalk
-	dw Anim_PFire_HoldJump
-	dw Anim_PFire_Spin
-	dw Anim_PFire_Turn
-	dw Anim_PFire_HoldDuck
-	dw Anim_PFire_Lookup
-	dw Anim_PFire_Sink
-	dw Anim_PFire_HoldSwim ; unused but fully implemented
-	dw Anim_PFire_Sink
-	dw Anim_PFire_Swim
-	dw Anim_PFire_Climb
-	dw Anim_PFire_ClimbMove
-	dw Anim_PFire_Sink
-	dw Anim_PFire_Win
-	dw Anim_PFire_ShootAir
-	dw Anim_PFire_ShootSwim
-	dw Anim_PFire_Shoot
+	.word Anim_PFire_Hold
+	.word Anim_PFire_HoldWalk
+	.word Anim_PFire_HoldRun
+	.word Anim_PFire_HoldWalk
+	.word Anim_PFire_HoldJump
+	.word Anim_PFire_Spin
+	.word Anim_PFire_Turn
+	.word Anim_PFire_HoldDuck
+	.word Anim_PFire_Lookup
+	.word Anim_PFire_Sink
+	.word Anim_PFire_HoldSwim ; unused but fully implemented
+	.word Anim_PFire_Sink
+	.word Anim_PFire_Swim
+	.word Anim_PFire_Climb
+	.word Anim_PFire_ClimbMove
+	.word Anim_PFire_Sink
+	.word Anim_PFire_Win
+	.word Anim_PFire_ShootAir
+	.word Anim_PFire_ShootSwim
+	.word Anim_PFire_Shoot
 Anim_PFire_Stand:
-	dw SprMap_PFire_Stand
+	.word SprMap_PFire_Stand
 	db $0A
 	db $00
-	dw SprMap_PFire_Stand
+	.word SprMap_PFire_Stand
 	db $80
 	db $00
 Anim_PFire_Walk:
-	dw SprMap_PFire_Walk1
+	.word SprMap_PFire_Walk1
 	db $04
 	db $00
-	dw SprMap_PFire_Walk2
+	.word SprMap_PFire_Walk2
 	db $04
 	db $00
-	dw SprMap_PFire_Stand
+	.word SprMap_PFire_Stand
 	db $04
 	db $00
-	dw SprMap_PFire_Walk2
+	.word SprMap_PFire_Walk2
 	db $04
 	db $00
-	dw SprMap_PFire_Walk1
+	.word SprMap_PFire_Walk1
 	db $04
 	db $00
-	dw SprMap_PFire_Walk2
+	.word SprMap_PFire_Walk2
 	db $04
 	db $00
-	dw SprMap_PFire_Stand
+	.word SprMap_PFire_Stand
 	db $04
 	db $00
-	dw SprMap_PFire_Walk2
+	.word SprMap_PFire_Walk2
 	db $04
 	db $00
-	dw SprMap_PFire_Walk1
+	.word SprMap_PFire_Walk1
 	db $80
 	db $00
 Anim_PFire_Run:
-	dw SprMap_PFire_Walk1
+	.word SprMap_PFire_Walk1
 	db $02
 	db $00
-	dw SprMap_PFire_Walk2
+	.word SprMap_PFire_Walk2
 	db $02
 	db $00
-	dw SprMap_PFire_Stand
+	.word SprMap_PFire_Stand
 	db $02
 	db $00
-	dw SprMap_PFire_Walk2
+	.word SprMap_PFire_Walk2
 	db $02
 	db $00
-	dw SprMap_PFire_Walk1
+	.word SprMap_PFire_Walk1
 	db $02
 	db $00
-	dw SprMap_PFire_Walk2
+	.word SprMap_PFire_Walk2
 	db $02
 	db $00
-	dw SprMap_PFire_Stand
+	.word SprMap_PFire_Stand
 	db $02
 	db $00
-	dw SprMap_PFire_Walk2
+	.word SprMap_PFire_Walk2
 	db $02
 	db $00
-	dw SprMap_PFire_Walk1
+	.word SprMap_PFire_Walk1
 	db $02
 	db $00
-	dw SprMap_PFire_Walk2
+	.word SprMap_PFire_Walk2
 	db $02
 	db $00
-	dw SprMap_PFire_Stand
+	.word SprMap_PFire_Stand
 	db $02
 	db $00
-	dw SprMap_PFire_Walk2
+	.word SprMap_PFire_Walk2
 	db $02
 	db $00
-	dw SprMap_PFire_Walk1
+	.word SprMap_PFire_Walk1
 	db $02
 	db $00
-	dw SprMap_PFire_Walk2
+	.word SprMap_PFire_Walk2
 	db $02
 	db $00
-	dw SprMap_PFire_Stand
+	.word SprMap_PFire_Stand
 	db $02
 	db $00
-	dw SprMap_PFire_Walk2
+	.word SprMap_PFire_Walk2
 	db $02
 	db $00
-	dw SprMap_PFire_Run1
+	.word SprMap_PFire_Run1
 	db $02
 	db $00
-	dw SprMap_PFire_Run2
+	.word SprMap_PFire_Run2
 	db $02
 	db $00
-	dw SprMap_PFire_Run3
+	.word SprMap_PFire_Run3
 	db $02
 	db $00
-	dw SprMap_PFire_Run2
+	.word SprMap_PFire_Run2
 	db $02
 	db $00
-	dw SprMap_PFire_Run1
+	.word SprMap_PFire_Run1
 	db $90
 	db $00
 Anim_PFire_Jump:
-	dw SprMap_PFire_Jump
+	.word SprMap_PFire_Jump
 	db $23
 	db $00
-	dw SprMap_PFire_Fall
+	.word SprMap_PFire_Fall
 	db $02
 	db $00
-	dw SprMap_PFire_Fall
+	.word SprMap_PFire_Fall
 	db $81
 	db $00
 Anim_PFire_RunJump:
-	dw SprMap_PFire_RunJump
+	.word SprMap_PFire_RunJump
 	db $0A
 	db $00
-	dw SprMap_PFire_RunJump
+	.word SprMap_PFire_RunJump
 	db $80
 	db $00
 Anim_PFire_Spin:
-	dw SprMap_PFire_Front
+	.word SprMap_PFire_Front
 	db $01
 	db $00
-	dw SprMap_PFire_Back
+	.word SprMap_PFire_Back
 	db $01
 	db $00
-	dw SprMap_PFire_Stand
+	.word SprMap_PFire_Stand
 	db $01
 	db $00
-	dw SprMap_PFire_Flipped
+	.word SprMap_PFire_Flipped
 	db $01
 	db $00
-	dw SprMap_PFire_Front
+	.word SprMap_PFire_Front
 	db $80
 	db $00
 Anim_PFire_Turn:
-	dw SprMap_PFire_Turn
+	.word SprMap_PFire_Turn
 	db $0A
 	db $00
-	dw SprMap_PFire_Turn
+	.word SprMap_PFire_Turn
 	db $80
 	db $00
 Anim_PFire_Duck:
-	dw SprMap_PFire_Duck
+	.word SprMap_PFire_Duck
 	db $08
 	db $00
-	dw SprMap_PFire_Duck
+	.word SprMap_PFire_Duck
 	db $80
 	db $00
 Anim_PFire_Lookup:
-	dw SprMap_PFire_LookUp
+	.word SprMap_PFire_LookUp
 	db $02
 	db $00
-	dw SprMap_PFire_LookUp
+	.word SprMap_PFire_LookUp
 	db $80
 	db $00
 Anim_PFire_Fall:
-	dw SprMap_PFire_Fall
+	.word SprMap_PFire_Fall
 	db $02
 	db $00
-	dw SprMap_PFire_Fall
+	.word SprMap_PFire_Fall
 	db $80
 	db $00
 Anim_PFire_Sink:
-	dw SprMap_PFire_Swim1
+	.word SprMap_PFire_Swim1
 	db $01
 	db $00
-	dw SprMap_PFire_Swim1
+	.word SprMap_PFire_Swim1
 	db $80
 	db $00
 Anim_PFire_Swim:
-	dw SprMap_PFire_RunJump
+	.word SprMap_PFire_RunJump
 	db $03
 	db $00
-	dw SprMap_PFire_Swim2
+	.word SprMap_PFire_Swim2
 	db $03
 	db $00
-	dw SprMap_PFire_Swim1
+	.word SprMap_PFire_Swim1
 	db $03
 	db $00
-	dw SprMap_PFire_Swim2
+	.word SprMap_PFire_Swim2
 	db $03
 	db $00
-	dw SprMap_PFire_Fall
+	.word SprMap_PFire_Fall
 	db $80
 	db $00
 Anim_PFire_Climb:
-	dw SprMap_PFire_Climb1
+	.word SprMap_PFire_Climb1
 	db $08
 	db $00
-	dw SprMap_PFire_Climb1
+	.word SprMap_PFire_Climb1
 	db $80
 	db $00
 Anim_PFire_ClimbMove:
-	dw SprMap_PFire_Climb1
+	.word SprMap_PFire_Climb1
 	db $08
 	db $00
-	dw SprMap_PFire_Climb2
+	.word SprMap_PFire_Climb2
 	db $08
 	db $00
-	dw SprMap_PFire_Climb1
+	.word SprMap_PFire_Climb1
 	db $80
 	db $00
 Anim_PFire_Win:
-	dw SprMap_PFire_Victory
+	.word SprMap_PFire_Victory
 	db $0A
 	db $00
-	dw SprMap_PFire_Victory
+	.word SprMap_PFire_Victory
 	db $80
 	db $00
 Anim_PFire_ShootAir:
-	dw SprMap_PFire_Swim1
+	.word SprMap_PFire_Swim1
 	db $03
 	db $00
-	dw SprMap_PFire_Swim1
+	.word SprMap_PFire_Swim1
 	db $80
 	db $00
 Anim_PFire_ShootSwim:
-	dw SprMap_PFire_Swim2
+	.word SprMap_PFire_Swim2
 	db $03
 	db $00
-	dw SprMap_PFire_Swim1
+	.word SprMap_PFire_Swim1
 	db $03
 	db $00
-	dw SprMap_PFire_Swim1
+	.word SprMap_PFire_Swim1
 	db $80
 	db $00
 Anim_PFire_Shoot:
-	dw SprMap_PFire_Shoot
+	.word SprMap_PFire_Shoot
 	db $03
 	db $00
-	dw SprMap_PFire_Shoot
+	.word SprMap_PFire_Shoot
 	db $80
 	db $00
 Anim_PFire_Hold:
-	dw SprMap_PFire_Hold
+	.word SprMap_PFire_Hold
 	db $0A
 	db $00
-	dw SprMap_PFire_Hold
+	.word SprMap_PFire_Hold
 	db $80
 	db $00
 Anim_PFire_HoldWalk:
-	dw SprMap_PFire_HoldWalk1
+	.word SprMap_PFire_HoldWalk1
 	db $04
 	db $00
-	dw SprMap_PFire_HoldWalk2
+	.word SprMap_PFire_HoldWalk2
 	db $04
 	db $00
-	dw SprMap_PFire_Hold
+	.word SprMap_PFire_Hold
 	db $04
 	db $00
-	dw SprMap_PFire_HoldWalk2
+	.word SprMap_PFire_HoldWalk2
 	db $04
 	db $00
-	dw SprMap_PFire_HoldWalk1
+	.word SprMap_PFire_HoldWalk1
 	db $04
 	db $00
-	dw SprMap_PFire_HoldWalk2
+	.word SprMap_PFire_HoldWalk2
 	db $04
 	db $00
-	dw SprMap_PFire_Hold
+	.word SprMap_PFire_Hold
 	db $04
 	db $00
-	dw SprMap_PFire_HoldWalk2
+	.word SprMap_PFire_HoldWalk2
 	db $04
 	db $00
-	dw SprMap_PFire_HoldWalk1
+	.word SprMap_PFire_HoldWalk1
 	db $80
 	db $00
 Anim_PFire_HoldRun:
-	dw SprMap_PFire_HoldWalk1
+	.word SprMap_PFire_HoldWalk1
 	db $02
 	db $00
-	dw SprMap_PFire_HoldWalk2
+	.word SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PFire_Hold
+	.word SprMap_PFire_Hold
 	db $02
 	db $00
-	dw SprMap_PFire_HoldWalk2
+	.word SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PFire_HoldWalk1
+	.word SprMap_PFire_HoldWalk1
 	db $02
 	db $00
-	dw SprMap_PFire_HoldWalk2
+	.word SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PFire_Hold
+	.word SprMap_PFire_Hold
 	db $02
 	db $00
-	dw SprMap_PFire_HoldWalk2
+	.word SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PFire_HoldWalk1
+	.word SprMap_PFire_HoldWalk1
 	db $02
 	db $00
-	dw SprMap_PFire_HoldWalk2
+	.word SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PFire_Hold
+	.word SprMap_PFire_Hold
 	db $02
 	db $00
-	dw SprMap_PFire_HoldWalk2
+	.word SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PFire_HoldWalk1
+	.word SprMap_PFire_HoldWalk1
 	db $02
 	db $00
-	dw SprMap_PFire_HoldWalk2
+	.word SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PFire_Hold
+	.word SprMap_PFire_Hold
 	db $02
 	db $00
-	dw SprMap_PFire_HoldWalk2
+	.word SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PFire_HoldWalk1
+	.word SprMap_PFire_HoldWalk1
 	db $02
 	db $00
-	dw SprMap_PFire_HoldWalk2
+	.word SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PFire_Hold
+	.word SprMap_PFire_Hold
 	db $02
 	db $00
-	dw SprMap_PFire_HoldWalk2
+	.word SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PFire_HoldWalk1
+	.word SprMap_PFire_HoldWalk1
 	db $90
 	db $00
 Anim_PFire_HoldJump:
-	dw SprMap_PFire_HoldWalk1
+	.word SprMap_PFire_HoldWalk1
 	db $23
 	db $00
-	dw SprMap_PFire_HoldWalk1
+	.word SprMap_PFire_HoldWalk1
 	db $02
 	db $00
-	dw SprMap_PFire_HoldWalk1
+	.word SprMap_PFire_HoldWalk1
 	db $81
 	db $00
 Anim_PFire_HoldDuck:
-	dw SprMap_PFire_DuckHold
+	.word SprMap_PFire_DuckHold
 	db $08
 	db $00
-	dw SprMap_PFire_DuckHold
+	.word SprMap_PFire_DuckHold
 	db $80
 	db $00
 Anim_PFire_HoldSwim:
-	dw SprMap_PFire_HoldWalk2
+	.word SprMap_PFire_HoldWalk2
 	db $02
 	db $00
-	dw SprMap_PFire_HoldWalk2
+	.word SprMap_PFire_HoldWalk2
 	db $80
 	db $00
 SprMap_PFire_Stand:
@@ -1796,185 +1796,185 @@ SprMap_PFire_HoldWalk2:
 	db $A0, $A2
 	db $8B, $8D
 AnimTbl_PCapeStatic: ; player animations for when the cape isn't animating
-	dw Anim_PCape_Stand ; unique from normal sprite 
-	dw Anim_PCape_Walk  ; larger mapping but otherwise identical
-	dw Anim_PCape_Run	  ; this suggests that the cape may have originally been part of the player sprite
-	dw Anim_PBig_Walk	  ; in game the cape is mostly a separate sprite bar a few frames
-	dw Anim_PBig_Jump
-	dw Anim_PCape_Spin
-	dw Anim_PBig_Turn
-	dw Anim_PBig_Duck
-	dw Anim_PCape_LookUp
-	dw Anim_PBig_RunJump
-	dw Anim_PBig_Fall
-	dw Anim_PBig_Sink
-	dw Anim_PBig_Swim
-	dw Anim_PCape_Climb
-	dw Anim_PCape_ClimbMove
-	dw Anim_PBig_RunJump
-	dw Anim_PBig_Win  
+	.word Anim_PCape_Stand ; unique from normal sprite 
+	.word Anim_PCape_Walk  ; larger mapping but otherwise identical
+	.word Anim_PCape_Run	  ; this suggests that the cape may have originally been part of the player sprite
+	.word Anim_PBig_Walk	  ; in game the cape is mostly a separate sprite bar a few frames
+	.word Anim_PBig_Jump
+	.word Anim_PCape_Spin
+	.word Anim_PBig_Turn
+	.word Anim_PBig_Duck
+	.word Anim_PCape_LookUp
+	.word Anim_PBig_RunJump
+	.word Anim_PBig_Fall
+	.word Anim_PBig_Sink
+	.word Anim_PBig_Swim
+	.word Anim_PCape_Climb
+	.word Anim_PCape_ClimbMove
+	.word Anim_PBig_RunJump
+	.word Anim_PBig_Win  
 AnimTbl_PCapeStatic_Hold: 
-	dw Anim_PCape_HoldStand
-	dw Anim_PBig_HoldWalk
-	dw Anim_PCape_Run
-	dw Anim_PBig_HoldWalk
-	dw Anim_PBig_HoldJump
-	dw Anim_PCape_Spin
-	dw Anim_PBig_Turn
-	dw Anim_PBig_HoldDuck
-	dw Anim_PCape_LookUp
-	dw Anim_PBig_Sink
-	dw Anim_PBig_HoldFall
-	dw Anim_PBig_Sink
-	dw Anim_PBig_HoldSwim
-	dw Anim_PCape_Climb
-	dw Anim_PCape_ClimbMove
-	dw Anim_PBig_Sink
-	dw Anim_PBig_Win
+	.word Anim_PCape_HoldStand
+	.word Anim_PBig_HoldWalk
+	.word Anim_PCape_Run
+	.word Anim_PBig_HoldWalk
+	.word Anim_PBig_HoldJump
+	.word Anim_PCape_Spin
+	.word Anim_PBig_Turn
+	.word Anim_PBig_HoldDuck
+	.word Anim_PCape_LookUp
+	.word Anim_PBig_Sink
+	.word Anim_PBig_HoldFall
+	.word Anim_PBig_Sink
+	.word Anim_PBig_HoldSwim
+	.word Anim_PCape_Climb
+	.word Anim_PCape_ClimbMove
+	.word Anim_PBig_Sink
+	.word Anim_PBig_Win
 Anim_PCape_Stand:
-	dw SprMap_PCape_Stand
+	.word SprMap_PCape_Stand
 	db $0A
 	db $00
-	dw SprMap_PCape_Stand
+	.word SprMap_PCape_Stand
 	db $80
 	db $00
 Anim_PCape_Walk:
-	dw SprMap_PBig_Walk1
+	.word SprMap_PBig_Walk1
 	db $04
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $04
 	db $00
-	dw SprMap_PCape_Stand
+	.word SprMap_PCape_Stand
 	db $04
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $04
 	db $00
-	dw SprMap_PBig_Walk1
+	.word SprMap_PBig_Walk1
 	db $04
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $04
 	db $00
-	dw SprMap_PCape_Stand
+	.word SprMap_PCape_Stand
 	db $04
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $04
 	db $00
-	dw SprMap_PBig_Walk1
+	.word SprMap_PBig_Walk1
 	db $80
 	db $00
 Anim_PCape_Run:
-	dw SprMap_PBig_Walk1
+	.word SprMap_PBig_Walk1
 	db $02
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw SprMap_PCape_Stand
+	.word SprMap_PCape_Stand
 	db $02
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw SprMap_PBig_Walk1
+	.word SprMap_PBig_Walk1
 	db $02
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw SprMap_PCape_Stand
+	.word SprMap_PCape_Stand
 	db $02
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw SprMap_PBig_Walk1
+	.word SprMap_PBig_Walk1
 	db $02
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw SprMap_PCape_Stand
+	.word SprMap_PCape_Stand
 	db $02
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw SprMap_PBig_Walk1
+	.word SprMap_PBig_Walk1
 	db $02
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw SprMap_PCape_Stand
+	.word SprMap_PCape_Stand
 	db $02
 	db $00
-	dw SprMap_PBig_Walk2
+	.word SprMap_PBig_Walk2
 	db $02
 	db $00
-	dw SprMap_PBig_Run1
+	.word SprMap_PBig_Run1
 	db $02
 	db $00
-	dw SprMap_PBig_Run2
+	.word SprMap_PBig_Run2
 	db $02
 	db $00
-	dw SprMap_PBig_Run3
+	.word SprMap_PBig_Run3
 	db $02
 	db $00
-	dw SprMap_PBig_Run2
+	.word SprMap_PBig_Run2
 	db $02
 	db $00
-	dw SprMap_PBig_Run1
+	.word SprMap_PBig_Run1
 	db $90
 	db $00
 Anim_PCape_Spin:
-	dw SprMap_PBig_Front
+	.word SprMap_PBig_Front
 	db $01
 	db $00
-	dw SprMap_PCape_Back
+	.word SprMap_PCape_Back
 	db $01
 	db $00
-	dw SprMap_PBig_Side1
+	.word SprMap_PBig_Side1
 	db $01
 	db $00
-	dw SprMap_PBig_Side2
+	.word SprMap_PBig_Side2
 	db $01
 	db $00
-	dw SprMap_PBig_Front
+	.word SprMap_PBig_Front
 	db $80
 	db $00
 Anim_PCape_LookUp:
-	dw SprMap_PCape_LookUp
+	.word SprMap_PCape_LookUp
 	db $02
 	db $00
-	dw SprMap_PCape_LookUp
+	.word SprMap_PCape_LookUp
 	db $80
 	db $00
 Anim_PCape_Climb:
-	dw SprMap_PCape_Climb1
+	.word SprMap_PCape_Climb1
 	db $08
 	db $00
-	dw SprMap_PCape_Climb1
+	.word SprMap_PCape_Climb1
 	db $80
 	db $00
 Anim_PCape_ClimbMove:
-	dw SprMap_PCape_Climb1
+	.word SprMap_PCape_Climb1
 	db $08
 	db $00
-	dw SprMap_PCape_Climb2
+	.word SprMap_PCape_Climb2
 	db $08
 	db $00
-	dw SprMap_PCape_Climb1
+	.word SprMap_PCape_Climb1
 	db $80
 	db $00
 Anim_PCape_HoldStand:
-	dw SprMap_PCape_Hold
+	.word SprMap_PCape_Hold
 	db $0A
 	db $00
-	dw SprMap_PCape_Hold
+	.word SprMap_PCape_Hold
 	db $80
 	db $00
 SprMap_PCape_Stand:
@@ -2032,316 +2032,316 @@ SprMap_PCape_Hold:
 	db $B0, $B2
 	db $B1, $BB
 AnimTbl_PCapeMove:
-	dw Anim_PBig_Stand
-	dw Anim_PBig_Walk
-	dw Anim_PBig_Run
-	dw Anim_PBig_Walk
-	dw Anim_PBig_HoldJump
-	dw Anim_PBig_Spin
-	dw Anim_PBig_Turn
-	dw Anim_PBig_Duck
-	dw Anim_PBig_LookUp
-	dw Anim_PBig_RunJump
-	dw Anim_PBig_Fall
-	dw Anim_PBig_Sink
-	dw Anim_PBig_Swim
-	dw Anim_PCape_Climb
-	dw Anim_PCape_ClimbMove
-	dw Anim_PBig_RunJump
-	dw Anim_PBig_Win
+	.word Anim_PBig_Stand
+	.word Anim_PBig_Walk
+	.word Anim_PBig_Run
+	.word Anim_PBig_Walk
+	.word Anim_PBig_HoldJump
+	.word Anim_PBig_Spin
+	.word Anim_PBig_Turn
+	.word Anim_PBig_Duck
+	.word Anim_PBig_LookUp
+	.word Anim_PBig_RunJump
+	.word Anim_PBig_Fall
+	.word Anim_PBig_Sink
+	.word Anim_PBig_Swim
+	.word Anim_PCape_Climb
+	.word Anim_PCape_ClimbMove
+	.word Anim_PBig_RunJump
+	.word Anim_PBig_Win
 AnimTbl_PCapeMove_Hold:
-	dw Anim_PBig_Hold
-	dw Anim_PBig_HoldWalk
-	dw Anim_PBig_HoldRun
-	dw Anim_PBig_HoldWalk
-	dw Anim_PBig_HoldJump
-	dw Anim_PBig_Spin
-	dw Anim_PBig_Turn
-	dw Anim_PBig_HoldDuck
-	dw Anim_PBig_LookUp
-	dw Anim_PBig_Sink
-	dw Anim_PBig_HoldFall
-	dw Anim_PBig_Sink
-	dw Anim_PBig_HoldSwim
-	dw Anim_PCape_Climb
-	dw Anim_PCape_ClimbMove
-	dw Anim_PBig_Sink
-	dw Anim_PBig_Win
+	.word Anim_PBig_Hold
+	.word Anim_PBig_HoldWalk
+	.word Anim_PBig_HoldRun
+	.word Anim_PBig_HoldWalk
+	.word Anim_PBig_HoldJump
+	.word Anim_PBig_Spin
+	.word Anim_PBig_Turn
+	.word Anim_PBig_HoldDuck
+	.word Anim_PBig_LookUp
+	.word Anim_PBig_Sink
+	.word Anim_PBig_HoldFall
+	.word Anim_PBig_Sink
+	.word Anim_PBig_HoldSwim
+	.word Anim_PCape_Climb
+	.word Anim_PCape_ClimbMove
+	.word Anim_PBig_Sink
+	.word Anim_PBig_Win
 YoshiAnimTablesTbl_1:
-	dw AnimTbl_Yoshi
-	dw AnimTbl_Yoshi
-	dw AnimTbl_Yoshi
-	dw AnimTbl_Yoshi
-	dw AnimTbl_Yoshi
+	.word AnimTbl_Yoshi
+	.word AnimTbl_Yoshi
+	.word AnimTbl_Yoshi
+	.word AnimTbl_Yoshi
+	.word AnimTbl_Yoshi
 AnimTbl_Yoshi:
-	dw Anim_Yoshi_Stand ; Standing
-	dw Anim_Yoshi_Walk ; Walking
-	dw Anim_Yoshi_Run ; Running
-	dw Anim_Yoshi_Walk ; The forbidden action
-	dw Anim_Yoshi_Jump ; Jumping
-	dw Anim_Yoshi_Jump ; Spinning. Unseen for obvious reasons
-	dw Anim_Yoshi_TongueDuck ; Tongue out (Ducking)
-	dw Anim_Yoshi_Ducking ; Ducking
-	dw Anim_Yoshi_Stand ; Looking up
-	dw Anim_Yoshi_Jump ; Running jump
-	dw Anim_Yoshi_Fall ; Falling
-	dw Anim_Yoshi_Fall ; Sinking
-	dw Anim_Yoshi_Swim ; Swimming
-	dw Anim_Yoshi_Tongue ; Tongue out (Idle)
-	dw Anim_Yoshi_TongueWalk ; Tongue out (While moving)
-	dw Anim_Yoshi_Jump ; Flying. Technically used, although rarely seen due to a control bug
-	dw Anim_Yoshi_Stand ; Victory pose.
+	.word Anim_Yoshi_Stand ; Standing
+	.word Anim_Yoshi_Walk ; Walking
+	.word Anim_Yoshi_Run ; Running
+	.word Anim_Yoshi_Walk ; The forbidden action
+	.word Anim_Yoshi_Jump ; Jumping
+	.word Anim_Yoshi_Jump ; Spinning. Unseen for obvious reasons
+	.word Anim_Yoshi_TongueDuck ; Tongue out (Ducking)
+	.word Anim_Yoshi_Ducking ; Ducking
+	.word Anim_Yoshi_Stand ; Looking up
+	.word Anim_Yoshi_Jump ; Running jump
+	.word Anim_Yoshi_Fall ; Falling
+	.word Anim_Yoshi_Fall ; Sinking
+	.word Anim_Yoshi_Swim ; Swimming
+	.word Anim_Yoshi_Tongue ; Tongue out (Idle)
+	.word Anim_Yoshi_TongueWalk ; Tongue out (While moving)
+	.word Anim_Yoshi_Jump ; Flying. Technically used, although rarely seen due to a control bug
+	.word Anim_Yoshi_Stand ; Victory pose.
 Anim_Yoshi_Stand:
-	dw SprMap_Yoshi_Stand
+	.word SprMap_Yoshi_Stand
 	db $0A
 	db $00
-	dw SprMap_Yoshi_Stand
+	.word SprMap_Yoshi_Stand
 	db $80
 	db $00
 Anim_Yoshi_Walk:
-	dw SprMap_Yoshi_Walk1
+	.word SprMap_Yoshi_Walk1
 	db $04
 	db $00
-	dw SprMap_Yoshi_Stand
+	.word SprMap_Yoshi_Stand
 	db $04
 	db $00
-	dw SprMap_Yoshi_Walk1
+	.word SprMap_Yoshi_Walk1
 	db $04
 	db $00
-	dw SprMap_Yoshi_Stand
+	.word SprMap_Yoshi_Stand
 	db $80
 	db $00
 Anim_Yoshi_Run:
-	dw SprMap_Yoshi_Walk1
+	.word SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Stand
+	.word SprMap_Yoshi_Stand
 	db $01
 	db $00
-	dw SprMap_Yoshi_Walk1
+	.word SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Walk1
+	.word SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Stand
+	.word SprMap_Yoshi_Stand
 	db $01
 	db $00
-	dw SprMap_Yoshi_Walk1
+	.word SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Walk1
+	.word SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Stand
+	.word SprMap_Yoshi_Stand
 	db $01
 	db $00
-	dw SprMap_Yoshi_Walk1
+	.word SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Walk1
+	.word SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Stand
+	.word SprMap_Yoshi_Stand
 	db $01
 	db $00
-	dw SprMap_Yoshi_Walk1
+	.word SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Walk1
+	.word SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Stand
+	.word SprMap_Yoshi_Stand
 	db $01
 	db $00
-	dw SprMap_Yoshi_Walk1
+	.word SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Walk1
+	.word SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Stand
+	.word SprMap_Yoshi_Stand
 	db $01
 	db $00
-	dw SprMap_Yoshi_Walk1
+	.word SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Stand
+	.word SprMap_Yoshi_Stand
 	db $80
 	db $00
 Anim_Yoshi_Jump:
-	dw SprMap_Yoshi_Jump
+	.word SprMap_Yoshi_Jump
 	db $23
 	db $00
-	dw SprMap_Yoshi_Walk1
+	.word SprMap_Yoshi_Walk1
 	db $02
 	db $00
-	dw SprMap_Yoshi_Jump
+	.word SprMap_Yoshi_Jump
 	db $81
 	db $00
 Anim_Yoshi_Swim:
-	dw SprMap_Yoshi_Jump
+	.word SprMap_Yoshi_Jump
 	db $01
 	db $00
-	dw SprMap_Yoshi_Jump
+	.word SprMap_Yoshi_Jump
 	db $80
 	db $00
 Anim_Yoshi_Ducking:
-	dw SprMap_Yoshi_Duck
+	.word SprMap_Yoshi_Duck
 	db $01
 	db $00
-	dw SprMap_Yoshi_Duck
+	.word SprMap_Yoshi_Duck
 	db $80
 	db $00
 Anim_Yoshi_Fall:
-	dw SprMap_Yoshi_Walk1
+	.word SprMap_Yoshi_Walk1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Walk1
+	.word SprMap_Yoshi_Walk1
 	db $80
 	db $00
-	dw SprMap_Yoshi_Stand
+	.word SprMap_Yoshi_Stand
 	db $0A
 	db $00
-	dw SprMap_Yoshi_Stand
+	.word SprMap_Yoshi_Stand
 	db $80
 	db $00
 Anim_Yoshi_Tongue:
-	dw SprMap_Yoshi_Flinch1
+	.word SprMap_Yoshi_Flinch1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Flinch1
+	.word SprMap_Yoshi_Flinch1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Flinch1
+	.word SprMap_Yoshi_Flinch1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Flinch1
+	.word SprMap_Yoshi_Flinch1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Flinch1
+	.word SprMap_Yoshi_Flinch1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Flinch1
+	.word SprMap_Yoshi_Flinch1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Tongue1
+	.word SprMap_Yoshi_Tongue1
 	db $02
 	db $00
-	dw SprMap_Yoshi_Tongue2
+	.word SprMap_Yoshi_Tongue2
 	db $02
 	db $00
-	dw SprMap_Yoshi_Tongue3
+	.word SprMap_Yoshi_Tongue3
 	db $02
 	db $00
-	dw SprMap_Yoshi_Tongue4
+	.word SprMap_Yoshi_Tongue4
 	db $04
 	db $00
-	dw SprMap_Yoshi_Tongue3
+	.word SprMap_Yoshi_Tongue3
 	db $02
 	db $00
-	dw SprMap_Yoshi_Tongue2
+	.word SprMap_Yoshi_Tongue2
 	db $02
 	db $00
-	dw SprMap_Yoshi_Tongue1
+	.word SprMap_Yoshi_Tongue1
 	db $02
 	db $00
-	dw SprMap_Yoshi_Tongue1
+	.word SprMap_Yoshi_Tongue1
 	db $02
 	db $00
-	dw SprMap_Yoshi_Flinch1
+	.word SprMap_Yoshi_Flinch1
 	db $80
 	db $00
 Anim_Yoshi_TongueDuck:
-	dw SprMap_Yoshi_Duck
+	.word SprMap_Yoshi_Duck
 	db $01
 	db $00
-	dw SprMap_Yoshi_Duck
+	.word SprMap_Yoshi_Duck
 	db $01
 	db $00
-	dw SprMap_Yoshi_Duck
+	.word SprMap_Yoshi_Duck
 	db $01
 	db $00
-	dw SprMap_Yoshi_Duck
+	.word SprMap_Yoshi_Duck
 	db $01
 	db $00
-	dw SprMap_Yoshi_Duck
+	.word SprMap_Yoshi_Duck
 	db $01
 	db $00
-	dw SprMap_Yoshi_Duck
+	.word SprMap_Yoshi_Duck
 	db $01
 	db $00
-	dw SprMap_Yoshi_Tongue1
+	.word SprMap_Yoshi_Tongue1
 	db $02
 	db $00
-	dw SprMap_Yoshi_Tongue2
+	.word SprMap_Yoshi_Tongue2
 	db $02
 	db $00
-	dw SprMap_Yoshi_Tongue3
+	.word SprMap_Yoshi_Tongue3
 	db $02
 	db $00
-	dw SprMap_Yoshi_Tongue4
+	.word SprMap_Yoshi_Tongue4
 	db $04
 	db $00
-	dw SprMap_Yoshi_Tongue3
+	.word SprMap_Yoshi_Tongue3
 	db $02
 	db $00
-	dw SprMap_Yoshi_Tongue2
+	.word SprMap_Yoshi_Tongue2
 	db $02
 	db $00
-	dw SprMap_Yoshi_Tongue1
+	.word SprMap_Yoshi_Tongue1
 	db $02
 	db $00
-	dw SprMap_Yoshi_Tongue1
+	.word SprMap_Yoshi_Tongue1
 	db $02
 	db $00
-	dw SprMap_Yoshi_Flinch1
+	.word SprMap_Yoshi_Flinch1
 	db $80
 	db $00
 Anim_Yoshi_TongueWalk:
-	dw SprMap_Yoshi_Flinch1
+	.word SprMap_Yoshi_Flinch1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Flinch1
+	.word SprMap_Yoshi_Flinch1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Flinch1
+	.word SprMap_Yoshi_Flinch1
 	db $01
 	db $00
-	dw SprMap_Yoshi_Flinch2
+	.word SprMap_Yoshi_Flinch2
 	db $01
 	db $00
-	dw SprMap_Yoshi_Flinch2
+	.word SprMap_Yoshi_Flinch2
 	db $01
 	db $00
-	dw SprMap_Yoshi_Flinch2
+	.word SprMap_Yoshi_Flinch2
 	db $01
 	db $00
-	dw SprMap_Yoshi_Tongue1
+	.word SprMap_Yoshi_Tongue1
 	db $02
 	db $00
-	dw SprMap_Yoshi_Tongue2
+	.word SprMap_Yoshi_Tongue2
 	db $02
 	db $00
-	dw SprMap_Yoshi_Tongue3
+	.word SprMap_Yoshi_Tongue3
 	db $02
 	db $00
-	dw SprMap_Yoshi_Tongue4
+	.word SprMap_Yoshi_Tongue4
 	db $04
 	db $00
-	dw SprMap_Yoshi_Tongue3
+	.word SprMap_Yoshi_Tongue3
 	db $02
 	db $00
-	dw SprMap_Yoshi_Tongue2
+	.word SprMap_Yoshi_Tongue2
 	db $02
 	db $00
-	dw SprMap_Yoshi_Tongue1
+	.word SprMap_Yoshi_Tongue1
 	db $02
 	db $00
-	dw SprMap_Yoshi_Tongue1
+	.word SprMap_Yoshi_Tongue1
 	db $02
 	db $00
-	dw SprMap_Yoshi_Flinch1
+	.word SprMap_Yoshi_Flinch1
 	db $80
 	db $00
 SprMap_Yoshi_Stand:
@@ -2431,136 +2431,136 @@ SprMap_Yoshi_Duck:
 	db $FF, $AC, $AD, $AE
 	db $FF, $FF, $AF, $B0
 YoshiAnimTablesTbl_2:
-	dw pnt3_CD36
-	dw pnt3_CD36
-	dw pnt3_CD36
-	dw pnt3_CD36
-	dw pnt3_CD36
+	.word pnt3_CD36
+	.word pnt3_CD36
+	.word pnt3_CD36
+	.word pnt3_CD36
+	.word pnt3_CD36
 pnt3_CD36:
-	dw pnt3_CD58
-	dw pnt3_CD60
-	dw pnt3_CD6C
-	dw pnt3_CD60
-	dw pnt3_CD78
-	dw pnt3_CD78
-	dw pnt3_CDA4
-	dw pnt3_CD8C
-	dw pnt3_CD58
-	dw pnt3_CD78
-	dw pnt3_CD94
-	dw pnt3_CD94
-	dw pnt3_CD84
-	dw pnt3_CDB0
-	dw pnt3_CDC4
-	dw pnt3_CD78
-	dw pnt3_CD58
+	.word pnt3_CD58
+	.word pnt3_CD60
+	.word pnt3_CD6C
+	.word pnt3_CD60
+	.word pnt3_CD78
+	.word pnt3_CD78
+	.word pnt3_CDA4
+	.word pnt3_CD8C
+	.word pnt3_CD58
+	.word pnt3_CD78
+	.word pnt3_CD94
+	.word pnt3_CD94
+	.word pnt3_CD84
+	.word pnt3_CDB0
+	.word pnt3_CDC4
+	.word pnt3_CD78
+	.word pnt3_CD58
 pnt3_CD58:
-	dw SprMap_YoshiEat_Stand
+	.word SprMap_YoshiEat_Stand
 	db $0A
 	db $00
-	dw SprMap_YoshiEat_Stand
+	.word SprMap_YoshiEat_Stand
 	db $80
 	db $00
 pnt3_CD60:
-	dw SprMap_YoshiEat_Walk2
+	.word SprMap_YoshiEat_Walk2
 	db $04
 	db $00
-	dw SprMap_YoshiEat_Stand
+	.word SprMap_YoshiEat_Stand
 	db $04
 	db $00
-	dw SprMap_YoshiEat_Stand
+	.word SprMap_YoshiEat_Stand
 	db $80
 	db $00
 pnt3_CD6C:
-	dw SprMap_YoshiEat_Stand
+	.word SprMap_YoshiEat_Stand
 	db $01
 	db $00
-	dw SprMap_YoshiEat_Walk2
+	.word SprMap_YoshiEat_Walk2
 	db $01
 	db $00
-	dw SprMap_YoshiEat_Stand
+	.word SprMap_YoshiEat_Stand
 	db $80
 	db $00
 pnt3_CD78:
-	dw SprMap_YoshiEat_Jump
+	.word SprMap_YoshiEat_Jump
 	db $23
 	db $00
-	dw SprMap_YoshiEat_Walk2
+	.word SprMap_YoshiEat_Walk2
 	db $02
 	db $00
-	dw SprMap_YoshiEat_Jump
+	.word SprMap_YoshiEat_Jump
 	db $81
 	db $00
 pnt3_CD84:
-	dw SprMap_YoshiEat_Jump
+	.word SprMap_YoshiEat_Jump
 	db $01
 	db $00
-	dw SprMap_YoshiEat_Jump
+	.word SprMap_YoshiEat_Jump
 	db $80
 	db $00
 pnt3_CD8C:
-	dw SprMap_YoshiEat_Duck
+	.word SprMap_YoshiEat_Duck
 	db $01
 	db $00
-	dw SprMap_YoshiEat_Duck
+	.word SprMap_YoshiEat_Duck
 	db $80
 	db $00
 pnt3_CD94:
-	dw SprMap_YoshiEat_Walk2
+	.word SprMap_YoshiEat_Walk2
 	db $01
 	db $00
-	dw SprMap_YoshiEat_Walk2
+	.word SprMap_YoshiEat_Walk2
 	db $80
 	db $00
-	dw SprMap_YoshiEat_Stand
+	.word SprMap_YoshiEat_Stand
 	db $0A
 	db $00
-	dw SprMap_YoshiEat_Stand
+	.word SprMap_YoshiEat_Stand
 	db $80
 	db $00
 pnt3_CDA4:
-	dw SprMap_YoshiSpit_Duck
+	.word SprMap_YoshiSpit_Duck
 	db $04
 	db $00
-	dw SprMap_YoshiSpit_Duck
+	.word SprMap_YoshiSpit_Duck
 	db $04
 	db $00
-	dw SprMap_YoshiSpit_Duck
+	.word SprMap_YoshiSpit_Duck
 	db $80
 	db $00
 pnt3_CDB0:
-	dw SprMap_YoshiSpit_Stand
+	.word SprMap_YoshiSpit_Stand
 	db $02
 	db $00
-	dw SprMap_YoshiSpit_Stand
+	.word SprMap_YoshiSpit_Stand
 	db $02
 	db $00
-	dw SprMap_YoshiSpit_Stand
+	.word SprMap_YoshiSpit_Stand
 	db $02
 	db $00
-	dw SprMap_YoshiSpit_Stand
+	.word SprMap_YoshiSpit_Stand
 	db $02
 	db $00
-	dw SprMap_YoshiSpit_Stand
+	.word SprMap_YoshiSpit_Stand
 	db $80
 	db $00
 pnt3_CDC4:
-	dw SprMap_YoshiSpit_Stand
+	.word SprMap_YoshiSpit_Stand
 	db $02
 	db $00
-	dw SprMap_YoshiSpit_Stand
+	.word SprMap_YoshiSpit_Stand
 	db $02
 	db $00
-	dw SprMap_YoshiSpit_Stand
+	.word SprMap_YoshiSpit_Stand
 	db $02
 	db $00
-	dw SprMap_YoshiSpit_Stand
+	.word SprMap_YoshiSpit_Stand
 	db $02
 	db $00
-	dw SprMap_YoshiSpit_Stand
+	.word SprMap_YoshiSpit_Stand
 	db $02
 	db $00
-	dw SprMap_YoshiSpit_Stand
+	.word SprMap_YoshiSpit_Stand
 	db $80
 	db $00
 SprMap_YoshiEat_Stand:
@@ -2619,98 +2619,98 @@ SprMap_YoshiSpit_Duck:
 	db $FF, $30, $31, $32
 	db $FF, $FF, $33, $34
 YoshiAnimTablesTbl_3:
-	dw pnt3_CE5E
-	dw pnt3_CE5E
-	dw pnt3_CE5E
-	dw pnt3_CE5E
-	dw pnt3_CE5E
+	.word pnt3_CE5E
+	.word pnt3_CE5E
+	.word pnt3_CE5E
+	.word pnt3_CE5E
+	.word pnt3_CE5E
 pnt3_CE5E:
-	dw pnt3_CE80
-	dw pnt3_CE8C
-	dw pnt3_CE98
-	dw pnt3_CE8C
-	dw pnt3_CE98
-	dw pnt3_CE98
-	dw pnt3_CEA0
-	dw pnt3_CE98
-	dw pnt3_CE80
-	dw pnt3_CE98
-	dw pnt3_CE98
-	dw pnt3_CE98
-	dw pnt3_CE98
-	dw pnt3_CEA0
-	dw pnt3_CEB4
-	dw pnt3_CE98
-	dw pnt3_CE80
+	.word pnt3_CE80
+	.word pnt3_CE8C
+	.word pnt3_CE98
+	.word pnt3_CE8C
+	.word pnt3_CE98
+	.word pnt3_CE98
+	.word pnt3_CEA0
+	.word pnt3_CE98
+	.word pnt3_CE80
+	.word pnt3_CE98
+	.word pnt3_CE98
+	.word pnt3_CE98
+	.word pnt3_CE98
+	.word pnt3_CEA0
+	.word pnt3_CEB4
+	.word pnt3_CE98
+	.word pnt3_CE80
 pnt3_CE80:
-	dw SprMap_YoshiEat_Stand
+	.word SprMap_YoshiEat_Stand
 	db $04
 	db $00
-	dw SprMap_Yoshi_Stand
+	.word SprMap_Yoshi_Stand
 	db $04
 	db $00
-	dw SprMap_YoshiEat_Stand
+	.word SprMap_YoshiEat_Stand
 	db $80
 	db $00
 pnt3_CE8C:
-	dw SprMap_YoshiEat_Walk2
+	.word SprMap_YoshiEat_Walk2
 	db $04
 	db $00
-	dw SprMap_Yoshi_Stand
+	.word SprMap_Yoshi_Stand
 	db $04
 	db $00
-	dw SprMap_YoshiEat_Stand
+	.word SprMap_YoshiEat_Stand
 	db $80
 	db $00
 pnt3_CE98:
-	dw SprMap_YoshiEat_Stand
+	.word SprMap_YoshiEat_Stand
 	db $0A
 	db $00
-	dw SprMap_YoshiEat_Stand
+	.word SprMap_YoshiEat_Stand
 	db $80
 	db $00
 pnt3_CEA0:
-	dw pnt3_CED8
+	.word pnt3_CED8
 	db $04
 	db $00
-	dw pnt3_CED8
+	.word pnt3_CED8
 	db $04
 	db $00
-	dw pnt3_CEF0
+	.word pnt3_CEF0
 	db $04
 	db $00
-	dw pnt3_CEF0
+	.word pnt3_CEF0
 	db $04
 	db $00
-	dw pnt3_CED8
+	.word pnt3_CED8
 	db $80
 	db $00
 pnt3_CEB4:
-	dw pnt3_CED8
+	.word pnt3_CED8
 	db $02
 	db $00
-	dw pnt3_CED8
+	.word pnt3_CED8
 	db $02
 	db $00
-	dw pnt3_CF04
+	.word pnt3_CF04
 	db $02
 	db $00
-	dw pnt3_CF04
+	.word pnt3_CF04
 	db $02
 	db $00
-	dw pnt3_CEF0
+	.word pnt3_CEF0
 	db $02
 	db $00
-	dw pnt3_CEF0
+	.word pnt3_CEF0
 	db $02
 	db $00
-	dw pnt3_CF14
+	.word pnt3_CF14
 	db $02
 	db $00
-	dw pnt3_CF14
+	.word pnt3_CF14
 	db $02
 	db $00
-	dw pnt3_CED8
+	.word pnt3_CED8
 	db $80
 	db $00
 pnt3_CED8:
@@ -2969,69 +2969,69 @@ pnt3_CF14:
 ; SPECIAL WARP DATA
 ; This is used for special warps such as the bonus room and cannon pipes.
 SpecialWarpSettings:
-	dw pnt3_D07C
-	dw pnt3_D080
-	dw pnt3_D084
-	dw pnt3_D088
-	dw pnt3_D08C
-	dw pnt3_D090
-	dw pnt3_D094
-	dw pnt3_D098
-	dw pnt3_D09C
-	dw pnt3_D0A0
-	dw pnt3_D0A4
-	dw pnt3_D0A8
-	dw pnt3_D0AC
-	dw pnt3_D0B0
-	dw pnt3_D0B4
-	dw pnt3_D0B8
-	dw pnt3_D0BC
-	dw pnt3_D0C0
-	dw pnt3_D0C4
-	dw pnt3_D0C8
-	dw pnt3_D0CC
-	dw pnt3_D0D0
-	dw pnt3_D0D4
-	dw pnt3_D0D8
-	dw pnt3_D0DC
-	dw pnt3_D0E0
-	dw pnt3_D0E4
-	dw pnt3_D0E8
-	dw SPWarp_BonusRoomSettings
-	dw SPWarp_6_3_CannonSettings
-	dw pnt3_D1D0
+	.word pnt3_D07C
+	.word pnt3_D080
+	.word pnt3_D084
+	.word pnt3_D088
+	.word pnt3_D08C
+	.word pnt3_D090
+	.word pnt3_D094
+	.word pnt3_D098
+	.word pnt3_D09C
+	.word pnt3_D0A0
+	.word pnt3_D0A4
+	.word pnt3_D0A8
+	.word pnt3_D0AC
+	.word pnt3_D0B0
+	.word pnt3_D0B4
+	.word pnt3_D0B8
+	.word pnt3_D0BC
+	.word pnt3_D0C0
+	.word pnt3_D0C4
+	.word pnt3_D0C8
+	.word pnt3_D0CC
+	.word pnt3_D0D0
+	.word pnt3_D0D4
+	.word pnt3_D0D8
+	.word pnt3_D0DC
+	.word pnt3_D0E0
+	.word pnt3_D0E4
+	.word pnt3_D0E8
+	.word SPWarp_BonusRoomSettings
+	.word SPWarp_6_3_CannonSettings
+	.word pnt3_D1D0
 SpecialWarpCoords:
-	dw pnt3_D0EC
-	dw pnt3_D0F4
-	dw pnt3_D0FC
-	dw pnt3_D104
-	dw pnt3_D10C
-	dw pnt3_D114
-	dw pnt3_D11C
-	dw pnt3_D124
-	dw pnt3_D12C
-	dw pnt3_D134
-	dw pnt3_D13C
-	dw pnt3_D144
-	dw pnt3_D14C
-	dw pnt3_D154
-	dw pnt3_D15C
-	dw pnt3_D164
-	dw pnt3_D16C
-	dw pnt3_D174
-	dw pnt3_D17C
-	dw pnt3_D184
-	dw pnt3_D18C
-	dw pnt3_D194
-	dw pnt3_D19C
-	dw pnt3_D1A4
-	dw pnt3_D1AC
-	dw pnt3_D1B4
-	dw pnt3_D1BC
-	dw pnt3_D1C4
-	dw SPWarp_BonusRoomPos
-	dw SPWarp_6_3_CannonPos
-	dw pnt3_D1DC
+	.word pnt3_D0EC
+	.word pnt3_D0F4
+	.word pnt3_D0FC
+	.word pnt3_D104
+	.word pnt3_D10C
+	.word pnt3_D114
+	.word pnt3_D11C
+	.word pnt3_D124
+	.word pnt3_D12C
+	.word pnt3_D134
+	.word pnt3_D13C
+	.word pnt3_D144
+	.word pnt3_D14C
+	.word pnt3_D154
+	.word pnt3_D15C
+	.word pnt3_D164
+	.word pnt3_D16C
+	.word pnt3_D174
+	.word pnt3_D17C
+	.word pnt3_D184
+	.word pnt3_D18C
+	.word pnt3_D194
+	.word pnt3_D19C
+	.word pnt3_D1A4
+	.word pnt3_D1AC
+	.word pnt3_D1B4
+	.word pnt3_D1BC
+	.word pnt3_D1C4
+	.word SPWarp_BonusRoomPos
+	.word SPWarp_6_3_CannonPos
+	.word pnt3_D1DC
 ; Warp Level Settings Format
 ; Byte 1: Level flags and ID(?)
 ; Format: UUPLLLLL

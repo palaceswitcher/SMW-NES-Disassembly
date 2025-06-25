@@ -1,5 +1,5 @@
 ; disassembled by BZK 6502 Disassembler
-incbin tilesets/ts_Bonus.bin
+.incbin tilesets/ts_Bonus.bin
 	db $18
 	db $00
 	db $00
@@ -192,7 +192,7 @@ bra3_86C0:
 	db $00
 	db $00
 	db $12
-	JSR GetMovementData
+	JSR getMovementData
 	RTS
 	JSR sub3_B057
 	BEQ bra3_874F
@@ -259,7 +259,7 @@ bra3_8759:
 	AND #$01
 	BNE bra3_8766
 	LDA $25
-	JSR GetMovementData
+	JSR getMovementData
 bra3_8766:
 	LDY #$00
 	LDA objFrameCount
@@ -300,7 +300,7 @@ bra3_8790:
 	BEQ bra3_87BD
 	CMP #$FF
 	BEQ bra3_87BD
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra3_87BD:
 	LDA objYLo,X
 	SEC
@@ -333,7 +333,7 @@ bra3_87EE:
 bra3_87FF:
 loc3_87FF:
 	db $AD
-incbin tilesets/ts_Bonus.bin
+.incbin tilesets/ts_Bonus.bin
 	db $00
 	db $00
 	db $00
@@ -681,7 +681,7 @@ tbl3_8F67:
 	BEQ bra3_8FF4
 	CMP #$FF
 	BEQ bra3_8FF4
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra3_8FF4:
 	LDA objYLo,X
 	SEC
@@ -690,7 +690,7 @@ bra3_8FF4:
 	LDA objYHi,X
 
 
-incbin tilesets/ts_Bonus.bin
+.incbin tilesets/ts_Bonus.bin
 	db $42
 	BCS bra3_960D
 	LDA #$0F
@@ -857,7 +857,7 @@ bra3_9762_RTS:
 	BEQ bra3_9782
 	CMP #$FF
 	BEQ bra3_9782
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra3_9782:
 	LDA objYLo,X
 	SEC
@@ -924,4 +924,4 @@ bra3_97F7:
 	LDA #$20
 	STA $06E1
 	db $BD
-incbin tilesets/ts_Bonus.bin
+.incbin tilesets/ts_Bonus.bin

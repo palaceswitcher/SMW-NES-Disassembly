@@ -16,7 +16,7 @@ bra3_A006:
 	STA M90_PRG0 ; Swap the current object bank in
 	LDA #$33
 	STA M90_PRG3 ; Swap bank 51 into the 4th PRG slot
-	JSR Obj_h36 ; Jump
+	JSR obj0x36 ; Jump
 	LDA #$3F
 	STA M90_PRG3 ; Swap bank 63 back in
 	RTS
@@ -138,7 +138,7 @@ bra3_A0DB:
 	BEQ bra3_A100
 	CMP #$FF
 	BEQ bra3_A100
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra3_A100:
 	LDA objYLo,X
 	SEC
@@ -231,1097 +231,1097 @@ bra3_A1AD:
 ;----------------------------------------
 ; OBJECTS 00-7F ($A1B5)
 tbl3_A1B5:
-	dw ptr4_A0D8
+	.word ptr4_A0D8
 	
 	OBJ_YOSHI = ($-tbl3_A1B5)/2
-	dw Obj_YoshiBox
+	.word objYoshiBox
 
 	OBJ_PSWITCH = ($-tbl3_A1B5)/2
-	dw Obj_PSwitch
+	.word objPSwitch
 
 	OBJ_SPRING = ($-tbl3_A1B5)/2
-	dw Obj_Spring
+	.word objSpring
 
 	OBJ_SHELL = ($-tbl3_A1B5)/2
-	dw Obj_Shell
+	.word objShell
 
 	OBJ_1UP = ($-tbl3_A1B5)/2
-	dw Obj_1UP
+	.word obj1UP
 
 	OBJ_PFIREBALL1 = ($-tbl3_A1B5)/2
-	dw Obj_h06
+	.word obj0x06
 
 	OBJ_PFIREBALL2 = ($-tbl3_A1B5)/2
-	dw Obj_h07
+	.word obj0x07
 
 	OBJ_YOSHIFIRE_TOP = ($-tbl3_A1B5)/2
-	dw Obj_h08
+	.word obj0x08
 
 	OBJ_YOSHIFIRE_MIDDLE = ($-tbl3_A1B5)/2
-	dw Obj_h09
+	.word obj0x09
 
 	OBJ_YOSHIFIRE_BOTTOM = ($-tbl3_A1B5)/2
-	dw Obj_h0A
+	.word obj0x0A
 
 	OBJ_MUSHROOM = ($-tbl3_A1B5)/2
-	dw Obj_h0B
+	.word obj0x0B
 
 	OBJ_FIREFLOWER = ($-tbl3_A1B5)/2
-	dw Obj_h0C
+	.word obj0x0C
 
 	OBJ_FEATHER = ($-tbl3_A1B5)/2
-	dw Obj_h0D
+	.word obj0x0D
 
 	OBJ_STAR = ($-tbl3_A1B5)/2
-	dw Obj_h0E
+	.word obj0x0E
 
 	OBJ_POP = ($-tbl3_A1B5)/2
-	dw Obj_h0F
+	.word obj0x0F
 
 	OBJ_KOOPA = ($-tbl3_A1B5)/2
-	dw Obj_Koopa
-	dw Obj_Koopa
+	.word objKoopa
+	.word objKoopa
 
 	OBJ_BEACHKOOPA = ($-tbl3_A1B5)/2
-	dw Obj_h12
-	dw Obj_h12
+	.word obj0x12
+	.word obj0x12
 
 	OBJ_PARATROOPA_BOUNCING = ($-tbl3_A1B5)/2
-	dw Obj_h14
-	dw Obj_h14
+	.word obj0x14
+	.word obj0x14
 
 	OBJ_REX = ($-tbl3_A1B5)/2
-	dw Obj_h16
-	dw Obj_h16
+	.word obj0x16
+	.word obj0x16
 
 	OBJ_REX_STOMPED = ($-tbl3_A1B5)/2
-	dw Obj_h16
-	dw Obj_h16
+	.word obj0x16
+	.word obj0x16
 
 	OBJ_PIRANHAPLANT = ($-tbl3_A1B5)/2
-	dw Obj_h1A
-	dw Obj_h1A
+	.word obj0x1A
+	.word obj0x1A
 
 	OBJ_PIRANHAPLANTMASK = ($-tbl3_A1B5)/2
-	dw Obj_h1C
-	dw Obj_h1C
+	.word obj0x1C
+	.word obj0x1C
 
 	OBJ_SUPERKOOPA_CAPE = ($-tbl3_A1B5)/2
-	dw Obj_h1E
-	dw Obj_h1E
+	.word obj0x1E
+	.word obj0x1E
 
 	OBJ_SUPERKOOPA_JUMP = ($-tbl3_A1B5)/2
-	dw Obj_h1E
+	.word obj0x1E
 
 	OBJ_SUPERKOOPA_STRAIGHT = ($-tbl3_A1B5)/2 ; Verify this
-	dw Obj_h1E
+	.word obj0x1E
 
 	OBJ_SUPERKOOPA_ALT = ($-tbl3_A1B5)/2 ; Verify this
-	dw Obj_h1E
+	.word obj0x1E
 
 	OBJ_SUPERKOOPA_FLYUP = ($-tbl3_A1B5)/2 ; Verify this
-	dw Obj_h1E
+	.word obj0x1E
 
 	OBJ_VOLCANOLOTUS = ($-tbl3_A1B5)/2
-	dw Obj_h24
-	dw Obj_h24
+	.word obj0x24
+	.word obj0x24
 
 	OBJ_LOTUSPOLLEN1 = ($-tbl3_A1B5)/2
-	dw Obj_h26
-	dw Obj_h26
+	.word obj0x26
+	.word obj0x26
 
 	OBJ_LOTUSPOLLEN2 = ($-tbl3_A1B5)/2
-	dw Obj_h26
-	dw Obj_h26
+	.word obj0x26
+	.word obj0x26
 
 	OBJ_LOTUSPOLLEN3 = ($-tbl3_A1B5)/2
-	dw Obj_h26
-	dw Obj_h26
+	.word obj0x26
+	.word obj0x26
 
 	OBJ_LOTUSPOLLEN4 = ($-tbl3_A1B5)/2
-	dw Obj_h26
-	dw Obj_h26
+	.word obj0x26
+	.word obj0x26
 
 	OBJ_SWOOPER = ($-tbl3_A1B5)/2
-	dw Obj_h2E
-	dw Obj_h2E
+	.word obj0x2E
+	.word obj0x2E
 
 	OBJ_BLURP_HORIZONTAL = ($-tbl3_A1B5)/2
-	dw Obj_h30
-	dw Obj_h30
+	.word obj0x30
+	.word obj0x30
 
 	OBJ_BLURP_VERTICAL = ($-tbl3_A1B5)/2
-	dw Obj_h30
-	dw Obj_h30
+	.word obj0x30
+	.word obj0x30
 
 	OBJ_BLURP_ALT = ($-tbl3_A1B5)/2 ; Verify this
-	dw Obj_h30
+	.word obj0x30
 
 	OBJ_BLURP_RIGHT = ($-tbl3_A1B5)/2 ; Verify this
-	dw Obj_h30
+	.word obj0x30
 
 	OBJ_GREENKOOPA = ($-tbl3_A1B5)/2
-	dw Obj_h36
-	dw Obj_h36
+	.word obj0x36
+	.word obj0x36
 
 	OBJ_KOOPASHELL_ALT = ($-tbl3_A1B5)/2 ; Verify this
-	dw Obj_h38
+	.word obj0x38
 
 	OBJ_MUSHROOM_HIDDEN = ($-tbl3_A1B5)/2
-	dw Obj_h0B
+	.word obj0x0B
 
 	OBJ_MECHAKOOPA = ($-tbl3_A1B5)/2
-	dw Obj_h3A
-	dw Obj_h3A
+	.word obj0x3A
+	.word obj0x3A
 
 	OBJ_MECHAKOOPA_STOMPED1 = ($-tbl3_A1B5)/2
-	dw Obj_h3C
-	dw Obj_h3C
+	.word obj0x3C
+	.word obj0x3C
 
 	OBJ_MECHAKOOPA_STOMPED2 = ($-tbl3_A1B5)/2
-	dw Obj_h3C
-	dw Obj_h3C
+	.word obj0x3C
+	.word obj0x3C
 
 	OBJ_MECHAKOOPA_STOMPED3 = ($-tbl3_A1B5)/2
-	dw Obj_h3C
-	dw Obj_h3C
+	.word obj0x3C
+	.word obj0x3C
 
 	OBJ_BUZZYBEETLE = ($-tbl3_A1B5)/2
-	dw Obj_h42
-	dw Obj_h42
+	.word obj0x42
+	.word obj0x42
 
 	OBJ_BUZZYSHELL = ($-tbl3_A1B5)/2
-	dw Obj_h44
-	dw Obj_h44
+	.word obj0x44
+	.word obj0x44
 
 	OBJ_BUZZYSHELL_KICKED = ($-tbl3_A1B5)/2
-	dw Obj_h38
-	dw Obj_h38
+	.word obj0x38
+	.word obj0x38
 
 	OBJ_PODOBOO_HORIZONTAL = ($-tbl3_A1B5)/2
-	dw Obj_h48
+	.word obj0x48
 
 	OBJ_1UP_ALT = ($-tbl3_A1B5)/2 ; Verify this
-	dw Obj_h49
+	.word obj0x49
 
 	OBJ_SPIKETOP = ($-tbl3_A1B5)/2
-	dw Obj_h4A
-	dw Obj_h4A
+	.word obj0x4A
+	.word obj0x4A
 
 	OBJ_GOALTAPE = ($-tbl3_A1B5)/2
-	dw Obj_h4C
-	dw Obj_h4C
+	.word obj0x4C
+	.word obj0x4C
 
 	OBJ_CLIMBINGKOOPA_HORIZONTAL = ($-tbl3_A1B5)/2
-	dw Obj_h4E
-	dw Obj_h4E
+	.word obj0x4E
+	.word obj0x4E
 
 	OBJ_CLIMBINGKOOPA_VERTICAL = ($-tbl3_A1B5)/2
-	dw Obj_h4E ; 50
-	dw Obj_h4E ; 51
+	.word obj0x4E ; 50
+	.word obj0x4E ; 51
 
 	OBJ_BLURPSTILL = ($-tbl3_A1B5)/2
-	dw Obj_h30 ; 52 (Blurp)
-	dw Obj_h30
+	.word obj0x30 ; 52 (Blurp)
+	.word obj0x30
 
 	OBJ_LINEPLATFORM = ($-tbl3_A1B5)/2
-	dw Obj_h54 ; 54 (Line Platform)
-	dw Obj_h54
+	.word obj0x54 ; 54 (Line Platform)
+	.word obj0x54
 
 	OBJ_SHORTPLATFORM = ($-tbl3_A1B5)/2
-	dw Obj_h54
-	dw Obj_h54
+	.word obj0x54
+	.word obj0x54
 
 	OBJ_PARATROOPA_GREEN = ($-tbl3_A1B5)/2 ; Verify this
-	dw Obj_h58
-	dw Obj_h58
+	.word obj0x58
+	.word obj0x58
 
 	OBJ_CHAINSAW_UP = ($-tbl3_A1B5)/2
-	dw Obj_h5A
-	dw Obj_h5A
+	.word obj0x5A
+	.word obj0x5A
 
 	OBJ_ROPE = ($-tbl3_A1B5)/2
-	dw Obj_h5C
-	dw Obj_h5C
-	dw Obj_h5C
+	.word obj0x5C
+	.word obj0x5C
+	.word obj0x5C
 
 	OBJ_ROPE_LONG = ($-tbl3_A1B5)/2
-	dw Obj_h5C
+	.word obj0x5C
 
 	OBJ_CHAINSAW_DOWN = ($-tbl3_A1B5)/2
-	dw Obj_h5A
-	dw Obj_h5A
+	.word obj0x5A
+	.word obj0x5A
 
 	OBJ_CHAINSAW_UP_ALT = ($-tbl3_A1B5)/2 ; Verify this
-	dw Obj_h5A
-	dw Obj_h5A
+	.word obj0x5A
+	.word obj0x5A
 
 	OBJ_PODOBOO_DIAG = ($-tbl3_A1B5)/2
-	dw Obj_h64
-	dw Obj_h64
+	.word obj0x64
+	.word obj0x64
 
 	OBJ_PSWITCHPLATFORM = ($-tbl3_A1B5)/2
-	dw Obj_h66
-	dw Obj_h66
+	.word obj0x66
+	.word obj0x66
 
 	OBJ_PDOOR = ($-tbl3_A1B5)/2
-	dw Obj_h66
-	dw Obj_h66
+	.word obj0x66
+	.word obj0x66
 
 	OBJ_PSWITCH_BOXED = ($-tbl3_A1B5)/2
-	dw Obj_h6A
+	.word obj0x6A
 
 	OBJ_MUSHROOM_IDLE = ($-tbl3_A1B5)/2
-	dw Obj_h6B
+	.word obj0x6B
 
 	OBJ_VINE = ($-tbl3_A1B5)/2
-	dw Obj_h6C
-	dw Obj_h6C
+	.word obj0x6C
+	.word obj0x6C
 
 	OBJ_BEACHKOOPA_SLIDING = ($-tbl3_A1B5)/2
-	dw Obj_h6E
-	dw Obj_h6E
+	.word obj0x6E
+	.word obj0x6E
 
 	OBJ_MORTONROY = ($-tbl3_A1B5)/2
-	dw Obj_h70
+	.word obj0x70
 
 	OBJ_PODOBOO_DIAG_BOSS = ($-tbl3_A1B5)/2
-	dw Obj_h64
+	.word obj0x64
 
 	OBJ_LEMMYWENDY = ($-tbl3_A1B5)/2
-	dw Obj_h72
+	.word obj0x72
 
 	OBJ_LEMMYWENDYDUMMY1 = ($-tbl3_A1B5)/2
-	dw Obj_h72
+	.word obj0x72
 
 	OBJ_MIDWAYPOINT = ($-tbl3_A1B5)/2
-	dw Obj_h74
+	.word obj0x74
 
 	OBJ_LEMMYWENDYDUMMY2 = ($-tbl3_A1B5)/2
-	dw Obj_h72
+	.word obj0x72
 
 	OBJ_ONOFFBLOCK = ($-tbl3_A1B5)/2
-	dw Obj_h76
+	.word obj0x76
 
 	OBJ_REZNOR = ($-tbl3_A1B5)/2
-	dw Obj_h77
+	.word obj0x77
 
 	OBJ_REZNORFIRE = ($-tbl3_A1B5)/2
-	dw Obj_h78 ; Object 0x78 (Reznor Fire)
+	.word obj0x78 ; Object 0x78 (Reznor Fire)
 
 	OBJ_FUZZY = ($-tbl3_A1B5)/2
-	dw Obj_h54 ; Object 0x79 (Fuzzy)
+	.word obj0x54 ; Object 0x79 (Fuzzy)
 
 	OBJ_BEACHKOOPA_SLIDING_ALT = ($-tbl3_A1B5)/2 ; Verify this
-	dw Obj_h7A
-	dw Obj_h7A
+	.word obj0x7A
+	.word obj0x7A
 
 	OBJ_LEVELEXIT = ($-tbl3_A1B5)/2
-	dw Obj_h7C
+	.word obj0x7C
 
 	OBJ_CASTLECANVAS = ($-tbl3_A1B5)/2
-	dw Obj_h7D
+	.word obj0x7D
 
 	OBJ_URCHIN = ($-tbl3_A1B5)/2
-	dw Obj_h7E
-	dw Obj_h7E ; Object 0x7F (Urchin)
+	.word obj0x7E
+	.word obj0x7E ; Object 0x7F (Urchin)
 
 ;----------------------------------------
 ; Unused duplicated pointers for objects' 00-7F rendering code. Can be found in bank 52
-	dw ptr4_A0D8
-	dw ptr6_9562 ; 1
-	dw ptr6_9590 ; 2
-	dw ptr6_9630 ; 3
-	dw ptr6_9660 ; 4
-	dw ptr6_96B7 ; 5
-	dw ptr6_96D5 ; 6
-	dw ptr6_96D5 ; 7
-	dw ptr7_96F8 ; 8
-	dw ptr7_96F8 ; 9
-	dw ptr7_96F8 ; a
-	dw ptr6_9724 ; b
-	dw ptr6_9742 ; c
-	dw ptr6_9769 ; d
-	dw ptr6_979C ; e
-	dw ptr6_97C3 ; f
-	dw ptr6_820E ; 10
-	dw ptr6_820E ; 11
-	dw ptr6_820E ; 12
-	dw ptr6_820E ; 13
-	dw ptr6_820E ; 14
-	dw ptr6_820E ; 15
-	dw ptr6_8657 ; 16
-	dw ptr6_8657 ; 17
-	dw ptr6_865B ; 18
-	dw ptr6_865B ; 19
-	dw ptr6_884B ; 1a
-	dw ptr6_884B ; 1b
-	dw ptr6_8912 ; 1c
-	dw ptr6_8912 ; 1d
-	dw ptr6_8AA0 ; 1e
-	dw ptr6_8AA0 ; 1f
-	dw ptr6_8AA0 ; 20
-	dw ptr6_8AA0 ; 21
-	dw ptr6_8AA0 ; 22
-	dw ptr6_8AA0 ; 23
-	dw ptr6_8CDE ; 24
-	dw ptr6_8CDE ; 25
-	dw ptr6_8E17 ; 26
-	dw ptr6_8E17 ; 27
-	dw ptr6_8E17 ; 28
-	dw ptr6_8E17 ; 29
-	dw ptr6_8E17 ; 2a
-	dw ptr6_8E17 ; 2b
-	dw ptr6_8E17 ; 2c
-	dw ptr6_8E17 ; 2d
-	dw ptr6_8F90 ; 2e
-	dw ptr6_8F90 ; 2f
-	dw ptr6_9118 ; 30
-	dw ptr6_9118 ; 31
-	dw ptr6_9118 ; 32
-	dw ptr6_9118 ; 33
-	dw ptr6_9118 ; 34
-	dw ptr6_9118 ; 35
-	dw ptr6_820E ; 36
-	dw ptr6_820E ; 37
-	dw ptr6_9660 ; 38
-	dw ptr6_9724 ; 39
-	dw ptr6_9349 ; 3a
-	dw ptr6_9349 ; 3b
-	dw ptr6_95B5 ; 3c
-	dw ptr6_95B5 ; 3d
-	dw ptr6_95B5 ; 3e
-	dw ptr6_95B5 ; 3f
-	dw ptr6_95B5 ; 40
-	dw ptr6_95B5 ; 41
-	dw ptr6_99CD ; 42
-	dw ptr6_99CD ; 43
-	dw ptr6_9A11 ; 44
-	dw ptr6_9A11 ; 45
-	dw ptr6_9A68 ; 46
-	dw ptr6_9A68 ; 47
-	dw ptr5_9DA5 ; 48
-	dw ptr6_96B7 ; 49
-	dw bra5_8008 ; 4a
-	dw bra5_8008 ; 4b
-	dw ptr6_9BFB ; 4c
-	dw ptr6_9BFB ; 4d
-	dw bra5_8008 ; 4e
-	dw bra5_8008 ; 4f
-	dw bra5_8008 ; 50
-	dw bra5_8008 ; 51
-	dw ptr6_9118 ; 52
-	dw ptr6_9118 ; 53
-	dw ptr6_8039 ; 54
-	dw ptr6_8039 ; 55
-	dw ptr6_8039 ; 56
-	dw ptr6_8039 ; 57
-	dw ptr6_820E ; 58
-	dw ptr6_820E ; 59
-	dw bra5_8008 ; 5a
-	dw bra5_8008 ; 5b
-	dw bra5_8008 ; 5c
-	dw bra5_8008 ; 5d
-	dw bra5_8008 ; 5e
-	dw bra5_8008 ; 5f
-	dw bra5_8008 ; 60
-	dw bra5_8008 ; 61
-	dw bra5_8008 ; 62
-	dw bra5_8008 ; 63
-	dw ptr6_9389 ; 64
-	dw ptr6_9389 ; 65
-	dw bra5_8008 ; 66
-	dw bra5_8008 ; 67
-	dw bra5_8008 ; 68
-	dw bra5_8008 ; 69
-	dw ptr6_958D ; 6a
-	dw ptr6_9727 ; 6b
-	dw ptr6_99A9 ; 6c
-	dw ptr6_99A9 ; 6d
-	dw ptr6_820E ; 6e
-	dw ptr6_820E ; 6f
-	dw ptr6_8CA2 ; 70
-	dw ptr6_9364 ; 71
-	dw ptr6_8CDB ; 72
-	dw ptr6_8CDB ; 73
-	dw ptr6_9BDB ; 74
-	dw ptr6_8CDB ; 75
-	dw ptr6_8039 ; 76
-	dw ptr6_8000 ; 77
-	dw ptr6_8000 ; 78
-	dw ptr6_8039 ; 79
-	dw ptr6_820E ; 7a
-	dw ptr6_820E ; 7b
-	dw ptr4_A0D8 ; 7c (different)
-	dw ptr4_A0D8 ; 7d (different)
-	dw ptr6_9670 ; 7e
-	dw ptr6_9670 ; 7f
+	.word ptr4_A0D8
+	.word ptr6_9562 ; 1
+	.word ptr6_9590 ; 2
+	.word ptr6_9630 ; 3
+	.word ptr6_9660 ; 4
+	.word ptr6_96B7 ; 5
+	.word ptr6_96D5 ; 6
+	.word ptr6_96D5 ; 7
+	.word ptr7_96F8 ; 8
+	.word ptr7_96F8 ; 9
+	.word ptr7_96F8 ; a
+	.word ptr6_9724 ; b
+	.word ptr6_9742 ; c
+	.word ptr6_9769 ; d
+	.word ptr6_979C ; e
+	.word ptr6_97C3 ; f
+	.word ptr6_820E ; 10
+	.word ptr6_820E ; 11
+	.word ptr6_820E ; 12
+	.word ptr6_820E ; 13
+	.word ptr6_820E ; 14
+	.word ptr6_820E ; 15
+	.word ptr6_8657 ; 16
+	.word ptr6_8657 ; 17
+	.word ptr6_865B ; 18
+	.word ptr6_865B ; 19
+	.word ptr6_884B ; 1a
+	.word ptr6_884B ; 1b
+	.word ptr6_8912 ; 1c
+	.word ptr6_8912 ; 1d
+	.word ptr6_8AA0 ; 1e
+	.word ptr6_8AA0 ; 1f
+	.word ptr6_8AA0 ; 20
+	.word ptr6_8AA0 ; 21
+	.word ptr6_8AA0 ; 22
+	.word ptr6_8AA0 ; 23
+	.word ptr6_8CDE ; 24
+	.word ptr6_8CDE ; 25
+	.word ptr6_8E17 ; 26
+	.word ptr6_8E17 ; 27
+	.word ptr6_8E17 ; 28
+	.word ptr6_8E17 ; 29
+	.word ptr6_8E17 ; 2a
+	.word ptr6_8E17 ; 2b
+	.word ptr6_8E17 ; 2c
+	.word ptr6_8E17 ; 2d
+	.word ptr6_8F90 ; 2e
+	.word ptr6_8F90 ; 2f
+	.word ptr6_9118 ; 30
+	.word ptr6_9118 ; 31
+	.word ptr6_9118 ; 32
+	.word ptr6_9118 ; 33
+	.word ptr6_9118 ; 34
+	.word ptr6_9118 ; 35
+	.word ptr6_820E ; 36
+	.word ptr6_820E ; 37
+	.word ptr6_9660 ; 38
+	.word ptr6_9724 ; 39
+	.word ptr6_9349 ; 3a
+	.word ptr6_9349 ; 3b
+	.word ptr6_95B5 ; 3c
+	.word ptr6_95B5 ; 3d
+	.word ptr6_95B5 ; 3e
+	.word ptr6_95B5 ; 3f
+	.word ptr6_95B5 ; 40
+	.word ptr6_95B5 ; 41
+	.word ptr6_99CD ; 42
+	.word ptr6_99CD ; 43
+	.word ptr6_9A11 ; 44
+	.word ptr6_9A11 ; 45
+	.word ptr6_9A68 ; 46
+	.word ptr6_9A68 ; 47
+	.word ptr5_9DA5 ; 48
+	.word ptr6_96B7 ; 49
+	.word bra5_8008 ; 4a
+	.word bra5_8008 ; 4b
+	.word ptr6_9BFB ; 4c
+	.word ptr6_9BFB ; 4d
+	.word bra5_8008 ; 4e
+	.word bra5_8008 ; 4f
+	.word bra5_8008 ; 50
+	.word bra5_8008 ; 51
+	.word ptr6_9118 ; 52
+	.word ptr6_9118 ; 53
+	.word ptr6_8039 ; 54
+	.word ptr6_8039 ; 55
+	.word ptr6_8039 ; 56
+	.word ptr6_8039 ; 57
+	.word ptr6_820E ; 58
+	.word ptr6_820E ; 59
+	.word bra5_8008 ; 5a
+	.word bra5_8008 ; 5b
+	.word bra5_8008 ; 5c
+	.word bra5_8008 ; 5d
+	.word bra5_8008 ; 5e
+	.word bra5_8008 ; 5f
+	.word bra5_8008 ; 60
+	.word bra5_8008 ; 61
+	.word bra5_8008 ; 62
+	.word bra5_8008 ; 63
+	.word ptr6_9389 ; 64
+	.word ptr6_9389 ; 65
+	.word bra5_8008 ; 66
+	.word bra5_8008 ; 67
+	.word bra5_8008 ; 68
+	.word bra5_8008 ; 69
+	.word ptr6_958D ; 6a
+	.word ptr6_9727 ; 6b
+	.word ptr6_99A9 ; 6c
+	.word ptr6_99A9 ; 6d
+	.word ptr6_820E ; 6e
+	.word ptr6_820E ; 6f
+	.word ptr6_8CA2 ; 70
+	.word ptr6_9364 ; 71
+	.word ptr6_8CDB ; 72
+	.word ptr6_8CDB ; 73
+	.word ptr6_9BDB ; 74
+	.word ptr6_8CDB ; 75
+	.word ptr6_8039 ; 76
+	.word ptr6_8000 ; 77
+	.word ptr6_8000 ; 78
+	.word ptr6_8039 ; 79
+	.word ptr6_820E ; 7a
+	.word ptr6_820E ; 7b
+	.word ptr4_A0D8 ; 7c (different)
+	.word ptr4_A0D8 ; 7d (different)
+	.word ptr6_9670 ; 7e
+	.word ptr6_9670 ; 7f
 
 ;----------------------------------------
 ; OBJECTS 00 - 7F PRG BANKS ($A3B5)
 tbl3_A3B5:
-	db $35
-	db $35
-	db $35
-	db $35
-	db $35
-	db $35
-	db $35
-	db $35
-	db $35
-	db $35
-	db $35
-	db $35
-	db $35
-	db $35
-	db $35
-	db $35
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $35
-	db $35
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $37
-	db $35
-	db $35
-	db $35
-	db $35
-	db $35
-	db $35
-	db $35
-	db $35
-	db $31
-	db $31
-	db $35
-	db $35
-	db $31
-	db $31
-	db $31
-	db $31
-	db $37
-	db $37
-	db $31
-	db $31
-	db $31
-	db $31
-	db $37
-	db $37
-	db $31
-	db $31
-	db $31
-	db $31
-	db $31
-	db $31
-	db $31
-	db $31
-	db $31
-	db $31
-	db $32
-	db $32
-	db $31
-	db $31
-	db $31
-	db $31
-	db $35
-	db $35
-	db $32
-	db $32
-	db $37
-	db $37
-	db $32
-	db $32
-	db $32
-	db $32
-	db $35
-	db $32
-	db $31
-	db $31
-	db $31
-	db $31
-	db $37
-	db $37
-	db $35
-	db $37
-	db $31
-	db $31
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $35
+	.byte $35
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $37
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $35
+	.byte $31
+	.byte $31
+	.byte $35
+	.byte $35
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $37
+	.byte $37
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $37
+	.byte $37
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $32
+	.byte $32
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $35
+	.byte $35
+	.byte $32
+	.byte $32
+	.byte $37
+	.byte $37
+	.byte $32
+	.byte $32
+	.byte $32
+	.byte $32
+	.byte $35
+	.byte $32
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $37
+	.byte $37
+	.byte $35
+	.byte $37
+	.byte $31
+	.byte $31
 
 ;----------------------------------------
 ; OBJECTS 80-FF ($A435)
 tbl3_A435:
 	OBJ_BULLETBILL = ($-tbl3_A435)/2 + $80
-	dw Obj_h80
-	dw Obj_h80
+	.word obj0x80
+	.word obj0x80
 
 	OBJ_EERIE = ($-tbl3_A435)/2 + $80
-	dw Obj_h82
-	dw Obj_h82
+	.word obj0x82
+	.word obj0x82
 
 	OBJ_THWOMP = ($-tbl3_A435)/2 + $80
-	dw Obj_h84
-	dw Obj_h84
+	.word obj0x84
+	.word obj0x84
 
 	OBJ_URCHIN_VERTICAL = ($-tbl3_A435)/2 + $80
-	dw Obj_h86
-	dw Obj_h86
+	.word obj0x86
+	.word obj0x86
 
 	OBJ_NINJI = ($-tbl3_A435)/2 + $80
-	dw Obj_h88
-	dw Obj_h88
+	.word obj0x88
+	.word obj0x88
 
 	OBJ_FISHBONE = ($-tbl3_A435)/2 + $80
-	dw Obj_h8A
-	dw Obj_h8A
+	.word obj0x8A
+	.word obj0x8A
 
 	OBJ_SPIKEBALL = ($-tbl3_A435)/2 + $80
-	dw Obj_h8C
-	dw Obj_h8C
+	.word obj0x8C
+	.word obj0x8C
 
 	OBJ_PARACHUTEGOOMBA_ALT = ($-tbl3_A435)/2 + $80 ; Verify this
-	dw Obj_h8E
-	dw Obj_h8E
+	.word obj0x8E
+	.word obj0x8E
 
 	OBJ_FUZZY_ALT = ($-tbl3_A435)/2 + $80 ; Verify this
-	dw Obj_h90
-	dw Obj_h90
+	.word obj0x90
+	.word obj0x90
 
 	OBJ_URCHIN_HORIZONTAL = ($-tbl3_A435)/2 + $80
-	dw Obj_h92
-	dw Obj_h92
+	.word obj0x92
+	.word obj0x92
 
 	OBJ_GOOMBA = ($-tbl3_A435)/2 + $80
-	dw Obj_h94
-	dw Obj_h94
+	.word obj0x94
+	.word obj0x94
 
 	OBJ_GOOMBA_FLIPPED = ($-tbl3_A435)/2 + $80
-	dw Obj_h96
-	dw Obj_h96
+	.word obj0x96
+	.word obj0x96
 
 	OBJ_PARACHUTEGOOMBA = ($-tbl3_A435)/2 + $80
-	dw Obj_h98
-	dw Obj_h98
+	.word obj0x98
+	.word obj0x98
 
 	OBJ_SPINY = ($-tbl3_A435)/2 + $80
-	dw Obj_h9A
-	dw Obj_h9A
+	.word obj0x9A
+	.word obj0x9A
 
 	OBJ_PODOBOO_VERTICAL = ($-tbl3_A435)/2 + $80
-	dw Obj_h9C
-	dw Obj_h9C
+	.word obj0x9C
+	.word obj0x9C
 
 	OBJ_PODOBOO_DIAG_ALT = ($-tbl3_A435)/2 + $80 ; Verify this
-	dw Obj_h9E
-	dw Obj_h9E
+	.word obj0x9E
+	.word obj0x9E
 
 	OBJ_PARAGOOMBA = ($-tbl3_A435)/2 + $80
-	dw Obj_hA0
-	dw Obj_hA0
+	.word obj0xA0
+	.word obj0xA0
 
 	OBJ_DRYBONES_THROWING = ($-tbl3_A435)/2 + $80
-	dw Obj_hA2
-	dw Obj_hA2
+	.word obj0xA2
+	.word obj0xA2
 
 	OBJ_DRYBONES = ($-tbl3_A435)/2 + $80
-	dw Obj_hA4
-	dw Obj_hA4
+	.word obj0xA4
+	.word obj0xA4
 
 	OBJ_BONE = ($-tbl3_A435)/2 + $80
-	dw Obj_hA6
-	dw Obj_hA6
+	.word obj0xA6
+	.word obj0xA6
 
 	OBJ_DRYBONES_THROW_BROKEN = ($-tbl3_A435)/2 + $80
-	dw Obj_hA8
-	dw Obj_hA8
+	.word obj0xA8
+	.word obj0xA8
 
 	OBJ_DRYBONES_BROKEN = ($-tbl3_A435)/2 + $80
-	dw Obj_hA8 ; AA
-	dw Obj_hA8 ; AB
+	.word obj0xA8 ; AA
+	.word obj0xA8 ; AB
 
 	OBJ_BONYBEETLE = ($-tbl3_A435)/2 + $80
-	dw Obj_hAA ; AC
-	dw Obj_hAA ; AD
+	.word obj0xAA ; AC
+	.word obj0xAA ; AD
 
 	OBJ_BONYBEETLE_BROKEN = ($-tbl3_A435)/2 + $80
-	dw Obj_hAC ; AE
-	dw Obj_hAC ; AF
+	.word obj0xAC ; AE
+	.word obj0xAC ; AF
 
 	OBJ_THING = ($-tbl3_A435)/2 + $80 ; Verify this
-	dw Obj_hAE
-	dw Obj_hAE
+	.word obj0xAE
+	.word obj0xAE
 
 	OBJ_FOOTBALL = ($-tbl3_A435)/2 + $80
-	dw Obj_hB0
-	dw Obj_hB0
+	.word obj0xB0
+	.word obj0xB0
 
 	OBJ_ROCK = ($-tbl3_A435)/2 + $80
-	dw Obj_hB2
-	dw Obj_hB2
+	.word obj0xB2
+	.word obj0xB2
 
 	OBJ_BOOBUDDY = ($-tbl3_A435)/2 + $80
-	dw Obj_hB4
-	dw Obj_hB4
+	.word obj0xB4
+	.word obj0xB4
 
 	OBJ_PRINCESSPEACH = ($-tbl3_A435)/2 + $80
-	dw Obj_hB6
-	dw ptr4_A0D8
+	.word obj0xB6
+	.word ptr4_A0D8
 
 	OBJ_SMOKE = ($-tbl3_A435)/2 + $80 ; Verify this
-	dw Obj_hB8
-	dw ptr4_A0D8
-	dw Obj_hBA
+	.word obj0xB8
+	.word ptr4_A0D8
+	.word obj0xBA
 
 	OBJ_PSWITCHPLATFORM2 = ($-tbl3_A435)/2 + $80 ; Verify this
-	dw ptr4_A0D8
-	dw ptr4_A0D8
+	.word ptr4_A0D8
+	.word ptr4_A0D8
 
 	OBJ_MUSHROOM_PRINCESS = ($-tbl3_A435)/2 + $80
-	dw Obj_hBD
+	.word obj0xBD
 
 	OBJ_CHARGINCHUCK = ($-tbl3_A435)/2 + $80
-	dw Obj_hBE
-	dw Obj_hBE
+	.word obj0xBE
+	.word obj0xBE
 
 	OBJ_CHARGINCHUCK_CHASE = ($-tbl3_A435)/2 + $80
-	dw Obj_hC0
-	dw Obj_hC0 ; Actually C2
+	.word obj0xC0
+	.word obj0xC0 ; Actually C2
 
 	OBJ_CHARGINCHUCK_STUNNED = ($-tbl3_A435)/2 + $80
-	dw Obj_hC2
-	dw Obj_hC2
+	.word obj0xC2
+	.word obj0xC2
 
 	OBJ_CHARGINCHUCK_HIT = ($-tbl3_A435)/2 + $80
-	dw Obj_hBE
-	dw Obj_hBE
+	.word obj0xBE
+	.word obj0xBE
 
 	OBJ_CHARGINCHUCK_CHASE_HIT = ($-tbl3_A435)/2 + $80
-	dw Obj_hC0
-	dw Obj_hC0
+	.word obj0xC0
+	.word obj0xC0
 
 	OBJ_CHARGINCHUCK_STUNNED_HIT = ($-tbl3_A435)/2 + $80
-	dw Obj_hC2
-	dw Obj_hC2
+	.word obj0xC2
+	.word obj0xC2
 
 	OBJ_CHARGINCHUCK_HIT2 = ($-tbl3_A435)/2 + $80
-	dw Obj_hBE
-	dw Obj_hBE
+	.word obj0xBE
+	.word obj0xBE
 
 	OBJ_CHARGINCHUCK_CHASE_HIT2 = ($-tbl3_A435)/2 + $80
-	dw Obj_hC0
-	dw Obj_hC0
+	.word obj0xC0
+	.word obj0xC0
 
 	OBJ_BASEBALLCHUCK = ($-tbl3_A435)/2 + $80
-	dw Obj_hCE
-	dw Obj_hCE
+	.word obj0xCE
+	.word obj0xCE
 
 	OBJ_FOOTBALLCHUCK = ($-tbl3_A435)/2 + $80
-	dw Obj_hD0
-	dw Obj_hD0
+	.word obj0xD0
+	.word obj0xD0
 
 	OBJ_DIGGINCHUCK = ($-tbl3_A435)/2 + $80
-	dw Obj_hD2
-	dw Obj_hD2
+	.word obj0xD2
+	.word obj0xD2
 
 	OBJ_BOOBUDDIESCENTER_ALT = ($-tbl3_A435)/2 + $80 ; Verify this
-	dw Obj_hD4
-	dw Obj_hD5
+	.word obj0xD4
+	.word obj0xD5
 
 	OBJ_BOOBUDDIESCENTER = ($-tbl3_A435)/2 + $80 ; Verify this
-	dw Obj_hD6 ; D8
-	dw Obj_hD6
+	.word obj0xD6 ; D8
+	.word obj0xD6
 
 	OBJ_BOO = ($-tbl3_A435)/2 + $80
-	dw Obj_hD8 ; DA
-	dw Obj_hD8
+	.word obj0xD8 ; DA
+	.word obj0xD8
 
 	OBJ_BOOCREWBOO = ($-tbl3_A435)/2 + $80 ; Verify this
-	dw Obj_hDA ; DC
-	dw Obj_hDA
+	.word obj0xDA ; DC
+	.word obj0xDA
 
 	OBJ_BOO_FLYAWAY = ($-tbl3_A435)/2 + $80 ; Verify this
-	dw Obj_hDC ; DE
-	dw Obj_hDC
+	.word obj0xDC ; DE
+	.word obj0xDC
 
 	OBJ_PROPELLER = ($-tbl3_A435)/2 + $80
-	dw Obj_hDE ; E0
+	.word obj0xDE ; E0
 
 	OBJ_BOWSER = ($-tbl3_A435)/2 + $80
-	dw Obj_hDF
+	.word obj0xDF
 
 	OBJ_SPIKE_UP = ($-tbl3_A435)/2 + $80
-	dw Obj_hE0
-	dw Obj_hE0
+	.word obj0xE0
+	.word obj0xE0
 
 	OBJ_DINORHINO = ($-tbl3_A435)/2 + $80
-	dw Obj_hE2 ; E4
-	dw Obj_hE2
+	.word obj0xE2 ; E4
+	.word obj0xE2
 
 	OBJ_DINOTORCH = ($-tbl3_A435)/2 + $80
-	dw Obj_hE4
-	dw Obj_hE4
+	.word obj0xE4
+	.word obj0xE4
 
 	OBJ_1UP_BONUS = ($-tbl3_A435)/2 + $80
-	dw Obj_hE6
+	.word obj0xE6
 
 	OBJ_BONUSBLOCKCOIN = ($-tbl3_A435)/2 + $80
-	dw Obj_hE7
+	.word obj0xE7
 
 	OBJ_BONUSBLOCK1 = ($-tbl3_A435)/2 + $80
-	dw Obj_hE8 ; 1st bonus block (EA)
-	dw Obj_hE8
+	.word obj0xE8 ; 1st bonus block (EA)
+	.word obj0xE8
 
 	OBJ_BONUSBLOCK2 = ($-tbl3_A435)/2 + $80
-	dw Obj_hE8 ; 2nd bonus block (EC)
-	dw Obj_hE8
+	.word obj0xE8 ; 2nd bonus block (EC)
+	.word obj0xE8
 
 	OBJ_BONUSBLOCK3 = ($-tbl3_A435)/2 + $80
-	dw Obj_hE8 ; 3rd bonus block (EE)
-	dw Obj_hED
+	.word obj0xE8 ; 3rd bonus block (EE)
+	.word obj0xED
 
 	OBJ_PSWITCHPLATFORM3 = ($-tbl3_A435)/2 + $80 ; Verify this
-	dw Obj_hED ; F0
-	dw Obj_hED
+	.word obj0xED ; F0
+	.word obj0xED
 
 	OBJ_BGPRIORITY_ABOVE = ($-tbl3_A435)/2 + $80
-	dw Obj_hF0 ; F2
-	dw Obj_hF0
+	.word obj0xF0 ; F2
+	.word obj0xF0
 
 	OBJ_BGPRIORITY_BELOW = ($-tbl3_A435)/2 + $80
-	dw Obj_hED
+	.word obj0xED
 
 	OBJ_PIPEEXIT = ($-tbl3_A435)/2 + $80
-	dw Obj_hED ; F5
+	.word obj0xED ; F5
 
 	OBJ_SPIKE_DOWN = ($-tbl3_A435)/2 + $80
-	dw Obj_hF4 ; F6
-	dw Obj_hF4
+	.word obj0xF4 ; F6
+	.word obj0xF4
 
 	OBJ_SPIKE_UP_ALT = ($-tbl3_A435)/2 + $80 ; Verify this
-	dw Obj_hF4 ; F8
-	dw Obj_hF4
+	.word obj0xF4 ; F8
+	.word obj0xF4
 
 	OBJ_PARATROOPA_VERTICAL = ($-tbl3_A435)/2 + $80
-	dw Obj_h58
-	dw Obj_h58
+	.word obj0x58
+	.word obj0x58
 
 	OBJ_COUNTDOWNPLATFORM_1S = ($-tbl3_A435)/2 + $80
-	dw Obj_hFA ; FC
-	dw Obj_hFA
+	.word obj0xFA ; FC
+	.word obj0xFA
 
 	OBJ_COUNTDOWNPLATFORM_4S = ($-tbl3_A435)/2 + $80
-	dw Obj_hFA ; FE
-	dw Obj_hFA
+	.word obj0xFA ; FE
+	.word obj0xFA
 
 ;----------------------------------------
 ; Unused duplicated pointers for objects' 80-FF rendering code. Can be found in bank 52
-	dw ptr6_8BF1 ; 80
-	dw ptr6_8BF1 ; 81
-	dw ptr6_9093 ; 82
-	dw ptr6_9093 ; 83
-	dw ptr6_83B3 ; 84
-	dw ptr6_83B3 ; 85
-	dw ptr6_87FE ; 86
-	dw ptr6_87FE ; 87
-	dw ptr6_817B ; 88
-	dw ptr6_817B ; 89
-	dw ptr6_9519 ; 8a
-	dw ptr6_9519 ; 8b
-	dw ptr7_9632 ; 8c
-	dw ptr7_9632 ; 8d
-	dw ptr6_8544 ; 8e
-	dw ptr6_8544 ; 8f
-	dw ptr7_8544 ; 90
-	dw ptr7_8544 ; 91
-	dw ptr6_87FE ; 92
-	dw ptr6_87FE ; 93
-	dw ptr6_88E0 ; 94
-	dw ptr6_88E0 ; 95
-	dw ptr6_8897 ; 96
-	dw ptr6_8897 ; 97
-	dw ptr6_8517 ; 98
-	dw ptr6_8517 ; 99
-	dw ptr6_8A5E ; 9a
-	dw ptr6_8A5E ; 9b
-	dw ptr6_8D95 ; 9c
-	dw ptr6_8D95 ; 9d
-	dw ptr6_8F15 ; 9e
-	dw ptr6_8F15 ; 9f
-	dw ptr6_82C7 ; a0
-	dw ptr6_82C7 ; a1
-	dw ptr6_9980 ; a2
-	dw ptr6_9980 ; a3
-	dw ptr6_9980 ; a4
-	dw ptr6_9980 ; a5
-	dw ptr6_9B79 ; a6
-	dw ptr6_9B79 ; a7
-	dw ptr7_9A87 ; a8
-	dw ptr7_9A87 ; a9
-	dw ptr7_9A87 ; aa
-	dw ptr7_9A87 ; ab
-	dw ptr6_9279 ; ac
-	dw ptr6_9279 ; ad
-	dw ptr6_93B7 ; ae
-	dw ptr6_93B7 ; af
-	dw ptr6_8B71 ; b0
-	dw ptr6_8B71 ; b1
-	dw ptr6_8E28 ; b2
-	dw ptr6_8E28 ; b3
-	dw ptr6_90C4 ; b4
-	dw ptr6_90C4 ; b5
-	dw ptr6_990E ; b6
-	dw ptr6_990E ; b7
-	dw ptr6_8ECE ; b8
-	dw ptr4_A0D8 ; b9 (different)
-	dw ptr6_8F2E ; ba
-	dw ptr4_A0D8 ; bb (different)
-	dw ptr6_8F2E ; bc
-	dw ptr4_A0D8 ; bd (different)
-	dw ptr4_A0D8 ; be (different)
-	dw ptr6_8349 ; bf
-	dw ptr9_843B ; c0
-	dw ptr9_843B ; c1
-	dw ptr6_8640 ; c2
-	dw ptr6_8640 ; c3
-	dw ptr6_87C8 ; c4
-	dw ptr6_87C8 ; c5
-	dw ptr9_843B ; c6
-	dw ptr9_843B ; c7
-	dw ptr6_8640 ; c8
-	dw ptr6_8640 ; c9
-	dw ptr6_87C8 ; ca
-	dw ptr6_87C8 ; cb
-	dw ptr9_843B ; cc
-	dw ptr9_843B ; cd
-	dw ptr6_8640 ; ce
-	dw ptr6_8640 ; cf
-	dw ptr6_8A81 ; d0
-	dw ptr6_8A81 ; d1
-	dw ptr6_8D59 ; d2
-	dw ptr6_8D59 ; d3
-	dw ptr6_901A ; d4
-	dw ptr6_901A ; d5
-	dw ptr4_A0D8 ; d6 (different)
-	dw ptr4_A0D8 ; d7 (different)
-	dw ptr6_9286 ; d8
-	dw ptr6_9286 ; d9
-	dw ptr6_98E1 ; da
-	dw ptr6_98E1 ; db
-	dw ptr6_98B7 ; dc
-	dw ptr6_98B7 ; dd
-	dw bra4_98BE ; de
-	dw bra4_98BE ; df
-	dw ptr6_88D1 ; e0
-	dw ptr6_88F9 ; e1
-	dw ptr7_8000 ; e2
-	dw ptr7_8000 ; e3
-	dw ptr6_8475 ; e4
-	dw ptr6_8475 ; e5
-	dw ptr6_8475 ; e6
-	dw ptr6_8475 ; e7
-	dw ptr6_9BED ; e8
-	dw ptr6_9951 ; e9
-	dw ptr6_9951 ; ea
-	dw ptr6_9951 ; eb
-	dw ptr6_9951 ; ec
-	dw ptr6_9951 ; ed
-	dw ptr6_9951 ; ee
-	dw ptr4_A0D8 ; ef (different)
-	dw ptr4_A0D8 ; f0 (different)
-	dw ptr4_A0D8 ; f1 (different)
-	dw ptr4_A0D8 ; f2 (different)
-	dw ptr4_A0D8 ; f3 (different)
-	dw ptr4_A0D8 ; f4 (different)
-	dw ptr4_A0D8 ; f5 (different)
-	dw ptr7_8000 ; f6
-	dw ptr7_8000 ; f7
-	dw ptr7_8000 ; f8
-	dw ptr7_8000 ; f9
-	dw ptr6_820E ; fa
-	dw ptr6_820E ; fb
-	dw ptr6_96CB ; fc
-	dw ptr6_96CB ; fd
-	dw ptr6_96CB ; fe
-	dw ptr6_96CB ; ff
+	.word ptr6_8BF1 ; 80
+	.word ptr6_8BF1 ; 81
+	.word ptr6_9093 ; 82
+	.word ptr6_9093 ; 83
+	.word ptr6_83B3 ; 84
+	.word ptr6_83B3 ; 85
+	.word ptr6_87FE ; 86
+	.word ptr6_87FE ; 87
+	.word ptr6_817B ; 88
+	.word ptr6_817B ; 89
+	.word ptr6_9519 ; 8a
+	.word ptr6_9519 ; 8b
+	.word ptr7_9632 ; 8c
+	.word ptr7_9632 ; 8d
+	.word ptr6_8544 ; 8e
+	.word ptr6_8544 ; 8f
+	.word ptr7_8544 ; 90
+	.word ptr7_8544 ; 91
+	.word ptr6_87FE ; 92
+	.word ptr6_87FE ; 93
+	.word ptr6_88E0 ; 94
+	.word ptr6_88E0 ; 95
+	.word ptr6_8897 ; 96
+	.word ptr6_8897 ; 97
+	.word ptr6_8517 ; 98
+	.word ptr6_8517 ; 99
+	.word ptr6_8A5E ; 9a
+	.word ptr6_8A5E ; 9b
+	.word ptr6_8D95 ; 9c
+	.word ptr6_8D95 ; 9d
+	.word ptr6_8F15 ; 9e
+	.word ptr6_8F15 ; 9f
+	.word ptr6_82C7 ; a0
+	.word ptr6_82C7 ; a1
+	.word ptr6_9980 ; a2
+	.word ptr6_9980 ; a3
+	.word ptr6_9980 ; a4
+	.word ptr6_9980 ; a5
+	.word ptr6_9B79 ; a6
+	.word ptr6_9B79 ; a7
+	.word ptr7_9A87 ; a8
+	.word ptr7_9A87 ; a9
+	.word ptr7_9A87 ; aa
+	.word ptr7_9A87 ; ab
+	.word ptr6_9279 ; ac
+	.word ptr6_9279 ; ad
+	.word ptr6_93B7 ; ae
+	.word ptr6_93B7 ; af
+	.word ptr6_8B71 ; b0
+	.word ptr6_8B71 ; b1
+	.word ptr6_8E28 ; b2
+	.word ptr6_8E28 ; b3
+	.word ptr6_90C4 ; b4
+	.word ptr6_90C4 ; b5
+	.word ptr6_990E ; b6
+	.word ptr6_990E ; b7
+	.word ptr6_8ECE ; b8
+	.word ptr4_A0D8 ; b9 (different)
+	.word ptr6_8F2E ; ba
+	.word ptr4_A0D8 ; bb (different)
+	.word ptr6_8F2E ; bc
+	.word ptr4_A0D8 ; bd (different)
+	.word ptr4_A0D8 ; be (different)
+	.word ptr6_8349 ; bf
+	.word ptr9_843B ; c0
+	.word ptr9_843B ; c1
+	.word ptr6_8640 ; c2
+	.word ptr6_8640 ; c3
+	.word ptr6_87C8 ; c4
+	.word ptr6_87C8 ; c5
+	.word ptr9_843B ; c6
+	.word ptr9_843B ; c7
+	.word ptr6_8640 ; c8
+	.word ptr6_8640 ; c9
+	.word ptr6_87C8 ; ca
+	.word ptr6_87C8 ; cb
+	.word ptr9_843B ; cc
+	.word ptr9_843B ; cd
+	.word ptr6_8640 ; ce
+	.word ptr6_8640 ; cf
+	.word ptr6_8A81 ; d0
+	.word ptr6_8A81 ; d1
+	.word ptr6_8D59 ; d2
+	.word ptr6_8D59 ; d3
+	.word ptr6_901A ; d4
+	.word ptr6_901A ; d5
+	.word ptr4_A0D8 ; d6 (different)
+	.word ptr4_A0D8 ; d7 (different)
+	.word ptr6_9286 ; d8
+	.word ptr6_9286 ; d9
+	.word ptr6_98E1 ; da
+	.word ptr6_98E1 ; .byte
+	.word ptr6_98B7 ; dc
+	.word ptr6_98B7 ; dd
+	.word bra4_98BE ; de
+	.word bra4_98BE ; df
+	.word ptr6_88D1 ; e0
+	.word ptr6_88F9 ; e1
+	.word ptr7_8000 ; e2
+	.word ptr7_8000 ; e3
+	.word ptr6_8475 ; e4
+	.word ptr6_8475 ; e5
+	.word ptr6_8475 ; e6
+	.word ptr6_8475 ; e7
+	.word ptr6_9BED ; e8
+	.word ptr6_9951 ; e9
+	.word ptr6_9951 ; ea
+	.word ptr6_9951 ; eb
+	.word ptr6_9951 ; ec
+	.word ptr6_9951 ; ed
+	.word ptr6_9951 ; ee
+	.word ptr4_A0D8 ; ef (different)
+	.word ptr4_A0D8 ; f0 (different)
+	.word ptr4_A0D8 ; f1 (different)
+	.word ptr4_A0D8 ; f2 (different)
+	.word ptr4_A0D8 ; f3 (different)
+	.word ptr4_A0D8 ; f4 (different)
+	.word ptr4_A0D8 ; f5 (different)
+	.word ptr7_8000 ; f6
+	.word ptr7_8000 ; f7
+	.word ptr7_8000 ; f8
+	.word ptr7_8000 ; f9
+	.word ptr6_820E ; fa
+	.word ptr6_820E ; fb
+	.word ptr6_96CB ; fc
+	.word ptr6_96CB ; fd
+	.word ptr6_96CB ; fe
+	.word ptr6_96CB ; ff
 
 ;------------------------------------
 ; OBJECTS 80-FF PRG BANKS ($A635)
 tbl3_A635:
-	db $38
-	db $38
-	db $38
-	db $38
-	db $32
-	db $32
-	db $32
-	db $32
-	db $32
-	db $32
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $32
-	db $32
-	db $32
-	db $32
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $38
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $25
-	db $25
-	db $25
-	db $30
-	db $25
-	db $30
-	db $30
-	db $25
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $25
-	db $25
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $30
-	db $25
-	db $25
-	db $25
-	db $25
-	db $25
-	db $25
-	db $25
-	db $25
-	db $31
-	db $31
-	db $31
-	db $31
-	db $31
-	db $31
-	db $31
-	db $31
-	db $31
-	db $31
-	db $37
-	db $37
-	db $31
-	db $31
-	db $25
-	db $25
-	db $25
-	db $25
-	db $37
-	db $37
-	db $31
-	db $31
-	db $31
-	db $31
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $32
+	.byte $32
+	.byte $32
+	.byte $32
+	.byte $32
+	.byte $32
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $32
+	.byte $32
+	.byte $32
+	.byte $32
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $38
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $25
+	.byte $25
+	.byte $25
+	.byte $30
+	.byte $25
+	.byte $30
+	.byte $30
+	.byte $25
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $25
+	.byte $25
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $25
+	.byte $25
+	.byte $25
+	.byte $25
+	.byte $25
+	.byte $25
+	.byte $25
+	.byte $25
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $37
+	.byte $37
+	.byte $31
+	.byte $31
+	.byte $25
+	.byte $25
+	.byte $25
+	.byte $25
+	.byte $37
+	.byte $37
+	.byte $31
+	.byte $31
+	.byte $31
+	.byte $31
 
 ;----------------------------------------
 ; ROUTINE ($A6B5)
 ; Removes the object of the X index from memory.
 ;----------------------------------------
-Obj_RemoveObject:
+objRemoveObject:
 	LDA #$00
 	STA objAction,X
 	STA objSlot,X
@@ -1339,76 +1339,76 @@ Obj_RemoveObject:
 ; SUBROUTINE ($A6D4)
 ; Checks if an object is being hit by a cape and kills it accordingly.
 ;----------------------------------------
-Obj_CapeHitCheck:
+objCapeHitCheck:
 	LDA playerYoshiState
-	BNE @Stop ; Stop if the player is riding Yoshi
+	BNE @stop ; Stop if the player is riding Yoshi
 		LDA playerPowerup
 		CMP #$03
-		BCS @Continue ; Only continue if the player has a cape
-@Stop:
+		BCS @continue ; Only continue if the player has a cape
+@stop:
 	RTS
 
-@Continue:
+@continue:
 	LDA playerPrevAction
 	CMP #$05
-	BNE @Stop ; Branch if the player isn't spinning
+	BNE @stop ; Branch if the player isn't spinning
 
 ; Get object hitbox size
 	LDX $A4 ; Get index of current object
 	LDY objSlot,X
-	LDA ObjectXHitBoxSizes,Y
+	LDA objectXHitBoxSizes,Y
 	STA $36
-	LDA ObjectYHitBoxSizes,Y
+	LDA objectYHitBoxSizes,Y
 	STA $38
 
 ; Check if the player is within the object's hitbox horizontally
 	LDA objXDistHi,X
-	BPL @HorizHitboxCheckLeft ; Branch if the player is to the left of the object
+	BPL @horizHitboxCheckLeft ; Branch if the player is to the left of the object
 	; If player is to the right of the object:
 		LDA #16
 		CLC
 		ADC $36
 		CLC
 		ADC objXDistLo,X ; X Hitbox + 16 + X Distance > 255
-		BCS @VertHitboxCheck ; Branch if the player is within 16 pixels of the object's hitbox (cape distance)
-		BCC SkipCapeKill ; Otherwise, set carry and stop
+		BCS @vertHitboxCheck ; Branch if the player is within 16 pixels of the object's hitbox (cape distance)
+		BCC skipCapeKill ; Otherwise, set carry and stop
 
 	; If player is to the left of the object:
-	@HorizHitboxCheckLeft:
+	@horizHitboxCheckLeft:
 		LDA objXDistLo,X
 		CMP #16
-		BCS SkipCapeKill ; Don't kill the object if the player is more than 16 pixels away from it
+		BCS skipCapeKill ; Don't kill the object if the player is more than 16 pixels away from it
 
 ; Otherwise, if the player is within the hitbox horizontally, check if they're in the hitbox vertically
-@VertHitboxCheck:
+@vertHitboxCheck:
 	LDA objYDistHi,X
-	BEQ @VertHitboxCheckAbove ; Branch if the player's origin is already above or at the object's origin
+	BEQ @vertHitboxCheckAbove ; Branch if the player's origin is already above or at the object's origin
 	CMP #$FF
-	BNE SkipCapeKill ; Don't kill the object if it's off-screen?
+	BNE skipCapeKill ; Don't kill the object if it's off-screen?
 	; If the player is at the same level as the object:
 		LDA #24
 		CLC
 		ADC $38
 		CLC
 		ADC objYDistLo,X ; Y hitbox + 24 + Y Distance > 255
-		BCS @KillObject ; Kill the object if the player is within 24 vertical pixels of the object's hitbox (origin at its foot?)
-		BCC SkipCapeKill ; Otherwise, don't kill it and stop
+		BCS @killObject ; Kill the object if the player is within 24 vertical pixels of the object's hitbox (origin at its foot?)
+		BCC skipCapeKill ; Otherwise, don't kill it and stop
 
 	; If the player's origin is above or at the object's:
-	@VertHitboxCheckAbove:
+	@vertHitboxCheckAbove:
 		LDA objYDistLo,X
 		CMP #$00
-		BCS SkipCapeKill ; Don't kill the object if the player is above the object
+		BCS skipCapeKill ; Don't kill the object if the player is above the object
 	; Otherwise, continue and kill the object
-	@KillObject:
+	@killObject:
 		CLC
-		BCC CheckIfCapeKill ; Clear the carry and continue
+		BCC checkIfCapeKill ; Clear the carry and continue
 
-SkipCapeKill:
+skipCapeKill:
 	SEC
 	
-CheckIfCapeKill:
-	BCS @Stop ; Stop if the carry flag was set
+checkIfCapeKill:
+	BCS @stop ; Stop if the carry flag was set
 		LDA objState,X
 		AND #%11100000
 		ORA #%00000100 ; Enable collision check
@@ -1416,26 +1416,26 @@ CheckIfCapeKill:
 		LDA #$00
 		STA objVar,X ; Reset object animation(?)
 		LDA #$01
-		JSR RewardPoints ; Give 200 points
+		JSR rewardPoints ; Give 200 points
 		LDA #SFX_ENEMYHIT2
 		STA sndSfx ; Play hit sound
 		PLA
 		PLA ; Go back two calls and stop running code for this object
-@Stop:
+@stop:
 	RTS
 
 ;----------------------------------------
 ; SUBROUTINE ($A74D)
 ; Destroys an object if spin jumped on or jumped on with Yoshi.
 ;----------------------------------------
-Obj_KillOnSpinJump:
+objKillOnSpinJump:
 	LDA playerYoshiState
-	BNE @Continue ; Continue if player has Yoshi
+	BNE @continue ; Continue if player has Yoshi
 	LDA playerPrevAction
 	CMP #$05
-	BNE @Stop ; If the player doesn't have Yoshi, make sure they're spin jumping
+	BNE @stop ; If the player doesn't have Yoshi, make sure they're spin jumping
 
-@Continue:
+@continue:
 	LDA #$20
 	STA playerYSpd ; Set player's vertical speed
 	LDA playerMoveFlags
@@ -1449,7 +1449,7 @@ Obj_KillOnSpinJump:
 	STA objState,X ; Remove object
 	PLA
 	PLA ; Go back two calls and stop running code for this object
-@Stop:
+@stop:
 	RTS
 
 jmp_54_A773:
@@ -1510,49 +1510,49 @@ bra3_A7BA_RTS:
 ; > 06 = Swallow
 ; > 07 = Inedible
 ;----------------------------------------
-Obj_YoshiTongueCheck:
+objYoshiTongueCheck:
 	LDA $25
 	CMP #$07
 	BNE bra3_A7C4 ; Branch if the object is completely inedible
-	JMP YoshiEatStop ; Otherwise, jump
+	JMP yoshiEatStop ; Otherwise, jump
 
 bra3_A7C4:
 	LDA yoshiTongueState
 	CMP #$01
-	BEQ @Continue ; Branch if there's nothing on Yoshi's tongue already
+	BEQ @continue ; Branch if there's nothing on Yoshi's tongue already
 
-@Stop:
-	JMP YoshiEatStop ; If there is, jump
+@stop:
+	JMP yoshiEatStop ; If there is, jump
 
-@Continue:
+@continue:
 	LDX $A4 ; Get index for current object
 	LDA playerState
 	CMP #$09
-	BCC @Stop ; Stop if Yoshi's tongue isn't out
+	BCC @stop ; Stop if Yoshi's tongue isn't out
 	LDA playerMoveFlags
 	AND #$40
-	BNE @IsFacingObjectLeft ; Branch if the player is facing left
+	BNE @isFacingObjectLeft ; Branch if the player is facing left
 	; If the player is facing right:
 		LDA objXDistHi,X
-		BMI @Stop ; Stop if the player is facing away from the object (facing right and to the left of it)
+		BMI @stop ; Stop if the player is facing away from the object (facing right and to the left of it)
 		BPL bra3_A7E8 ; Branch if the player is to the left of the object
 
 	; If the player is facing left:
-	@IsFacingObjectLeft:
+	@isFacingObjectLeft:
 		LDA objXDistHi,X
-		BPL @Stop ; Stop if the player is facing away from the object (facing left and to the right of it)
+		BPL @stop ; Stop if the player is facing away from the object (facing left and to the right of it)
 
 bra3_A7E8:
 	LDX playerAnimFrame
 	CPX #$06
-	BCC YoshiEatStop ; Make sure Yoshi's mouth is open
+	BCC yoshiEatStop ; Make sure Yoshi's mouth is open
 	LDA tbl3_A85F,X
 	STA $32 ; Get the width of Yoshi's tongue hitbox
 	LDY $A4 ; Get index for current object
 	LDX objSlot,Y
-	LDA ObjectXHitBoxSizes,X
+	LDA objectXHitBoxSizes,X
 	STA $36 ; Get object hitbox width
-	LDA ObjectYHitBoxSizes,X
+	LDA objectYHitBoxSizes,X
 	STA $38 ; Get object hitbox height
 	LDX $A4
 	LDA objXDistHi,X
@@ -1597,7 +1597,7 @@ bra3_A83A:
 bra3_A83D:
 	SEC
 bra3_A83E:
-	BCS YoshiEatStop
+	BCS yoshiEatStop
 	LDX playerAnimFrame
 	LDA tbl3_A86D,X
 	STA playerAnimFrame
@@ -1607,7 +1607,7 @@ bra3_A83E:
 	STA yoshiTongueState
 	RTS
 
-YoshiEatStop:
+yoshiEatStop:
 	LDX $A4
 	LDA objState,X
 	AND #$E0 ; Mask out the lower 5 bits
@@ -1615,551 +1615,551 @@ YoshiEatStop:
 	STA objState,X ; Run main collision code
 	RTS
 tbl3_A85F:
-	db $00
-	db $01
-	db $02
-	db $03
-	db $04
-	db $05
-	db $18
-	db $20
-	db $28
-	db $30
-	db $28
-	db $20
-	db $18
-	db $18
+	.byte $00
+	.byte $01
+	.byte $02
+	.byte $03
+	.byte $04
+	.byte $05
+	.byte $18
+	.byte $20
+	.byte $28
+	.byte $30
+	.byte $28
+	.byte $20
+	.byte $18
+	.byte $18
 tbl3_A86D:
-	db $00
-	db $01
-	db $02
-	db $03
-	db $04
-	db $05
-	db $0B
-	db $0B
-	db $0A
-	db $09
-	db $0A
-	db $0B
-	db $0C
-	db $0D
+	.byte $00
+	.byte $01
+	.byte $02
+	.byte $03
+	.byte $04
+	.byte $05
+	.byte $0B
+	.byte $0B
+	.byte $0A
+	.byte $09
+	.byte $0A
+	.byte $0B
+	.byte $0C
+	.byte $0D
 ; A87B
-ObjectXHitBoxSizes:
-	db $00
-	db $00
-	db $10
-	db $10
-	db $10 ; Koopa shell
-	db $10
-	db $08
-	db $08
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10 ; Koopa
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $18
-	db $18
-	db $18
-	db $18
-	db $18
-	db $18
-	db $20
-	db $20
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $18
-	db $18
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $18
-	db $18
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $30
-	db $30
-	db $30
-	db $12
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $30
-	db $30
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $18
-	db $10
-	db $20
-	db $20
-	db $10
-	db $10
-	db $10
-	db $20
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $20
-	db $20
-	db $10
-	db $10
-	db $10
-	db $10
-	db $18
-	db $18
-	db $20
-	db $20
-	db $10
-	db $10
-	db $18
-	db $18
-	db $20
-	db $20
-	db $10
-	db $10
-	db $10
-	db $10
-	db $20
-	db $20
-	db $10
-	db $10
-	db $10
-	db $10
-	db $18
-	db $18
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $20
-	db $20
-	db $18
-	db $18
-	db $18
-	db $18
-	db $10
-	db $10
-	db $18
-	db $18
-	db $18
-	db $18
-	db $10
-	db $10
-	db $10
-	db $10
-	db $08
-	db $08
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $10
-	db $18
-	db $18
-	db $20
-	db $20
-	db $18
-	db $18
-	db $18
-	db $18
-	db $20
-	db $20
-	db $18
-	db $18
-	db $18
-	db $18
-	db $20
-	db $20
-	db $18
-	db $18
-	db $18
-	db $18
-	db $20
-	db $20
-	db $08
-	db $20
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $30
-	db $30
-	db $10
-	db $10
-	db $20
-	db $20
-	db $10
-	db $10
-	db $10
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $20
-	db $20
-	db $20
-	db $20
+objectXHitBoxSizes:
+	.byte $00
+	.byte $00
+	.byte $10
+	.byte $10
+	.byte $10 ; Koopa shell
+	.byte $10
+	.byte $08
+	.byte $08
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10 ; Koopa
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $20
+	.byte $20
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $18
+	.byte $18
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $18
+	.byte $18
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $30
+	.byte $30
+	.byte $30
+	.byte $12
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $30
+	.byte $30
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $18
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $18
+	.byte $18
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $18
+	.byte $18
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $18
+	.byte $18
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $10
+	.byte $10
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $08
+	.byte $08
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $18
+	.byte $18
+	.byte $20
+	.byte $20
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $20
+	.byte $20
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $20
+	.byte $20
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $20
+	.byte $20
+	.byte $08
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $30
+	.byte $30
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
 ; A97B
-ObjectYHitBoxSizes:
-	db $00
-	db $00
-	db $10
-	db $10
-	db $10 ; Koopa shell
-	db $10
-	db $08
-	db $08
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $20 ; Koopa
-	db $20
-	db $10
-	db $10
-	db $20
-	db $20
-	db $20
-	db $20
-	db $10
-	db $10
-	db $10
-	db $10
-	db $20
-	db $20
-	db $18
-	db $18
-	db $18
-	db $18
-	db $18
-	db $18
-	db $10
-	db $10
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $20
-	db $20
-	db $10
-	db $10
-	db $18
-	db $18
-	db $18
-	db $18
-	db $18
-	db $18
-	db $18
-	db $18
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $08
-	db $08
-	db $20
-	db $20
-	db $20
-	db $20
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $20
-	db $20
-	db $28
-	db $28
-	db $50
-	db $50
-	db $88
-	db $88
-	db $28
-	db $28
-	db $28
-	db $28
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $20
-	db $10
-	db $20
-	db $18
-	db $03
-	db $18
-	db $10
-	db $20
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $20
-	db $20
-	db $10
-	db $10
-	db $18
-	db $18
-	db $20
-	db $20
-	db $20
-	db $20
-	db $10
-	db $10
-	db $10
-	db $10
-	db $20
-	db $20
-	db $10
-	db $10
-	db $10
-	db $10
-	db $20
-	db $20
-	db $10
-	db $10
-	db $10
-	db $10
-	db $20
-	db $20
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $10
-	db $10
-	db $20
-	db $20
-	db $20
-	db $20
-	db $10
-	db $10
-	db $10
-	db $10
-	db $08
-	db $08
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $10
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $18
-	db $18
-	db $08
-	db $38
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $08
-	db $28
-	db $40
-	db $40
-	db $20
-	db $20
-	db $10
-	db $10
-	db $10
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $40
-	db $40
-	db $40
-	db $40
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
+objectYHitBoxSizes:
+	.byte $00
+	.byte $00
+	.byte $10
+	.byte $10
+	.byte $10 ; Koopa shell
+	.byte $10
+	.byte $08
+	.byte $08
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20 ; Koopa
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $10
+	.byte $10
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $08
+	.byte $08
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $28
+	.byte $28
+	.byte $50
+	.byte $50
+	.byte $88
+	.byte $88
+	.byte $28
+	.byte $28
+	.byte $28
+	.byte $28
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $10
+	.byte $20
+	.byte $18
+	.byte $03
+	.byte $18
+	.byte $10
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $18
+	.byte $18
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $08
+	.byte $08
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $18
+	.byte $18
+	.byte $08
+	.byte $38
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $08
+	.byte $28
+	.byte $40
+	.byte $40
+	.byte $20
+	.byte $20
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
 
 ;----------------------------------------
 ; FUNCTION ($AA7B)
@@ -2169,7 +2169,7 @@ ptr_AA7B:
 	LDY $A4 ; Get index for the current object
 	LDX playerAnimFrame ; Get hitbox index for player
 	CPX #$0C
-	BCC @Continue ; Only continue if the player isn't underwater or doing a special animation
+	BCC @continue ; Only continue if the player isn't underwater or doing a special animation
 	; Otherwise, move to the next object function
 		LDA objState,Y
 		CLC
@@ -2177,7 +2177,7 @@ ptr_AA7B:
 		STA objState,Y ; Move to next object function
 		RTS
 
-@Continue:
+@continue:
 	LDA tbl3_AB0D,X
 	STA $37
 	LDA tbl3_AB1B,X
@@ -2185,14 +2185,14 @@ ptr_AA7B:
 	LDX objSlot,Y ; Get the index for the current object
 
 	; Get player's horizontal offset
-	LDA ObjectXHitBoxSizes,X
+	LDA objectXHitBoxSizes,X
 	LSR
 	CLC
 	ADC $37
 	STA $32 ; (Player hitbox width / 2) + animation hitbox size
 
 	; Get player's vertical offset
-	LDA ObjectYHitBoxSizes,X
+	LDA objectYHitBoxSizes,X
 	CLC
 	ADC #4
 	EOR #%11111111 ; Make value negative
@@ -2200,7 +2200,7 @@ ptr_AA7B:
 
 	LDA playerMoveFlags
 	AND #%01000000
-	BNE @AddHorizOffsetLeft ; Branch if the player is facing left
+	BNE @addHorizOffsetLeft ; Branch if the player is facing left
 	; If the player is facing right:
 		LDA playerXLoDup
 		CLC
@@ -2208,10 +2208,10 @@ ptr_AA7B:
 		STA objXLo,Y
 		LDA playerXHiDup ; Offset player's position to the right
 		ADC #$00
-		JMP @AddVertOffset ; Add high byte if needed
+		JMP @addVertOffset ; Add high byte if needed
 
 	; If the player is facing left:
-	@AddHorizOffsetLeft:
+	@addHorizOffsetLeft:
 		LDA playerXLoDup
 		SEC
 		SBC $32
@@ -2219,35 +2219,35 @@ ptr_AA7B:
 		LDA playerXHiDup
 		SBC #$00 ; Offset player's position to the left
 
-@AddVertOffset:
+@addVertOffset:
 	STA objXHi,Y
 	LDA playerYHiDup
 	STA objYHi,Y ; Carry over to high byte of player's position
 	LDA $36
-	BMI @AddNegVertOffset ; Offset differently if the vertical offset is negative
+	BMI @addNegVertOffset ; Offset differently if the vertical offset is negative
 	; Add positive offset to player's vertical position
 		CLC
 		ADC playerYLoDup
 		STA objYLo,Y ; Add vertical offset to player's position
-		BCS @AddHorizHighByte ; Add to high byte if needed
+		BCS @addHorizHighByte ; Add to high byte if needed
 			CMP #$F0
-			BCC @Stop ; Stop if adding 16 doesn't cross the vertical screen boundary
+			BCC @stop ; Stop if adding 16 doesn't cross the vertical screen boundary
 
-		@AddHorizHighByte:
+		@addHorizHighByte:
 			CLC
 			ADC #16
 			STA objYLo,Y ; Offset Y position by 16
 			LDA objYHi,Y
 			CLC
 			ADC #$01
-			JMP @StoreVerticalHighByte
+			JMP @storeVerticalHighByte
 
 	; Add negative offset to player's vertical position
-	@AddNegVertOffset:
+	@addNegVertOffset:
 		CLC
 		ADC playerYLoDup
 		STA objYLo,Y
-		BCS @Stop ; Stop if subtraction doesn't need to borrow from the high byte
+		BCS @stop ; Stop if subtraction doesn't need to borrow from the high byte
 			SEC
 			SBC #16
 			STA objYLo,Y
@@ -2255,58 +2255,58 @@ ptr_AA7B:
 			SEC
 			SBC #$01 ; Borrow from high byte if needed
 
-@StoreVerticalHighByte:
+@storeVerticalHighByte:
 	STA objYHi,Y
-@Stop:
+@stop:
 	RTS
 
 tbl3_AB0D:
-	db $00 ; Idle
-	db $00 ; Walking
-	db $00 ; Running
-	db $00 ; Unused
-	db $00 ; Jumping
-	db $00 ; Spinning
-	db $00 ; Turning (Unused)
-	db $18 ; Ducking
-	db $28 ; Looking up
-	db $30 ; Running jump
-	db $28 ; Falling
-	db $18 ; Sinking
-	db $00 ; Swimming up
-	db $00 ; Climbing idle
+	.byte $00 ; Idle
+	.byte $00 ; Walking
+	.byte $00 ; Running
+	.byte $00 ; Unused
+	.byte $00 ; Jumping
+	.byte $00 ; Spinning
+	.byte $00 ; Turning (Unused)
+	.byte $18 ; Ducking
+	.byte $28 ; Looking up
+	.byte $30 ; Running jump
+	.byte $28 ; Falling
+	.byte $18 ; Sinking
+	.byte $00 ; Swimming up
+	.byte $00 ; Climbing idle
 tbl3_AB1B:
-	db $00 ; Idle
-	db $01 ; Walking
-	db $02 ; Running
-	db $03 ; Unused
-	db $04 ; Jumping
-	db $05 ; Spinning
-	db $10 ; Turning (Unused)
-	db $10 ; Ducking
-	db $20 ; Looking up
-	db $28 ; Running jump
-	db $20 ; Falling
-	db $10 ; Sinking
-	db $10 ; Swimming up
-	db $10 ; Climbing idle
+	.byte $00 ; Idle
+	.byte $01 ; Walking
+	.byte $02 ; Running
+	.byte $03 ; Unused
+	.byte $04 ; Jumping
+	.byte $05 ; Spinning
+	.byte $10 ; Turning (Unused)
+	.byte $10 ; Ducking
+	.byte $20 ; Looking up
+	.byte $28 ; Running jump
+	.byte $20 ; Falling
+	.byte $10 ; Sinking
+	.byte $10 ; Swimming up
+	.byte $10 ; Climbing idle
 
 ;----------------------------------------
 ; FUNCTION ($AB29)
 ; Handles Yoshi eating powerups
 ;----------------------------------------
-Obj_PowerupEatCheck:
+objPowerupEatCheck:
 	LDA $25
 	CMP #$06
-	BNE @Continue ; Skip ahead if object can't be swallowed
+	BNE @continue ; Skip ahead if object can't be swallowed
 	; If the object can be swallowed:
 		LDA #SFX_YOSHISWALLOW
 		STA sndSfx ; Play swallow sound
 
-@Continue:
-	JSR Obj_GetEdiblePowerup ; Check if Yoshi ate a generic powerup (mushroom, fire flower, or feather)
+@continue:
+	JSR objGetEdiblePowerup ; Check if Yoshi ate a generic powerup (mushroom, fire flower, or feather)
 	CPX #OBJ_1UP
-	BNE @CheckIfStar ; Check if Yoshi ate a star if he didn't eat a 1UP
+	BNE @checkIfStar ; Check if Yoshi ate a star if he didn't eat a 1UP
 	; If Yoshi ate a 1UP:
 		LDY curPlayer
 		LDA playerLives,Y
@@ -2315,15 +2315,15 @@ Obj_PowerupEatCheck:
 		STA playerLives,Y ; Add 1 to the player's life counter if Yoshi ate a 1UP
 		LDA #SFX_1UP
 		STA sndSfx ; Play 1UP sound
-		BNE @RemoveObject ; Continue and remove object
+		BNE @removeObject ; Continue and remove object
 	; If Yoshi ate a star:
-	@CheckIfStar:
+	@checkIfStar:
 		CPX #OBJ_STAR
-		BNE @RemoveObject ; Continue and remove object if Yoshi didn't eat a star
+		BNE @removeObject ; Continue and remove object if Yoshi didn't eat a star
 			LDA #$01
 			STA invincibilityTimer ; Give the player invincibility
 
-@RemoveObject:
+@removeObject:
 	LDX $A4 ; Get object's index
 	LDA #$00
 	STA objSlot,X ; Remove object
@@ -2341,17 +2341,17 @@ ptr_AB5D:
 ; SUBROUTINE
 ; Updates player and object values when an object is picked up.
 ;----------------------------------------
-SetObjectCarryState:
+setObjectCarryState:
 	LDA playerYoshiState
-	BNE SetObjectCarryStateDone ; Make sure the player isn't riding Yoshi
+	BNE setObjectCarryStateDone ; Make sure the player isn't riding Yoshi
 	LDA playerHoldFlag
-	BNE SetObjectCarryStateDone ; Stop if the player is already carrying something
+	BNE setObjectCarryStateDone ; Stop if the player is already carrying something
 	LDA playerAction+1
 	CMP #$04
-	BCS SetObjectCarryStateDone ; Only continue if player is either walking, running, or doing nothing
+	BCS setObjectCarryStateDone ; Only continue if player is either walking, running, or doing nothing
 	LDA btnHeld
 	AND #BTN_B
-	BEQ SetObjectCarryStateDone ; Make sure the B button is held
+	BEQ setObjectCarryStateDone ; Make sure the B button is held
 	STA playerHoldFlag
 	LDY $A4 ; Get index for current object
 	LDA objState,Y
@@ -2359,14 +2359,14 @@ SetObjectCarryState:
 	STA objState,Y ; Set object to "held"
 	PLA
 	PLA ; Add 2 to stack pointer? The accumulator is overwritten after every call to this routine, so this is seemingly useless.
-SetObjectCarryStateDone:
+setObjectCarryStateDone:
 	RTS
 	
 ;----------------------------------------
 ; SUBROUTINE ($AB92)
 ; Positions carried objects.
 ;----------------------------------------
-PositionCarriedObject:
+positionCarriedObject:
 	LDY $A4
 	LDA objState,Y
 	AND #$80
@@ -2410,7 +2410,7 @@ loc3_ABC7:
 	STA objYLo,Y
 	BCS bra3_ABDF
 	CMP #$F0
-	BCC PositionCarriedObjectDone
+	BCC positionCarriedObjectDone
 bra3_ABDF:
 	CLC
 	ADC #$10
@@ -2425,7 +2425,7 @@ bra3_ABEE:
 	CLC
 	ADC playerYLoDup
 	STA objYLo,Y ; Offset object 20 pixels above the origin of the player's sprite
-	BCS PositionCarriedObjectDone ; Stop if adding overflows and subtracts 20, which occurs for values 20 ($14) and higher
+	BCS positionCarriedObjectDone ; Stop if adding overflows and subtracts 20, which occurs for values 20 ($14) and higher
 	; If it doesn't overflow and subtract properly, subtract 16 ($10) and decrement the upper byte
 		SEC
 		SBC #$10
@@ -2439,7 +2439,7 @@ bra3_ABEE:
 ;--------------------
 jmp_54_AC02:
 	STA objYHi,Y
-PositionCarriedObjectDone:
+positionCarriedObjectDone:
 	PLA
 	PLA ; Add 2 to stack pointer? Seemingly useless.
 	RTS
@@ -2653,7 +2653,7 @@ ptr_AD79:
 ; FUNCTION ($AD88)
 ; Moves an object while they're falling off-screen
 ;----------------------------------------
-Obj_FlipKill:
+objFlipKill:
 	LDY #2
 	LDX $A4
 	LDA objState,X
@@ -2737,14 +2737,14 @@ loc3_AE0E_RTS:
 	RTS
 
 tbl3_AE0F:
-	db -4
-	db -3
-	db -2
-	db 1
-	db 2
-	db 3
-	db 4
-	db $FF
+	.byte -4
+	.byte -3
+	.byte -2
+	.byte 1
+	.byte 2
+	.byte 3
+	.byte 4
+	.byte $FF
 
 ptr_AE17:
 	LDA objXDistHi,X
@@ -2761,7 +2761,7 @@ bra3_AE28:
 	AND #$00
 	BNE bra3_AE36_RTS
 	LDA #$24
-	JSR GetMovementData
+	JSR getMovementData
 bra3_AE36_RTS:
 	RTS
 
@@ -2772,7 +2772,7 @@ bra3_AE36_RTS:
 ; X Reg: The ID of the object eaten. Special mushrooms will return the ID for normal mushrooms
 ; Y Reg: The index of the current object.
 ;----------------------------------------
-Obj_GetEdiblePowerup:
+objGetEdiblePowerup:
 	LDA $25
 	CMP #$06
 	BNE bra3_AE97_RTS ; Stop if object can't be swallowed
@@ -2782,58 +2782,58 @@ jmp_54_AE3D:
 	LDY $A4 ; Get current object's index
 	LDA playerPowerup
 	CMP #$04
-	BNE @Continue ; Continue if player isn't moving with a cape
+	BNE @continue ; Continue if player isn't moving with a cape
 		LDA #$03 ; Clamp player powerup state to 3 (not moving with cape)
 
-@Continue:
+@continue:
 	STA $32 ; Copy player powerup status to scratch memory
 	LDX objSlot,Y ; Get index for current object
 	CPX #OBJ_KOOPA
-	BCC GetPowerupFromObject ; Branch if object's ID is between 1 and 15
+	BCC getPowerupFromObject ; Branch if object's ID is between 1 and 15
 	; Otherwise, check if the object is a mushroom variant
 		CPX #OBJ_MUSHROOM_IDLE
-		BEQ SetToMushroom ; Give powerup for standing mushroom
+		BEQ setToMushroom ; Give powerup for standing mushroom
 		CPX #OBJ_MUSHROOM_PRINCESS
-		BEQ SetToMushroom ; Give powerup for princess-thrown mushroom
+		BEQ setToMushroom ; Give powerup for princess-thrown mushroom
 		CPX #OBJ_MUSHROOM_HIDDEN
 		BNE bra3_AE97_RTS ; Give power up if mushroom was hidden. Otherwise, don't give the player a powerup at all
 
-SetToMushroom:
+setToMushroom:
 	LDX #OBJ_MUSHROOM ; Replace with ID for normal mushroom
 
-GetPowerupFromObject:
-	LDA ObjectPowerupTbl,X ; Get powerup for swallowing current object
+getPowerupFromObject:
+	LDA objectPowerupTbl,X ; Get powerup for swallowing current object
 	BEQ bra3_AE97_RTS ; Don't change powerup if swallowing the object does nothing
 	CMP #$01
-	BNE @GivePowerupContinue ; Branch if the object 
+	BNE @givePowerupContinue ; Branch if the object 
 	; If the object gives a mushroom when swallowed:
 		LDY playerPowerup
-		BEQ @GivePowerupContinue ; Don't check the item box if the player is small
+		BEQ @givePowerupContinue ; Don't check the item box if the player is small
 			LDY playerItemBox
-			BEQ @StoreItem ; Store a mushroom if the item box is empty
-			BNE @SetPowerupEffect ; Otherwise, don't overwrite the item box
+			BEQ @storeItem ; Store a mushroom if the item box is empty
+			BNE @setPowerupEffect ; Otherwise, don't overwrite the item box
 	; If it gives a fire flower or feather when swallowed:
-	@GivePowerupContinue:
+	@givePowerupContinue:
 		STA playerPowerup ; Give player powerup
 		LDA $32
-		BEQ @SetPowerupEffect ; Only put the player's powerup in the item box if the player has one
+		BEQ @setPowerupEffect ; Only put the player's powerup in the item box if the player has one
 
-@StoreItem:
+@storeItem:
 	STA playerItemBox ; Store powerup in item box
 
 ; Plays the powerup sound and buffers the game
-@SetPowerupEffect:
+@setPowerupEffect:
 	LDA #SFX_POWERUP
 	STA sndSfx
 	LDA #$01 ; Set powerup buffer time for fire flower
 	CPX #OBJ_FEATHER
-	BNE @NotFeather
+	BNE @notFeather
 	; If Yoshi ate a feather:
 		LDA #SFX_FEATHER
 		STA sndSfx ; Play feather sound
 		LDA #$81 ; Set powerup buffer time for feather
 	; If Yoshi ate a mushroom or fire flower:
-	@NotFeather:
+	@notFeather:
 		STA playerPowerupBuffer
 		LDA #$07
 		STA gameState ; Trigger appropriate event
@@ -2842,23 +2842,23 @@ GetPowerupFromObject:
 bra3_AE97_RTS:
 	RTS
 
-ObjectPowerupTbl:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01 ; Mushroom
-	db $02 ; Fire Flower
-	db $03 ; Feather
-	db $00
-	db $00
+objectPowerupTbl:
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01 ; Mushroom
+	.byte $02 ; Fire Flower
+	.byte $03 ; Feather
+	.byte $00
+	.byte $00
 
 sub3_AEA8:
 	STA $38
@@ -2888,9 +2888,9 @@ bra3_AEBE:
 	PLA
 	RTS
 bra3_AECF:
-	LDA ObjectXHitBoxSizes,Y
+	LDA objectXHitBoxSizes,Y
 	STA $36
-	LDA ObjectYHitBoxSizes,Y
+	LDA objectYHitBoxSizes,Y
 	STA $37
 	LDY $A4
 	STY $32
@@ -2949,263 +2949,263 @@ bra3_AF39:
 bra3_AF42_RTS:
 	RTS
 tbl3_AF43:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $00
-	db $00
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $00
-	db $00
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $00
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $00
-	db $01
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $00
-	db $00
-	db $00
-	db $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
 tbl3_AFC3:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $00
-	db $00
-	db $00
-	db $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
 
 ;----------------------------------------
 ; SUBROUTINE ($B043)
@@ -3223,7 +3223,7 @@ sub3_B043:
 	LDY objSlot,X
 	LDA #$08
 	STA $36
-	LDA ObjectYHitBoxSizes,Y
+	LDA objectYHitBoxSizes,Y
 	CLC
 	ADC #$04 ; Object's hitbox height + 4
 	JMP loc3_B08D
@@ -3239,11 +3239,11 @@ sub3_B057:
 	BEQ bra3_B06C
 
 bra3_B069:
-	LDA ObjectXHitBoxSizes,Y
+	LDA objectXHitBoxSizes,Y
 
 bra3_B06C:
 	STA $36
-	LDA ObjectYHitBoxSizes,Y
+	LDA objectYHitBoxSizes,Y
 	SEC
 	SBC #$08
 	JMP loc3_B08D
@@ -3264,12 +3264,12 @@ sub3_B077:
 	LDY objSlot,X ; Load current object
 	LDA objState,X ; Get state of current object
 	AND #%01000000
-	BEQ @SetObjXPosOfs ; Offset position by 0 if the object isn't mirrored
-	LDA ObjectXHitBoxSizes,Y ; Offset the object by its hitbox width during the calculation if it's mirrored
+	BEQ @setObjXPosOfs ; Offset position by 0 if the object isn't mirrored
+	LDA objectXHitBoxSizes,Y ; Offset the object by its hitbox width during the calculation if it's mirrored
 
-@SetObjXPosOfs:
+@setObjXPosOfs:
 	STA $36
-	LDA ObjectYHitBoxSizes,Y
+	LDA objectYHitBoxSizes,Y
 
 loc3_B08D:
 	STA $38 ; Store vertical position offset
@@ -3377,7 +3377,7 @@ jmp_54_B11D:
 	STA $32
 	LDA tbl_51_E000+1,Y
 	STA $33 ; Get pointer for movement data
-	JSR GetSpeedData
+	JSR getSpeedData
 	LDA curObjPrgBank
 	STA M90_PRG0 ; Swap object back into first 8K PRG bank
 	RTS
@@ -3389,7 +3389,7 @@ jmp_54_B11D:
 ; > $0032: Movement table pointer
 ; > Object Variable: Used to determine which movement vectors to load from the table
 ;----------------------------------------
-GetSpeedData:
+getSpeedData:
 	LDX $A4 ; Get index of current object
 	LDA objVar,X
 	AND #%01111111 ; Clear upper bit of object variable
@@ -3397,18 +3397,18 @@ GetSpeedData:
 	TAY ; Get movement data index
 	LDA objState,X
 	AND #$40
-	BEQ LoadObjSpeedRight ; Branch if object is facing right
+	BEQ loadObjSpeedRight ; Branch if object is facing right
 	; If the object is facing left, invert its X movement value
 		LDA ($32),Y
 		EOR #$FF
 		CLC
 		ADC #$01 ; (x XOR 255) + 1 == -x (Two's complement of X movement)
-		JMP StoreObjMovementData ; Continue
+		JMP storeObjMovementData ; Continue
 	; If object is facing right, load X movement value as normal
-	LoadObjSpeedRight:
+	loadObjSpeedRight:
 		LDA ($32),Y
 
-StoreObjMovementData:
+storeObjMovementData:
 	STA $06E2 ; Store X movement
 
 ; Load Y movement from next byte in table
@@ -3418,7 +3418,7 @@ StoreObjMovementData:
 
 	LDA interruptMode
 	CMP #$04
-	BEQ ChangeObjDirection ; Branch if in the bowser fight, which has one screen
+	BEQ changeObjDirection ; Branch if in the bowser fight, which has one screen
 	; Otherwise, add X movement to the object's position
 		LDA $06E2
 		PHA ; Backup object X movement
@@ -3426,41 +3426,41 @@ StoreObjMovementData:
 		ADC objXLo,X
 		STA objXLo,X ; Add X movement to object's horizontal position
 		PLA ; Get X movement
-		BMI ObjNegXSpeedCalcHi ; Branch if X movement value is negative, subtracting upper byte of X position
+		BMI objNegXSpeedCalcHi ; Branch if X movement value is negative, subtracting upper byte of X position
 		LDA objXHi,X
 		ADC #$00 ; Otherwise, if X movement value is positive, carry to upper byte of the X position if needed
-		BPL StoreObjXSpeedCalc ; Continue if the position doesn't overflow
+		BPL storeObjXSpeedCalc ; Continue if the position doesn't overflow
 		; Borrow from upper byte of object's horizontal position if needed
-		ObjNegXSpeedCalcHi:
+		objNegXSpeedCalcHi:
 			LDA objXHi,X
 			SBC #$00
 
-StoreObjXSpeedCalc:
+storeObjXSpeedCalc:
 	STA objXHi,X ; Store upper byte of object's horizontal position
 
 ; Add positive vertical movement
 	LDA $06E3
-	BMI ObjNegYSpeedCalc ; Branch if object's Y movement is negative (moving upwards)
+	BMI objNegYSpeedCalc ; Branch if object's Y movement is negative (moving upwards)
 	CLC
 	ADC objYLo,X
 	STA objYLo,X ; Otherwise, if movement is positive, add to low byte
-	BCS ObjYSpeedCalcHi ; Branch if it carries over (crossing vertical screen boundary)
+	BCS objYSpeedCalcHi ; Branch if it carries over (crossing vertical screen boundary)
 	CMP #$F0
-	BCC ChangeObjDirection ; If adding 10 wouldn't carry over, branch
+	BCC changeObjDirection ; If adding 10 wouldn't carry over, branch
 	; Carry to high byte and move 16 bytes down if addition carries over
-	ObjYSpeedCalcHi:
+	objYSpeedCalcHi:
 		CLC
 		ADC #$10
 		STA objYLo,X
 		INC objYHi,X ; Carry over addition and add 16 ($10)
-		JMP ChangeObjDirection
+		JMP changeObjDirection
 
 ; Subtract negative vertical movement (if speed value is negative)
-ObjNegYSpeedCalc:
+objNegYSpeedCalc:
 	CLC
 	ADC objYLo,X
 	STA objYLo,X ; Subtract low byte
-	BCS ChangeObjDirection ; Branch if subtraction doesn't borrow from high byte
+	BCS changeObjDirection ; Branch if subtraction doesn't borrow from high byte
 	; Otherwise, borrow from high byte and subtract 16 ($10)
 		SEC
 		SBC #$10
@@ -3468,28 +3468,28 @@ ObjNegYSpeedCalc:
 		DEC objYHi,X
 
 ; Change object's direction if needed and update movement vector table index
-ChangeObjDirection:
+changeObjDirection:
 	INY ; Move to next byte
 	LDA ($32),Y
 	CMP #$FF
-	BNE UpdateObjSpeedDataIndex ; Branch if delimiter byte isn't reached
+	BNE updateObjSpeedDataIndex ; Branch if delimiter byte isn't reached
 	; Turn the object around and stop if the delimiter byte is reached
 		LDA objState,X
 		EOR #%01000000
 		STA objState,X ; Turn object around
-		JMP GetSpeedDataDone ; Go to next vector and end routine
+		JMP getSpeedDataDone ; Go to next vector and end routine
 	; If the X movement byte isn't the delimiter, check if it's an index change vector
-	UpdateObjSpeedDataIndex:
+	updateObjSpeedDataIndex:
 		AND #%11110000
-		BEQ GetSpeedDataDone ; Stop if the X movement byte is normal
+		BEQ getSpeedDataDone ; Stop if the X movement byte is normal
 		; Otherwise, check if it's a loop byte
 			LDA ($32),Y
 			AND #%00111111
-			BNE SubObjXYSpeedIndex ; Stop if this is a normal movement value
+			BNE subObjXYSpeedIndex ; Stop if this is a normal movement value
 			STA objVar,X ; If they are clear, set the movement vector index directly
 			RTS
 		; If bits 0 - 5 of the next byte aren't clear, subtract the X/Y speed set index by the lower 6 bits of the next byte
-		SubObjXYSpeedIndex:
+		subObjXYSpeedIndex:
 			STA $32 ; Save lower 6 bits of next byte
 			LDA objVar,X
 			SEC
@@ -3497,7 +3497,7 @@ ChangeObjDirection:
 			STA objVar,X ; Move back the amount of X/Y speed sets in the lower 6 bits (highest bit of the subtrahend will be cleared)
 
 ; Move to next set of X/Y speeds in the table
-GetSpeedDataDone:
+getSpeedDataDone:
 	INC objVar,X
 	RTS
 
@@ -3507,7 +3507,7 @@ GetSpeedDataDone:
 ; Parameters:
 ; > A: Object ID
 ;----------------------------------------
-GetMovementData:
+getMovementData:
 	ASL
 	TAY ; Get pointer index
 	LDA tbl_51_E000,Y
@@ -4015,14 +4015,14 @@ bra3_B5BA_RTS:
 ; SUBROUTINE ($B5BB)
 ; Turns the object around in the direction of the player
 ;----------------------------------------
-Obj_FacePlayer:
+objFacePlayer:
 	LDA #$00
 	STA objVar,X ; Clear object variable
 	TAY ; Set object direction to right
 	LDA objXDistHi,X
-	BMI @SetDirection ; Branch if the object is behind the player, setting its direction to right
+	BMI @setDirection ; Branch if the object is behind the player, setting its direction to right
 		LDY #$40 ; If the object is ahead of the player, set object direction to left
-@SetDirection:
+@setDirection:
 	TYA
 	STA objState,X ; Store object direction
 	RTS
@@ -4439,20 +4439,20 @@ jmp_54_B896:
 	STA $2B
 	JMP ($32) ; Jump to the pointer
 tbl3_B8BF:
-	dw ptr11_B8DB
-	dw ptr11_B968
-	dw ptr11_B983
-	dw ptr11_B989
-	dw ptr11_B99B
-	dw ptr11_B99C
-	dw ptr11_B9D6
-	dw ptr11_BA1C
-	dw ptr11_BA6B
-	dw ptr11_BA78
-	dw ptr11_BA81
-	dw ptr11_BA96
-	dw ptr11_BAA2
-	dw ptr11_B9DF
+	.word ptr11_B8DB
+	.word ptr11_B968
+	.word ptr11_B983
+	.word ptr11_B989
+	.word ptr11_B99B
+	.word ptr11_B99C
+	.word ptr11_B9D6
+	.word ptr11_BA1C
+	.word ptr11_BA6B
+	.word ptr11_BA78
+	.word ptr11_BA81
+	.word ptr11_BA96
+	.word ptr11_BAA2
+	.word ptr11_B9DF
 ptr11_B8DB:
 	LDY $3F
 	INY
@@ -4820,7 +4820,7 @@ sub_54_BB59:
 	STY $2B
 	LDX $A4
 	LDY objSlot,X
-	LDA ObjectYHitBoxSizes,Y
+	LDA objectYHitBoxSizes,Y
 	CLC
 	ADC objYLo,X
 	STA $AA
@@ -4845,7 +4845,7 @@ sub_54_BB8E:
 	STY $2B
 	LDX $A4
 	LDY objSlot,X
-	LDA ObjectXHitBoxSizes,Y
+	LDA objectXHitBoxSizes,Y
 	CLC
 	ADC objXLo,X
 	STA $A8
@@ -4916,44 +4916,44 @@ bra3_BC0B:
 loc3_BC1D_RTS:
 	RTS
 tbl3_BC1E:
-	db $FC
-	db $FC
-	db $FD
-	db $FD
-	db $FE
-	db $FE
-	db $FF
-	db $FF
-	db $01
-	db $01
-	db $02
-	db $02
-	db $03
-	db $03
-	db $04
-	db $04
-	db $04
-	db $04
-	db $03
-	db $03
-	db $02
-	db $02
-	db $01
-	db $01
-	db $FF
-	db $FF
-	db $FE
-	db $FE
-	db $FD
-	db $FD
-	db $FC
-	db $FC
+	.byte $FC
+	.byte $FC
+	.byte $FD
+	.byte $FD
+	.byte $FE
+	.byte $FE
+	.byte $FF
+	.byte $FF
+	.byte $01
+	.byte $01
+	.byte $02
+	.byte $02
+	.byte $03
+	.byte $03
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $03
+	.byte $03
+	.byte $02
+	.byte $02
+	.byte $01
+	.byte $01
+	.byte $FF
+	.byte $FF
+	.byte $FE
+	.byte $FE
+	.byte $FD
+	.byte $FD
+	.byte $FC
+	.byte $FC
 jmp_54_BC3E:
 	LDX $A4
 	LDY objSlot,X
-	LDA ObjectXHitBoxSizes,Y
+	LDA objectXHitBoxSizes,Y
 	STA $36
-	LDA ObjectYHitBoxSizes,Y
+	LDA objectYHitBoxSizes,Y
 	STA $38
 	LDY #$10
 	LDA playerPowerup
@@ -5014,7 +5014,7 @@ bra3_BCA6_RTS:
 ; SUBROUTINE ($BCA7)
 ; Like the subroutine below it, except it gives more rebound speed and always turns the player right.
 ;----------------------------------------
-Obj_StompReboundAlt:
+objStompReboundAlt:
 	LDA #SFX_ENEMYHIT2
 	STA sndSfx ; Play enemy hit sound
 	LDA #48
@@ -5025,13 +5025,13 @@ Obj_StompReboundAlt:
 	AND #%10111110 ; This may be a bug
 	STA playerMoveFlags ; Make player move upwards and right
 	LDA #$01
-	JMP RewardPoints ; Give player 200 points
+	JMP rewardPoints ; Give player 200 points
 
 ;----------------------------------------
 ; SUBROUTINE ($BCBE)
 ; Bounces the player back and gives them points while playing a sound effect 
 ;----------------------------------------
-Obj_StompRebound:
+objStompRebound:
 	LDA #SFX_ENEMYHIT2
 	STA sndSfx ; Play hit sound effect
 
@@ -5039,7 +5039,7 @@ Obj_StompRebound:
 ; SUBROUTINE ($BCC2)
 ; Bounces the player back and gives them points
 ;----------------------------------------
-Obj_StompReboundNoSFX:
+objStompReboundNoSFX:
 	LDA #8
 	STA playerYSpd ; Set vertical rebound speed
 	LDA playerMoveFlags
@@ -5060,7 +5060,7 @@ Obj_StompReboundNoSFX:
 ;   > 2 = 500
 ;   > 3 = 1000
 ;----------------------------------------
-RewardPoints:
+rewardPoints:
 	ASL ; Get score data index
 	STY $2B
 	STX $28 ; Back up X and Y registers
@@ -5068,11 +5068,11 @@ RewardPoints:
 	LDA curPlayer
 	ASL
 	TAX ; Get appropriate offset for current player's score
-	LDA ScoreTbl+1,Y
+	LDA scoreTbl+1,Y
 	STA $32 ; Get high byte
 	
 ; Add to player's score
-	LDA ScoreTbl,Y
+	LDA scoreTbl,Y
 	CLC
 	ADC playerScores,X
 	STA playerScores,X
@@ -5084,11 +5084,11 @@ RewardPoints:
 	LDY $2B
 	LDX $28
 	RTS
-ScoreTbl:
-	dw 100/10
-	dw 200/10
-	dw 500/10
-	dw 1000/10
+scoreTbl:
+	.word 100/10
+	.word 200/10
+	.word 500/10
+	.word 1000/10
 
 sub3_BD03:
 	LDA objSlot,X
@@ -5121,7 +5121,7 @@ bra3_BD31:
 	LDY $2B
 	LDX $28
 	LDA #$01
-	JSR RewardPoints
+	JSR rewardPoints
 	RTS
 jmp_54_BD3D:
 	LDA objVar,X
@@ -5330,73 +5330,73 @@ bra3_BEB7:
 ; SUBROUTINE ($BEBC)
 ; Checks if the player collides with the object's hitbox. If the player stomps the object, they are rewarded 200 points. Otherwise, if the player takes damage or isn't touching the object, it will stop the object's code.
 ;----------------------------------------
-Obj_PlayerHitCheck:
+objPlayerHitCheck:
 	LDX $A4 ; Get current object index
 	LDY objSlot,X
-	LDA ObjectXHitBoxSizes,Y
+	LDA objectXHitBoxSizes,Y
 	STA $36
-	LDA ObjectYHitBoxSizes,Y
+	LDA objectYHitBoxSizes,Y
 	STA $38
 	LDY #$10 ; Set default player hitbox to 16 pixels high
 	LDA playerPowerup
-	BEQ @SetPlayerDuckingHeight ; Branch if the player is small, keeping their hitbox at 16 pixels high
+	BEQ @setPlayerDuckingHeight ; Branch if the player is small, keeping their hitbox at 16 pixels high
 	LDY #$18 ; Otherwise, if they have a powerup, make their hitbox 24 pixels high
 
-@SetPlayerDuckingHeight:
+@setPlayerDuckingHeight:
 	LDA playerAction
 	CMP #PACT_DUCK
-	BNE @HorizHitboxCheck ; Don't change the player's hitbox size if they aren't ducking
+	BNE @horizHitboxCheck ; Don't change the player's hitbox size if they aren't ducking
 	LDY #$08 ; If the player is ducking, make their hitbox 8 pixels high
 
-@HorizHitboxCheck:
+@horizHitboxCheck:
 	STY $32 ; Store player's hitbox height
 	LDA objXDistHi,X
-	BPL @HorizHitboxCheckLeft ; Branch if the player is to the left of the object
+	BPL @horizHitboxCheckLeft ; Branch if the player is to the left of the object
 	; If player is to the right of the object:
 		LDA #5
 		CLC
 		ADC $36
 		CLC
 		ADC objXDistLo,X ; 5 + X Hitbox + X Distance > 255
-		BCS @VertHitboxCheck ; Move to the vertical check if player is within 5 pixels of the object's hitbox horizontally
-		BCC SkipPlayerObjectColl ; Otherwise, stop
+		BCS @vertHitboxCheck ; Move to the vertical check if player is within 5 pixels of the object's hitbox horizontally
+		BCC skipPlayerObjectColl ; Otherwise, stop
 
 	; If player is to the left of the object:
-	@HorizHitboxCheckLeft:
+	@horizHitboxCheckLeft:
 		LDA objXDistLo,X
 		CMP #5
-		BCS SkipPlayerObjectColl ; Stop if the player is more than 5 pixels away from the object
+		BCS skipPlayerObjectColl ; Stop if the player is more than 5 pixels away from the object
 
 ; Otherwise, if the player is within the horizontal hitbox, move to the vertical hitbox check
-@VertHitboxCheck:
+@vertHitboxCheck:
 	LDA objYDistHi,X
-	BEQ @VertHitboxCheckAbove ; Skip these checks if the player's origin is already above or at the object's origin
+	BEQ @vertHitboxCheckAbove ; Skip these checks if the player's origin is already above or at the object's origin
 	CMP #$FF
-	BNE SkipPlayerObjectColl ; Stop if the object is off-screen
+	BNE skipPlayerObjectColl ; Stop if the object is off-screen
 	; If the player is at the same level as the object:
 		LDA $32
 		CLC
 		ADC $38
 		CLC
 		ADC objYDistLo,X ; Player Hitbox Height + Object Hitbox Height > 255
-		BCS @HandleCollision ; Handle collision with the player if they're within the object's vertical hitbox
-		BCC SkipPlayerObjectColl ; Otherwise, stop
+		BCS @handleCollision ; Handle collision with the player if they're within the object's vertical hitbox
+		BCC skipPlayerObjectColl ; Otherwise, stop
 
 	; If the player's origin is above or at the object's:
-	@VertHitboxCheckAbove:
+	@vertHitboxCheckAbove:
 		LDA objYDistLo,X
 		CMP #$00
-		BCS SkipPlayerObjectColl ; Stop if the player is above the object
+		BCS skipPlayerObjectColl ; Stop if the player is above the object
 	; Otherwise, continue and handle collision with player
-	@HandleCollision:
+	@handleCollision:
 		CLC
-		BCC CheckIfCollided ; Handle collision
+		BCC checkIfCollided ; Handle collision
 
-SkipPlayerObjectColl:
+skipPlayerObjectColl:
 	SEC ; If set, the branch below will fail and collision with the player won't be handled
 
-CheckIfCollided:
-	BCC ObjHandlePlayerColl ; If not set, handle collision accordingly
+checkIfCollided:
+	BCC objHandlePlayerColl ; If not set, handle collision accordingly
 bra3_BF1A:
 	LDA objState,X
 	AND #%11100000
@@ -5406,35 +5406,35 @@ bra3_BF1A:
 	RTS ; Go back two calls and stop running code for this object
 
 ; Check if the player can take damage
-ObjHandlePlayerColl:
+objHandlePlayerColl:
 	LDA objYDistHi,X
-	BPL @InvincibilityCheck ; Only continue if the player isn't above the object's hitbox
+	BPL @invincibilityCheck ; Only continue if the player isn't above the object's hitbox
 	LDA objYDistLo,X
 	CMP #-14
-	BCC @InvincibilityCheck ; AND only continue if the player is within 14 pixels of the object vertically
+	BCC @invincibilityCheck ; AND only continue if the player is within 14 pixels of the object vertically
 		LDA playerAction
 		CMP #PACT_CLIMBIDLE
-		BEQ @GivePoints
+		BEQ @givePoints
 		CMP #PACT_CLIMBMOVE
-		BEQ @GivePoints ; Give points if the player hits the object while climbing
+		BEQ @givePoints ; Give points if the player hits the object while climbing
 		LDA playerMoveFlags
 		AND #%00000100
-		BNE @InvincibilityCheck ; Player can be assumed to be taking damage from the object if they are moving upwards
+		BNE @invincibilityCheck ; Player can be assumed to be taking damage from the object if they are moving upwards
 
 ; Otherwise, if the player is falling downwards, it can be assumed that they're stomping on the object
-@GivePoints:
+@givePoints:
 	LDA invincibilityTimer
-	BNE @GivePointsContinue ; Reward points immediately if the player already has invulnerability frames
+	BNE @givePointsContinue ; Reward points immediately if the player already has invulnerability frames
 	LDA #$F6
 	STA invincibilityTimer ; Otherwise, give them 12 frames of invulnerability without flickering
-@GivePointsContinue:
+@givePointsContinue:
 	LDA #$01
-	JSR RewardPoints ; Give the player 200 points
+	JSR rewardPoints ; Give the player 200 points
 	RTS
 
-@InvincibilityCheck:
+@invincibilityCheck:
 	LDA invincibilityTimer
-	BEQ @DamagePlayer ; Deal damage if the player isn't invincible
+	BEQ @damagePlayer ; Deal damage if the player isn't invincible
 	CMP #$D0
 	BCS bra3_BF1A ; Stop collision check if the player has invulnerability frames
 	; Otherwise, if player has star power:
@@ -5449,58 +5449,58 @@ ObjHandlePlayerColl:
 		PLA
 		RTS ; Go back two calls and stop running code for this object
 
-@DamagePlayer:
-	JSR DealDamage ; Deal damage
+@damagePlayer:
+	JSR dealDamage ; Deal damage
 	PLA
 	PLA
 	RTS ; Go back two calls and stop running code for this object
 
 jmp_54_BF74:
 	LDA invincibilityTimer
-	BEQ DealDamage
+	BEQ dealDamage
 	RTS
 
 ;----------------------------------------
 ; SUBROUTINE ($BF7A)
 ; Deals damage to the player. This is only used within this bank
 ;----------------------------------------
-DealDamage:
+dealDamage:
 	LDX $A4
 	LDA objSlot,X
 	CMP #$48
-	BCC @TurnObject
+	BCC @turnObject
 	CMP #$4C
-	BCC @DamagePlayer ; Don't turn objects $48 - $4C around when they damage the player
+	BCC @damagePlayer ; Don't turn objects $48 - $4C around when they damage the player
 
 ; Turn the object in the direction of the player when it damages them
-@TurnObject:
+@turnObject:
 	LDA objXDistHi,X
-	BMI @TurnObjectRight ; Turn object right if the player is damaged from the right
+	BMI @turnObjectRight ; Turn object right if the player is damaged from the right
 	LDA objState,X
 	ORA #%01000000 ; Turn object left if the player is damaged from the left 
-	BNE @SetObjectDirection
+	BNE @setObjectDirection
 
-@TurnObjectRight:
+@turnObjectRight:
 	LDA objState,X
 	AND #%10111111
 
-@SetObjectDirection:
+@setObjectDirection:
 	STA objState,X ; Turn object right
 
-@DamagePlayer:
+@damagePlayer:
 	LDA #$00
 	STA playerHoldFlag
 	LDA playerYoshiState
-	BEQ @DamageNoYoshi ; Branch if player isn't on Yoshi
+	BEQ @damageNoYoshi ; Branch if player isn't on Yoshi
 	; Otherwise, inflict damage to Yoshi
 		LDA #$01
 		STA playerHurtFlag
-		JMP @GiveIFrames ; Hurt player and give them invulnerability frames
+		JMP @giveIFrames ; Hurt player and give them invulnerability frames
 
 ; Handle damage if the player isn't riding Yoshi
-@DamageNoYoshi:
+@damageNoYoshi:
 	LDA playerPowerup
-	BEQ @KillPlayer ; Kill the player if they're already small
+	BEQ @killPlayer ; Kill the player if they're already small
 	; Otherwise, make the player small
 		LDA #$00
 		STA playerPowerup
@@ -5509,7 +5509,7 @@ DealDamage:
 	LDA #$07
 	STA gameState ; Pause game to change powerup
 
-@GiveIFrames:
+@giveIFrames:
 	LDA #$D0
 	STA invincibilityTimer ; Give player (128) invulnerability frames
 	LDA #SFX_POWERDOWN
@@ -5519,7 +5519,7 @@ DealDamage:
 	STA objState,X ; End collision check for this frame
 	RTS
 
-@KillPlayer:
+@killPlayer:
 	LDA #GAMESTATE_DEATH
 	STA gameState ; Trigger death event
 	LDA #$00

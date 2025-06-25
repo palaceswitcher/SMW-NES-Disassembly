@@ -1,20 +1,20 @@
 ; disassembled with BZK 6502 Disassembler
 TilemapPointers:
-	dw TitleLogo
-	dw EndingScreen
-	dw ThankYouScreen
-	dw CopyrightScreen
-	dw YoshiHouse ; Unused
+	.word TitleLogo
+	.word EndingScreen
+	.word ThankYouScreen
+	.word CopyrightScreen
+	.word YoshiHouse ; Unused
 TitleLogo:
-	incbin screens/TitleLogo.bin
+	.incbin screens/TitleLogo.bin
 EndingScreen:
-	incbin screens/EndingScreen.bin
+	.incbin screens/EndingScreen.bin
 ThankYouScreen:
-	incbin screens/ThankYouScreen.bin
+	.incbin screens/ThankYouScreen.bin
 CopyrightScreen:
-	incbin screens/CopyrightScreen.bin
+	.incbin screens/CopyrightScreen.bin
 YoshiHouse:
-	incbin screens/YoshiHouse.bin ; Unused
+	.incbin screens/YoshiHouse.bin ; Unused
 	db $11, $30, $2A, $0E
 	db $11, $38, $26, $0E
 	db $11, $37, $2A, $1A
@@ -252,142 +252,142 @@ bra2_88E1:
 bra2_88FF_RTS:
 	RTS
 tbl2_8900:
-	dw SprMap_PlayerText
-	dw SprMap_PlayerText
-	dw SprMap_PlayerCursor
-	dw SprMap_TitleCloud
-	dw SprMap_TitleEnemyPop
-	dw pnt3_8B0C ; unused 05
-	dw pnt3_8B16 ; unused 06
-	dw SprMap_TitleKoopa1
-	dw SprMap_TitleKoopa2
-	dw SprMap_TitleRex1
-	dw SprMap_TitleRex2
-	dw pnt3_8B74 ; unused 0B
-	dw pnt3_8B80 ; unused 0C
-	dw SprMap_TitleSuperKoopa1
-	dw SprMap_TitleSuperKoopa2
-	dw pnt3_8B9E ; unused 0F
-	dw pnt3_8BC2 ; unused 10
-	dw SprMap_TitleMario1
-	dw SprMap_TitleMario2
-	dw SprMap_TitleYoshi_Walk1
-	dw SprMap_TitleYoshi_Walk2
-	dw SprMap_TitleYoshi_Jump
+	.word SprMap_PlayerText
+	.word SprMap_PlayerText
+	.word SprMap_PlayerCursor
+	.word SprMap_TitleCloud
+	.word SprMap_TitleEnemyPop
+	.word pnt3_8B0C ; unused 05
+	.word pnt3_8B16 ; unused 06
+	.word SprMap_TitleKoopa1
+	.word SprMap_TitleKoopa2
+	.word SprMap_TitleRex1
+	.word SprMap_TitleRex2
+	.word pnt3_8B74 ; unused 0B
+	.word pnt3_8B80 ; unused 0C
+	.word SprMap_TitleSuperKoopa1
+	.word SprMap_TitleSuperKoopa2
+	.word pnt3_8B9E ; unused 0F
+	.word pnt3_8BC2 ; unused 10
+	.word SprMap_TitleMario1
+	.word SprMap_TitleMario2
+	.word SprMap_TitleYoshi_Walk1
+	.word SprMap_TitleYoshi_Walk2
+	.word SprMap_TitleYoshi_Jump
 ; Map sprites (starts at hex 16)
-	dw SprMap_MapplayerDown1
-	dw SprMap_MapplayerDown2
-	dw SprMap_MapplayerDown3
-	dw SprMap_MapplayerLeft1
-	dw SprMap_MapplayerLeft2
-	dw SprMap_MapplayerClimb1
-	dw SprMap_MapplayerClimb2
-	dw SprMap_MapplayerUp1
-	dw SprMap_MapplayerUp2
-	dw SprMap_MapplayerUp3
-	dw SprMap_MapplayerSwimDown1
-	dw SprMap_MapplayerSwimDown2
-	dw SprMap_MapplayerSwimLeft1
-	dw SprMap_MapplayerSwimLeft2 ; unused
-	dw SprMap_MapplayerSwimUp1
-	dw SprMap_MapplayerSwimUp2
-	dw SprMap_MapBoo ; unused
-	dw SprMap_MapHalo ; unused
-	dw SprMap_MapYoshi_Down1
-	dw SprMap_MapYoshi_Down2
-	dw SprMap_MapYoshi_Left1
-	dw SprMap_MapYoshi_Left2
-	dw SprMap_MapYoshi_Up1
-	dw SprMap_MapYoshi_Up2
-	dw SprMap_MapYoshi_SwimDown1
-	dw SprMap_MapYoshi_SwimDown2
-	dw SprMap_MapYoshi_SwimLeft1
-	dw SprMap_MapYoshi_SwimLeft2 ; unused
-	dw SprMap_MapYoshi_SwimUp1
-	dw SprMap_MapYoshi_SwimUp2
-	dw SprMap_MapplayerStart
-	dw SprMap_MapYoshi_Start1
-	dw SprMap_MapYoshi_Start2
-	dw SprMap_MapYoshi_SwimStart1
-	dw SprMap_MapYoshi_SwimStart2
-	dw SprMap_MapplayerSwimStart1
-	dw SprMap_MapplayerSwimStart2
-	dw SprMap_MapplayerRight1
-	dw SprMap_MapplayerRight2
-	dw SprMap_MapplayerSwimRight1 ; unused
-	dw SprMap_MapplayerSwimRight2 ; unused
-	dw SprMap_MapYoshi_Right1
-	dw SprMap_MapYoshi_Right2
-	dw SprMap_MapYoshi_SwimRight1 ; unused
-	dw SprMap_MapYoshi_SwimRight2 ; unused
+	.word SprMap_MapplayerDown1
+	.word SprMap_MapplayerDown2
+	.word SprMap_MapplayerDown3
+	.word SprMap_MapplayerLeft1
+	.word SprMap_MapplayerLeft2
+	.word SprMap_MapplayerClimb1
+	.word SprMap_MapplayerClimb2
+	.word SprMap_MapplayerUp1
+	.word SprMap_MapplayerUp2
+	.word SprMap_MapplayerUp3
+	.word SprMap_MapplayerSwimDown1
+	.word SprMap_MapplayerSwimDown2
+	.word SprMap_MapplayerSwimLeft1
+	.word SprMap_MapplayerSwimLeft2 ; unused
+	.word SprMap_MapplayerSwimUp1
+	.word SprMap_MapplayerSwimUp2
+	.word SprMap_MapBoo ; unused
+	.word SprMap_MapHalo ; unused
+	.word SprMap_MapYoshi_Down1
+	.word SprMap_MapYoshi_Down2
+	.word SprMap_MapYoshi_Left1
+	.word SprMap_MapYoshi_Left2
+	.word SprMap_MapYoshi_Up1
+	.word SprMap_MapYoshi_Up2
+	.word SprMap_MapYoshi_SwimDown1
+	.word SprMap_MapYoshi_SwimDown2
+	.word SprMap_MapYoshi_SwimLeft1
+	.word SprMap_MapYoshi_SwimLeft2 ; unused
+	.word SprMap_MapYoshi_SwimUp1
+	.word SprMap_MapYoshi_SwimUp2
+	.word SprMap_MapplayerStart
+	.word SprMap_MapYoshi_Start1
+	.word SprMap_MapYoshi_Start2
+	.word SprMap_MapYoshi_SwimStart1
+	.word SprMap_MapYoshi_SwimStart2
+	.word SprMap_MapplayerSwimStart1
+	.word SprMap_MapplayerSwimStart2
+	.word SprMap_MapplayerRight1
+	.word SprMap_MapplayerRight2
+	.word SprMap_MapplayerSwimRight1 ; unused
+	.word SprMap_MapplayerSwimRight2 ; unused
+	.word SprMap_MapYoshi_Right1
+	.word SprMap_MapYoshi_Right2
+	.word SprMap_MapYoshi_SwimRight1 ; unused
+	.word SprMap_MapYoshi_SwimRight2 ; unused
 tbl2_8986:
-	dw pnt3_8ACC
-	dw pnt3_8ACC
-	dw pnt3_8AE9
-	dw pnt3_8AF6
-	dw pnt3_8B06
-	dw pnt3_8B06
-	dw pnt3_8B06
-	dw pnt3_8B2E
-	dw pnt3_8B2E
-	dw pnt3_8B58
-	dw pnt3_8B58
-	dw pnt3_8B7A
-	dw pnt3_8B7A
-	dw pnt3_8B8E
-	dw pnt3_8B8E
-	dw pnt3_8BB0
-	dw pnt3_8BD4
-	dw pnt3_8BF0
-	dw pnt3_8BF0
-	dw pnt3_8C16
-	dw pnt3_8C16
-	dw pnt3_8C16
-	dw pnt3_8C4C
-	dw pnt3_8C4C
-	dw pnt3_8C4C
-	dw pnt3_8C4C
-	dw pnt3_8C4C
-	dw pnt3_8C4C
-	dw pnt3_8C4C
-	dw pnt3_8C4C
-	dw pnt3_8C4C
-	dw pnt3_8C4C
-	dw pnt3_8C8E
-	dw pnt3_8C8E
-	dw pnt3_8C8E
-	dw pnt3_8C8E
-	dw pnt3_8C8E
-	dw pnt3_8C8E
-	dw pnt3_8CB8
-	dw pnt3_8CBB
-	dw pnt3_8CC6
-	dw pnt3_8CCE
-	dw pnt3_8CE6
-	dw pnt3_8CE6
-	dw pnt3_8D07
-	dw pnt3_8D07
-	dw pnt3_8CC6
-	dw pnt3_8CCE
-	dw pnt3_8D2F
-	dw pnt3_8D2F
-	dw pnt3_8D07
-	dw pnt3_8D07
-	dw pnt3_8C4C
-	dw pnt3_8CC6
-	dw pnt3_8CCE
-	dw pnt3_8CC6
-	dw pnt3_8CCE
-	dw pnt3_8C8E
-	dw pnt3_8C8E
-	dw pnt3_8D92
-	dw pnt3_8D92
-	dw pnt3_8DA4
-	dw pnt3_8DA4
-	dw pnt3_8DB6
-	dw pnt3_8DB6
-	dw pnt3_8DD7
-	dw pnt3_8DD7
+	.word pnt3_8ACC
+	.word pnt3_8ACC
+	.word pnt3_8AE9
+	.word pnt3_8AF6
+	.word pnt3_8B06
+	.word pnt3_8B06
+	.word pnt3_8B06
+	.word pnt3_8B2E
+	.word pnt3_8B2E
+	.word pnt3_8B58
+	.word pnt3_8B58
+	.word pnt3_8B7A
+	.word pnt3_8B7A
+	.word pnt3_8B8E
+	.word pnt3_8B8E
+	.word pnt3_8BB0
+	.word pnt3_8BD4
+	.word pnt3_8BF0
+	.word pnt3_8BF0
+	.word pnt3_8C16
+	.word pnt3_8C16
+	.word pnt3_8C16
+	.word pnt3_8C4C
+	.word pnt3_8C4C
+	.word pnt3_8C4C
+	.word pnt3_8C4C
+	.word pnt3_8C4C
+	.word pnt3_8C4C
+	.word pnt3_8C4C
+	.word pnt3_8C4C
+	.word pnt3_8C4C
+	.word pnt3_8C4C
+	.word pnt3_8C8E
+	.word pnt3_8C8E
+	.word pnt3_8C8E
+	.word pnt3_8C8E
+	.word pnt3_8C8E
+	.word pnt3_8C8E
+	.word pnt3_8CB8
+	.word pnt3_8CBB
+	.word pnt3_8CC6
+	.word pnt3_8CCE
+	.word pnt3_8CE6
+	.word pnt3_8CE6
+	.word pnt3_8D07
+	.word pnt3_8D07
+	.word pnt3_8CC6
+	.word pnt3_8CCE
+	.word pnt3_8D2F
+	.word pnt3_8D2F
+	.word pnt3_8D07
+	.word pnt3_8D07
+	.word pnt3_8C4C
+	.word pnt3_8CC6
+	.word pnt3_8CCE
+	.word pnt3_8CC6
+	.word pnt3_8CCE
+	.word pnt3_8C8E
+	.word pnt3_8C8E
+	.word pnt3_8D92
+	.word pnt3_8D92
+	.word pnt3_8DA4
+	.word pnt3_8DA4
+	.word pnt3_8DB6
+	.word pnt3_8DB6
+	.word pnt3_8DD7
+	.word pnt3_8DD7
 tbl2_8A0C:
 	db $00
 	db $00
@@ -444,20 +444,20 @@ TitleSpriteFrameTypes:
 ; Speed - Animation speed in frames
 ; Index - 1K CHR slot used. Can be $00, $40, $80, or $C0 for slots 1 through 4 respectively.
 TitleSpriteAnimations:
-	dw pnt3_8A6C
-	dw SprMap_TitleKoopaAnim
-	dw SprMap_TitleSuperKoopaAnim
-	dw TitlePopEffectAnim
-	dw pnt3_8A80 ; Unknown
-	dw SprMap_TitleRexAnim
-	dw pnt3_8A8A ; Unknown
-	dw pnt3_8A8F
-	dw SprMap_TitleMarioAnim ; Useless, hardcoded
-	dw SprMap_TitleYoshi_WalkAnim ; Useless, hardcoded
-	dw pnt3_8A9E ; Yoshi duplicate
-	dw pnt3_8AA3
-	dw pnt3_8AA8
-	dw pnt3_8AAD
+	.word pnt3_8A6C
+	.word SprMap_TitleKoopaAnim
+	.word SprMap_TitleSuperKoopaAnim
+	.word TitlePopEffectAnim
+	.word pnt3_8A80 ; Unknown
+	.word SprMap_TitleRexAnim
+	.word pnt3_8A8A ; Unknown
+	.word pnt3_8A8F
+	.word SprMap_TitleMarioAnim ; Useless, hardcoded
+	.word SprMap_TitleYoshi_WalkAnim ; Useless, hardcoded
+	.word pnt3_8A9E ; Yoshi duplicate
+	.word pnt3_8AA3
+	.word pnt3_8AA8
+	.word pnt3_8AAD
 pnt3_8A6C:
 	db $00
 	db $00
@@ -1553,11 +1553,11 @@ tbl2_8E67:
 	hex 2140
 	hex 2140
 tbl2_8E71:
-	dw ofs_8E7B
-	dw ofs_8EFB
-	dw ofs_8F3B
-	dw ofs_8F7B
-	dw ofs_8FBB
+	.word ofs_8E7B
+	.word ofs_8EFB
+	.word ofs_8F3B
+	.word ofs_8F7B
+	.word ofs_8FBB
 ofs_8E7B:
 	db $FF
 	db $FF
@@ -2082,14 +2082,14 @@ sub2_90B1:
 	STA $33
 	JMP ($32)
 tbl2_90C3:
-	dw ptr9_90F3
-	dw ptr9_90F9
-	dw ptr9_9102
-	dw ptr9_9108
-	dw ptr9_9111
-	dw ptr9_9117
-	dw ptr9_9120
-	dw ptr9_9126
+	.word ptr9_90F3
+	.word ptr9_90F9
+	.word ptr9_9102
+	.word ptr9_9108
+	.word ptr9_9111
+	.word ptr9_9117
+	.word ptr9_9120
+	.word ptr9_9126
 sub2_90D3:
 	LDX $0361
 	LDA tbl2_90DD,X
@@ -2183,18 +2183,18 @@ sub2_9151:
 	STA $33
 	JMP ($32)
 tbl2_9163:
-	dw ptr9_91A1
-	dw ptr9_91A7
-	dw ptr9_91B2
-	dw ptr9_91BA
-	dw ptr9_91C5
-	dw ptr9_91CB
-	dw ptr9_91D6
-	dw ptr9_91DE
-	dw ptr9_917B
-	dw ptr9_9183
-	dw ptr9_918B
-	dw ptr9_9193
+	.word ptr9_91A1
+	.word ptr9_91A7
+	.word ptr9_91B2
+	.word ptr9_91BA
+	.word ptr9_91C5
+	.word ptr9_91CB
+	.word ptr9_91D6
+	.word ptr9_91DE
+	.word ptr9_917B
+	.word ptr9_9183
+	.word ptr9_918B
+	.word ptr9_9193
 ptr9_917B:
 	LDA #$00
 	STA mapScreen
@@ -2260,70 +2260,70 @@ loc2_91E9:
 bra2_91FC_RTS:
 	RTS
 tbl2_91FD:
-	dw ofs_927D
-	dw ofs_9282
-	dw ofs_9287
-	dw ofs_9290
-	dw ofs_9295
-	dw ofs_929E
-	dw ofs_92A7
-	dw ofs_92AC
-	dw ofs_92B5
-	dw ofs_92BA
-	dw ofs_92BF
-	dw ofs_92C4
-	dw ofs_92C9
-	dw ofs_92DE
-	dw ofs_92E3
-	dw ofs_930C
-	dw ofs_9321
-	dw ofs_933E
-	dw ofs_9367
-	dw ofs_9378
-	dw ofs_9395
-	dw ofs_93A6
-	dw ofs_93B7
-	dw ofs_93C8
-	dw ofs_93D9
-	dw ofs_93EE
-	dw ofs_93FF
-	dw ofs_9404
-	dw ofs_9419
-	dw ofs_9436
-	dw ofs_943B
-	dw ofs_9458
-	dw ofs_9475
-	dw ofs_9486
-	dw ofs_94A3
-	dw ofs_94B4
-	dw ofs_94C5
-	dw ofs_94DA
-	dw ofs_94EB
-	dw ofs_9500
-	dw ofs_9519
-	dw ofs_9532
-	dw ofs_9543
-	dw ofs_9554
-	dw ofs_956D
-	dw ofs_9576
-	dw ofs_9587
-	dw ofs_959C
-	dw ofs_95A5
-	dw ofs_95B6
-	dw ofs_95CB
-	dw ofs_95E8
-	dw ofs_95F9
-	dw ofs_9612
-	dw ofs_962F
-	dw ofs_9650
-	dw ofs_9669
-	dw ofs_9686
-	dw ofs_96A7
-	dw ofs_96B4
-	dw ofs_96CC
-	dw ofs_96CD
-	dw ofs_96DA
-	dw ofs_96DA
+	.word ofs_927D
+	.word ofs_9282
+	.word ofs_9287
+	.word ofs_9290
+	.word ofs_9295
+	.word ofs_929E
+	.word ofs_92A7
+	.word ofs_92AC
+	.word ofs_92B5
+	.word ofs_92BA
+	.word ofs_92BF
+	.word ofs_92C4
+	.word ofs_92C9
+	.word ofs_92DE
+	.word ofs_92E3
+	.word ofs_930C
+	.word ofs_9321
+	.word ofs_933E
+	.word ofs_9367
+	.word ofs_9378
+	.word ofs_9395
+	.word ofs_93A6
+	.word ofs_93B7
+	.word ofs_93C8
+	.word ofs_93D9
+	.word ofs_93EE
+	.word ofs_93FF
+	.word ofs_9404
+	.word ofs_9419
+	.word ofs_9436
+	.word ofs_943B
+	.word ofs_9458
+	.word ofs_9475
+	.word ofs_9486
+	.word ofs_94A3
+	.word ofs_94B4
+	.word ofs_94C5
+	.word ofs_94DA
+	.word ofs_94EB
+	.word ofs_9500
+	.word ofs_9519
+	.word ofs_9532
+	.word ofs_9543
+	.word ofs_9554
+	.word ofs_956D
+	.word ofs_9576
+	.word ofs_9587
+	.word ofs_959C
+	.word ofs_95A5
+	.word ofs_95B6
+	.word ofs_95CB
+	.word ofs_95E8
+	.word ofs_95F9
+	.word ofs_9612
+	.word ofs_962F
+	.word ofs_9650
+	.word ofs_9669
+	.word ofs_9686
+	.word ofs_96A7
+	.word ofs_96B4
+	.word ofs_96CC
+	.word ofs_96CD
+	.word ofs_96DA
+	.word ofs_96DA
 ofs_927D:
 	db $01
 	db $04
@@ -3578,35 +3578,35 @@ bra2_974D:
 bra2_9752_RTS:
 	RTS
 tbl2_9753:
-	dw ofs_978D
-	dw ofs_9792
-	dw ofs_9795
-	dw ofs_9798
-	dw ofs_979D
-	dw ofs_97A0
-	dw ofs_97A3
-	dw ofs_97A6
-	dw ofs_97A9
-	dw ofs_97AC
-	dw ofs_97AF
-	dw ofs_97B2
-	dw ofs_97B5
-	dw ofs_97B8
-	dw ofs_97BB
-	dw ofs_97BE
-	dw ofs_97C1
-	dw ofs_97C4
-	dw ofs_97C7
-	dw ofs_97CA
-	dw ofs_97CD
-	dw ofs_97D0
-	dw ofs_97D0
-	dw ofs_97D0
-	dw ofs_97D0
-	dw ofs_97D0
-	dw ofs_97D0
-	dw ofs_97D0
-	dw ofs_97D0
+	.word ofs_978D
+	.word ofs_9792
+	.word ofs_9795
+	.word ofs_9798
+	.word ofs_979D
+	.word ofs_97A0
+	.word ofs_97A3
+	.word ofs_97A6
+	.word ofs_97A9
+	.word ofs_97AC
+	.word ofs_97AF
+	.word ofs_97B2
+	.word ofs_97B5
+	.word ofs_97B8
+	.word ofs_97BB
+	.word ofs_97BE
+	.word ofs_97C1
+	.word ofs_97C4
+	.word ofs_97C7
+	.word ofs_97CA
+	.word ofs_97CD
+	.word ofs_97D0
+	.word ofs_97D0
+	.word ofs_97D0
+	.word ofs_97D0
+	.word ofs_97D0
+	.word ofs_97D0
+	.word ofs_97D0
+	.word ofs_97D0
 ofs_978D:
 	db $16
 	db $17
@@ -4254,12 +4254,12 @@ bra2_9A52:
 	BCC bra2_9A52
 	RTS
 BankPointers:
-	dw TitleLogoBanks
-	dw EndingBanks
-	dw ThankYouBanks
-	dw CopyrightBanks
-	dw OverworldBanks
-	dw TransitionBanks
+	.word TitleLogoBanks
+	.word EndingBanks
+	.word ThankYouBanks
+	.word CopyrightBanks
+	.word OverworldBanks
+	.word TransitionBanks
 TitleLogoBanks: ; Format:
 	db $FC ; 1st+2nd BG Bank
 	db $FE ; 3rd+4th BG Bank

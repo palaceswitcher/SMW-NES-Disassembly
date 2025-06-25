@@ -5,192 +5,192 @@ YoshisIsland_P1:
 	pitch 0
 	volenv $11
 	notelen 36
-	db C2
+	.byte C2
 	notelen 12
-	db G2
+	.byte G2
 	notelen 24
-	db C3
-	db G2
+	.byte C3
+	.byte G2
 	notelen 12
-	db C2
-	db C2
+	.byte C2
+	.byte C2
 	notelen 24
-	db C2
+	.byte C2
 	notelen 12
-	db NRest
-	db NRest
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
 	notelen 36
-	db D2
+	.byte D2
 	notelen 12
-	db A2
+	.byte A2
 	notelen 24
-	db D3
-	db A2
+	.byte D3
+	.byte A2
 	notelen 12
-	db D2
-	db D2
+	.byte D2
+	.byte D2
 	notelen 24
-	db D2
+	.byte D2
 	notelen 12
-	db NRest
-	db NRest
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
 	notelen 36
-	db C2
+	.byte C2
 	notelen 12
-	db G2
+	.byte G2
 	notelen 24
-	db C3
-	db G2
+	.byte C3
+	.byte G2
 	notelen 12
-	db C3
-	db B2
-	db A#2
-	db A2
+	.byte C3
+	.byte B2
+	.byte A#2
+	.byte A2
 	notelen 48
-	db G#2
+	.byte G#2
 	sndjump YoshisIsland_P1
-	db $FF
+	.byte $FF
 YoshisIsland_P2:
 	transpose 24
 	duty $38
 	pitch $39
 	volenv $40
 	notelen 18
-	db C3
+	.byte C3
 	notelen 6
-	db C3
+	.byte C3
 	notelen 12
-	db C3
-	db G2
+	.byte C3
+	.byte G2
 	notelen 24
-	db A2
-	db G2
+	.byte A2
+	.byte G2
 	notelen 12
-	db C3
-	db C3
-	db C3
+	.byte C3
+	.byte C3
+	.byte C3
 	duty $0E
 	pitch $0F
 	volenv $03
-	db G3
+	.byte G3
 	notelen 24
-	db A3
-	db G3
+	.byte A3
+	.byte G3
 	duty $38
 	pitch $39
 	volenv $40
 	notelen 18
-	db D3
+	.byte D3
 	notelen 6
-	db D3
+	.byte D3
 	notelen 12
-	db D3
-	db A2
+	.byte D3
+	.byte A2
 	notelen 24
-	db B2
-	db A2
+	.byte B2
+	.byte A2
 	notelen 12
-	db D3
-	db D3
-	db D3
+	.byte D3
+	.byte D3
+	.byte D3
 	duty $0E
 	pitch $0F
 	volenv $03
-	db A3
+	.byte A3
 	notelen 24
-	db B3
-	db A3
+	.byte B3
+	.byte A3
 	duty $38
 	pitch $39
 	volenv $40
 	notelen 18
-	db C3
+	.byte C3
 	notelen 6
-	db C3
+	.byte C3
 	notelen 12
-	db C3
-	db G2
+	.byte C3
+	.byte G2
 	notelen 24
-	db A2
-	db G2
+	.byte A2
+	.byte G2
 	transpose 0
 	duty $12
 	pitch 0
 	volenv $11
 	notelen 12
-	db A#2
-	db A2
-	db G#2
-	db G2
+	.byte A#2
+	.byte A2
+	.byte G#2
+	.byte G2
 	notelen 48
-	db $1E
+	.byte $1E
 	sndjump YoshisIsland_P2
-	db $FF
+	.byte $FF
 YoshisIsland_Tri:
 	transpose 0
 	duty $12
 	pitch 0
 	volenv $11
 	notelen 36
-	db C3
+	.byte C3
 	notelen 12
-	db G3
+	.byte G3
 	notelen 24
-	db C4
-	db G3
+	.byte C4
+	.byte G3
 	notelen 12
-	db C3
-	db C3
+	.byte C3
+	.byte C3
 	notelen 24
-	db C3
+	.byte C3
 	notelen 12
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db $A4
-	db D3
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte $A4
+	.byte D3
 	notelen 12
-	db A3
+	.byte A3
 	notelen 24
-	db D4
-	db A3
+	.byte D4
+	.byte A3
 	notelen 12
-	db D3
-	db D3
+	.byte D3
+	.byte D3
 	notelen 24
-	db D3
+	.byte D3
 	notelen 12
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db $A4
-	db C3
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte $A4
+	.byte C3
 	notelen 12
-	db G3
+	.byte G3
 	notelen 24
-	db C4
-	db G3
+	.byte C4
+	.byte G3
 	notelen 12
-	db D#3
-	db D3
-	db C#3
-	db B2
+	.byte D#3
+	.byte D3
+	.byte C#3
+	.byte B2
 	notelen 48
-	db A#2
+	.byte A#2
 	sndjump YoshisIsland_Tri
-	db $FF
+	.byte $FF
 YoshisIsland_End:
-	db $FF
+	.byte $FF
 YoshisIsland_Footer:
 	mussq1 YoshisIsland_P1
 	mussq2 YoshisIsland_P2
 	mustri YoshisIsland_Tri
 	musnoise YoshisIsland_End
 	musdpcm YoshisIsland_End
-	db $FF
+	.byte $FF

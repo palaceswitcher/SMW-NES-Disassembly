@@ -9,55 +9,55 @@ jmp_41_A000:
 	STA $33 ; Load upper byte of pointer
 	JMP ($32) ; Jump to loaded pointer
 tbl_A012:
-	dw pnt5_A074 ; gameState 0
-	dw pnt5_A0A2 ; gameState 1
-	dw pnt5_A695 ; gameState 2
-	dw pnt5_A706
-	dw pnt5_A761
-	dw pnt5_A7A6
-	dw pnt5_A09E
-	dw pnt5_A7D3
-	dw pnt5_A7FF ; 08
-	dw pnt5_A86F
-	dw pnt5_A892
-	dw pnt5_A8FE ; On map
-	dw pnt5_A924 ; 0c
-	dw pnt5_A933 ; 0d
-	dw pnt5_A9A7
-	dw pnt5_A927 ; 0f
-	dw pnt5_A933
-	dw pnt5_AB1D
-	dw pnt5_A927 ; 12
-	dw pnt5_AC8D ; 13
-	dw pnt5_A927 ; 14
-	dw pnt5_AD29 ; 15
-	dw pnt5_AD5C ; 16
-	dw pnt5_AD7E ; 17
-	dw pnt5_ADC5 ; 18
-	dw pnt5_A927 ; 19
-	dw pnt5_AE09 ; 1A
-	dw pnt5_998A ; 1B
-	dw pnt5_AEB9 ; 1C
-	dw pnt5_AF13 ; 1D
-	dw pnt5_AF13 ; 1E
-	dw pnt5_AF14 ; 1F
-	dw pnt5_A927 ; 20
-	dw pnt5_AF1F ; 21
-	dw pnt5_AF4C ; 22
-	dw pnt5_A927 ; 23
-	dw pnt5_AF93 ; 24
-	dw pnt5_A7FF ; 25
-	dw pnt5_A86F
-	dw pnt5_A892
-	dw pnt5_9B28
-	dw pnt5_AFF3
-	dw pnt5_B013
-	dw pnt5_A927
-	dw pnt5_AFAF
-	dw pnt5_A927
-	dw pnt5_B03E
-	dw pnt5_A927
-	dw pnt5_B062
+	.word pnt5_A074 ; gameState 0
+	.word pnt5_A0A2 ; gameState 1
+	.word pnt5_A695 ; gameState 2
+	.word pnt5_A706
+	.word pnt5_A761
+	.word pnt5_A7A6
+	.word pnt5_A09E
+	.word pnt5_A7D3
+	.word pnt5_A7FF ; 08
+	.word pnt5_A86F
+	.word pnt5_A892
+	.word pnt5_A8FE ; On map
+	.word pnt5_A924 ; 0c
+	.word pnt5_A933 ; 0d
+	.word pnt5_A9A7
+	.word pnt5_A927 ; 0f
+	.word pnt5_A933
+	.word pnt5_AB1D
+	.word pnt5_A927 ; 12
+	.word pnt5_AC8D ; 13
+	.word pnt5_A927 ; 14
+	.word pnt5_AD29 ; 15
+	.word pnt5_AD5C ; 16
+	.word pnt5_AD7E ; 17
+	.word pnt5_ADC5 ; 18
+	.word pnt5_A927 ; 19
+	.word pnt5_AE09 ; 1A
+	.word pnt5_998A ; 1B
+	.word pnt5_AEB9 ; 1C
+	.word pnt5_AF13 ; 1D
+	.word pnt5_AF13 ; 1E
+	.word pnt5_AF14 ; 1F
+	.word pnt5_A927 ; 20
+	.word pnt5_AF1F ; 21
+	.word pnt5_AF4C ; 22
+	.word pnt5_A927 ; 23
+	.word pnt5_AF93 ; 24
+	.word pnt5_A7FF ; 25
+	.word pnt5_A86F
+	.word pnt5_A892
+	.word pnt5_9B28
+	.word pnt5_AFF3
+	.word pnt5_B013
+	.word pnt5_A927
+	.word pnt5_AFAF
+	.word pnt5_A927
+	.word pnt5_B03E
+	.word pnt5_A927
+	.word pnt5_B062
 pnt5_A074:
 	LDA #$2A
 	STA bank42Backup ; Backup bank value
@@ -77,7 +77,7 @@ pnt5_A074:
 	STA bgAttrRowCount ; Only update the palette of the first nametable
 	JSR sub_B75D
 pnt5_A09E:
-	INC a:gameState ; Go to the next event
+	iNC a:gameState ; Go to the next event
 	RTS
 pnt5_A0A2:
 	JSR sub_AE96 ; Reset PPU settings
@@ -120,7 +120,7 @@ pnt5_A0A2:
 	STA $52
 	LDA #$EF
 	STA logoYOffs ; Set Y offset for the logo
-	INC a:gameState ; Go to next event number
+	iNC a:gameState ; Go to next event number
 	RTS
 sub_A107:
 	LDX #$07
@@ -141,26 +141,26 @@ sub_A107:
 	STA gs0SpriteFlags+2 ; Make the player and Yoshi's sprites visible
 	CLC
 	LDA gs0SpriteX+1
-	ADC TitleYoshiXOfs
+	ADC titleYoshiXOfs
 	STA gs0SpriteX+2 ; Set X offset for Yoshi's sprite
 	CLC
 	LDA gs0SpriteY+1
-	ADC TitleYoshiYOfs
+	ADC titleYoshiYOfs
 	STA gs0SpriteY+2 ; Set Y offset for Yoshi's sprite
 	RTS
 	CLC ; Unused duplicate code
 	LDA gs0SpriteX+1
-	ADC TitleYoshiXOfs
+	ADC titleYoshiXOfs
 	STA gs0SpriteX+2
 	CLC
 	LDA gs0SpriteY+1
-	ADC TitleYoshiYOfs
+	ADC titleYoshiYOfs
 	STA gs0SpriteY+2
 	RTS
-TitleYoshiXOfs:
-	db $02
-TitleYoshiYOfs:
-	db $0B
+titleYoshiXOfs:
+	.byte $02
+titleYoshiYOfs:
+	.byte $0B
 
 tbl_A155:
 	titlespr 256, 169, 7
@@ -184,22 +184,22 @@ tbl_A155:
 	titlespr 3200, 96, 13
 	titlespr 3488, 96, 13
 	titlespr 3552, 96, 13
-	db $FF, $FF, $00, $00 ; End of data
+	.byte $FF, $FF, $00, $00 ; End of data
 
 tbl_A1AD:
-	db $00, $01, $03, $00
-	db $00, $70, $04, $00
-	db $01, $40, $02, $01
-	db $02, $30, $05, $01
-	db $02, $A0, $06, $0E
-	db $03, $A0, $01, $01
-	db $04, $2E, $07, $01
-	db $04, $F0, $05, $01
-	db $05, $B0, $06, $0E
-	db $05, $EE, $07, $01
-	db $06, $70, $01, $01
-	db $06, $A0, $01, $01
-	db $FF, $FF, $02, $00 ; End of data
+	.byte $00, $01, $03, $00
+	.byte $00, $70, $04, $00
+	.byte $01, $40, $02, $01
+	.byte $02, $30, $05, $01
+	.byte $02, $A0, $06, $0E
+	.byte $03, $A0, $01, $01
+	.byte $04, $2E, $07, $01
+	.byte $04, $F0, $05, $01
+	.byte $05, $B0, $06, $0E
+	.byte $05, $EE, $07, $01
+	.byte $06, $70, $01, $01
+	.byte $06, $A0, $01, $01
+	.byte $FF, $FF, $02, $00 ; End of data
 
 ;----------------------------------------
 ; SUBROUTINE ($A1E1)
@@ -265,16 +265,16 @@ sub_A22F:
 	STA $28 ; Copy action data to memory
 	LDA playerXHiDup
 	CMP $25
-	BNE @Stop
+	BNE @stop
 	LDA playerXLoDup
 	CMP $26
-	BNE @Stop ; Don't change action until player reaches the X position
+	BNE @stop ; Don't change action until player reaches the X position
 	LDA $27
 	STA titleDemoAction
 	LDA $28
 	STA titleJumpTimer ; Load wait time before jumping
 	INC $0361
-@Stop:
+@stop:
 	RTS
 
 sub_A263:
@@ -287,18 +287,18 @@ sub_A263:
 	STA $33 ; Load upper byte of pointer
 	JMP ($32) ; Jump to loaded pointer
 tbl_A275:
-	dw sub_A2AE
-	dw ptr2_A2D8
-	dw ptr2_A43B
-	dw ptr2_A569
-	dw ptr2_A28D
-	dw ptr2_A3CE
-	dw ptr2_A368
-	dw ptr2_A480
-	dw ptr2_A480
-	dw ptr2_A480
-	dw ptr2_A480
-	dw ptr2_A480
+	.word sub_A2AE
+	.word ptr2_A2D8
+	.word ptr2_A43B
+	.word ptr2_A569
+	.word ptr2_A28D
+	.word ptr2_A3CE
+	.word ptr2_A368
+	.word ptr2_A480
+	.word ptr2_A480
+	.word ptr2_A480
+	.word ptr2_A480
+	.word ptr2_A480
 ptr2_A28D:
 	JSR sub_A2AE
 	LDA gs0SpriteX+1
@@ -308,11 +308,11 @@ ptr2_A28D:
 	JSR sub2_96F6 ; Jump
 	CLC
 	LDA gs0SpriteX+1
-	ADC TitleYoshiXOfs
+	ADC titleYoshiXOfs
 	STA gs0SpriteX+2 ; Set the horizontal offset for Yoshi
 	CLC
 	LDA gs0SpriteY+1
-	ADC TitleYoshiYOfs
+	ADC titleYoshiYOfs
 	STA gs0SpriteY+2 ; Set the horizontal offset for Mario
 bra_A2AD_RTS:
 	RTS
@@ -324,26 +324,26 @@ sub_A2AE:
 	LDA titleWalkTimer
 	AND #$01
 	BEQ bra_A2C9 ; Branch if the walk timer is an even number
-	LDA TitleMarioWalk1 ; If it's an odd number, continue
+	LDA titleMarioWalk1 ; If it's an odd number, continue
 	STA gs0SpriteFrame+1 ; Switch Mario to the 1st walk sprite
-	LDA TitleYoshiWalk1
+	LDA titleYoshiWalk1
 	STA gs0SpriteFrame+2 ; Switch Yoshi to the 1st walk sprite
 bra_A2C8_RTS:
 	RTS
 bra_A2C9:
-	LDA TitleMarioWalk2
+	LDA titleMarioWalk2
 	STA gs0SpriteFrame+1 ; Switch Mario to the 2nd walk sprite
-	LDA TitleYoshiWalk2
+	LDA titleYoshiWalk2
 	STA gs0SpriteFrame+2 ; Switch Yoshi to the 2nd walk sprite
 	RTS
-TitleMarioWalk1:
-	db $11
-TitleMarioWalk2:
-	db $12
-TitleYoshiWalk1:
-	db $13
-TitleYoshiWalk2:
-	db $14
+titleMarioWalk1:
+	.byte $11
+titleMarioWalk2:
+	.byte $12
+titleYoshiWalk1:
+	.byte $13
+titleYoshiWalk2:
+	.byte $14
 ptr2_A2D8:
 	LDA frameCount
 	AND #$01
@@ -359,11 +359,11 @@ ptr2_A2D8:
 	STA gs0SpriteY+1 ; Add loaded speed value
 	CLC
 	LDA gs0SpriteX+1
-	ADC TitleYoshiXOfs
+	ADC titleYoshiXOfs
 	STA gs0SpriteX+2 ; Set horizontal offset for Yoshi
 	CLC
 	LDA gs0SpriteY+1
-	ADC TitleYoshiYOfs
+	ADC titleYoshiYOfs
 	STA gs0SpriteY+2 ; Set vertical offset for Yoshi
 	LDA tbl_A336,X ; Load Mario's sprite for the current jump timer value
 	STA gs0SpriteFrame+1 ; Make Mario use it
@@ -378,83 +378,83 @@ bra_A314:
 	STA titleDemoAction ; Set demo action to walking
 	RTS
 tbl_A31D:
-	db $00
-	db $F7
-	db $F8
-	db $F8
-	db $F9
-	db $FA
-	db $FB
-	db $FC
-	db $FD
-	db $FE
-	db $FF
-	db $FF
-	db $00
-	db $01
-	db $01
-	db $02
-	db $03
-	db $04
-	db $05
-	db $06
-	db $07
-	db $08
-	db $08
-	db $09
-	db $80
+	.byte $00
+	.byte $F7
+	.byte $F8
+	.byte $F8
+	.byte $F9
+	.byte $FA
+	.byte $FB
+	.byte $FC
+	.byte $FD
+	.byte $FE
+	.byte $FF
+	.byte $FF
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $02
+	.byte $03
+	.byte $04
+	.byte $05
+	.byte $06
+	.byte $07
+	.byte $08
+	.byte $08
+	.byte $09
+	.byte $80
 tbl_A336:
-	db $00
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $12
-	db $12
-	db $12
-	db $12
-	db $12
-	db $12
-	db $12
-	db $12
-	db $12
-	db $12
-	db $12
-	db $80
+	.byte $00
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $80
 tbl_A34F:
-	db $00
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $13
-	db $13
-	db $13
-	db $13
-	db $13
-	db $13
-	db $13
-	db $13
-	db $13
-	db $80
+	.byte $00
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $80
 ptr2_A368:
 	LDA frameCount
 	AND #$01
@@ -470,11 +470,11 @@ ptr2_A368:
 	STA gs0SpriteY+1 ; Add loaded speed value
 	CLC
 	LDA gs0SpriteX+1
-	ADC TitleYoshiXOfs
+	ADC titleYoshiXOfs
 	STA gs0SpriteX+2 ; Set horizontal offset for Yoshi's sprite
 	CLC
 	LDA gs0SpriteY+1
-	ADC TitleYoshiYOfs
+	ADC titleYoshiYOfs
 	STA gs0SpriteY+2 ; Set vertical offset for Yoshi's sprite
 	LDA playerTitleY
 	CMP #$9E
@@ -483,11 +483,11 @@ ptr2_A368:
 	STA playerTitleY ; Otherwise, set it to $9E
 	CLC
 	LDA gs0SpriteX+1
-	ADC TitleYoshiXOfs
+	ADC titleYoshiXOfs
 	STA gs0SpriteX+2 ; Set horizontal offset again?
 	CLC
 	LDA gs0SpriteY+1
-	ADC TitleYoshiYOfs
+	ADC titleYoshiYOfs
 	STA gs0SpriteY+2 ; Set vertical offset again?
 	JMP loc_A3C5
 bra_A3B7:
@@ -519,11 +519,11 @@ ptr2_A3CE:
 	STA gs0SpriteY+1 ; Add loaded speed value
 	CLC
 	LDA gs0SpriteX+1
-	ADC TitleYoshiXOfs
+	ADC titleYoshiXOfs
 	STA gs0SpriteX+2 ; Set horizontal offset for Yoshi
 	CLC
 	LDA gs0SpriteY+1
-	ADC TitleYoshiYOfs
+	ADC titleYoshiYOfs
 	STA gs0SpriteY+2 ; Set vertical offset for Yoshi
 	LDA titleJumpTimer
 	CMP #$0C
@@ -535,11 +535,11 @@ ptr2_A3CE:
 	STA gs0SpriteY+1 ; Otherwise, set it to $7E
 	CLC
 	LDA gs0SpriteX+1
-	ADC TitleYoshiXOfs
+	ADC titleYoshiXOfs
 	STA gs0SpriteX+2 ; Set horizontal offset again?
 	CLC
 	LDA gs0SpriteY+1
-	ADC TitleYoshiYOfs
+	ADC titleYoshiYOfs
 	STA gs0SpriteY+2 ; Set vertical offset again?
 	JMP loc_A432
 bra_A424:
@@ -571,11 +571,11 @@ ptr2_A43B:
 	STA gs0SpriteY+1 ; Add loaded speed value
 	CLC
 	LDA gs0SpriteX+1
-	ADC TitleYoshiXOfs
+	ADC titleYoshiXOfs
 	STA gs0SpriteX+2 ; Set Yoshi's horizontal offset
 	CLC
 	LDA gs0SpriteY+1
-	ADC TitleYoshiYOfs
+	ADC titleYoshiYOfs
 	STA gs0SpriteY+2 ; Set Yoshi's vertical offset
 	LDA tbl_A518,X ; Load Mario's sprite for the current jump timer value
 	STA gs0SpriteFrame+1 ; Make Mario use it
@@ -604,11 +604,11 @@ ptr2_A480:
 	STA gs0SpriteY+1 ; Add loaded speed value
 	CLC
 	LDA gs0SpriteX+1
-	ADC TitleYoshiXOfs
+	ADC titleYoshiXOfs
 	STA gs0SpriteX+2 ; Set Yoshi's horizontal offset
 	CLC
 	LDA gs0SpriteY+1
-	ADC TitleYoshiYOfs
+	ADC titleYoshiYOfs
 	STA gs0SpriteY+2 ; Set Yoshi's vertical offset
 	LDA tbl_A518,X
 	STA gs0SpriteFrame+1 ; Get sprite for Mario (based on jump timer)
@@ -629,151 +629,151 @@ bra_A4C4:
 	STA titleDemoAction
 	STA gs0SpriteFrame,X
 	RTS
-	db $00
+	.byte $00
 tbl_A4D7:
-	db $00
-	db $00
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
+	.byte $00
+	.byte $00
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
 sub_A4E8:
 	CLC
 	LDA gs0SpriteX+1
-	ADC PopEffectXOfs
+	ADC popEffectXOfs
 	STA gs0SpriteX ; Set horizontal offset for the enemy "pop" effect
 	CLC
 	LDA gs0SpriteY+1
-	ADC PopEffectYOfs
+	ADC popEffectYOfs
 	STA gs0SpriteY ; Set vertical offset for the "pop" effect
 	RTS
-PopEffectXOfs:
-	db $04
-PopEffectYOfs:
-	db $1B
+popEffectXOfs:
+	.byte $04
+popEffectYOfs:
+	.byte $1B
 tbl_A4FD:
-	db $00
-	db $F4
-	db $F7
-	db $F8
-	db $F8
-	db $F9
-	db $FA
-	db $FB
-	db $FC
-	db $FD
-	db $FE
-	db $FF
-	db $FF
-	db $00
-	db $01
-	db $01
-	db $02
-	db $03
-	db $04
-	db $05
-	db $06
-	db $07
-	db $08
-	db $08
-	db $09
-	db $0C
-	db $80
+	.byte $00
+	.byte $F4
+	.byte $F7
+	.byte $F8
+	.byte $F8
+	.byte $F9
+	.byte $FA
+	.byte $FB
+	.byte $FC
+	.byte $FD
+	.byte $FE
+	.byte $FF
+	.byte $FF
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $02
+	.byte $03
+	.byte $04
+	.byte $05
+	.byte $06
+	.byte $07
+	.byte $08
+	.byte $08
+	.byte $09
+	.byte $0C
+	.byte $80
 tbl_A518:
-	db $00
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $12
-	db $12
-	db $12
-	db $12
-	db $12
-	db $12
-	db $12
-	db $12
-	db $12
-	db $12
-	db $12
-	db $12
-	db $80
+	.byte $00
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $80
 tbl_A533:
-	db $00
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $13
-	db $13
-	db $13
-	db $13
-	db $13
-	db $13
-	db $13
-	db $13
-	db $13
-	db $13
-	db $80
+	.byte $00
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $80
 tbl_A54E:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $04
-	db $04
-	db $04
-	db $04
-	db $00
-	db $80
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $00
+	.byte $80
 ptr2_A569:
 	LDA #$11
 	STA $B3
@@ -950,15 +950,15 @@ bra_A680:
 	STA $0362
 	RTS
 tbl_A68D:
-	db $F2
-	db $EC
-	db $EE
-	db $FA
+	.byte $F2
+	.byte $EC
+	.byte $EE
+	.byte $FA
 tbl_A691:
-	db $20
-	db $30
-	db $20
-	db $30
+	.byte $20
+	.byte $30
+	.byte $20
+	.byte $30
 
 ;----------------------------------------
 ; TITLE SCREEN CODE ($A695)
@@ -989,14 +989,14 @@ bra_A6C3:
 	DEX
 	BNE bra_A6C1
 	LDA #$04
-	STA a:gameState
+	sTA a:gameState
 	RTS
 bra_A6CF:
 	JSR sub_B486
 	RTS
 bra_A6D3:
-	JSR ClearGS0Sprites
-	JSR ClearSprites
+	JSR clearGS0Sprites
+	JSR clearSprites
 	LDX #$00
 	LDA #$01
 	JSR sub_42_8DF8
@@ -1004,7 +1004,7 @@ bra_A6D3:
 	LDA #$02
 	JSR sub_42_8DF8
 	JSR sub_A6EE
-	INC a:gameState
+	iNC a:gameState
 	RTS
 sub_A6EE:
 	LDA #$00
@@ -1041,7 +1041,7 @@ pnt5_A706:
 	LDA #$2A
 	STA $08
 	LDA #$07
-	STA a:gameState
+	sTA a:gameState
 	RTS
 bra_A735:
 	LDA btnPressed
@@ -1076,8 +1076,8 @@ pnt5_A761:
 	LDA #$03
 	JSR CHRBankSub
 	JSR sub_AE8A
-	JSR ClearGS0Sprites
-	JSR ClearSprites
+	JSR clearGS0Sprites
+	JSR clearSprites
 	LDA #$03
 	STA bgCurPalette
 	LDA #$00
@@ -1091,7 +1091,7 @@ pnt5_A761:
 	STA $0368
 	STA $0369
 	JSR sub_B068
-	INC a:gameState
+	iNC a:gameState
 	RTS
 pnt5_A7A6:
 	LDA btnHeld
@@ -1109,7 +1109,7 @@ bra_A7BB:
 	STA $0312
 	JSR sub_B068
 	LDA #$00
-	STA a:gameState
+	sTA a:gameState
 	STA playerXHiDup
 	STA playerXLoDup
 	STA $0360
@@ -1127,38 +1127,38 @@ pnt5_A7D3:
 	NOP
 	RTS
 tbl_A7DF:
-	db $25 ; world select music settings
-	db $25
-	db $25
-	db $25
-	db $25 ; World 1
-	db $24
-	db $24
-	db $24
-	db $24
-	db $24 ; World 2
-	db $24
-	db $24
-	db $24
-	db $24 ; World 3
-	db $24
-	db $24
-	db $24
-	db $24 ; World 4
-	db $28
-	db $28
-	db $28
-	db $28
-	db $28 ; World 5
-	db $27
-	db $27
-	db $27
-	db $27 ; World 6
-	db $27
-	db $27
-	db $26
-	db $26 ; World 7
-	db $00
+	.byte $25 ; world select music settings
+	.byte $25
+	.byte $25
+	.byte $25
+	.byte $25 ; World 1
+	.byte $24
+	.byte $24
+	.byte $24
+	.byte $24
+	.byte $24 ; World 2
+	.byte $24
+	.byte $24
+	.byte $24
+	.byte $24 ; World 3
+	.byte $24
+	.byte $24
+	.byte $24
+	.byte $24 ; World 4
+	.byte $28
+	.byte $28
+	.byte $28
+	.byte $28
+	.byte $28 ; World 5
+	.byte $27
+	.byte $27
+	.byte $27
+	.byte $27 ; World 6
+	.byte $27
+	.byte $27
+	.byte $26
+	.byte $26 ; World 7
+	.byte $00
 pnt5_A7FF:
 	LDX #$01
 	LDA curPlayer
@@ -1182,8 +1182,8 @@ bra_A825:
 loc_A828:
 	LDA player1LevelsUnlocked,X
 	STA $039B
-	JSR ClearSprites
-	JSR ClearGS0Sprites
+	JSR clearSprites
+	JSR clearGS0Sprites
 	LDA #$00
 	STA worldNumber
 	STA $0378
@@ -1205,15 +1205,15 @@ bra_A854:
 	LDX #$00
 	STX gs0SpriteSlot
 	JSR sub_AC1D
-	INC a:gameState
+	iNC a:gameState
 	RTS
 tbl_A869:
-	db $E8
-	db $EA
-	db $E4
-	db $E5
-	db $E6
-	db $E7
+	.byte $E8
+	.byte $EA
+	.byte $E4
+	.byte $E5
+	.byte $E6
+	.byte $E7
 pnt5_A86F:
 	JSR sub_B75D
 	JSR sub_42_99D6
@@ -1228,7 +1228,7 @@ pnt5_A86F:
 	LDA $0D
 	STA $11
 	JSR sub_AE8A
-	INC a:gameState
+	iNC a:gameState
 	RTS
 pnt5_A892:
 	LDX #$01
@@ -1239,7 +1239,7 @@ bra_A89B:
 	LDA playerLives,X
 	BNE bra_A8A6
 	LDA #$2C
-	STA a:gameState
+	sTA a:gameState
 	RTS
 bra_A8A6:
 	JSR sub_AE96
@@ -1279,13 +1279,13 @@ bra_A8E1:
 	LDA #$0B
 	STA interruptMode
 	JSR sub_B068
-	INC a:gameState
+	iNC a:gameState
 	RTS
 pnt5_A8FE:
 	LDA mapMoveFlag
 	BNE bra_A90F ; Branch if the player starts moving
 	JSR sub_AA5F
-	JSR WorldSelectCheck
+	JSR worldSelectCheck
 	JSR sub_42_96FE
 	JMP loc_A912
 bra_A90F:
@@ -1304,7 +1304,7 @@ pnt5_A927:
 	LDA #$05
 	STA palTransition ; Start palette fadeout
 	JSR sub_B068
-	INC a:gameState ; Go to the next event
+	iNC a:gameState ; Go to the next event
 	RTS
 pnt5_A933:
 	JSR sub_B75D
@@ -1342,86 +1342,86 @@ pnt5_A933:
 	TAX
 	LDA tbl_A98F+2,X
 	STA $03
-	JSR ClearSprites
+	JSR clearSprites
 	JSR sub_AE8A
 	LDA #$00
 	STA fadeoutMode
 	STA $0312
 	JSR sub_B068
-	INC a:gameState
+	iNC a:gameState
 	RTS
 tbl_A98F:
-	db $09
-	db $00
-	db $EF
-	db $00
-	db $06
-	db $F0
-	db $00
-	db $00
-	db $05
-	db $00
-	db $00
-	db $00
-	db $0A
-	db $F0
-	db $EF
-	db $00
-	db $0D
-	db $00
-	db $00
-	db $00
-	db $05
-	db $00
-	db $EF
-	db $00
+	.byte $09
+	.byte $00
+	.byte $EF
+	.byte $00
+	.byte $06
+	.byte $F0
+	.byte $00
+	.byte $00
+	.byte $05
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $0A
+	.byte $F0
+	.byte $EF
+	.byte $00
+	.byte $0D
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $05
+	.byte $00
+	.byte $EF
+	.byte $00
 pnt5_A9A7:
 	INC $0360
 	LDA #$00
 	STA $037C
 	LDA #$0B
-	STA a:gameState
+	sTA a:gameState
 	RTS
 tbl_A9B5:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $00
-	db $00
-	db $00
-	db $00
-	db $02
-	db $00
-	db $00
-	db $00
-	db $03
-	db $00
-	db $00
-	db $00
-	db $04
-	db $00
-	db $00
-	db $00
-	db $00
-	db $05
-	db $00
-	db $00
-	db $00
-	db $06
-	db $00
-	db $00
-	db $00
-	db $07
-	db $00
-PlayLevel:
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $03
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $04
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $05
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $06
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $07
+	.byte $00
+playLevel:
 	CLC
 	LDX #$08 ; Set index for player #2
 	LDA curPlayer
-	BNE LevelDestroyCheck ; Branch if player #2 is playing
+	BNE levelDestroyCheck ; Branch if player #2 is playing
 	LDX #$00 ; Otherwise, set index for player #1
-LevelDestroyCheck:
+levelDestroyCheck:
 	STX $25 ; Store index value
 	LDY mapLevelId
 	LDA tbl_A9B5,Y
@@ -1484,13 +1484,13 @@ bra_AA52:
 	CMP #$04
 	BCC bra_AA38 ; Branch if the timer hasn't reached 4 yet
 	LDA #$12
-	STA a:gameState ; Otherwise, start fadeout
+	sTA a:gameState ; Otherwise, start fadeout
 	RTS
 sub_AA5F:
 	LDA btnPressed
 	AND #BTN_A+BTN_START ; Check if A or start is pressed
 	BEQ bra_AA6A ; If not, branch
-	JSR PlayLevel ; If they are, jump
+	JSR playLevel ; If they are, jump
 	RTS
 bra_AA6A:
 	LDX curPlayer
@@ -1545,27 +1545,27 @@ sub_AACB:
 	STA M90_PRG0 ; Load bank 42 into the 1st PRG slot
 	JSR TilemapDecompSub ; Draw the compressed title screen logo to VRAM
 	RTS
-ClearGS0Sprites:
+clearGS0Sprites:
 	LDX #$00
 	LDA #$00
-GS0ClearLoop:
+gS0ClearLoop:
 	STA gs0SpriteFrame,X
 	INX
 	CPX #$07 ; Make all sprites blank
-	BCC GS0ClearLoop
+	BCC gS0ClearLoop
 	RTS
-ClearSprites:
+clearSprites:
 	LDX #$00
 	LDA #$F8
-ClearSpritesLoop:
+clearSpritesLoop:
 	STA spriteMem,X
 	INX
 	INX
 	INX
 	INX
-	BNE ClearSpritesLoop ; Move all 8x8 sprites off-screen
+	BNE clearSpritesLoop ; Move all 8x8 sprites off-screen
 	RTS
-WorldSelectCheck:
+worldSelectCheck:
 	LDA worldSelectTrigger
 	BEQ bra_AAFA ; Branch if the world select trigger is set to zero
 	LDA btnPressed
@@ -1582,23 +1582,23 @@ bra_AAFA:
 bra_AB0C_RTS:
 	RTS
 tbl_AB0D:
-	db $00
+	.byte $00
 tbl_AB0E:
-	db $60
-	db $00
-	db $80
-	db $00
-	db $A0
-	db $00
-	db $C0
-	db $00
-	db $E0
-	db $01
-	db $00
-	db $01
-	db $20
-	db $01
-	db $40
+	.byte $60
+	.byte $00
+	.byte $80
+	.byte $00
+	.byte $A0
+	.byte $00
+	.byte $C0
+	.byte $00
+	.byte $E0
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $20
+	.byte $01
+	.byte $40
 pnt5_AB1D:
 	LDA btnPressed
 	AND #$02
@@ -1639,7 +1639,7 @@ bra_AB62:
 	STA $0312
 	JSR sub_B068
 	LDA #$08
-	STA a:gameState
+	sTA a:gameState
 	RTS
 bra_AB79:
 	LDA worldSelectNum
@@ -1655,143 +1655,143 @@ bra_AB79:
 	JSR ClearOtherSprites
 	RTS
 tbl_AB95:
-	db $04
-	db $09
-	db $0D
-	db $11
-	db $16
-	db $1A
-	db $1E
-	db $1E
-	db $05
-	db $00
+	.byte $04
+	.byte $09
+	.byte $0D
+	.byte $11
+	.byte $16
+	.byte $1A
+	.byte $1E
+	.byte $1E
+	.byte $05
+	.byte $00
 tbl_AB9F:
-	db $EF
-	db $00
-	db $05
-	db $00
-	db $EF
-	db $00
-	db $05
-	db $00
-	db $EF
-	db $00
-	db $05
-	db $00
-	db $EF
-	db $00
-	db $05
-	db $00
-	db $BF
-	db $00
-	db $05
-	db $00
-	db $4F
-	db $00
-	db $05
-	db $00
-	db $4F
-	db $00
-	db $05
-	db $00
-	db $4F
-	db $00
-	db $09
-	db $10
-	db $9F
-	db $00
-	db $09
-	db $70
-	db $8F
-	db $00
-	db $09
-	db $60
-	db $3F
-	db $00
-	db $09
-	db $70
-	db $0F
-	db $00
-	db $09
-	db $80
-	db $0F
-	db $00
-	db $09
-	db $A0
-	db $00
-	db $00
-	db $0A
-	db $00
-	db $00
-	db $00
-	db $0A
-	db $60
-	db $60
-	db $00
-	db $0A
-	db $B0
-	db $18
-	db $00
-	db $0A
-	db $E0
-	db $28
-	db $00
-	db $0A
-	db $F0
-	db $B8
-	db $00
-	db $0A
-	db $F0
-	db $EF
-	db $00
-	db $07
-	db $60
-	db $30
-	db $00
-	db $06
-	db $D0
-	db $60
-	db $00
-	db $07
-	db $00
-	db $80
-	db $00
-	db $07
-	db $00
-	db $EF
-	db $00
-	db $07
-	db $00
-	db $EF
-	db $00
-	db $06
-	db $90
-	db $EF
-	db $00
-	db $06
-	db $30
-	db $EF
-	db $00
-	db $05
-	db $90
-	db $EF
-	db $00
-	db $05
-	db $A0
-	db $8F
-	db $00
-	db $06
-	db $50
-	db $8F
-	db $00
-	db $06
-	db $50
-	db $2F
-	db $00
-	db $05
-	db $00
-	db $00
-	db $00
+	.byte $EF
+	.byte $00
+	.byte $05
+	.byte $00
+	.byte $EF
+	.byte $00
+	.byte $05
+	.byte $00
+	.byte $EF
+	.byte $00
+	.byte $05
+	.byte $00
+	.byte $EF
+	.byte $00
+	.byte $05
+	.byte $00
+	.byte $BF
+	.byte $00
+	.byte $05
+	.byte $00
+	.byte $4F
+	.byte $00
+	.byte $05
+	.byte $00
+	.byte $4F
+	.byte $00
+	.byte $05
+	.byte $00
+	.byte $4F
+	.byte $00
+	.byte $09
+	.byte $10
+	.byte $9F
+	.byte $00
+	.byte $09
+	.byte $70
+	.byte $8F
+	.byte $00
+	.byte $09
+	.byte $60
+	.byte $3F
+	.byte $00
+	.byte $09
+	.byte $70
+	.byte $0F
+	.byte $00
+	.byte $09
+	.byte $80
+	.byte $0F
+	.byte $00
+	.byte $09
+	.byte $A0
+	.byte $00
+	.byte $00
+	.byte $0A
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $0A
+	.byte $60
+	.byte $60
+	.byte $00
+	.byte $0A
+	.byte $B0
+	.byte $18
+	.byte $00
+	.byte $0A
+	.byte $E0
+	.byte $28
+	.byte $00
+	.byte $0A
+	.byte $F0
+	.byte $B8
+	.byte $00
+	.byte $0A
+	.byte $F0
+	.byte $EF
+	.byte $00
+	.byte $07
+	.byte $60
+	.byte $30
+	.byte $00
+	.byte $06
+	.byte $D0
+	.byte $60
+	.byte $00
+	.byte $07
+	.byte $00
+	.byte $80
+	.byte $00
+	.byte $07
+	.byte $00
+	.byte $EF
+	.byte $00
+	.byte $07
+	.byte $00
+	.byte $EF
+	.byte $00
+	.byte $06
+	.byte $90
+	.byte $EF
+	.byte $00
+	.byte $06
+	.byte $30
+	.byte $EF
+	.byte $00
+	.byte $05
+	.byte $90
+	.byte $EF
+	.byte $00
+	.byte $05
+	.byte $A0
+	.byte $8F
+	.byte $00
+	.byte $06
+	.byte $50
+	.byte $8F
+	.byte $00
+	.byte $06
+	.byte $50
+	.byte $2F
+	.byte $00
+	.byte $05
+	.byte $00
+	.byte $00
+	.byte $00
 sub_AC1D:
 	LDA mapLevelId
 	ASL
@@ -1833,30 +1833,30 @@ bra_AC68:
 	LDA #$04
 	STA $0361
 	RTS
-CycleFrameCount:
+cycleFrameCount:
 	LDX #$00
-CycleCountLoop:
-	JSR CycleFrameEnd
-	JSR CycleFrameEnd
-	JSR CycleFrameEnd
-	JSR CycleFrameEnd
+cycleCountLoop:
+	JSR cycleFrameEnd
+	JSR cycleFrameEnd
+	JSR cycleFrameEnd
+	JSR cycleFrameEnd
 	NOP
 	NOP
 	NOP
 	DEX
-	BNE CycleCountLoop ; Wait a frame worth of cycles
+	BNE cycleCountLoop ; Wait a frame worth of cycles
 	DEY
-	BNE CycleFrameCount ; Wait for the set amount of frames
-CycleFrameEnd:
+	BNE cycleFrameCount ; Wait for the set amount of frames
+cycleFrameEnd:
 	RTS
-YoshiHouseIDs:
-	db $00
-	db $06
-	db $14
-	db $00
-	db $00
-	db $00
-	db $00
+yoshiHouseIDs:
+	.byte $00
+	.byte $06
+	.byte $14
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
 pnt5_AC8D:
 	LDY #$00
 	LDX #$01
@@ -1865,7 +1865,7 @@ pnt5_AC8D:
 	LDX #$00
 bra_AC98:
 	LDA levelId,X
-	CMP YoshiHouseIDs,Y
+	CMP yoshiHouseIDs,Y
 	BEQ bra_ACA8 ; If current level ID is one of the Yoshi house IDs, branch
 	INY ; Go to next byte of ID list
 	CPY #$03
@@ -1873,9 +1873,9 @@ bra_AC98:
 	JMP loc_ACB3
 bra_ACA8:
 	LDY #$40
-	JSR CycleFrameCount
+	JSR cycleFrameCount
 	LDA #$2E
-	STA a:gameState ; Enter Yoshi house
+	sTA a:gameState ; Enter Yoshi house
 	RTS
 loc_ACB3:
 	LDA #$00
@@ -1887,16 +1887,16 @@ loc_ACB3:
 	LDA #$2E
 	STA sndMusic ; Stop playing music
 	LDA curPlayer
-	BNE P2TransitionSet ; Branch if player #2 is playing
+	BNE p2TransitionSet ; Branch if player #2 is playing
 	LDA #$01
 	BNE bra_ACD0 ; Set transition for player #1
-P2TransitionSet:
+p2TransitionSet:
 	LDA #$03 ; Set transition for player #2
 bra_ACD0:
 	JSR TransitionScreenSub
 loc_ACD3:
-	JSR ClearGS0Sprites ; Hide sprites
-	JSR ClearSprites
+	JSR clearGS0Sprites ; Hide sprites
+	JSR clearSprites
 	LDA #$00
 	STA fadeoutMode ; Set fadeout mode
 	STA palTransition ; Fade the screen in
@@ -1906,49 +1906,49 @@ loc_ACD3:
 	STA bgCurPalette ; Set palette
 	JSR CHRBankSub
 	LDY #$40
-	JSR CycleFrameCount ; Wait 64 frames
+	JSR cycleFrameCount ; Wait 64 frames
 	LDA #%00011110
 	STA ppuMaskMirror ; Set the PPU mask
 	LDA #$0C
 	STA interruptMode ; Set horizontal interrupt mode
 	JSR sub_B068
 	LDY #$E0
-	JSR CycleFrameCount ; Wait 224 frames
-	INC a:gameState
+	JSR cycleFrameCount ; Wait 224 frames
+	iNC a:gameState
 	RTS
 tbl_AD09:
-	db $00
-	db $00
-	db $01
-	db $02
-	db $03
-	db $10
-	db $00
-	db $11
-	db $12
-	db $13
-	db $20
-	db $21
-	db $22
-	db $23
-	db $30
-	db $31
-	db $32
-	db $33
-	db $40
-	db $41
-	db $00
-	db $42
-	db $43
-	db $50
-	db $51
-	db $52
-	db $53
-	db $60
-	db $61
-	db $62
-	db $63
-	db $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $02
+	.byte $03
+	.byte $10
+	.byte $00
+	.byte $11
+	.byte $12
+	.byte $13
+	.byte $20
+	.byte $21
+	.byte $22
+	.byte $23
+	.byte $30
+	.byte $31
+	.byte $32
+	.byte $33
+	.byte $40
+	.byte $41
+	.byte $00
+	.byte $42
+	.byte $43
+	.byte $50
+	.byte $51
+	.byte $52
+	.byte $53
+	.byte $60
+	.byte $61
+	.byte $62
+	.byte $63
+	.byte $00
 pnt5_AD29:
 	LDA #$00
 	STA $037E
@@ -1969,42 +1969,42 @@ pnt5_AD29:
 	LSR
 	STA worldNumber
 	LDA #$01
-	STA a:inLvlFlag
+	sTA a:inLvlFlag
 	LDA #$00
-	STA a:gameState
+	sTA a:gameState
 	RTS
 pnt5_AD5C:
 	LDA #$00
 	STA $5B
 	LDA #$2A
 	STA $08
-	INC a:gameState
+	iNC a:gameState
 	RTS
 tbl_AD68:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $04
-	db $04
-	db $04
-	db $07
-	db $07
-	db $07
-	db $0A
-	db $0A
-	db $0A
-	db $00
-	db $07
-	db $0A
-	db $04
-	db $00
-	db $04
-	db $07
-	db $0A
-	db $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $00
+	.byte $07
+	.byte $0A
+	.byte $04
+	.byte $00
+	.byte $04
+	.byte $07
+	.byte $0A
+	.byte $00
 pnt5_AD7E:
-	JSR ClearSprites
+	JSR clearSprites
 	LDA $0361
 	AND #$1F
 	TAX
@@ -2020,23 +2020,23 @@ pnt5_AD7E:
 bra_ADA0:
 	LDA $037E
 	BEQ bra_ADA9
-	INC a:gameState
+	iNC a:gameState
 	RTS
 bra_ADA9:
 	LDA unlockNextLevel
 	BEQ bra_ADB4
 	LDA #$1C
-	STA a:gameState
+	sTA a:gameState
 	RTS
 bra_ADB4:
 	LDA $0398
 	BEQ bra_ADBF
 	LDA #$1F
-	STA a:gameState
+	sTA a:gameState
 	RTS
 bra_ADBF:
 	LDA #$21
-	STA a:gameState
+	sTA a:gameState
 	RTS
 pnt5_ADC5:
 	JSR sub_AE96
@@ -2063,8 +2063,8 @@ pnt5_ADC5:
 	STA interruptMode
 	JSR sub_B068
 	LDY #$FF
-	JSR CycleFrameCount
-	INC a:gameState
+	JSR cycleFrameCount
+	iNC a:gameState
 	RTS
 pnt5_AE09:
 	JSR sub_AE96
@@ -2076,7 +2076,7 @@ pnt5_AE09:
 	LDA #$01
 	JSR CHRBankSub
 	JSR sub_AE8A
-	JSR ClearSprites
+	JSR clearSprites
 	LDX #$00
 bra_AE26:
 	LDA tbl_AE5A,X
@@ -2094,25 +2094,25 @@ bra_AE26:
 	LDA #$0C
 	STA interruptMode
 	LDY #$A0
-	JSR CycleFrameCount
+	JSR cycleFrameCount
 	JSR sub_B068
 	LDA #$00
 	STA worldSelectNum
-	INC a:gameState
+	iNC a:gameState
 	RTS
 tbl_AE5A:
-	db $28, $01, $00, $50
-	db $28, $02, $00, $60
-	db $28, $03, $00, $70
-	db $28, $04, $00, $88
-	db $28, $05, $00, $98
-	db $28, $06, $00, $A8
-	db $30, $07, $00, $50
-	db $30, $08, $00, $60
-	db $30, $09, $00, $70
-	db $30, $0A, $00, $88
-	db $30, $0B, $00, $98
-	db $30, $0C, $00, $A8
+	.byte $28, $01, $00, $50
+	.byte $28, $02, $00, $60
+	.byte $28, $03, $00, $70
+	.byte $28, $04, $00, $88
+	.byte $28, $05, $00, $98
+	.byte $28, $06, $00, $A8
+	.byte $30, $07, $00, $50
+	.byte $30, $08, $00, $60
+	.byte $30, $09, $00, $70
+	.byte $30, $0A, $00, $88
+	.byte $30, $0B, $00, $98
+	.byte $30, $0C, $00, $A8
 sub_AE8A:
 	LDA #%00011000
 	STA ppuMaskMirror ; Set PPU mask bits
@@ -2136,13 +2136,13 @@ sub_AEA3:
 	JSR ClearNametable ; Clear the screen
 	RTS
 tbl_AEB2:
-	db $04
-	db $09
-	db $0D
-	db $11
-	db $16
-	db $1A
-	db $1E
+	.byte $04
+	.byte $09
+	.byte $0D
+	.byte $11
+	.byte $16
+	.byte $1A
+	.byte $1E
 pnt5_AEB9:
 	LDY #$00
 	LDX curPlayer
@@ -2171,7 +2171,7 @@ bra_AEE3:
 	LDA numPlayers
 	BNE bra_AEF9
 	LDA #$08
-	STA a:gameState
+	sTA a:gameState
 	LDY player1LevelsUnlocked
 	CPY levelId
 	BNE bra_AEF8_RTS
@@ -2190,7 +2190,7 @@ bra_AF02:
 	INC player1LevelsUnlocked,X
 bra_AF0D:
 	LDA #$25
-	STA a:gameState
+	sTA a:gameState
 	RTS
 pnt5_AF13:
 	RTS
@@ -2210,19 +2210,19 @@ bra_AF2B:
 bra_AF2D:
 	DEC playerLives,X ; Subtract from the player's life count
 	LDA playerLives,X
-	BEQ SetGameOver ; Branch if the player has zero lives
+	BEQ setGameOver ; Branch if the player has zero lives
 	LDA numPlayers
-	BNE SetPlayerChange ; Switch to the other player
+	BNE setPlayerChange ; Switch to the other player
 	LDA #$2C
-	STA a:gameState
+	sTA a:gameState
 	RTS
-SetGameOver:
+setGameOver:
 	LDA #$22
-	STA a:gameState
+	sTA a:gameState
 	RTS
-SetPlayerChange:
+setPlayerChange:
 	LDA #$25
-	STA a:gameState
+	sTA a:gameState
 	RTS
 pnt5_AF4C:
 	JSR sub_AEA3
@@ -2230,8 +2230,8 @@ pnt5_AF4C:
 	JSR TransitionScreenSub
 	LDA #MUS_GAMEOVER
 	STA sndMusic
-	JSR ClearGS0Sprites
-	JSR ClearSprites
+	JSR clearGS0Sprites
+	JSR clearSprites
 	LDA #$00
 	STA fadeoutMode
 	STA $0312
@@ -2241,32 +2241,32 @@ pnt5_AF4C:
 	STA bgCurPalette
 	JSR CHRBankSub
 	LDY #$40
-	JSR CycleFrameCount
+	JSR cycleFrameCount
 	LDA #$1E
 	STA ppuMaskMirror
 	LDA #$0C
 	STA interruptMode
 	JSR sub_B068
 	LDY #$E0
-	JSR CycleFrameCount
+	JSR cycleFrameCount
 	LDY #$E0
-	JSR CycleFrameCount
-	INC a:gameState
+	JSR cycleFrameCount
+	iNC a:gameState
 	RTS
 pnt5_AF93:
 	LDA numPlayers
 	BNE bra_AFA0
 loc_AF98:
 	LDY #$40
-	JSR CycleFrameCount
-	JMP Reset
+	JSR cycleFrameCount
+	JMP reset
 bra_AFA0:
 	LDA playerLives
 	ORA playerLives+1
 	BNE bra_AFAB
 	JMP loc_AF98
 bra_AFAB:
-	INC a:gameState
+	iNC a:gameState
 	RTS
 pnt5_AFAF:
 	LDA numPlayers
@@ -2291,7 +2291,7 @@ bra_AFD5:
 	STA curPlayer
 loc_AFDA:
 	LDA #$07
-	STA a:gameState
+	sTA a:gameState
 	LDA curPlayer
 	BEQ bra_AFEA_RTS
 	LDA $0332
@@ -2300,12 +2300,12 @@ bra_AFEA_RTS:
 	RTS
 bra_AFEB:
 	LDY #$40
-	JSR CycleFrameCount
-	JMP Reset
+	JSR cycleFrameCount
+	JMP reset
 pnt5_AFF3:
 	LDA mapMoveFlag
 	BNE bra_AFFE
-	INC a:gameState
+	iNC a:gameState
 	JMP loc_B001
 bra_AFFE:
 	JSR sub_42_8FFB
@@ -2326,7 +2326,7 @@ bra_B01C:
 	LDA worldSelectNum
 	CMP #$04
 	BCC bra_B029
-	INC a:gameState
+	iNC a:gameState
 	JMP loc_B02C
 bra_B029:
 	JSR sub2_90D3
@@ -2348,14 +2348,14 @@ pnt5_B03E:
 	LDA #$07
 	STA worldNumber
 	LDA #$01
-	STA a:inLvlFlag
+	sTA a:inLvlFlag
 	STA unlockNextLevel
 	LDA #$00
-	STA a:gameState
+	sTA a:gameState
 	RTS
 pnt5_B062:
 	LDA #$07
-	STA a:gameState
+	sTA a:gameState
 	RTS
 sub_B068:
 	LDA bgCurPalette
@@ -2419,710 +2419,710 @@ loc_B0AD:
 bra_B0DD_RTS:
 	RTS
 tbl_B0DE:
-	db $40 ; fadeout effect
-	db $30 ; 
-	db $20 ; 
-	db $10 ; 
-	db $00 ; 
-	db $10 ; 
-	db $20 ; 
-	db $30 ; 
-	db $40 ; 
+	.byte $40 ; fadeout effect
+	.byte $30 ; 
+	.byte $20 ; 
+	.byte $10 ; 
+	.byte $00 ; 
+	.byte $10 ; 
+	.byte $20 ; 
+	.byte $30 ; 
+	.byte $40 ; 
 tbl_B0E7:
-	dw ofs_B1C9
-	dw ofs_B1E9
+	.word ofs_B1C9
+	.word ofs_B1E9
 tbl_B0EB:
-	dw ofs_B0F9
-	dw ofs_B119
-	dw ofs_B139
-	dw ofs_B149
-	dw ofs_B169
-	dw ofs_B189
-	dw ofs_B1A9
+	.word ofs_B0F9
+	.word ofs_B119
+	.word ofs_B139
+	.word ofs_B149
+	.word ofs_B169
+	.word ofs_B189
+	.word ofs_B1A9
 ofs_B0F9:
-	db $11
-	db $30
-	db $2A
-	db $0E
-	db $11
-	db $38
-	db $26
-	db $0E
-	db $11
-	db $37
-	db $2A
-	db $1A
-	db $11
-	db $39
-	db $29
-	db $1A
-	db $11
-	db $37
-	db $16
-	db $0E
-	db $11
-	db $30
-	db $16
-	db $02
-	db $11
-	db $2A
-	db $30
-	db $0F
-	db $11
-	db $28
-	db $16
-	db $0E
+	.byte $11
+	.byte $30
+	.byte $2A
+	.byte $0E
+	.byte $11
+	.byte $38
+	.byte $26
+	.byte $0E
+	.byte $11
+	.byte $37
+	.byte $2A
+	.byte $1A
+	.byte $11
+	.byte $39
+	.byte $29
+	.byte $1A
+	.byte $11
+	.byte $37
+	.byte $16
+	.byte $0E
+	.byte $11
+	.byte $30
+	.byte $16
+	.byte $02
+	.byte $11
+	.byte $2A
+	.byte $30
+	.byte $0F
+	.byte $11
+	.byte $28
+	.byte $16
+	.byte $0E
 ofs_B119:
-	db $0E
-	db $20
-	db $35
-	db $1A
-	db $0E
-	db $21
-	db $11
-	db $14
-	db $0E
-	db $20
-	db $35
-	db $38
-	db $0E
-	db $20
-	db $24
-	db $14
-	db $0E
-	db $37
-	db $27
-	db $17
-	db $0E
-	db $27
-	db $17
-	db $37
-	db $0E
-	db $17
-	db $37
-	db $27
-	db $0E
-	db $30
-	db $20
-	db $10
+	.byte $0E
+	.byte $20
+	.byte $35
+	.byte $1A
+	.byte $0E
+	.byte $21
+	.byte $11
+	.byte $14
+	.byte $0E
+	.byte $20
+	.byte $35
+	.byte $38
+	.byte $0E
+	.byte $20
+	.byte $24
+	.byte $14
+	.byte $0E
+	.byte $37
+	.byte $27
+	.byte $17
+	.byte $0E
+	.byte $27
+	.byte $17
+	.byte $37
+	.byte $0E
+	.byte $17
+	.byte $37
+	.byte $27
+	.byte $0E
+	.byte $30
+	.byte $20
+	.byte $10
 ofs_B139:
-	db $0E
-	db $2A
-	db $2C
-	db $36
-	db $0E
-	db $37
-	db $27
-	db $38
-	db $0E
-	db $2A
-	db $37
-	db $30
-	db $0E
-	db $1C
-	db $2C
-	db $30
+	.byte $0E
+	.byte $2A
+	.byte $2C
+	.byte $36
+	.byte $0E
+	.byte $37
+	.byte $27
+	.byte $38
+	.byte $0E
+	.byte $2A
+	.byte $37
+	.byte $30
+	.byte $0E
+	.byte $1C
+	.byte $2C
+	.byte $30
 ofs_B149:
-	db $0E
-	db $11
-	db $2C
-	db $30
-	db $0E
-	db $37
-	db $27
-	db $38
-	db $0E
-	db $2A
-	db $37
-	db $30
-	db $0E
-	db $1C
-	db $2C
-	db $30
-	db $0E
-	db $2A
-	db $2C
-	db $36
-	db $0E
-	db $37
-	db $27
-	db $38
-	db $0E
-	db $2A
-	db $37
-	db $30
-	db $0E
-	db $1C
-	db $2C
-	db $30
+	.byte $0E
+	.byte $11
+	.byte $2C
+	.byte $30
+	.byte $0E
+	.byte $37
+	.byte $27
+	.byte $38
+	.byte $0E
+	.byte $2A
+	.byte $37
+	.byte $30
+	.byte $0E
+	.byte $1C
+	.byte $2C
+	.byte $30
+	.byte $0E
+	.byte $2A
+	.byte $2C
+	.byte $36
+	.byte $0E
+	.byte $37
+	.byte $27
+	.byte $38
+	.byte $0E
+	.byte $2A
+	.byte $37
+	.byte $30
+	.byte $0E
+	.byte $1C
+	.byte $2C
+	.byte $30
 ofs_B169:
-	db $0E
-	db $21
-	db $37
-	db $20
-	db $0E
-	db $20
-	db $2A
-	db $37
-	db $0E
-	db $1A
-	db $2A
-	db $21
-	db $0E
-	db $20
-	db $3D
-	db $28
-	db $0E
-	db $37
-	db $16
-	db $0E
-	db $0E
-	db $37
-	db $16
-	db $02
-	db $0E
-	db $30
-	db $2A
-	db $0E
-	db $0E
-	db $20
-	db $2A
-	db $0E
+	.byte $0E
+	.byte $21
+	.byte $37
+	.byte $20
+	.byte $0E
+	.byte $20
+	.byte $2A
+	.byte $37
+	.byte $0E
+	.byte $1A
+	.byte $2A
+	.byte $21
+	.byte $0E
+	.byte $20
+	.byte $3D
+	.byte $28
+	.byte $0E
+	.byte $37
+	.byte $16
+	.byte $0E
+	.byte $0E
+	.byte $37
+	.byte $16
+	.byte $02
+	.byte $0E
+	.byte $30
+	.byte $2A
+	.byte $0E
+	.byte $0E
+	.byte $20
+	.byte $2A
+	.byte $0E
 ofs_B189:
-	db $0E
-	db $27
-	db $30
-	db $38
-	db $0E
-	db $27
-	db $30
-	db $38
-	db $0E
-	db $27
-	db $30
-	db $38
-	db $0E
-	db $27
-	db $30
-	db $38
-	db $0E
-	db $30
-	db $20
-	db $10
-	db $0E
-	db $20
-	db $10
-	db $30
-	db $0E
-	db $10
-	db $30
-	db $20
-	db $0E
-	db $37
-	db $27
-	db $17
+	.byte $0E
+	.byte $27
+	.byte $30
+	.byte $38
+	.byte $0E
+	.byte $27
+	.byte $30
+	.byte $38
+	.byte $0E
+	.byte $27
+	.byte $30
+	.byte $38
+	.byte $0E
+	.byte $27
+	.byte $30
+	.byte $38
+	.byte $0E
+	.byte $30
+	.byte $20
+	.byte $10
+	.byte $0E
+	.byte $20
+	.byte $10
+	.byte $30
+	.byte $0E
+	.byte $10
+	.byte $30
+	.byte $20
+	.byte $0E
+	.byte $37
+	.byte $27
+	.byte $17
 ofs_B1A9:
-	db $0E
-	db $21
-	db $37
-	db $20
-	db $0E
-	db $20
-	db $2A
-	db $37
-	db $0E
-	db $1A
-	db $2A
-	db $21
-	db $0E
-	db $20
-	db $3D
-	db $28
-	db $0E
-	db $37
-	db $1A
-	db $0E
-	db $0E
-	db $37
-	db $1A
-	db $11
-	db $0E
-	db $30
-	db $2A
-	db $0E
-	db $0E
-	db $20
-	db $2A
-	db $0E
+	.byte $0E
+	.byte $21
+	.byte $37
+	.byte $20
+	.byte $0E
+	.byte $20
+	.byte $2A
+	.byte $37
+	.byte $0E
+	.byte $1A
+	.byte $2A
+	.byte $21
+	.byte $0E
+	.byte $20
+	.byte $3D
+	.byte $28
+	.byte $0E
+	.byte $37
+	.byte $1A
+	.byte $0E
+	.byte $0E
+	.byte $37
+	.byte $1A
+	.byte $11
+	.byte $0E
+	.byte $30
+	.byte $2A
+	.byte $0E
+	.byte $0E
+	.byte $20
+	.byte $2A
+	.byte $0E
 ofs_B1C9:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
 ofs_B1E9:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $FF
-	db $FF
-	db $FF
-	db $FF
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
 tbl_B209:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $01
-	db $01
-	db $02
-	db $02
-	db $02
-	db $02
-	db $03
-	db $03
-	db $03
-	db $03
-	db $04
-	db $04
-	db $04
-	db $04
-	db $05
-	db $05
-	db $05
-	db $05
-	db $06
-	db $06
-	db $06
-	db $06
-	db $07
-	db $07
-	db $07
-	db $07
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $01
-	db $01
-	db $02
-	db $02
-	db $02
-	db $02
-	db $03
-	db $03
-	db $03
-	db $03
-	db $04
-	db $04
-	db $04
-	db $04
-	db $05
-	db $05
-	db $05
-	db $05
-	db $06
-	db $06
-	db $06
-	db $06
-	db $07
-	db $07
-	db $07
-	db $07
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $01
-	db $01
-	db $02
-	db $02
-	db $02
-	db $02
-	db $03
-	db $03
-	db $03
-	db $03
-	db $04
-	db $04
-	db $04
-	db $04
-	db $05
-	db $05
-	db $05
-	db $05
-	db $06
-	db $06
-	db $06
-	db $06
-	db $07
-	db $07
-	db $07
-	db $07
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $01
-	db $01
-	db $02
-	db $02
-	db $02
-	db $02
-	db $03
-	db $03
-	db $03
-	db $03
-	db $04
-	db $04
-	db $04
-	db $04
-	db $05
-	db $05
-	db $05
-	db $05
-	db $06
-	db $06
-	db $06
-	db $06
-	db $07
-	db $07
-	db $07
-	db $07
-	db $08
-	db $08
-	db $08
-	db $08
-	db $09
-	db $09
-	db $09
-	db $09
-	db $0A
-	db $0A
-	db $0A
-	db $0A
-	db $0B
-	db $0B
-	db $0B
-	db $0B
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $08
-	db $08
-	db $08
-	db $08
-	db $09
-	db $09
-	db $09
-	db $09
-	db $0A
-	db $0A
-	db $0A
-	db $0A
-	db $0B
-	db $0B
-	db $0B
-	db $0B
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $08
-	db $08
-	db $08
-	db $08
-	db $09
-	db $09
-	db $09
-	db $09
-	db $0A
-	db $0A
-	db $0A
-	db $0A
-	db $0B
-	db $0B
-	db $0B
-	db $0B
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $08
-	db $08
-	db $08
-	db $08
-	db $09
-	db $09
-	db $09
-	db $09
-	db $0A
-	db $0A
-	db $0A
-	db $0A
-	db $0B
-	db $0B
-	db $0B
-	db $0B
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0F
-	db $0F
-	db $0F
-	db $0F
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $06
+	.byte $06
+	.byte $06
+	.byte $06
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $06
+	.byte $06
+	.byte $06
+	.byte $06
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $06
+	.byte $06
+	.byte $06
+	.byte $06
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $06
+	.byte $06
+	.byte $06
+	.byte $06
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $09
+	.byte $09
+	.byte $09
+	.byte $09
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $09
+	.byte $09
+	.byte $09
+	.byte $09
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $09
+	.byte $09
+	.byte $09
+	.byte $09
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $09
+	.byte $09
+	.byte $09
+	.byte $09
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
 tbl_B309:
-	db $00
-	db $10
-	db $20
-	db $30
-	db $00
-	db $10
-	db $20
-	db $30
-	db $40
-	db $50
-	db $60
-	db $70
-	db $40
-	db $50
-	db $60
-	db $70
+	.byte $00
+	.byte $10
+	.byte $20
+	.byte $30
+	.byte $00
+	.byte $10
+	.byte $20
+	.byte $30
+	.byte $40
+	.byte $50
+	.byte $60
+	.byte $70
+	.byte $40
+	.byte $50
+	.byte $60
+	.byte $70
 tbl_B319:
-	db $03
-	db $03
-	db $0C
-	db $0C
-	db $03
-	db $03
-	db $0C
-	db $0C
-	db $03
-	db $03
-	db $0C
-	db $0C
-	db $03
-	db $03
-	db $0C
-	db $0C
-	db $03
-	db $03
-	db $0C
-	db $0C
-	db $03
-	db $03
-	db $0C
-	db $0C
-	db $03
-	db $03
-	db $0C
-	db $0C
-	db $03
-	db $03
-	db $0C
-	db $0C
-	db $03
-	db $03
-	db $0C
-	db $0C
-	db $03
-	db $03
-	db $0C
-	db $0C
-	db $03
-	db $03
-	db $0C
-	db $0C
-	db $03
-	db $03
-	db $0C
-	db $0C
-	db $03
-	db $03
-	db $0C
-	db $0C
-	db $03
-	db $03
-	db $0C
-	db $0C
-	db $03
-	db $03
-	db $0C
-	db $0C
-	db $03
-	db $03
-	db $0C
-	db $0C
-	db $30
-	db $30
-	db $C0
-	db $C0
-	db $30
-	db $30
-	db $C0
-	db $C0
-	db $30
-	db $30
-	db $C0
-	db $C0
-	db $30
-	db $30
-	db $C0
-	db $C0
-	db $30
-	db $30
-	db $C0
-	db $C0
-	db $30
-	db $30
-	db $C0
-	db $C0
-	db $30
-	db $30
-	db $C0
-	db $C0
-	db $30
-	db $30
-	db $C0
-	db $C0
-	db $30
-	db $30
-	db $C0
-	db $C0
-	db $30
-	db $30
-	db $C0
-	db $C0
-	db $30
-	db $30
-	db $C0
-	db $C0
-	db $30
-	db $30
-	db $C0
-	db $C0
-	db $30
-	db $30
-	db $C0
-	db $C0
-	db $30
-	db $30
-	db $C0
-	db $C0
-	db $30
-	db $30
-	db $C0
-	db $C0
-	db $30
-	db $30
-	db $C0
-	db $C0
+	.byte $03
+	.byte $03
+	.byte $0C
+	.byte $0C
+	.byte $03
+	.byte $03
+	.byte $0C
+	.byte $0C
+	.byte $03
+	.byte $03
+	.byte $0C
+	.byte $0C
+	.byte $03
+	.byte $03
+	.byte $0C
+	.byte $0C
+	.byte $03
+	.byte $03
+	.byte $0C
+	.byte $0C
+	.byte $03
+	.byte $03
+	.byte $0C
+	.byte $0C
+	.byte $03
+	.byte $03
+	.byte $0C
+	.byte $0C
+	.byte $03
+	.byte $03
+	.byte $0C
+	.byte $0C
+	.byte $03
+	.byte $03
+	.byte $0C
+	.byte $0C
+	.byte $03
+	.byte $03
+	.byte $0C
+	.byte $0C
+	.byte $03
+	.byte $03
+	.byte $0C
+	.byte $0C
+	.byte $03
+	.byte $03
+	.byte $0C
+	.byte $0C
+	.byte $03
+	.byte $03
+	.byte $0C
+	.byte $0C
+	.byte $03
+	.byte $03
+	.byte $0C
+	.byte $0C
+	.byte $03
+	.byte $03
+	.byte $0C
+	.byte $0C
+	.byte $03
+	.byte $03
+	.byte $0C
+	.byte $0C
+	.byte $30
+	.byte $30
+	.byte $C0
+	.byte $C0
+	.byte $30
+	.byte $30
+	.byte $C0
+	.byte $C0
+	.byte $30
+	.byte $30
+	.byte $C0
+	.byte $C0
+	.byte $30
+	.byte $30
+	.byte $C0
+	.byte $C0
+	.byte $30
+	.byte $30
+	.byte $C0
+	.byte $C0
+	.byte $30
+	.byte $30
+	.byte $C0
+	.byte $C0
+	.byte $30
+	.byte $30
+	.byte $C0
+	.byte $C0
+	.byte $30
+	.byte $30
+	.byte $C0
+	.byte $C0
+	.byte $30
+	.byte $30
+	.byte $C0
+	.byte $C0
+	.byte $30
+	.byte $30
+	.byte $C0
+	.byte $C0
+	.byte $30
+	.byte $30
+	.byte $C0
+	.byte $C0
+	.byte $30
+	.byte $30
+	.byte $C0
+	.byte $C0
+	.byte $30
+	.byte $30
+	.byte $C0
+	.byte $C0
+	.byte $30
+	.byte $30
+	.byte $C0
+	.byte $C0
+	.byte $30
+	.byte $30
+	.byte $C0
+	.byte $C0
+	.byte $30
+	.byte $30
+	.byte $C0
+	.byte $C0
 sub_B399:
 	LDA PPUSTATUS
 	LDA $00
@@ -3292,70 +3292,70 @@ bra_B4DF:
 	BCC bra_B4DF
 	RTS
 tbl_B4EB:
-	db $00
-	db $80
-	db $00
-	db $81
-	db $00
-	db $82
-	db $00
-	db $83
-	db $00
-	db $84
-	db $00
-	db $85
-	db $00
-	db $86
-	db $00
-	db $00
-	db $00
-	db $88
-	db $00
-	db $89
-	db $00
-	db $8A
-	db $00
-	db $8B
-	db $00
-	db $8C
-	db $00
-	db $8D
-	db $40
-	db $86
-	db $00
-	db $00
-	db $00
-	db $90
-	db $00
-	db $91
-	db $00
-	db $92
-	db $00
-	db $93
-	db $00
-	db $94
-	db $00
-	db $95
-	db $80
-	db $86
-	db $00
-	db $00
-	db $00
-	db $98
-	db $00
-	db $99
-	db $00
-	db $9A
-	db $00
-	db $9B
-	db $00
-	db $9C
-	db $00
-	db $9D
-	db $C0
-	db $86
-	db $00
-	db $00
+	.byte $00
+	.byte $80
+	.byte $00
+	.byte $81
+	.byte $00
+	.byte $82
+	.byte $00
+	.byte $83
+	.byte $00
+	.byte $84
+	.byte $00
+	.byte $85
+	.byte $00
+	.byte $86
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $88
+	.byte $00
+	.byte $89
+	.byte $00
+	.byte $8A
+	.byte $00
+	.byte $8B
+	.byte $00
+	.byte $8C
+	.byte $00
+	.byte $8D
+	.byte $40
+	.byte $86
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $90
+	.byte $00
+	.byte $91
+	.byte $00
+	.byte $92
+	.byte $00
+	.byte $93
+	.byte $00
+	.byte $94
+	.byte $00
+	.byte $95
+	.byte $80
+	.byte $86
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $98
+	.byte $00
+	.byte $99
+	.byte $00
+	.byte $9A
+	.byte $00
+	.byte $9B
+	.byte $00
+	.byte $9C
+	.byte $00
+	.byte $9D
+	.byte $C0
+	.byte $86
+	.byte $00
+	.byte $00
 sub_B52B:
 	LDA #$00
 	STA $9C
@@ -3411,7 +3411,7 @@ bra_B582:
 loc_B58A:
 	LDY $2D
 loc_B58C:
-	LDA a:$0060,Y
+	lDA a:$0060,Y
 	LDX $9C
 	STA $0485,X
 	LDA $9B
@@ -3906,257 +3906,257 @@ bra_B90B:
 	BCC bra_B90B
 	RTS
 tbl_B917:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $02
-	db $03
-	db $04
-	db $05
-	db $06
-	db $07
-	db $08
-	db $09
-	db $0A
-	db $0B
-	db $0C
-	db $0D
-	db $0E
-	db $0F
-	db $10
-	db $11
-	db $12
-	db $13
-	db $14
-	db $15
-	db $16
-	db $17
-	db $18
-	db $19
-	db $1A
-	db $1B
-	db $1C
-	db $1D
-	db $1E
-	db $1F
-	db $10
-	db $11
-	db $12
-	db $13
-	db $14
-	db $15
-	db $16
-	db $17
-	db $18
-	db $19
-	db $1A
-	db $1B
-	db $1C
-	db $1D
-	db $1E
-	db $1F
-	db $20
-	db $21
-	db $22
-	db $23
-	db $24
-	db $25
-	db $26
-	db $27
-	db $28
-	db $29
-	db $2A
-	db $2B
-	db $2C
-	db $2D
-	db $2E
-	db $2F
-	db $20
-	db $21
-	db $22
-	db $23
-	db $24
-	db $25
-	db $26
-	db $27
-	db $28
-	db $29
-	db $2A
-	db $2B
-	db $2C
-	db $2D
-	db $2E
-	db $2F
-	db $30
-	db $31
-	db $32
-	db $33
-	db $34
-	db $35
-	db $36
-	db $37
-	db $38
-	db $39
-	db $3A
-	db $3B
-	db $3C
-	db $3D
-	db $3E
-	db $3F
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $02
+	.byte $03
+	.byte $04
+	.byte $05
+	.byte $06
+	.byte $07
+	.byte $08
+	.byte $09
+	.byte $0A
+	.byte $0B
+	.byte $0C
+	.byte $0D
+	.byte $0E
+	.byte $0F
+	.byte $10
+	.byte $11
+	.byte $12
+	.byte $13
+	.byte $14
+	.byte $15
+	.byte $16
+	.byte $17
+	.byte $18
+	.byte $19
+	.byte $1A
+	.byte $1B
+	.byte $1C
+	.byte $1D
+	.byte $1E
+	.byte $1F
+	.byte $10
+	.byte $11
+	.byte $12
+	.byte $13
+	.byte $14
+	.byte $15
+	.byte $16
+	.byte $17
+	.byte $18
+	.byte $19
+	.byte $1A
+	.byte $1B
+	.byte $1C
+	.byte $1D
+	.byte $1E
+	.byte $1F
+	.byte $20
+	.byte $21
+	.byte $22
+	.byte $23
+	.byte $24
+	.byte $25
+	.byte $26
+	.byte $27
+	.byte $28
+	.byte $29
+	.byte $2A
+	.byte $2B
+	.byte $2C
+	.byte $2D
+	.byte $2E
+	.byte $2F
+	.byte $20
+	.byte $21
+	.byte $22
+	.byte $23
+	.byte $24
+	.byte $25
+	.byte $26
+	.byte $27
+	.byte $28
+	.byte $29
+	.byte $2A
+	.byte $2B
+	.byte $2C
+	.byte $2D
+	.byte $2E
+	.byte $2F
+	.byte $30
+	.byte $31
+	.byte $32
+	.byte $33
+	.byte $34
+	.byte $35
+	.byte $36
+	.byte $37
+	.byte $38
+	.byte $39
+	.byte $3A
+	.byte $3B
+	.byte $3C
+	.byte $3D
+	.byte $3E
+	.byte $3F
 tbl_B997:
-	db $2D
-	db $00
-	db $2C
-	db $12
-	db $2E
-	db $00
-	db $2C
-	db $12
-	db $02
-	db $00
-	db $1C
-	db $12
-	db $03
-	db $00
-	db $1C
-	db $12
-	db $04
-	db $00
-	db $1D
-	db $12
-	db $05
-	db $00
-	db $1D
-	db $12
-	db $06
-	db $00
-	db $1D
-	db $12
-	db $07
-	db $00
-	db $1D
-	db $12
-	db $08
-	db $00
-	db $1E
-	db $12
-	db $09
-	db $00
-	db $1E
-	db $12
-	db $0A
-	db $00
-	db $1E
-	db $12
-	db $0B
-	db $00
-	db $1E
-	db $12
-	db $0C
-	db $00
-	db $1F
-	db $12
-	db $0D
-	db $00
-	db $1F
-	db $12
-	db $0E
-	db $00
-	db $1F
-	db $12
-	db $0F
-	db $00
-	db $1F
-	db $12
-	db $10
-	db $00
-	db $20
-	db $12
-	db $11
-	db $00
-	db $20
-	db $12
-	db $12
-	db $00
-	db $20
-	db $12
-	db $13
-	db $00
-	db $20
-	db $12
-	db $14
-	db $00
-	db $21
-	db $12
-	db $15
-	db $00
-	db $21
-	db $12
-	db $16
-	db $00
-	db $21
-	db $12
-	db $17
-	db $00
-	db $21
-	db $12
-	db $18
-	db $00
-	db $22
-	db $12
-	db $19
-	db $00
-	db $22
-	db $12
-	db $1A
-	db $00
-	db $22
-	db $12
-	db $1B
-	db $00
-	db $22
-	db $12
+	.byte $2D
+	.byte $00
+	.byte $2C
+	.byte $12
+	.byte $2E
+	.byte $00
+	.byte $2C
+	.byte $12
+	.byte $02
+	.byte $00
+	.byte $1C
+	.byte $12
+	.byte $03
+	.byte $00
+	.byte $1C
+	.byte $12
+	.byte $04
+	.byte $00
+	.byte $1D
+	.byte $12
+	.byte $05
+	.byte $00
+	.byte $1D
+	.byte $12
+	.byte $06
+	.byte $00
+	.byte $1D
+	.byte $12
+	.byte $07
+	.byte $00
+	.byte $1D
+	.byte $12
+	.byte $08
+	.byte $00
+	.byte $1E
+	.byte $12
+	.byte $09
+	.byte $00
+	.byte $1E
+	.byte $12
+	.byte $0A
+	.byte $00
+	.byte $1E
+	.byte $12
+	.byte $0B
+	.byte $00
+	.byte $1E
+	.byte $12
+	.byte $0C
+	.byte $00
+	.byte $1F
+	.byte $12
+	.byte $0D
+	.byte $00
+	.byte $1F
+	.byte $12
+	.byte $0E
+	.byte $00
+	.byte $1F
+	.byte $12
+	.byte $0F
+	.byte $00
+	.byte $1F
+	.byte $12
+	.byte $10
+	.byte $00
+	.byte $20
+	.byte $12
+	.byte $11
+	.byte $00
+	.byte $20
+	.byte $12
+	.byte $12
+	.byte $00
+	.byte $20
+	.byte $12
+	.byte $13
+	.byte $00
+	.byte $20
+	.byte $12
+	.byte $14
+	.byte $00
+	.byte $21
+	.byte $12
+	.byte $15
+	.byte $00
+	.byte $21
+	.byte $12
+	.byte $16
+	.byte $00
+	.byte $21
+	.byte $12
+	.byte $17
+	.byte $00
+	.byte $21
+	.byte $12
+	.byte $18
+	.byte $00
+	.byte $22
+	.byte $12
+	.byte $19
+	.byte $00
+	.byte $22
+	.byte $12
+	.byte $1A
+	.byte $00
+	.byte $22
+	.byte $12
+	.byte $1B
+	.byte $00
+	.byte $22
+	.byte $12
 tbl_BA07:
-	db $00
-	db $40
-	db $80
-	db $C0
+	.byte $00
+	.byte $40
+	.byte $80
+	.byte $C0
 tbl_BA0B:
-	db $86
-	db $86
-	db $86
-	db $86
+	.byte $86
+	.byte $86
+	.byte $86
+	.byte $86
 sub_BA0F:
 	LDA prgDataBank2
 	STA M90_PRG0
@@ -4175,265 +4175,265 @@ bra_BA24:
 	STA $61
 	RTS
 tbl_BA2D:
-	dw ofs_BA3B
-	dw ofs_BA5B
-	dw ofs_BA7B
-	dw ofs_BA9B
-	dw ofs_BABB
-	dw ofs_BADB
-	dw ofs_BAFB
+	.word ofs_BA3B
+	.word ofs_BA5B
+	.word ofs_BA7B
+	.word ofs_BA9B
+	.word ofs_BABB
+	.word ofs_BADB
+	.word ofs_BAFB
 ofs_BA3B:
-	db $00
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 	
-	db $01
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $01
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 
-	db $02
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
-	db $03
+	.byte $02
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
+	.byte $03
 	
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 ofs_BA5B:
-	db $04
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $06
-	db $FF
-	db $01
+	.byte $04
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $06
+	.byte $FF
+	.byte $01
 	
-	db $05
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $05
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 	
-	db $06
-	db $01
-	db $80
-	db $B0
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $06
+	.byte $01
+	.byte $80
+	.byte $B0
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 	
-	db $07
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $02
-	db $FF
-	db $01
+	.byte $07
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $02
+	.byte $FF
+	.byte $01
 ofs_BA7B:
-	db $08
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $08
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 	
-	db $09
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $09
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 	
-	db $0A
-	db $01
-	db $80
-	db $B0
-	db $FF
-	db $04
-	db $00
-	db $01
+	.byte $0A
+	.byte $01
+	.byte $80
+	.byte $B0
+	.byte $FF
+	.byte $04
+	.byte $00
+	.byte $01
 	
-	db $0B
-	db $00
-	db $80
-	db $40
-	db $FF
-	db $09
-	db $FF
-	db $00
+	.byte $0B
+	.byte $00
+	.byte $80
+	.byte $40
+	.byte $FF
+	.byte $09
+	.byte $FF
+	.byte $00
 ofs_BA9B:
-	db $00
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 	
-	db $00
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 	
-	db $00
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 	
-	db $00
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 ofs_BABB:
-	db $00
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 	
-	db $00
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 	
-	db $00
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 	
-	db $00
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 ofs_BADB:
-	db $00
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 	
-	db $00
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 	
-	db $00
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 	
-	db $00
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 ofs_BAFB:
-	db $00
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 	
-	db $00
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 	
-	db $00
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 	
-	db $00
-	db $00
-	db $80
-	db $80
-	db $FF
-	db $10
-	db $FF
-	db $01
+	.byte $00
+	.byte $00
+	.byte $80
+	.byte $80
+	.byte $FF
+	.byte $10
+	.byte $FF
+	.byte $01
 	LDA playerXSpd
 	ROR
 	ROR
@@ -4614,39 +4614,39 @@ bra_BC4D_RTS:
 loc_BC4D_RTS:
 	RTS
 tbl_BC4E:
-	db $01
-	db $01
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
+	.byte $01
+	.byte $01
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
 tbl_BC5E:
-	db $01
-	db $02
-	db $03
-	db $04
-	db $05
-	db $06
-	db $07
-	db $07
-	db $07
-	db $07
-	db $07
-	db $07
-	db $07
-	db $07
-	db $07
-	db $07
+	.byte $01
+	.byte $02
+	.byte $03
+	.byte $04
+	.byte $05
+	.byte $06
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
 sub_BC6E:
 	LDA playerXLoDup
 	SEC
@@ -5078,132 +5078,132 @@ sub_BF31:
 	JSR $8000
 bra_BF7A_RTS:
 	RTS
-	db $C0
-	db $FF
-	db $06
-	db $50
-	db $CE
-	db $EB
-	db $DB
-	db $C7
-	db $06
-	db $50
-	db $CE
-	db $00
-	db $00
-	db $A1
-	db $7C
-	db $CE
-	db $8B
-	db $1E
-	db $50
-	db $CE
-	db $3B
-	db $D8
-	db $74
-	db $17
-	db $48
-	db $2B
-	db $C3
-	db $8B
-	db $F0
-	db $8A
-	db $84
-	db $C1
-	db $1A
-	db $98
-	db $50
-	db $0E
-	db $E8
-	db $2F
-	db $03
-	db $8B
-	db $E5
-	db $FF
-	db $06
-	db $50
-	db $CE
-	db $EB
-	db $DE
-	db $C4
-	db $36
-	db $99
-	db $C0
-	db $26
-	db $C6
-	db $04
-	db $3A
-	db $FF
-	db $06
-	db $99
-	db $C0
-	db $C7
-	db $06
-	db $50
-	db $CE
-	db $00
-	db $00
-	db $A1
-	db $7E
-	db $CE
-	db $8B
-	db $1E
-	db $50
-	db $CE
-	db $3B
-	db $D8
-	db $74
-	db $17
-	db $48
-	db $2B
-	db $C3
-	db $8B
-	db $F0
-	db $8A
-	db $84
-	db $CD
-	db $1A ; Unlogged data ends here
+	.byte $C0
+	.byte $FF
+	.byte $06
+	.byte $50
+	.byte $CE
+	.byte $EB
+	.byte $DB
+	.byte $C7
+	.byte $06
+	.byte $50
+	.byte $CE
+	.byte $00
+	.byte $00
+	.byte $A1
+	.byte $7C
+	.byte $CE
+	.byte $8B
+	.byte $1E
+	.byte $50
+	.byte $CE
+	.byte $3B
+	.byte $D8
+	.byte $74
+	.byte $17
+	.byte $48
+	.byte $2B
+	.byte $C3
+	.byte $8B
+	.byte $F0
+	.byte $8A
+	.byte $84
+	.byte $C1
+	.byte $1A
+	.byte $98
+	.byte $50
+	.byte $0E
+	.byte $E8
+	.byte $2F
+	.byte $03
+	.byte $8B
+	.byte $E5
+	.byte $FF
+	.byte $06
+	.byte $50
+	.byte $CE
+	.byte $EB
+	.byte $DE
+	.byte $C4
+	.byte $36
+	.byte $99
+	.byte $C0
+	.byte $26
+	.byte $C6
+	.byte $04
+	.byte $3A
+	.byte $FF
+	.byte $06
+	.byte $99
+	.byte $C0
+	.byte $C7
+	.byte $06
+	.byte $50
+	.byte $CE
+	.byte $00
+	.byte $00
+	.byte $A1
+	.byte $7E
+	.byte $CE
+	.byte $8B
+	.byte $1E
+	.byte $50
+	.byte $CE
+	.byte $3B
+	.byte $D8
+	.byte $74
+	.byte $17
+	.byte $48
+	.byte $2B
+	.byte $C3
+	.byte $8B
+	.byte $F0
+	.byte $8A
+	.byte $84
+	.byte $CD
+	.byte $1A ; Unlogged data ends here
 sub_BFD0:
-	STA a:gameState ; Store set event
+	sTA a:gameState ; Store set event
 	LDA #$01
 	STA worldSelectTrigger ; Reset the trigger
 	RTS
-	db $EA
-	db $EA
-	db $EA
-	db $EB
-	db $DE
-	db $C7
-	db $06
-	db $50
-	db $CE
-	db $00
-	db $00
-	db $A1
-	db $76
-	db $CE
-	db $03
-	db $06
-	db $74
-	db $CE
-	db $BB
-	db $0F
-	db $00
-	db $2B
-	db $D8
-	db $A1
-	db $50
-	db $CE
-	db $3B
-	db $C3
-	db $74
-	db $12
-	db $C4
-	db $36
-	db $99
-	db $C0
-	db $26
-	db $C6
-	db $04
-	db $20
-	db $FF
+	.byte $EA
+	.byte $EA
+	.byte $EA
+	.byte $EB
+	.byte $DE
+	.byte $C7
+	.byte $06
+	.byte $50
+	.byte $CE
+	.byte $00
+	.byte $00
+	.byte $A1
+	.byte $76
+	.byte $CE
+	.byte $03
+	.byte $06
+	.byte $74
+	.byte $CE
+	.byte $BB
+	.byte $0F
+	.byte $00
+	.byte $2B
+	.byte $D8
+	.byte $A1
+	.byte $50
+	.byte $CE
+	.byte $3B
+	.byte $C3
+	.byte $74
+	.byte $12
+	.byte $C4
+	.byte $36
+	.byte $99
+	.byte $C0
+	.byte $26
+	.byte $C6
+	.byte $04
+	.byte $20
+	.byte $FF

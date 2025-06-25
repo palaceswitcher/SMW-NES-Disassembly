@@ -1,269 +1,269 @@
 DonutPlains_P1:
 DonutPlains_P1Loop:
-	db $F5
-	db $01
-	db Transpose
-	db C2
-	db DutySet
-	db $5B
-	db PitchSet
-	db $39
-	db VolSet
-	db $11
+	.byte $F5
+	.byte $01
+	.byte Transpose
+	.byte C2
+	.byte DutySet
+	.byte $5B
+	.byte PitchSet
+	.byte $39
+	.byte VolSet
+	.byte $11
 	notelen 12
-	db NRest
-	db $86
-	db NRest
-	db C3
-	db B3
-	db A3
+	.byte NRest
+	.byte $86
+	.byte NRest
+	.byte C3
+	.byte B3
+	.byte A3
 	notelen 12
-	db B3
-	db A3
-	db NRest
+	.byte B3
+	.byte A3
+	.byte NRest
 	notelen 24
-	db A3
+	.byte A3
 	notelen 12
-	db NRest
-	db $86
-	db NRest
-	db C3
-	db C4
-	db A3
+	.byte NRest
+	.byte $86
+	.byte NRest
+	.byte C3
+	.byte C4
+	.byte A3
 	notelen 12
-	db C4
-	db B3
-	db NRest
+	.byte C4
+	.byte B3
+	.byte NRest
 	notelen 24
-	db B3
+	.byte B3
 	notelen 12
-	db NRest
-	db $86
-	db NRest
-	db C3
-	db B3
-	db A3
+	.byte NRest
+	.byte $86
+	.byte NRest
+	.byte C3
+	.byte B3
+	.byte A3
 	notelen 12
-	db B3
-	db A3
-	db NRest
+	.byte B3
+	.byte A3
+	.byte NRest
 	notelen 24
-	db A3
+	.byte A3
 	notelen 12
-	db C4
-	db A3
-	db F3
+	.byte C4
+	.byte A3
+	.byte F3
 	notelen 24
-	db E3
-	db $86
-	db NRest
+	.byte E3
+	.byte $86
+	.byte NRest
 	notelen 24
-	db D3
-	db $86
-	db NRest
+	.byte D3
+	.byte $86
+	.byte NRest
 	notelen 12
-	db NRest
-	db $86
-	db NRest
-	db C3
-	db B3
-	db A3
+	.byte NRest
+	.byte $86
+	.byte NRest
+	.byte C3
+	.byte B3
+	.byte A3
 	notelen 12
-	db B3
-	db A3
-	db NRest
+	.byte B3
+	.byte A3
+	.byte NRest
 	notelen 24
-	db A3
+	.byte A3
 	notelen 12
-	db NRest
-	db $86
-	db NRest
-	db C3
-	db C4
-	db A3
+	.byte NRest
+	.byte $86
+	.byte NRest
+	.byte C3
+	.byte C4
+	.byte A3
 	notelen 12
-	db C4
-	db B3
-	db NRest
+	.byte C4
+	.byte B3
+	.byte NRest
 	notelen 24
-	db B3
+	.byte B3
 	notelen 12
-	db NRest
-	db $86
-	db NRest
-	db C3
-	db B3
-	db A3
+	.byte NRest
+	.byte $86
+	.byte NRest
+	.byte C3
+	.byte B3
+	.byte A3
 	notelen 12
-	db B3
-	db A3
-	db NRest
+	.byte B3
+	.byte A3
+	.byte NRest
 	notelen 24
-	db A3
-	db $92
-	db D3
-	db $86
-	db E3
+	.byte A3
+	.byte $92
+	.byte D3
+	.byte $86
+	.byte E3
 	notelen 12
-	db F3
-	db $2B
-	db Transpose
-	db $0C
-	db DutySet
-	db $07
-	db PitchSet
-	db $05
-	db VolSet
-	db $03
-	db $86
-	db $2B
-	db A3
+	.byte F3
+	.byte $2B
+	.byte Transpose
+	.byte $0C
+	.byte DutySet
+	.byte $07
+	.byte PitchSet
+	.byte $05
+	.byte VolSet
+	.byte $03
+	.byte $86
+	.byte $2B
+	.byte A3
 	notelen 24
-	db $2B
+	.byte $2B
 	notelen 12
-	db NRest
+	.byte NRest
 	sndjump DonutPlains_P1Loop
-	db $FF
+	.byte $FF
 DonutPlains_P2:
 DonutPlains_P2Loop:
-	db Transpose
-	db NRest
-	db DutySet
-	db $12
-	db PitchSet
-	db NRest
-	db VolSet
-	db $11
+	.byte Transpose
+	.byte NRest
+	.byte DutySet
+	.byte $12
+	.byte PitchSet
+	.byte NRest
+	.byte VolSet
+	.byte $11
 	notelen 24
-	db C2
-	db C3
-	db $15
-	db A2
-	db $1A
-	db D3
-	db $13
-	db G2
-	db C2
-	db C3
-	db $15
-	db A2
+	.byte C2
+	.byte C3
+	.byte $15
+	.byte A2
+	.byte $1A
+	.byte D3
+	.byte $13
+	.byte G2
+	.byte C2
+	.byte C3
+	.byte $15
+	.byte A2
 	notelen 12
-	db $20
-	db NRest
-	db NRest
-	db NRest
+	.byte $20
+	.byte NRest
+	.byte NRest
+	.byte NRest
 	notelen 48
-	db G2
+	.byte G2
 	notelen 24
-	db C2
-	db C3
-	db $15
-	db A2
-	db $1A
-	db D3
-	db $13
-	db G2
-	db C2
-	db C3
+	.byte C2
+	.byte C3
+	.byte $15
+	.byte A2
+	.byte $1A
+	.byte D3
+	.byte $13
+	.byte G2
+	.byte C2
+	.byte C3
 	notelen 12
-	db $15
-	db NRest
+	.byte $15
+	.byte NRest
 	notelen 24
-	db A2
+	.byte A2
 	notelen 12
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
 	sndjump DonutPlains_P2Loop
-	db $FF
+	.byte $FF
 DonutPlains_Unused:
 DonutPlains_UnusedLoop:
-	db Transpose
-	db $0C
-	db DutySet
-	db $07
-	db PitchSet
-	db $05
-	db VolSet
-	db $03
+	.byte Transpose
+	.byte $0C
+	.byte DutySet
+	.byte $07
+	.byte PitchSet
+	.byte $05
+	.byte VolSet
+	.byte $03
 	notelen 12
-	db NRest
-	db NRest
-	db $86
-	db B3
-	db $92
-	db B3
+	.byte NRest
+	.byte NRest
+	.byte $86
+	.byte B3
+	.byte $92
+	.byte B3
 	notelen 48
-	db A3
+	.byte A3
 	notelen 12
-	db NRest
-	db NRest
-	db $86
-	db C4
-	db $92
-	db C4
+	.byte NRest
+	.byte NRest
+	.byte $86
+	.byte C4
+	.byte $92
+	.byte C4
 	notelen 48
-	db B3
+	.byte B3
 	notelen 12
-	db NRest
-	db NRest
-	db $86
-	db B3
-	db $92
-	db B3
+	.byte NRest
+	.byte NRest
+	.byte $86
+	.byte B3
+	.byte $92
+	.byte B3
 	notelen 48
-	db A3
-	db E3
-	db D3
+	.byte A3
+	.byte E3
+	.byte D3
 	notelen 12
-	db NRest
-	db NRest
-	db $86
-	db B3
-	db $92
-	db B3
+	.byte NRest
+	.byte NRest
+	.byte $86
+	.byte B3
+	.byte $92
+	.byte B3
 	notelen 48
-	db A3
+	.byte A3
 	notelen 12
-	db NRest
-	db NRest
-	db $86
-	db C4
-	db $92
-	db C4
+	.byte NRest
+	.byte NRest
+	.byte $86
+	.byte C4
+	.byte $92
+	.byte C4
 	notelen 48
-	db B3
+	.byte B3
 	notelen 12
-	db NRest
-	db NRest
-	db $86
-	db B3
-	db $92
-	db B3
+	.byte NRest
+	.byte NRest
+	.byte $86
+	.byte B3
+	.byte $92
+	.byte B3
 	notelen 48
-	db A3
+	.byte A3
 	notelen 12
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
 	sndjump DonutPlains_UnusedLoop
-	db $FF
+	.byte $FF
 DonutPlains_End:
-	db $FF
+	.byte $FF
 DonutPlains_Footer:
 	mussq1 DonutPlains_P1
 	mussq2 DonutPlains_P2
 	mustri DonutPlains_End
 	musnoise DonutPlains_End
 	musdpcm DonutPlains_End
-	db $FF
+	.byte $FF

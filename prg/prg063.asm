@@ -45,11 +45,11 @@ jmp_63_E000:
 	PLA ; Pull the accumulator from the stack
 	PLP ; Pull CPU status from the stack
 	RTI
-NMI_E05C:
+nMI_E05C:
 	JMP loc3_EF10
-NMI_E05F:
+nMI_E05F:
 	JMP loc3_EFE0
-NMI_E062:
+nMI_E062:
 	PHP ; Push CPU status to stack 
 	PHA ; Push A to stack
 	TXA 
@@ -181,8 +181,8 @@ bra3_E12F:
 	LDA chrSpriteBank4
 	STA M90_SP_CHR3
 
-	JSR PauseChk ; Check if the game is paused
-	JSR UpdateJoypad ; Update controller input
+	JSR pauseChk ; Check if the game is paused
+	JSR updateJoypad ; Update controller input
 	LDA #$3A
 	STA M90_PRG0
 	LDA #$3B
@@ -200,7 +200,7 @@ bra3_E12F:
 	PLP
 	RTI
 
-Reset:
+reset:
 	SEI
 	CLD ; Standard 2A03/6502 initialization
 	LDX #$FF
@@ -211,14 +211,14 @@ Reset:
 	STA PPUCTRL
 	LDX #$02 ; Set the amount of frames to wait. This is likely done to prevent false negatives
 
-VBlankWait1:
+vBlankWait1:
 	BIT PPUSTATUS
-	BPL VBlankWait1 ; Wait for VBlank
-VBlankWait2:
+	BPL vBlankWait1 ; Wait for VBlank
+vBlankWait2:
 	BIT PPUSTATUS
-	BMI VBlankWait2 ; Wait for the VBlank flag to clear
+	BMI vBlankWait2 ; Wait for the VBlank flag to clear
 	DEX
-	BNE VBlankWait1 ; Loop until the set amount of frames have passed
+	BNE vBlankWait1 ; Loop until the set amount of frames have passed
 
 ;--------------------
 
@@ -266,7 +266,7 @@ bra3_E202: ; No idea what this loop is for
 ; Wipe memory
 	LDA #$00 ; Load zero
 	LDX #$00 ; Clear X index
-ClearMemory:
+clearMemory:
 	STA $00,X
 	STA $0200,X
 	STA $0300,X
@@ -275,11 +275,11 @@ ClearMemory:
 	STA $0600,X
 	STA $0700,X ; Wipe all pages of memory
 	DEX
-	BNE ClearMemory ; Keep looping until every page is cleared
+	BNE clearMemory ; Keep looping until every page is cleared
 
 ; Initialize game engine?
 	LDA #$00 ; Clear the accumulator
-	JSR MapperProtection ; Verify the game is on Mapper 90
+	JSR mapperProtection ; Verify the game is on Mapper 90
 	LDA #58
 	STA M90_PRG0
 	LDA #59
@@ -324,7 +324,7 @@ loc3_E277:
 	LDA #$00
 	STA $062D
 	LDX #$00
-	LDA a:inLvlFlag
+	lDA a:inLvlFlag
 	BNE bra3_E298
 	LDX #$04
 bra3_E298:
@@ -336,7 +336,7 @@ bra3_E298:
 	STA yScroll ; Copy vertical scroll
 	JMP loc3_E277 ; Jump
 sub3_E2AB:
-	LDA a:inLvlFlag
+	lDA a:inLvlFlag
 	BNE loc3_E317 ; Branch if in a level
 	LDX #$04
 	LDA tbl3_EF08,X
@@ -352,7 +352,7 @@ loc3_E2BE:
 
 ;-----UNUSED CODE START-----
 ; Seems to be an early routine for loading levels
-	LDA a:gameState
+	lDA a:gameState
 	ASL
 	TAY ; Get the event pointer
 	LDA tbl3_E2DB,Y 
@@ -361,11 +361,11 @@ loc3_E2BE:
 	STA $33 ; Load upper byte of pointer
 	JMP ($32) ; Jump to the loaded pointer
 tbl3_E2DB:
-	dw pnt2_E2E5
-	dw pnt2_E316
-	dw pnt2_E316
-	dw pnt2_E316
-	dw pnt2_E316
+	.word pnt2_E2E5
+	.word pnt2_E316
+	.word pnt2_E316
+	.word pnt2_E316
+	.word pnt2_E316
 pnt2_E2E5:
 	LDA btnPressed
 	AND #BTN_A
@@ -383,7 +383,7 @@ bra3_E2FE:
 	BEQ bra3_E315 ; If start is pressed,
 	INC a:inLvlFlag ; Set game state to 'in level'
 	LDA #$00
-	STA a:gameState ; Clear event triggers
+	sTA a:gameState ; Clear event triggers
 	LDA #$05
 	STA palTransition
 	JSR sub3_F919 ; Jump
@@ -394,7 +394,7 @@ pnt2_E316:
 ;-----UNUSED CODE END-----
 
 loc3_E317:
-	LDA a:gameState
+	lDA a:gameState
 	ASL
 	TAY ; Get the pointer for the current event
 	LDA tbl3_E329,Y
@@ -403,27 +403,27 @@ loc3_E317:
 	STA $33 ; Load upper byte of pointer
 	JMP ($32) ; Jump to loaded pointer
 tbl3_E329:
-	dw pnt2_E353 ; Game State 0
-	dw pnt2_E372 ; Reentering level
-	dw pnt2_E409 ; Normal/Default
-	dw pnt2_E4CA ; Entering door
-	dw pnt2_E534 ; Death
-	dw pnt2_E610 ; Castle intro
-	dw pnt2_E6ED ; Level complete
-	dw pnt2_E79E ; Unusable item box use (nothing)
-	dw pnt2_E7A2 ; Game State 8
-	dw pnt2_E7D0 ; Game State 9
-	dw pnt2_E85F ; JY Easter egg
-	dw pnt2_ED75 ; Bonus pipe down
-	dw pnt2_EE02 ; Exiting pipe horizontally
-	dw pnt2_EE23 ; Exiting pipe upwards
-	dw pnt2_EE59 ; Enter 1st cannon pipe
-	dw pnt2_EE96 ; Launch out of 1st cannon
-	dw pnt2_EEC8 ; Enter 2nd cannon pipe
-	dw pnt2_EE96 ; Launch out of 2nd cannon
-	dw pnt2_EEC8 ; Enter pipe up
-	dw pnt2_ED75
-	dw pnt2_EEFD
+	.word pnt2_E353 ; Game State 0
+	.word pnt2_E372 ; Reentering level
+	.word pnt2_E409 ; Normal/Default
+	.word pnt2_E4CA ; Entering door
+	.word pnt2_E534 ; Death
+	.word pnt2_E610 ; Castle intro
+	.word pnt2_E6ED ; Level complete
+	.word pnt2_E79E ; Unusable item box use (nothing)
+	.word pnt2_E7A2 ; Game State 8
+	.word pnt2_E7D0 ; Game State 9
+	.word pnt2_E85F ; JY Easter egg
+	.word pnt2_ED75 ; Bonus pipe down
+	.word pnt2_EE02 ; Exiting pipe horizontally
+	.word pnt2_EE23 ; Exiting pipe upwards
+	.word pnt2_EE59 ; Enter 1st cannon pipe
+	.word pnt2_EE96 ; Launch out of 1st cannon
+	.word pnt2_EEC8 ; Enter 2nd cannon pipe
+	.word pnt2_EE96 ; Launch out of 2nd cannon
+	.word pnt2_EEC8 ; Enter pipe up
+	.word pnt2_ED75
+	.word pnt2_EEFD
 pnt2_E353:
 	LDA yoshiExitStatus
 	STA playerYoshiState ; Copy player 2's yoshi to current yoshi
@@ -435,10 +435,10 @@ pnt2_E353:
 	LDA #$3D
 	STA M90_PRG1 ; Swap bank 61 into 2nd PRG slot
 	JSR jmp_61_B19E
-	INC a:gameState
+	iNC a:gameState
 	RTS
 pnt2_E372:
-	LDA a:gameSubstate
+	lDA a:gameSubstate
 	ASL
 	TAY ; Get the pointer for the current event part
 	LDA tbl3_E384,Y
@@ -447,8 +447,8 @@ pnt2_E372:
 	STA $33 ; Load upper byte of pointer
 	JMP ($32) ; Jump to loaded pointer
 tbl3_E384:
-	dw pnt2_E388
-	dw pnt2_E3DD
+	.word pnt2_E388
+	.word pnt2_E3DD
 pnt2_E388:
 	LDA #$00
 	STA PPUCTRL
@@ -483,10 +483,10 @@ bra3_E397:
 	LDA #%01
 	STA M90_CHR_CTRL2 ; Set mirroring to horizontal
 	JSR sub3_F0CB ; Jump
-	INC a:gameSubstate ; Go to next part of event
+	iNC a:gameSubstate ; Go to next part of event
 	RTS
 
-TimerSetting: dw 300 ; Timer data for levels
+TimerSetting: .word 300 ; Timer data for levels
 
 pnt2_E3DD:
 	LDA #$00
@@ -495,7 +495,7 @@ pnt2_E3DD:
 	JSR sub3_F919
 	LDA #$00
 	STA $52
-	STA a:gameSubstate ; End level transition
+	sTA a:gameSubstate ; End level transition
 	LDA prgDataBank2
 	CMP #$23
 	BNE bra3_E405 ; Check if using the tileset PRG bank for the castle or ghost house intro
@@ -506,22 +506,22 @@ pnt2_E3DD:
 	LDA levelNumber
 	BEQ bra3_E405 ; Make sure the player isn't in the first level of a world
 	LDA #$05
-	STA a:gameState ; Trigger castle/ghost house intro
+	sTA a:gameState ; Trigger castle/ghost house intro
 	RTS
 	; Otherwise, start the level as normal.
 	bra3_E405:
-		INC a:gameState
+		iNC a:gameState
 		RTS
 
 ;----------------------------------------
 ; DEFAULT GAME STATE ($E409)
 ;----------------------------------------
 pnt2_E409:
-	LDA a:gameSubstate
-	BEQ @Continue
+	lDA a:gameSubstate
+	BEQ @continue
 	JMP loc3_E498 ; Jump if in the level exit substate
 
-@Continue:
+@continue:
 	LDX #$02
 	LDA tbl3_EF08,X
 	STA nmiJmpOpcode+1 ; Set the high byte of the NMI jump
@@ -578,17 +578,17 @@ bra3_E47C:
 	LDA pauseFlag
 	BEQ bra3_E494 ; Stop if game isn't paused
 	; If game is paused:
-		JSR JYButtonComboCheck ; Check for Easter egg button combo
+		JSR jYButtonComboCheck ; Check for Easter egg button combo
 		LDA btnPressed
 		AND #BTN_SELECT
 		BEQ bra3_E494 ; Stop if select isn't pressed
 		; If select pressed:
-			INC a:gameSubstate ; Enter level exit state if
+			iNC a:gameSubstate ; Enter level exit state if
 			LDX curPlayer
 			INC playerLives,X ; Temporarily increment current player's life count
 
 bra3_E494:
-	JSR HUD_Update ; Update HUD before stopping
+	JSR hUD_Update ; Update HUD before stopping
 	RTS
 
 loc3_E498:
@@ -600,17 +600,17 @@ loc3_E498:
 	LDA #$00
 	STA pauseFlag ; Unpause the game
 	STA a:inLvlFlag ; Not in a level anymore
-	STA a:gameSubstate
+	sTA a:gameSubstate
 	LDA #GAMESTATE_MAPEXITLEVEL_TRANS
-	STA a:gameState ; Set to transition state for exiting a level
-	JSR BackupplayerPowerups
+	sTA a:gameState ; Set to transition state for exiting a level
+	JSR backupplayerPowerups
 	RTS
 
 ;----------------------------------------
 ; SUBROUTINE ($E4BA)
 ; Backup the player's powerup and Yoshi.
 ;----------------------------------------
-BackupplayerPowerups:
+backupplayerPowerups:
 	LDX curPlayer ; Set index for current player
 	LDA playerPowerup
 	STA playerStoredPowerup,X ; Backup player's powerup
@@ -619,7 +619,7 @@ BackupplayerPowerups:
 	RTS
 
 pnt2_E4CA:
-	LDA a:gameSubstate
+	lDA a:gameSubstate
 	ASL
 	TAY
 	LDA tbl3_E4DC,Y
@@ -628,20 +628,20 @@ pnt2_E4CA:
 	STA $33
 	JMP ($32)
 tbl3_E4DC:
-	dw pnt2_E4E4
-	dw pnt2_E4EC
-	dw pnt2_E4F7
-	dw pnt2_E509
+	.word pnt2_E4E4
+	.word pnt2_E4EC
+	.word pnt2_E4F7
+	.word pnt2_E509
 pnt2_E4E4:
 	LDA #SFX_WARP
 	STA sndSfx ; Play warp sound
-	INC a:gameSubstate
+	iNC a:gameSubstate
 	RTS
 pnt2_E4EC:
 	LDX #$00
 	LDY #$3C
 	JSR sub3_E5B6 ; Jump
-	INC a:gameSubstate
+	iNC a:gameSubstate
 	RTS
 pnt2_E4F7:
 	LDA #$00
@@ -649,7 +649,7 @@ pnt2_E4F7:
 	JSR sub3_E6D5
 	JSR sub3_F919
 	JSR sub3_E904
-	INC a:gameSubstate ; Go to next part of event
+	iNC a:gameSubstate ; Go to next part of event
 	RTS
 pnt2_E509:
 	LDY warpLvlNumber ; Load pointers based on level number of warp
@@ -663,14 +663,14 @@ pnt2_E509:
 	STA $35 ; Store upper byte of 2nd pointer
 	JSR sub3_E870 ; Jump
 	LDA #$01
-	STA a:gameState ; Trigger door exit
+	sTA a:gameState ; Trigger door exit
 	LDA #$00
-	STA a:gameSubstate ; Go to 1st event part
+	sTA a:gameSubstate ; Go to 1st event part
 	STA $06DE
 	STA $06DF
 	RTS
 pnt2_E534:
-	LDA a:gameSubstate ; Load part of event
+	lDA a:gameSubstate ; Load part of event
 	ASL ; Multiply by 2
 	TAY ; Load pointer based on event part
 	LDA tbl3_E546,Y
@@ -679,10 +679,10 @@ pnt2_E534:
 	STA $33 ; Load upper byte of pointer
 	JMP ($32) ; Jump to loaded pointer
 tbl3_E546:
-	dw pnt2_E54E
-	dw pnt2_E570
-	dw pnt2_E585
-	dw pnt2_E597
+	.word pnt2_E54E
+	.word pnt2_E570
+	.word pnt2_E585
+	.word pnt2_E597
 pnt2_E54E:
 	LDA #$11
 	STA playerAction ; Set action to "dying"
@@ -696,8 +696,8 @@ pnt2_E54E:
 	LDX #$00 ; Set action tick count to 1
 	LDY #$28 ; Set tick length to 40 frames
 	JSR sub3_E5B6 ; Jump
-	JSR HUD_Update ; Jump
-	INC a:gameSubstate ; Start level transition
+	JSR hUD_Update ; Jump
+	iNC a:gameSubstate ; Start level transition
 	RTS
 pnt2_E570:
 	LDA #$00
@@ -708,7 +708,7 @@ pnt2_E570:
 	ORA #$04
 	STA playerMoveFlags ; Make player move up
 	JSR sub3_E5D4
-	INC a:gameSubstate
+	iNC a:gameSubstate
 	RTS
 pnt2_E585:
 	LDA #$00
@@ -717,7 +717,7 @@ pnt2_E585:
 	LDX #$04 ; Set action tick count to 4
 	LDY #$3B ; Set tick length to 59 frames
 	JSR sub3_E5B6 ; Jump
-	INC a:gameSubstate ; Start level transition
+	iNC a:gameSubstate ; Start level transition
 	RTS
 pnt2_E597:
 	LDA #$00
@@ -727,10 +727,10 @@ pnt2_E597:
 	JSR sub3_E904
 	LDA #$00
 	STA a:inLvlFlag ; Set game state for map
-	STA a:gameSubstate ; Go to first part of event
+	sTA a:gameSubstate ; Go to first part of event
 	LDA #$16
-	STA a:gameState ; Trigger map fade-in
-	JSR BackupplayerPowerups
+	sTA a:gameState ; Trigger map fade-in
+	JSR backupplayerPowerups
 	RTS
 sub3_E5B6:
 	INC playerActionFrameCount ; Increment frame count for player action
@@ -775,7 +775,7 @@ sub3_E5D4:
 	RTS
 pnt2_E610:
 	JSR sub3_ED14 ; Jump
-	JSR HUD_Update ; Jump
+	JSR hUD_Update ; Jump
 	LDA btnPressed
 	AND #BTN_A|BTN_B
 	BEQ bra3_E62F ; If A or B are pressed,
@@ -785,9 +785,9 @@ pnt2_E610:
 	STA M90_PRG1 ; Swap player bank into 2nd PRG slot
 	JSR sub4_A14A ; Jump
 	LDA #$03
-	STA a:gameSubstate ; Skip to 3rd part of event
+	sTA a:gameSubstate ; Skip to 3rd part of event
 bra3_E62F:
-	LDA a:gameSubstate ; Load event part
+	lDA a:gameSubstate ; Load event part
 	ASL ; Multiply by 2
 	TAY ; Load pointer based on event part
 	LDA tbl3_E641,Y
@@ -796,10 +796,10 @@ bra3_E62F:
 	STA $33 ; Load upper byte of pointer
 	JMP ($32) ; Jump to loaded pointer
 tbl3_E641:
-	dw pnt2_E649
-	dw pnt2_E68B
-	dw pnt2_E69E
-	dw pnt2_E6B0
+	.word pnt2_E649
+	.word pnt2_E68B
+	.word pnt2_E69E
+	.word pnt2_E6B0
 pnt2_E649:
 	LDA playerYSpd
 	BNE bra3_E68A ; Branch if moving vertically
@@ -832,7 +832,7 @@ bra3_E681:
 	LDA playerSprX
 	CMP #$B0 ; If player hasn't reached this point,
 	BCC bra3_E68A ; stop
-	INC a:gameSubstate ; Set level transition
+	iNC a:gameSubstate ; Set level transition
 bra3_E68A:
 	RTS
 pnt2_E68B:
@@ -843,7 +843,7 @@ pnt2_E68B:
 	LDX #$01
 	LDY #$3B
 	JSR sub3_E5B6 ; Jump
-	INC a:gameSubstate ; Go to next part of event
+	iNC a:gameSubstate ; Go to next part of event
 	RTS
 pnt2_E69E:
 	LDA #$01
@@ -853,7 +853,7 @@ pnt2_E69E:
 	LDA playerSprX
 	CMP #$C8 ; If player hasn't reached this point,
 	BCC bra3_E6AF ; stop
-	INC a:gameSubstate ; Go to next part of event
+	iNC a:gameSubstate ; Go to next part of event
 bra3_E6AF:
 	RTS
 pnt2_E6B0:
@@ -867,9 +867,9 @@ pnt2_E6B0:
 	LDA #$00
 	STA warpNumber ; Set level warp to 0
 	LDA #$03
-	STA a:gameState ; Enter door
+	sTA a:gameState ; Enter door
 	LDA #$00
-	STA a:gameSubstate ; Set event part
+	sTA a:gameSubstate ; Set event part
 	STA playerActionFrameCount ; Disable action frame counter
 	STA playerActionTicks ; Disable action timer
 	STA playerAction ; Clear player action
@@ -913,7 +913,7 @@ pnt2_E6ED:
 	STA M90_PRG1 ; Swap bank 61 into 2nd PRG slot
 	JSR jmp_61_AE8F ; Jump
 	JSR sub3_E9C4
-	LDA a:gameSubstate ; Load event part
+	lDA a:gameSubstate ; Load event part
 	ASL
 	TAY ; Load pointer based on event part
 	LDA tbl3_E71F,Y
@@ -922,10 +922,10 @@ pnt2_E6ED:
 	STA $33 ; Load upper byte of pointer
 	JMP ($32) ; Jump to loaded pointer
 tbl3_E71F:
-	dw pnt2_E727
-	dw pnt2_E748
-	dw pnt2_E769
-	dw pnt2_E774
+	.word pnt2_E727
+	.word pnt2_E748
+	.word pnt2_E769
+	.word pnt2_E774
 pnt2_E727:
 	LDA playerYSpd
 	BNE bra3_E747 ; If player not moving vertically,
@@ -940,7 +940,7 @@ pnt2_E727:
 	LDA playerMoveFlags
 	AND #$BE
 	STA playerMoveFlags ; Make player face right
-	INC a:gameSubstate ; Go to next part of event
+	iNC a:gameSubstate ; Go to next part of event
 bra3_E747:
 	RTS
 pnt2_E748:
@@ -957,14 +957,14 @@ pnt2_E748:
 	STA fadeoutMode ; Start BG 'blackout' effect
 	JSR sub3_E6E0 ; Jump
 	JSR sub3_F919 ; Jump
-	INC a:gameSubstate ; Go to next part of event
+	iNC a:gameSubstate ; Go to next part of event
 bra3_E768:
 	RTS
 pnt2_E769:
 	LDX #$02
 	LDY #$3B
 	JSR sub3_E5B6
-	INC a:gameSubstate ; Go to next part of event
+	iNC a:gameSubstate ; Go to next part of event
 	RTS
 pnt2_E774:
 	LDA #$01
@@ -979,13 +979,13 @@ pnt2_E774:
 	JSR sub3_E904 ; Jump
 	LDA #$00
 	STA a:inLvlFlag ; Set game state to be outside a level
-	STA a:gameSubstate ; Clear event part
+	sTA a:gameSubstate ; Clear event part
 	LDA #$16
-	STA a:gameState ; Set event number to 16h
-	JSR BackupplayerPowerups ; Jump
+	sTA a:gameState ; Set event number to 16h
+	JSR backupplayerPowerups ; Jump
 	RTS
 pnt2_E79E:
-	INC a:gameState ; Increment event number (go right to next event)
+	iNC a:gameState ; Increment event number (go right to next event)
 	RTS
 pnt2_E7A2:
 	LDA #$39
@@ -1024,7 +1024,7 @@ pnt2_E7D0:
 	STA $3C
 	JSR jmp_52_A089 ; Jump
 	JSR sub3_E9C4 ; Jump
-	LDA a:gameSubstate
+	lDA a:gameSubstate
 	ASL
 	TAY ; Load pointer based on event part
 	LDA tbl3_E80F,Y
@@ -1033,13 +1033,13 @@ pnt2_E7D0:
 	STA $33 ; Load upper byte of pointer
 	JMP ($32) ; Jump to loaded pointer
 tbl3_E80F:
-	dw pnt2_E813
-	dw pnt2_E81E
+	.word pnt2_E813
+	.word pnt2_E81E
 pnt2_E813:
 	LDX #$06
 	LDY #$3B
 	JSR sub3_E5B6
-	INC a:gameSubstate
+	iNC a:gameSubstate
 	RTS
 pnt2_E81E:
 	LDY #$03
@@ -1067,18 +1067,18 @@ bra3_E840:
 	JSR sub3_E904
 	LDA #$00
 	STA a:inLvlFlag ; Set game state to 'not in level'
-	STA a:gameSubstate ; Set event part
+	sTA a:gameSubstate ; Set event part
 	LDA #$16
-	STA a:gameState
-	JSR BackupplayerPowerups
+	sTA a:gameState
+	JSR backupplayerPowerups
 	RTS
 pnt2_E85F:
-	LDA a:gameSubstate
+	lDA a:gameSubstate
 	BNE bra3_E86F ; Branch if not on 1st event part
 	LDA #$3D
 	STA M90_PRG1 ; Swap level handling bank into 2nd PRG slot
 	JSR jmp_61_BE85 ; Jump
-	INC a:gameSubstate ; Go to next event part
+	iNC a:gameSubstate ; Go to next event part
 bra3_E86F:
 	RTS
 sub3_E870:
@@ -1091,7 +1091,7 @@ sub3_E870:
 	STA playerCollXHi ; Store as wall collision position
 	LDA #$00
 	STA $52
-	STA playerCollXLo ; Reset player collision and sprite positioning?
+	STA playerCollXLo ; reset player collision and sprite positioning?
 	INY ; Move to next byte
 	LDA ($32),Y
 	STA $53
@@ -1172,7 +1172,7 @@ sub3_E904:
 	STA playerMoveFlags
 	STA $1A
 	STA playerAction
-	STA a:playerState
+	sTA a:playerState
 	STA playerActionFrameCount
 	STA playerActionTicks
 	STA $0613
@@ -1260,774 +1260,774 @@ sub3_E9C4:
 	STA M90_PRG1 ; Swap bank 52 into 2nd PRG slot
 	JSR jmp_52_A0F3
 	RTS
-JYButtonComboCheck:
+jYButtonComboCheck:
 	LDA btnPressed
 	CMP #BTN_START
-	BEQ JYTriggerDone ; Stop if the game is unpaused.
+	BEQ jYTriggerDone ; Stop if the game is unpaused.
 	LDA btnPressed
-	BEQ JYTriggerDone ; If any button is being pressed,
+	BEQ jYTriggerDone ; If any button is being pressed,
 	LDX jyEasterEggInput ; Load correct input count
-	BMI JYTriggerDone
-	CMP JYScreenInputs,X
-	BNE ClearJYInputs ; Start over if the wrong button is pressed
+	BMI jYTriggerDone
+	CMP jYScreenInputs,X
+	BNE clearJYInputs ; Start over if the wrong button is pressed
 	INC jyEasterEggInput ; Continue with each correct input
 	LDA jyEasterEggInput
 	CMP #$08
-	BCC JYTriggerDone ; Wait for all 8 inputs to be entered correctly
+	BCC jYTriggerDone ; Wait for all 8 inputs to be entered correctly
 	LDA #$0A
-	STA a:gameState ; Trigger JY Easter egg screen
-JYTriggerDone:
+	sTA a:gameState ; Trigger JY Easter egg screen
+jYTriggerDone:
 	RTS
-ClearJYInputs:
+clearJYInputs:
 	LDA #$00
 	STA jyEasterEggInput ; Clear correct input count
 	RTS
 	
 ; This is the 8 button code needed to trigger the JY easter egg screen
-JYScreenInputs:
-	db BTN_UP, BTN_RIGHT, BTN_A, BTN_DOWN, BTN_RIGHT, BTN_B, BTN_UP, BTN_LEFT
+jYScreenInputs:
+	.byte BTN_UP, BTN_RIGHT, BTN_A, BTN_DOWN, BTN_RIGHT, BTN_B, BTN_UP, BTN_LEFT
 tbl3_EA10:
-	dw pnt2_EA48
-	dw pnt2_EA48
-	dw pnt2_EA48
-	dw pnt2_EA48
-	dw pnt2_EA48
-	dw pnt2_EA48
-	dw pnt2_EA54
-	dw pnt2_EA70
-	dw pnt2_EA48
-	dw pnt2_EA48
-	dw pnt2_EA80
-	dw pnt2_EA9C
-	dw pnt2_EA48
-	dw pnt2_EA48
-	dw pnt2_EA48
-	dw pnt2_EAA8
-	dw pnt2_EA48
-	dw pnt2_EAB4
-	dw pnt2_EA48
-	dw pnt2_EAD0
-	dw pnt2_EA48
-	dw pnt2_EADC ; 6-2
-	dw pnt2_EA48
-	dw pnt2_EAE8
-	dw pnt2_EA48
-	dw pnt2_EA48
-	dw pnt2_EAF4
-	dw pnt2_EB10
+	.word pnt2_EA48
+	.word pnt2_EA48
+	.word pnt2_EA48
+	.word pnt2_EA48
+	.word pnt2_EA48
+	.word pnt2_EA48
+	.word pnt2_EA54
+	.word pnt2_EA70
+	.word pnt2_EA48
+	.word pnt2_EA48
+	.word pnt2_EA80
+	.word pnt2_EA9C
+	.word pnt2_EA48
+	.word pnt2_EA48
+	.word pnt2_EA48
+	.word pnt2_EAA8
+	.word pnt2_EA48
+	.word pnt2_EAB4
+	.word pnt2_EA48
+	.word pnt2_EAD0
+	.word pnt2_EA48
+	.word pnt2_EADC ; 6-2
+	.word pnt2_EA48
+	.word pnt2_EAE8
+	.word pnt2_EA48
+	.word pnt2_EA48
+	.word pnt2_EAF4
+	.word pnt2_EB10
 pnt2_EA48:
-	db $03
-	db $03
-	db $1C
-	db $03
-	db $03
-	db $03
-	db $1C
-	db $21
-	db $0F
-	db $0F
-	db $1F
-	db $20
+	.byte $03
+	.byte $03
+	.byte $1C
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $1C
+	.byte $21
+	.byte $0F
+	.byte $0F
+	.byte $1F
+	.byte $20
 pnt2_EA54:
-	db $06
-	db $06
-	db $1D
-	db $06
-	db $06
-	db $06
-	db $1D
-	db $06
-	db $06
-	db $06
-	db $1D
-	db $06
-	db $06
-	db $06
-	db $1D
-	db $06
-	db $03
-	db $27
-	db $23
-	db $1C
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $06
-	db $06
-	db $1D
-	db $06
+	.byte $06
+	.byte $06
+	.byte $1D
+	.byte $06
+	.byte $06
+	.byte $06
+	.byte $1D
+	.byte $06
+	.byte $06
+	.byte $06
+	.byte $1D
+	.byte $06
+	.byte $06
+	.byte $06
+	.byte $1D
+	.byte $06
+	.byte $03
+	.byte $27
+	.byte $23
+	.byte $1C
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $06
+	.byte $06
+	.byte $1D
+	.byte $06
 pnt2_EA70:
-	db $07
-	db $07
-	db $1D
-	db $20
-	db $07
-	db $07
-	db $1D
-	db $20
-	db $07
-	db $07
-	db $1D
-	db $21
-	db $07
-	db $07
-	db $1D
-	db $1E
+	.byte $07
+	.byte $07
+	.byte $1D
+	.byte $20
+	.byte $07
+	.byte $07
+	.byte $1D
+	.byte $20
+	.byte $07
+	.byte $07
+	.byte $1D
+	.byte $21
+	.byte $07
+	.byte $07
+	.byte $1D
+	.byte $1E
 pnt2_EA80:
-	db $0A
-	db $0A
-	db $1E
-	db $0A
-	db $0A
-	db $0A
-	db $1E
-	db $0A
-	db $0A
-	db $0A
-	db $1E
-	db $0A
-	db $0A
-	db $0A
-	db $1E
-	db $0A
-	db $0A
-	db $0A
-	db $1E
-	db $0A
-	db $0A
-	db $0A
-	db $1E
-	db $0A
-	db $03
-	db $27
-	db $23
-	db $1C
+	.byte $0A
+	.byte $0A
+	.byte $1E
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $1E
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $1E
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $1E
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $1E
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $1E
+	.byte $0A
+	.byte $03
+	.byte $27
+	.byte $23
+	.byte $1C
 pnt2_EA9C:
-	db $0B
-	db $0B
-	db $1E
-	db $21
-	db $0B
-	db $0B
-	db $1E
-	db $21
-	db $0B
-	db $0B
-	db $1E
-	db $1F
+	.byte $0B
+	.byte $0B
+	.byte $1E
+	.byte $21
+	.byte $0B
+	.byte $0B
+	.byte $1E
+	.byte $21
+	.byte $0B
+	.byte $0B
+	.byte $1E
+	.byte $1F
 pnt2_EAA8:
-	db $0F
-	db $0F
-	db $1F
-	db $21
-	db $0F
-	db $0F
-	db $1F
-	db $0F
-	db $0F
-	db $0F
-	db $1F
-	db $20
+	.byte $0F
+	.byte $0F
+	.byte $1F
+	.byte $21
+	.byte $0F
+	.byte $0F
+	.byte $1F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $1F
+	.byte $20
 pnt2_EAB4:
-	db $11
-	db $11
-	db $20
-	db $11
-	db $11
-	db $11
-	db $20
-	db $11
-	db $03
-	db $27
-	db $23
-	db $1C
-	db $03
-	db $27
-	db $23
-	db $1C
-	db $11
-	db $11
-	db $20
-	db $11
-	db $11
-	db $11
-	db $20
-	db $11
-	db $11
-	db $11
-	db $20
-	db $11
+	.byte $11
+	.byte $11
+	.byte $20
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $20
+	.byte $11
+	.byte $03
+	.byte $27
+	.byte $23
+	.byte $1C
+	.byte $03
+	.byte $27
+	.byte $23
+	.byte $1C
+	.byte $11
+	.byte $11
+	.byte $20
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $20
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $20
+	.byte $11
 pnt2_EAD0:
-	db $13
-	db $13
-	db $20
-	db $13
-	db $13
-	db $13
-	db $20
-	db $13
-	db $07
-	db $07
-	db $1D
-	db $23
+	.byte $13
+	.byte $13
+	.byte $20
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $20
+	.byte $13
+	.byte $07
+	.byte $07
+	.byte $1D
+	.byte $23
 pnt2_EADC:
-	db $15
-	db $16
-	db $21
-	db $15
-	db $15
-	db $16
-	db $21
-	db $15
-	db $03
-	db $27
-	db $23
-	db $1C
+	.byte $15
+	.byte $16
+	.byte $21
+	.byte $15
+	.byte $15
+	.byte $16
+	.byte $21
+	.byte $15
+	.byte $03
+	.byte $27
+	.byte $23
+	.byte $1C
 pnt2_EAE8:
-	db $17
-	db $17
-	db $21
-	db $17
-	db $17
-	db $17
-	db $21
-	db $17
-	db $0B
-	db $0B
-	db $1E
-	db $1F
+	.byte $17
+	.byte $17
+	.byte $21
+	.byte $17
+	.byte $17
+	.byte $17
+	.byte $21
+	.byte $17
+	.byte $0B
+	.byte $0B
+	.byte $1E
+	.byte $1F
 pnt2_EAF4:
-	db $1A
-	db $1A
-	db $22
-	db $1A
-	db $1A
-	db $1A
-	db $22
-	db $1A
-	db $1A
-	db $1A
-	db $22
-	db $1A
-	db $1A
-	db $1A
-	db $22
-	db $1A
-	db $03
-	db $27
-	db $23
-	db $1C
-	db $1A
-	db $1A
-	db $22
-	db $1A
-	db $1A
-	db $1A
-	db $22
-	db $1A
+	.byte $1A
+	.byte $1A
+	.byte $22
+	.byte $1A
+	.byte $1A
+	.byte $1A
+	.byte $22
+	.byte $1A
+	.byte $1A
+	.byte $1A
+	.byte $22
+	.byte $1A
+	.byte $1A
+	.byte $1A
+	.byte $22
+	.byte $1A
+	.byte $03
+	.byte $27
+	.byte $23
+	.byte $1C
+	.byte $1A
+	.byte $1A
+	.byte $22
+	.byte $1A
+	.byte $1A
+	.byte $1A
+	.byte $22
+	.byte $1A
 pnt2_EB10:
-	db $1B
-	db $1B
-	db $22
-	db $1B
-	db $1B
-	db $1B
-	db $22
-	db $1B
-	db $3B
-	db $1B
-	db $22
-	db $1B
-	db $1B
-	db $1B
-	db $22
-	db $1B
-	db $3B
-	db $32
-	db $26
-	db $24
+	.byte $1B
+	.byte $1B
+	.byte $22
+	.byte $1B
+	.byte $1B
+	.byte $1B
+	.byte $22
+	.byte $1B
+	.byte $3B
+	.byte $1B
+	.byte $22
+	.byte $1B
+	.byte $1B
+	.byte $1B
+	.byte $22
+	.byte $1B
+	.byte $3B
+	.byte $32
+	.byte $26
+	.byte $24
 tbl3_EB24:
-	dw pnt2_EB5C
-	dw pnt2_EB5C
-	dw pnt2_EB5C
-	dw pnt2_EB5C
-	dw pnt2_EB5C
-	dw pnt2_EB5C
-	dw pnt2_EB74
-	dw pnt2_EBAC
-	dw pnt2_EB5C
-	dw pnt2_EB5C
-	dw pnt2_EBCC
-	dw pnt2_EC04
-	dw pnt2_EB5C
-	dw pnt2_EB5C
-	dw pnt2_EB5C
-	dw pnt2_EC1C
-	dw pnt2_EB5C
-	dw pnt2_EC34
-	dw pnt2_EB5C
-	dw pnt2_EC6C
-	dw pnt2_EB5C
-	dw pnt2_EC84
-	dw pnt2_EB5C
-	dw pnt2_EC9C
-	dw pnt2_EB5C
-	dw pnt2_EB5C
-	dw pnt2_ECB4
-	dw pnt2_ECEC
+	.word pnt2_EB5C
+	.word pnt2_EB5C
+	.word pnt2_EB5C
+	.word pnt2_EB5C
+	.word pnt2_EB5C
+	.word pnt2_EB5C
+	.word pnt2_EB74
+	.word pnt2_EBAC
+	.word pnt2_EB5C
+	.word pnt2_EB5C
+	.word pnt2_EBCC
+	.word pnt2_EC04
+	.word pnt2_EB5C
+	.word pnt2_EB5C
+	.word pnt2_EB5C
+	.word pnt2_EC1C
+	.word pnt2_EB5C
+	.word pnt2_EC34
+	.word pnt2_EB5C
+	.word pnt2_EC6C
+	.word pnt2_EB5C
+	.word pnt2_EC84
+	.word pnt2_EB5C
+	.word pnt2_EC9C
+	.word pnt2_EB5C
+	.word pnt2_EB5C
+	.word pnt2_ECB4
+	.word pnt2_ECEC
 pnt2_EB5C:
-	db $00 ; warp data start here
-	db $00
-	db $40
-	db $B0
-	db $FF
-	db $07
-	db $FF
-	db $00
-	db $89
-	db $00
-	db $40
-	db $B0
-	db $08
-	db $0D
-	db $FF
-	db $00
-	db $10
-	db $01
-	db $40
-	db $A0
-	db $0F
-	db $10
-	db $00
-	db $01
+	.byte $00 ; warp data start here
+	.byte $00
+	.byte $40
+	.byte $B0
+	.byte $FF
+	.byte $07
+	.byte $FF
+	.byte $00
+	.byte $89
+	.byte $00
+	.byte $40
+	.byte $B0
+	.byte $08
+	.byte $0D
+	.byte $FF
+	.byte $00
+	.byte $10
+	.byte $01
+	.byte $40
+	.byte $A0
+	.byte $0F
+	.byte $10
+	.byte $00
+	.byte $01
 pnt2_EB74:
-	db $00
-	db $01
-	db $40
-	db $B0
-	db $FF
-	db $06
-	db $FF
-	db $01
-	db $08
-	db $01
-	db $40
-	db $B0
-	db $07
-	db $09
-	db $FF
-	db $01
-	db $0C
-	db $01
-	db $80
-	db $A0
-	db $0A
-	db $0C
-	db $FF
-	db $01
-	db $09
-	db $01
-	db $80
-	db $A0
-	db $07
-	db $09
-	db $FF
-	db $01
-	db $01
-	db $00
-	db $20
-	db $C0
-	db $00
-	db $02
-	db $FF
-	db $00
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $0E
-	db $01
-	db $20
-	db $B0
-	db $0D
-	db $0E
-	db $FF
-	db $01
+	.byte $00
+	.byte $01
+	.byte $40
+	.byte $B0
+	.byte $FF
+	.byte $06
+	.byte $FF
+	.byte $01
+	.byte $08
+	.byte $01
+	.byte $40
+	.byte $B0
+	.byte $07
+	.byte $09
+	.byte $FF
+	.byte $01
+	.byte $0C
+	.byte $01
+	.byte $80
+	.byte $A0
+	.byte $0A
+	.byte $0C
+	.byte $FF
+	.byte $01
+	.byte $09
+	.byte $01
+	.byte $80
+	.byte $A0
+	.byte $07
+	.byte $09
+	.byte $FF
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $20
+	.byte $C0
+	.byte $00
+	.byte $02
+	.byte $FF
+	.byte $00
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $0E
+	.byte $01
+	.byte $20
+	.byte $B0
+	.byte $0D
+	.byte $0E
+	.byte $FF
+	.byte $01
 pnt2_EBAC:
-	db $00
-	db $01
-	db $40
-	db $B0
-	db $FF
-	db $02
-	db $FF
-	db $01
-	db $06
-	db $01
-	db $70
-	db $B0
-	db $03
-	db $06
-	db $FF
-	db $01
-	db $08
-	db $01
-	db $40
-	db $B0
-	db $07
-	db $0E
-	db $00
-	db $01
-	db $10
-	db $01
-	db $40
-	db $A0
-	db $0F
-	db $10
-	db $00
-	db $01
+	.byte $00
+	.byte $01
+	.byte $40
+	.byte $B0
+	.byte $FF
+	.byte $02
+	.byte $FF
+	.byte $01
+	.byte $06
+	.byte $01
+	.byte $70
+	.byte $B0
+	.byte $03
+	.byte $06
+	.byte $FF
+	.byte $01
+	.byte $08
+	.byte $01
+	.byte $40
+	.byte $B0
+	.byte $07
+	.byte $0E
+	.byte $00
+	.byte $01
+	.byte $10
+	.byte $01
+	.byte $40
+	.byte $A0
+	.byte $0F
+	.byte $10
+	.byte $00
+	.byte $01
 pnt2_EBCC:
-	db $00
-	db $01
-	db $40
-	db $B0
-	db $FF
-	db $04
-	db $00
-	db $01
-	db $0A
-	db $01
-	db $88
-	db $B0
-	db $05
-	db $0B
-	db $FF
-	db $01
-	db $02
-	db $01
-	db $40
-	db $B0
-	db $FF
-	db $04
-	db $00
-	db $01
-	db $0D
-	db $01
-	db $88
-	db $B0
-	db $0B
-	db $0E
-	db $00
-	db $01
-	db $04
-	db $01
-	db $88
-	db $B0
-	db $FF
-	db $04
-	db $00
-	db $01
-	db $06
-	db $01
-	db $40
-	db $70
-	db $05
-	db $0B
-	db $FF
-	db $01
-	db $01
-	db $00
-	db $20
-	db $C0
-	db $00
-	db $02
-	db $FF
-	db $00
+	.byte $00
+	.byte $01
+	.byte $40
+	.byte $B0
+	.byte $FF
+	.byte $04
+	.byte $00
+	.byte $01
+	.byte $0A
+	.byte $01
+	.byte $88
+	.byte $B0
+	.byte $05
+	.byte $0B
+	.byte $FF
+	.byte $01
+	.byte $02
+	.byte $01
+	.byte $40
+	.byte $B0
+	.byte $FF
+	.byte $04
+	.byte $00
+	.byte $01
+	.byte $0D
+	.byte $01
+	.byte $88
+	.byte $B0
+	.byte $0B
+	.byte $0E
+	.byte $00
+	.byte $01
+	.byte $04
+	.byte $01
+	.byte $88
+	.byte $B0
+	.byte $FF
+	.byte $04
+	.byte $00
+	.byte $01
+	.byte $06
+	.byte $01
+	.byte $40
+	.byte $70
+	.byte $05
+	.byte $0B
+	.byte $FF
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $20
+	.byte $C0
+	.byte $00
+	.byte $02
+	.byte $FF
+	.byte $00
 pnt2_EC04:
-	db $00
-	db $00
-	db $40
-	db $40
-	db $FF
-	db $09
-	db $FF
-	db $00
-	db $00
-	db $01
-	db $40
-	db $60
-	db $FF
-	db $0B
-	db $00
-	db $01
-	db $0D
-	db $01
-	db $40
-	db $80
-	db $0C
-	db $0D
-	db $00
-	db $01
+	.byte $00
+	.byte $00
+	.byte $40
+	.byte $40
+	.byte $FF
+	.byte $09
+	.byte $FF
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $40
+	.byte $60
+	.byte $FF
+	.byte $0B
+	.byte $00
+	.byte $01
+	.byte $0D
+	.byte $01
+	.byte $40
+	.byte $80
+	.byte $0C
+	.byte $0D
+	.byte $00
+	.byte $01
 pnt2_EC1C:
-	db $00
-	db $01
-	db $40
-	db $80
-	db $FF
-	db $05
-	db $00
-	db $01
-	db $06
-	db $01
-	db $40
-	db $90
-	db $05
-	db $0D
-	db $FF
-	db $01
-	db $10
-	db $01
-	db $40
-	db $A0
-	db $0F
-	db $10
-	db $00
-	db $01
+	.byte $00
+	.byte $01
+	.byte $40
+	.byte $80
+	.byte $FF
+	.byte $05
+	.byte $00
+	.byte $01
+	.byte $06
+	.byte $01
+	.byte $40
+	.byte $90
+	.byte $05
+	.byte $0D
+	.byte $FF
+	.byte $01
+	.byte $10
+	.byte $01
+	.byte $40
+	.byte $A0
+	.byte $0F
+	.byte $10
+	.byte $00
+	.byte $01
 pnt2_EC34:
-	db $00
-	db $01
-	db $40
-	db $80
-	db $FF
-	db $0A
-	db $00
-	db $01
-	db $00
-	db $00
-	db $30
-	db $B0
-	db $FF
-	db $07
-	db $FF
-	db $00
-	db $01
-	db $00
-	db $20
-	db $C0
-	db $00
-	db $02
-	db $FF
-	db $00
-	db $01
-	db $00
-	db $20
-	db $C0
-	db $00
-	db $02
-	db $FF
-	db $00
-	db $00
-	db $00
-	db $30
-	db $B0
-	db $FF
-	db $07
-	db $FF
-	db $00
-	db $06
-	db $01
-	db $70
-	db $80
-	db $FF
-	db $0A
-	db $00
-	db $01
-	db $06
-	db $01
-	db $70
-	db $80
-	db $FF
-	db $0A
-	db $00
-	db $01
+	.byte $00
+	.byte $01
+	.byte $40
+	.byte $80
+	.byte $FF
+	.byte $0A
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $30
+	.byte $B0
+	.byte $FF
+	.byte $07
+	.byte $FF
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $20
+	.byte $C0
+	.byte $00
+	.byte $02
+	.byte $FF
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $20
+	.byte $C0
+	.byte $00
+	.byte $02
+	.byte $FF
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $30
+	.byte $B0
+	.byte $FF
+	.byte $07
+	.byte $FF
+	.byte $00
+	.byte $06
+	.byte $01
+	.byte $70
+	.byte $80
+	.byte $FF
+	.byte $0A
+	.byte $00
+	.byte $01
+	.byte $06
+	.byte $01
+	.byte $70
+	.byte $80
+	.byte $FF
+	.byte $0A
+	.byte $00
+	.byte $01
 pnt2_EC6C:
-	db $00
-	db $01
-	db $40
-	db $B0
-	db $FF
-	db $05
-	db $00
-	db $01
-	db $06
-	db $01
-	db $40
-	db $B0
-	db $05
-	db $11
-	db $00
-	db $01
-	db $10
-	db $01
-	db $40
-	db $A0
-	db $0F
-	db $10
-	db $00
-	db $01
+	.byte $00
+	.byte $01
+	.byte $40
+	.byte $B0
+	.byte $FF
+	.byte $05
+	.byte $00
+	.byte $01
+	.byte $06
+	.byte $01
+	.byte $40
+	.byte $B0
+	.byte $05
+	.byte $11
+	.byte $00
+	.byte $01
+	.byte $10
+	.byte $01
+	.byte $40
+	.byte $A0
+	.byte $0F
+	.byte $10
+	.byte $00
+	.byte $01
 pnt2_EC84:
-	db $00
-	db $01
-	db $40
-	db $B0
-	db $FF
-	db $0B
-	db $00
-	db $01
-	db $0C
-	db $01
-	db $40
-	db $B0
-	db $0B
-	db $11
-	db $00
-	db $01
-	db $01
-	db $00
-	db $20
-	db $C0
-	db $00
-	db $02
-	db $FF
-	db $00
+	.byte $00
+	.byte $01
+	.byte $40
+	.byte $B0
+	.byte $FF
+	.byte $0B
+	.byte $00
+	.byte $01
+	.byte $0C
+	.byte $01
+	.byte $40
+	.byte $B0
+	.byte $0B
+	.byte $11
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $20
+	.byte $C0
+	.byte $00
+	.byte $02
+	.byte $FF
+	.byte $00
 pnt2_EC9C:
-	db $00
-	db $01
-	db $40
-	db $B0
-	db $FF
-	db $08
-	db $00
-	db $01
-	db $00
-	db $00
-	db $40
-	db $40
-	db $FF
-	db $0B
-	db $FF
-	db $00
-	db $0D
-	db $01
-	db $40
-	db $80
-	db $0C
-	db $0D
-	db $00
-	db $01
+	.byte $00
+	.byte $01
+	.byte $40
+	.byte $B0
+	.byte $FF
+	.byte $08
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $40
+	.byte $40
+	.byte $FF
+	.byte $0B
+	.byte $FF
+	.byte $00
+	.byte $0D
+	.byte $01
+	.byte $40
+	.byte $80
+	.byte $0C
+	.byte $0D
+	.byte $00
+	.byte $01
 pnt2_ECB4:
-	db $00
-	db $01
-	db $20
-	db $B0
-	db $FF
-	db $04
-	db $00
-	db $01
-	db $0C
-	db $01
-	db $88
-	db $90
-	db $09
-	db $11
-	db $00
-	db $01
-	db $09
-	db $01
-	db $48
-	db $B0
-	db $04
-	db $09
-	db $00
-	db $01
-	db $05
-	db $01
-	db $30
-	db $B0
-	db $04
-	db $09
-	db $00
-	db $01
-	db $01
-	db $00
-	db $20
-	db $C0
-	db $00
-	db $02
-	db $FF
-	db $00
-	db $00
-	db $01
-	db $30
-	db $B0
-	db $FF
-	db $04
-	db $00
-	db $01
-	db $04
-	db $01
-	db $48
-	db $90
-	db $FF
-	db $04
-	db $00
-	db $01
+	.byte $00
+	.byte $01
+	.byte $20
+	.byte $B0
+	.byte $FF
+	.byte $04
+	.byte $00
+	.byte $01
+	.byte $0C
+	.byte $01
+	.byte $88
+	.byte $90
+	.byte $09
+	.byte $11
+	.byte $00
+	.byte $01
+	.byte $09
+	.byte $01
+	.byte $48
+	.byte $B0
+	.byte $04
+	.byte $09
+	.byte $00
+	.byte $01
+	.byte $05
+	.byte $01
+	.byte $30
+	.byte $B0
+	.byte $04
+	.byte $09
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $20
+	.byte $C0
+	.byte $00
+	.byte $02
+	.byte $FF
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $30
+	.byte $B0
+	.byte $FF
+	.byte $04
+	.byte $00
+	.byte $01
+	.byte $04
+	.byte $01
+	.byte $48
+	.byte $90
+	.byte $FF
+	.byte $04
+	.byte $00
+	.byte $01
 pnt2_ECEC:
-	db $00
-	db $01
-	db $40
-	db $B0
-	db $FF
-	db $02
-	db $00
-	db $01
-	db $03
-	db $01
-	db $40
-	db $B0
-	db $02
-	db $05
-	db $00
-	db $01
-	db $06
-	db $01
-	db $30
-	db $90
-	db $05
-	db $0A
-	db $FF
-	db $01
-	db $0B
-	db $01
-	db $40
-	db $B0
-	db $0A
-	db $11
-	db $00
-	db $01
-	db $00
-	db $00
-	db $40
-	db $C0
-	db $FF
-	db $00
-	db $FF
-	db $00
+	.byte $00
+	.byte $01
+	.byte $40
+	.byte $B0
+	.byte $FF
+	.byte $02
+	.byte $00
+	.byte $01
+	.byte $03
+	.byte $01
+	.byte $40
+	.byte $B0
+	.byte $02
+	.byte $05
+	.byte $00
+	.byte $01
+	.byte $06
+	.byte $01
+	.byte $30
+	.byte $90
+	.byte $05
+	.byte $0A
+	.byte $FF
+	.byte $01
+	.byte $0B
+	.byte $01
+	.byte $40
+	.byte $B0
+	.byte $0A
+	.byte $11
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $40
+	.byte $C0
+	.byte $FF
+	.byte $00
+	.byte $FF
+	.byte $00
 sub3_ED14:
 	LDA #$39
 	STA M90_PRG1 ; Swap player bank into 2nd PRG slot
@@ -2063,13 +2063,13 @@ sub3_ED48:
 	LDA #$00
 	STA warpNumber ; Set warp number to 0
 	JSR sub3_E870
-	INC a:gameSubstate ; Go to next part of event
+	iNC a:gameSubstate ; Go to next part of event
 	LDA #$00
 	STA $06DE
 	STA $06DF
 	RTS
 pnt2_ED75:
-	LDA a:gameSubstate ; Load event part
+	lDA a:gameSubstate ; Load event part
 	ASL
 	TAY ; Load pointer based on event part
 	LDA tbl3_ED87,Y
@@ -2078,12 +2078,12 @@ pnt2_ED75:
 	STA $33 ; Load upper byte of pointer
 	JMP ($32) ; Jump to loaded pointer location
 tbl3_ED87:
-	dw pnt2_ED93
-	dw pnt2_EDAA
-	dw pnt2_EDCF
-	dw pnt2_EDE1
-	dw pnt2_E388
-	dw pnt2_E3DD
+	.word pnt2_ED93
+	.word pnt2_EDAA
+	.word pnt2_EDCF
+	.word pnt2_EDE1
+	.word pnt2_E388
+	.word pnt2_E3DD
 pnt2_ED93:
 	LDA #%00100000
 	STA playerAttrs ; Set player to be behind BG
@@ -2092,8 +2092,8 @@ pnt2_ED93:
 	JSR sub3_E5D4 ; Jump
 	LDA #SFX_WARP
 	STA sndSfx ; Play warp sound
-	JSR HUD_Update ; Jump
-	INC a:gameSubstate ; Go to next part of event
+	JSR hUD_Update ; Jump
+	iNC a:gameSubstate ; Go to next part of event
 	RTS
 pnt2_EDAA:
 	LDA #$00
@@ -2102,7 +2102,7 @@ pnt2_EDAA:
 	STA playerYSpd ; Set pipe speed to 10h
 	LDA playerMoveFlags
 	AND #$FB ; Stop player from moving up
-	LDY a:gameState
+	lDY a:gameState
 	CPY #$13 ; If player isn't going up a pipe,
 	BNE bra3_EDBF ; branch
 	ORA #$04 ; Otherwise, make the player move up
@@ -2112,7 +2112,7 @@ bra3_EDBF:
 	LDX #$01
 	LDY #$16 ; Set action length to 22 frames
 	JSR sub3_E5B6 ; Jump
-	INC a:gameSubstate ; Go to next part of event
+	iNC a:gameSubstate ; Go to next part of event
 	RTS
 pnt2_EDCF:
 	LDA #$00
@@ -2120,7 +2120,7 @@ pnt2_EDCF:
 	JSR sub3_E6D5
 	JSR sub3_F919
 	JSR sub3_E904
-	INC a:gameSubstate ; Go to next part of event
+	iNC a:gameSubstate ; Go to next part of event
 	RTS
 pnt2_EDE1:
 	LDY #$38
@@ -2130,15 +2130,15 @@ pnt2_EDE1:
 	LDA #61
 	STA M90_PRG1
 	LDA BonusEntitySet
-	STA a:$DC
+	sTA a:$DC
 	LDA BonusEntitySet+1
-	STA a:$DD
+	sTA a:$DD
 	LDA #$00
 	STA $06E1
 	RTS
 pnt2_EE02:
 	JSR sub3_ED14
-	JSR HUD_Update
+	JSR hUD_Update
 	LDA #$01
 	STA playerAction
 	LDA #$10
@@ -2150,10 +2150,10 @@ pnt2_EE02:
 	LDY #$1E
 	JSR sub3_E5B6
 	LDA #$02
-	STA a:gameState
+	sTA a:gameState
 	RTS
 pnt2_EE23:
-	LDA a:gameSubstate
+	lDA a:gameSubstate
 	ASL
 	TAY
 	LDA tbl3_EE35,Y
@@ -2162,10 +2162,10 @@ pnt2_EE23:
 	STA $33
 	JMP ($32)
 tbl3_EE35:
-	dw pnt2_EDCF
-	dw pnt2_EE3D
-	dw pnt2_E388
-	dw pnt2_E3DD
+	.word pnt2_EDCF
+	.word pnt2_EE3D
+	.word pnt2_E388
+	.word pnt2_E3DD
 pnt2_EE3D:
 	LDA worldNumber
 	ASL
@@ -2183,7 +2183,7 @@ pnt2_EE3D:
 	RTS
 pnt2_EE59:
 	JSR sub3_ED14
-	JSR HUD_Update
+	JSR hUD_Update
 	LDA #$00
 	STA playerAction
 	LDA #$10
@@ -2209,10 +2209,10 @@ bra3_EE84:
 	LDA #$00
 	STA playerAttrs
 	LDA #$02
-	STA a:gameState
+	sTA a:gameState
 	RTS
 pnt2_EE96:
-	LDA a:gameSubstate
+	lDA a:gameSubstate
 	ASL
 	TAY
 	LDA tbl3_EEA8,Y
@@ -2221,15 +2221,15 @@ pnt2_EE96:
 	STA $33
 	JMP ($32)
 tbl3_EEA8:
-	dw pnt2_ED93
-	dw pnt2_EDAA
-	dw pnt2_EDCF
-	dw ofs5_EEB4
-	dw pnt2_E388
-	dw pnt2_E3DD
+	.word pnt2_ED93
+	.word pnt2_EDAA
+	.word pnt2_EDCF
+	.word ofs5_EEB4
+	.word pnt2_E388
+	.word pnt2_E3DD
 ofs5_EEB4:
 	LDY #$3A
-	LDA a:gameState
+	lDA a:gameState
 	CMP #$0F
 	BEQ bra3_EEBF
 	LDY #$3C
@@ -2240,7 +2240,7 @@ bra3_EEBF:
 	RTS
 pnt2_EEC8:
 	JSR sub3_ED14
-	JSR HUD_Update
+	JSR hUD_Update
 	LDA #$0F
 	STA playerAction
 	LDA #$50
@@ -2262,19 +2262,19 @@ bra3_EEEB:
 	LDA #$00
 	STA playerAttrs
 	LDA #$02
-	STA a:gameState
+	sTA a:gameState
 	RTS
 pnt2_EEFD:
 	LDA #$00
-	STA a:gameSubstate
+	sTA a:gameSubstate
 	LDA #$0C
-	STA a:gameState
+	sTA a:gameState
 	RTS
 tbl3_EF08:
-	dw NMI_E062
-	dw jmp_63_E000
-	dw NMI_E05C
-	dw NMI_E05F
+	.word nMI_E062
+	.word jmp_63_E000
+	.word nMI_E05C
+	.word nMI_E05F
 loc3_EF10:
 	PHP ; Push the CPU status into the stack
 	PHA ; Push the accumulator into the stack
@@ -2340,7 +2340,7 @@ loc3_EF73:
 	STA M90_SP_CHR2 ; Update 3rd sprite bank
 	LDA chrSpriteBank4
 	STA M90_SP_CHR3 ; Update 4th sprite bank
-	JSR UpdateJoypad ; Jump
+	JSR updateJoypad ; Jump
 	INC secFrameCount ; Increment second frame counter
 	LDA secFrameCount
 	CMP #$3C ; If its below 60 frames,
@@ -2355,7 +2355,7 @@ bra3_EFB4:
 	STA M90_PRG0
 	LDA #$3B
 	STA M90_PRG1
-	LDA a:inLvlFlag
+	lDA a:inLvlFlag
 	BNE bra3_EFD9 ; If in a level, branch
 	JSR jmp_58_85BE ; Otherwise, jump
 	JSR jmp_58_862A
@@ -2493,39 +2493,39 @@ sub3_F0CB:
 	CLC
 	ADC levelNumber ; Add it to level count
 	TAX ; Copy to X reg
-	LDA LevelMusic,X
+	LDA levelMusic,X
 	STA sndMusic ; Load/play music for level
 	RTS
-LevelMusic:
-	db $29 ; 1-1 Music
-	db $28 ; 1-2 Music
-	db $20 ; 1-3 Music
-	db $2C ; 1-4 Music
-	db $29 ; 2-1 Music
-	db $28 ; 2-2 Music
-	db $2B ; 2-3 Music
-	db $2C ; 2-4 Music
-	db $2A ; 3-1 Music
-	db $2D ; 3-2 Music
-	db $2B ; 3-3 Music
-	db $2C ; 3-4 Music
-	db $29 ; 4-1 Music
-	db $28 ; 4-2 Music
-	db $20 ; 4-3 Music
-	db $2C ; 4-4 Music
-	db $29 ; 5-1 Music
-	db $2B ; 5-2 Music
-	db $2D ; 5-3 Music
-	db $2C ; 5-4 Music
-	db $29 ; 6-1 Music
-	db $2B ; 6-2 Music
-	db $28 ; 6-3 Music
-	db $2C ; 6-4 Music
-	db $29 ; 7-1 Music
-	db $28 ; 7-2 Music
-	db $2B ; 7-3 Music
-	db $2C ; 7-4 Music
-	db $29 ; Yoshi's House Music
+levelMusic:
+	.byte $29 ; 1-1 Music
+	.byte $28 ; 1-2 Music
+	.byte $20 ; 1-3 Music
+	.byte $2C ; 1-4 Music
+	.byte $29 ; 2-1 Music
+	.byte $28 ; 2-2 Music
+	.byte $2B ; 2-3 Music
+	.byte $2C ; 2-4 Music
+	.byte $2A ; 3-1 Music
+	.byte $2D ; 3-2 Music
+	.byte $2B ; 3-3 Music
+	.byte $2C ; 3-4 Music
+	.byte $29 ; 4-1 Music
+	.byte $28 ; 4-2 Music
+	.byte $20 ; 4-3 Music
+	.byte $2C ; 4-4 Music
+	.byte $29 ; 5-1 Music
+	.byte $2B ; 5-2 Music
+	.byte $2D ; 5-3 Music
+	.byte $2C ; 5-4 Music
+	.byte $29 ; 6-1 Music
+	.byte $2B ; 6-2 Music
+	.byte $28 ; 6-3 Music
+	.byte $2C ; 6-4 Music
+	.byte $29 ; 7-1 Music
+	.byte $28 ; 7-2 Music
+	.byte $2B ; 7-3 Music
+	.byte $2C ; 7-4 Music
+	.byte $29 ; Yoshi's House Music
 pnt2_F0F8:
 	LDX #$F0
 	STX M90_BG_CHR0 ; Set bank F0 to 1st BG bank
@@ -2627,12 +2627,12 @@ bra3_F195:
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
 ; CONTROLLER READING
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
-UpdateJoypad:
-	JSR ReadJoypad
+updateJoypad:
+	JSR readJoypad
 	LDX #$00 ; Set the X index for the first controller
-	JSR ControllerLogicSub
+	JSR controllerLogicSub
 	INX ; Set the X index for the second controller
-ControllerLogicSub:
+controllerLogicSub:
 	LDA btnHeld,X
 	EOR btnMirrored,X
 	AND btnHeld,X ; Try to match the main controller bits with the mirrored bits
@@ -2641,14 +2641,14 @@ ControllerLogicSub:
 	STA btnMirrored,X ; Copy the button input over
 	AND #$0C ; Mask out the bits for up and down
 	CMP #$0C
-	BNE UpdateJoypadDone ; If both up and down are held, continue
+	BNE updateJoypadDone ; If both up and down are held, continue
 	LDA btnHeld,X
 	AND #%11111011
 	STA btnHeld,X ; Ignore the down button
-UpdateJoypadDone:
+updateJoypadDone:
 	RTS
 	
-ReadJoypad:
+readJoypad:
 	LDA #$01
 	STA JOY1 ; Strobe controller input
 	LDA #$00
@@ -2749,65 +2749,65 @@ bra3_F270:
 ; SUBROUTINE ($F27F)
 ; Updates HUD counters while in levels.
 ;----------------------------------------
-HUD_Update:
+hUD_Update:
 	LDA interruptMode
 	CMP #$04
-	BEQ @Stop ; Don't render the HUD in the Bowser fight
+	BEQ @stop ; Don't render the HUD in the Bowser fight
 	LDA ppuUpdatePtr
-	BNE @Stop ; Stop if the upper byte of the PPU pointer is empty
+	BNE @stop ; Stop if the upper byte of the PPU pointer is empty
 		LDA hudUpdate
 		ASL
 		TAY
-		LDA HUD_UpdateFuncs,Y
+		LDA hUD_UpdateFuncs,Y
 		STA $32
-		LDA HUD_UpdateFuncs+1,Y
+		LDA hUD_UpdateFuncs+1,Y
 		STA $33 ; Get pointer for current HUD update state
 		JMP ($32) ; Jump to loaded pointer
-@Stop:
+@stop:
 	RTS
 	
-HUD_UpdateFuncs:
-	dw HUD_UpdateLifeCount
-	dw HUD_UpdateDragonCoins
-	dw HUD_UpdateTimer
-	dw HUD_UpdateScore
-	dw HUD_UpdateCoinCount
+hUD_UpdateFuncs:
+	.word hUD_UpdateLifeCount
+	.word hUD_UpdateDragonCoins
+	.word hUD_UpdateTimer
+	.word hUD_UpdateScore
+	.word hUD_UpdateCoinCount
 
 ;--------------------
 ; Update life counter display
 ;--------------------
-HUD_UpdateLifeCount:
-	JSR HUD_GetPPUUploadParams ; Get PPU upload parameters
+hUD_UpdateLifeCount:
+	JSR hUD_GetPPUUploadParams ; Get PPU upload parameters
 	INC hudUpdate ; Go to next update state after this code is finished
 	LDX #0 ; Set index for Player 1
 	LDA curPlayer
-	BEQ @Continue ; Continue using Player 1 index if it's their turn
+	BEQ @continue ; Continue using Player 1 index if it's their turn
 		LDX #1 ; Use index for Player 2 otherwise, effectively clamping the player value to 1 (Player 2)
-@Continue:
+@continue:
 	LDA playerLives,X
 	STA $34
 	LDA #$00
 	STA $35 ; Pass in player's life count
 	LDA #$0B
 	STA $26 ; Number tiles start at #$0B
-	JSR HUD_RenderCounterToBuf ; Render counter to buffer
+	JSR hUD_RenderCounterToBuf ; Render counter to buffer
 
 ; Upload HUD counter buffer to PPU data buffer backwards
 	LDY #$00 ; Start at end of life count string
 	LDX #1 ; Start at second character of PPU data buffer
-@UploadLoop:
+@uploadLoop:
 	LDA hudUpdateTiles,Y ; Load currently updated HUD tile
 	STA ppuDataBuf,X
 	INY ; Advance to next tile in HUD buffer
 	DEX ; Go to previous tile in PPU data buffer
-	BPL @UploadLoop
+	BPL @uploadLoop
 	RTS
 
 ;--------------------
 ; Update Dragon Coin display
 ;--------------------
-HUD_UpdateDragonCoins:
-	JSR HUD_GetPPUUploadParams ; Get PPU upload parameters
+hUD_UpdateDragonCoins:
+	JSR hUD_GetPPUUploadParams ; Get PPU upload parameters
 	INC hudUpdate ; Go to next update state after this code is finished
 
 ; Clear PPU buffer for Dragon coins
@@ -2820,28 +2820,28 @@ bra3_F2E0:
 
 	LDX #0 ; Set index for player 1
 	LDA curPlayer
-	BEQ @Continue ; Continue using Player 1 index if it's their turn
+	BEQ @continue ; Continue using Player 1 index if it's their turn
 		LDX #1 ; Use index for Player 2 otherwise, effectively clamping the player value to 1 (Player 2)
-@Continue:
+@continue:
 	LDA playerDragonCoins,X
 	STA $25 ; Copy player's Dragon Coin count to zero page for faster access
-	BEQ @Stop ; Stop if no Dragon Coins have been collected
+	BEQ @stop ; Stop if no Dragon Coins have been collected
 		LDY #$00 ; Clear Y for loop
 		LDA #$06 ; Dragon Coin tile
 	; Render a Dragon Coin icon for each one the player collected
-	@TileUploadLoop:
+	@tileUploadLoop:
 		STA ppuDataBuf,Y
 		INY
 		CPY $25
-		BCC @TileUploadLoop
-@Stop:
+		BCC @tileUploadLoop
+@stop:
 	RTS
 
 ;--------------------
 ; Update timer display
 ;--------------------
-HUD_UpdateTimer:
-	JSR HUD_GetPPUUploadParams ; Get PPU upload parameters
+hUD_UpdateTimer:
+	JSR hUD_GetPPUUploadParams ; Get PPU upload parameters
 	INC hudUpdate ; Go to next update state after this code is finished
 	LDA levelTimer
 	STA $34
@@ -2849,54 +2849,54 @@ HUD_UpdateTimer:
 	STA $35 ; Pass in timer
 	LDA #$0B
 	STA $26 ; Number tiles start at #$0B
-	JSR HUD_RenderCounterToBuf ; Render counter to buffer
+	JSR hUD_RenderCounterToBuf ; Render counter to buffer
 
 ; Upload HUD counter buffer to PPU data buffer backwards
 	LDY #$00
 	LDX #$02 ; Upload 3 tiles from buffer
-@UploadLoop:
+@uploadLoop:
 	LDA hudUpdateTiles,Y
 	STA ppuDataBuf,X
 	INY ; Advance to next tile in HUD buffer
 	DEX ; Go to previous tile in PPU data buffer
-	BPL @UploadLoop
+	BPL @uploadLoop
 	RTS
 
 ;--------------------
 ; Update score display
 ;--------------------
-HUD_UpdateScore:
-	JSR HUD_GetPPUUploadParams ; Get PPU upload parameters
+hUD_UpdateScore:
+	JSR hUD_GetPPUUploadParams ; Get PPU upload parameters
 	INC hudUpdate ; Go to next update state after this code is finished
 	LDX #0 ; Set index for player 1
 	LDA curPlayer
-	BEQ @Continue ; Continue using Player 1 index if it's their turn
+	BEQ @continue ; Continue using Player 1 index if it's their turn
 		LDX #2 ; Use index for Player 2 otherwise, effectively clamping the player value to 1 (Player 2)
-@Continue:
+@continue:
 	LDA #$0B ; Number tiles start at #$0B
 	STA $26
 	LDA playerScores,X
 	STA $34
 	LDA playerScores+1,X
 	STA $35 ; Pass in player's score
-	JSR HUD_RenderCounterToBuf ; Render counter to buffer
+	JSR hUD_RenderCounterToBuf ; Render counter to buffer
 
 ; Upload HUD counter buffer to PPU data buffer backwards
 	LDY #$00
 	LDX #$04 ; Display up to 5 digits
-@UploadLoop:
+@uploadLoop:
 	LDA hudUpdateTiles,Y
 	STA ppuDataBuf,X
 	INY ; Advance to next tile in HUD buffer
 	DEX ; Go to previous tile in PPU data buffer
-	BPL @UploadLoop
+	BPL @uploadLoop
 	RTS
 
 ;--------------------
 ; Update coin counter display
 ;--------------------
-HUD_UpdateCoinCount:
-	JSR HUD_GetPPUUploadParams
+hUD_UpdateCoinCount:
+	JSR hUD_GetPPUUploadParams
 	LDA #$00
 	STA hudUpdate
 	LDX #$00 ; Set to Player 1
@@ -2910,24 +2910,24 @@ bra3_F369:
 	STA $35
 	LDA #$0B ; Pass in player's coin count
 	STA $26 ; Number tiles start at #$0B
-	JSR HUD_RenderCounterToBuf ; Render counter to buffer
+	JSR hUD_RenderCounterToBuf ; Render counter to buffer
 
 ; Upload HUD counter buffer to PPU data buffer backwards
 	LDY #$00
 	LDX #$01 ; Display up to 2 digits
-@UploadLoop:
+@uploadLoop:
 	LDA hudUpdateTiles,Y
 	STA ppuDataBuf,X
 	INY ; Advance to next tile in HUD buffer
 	DEX ; Go to previous tile in PPU data buffer
-	BPL @UploadLoop
+	BPL @uploadLoop
 	RTS
 
 ;----------------------------------------
 ; SUBROUTINE ($F388)
 ; Returns the PPU update parameters for the current HUD update state
 ;----------------------------------------
-HUD_GetPPUUploadParams:
+hUD_GetPPUUploadParams:
 	LDA hudUpdate ; Get HUD update state
 	ASL
 	ASL
@@ -2943,25 +2943,25 @@ HUD_GetPPUUploadParams:
 	RTS
 tbl3_F3A7:
 ; Life Counter (00)
-	db $2B, $84 ; PPU Address 
-	db $01
-	db $02 ; Tile Length
+	.byte $2B, $84 ; PPU Address 
+	.byte $01
+	.byte $02 ; Tile Length
 ; Dragon Coins (04)
-	db $2B, $68
-	db $01
-	db $05
+	.byte $2B, $68
+	.byte $01
+	.byte $05
 ; Timer (08)
-	db $2B, $94
-	db $01
-	db $03
+	.byte $2B, $94
+	.byte $01
+	.byte $03
 ; Score (12)
-	db $2B, $98
-	db $01
-	db $05
+	.byte $2B, $98
+	.byte $01
+	.byte $05
 ; Coin Counter (16)
-	db $2B, $7C
-	db $01
-	db $02
+	.byte $2B, $7C
+	.byte $01
+	.byte $02
 
 ;----------------------------------------
 ; SUBROUTINE ($F3BB)
@@ -2970,15 +2970,15 @@ tbl3_F3A7:
 ; > $26: Number start tile
 ; > $34: [16-bit] Counter value
 ;----------------------------------------
-HUD_RenderCounterToBuf:
+hUD_RenderCounterToBuf:
 	LDA #$00
 	STA $39
 	STA $25 ; Clear registers
 	LDA #10
 	STA $38 ; Convert number to base 10 (decimal)
 
-RenderDigitLoop:
-	JSR Div16 ; Divide counter by base
+renderDigitLoop:
+	JSR div16 ; Divide counter by base
 	LDA $32
 	CLC
 	ADC $26 ; (Counter % Base) + Digit start tile = Next digit of counter
@@ -2987,19 +2987,19 @@ RenderDigitLoop:
 	INC $25 ; Move to next tile in buffer
 	LDA $25
 	CMP #5
-	BCC RenderDigitLoop ; Upload up to 5 digits of a count, displaying each digit from right to left
+	BCC renderDigitLoop ; Upload up to 5 digits of a count, displaying each digit from right to left
 
 ; Clear every unused digit from the left
 	LDY #4
-ClearUnusedDigitsLoop:
+clearUnusedDigitsLoop:
 	LDA hudUpdateTiles,Y
 	CMP $26
-	BNE @Stop ; Stop if a non-zero tile is reached, as this marks the start of the number
+	BNE @stop ; Stop if a non-zero tile is reached, as this marks the start of the number
 		LDA #$00
 		STA hudUpdateTiles,Y ; Render each zero from the left as blank
 		DEY
-		BNE ClearUnusedDigitsLoop ; Loop until the last digit is reached
-@Stop:
+		BNE clearUnusedDigitsLoop ; Loop until the last digit is reached
+@stop:
 	RTS
 
 ;----------------------------------------
@@ -3011,13 +3011,13 @@ ClearUnusedDigitsLoop:
 ; Return:
 ; > $32: [16-bit] Remainder
 ;----------------------------------------
-Div16:
+div16:
 	LDA #$00
 	STA $32
 	STA $33 ; Clear the remainder
 	LDX #16 ; Loop through all 16 bits of the number
 ; Divide the number by the base
-@Loop:
+@loop:
 	ASL $34
 	ROL $35
 	ROL $32
@@ -3028,13 +3028,13 @@ Div16:
 	TAY ; Copy low byte of result to Y for later
 	LDA $33
 	SBC $39 ; Subtract divisor to see if it fits
-	BCC @Continue ; If it underflowed, the divisor didn't fit yet
+	BCC @continue ; If it underflowed, the divisor didn't fit yet
 		INC $34 ; Otherwise, increment the result for each time it fits
 		STA $33
 		STY $32 ; Save the new difference as the remainder
-@Continue:
+@continue:
 	DEX
-	BNE @Loop
+	BNE @loop
 	RTS
 
 	LDA #$2B
@@ -3071,392 +3071,392 @@ bra3_F442: ; not sure, it just loads nothing from a table and clears PPU data ov
 	BCC bra3_F442 ; Loop if X < #$80
 	RTS
 tbl3_F44E:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $9F
-	db $A0
-	db $A1
-	db $A2
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $02
-	db $03
-	db $04
-	db $05
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $A3
-	db $00
-	db $00
-	db $AA
-	db $00
-	db $00
-	db $07
-	db $08
-	db $09
-	db $00
-	db $00
-	db $00
-	db $06
-	db $0A
-	db $00
-	db $0B
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $0A
-	db $00
-	db $0B
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $A4
-	db $00
-	db $00
-	db $A9
-	db $00
-	db $00
-	db $0E
-	db $0B
-	db $0B
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $0B
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $A5
-	db $A6
-	db $A7
-	db $A8
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $9F
+	.byte $A0
+	.byte $A1
+	.byte $A2
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $02
+	.byte $03
+	.byte $04
+	.byte $05
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $A3
+	.byte $00
+	.byte $00
+	.byte $AA
+	.byte $00
+	.byte $00
+	.byte $07
+	.byte $08
+	.byte $09
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $06
+	.byte $0A
+	.byte $00
+	.byte $0B
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $0A
+	.byte $00
+	.byte $0B
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $A4
+	.byte $00
+	.byte $00
+	.byte $A9
+	.byte $00
+	.byte $00
+	.byte $0E
+	.byte $0B
+	.byte $0B
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $0B
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $A5
+	.byte $A6
+	.byte $A7
+	.byte $A8
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
 tbl3_F4CE:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $9F
-	db $A0
-	db $A1
-	db $A2
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $2B
-	db $2C
-	db $2D
-	db $2E
-	db $2F
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $A3
-	db $00
-	db $00
-	db $AA
-	db $00
-	db $00
-	db $07
-	db $08
-	db $09
-	db $00
-	db $00
-	db $00
-	db $06
-	db $0A
-	db $00
-	db $0B
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $0A
-	db $00
-	db $0B
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $A4
-	db $00
-	db $00
-	db $A9
-	db $00
-	db $00
-	db $0E
-	db $0B
-	db $0B
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $0B
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $A5
-	db $A6
-	db $A7
-	db $A8
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $9F
+	.byte $A0
+	.byte $A1
+	.byte $A2
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $2B
+	.byte $2C
+	.byte $2D
+	.byte $2E
+	.byte $2F
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $A3
+	.byte $00
+	.byte $00
+	.byte $AA
+	.byte $00
+	.byte $00
+	.byte $07
+	.byte $08
+	.byte $09
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $06
+	.byte $0A
+	.byte $00
+	.byte $0B
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $0A
+	.byte $00
+	.byte $0B
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $A4
+	.byte $00
+	.byte $00
+	.byte $A9
+	.byte $00
+	.byte $00
+	.byte $0E
+	.byte $0B
+	.byte $0B
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $0B
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $A5
+	.byte $A6
+	.byte $A7
+	.byte $A8
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
 tbl3_F54E:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
 sub3_F5CE:
 	LDX #$00
 loc3_F5D0:
@@ -3554,27 +3554,28 @@ loc3_F668:
 	INX
 	JMP loc3_F5D0
 tbl3_F6AB:
-	db $00
+	.byte $00
 tbl3_F6AC:
-	db $E0
+	.byte $E0
 tbl3_F6AD:
-	db $E1
+	.byte $E1
 tbl3_F6AE:
-	db $E2
-	db $E3
-	db $D0
-	db $D1
-	db $D2
-	db $D3
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-IRQ:
+	.byte $E2
+	.byte $E3
+	.byte $D0
+	.byte $D1
+	.byte $D2
+	.byte $D3
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+
+irq:
 	PHP
 	PHA
 	TXA
@@ -3612,41 +3613,41 @@ loc3_F6F3:
 	STA memJmpPtr+1
 	LDX interruptMode
 	LDA PPUSTATUS ; Clear address latch
-	LDA InterruptLineTable,X
+	LDA interruptLineTable,X
 	STA M90_IRQ_DISABLE
 	STA M90_IRQ_COUNTER ; Temporarily disable interrupts and set IRQ counter to the given scanline, causing it to fire an interrupt once the number of scanlines has been reached
 	LDA #$FB
 	STA M90_IRQ_PRESCALER
 	STA M90_IRQ_ENABLE ; Enable interrupts and set prescaler to 251 (unsure of why)
 	RTS
-InterruptLineTable:
-	db 8
-	db 204 ; Level
-	db 128
-	db 8
-	db 176 ; Bowser Fight
-	db 8
-	db 8
-	db 8
-	db 8
-	db 8
-	db 100 ; Title Screen
-	db 208 ; Overworld Map
+interruptLineTable:
+	.byte 8
+	.byte 204 ; Level
+	.byte 128
+	.byte 8
+	.byte 176 ; Bowser Fight
+	.byte 8
+	.byte 8
+	.byte 8
+	.byte 8
+	.byte 8
+	.byte 100 ; Title Screen
+	.byte 208 ; Overworld Map
 tbl3_F71A:
-	dw pnt2_F152
-	dw bra3_F751
-	dw bra3_F76E
+	.word pnt2_F152
+	.word bra3_F751
+	.word bra3_F76E
 tbl3_F720:
-	dw bra3_F78B
-	dw bra3_F7A8
-	dw pnt2_F734
-	dw pnt2_F734
-	dw pnt2_F734
-	dw pnt2_F734
-	dw pnt2_F734
-	dw pnt2_F0F8
-	dw pnt2_F127
-	dw pnt2_F152
+	.word bra3_F78B
+	.word bra3_F7A8
+	.word pnt2_F734
+	.word pnt2_F734
+	.word pnt2_F734
+	.word pnt2_F734
+	.word pnt2_F734
+	.word pnt2_F0F8
+	.word pnt2_F127
+	.word pnt2_F152
 
 ;-----------------------------
 ; HUD MODE CHECKS
@@ -3745,29 +3746,29 @@ loc3_F7CE:
 	STA M90_IRQ_ENABLE ; Enable interrupts
 	RTS
 
-PauseChk:
+pauseChk:
 	LDA pauseFlag ; Check if the game is paused
-	BNE BGAnimSubDone ; If so, branch (stop)
+	BNE bGAnimSubDone ; If so, branch (stop)
 	LDA prgDataBank2 ; Otherwise, continue
 	CMP #$26 ; Check if the final boss area is loaded
-	BNE BGAnimSub ; If not, do standard BG animation
+	BNE bGAnimSub ; If not, do standard BG animation
 	JSR sub3_F90B ; If it is, animate the clown car instead
 	RTS
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ; BG BANK ANIMATION
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-BGAnimSub:
+bGAnimSub:
 	LDA prgDataBank2
 	CMP #$23
-	BEQ BGAnimSubDone ; Skip BG animation if on special level, which includes Yoshi's house or any of the level intro screens
+	BEQ bGAnimSubDone ; Skip BG animation if on special level, which includes Yoshi's house or any of the level intro screens
 	CMP #$2B
-	BEQ BGAnimSubDone ; Also skip BG animation if the bonus level is loaded
+	BEQ bGAnimSubDone ; Also skip BG animation if the bonus level is loaded
 	LDA chrBgBankAnimation
 	LSR
 	TAY ; Get pointer index for BG bank animation
-	LDA AnimatedBankPointers,Y
+	LDA animatedBankPointers,Y
 	STA $A6 ; Load lower byte of pointer
-	LDA AnimatedBankPointers+1,Y
+	LDA animatedBankPointers+1,Y
 	STA $A7 ; Load upper byte of pointer
 	LDA frameCount
 	AND #%00011000 ; Mask out bits 4 and 5 to cycle through 4 values every 32 frames
@@ -3777,57 +3778,57 @@ BGAnimSub:
 	TAY ; Set pointer index
 	LDA ($A6),Y
 	STA M90_BG_CHR3 ; Update the 4th CHR bank
-BGAnimSubDone:
+bGAnimSubDone:
 	RTS
-AnimatedBankPointers:
-	dw AnimBank2
-	dw AnimBank2
-	dw AnimBank3
-	dw AnimBank2
-	dw AnimBank2
-	dw AnimBank2
-	dw AnimBank1
-	dw AnimBank1
-	dw AnimBank2
-	dw AnimBank2
-	dw AnimBank1
-	dw AnimBank1
-	dw AnimBank3
-	dw AnimBank3
-	dw AnimBank3
-	dw AnimBank1
-	dw AnimBank2
-	dw AnimBank1
-	dw AnimBank2
-	dw AnimBank1
-	dw AnimBank3
-	dw AnimBank2
-	dw AnimBank1
-	dw AnimBank1
-	dw AnimBank1
-	dw AnimBank4
-	dw AnimBank1
-	dw AnimBank2
-AnimBank1:
-	db $01
-	db $45
-	db $41
-	db $0A
-AnimBank2:
-	db $5B
-	db $56
-	db $16
-	db $36
-AnimBank3:
-	db $0D
-	db $33
-	db $63
-	db $79
-AnimBank4:
-	db $C4
-	db $C5
-	db $C6
-	db $C7
+animatedBankPointers:
+	.word animBank2
+	.word animBank2
+	.word animBank3
+	.word animBank2
+	.word animBank2
+	.word animBank2
+	.word animBank1
+	.word animBank1
+	.word animBank2
+	.word animBank2
+	.word animBank1
+	.word animBank1
+	.word animBank3
+	.word animBank3
+	.word animBank3
+	.word animBank1
+	.word animBank2
+	.word animBank1
+	.word animBank2
+	.word animBank1
+	.word animBank3
+	.word animBank2
+	.word animBank1
+	.word animBank1
+	.word animBank1
+	.word animBank4
+	.word animBank1
+	.word animBank2
+animBank1:
+	.byte $01
+	.byte $45
+	.byte $41
+	.byte $0A
+animBank2:
+	.byte $5B
+	.byte $56
+	.byte $16
+	.byte $36
+animBank3:
+	.byte $0D
+	.byte $33
+	.byte $63
+	.byte $79
+animBank4:
+	.byte $C4
+	.byte $C5
+	.byte $C6
+	.byte $C7
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ; END OF BG BANK ANIMATION
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-	
@@ -3920,14 +3921,14 @@ loc3_F8D7:
 	RTS
 sub3_F90B:
 	LDY clownCarFace
-	LDA ClownCarBanks,Y
+	LDA clownCarBanks,Y
 	STA M90_BG_CHR0
 	RTS
-ClownCarBanks:
-	db $C8 ; Default
-	db $C9 ; Blinking
-	db $CA ; Hurt
-	db $CB ; Angry
+clownCarBanks:
+	.byte $C8 ; Default
+	.byte $C9 ; Blinking
+	.byte $CA ; Hurt
+	.byte $CB ; Angry
 sub3_F919:
 	LDA bgCurPalette
 	ASL
@@ -3936,22 +3937,22 @@ sub3_F919:
 	LDA curPlayer
 	BEQ bra3_F939 ; Load player 1 palettes if player 1 is playing
 	; Otherwise, load palettes for player 2
-	LDA Player2LevelPalettes+2,Y
+	LDA player2LevelPalettes+2,Y
 	STA $30 ; Load lower byte of pointer
-	LDA Player2LevelPalettes+3,Y
+	LDA player2LevelPalettes+3,Y
 	STA $31 ; Load upper byte of pointer
-	LDA Player2LevelPalettes,Y
+	LDA player2LevelPalettes,Y
 	STA $32
-	LDA Player2LevelPalettes+1,Y
+	LDA player2LevelPalettes+1,Y
 	JMP loc3_F94B
 bra3_F939:
-	LDA Player1LevelPalettes+2,Y
+	LDA player1LevelPalettes+2,Y
 	STA $30 ; Load lower byte of pointer
-	LDA Player1LevelPalettes+3,Y
+	LDA player1LevelPalettes+3,Y
 	STA $31 ; Load upper byte of pointer
-	LDA Player1LevelPalettes,Y
+	LDA player1LevelPalettes,Y
 	STA $32
-	LDA Player1LevelPalettes+1,Y
+	LDA player1LevelPalettes+1,Y
 loc3_F94B:
 	STA $33
 	LDA fadeoutMode
@@ -4045,841 +4046,841 @@ bra3_F9EA:
 	STA palTransition
 	RTS
 tbl3_F9F3:
-	db $40
-	db $30
-	db $20
-	db $10
-	db $00
-	db $10
-	db $20
-	db $30
-	db $40
-Player1LevelPalettes:
-	dw LvlPalBG_1_1 ; Level 1-1 BG Palette
-	dw LvlPalSprP1_1 ; Level 1-1 Sprite Palette
-	dw LvlPalBG_1_2 ; Level 1-2 BG Palette
-	dw LvlPalSprP1_1 ; Level 1-2 Sprite Palette
-	dw LvlPalBG_1_3 ; Level 1-3 BG Palette
-	dw LvlPalSprP1_1 ; Level 1-3 Sprite Palette
-	dw LvlPalBG_Castle1 ; Level 1-4 BG Palette
-	dw LvlPalSprP1_1 ; Level 1-4 Sprite Palette
-	dw LvlPalBG_2_1 ; Level 2-1 BG Palette
-	dw LvlPalSprP1_1 ; Level 2-1 Sprite Palette
-	dw LvlPalBG_2_2 ; Level 2-2 BG Palette
-	dw LvlPalSprP1_1 ; Level 2-2 Sprite Palette
-	dw LvlPalBG_GhostHouse1 ; Level 2-3 BG Palette
-	dw LvlPalSprP1_1 ; Level 2-3 Sprite Palette
-	dw LvlPalBG_Castle1
-	dw LvlPalSprP1_1
-	dw LvlPalBG_3_1 ; Level 3-1 BG Palette
-	dw LvlPalSprP1_1 ; Level 3-1 Sprite Palette
-	dw LvlPalBG_3_2 ; Level 3-2 BG Palette
-	dw LvlPalSprP1_1 ; Level 3-2 Sprite Paltte
-	dw LvlPalBG_GhostHouse1 ; Level 3-3 BG Palette
-	dw LvlPalSprP1_1 ; Level 3-3 BG Palette
-	dw ofs_FBBC
-	dw LvlPalSprP1_1
-	dw LvlPalBG_Bridge ; Level 4-1 BG Palette
-	dw LvlPalSprP1_1 ; Level 4-1 Sprite Palette
-	dw LvlPalBG_Bridge ; Level 4-2 BG Palette
-	dw LvlPalSprP1_1 ; Level 4-2 Sprite Palette
-	dw LvlPalBG_4_3 ; Level 4-3 BG Palette
-	dw LvlPalSprP1_1 ; Level 4-3 Sprite Palette
-	dw LvlPalBG_4_4 ; Level 4-4 (Area 2) BG Palette
-	dw LvlPalSprP1_1 ; Level 4-4 (Area 2) BG Palette
-	dw LvlPalBG_5_1 ; Level 5-1 BG Palette
-	dw LvlPalSprP1_1 ; Level 5-1 Sprite Palette
-	dw LvlPalBG_5_2 ; Level 5-2 BG Palette
-	dw LvlPalSprP1_1 ; Level 5-2 Sprite Palette
-	dw LvlPalBG_5_3 ; Level 5-3 BG Palette
-	dw LvlPalSprP1_1 ; Level 5-3 Sprite Palette
-	dw LvlPalBG_5_4 ; Level 5-4 BG Palette
-	dw LvlPalSprP1_Castle3 ; Level 5-4 Sprite Palette
-	dw LvlPalBG_6_1 ; Level 6-1 BG Palette
-	dw LvlPalSprP1_1 ; Level 6-1 Sprite Palette
-	dw LvlPalBG_6_2 ; Level 6-2 BG Palette
-	dw LvlPalSprP1_1 ; Level 6-2 Sprite Palette
-	dw LvlPalBG_6_3 ; Level 6-3 BG Palette
-	dw LvlPalSprP1_1 ; Level 6-3 Sprite Palette
-	dw LvlPalBG_6_4 ; Level 6-4 BG Palette
-	dw LvlPalSprP1_Castle3 ; Level 6-4 Sprite Palette
-	dw LvlPalBG_7_1 ; Level 7-1 BG Palette
-	dw LvlPalSprP1_1 ; Level 7-1 Sprite Palette
-	dw LvlPalBG_7_2 ; Level 7-2 BG Palette
-	dw LvlPalSprP1_1 ; Level 7-2 Sprite Palette
-	dw LvlPalBG_7_3 ; Level 7-3 BG Palette
-	dw LvlPalSprP1_1 ; Level 7-3 Sprite Palette
-	dw LvlPalBG_7_4 ; Level 7-4 BG Palette
-	dw LvlPalSprP1_Castle3 ; Level 7-4 Sprite Palette
-	dw LvlPalBG_GhostHouseIntro ; Ghost House Intro BG Palette
-	dw LvlPalSprP1_1 ; Ghost House Intro Sprite Palette
-	dw LvlPalBG_CastleIntro ; Castle Intro BG Palette
-	dw LvlPalSprP1_1 ; Castle Intro Sprite Palette
-	dw LvlPalBG_MortonBoss ; Morton Boss Room BG Palette
-	dw LvlPalSprP1_MortonBoss ; Morton Boss Room Sprite Palette
-	dw LvlPalBG_LemmyBoss ; Lemmy/Wendy Boss Room BG Palette
-	dw LvlPalSprP1_LemmyBoss ; Lemmy/Wendy Boss Room Sprite Palette
-	dw LvlPalBG_Castle2 ; Reznor Room, Level 2-4 (Areas 1 and 2) BG Palette
-	dw LvlPalSprP1_Castle2 ; Reznor Room, Level 2-4 (Areas 1 and 2) Sprite Palette
-	dw LvlPalBG_Castle3 ; Level 1-4 (Area 2), 2-4 (Area 3), 3-4, 4-4 (Area 1) BG Palette
-	dw LvlPalSprP1_Castle3 ; Level 1-4 (Area 2), 2-4 (Area 3), 3-4, 4-4 (Area 1) Sprite Palette
-	dw LvlPalBG_YoshisHouse ; Yoshi's House BG Palette
-	dw LvlPalSprP1_YoshisHouse ; Yoshi's House Sprite Palette
-	dw LvlPalBG_MortonBoss ; Roy Boss Room BG Palette
-	dw LvlPalSprP1_RoyBoss ; Roy Boss Room Sprite Palette
-	dw LvlPalBG_BowserFight ; Bowser Fight BG Palette
-	dw LvlPalSprP1_BowserFight ; Bowser Fight Sprite Palette
-	dw LvlPalBG_BonusRoom ; Bonus Room BG Palette
-	dw LvlPalSprP1_BonusRoom ; Bonus Room Sprite Palette
-Player2LevelPalettes:
-	dw LvlPalBG_1_1 ; Level 1-1 BG Palette
-	dw LvlPalSprP2_1 ; Level 1-1 Sprite Palette
-	dw LvlPalBG_1_2 ; Level 1-2 BG Palette
-	dw LvlPalSprP2_1 ; Level 1-2 Sprite Palette
-	dw LvlPalBG_1_3 ; Level 1-3 BG Palette
-	dw LvlPalSprP2_1 ; Level 1-3 Sprite Palette
-	dw LvlPalBG_Castle1 ; Level 1-4 BG Palette
-	dw LvlPalSprP2_1 ; Level 1-4 Sprite Palette
-	dw LvlPalBG_2_1 ; Level 2-1 BG Palette
-	dw LvlPalSprP2_1 ; Level 2-1 Sprite Palette
-	dw LvlPalBG_2_2 ; Level 2-2 BG Palette
-	dw LvlPalSprP2_1 ; Level 2-2 Sprite Palette
-	dw LvlPalBG_GhostHouse1 ; Level 2-3 BG Palette
-	dw LvlPalSprP2_1 ; Level 2-3 Sprite Palette
-	dw LvlPalBG_Castle1
-	dw LvlPalSprP2_1
-	dw LvlPalBG_3_1 ; Level 3-1 BG Palette
-	dw LvlPalSprP2_1 ; Level 3-1 Sprite Palette
-	dw LvlPalBG_3_2 ; Level 3-2 BG Palette
-	dw LvlPalSprP2_1 ; Level 3-2 Sprite Paltte
-	dw LvlPalBG_GhostHouse1 ; Level 3-3 BG Palette
-	dw LvlPalSprP2_1 ; Level 3-3 BG Palette
-	dw ofs_FBBC
-	dw LvlPalSprP2_1
-	dw LvlPalBG_Bridge ; Level 4-1 BG Palette
-	dw LvlPalSprP2_1 ; Level 4-1 Sprite Palette
-	dw LvlPalBG_Bridge ; Level 4-2 BG Palette
-	dw LvlPalSprP2_1 ; Level 4-2 Sprite Palette
-	dw LvlPalBG_4_3 ; Level 4-3 BG Palette
-	dw LvlPalSprP2_1 ; Level 4-3 Sprite Palette
-	dw LvlPalBG_4_4 ; Level 4-4 (Area 2) BG Palette
-	dw LvlPalSprP2_1 ; Level 4-4 (Area 2) BG Palette
-	dw LvlPalBG_5_1 ; Level 5-1 BG Palette
-	dw LvlPalSprP2_1 ; Level 5-1 Sprite Palette
-	dw LvlPalBG_5_2 ; Level 5-2 BG Palette
-	dw LvlPalSprP2_1 ; Level 5-2 Sprite Palette
-	dw LvlPalBG_5_3 ; Level 5-3 BG Palette
-	dw LvlPalSprP2_1 ; Level 5-3 Sprite Palette
-	dw LvlPalBG_5_4 ; Level 5-4 BG Palette
-	dw LvlPalSprP2_Castle3 ; Level 5-4 Sprite Palette
-	dw LvlPalBG_6_1 ; Level 6-1 BG Palette
-	dw LvlPalSprP2_1 ; Level 6-1 Sprite Palette
-	dw LvlPalBG_6_2 ; Level 6-2 BG Palette
-	dw LvlPalSprP2_1 ; Level 6-2 Sprite Palette
-	dw LvlPalBG_6_3 ; Level 6-3 BG Palette
-	dw LvlPalSprP2_1 ; Level 6-3 Sprite Palette
-	dw LvlPalBG_6_4 ; Level 6-4 BG Palette
-	dw LvlPalSprP2_Castle3 ; Level 6-4 Sprite Palette
-	dw LvlPalBG_7_1 ; Level 7-1 BG Palette
-	dw LvlPalSprP2_1 ; Level 7-1 Sprite Palette
-	dw LvlPalBG_7_2 ; Level 7-2 BG Palette
-	dw LvlPalSprP2_1 ; Level 7-2 Sprite Palette
-	dw LvlPalBG_7_3 ; Level 7-3 BG Palette
-	dw LvlPalSprP2_1 ; Level 7-3 Sprite Palette
-	dw LvlPalBG_7_4 ; Level 7-4 BG Palette
-	dw LvlPalSprP2_Castle3 ; Level 7-4 Sprite Palette
-	dw LvlPalBG_GhostHouseIntro ; Ghost House Intro BG Palette
-	dw LvlPalSprP2_1 ; Ghost House Intro Sprite Palette
-	dw LvlPalBG_CastleIntro ; Castle Intro BG Palette
-	dw LvlPalSprP2_1 ; Castle Intro Sprite Palette
-	dw LvlPalBG_MortonBoss ; Morton Boss Room BG Palette
-	dw LvlPalSprP2_MortonBoss ; Morton Boss Room Sprite Palette
-	dw LvlPalBG_LemmyBoss ; Lemmy/Wendy Boss Room BG Palette
-	dw LvlPalSprP2_LemmyBoss ; Lemmy/Wendy Boss Room Sprite Palette
-	dw LvlPalBG_Castle2 ; Reznor Room, Level 2-4 (Areas 1 and 2) BG Palette
-	dw LvlPalSprP2_Castle2 ; Reznor Room, Level 2-4 (Areas 1 and 2) Sprite Palette
-	dw LvlPalBG_Castle3 ; Level 1-4 (Area 2), 2-4 (Area 3), 3-4, 4-4 (Area 1) BG Palette
-	dw LvlPalSprP2_Castle3 ; Level 1-4 (Area 2), 2-4 (Area 3), 3-4, 4-4 (Area 1) Sprite Palette
-	dw LvlPalBG_YoshisHouse ; Yoshi's House BG Palette
-	dw LvlPalSprP2_YoshisHouse ; Yoshi's House Sprite Palette
-	dw LvlPalBG_MortonBoss ; Roy Boss Room BG Palette
-	dw LvlPalSprP2_RoyBoss ; Roy Boss Room Sprite Palette
-	dw LvlPalBG_BowserFight ; Bowser Fight BG Palette
-	dw LvlPalSprP2_BowserFight ; Bowser Fight Sprite Palette
-	dw LvlPalBG_BonusRoom ; Bonus Room BG Palette
-	dw LvlPalSprP2_BonusRoom ; Bonus Room Sprite Palette
-LvlPalBG_1_1:
-	db $11, $30, $38, $3D
-	db $11, $30, $2A, $1A
-	db $11, $37, $2A, $1A
-	db $11, $2C, $3C, $30
+	.byte $40
+	.byte $30
+	.byte $20
+	.byte $10
+	.byte $00
+	.byte $10
+	.byte $20
+	.byte $30
+	.byte $40
+player1LevelPalettes:
+	.word lvlPalBG_1_1 ; Level 1-1 BG Palette
+	.word lvlPalSprP1_1 ; Level 1-1 Sprite Palette
+	.word lvlPalBG_1_2 ; Level 1-2 BG Palette
+	.word lvlPalSprP1_1 ; Level 1-2 Sprite Palette
+	.word lvlPalBG_1_3 ; Level 1-3 BG Palette
+	.word lvlPalSprP1_1 ; Level 1-3 Sprite Palette
+	.word lvlPalBG_Castle1 ; Level 1-4 BG Palette
+	.word lvlPalSprP1_1 ; Level 1-4 Sprite Palette
+	.word lvlPalBG_2_1 ; Level 2-1 BG Palette
+	.word lvlPalSprP1_1 ; Level 2-1 Sprite Palette
+	.word lvlPalBG_2_2 ; Level 2-2 BG Palette
+	.word lvlPalSprP1_1 ; Level 2-2 Sprite Palette
+	.word lvlPalBG_GhostHouse1 ; Level 2-3 BG Palette
+	.word lvlPalSprP1_1 ; Level 2-3 Sprite Palette
+	.word lvlPalBG_Castle1
+	.word lvlPalSprP1_1
+	.word lvlPalBG_3_1 ; Level 3-1 BG Palette
+	.word lvlPalSprP1_1 ; Level 3-1 Sprite Palette
+	.word lvlPalBG_3_2 ; Level 3-2 BG Palette
+	.word lvlPalSprP1_1 ; Level 3-2 Sprite Paltte
+	.word lvlPalBG_GhostHouse1 ; Level 3-3 BG Palette
+	.word lvlPalSprP1_1 ; Level 3-3 BG Palette
+	.word ofs_FBBC
+	.word lvlPalSprP1_1
+	.word lvlPalBG_Bridge ; Level 4-1 BG Palette
+	.word lvlPalSprP1_1 ; Level 4-1 Sprite Palette
+	.word lvlPalBG_Bridge ; Level 4-2 BG Palette
+	.word lvlPalSprP1_1 ; Level 4-2 Sprite Palette
+	.word lvlPalBG_4_3 ; Level 4-3 BG Palette
+	.word lvlPalSprP1_1 ; Level 4-3 Sprite Palette
+	.word lvlPalBG_4_4 ; Level 4-4 (Area 2) BG Palette
+	.word lvlPalSprP1_1 ; Level 4-4 (Area 2) BG Palette
+	.word lvlPalBG_5_1 ; Level 5-1 BG Palette
+	.word lvlPalSprP1_1 ; Level 5-1 Sprite Palette
+	.word lvlPalBG_5_2 ; Level 5-2 BG Palette
+	.word lvlPalSprP1_1 ; Level 5-2 Sprite Palette
+	.word lvlPalBG_5_3 ; Level 5-3 BG Palette
+	.word lvlPalSprP1_1 ; Level 5-3 Sprite Palette
+	.word lvlPalBG_5_4 ; Level 5-4 BG Palette
+	.word lvlPalSprP1_Castle3 ; Level 5-4 Sprite Palette
+	.word lvlPalBG_6_1 ; Level 6-1 BG Palette
+	.word lvlPalSprP1_1 ; Level 6-1 Sprite Palette
+	.word lvlPalBG_6_2 ; Level 6-2 BG Palette
+	.word lvlPalSprP1_1 ; Level 6-2 Sprite Palette
+	.word lvlPalBG_6_3 ; Level 6-3 BG Palette
+	.word lvlPalSprP1_1 ; Level 6-3 Sprite Palette
+	.word lvlPalBG_6_4 ; Level 6-4 BG Palette
+	.word lvlPalSprP1_Castle3 ; Level 6-4 Sprite Palette
+	.word lvlPalBG_7_1 ; Level 7-1 BG Palette
+	.word lvlPalSprP1_1 ; Level 7-1 Sprite Palette
+	.word lvlPalBG_7_2 ; Level 7-2 BG Palette
+	.word lvlPalSprP1_1 ; Level 7-2 Sprite Palette
+	.word lvlPalBG_7_3 ; Level 7-3 BG Palette
+	.word lvlPalSprP1_1 ; Level 7-3 Sprite Palette
+	.word lvlPalBG_7_4 ; Level 7-4 BG Palette
+	.word lvlPalSprP1_Castle3 ; Level 7-4 Sprite Palette
+	.word lvlPalBG_GhostHouseIntro ; Ghost House Intro BG Palette
+	.word lvlPalSprP1_1 ; Ghost House Intro Sprite Palette
+	.word lvlPalBG_CastleIntro ; Castle Intro BG Palette
+	.word lvlPalSprP1_1 ; Castle Intro Sprite Palette
+	.word lvlPalBG_MortonBoss ; Morton Boss Room BG Palette
+	.word lvlPalSprP1_MortonBoss ; Morton Boss Room Sprite Palette
+	.word lvlPalBG_LemmyBoss ; Lemmy/Wendy Boss Room BG Palette
+	.word lvlPalSprP1_LemmyBoss ; Lemmy/Wendy Boss Room Sprite Palette
+	.word lvlPalBG_Castle2 ; Reznor Room, Level 2-4 (Areas 1 and 2) BG Palette
+	.word lvlPalSprP1_Castle2 ; Reznor Room, Level 2-4 (Areas 1 and 2) Sprite Palette
+	.word lvlPalBG_Castle3 ; Level 1-4 (Area 2), 2-4 (Area 3), 3-4, 4-4 (Area 1) BG Palette
+	.word lvlPalSprP1_Castle3 ; Level 1-4 (Area 2), 2-4 (Area 3), 3-4, 4-4 (Area 1) Sprite Palette
+	.word lvlPalBG_YoshisHouse ; Yoshi's House BG Palette
+	.word lvlPalSprP1_YoshisHouse ; Yoshi's House Sprite Palette
+	.word lvlPalBG_MortonBoss ; Roy Boss Room BG Palette
+	.word lvlPalSprP1_RoyBoss ; Roy Boss Room Sprite Palette
+	.word lvlPalBG_BowserFight ; Bowser Fight BG Palette
+	.word lvlPalSprP1_BowserFight ; Bowser Fight Sprite Palette
+	.word lvlPalBG_BonusRoom ; Bonus Room BG Palette
+	.word lvlPalSprP1_BonusRoom ; Bonus Room Sprite Palette
+player2LevelPalettes:
+	.word lvlPalBG_1_1 ; Level 1-1 BG Palette
+	.word lvlPalSprP2_1 ; Level 1-1 Sprite Palette
+	.word lvlPalBG_1_2 ; Level 1-2 BG Palette
+	.word lvlPalSprP2_1 ; Level 1-2 Sprite Palette
+	.word lvlPalBG_1_3 ; Level 1-3 BG Palette
+	.word lvlPalSprP2_1 ; Level 1-3 Sprite Palette
+	.word lvlPalBG_Castle1 ; Level 1-4 BG Palette
+	.word lvlPalSprP2_1 ; Level 1-4 Sprite Palette
+	.word lvlPalBG_2_1 ; Level 2-1 BG Palette
+	.word lvlPalSprP2_1 ; Level 2-1 Sprite Palette
+	.word lvlPalBG_2_2 ; Level 2-2 BG Palette
+	.word lvlPalSprP2_1 ; Level 2-2 Sprite Palette
+	.word lvlPalBG_GhostHouse1 ; Level 2-3 BG Palette
+	.word lvlPalSprP2_1 ; Level 2-3 Sprite Palette
+	.word lvlPalBG_Castle1
+	.word lvlPalSprP2_1
+	.word lvlPalBG_3_1 ; Level 3-1 BG Palette
+	.word lvlPalSprP2_1 ; Level 3-1 Sprite Palette
+	.word lvlPalBG_3_2 ; Level 3-2 BG Palette
+	.word lvlPalSprP2_1 ; Level 3-2 Sprite Paltte
+	.word lvlPalBG_GhostHouse1 ; Level 3-3 BG Palette
+	.word lvlPalSprP2_1 ; Level 3-3 BG Palette
+	.word ofs_FBBC
+	.word lvlPalSprP2_1
+	.word lvlPalBG_Bridge ; Level 4-1 BG Palette
+	.word lvlPalSprP2_1 ; Level 4-1 Sprite Palette
+	.word lvlPalBG_Bridge ; Level 4-2 BG Palette
+	.word lvlPalSprP2_1 ; Level 4-2 Sprite Palette
+	.word lvlPalBG_4_3 ; Level 4-3 BG Palette
+	.word lvlPalSprP2_1 ; Level 4-3 Sprite Palette
+	.word lvlPalBG_4_4 ; Level 4-4 (Area 2) BG Palette
+	.word lvlPalSprP2_1 ; Level 4-4 (Area 2) BG Palette
+	.word lvlPalBG_5_1 ; Level 5-1 BG Palette
+	.word lvlPalSprP2_1 ; Level 5-1 Sprite Palette
+	.word lvlPalBG_5_2 ; Level 5-2 BG Palette
+	.word lvlPalSprP2_1 ; Level 5-2 Sprite Palette
+	.word lvlPalBG_5_3 ; Level 5-3 BG Palette
+	.word lvlPalSprP2_1 ; Level 5-3 Sprite Palette
+	.word lvlPalBG_5_4 ; Level 5-4 BG Palette
+	.word lvlPalSprP2_Castle3 ; Level 5-4 Sprite Palette
+	.word lvlPalBG_6_1 ; Level 6-1 BG Palette
+	.word lvlPalSprP2_1 ; Level 6-1 Sprite Palette
+	.word lvlPalBG_6_2 ; Level 6-2 BG Palette
+	.word lvlPalSprP2_1 ; Level 6-2 Sprite Palette
+	.word lvlPalBG_6_3 ; Level 6-3 BG Palette
+	.word lvlPalSprP2_1 ; Level 6-3 Sprite Palette
+	.word lvlPalBG_6_4 ; Level 6-4 BG Palette
+	.word lvlPalSprP2_Castle3 ; Level 6-4 Sprite Palette
+	.word lvlPalBG_7_1 ; Level 7-1 BG Palette
+	.word lvlPalSprP2_1 ; Level 7-1 Sprite Palette
+	.word lvlPalBG_7_2 ; Level 7-2 BG Palette
+	.word lvlPalSprP2_1 ; Level 7-2 Sprite Palette
+	.word lvlPalBG_7_3 ; Level 7-3 BG Palette
+	.word lvlPalSprP2_1 ; Level 7-3 Sprite Palette
+	.word lvlPalBG_7_4 ; Level 7-4 BG Palette
+	.word lvlPalSprP2_Castle3 ; Level 7-4 Sprite Palette
+	.word lvlPalBG_GhostHouseIntro ; Ghost House Intro BG Palette
+	.word lvlPalSprP2_1 ; Ghost House Intro Sprite Palette
+	.word lvlPalBG_CastleIntro ; Castle Intro BG Palette
+	.word lvlPalSprP2_1 ; Castle Intro Sprite Palette
+	.word lvlPalBG_MortonBoss ; Morton Boss Room BG Palette
+	.word lvlPalSprP2_MortonBoss ; Morton Boss Room Sprite Palette
+	.word lvlPalBG_LemmyBoss ; Lemmy/Wendy Boss Room BG Palette
+	.word lvlPalSprP2_LemmyBoss ; Lemmy/Wendy Boss Room Sprite Palette
+	.word lvlPalBG_Castle2 ; Reznor Room, Level 2-4 (Areas 1 and 2) BG Palette
+	.word lvlPalSprP2_Castle2 ; Reznor Room, Level 2-4 (Areas 1 and 2) Sprite Palette
+	.word lvlPalBG_Castle3 ; Level 1-4 (Area 2), 2-4 (Area 3), 3-4, 4-4 (Area 1) BG Palette
+	.word lvlPalSprP2_Castle3 ; Level 1-4 (Area 2), 2-4 (Area 3), 3-4, 4-4 (Area 1) Sprite Palette
+	.word lvlPalBG_YoshisHouse ; Yoshi's House BG Palette
+	.word lvlPalSprP2_YoshisHouse ; Yoshi's House Sprite Palette
+	.word lvlPalBG_MortonBoss ; Roy Boss Room BG Palette
+	.word lvlPalSprP2_RoyBoss ; Roy Boss Room Sprite Palette
+	.word lvlPalBG_BowserFight ; Bowser Fight BG Palette
+	.word lvlPalSprP2_BowserFight ; Bowser Fight Sprite Palette
+	.word lvlPalBG_BonusRoom ; Bonus Room BG Palette
+	.word lvlPalSprP2_BonusRoom ; Bonus Room Sprite Palette
+lvlPalBG_1_1:
+	.byte $11, $30, $38, $3D
+	.byte $11, $30, $2A, $1A
+	.byte $11, $37, $2A, $1A
+	.byte $11, $2C, $3C, $30
 
-LvlPalBG_1_2:
-	db $0A, $2C, $1C, $30
-	db $0A, $30, $38, $28
-	db $0A, $37, $2A, $1A
-	db $0A, $29, $19, $39
+lvlPalBG_1_2:
+	.byte $0A, $2C, $1C, $30
+	.byte $0A, $30, $38, $28
+	.byte $0A, $37, $2A, $1A
+	.byte $0A, $29, $19, $39
 
-LvlPalBG_1_3:
-	db $0E, $11, $3C, $30
-	db $0E, $30, $37, $27
-	db $0E, $29, $38, $18
-	db $0E, $00, $10, $30
+lvlPalBG_1_3:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $37, $27
+	.byte $0E, $29, $38, $18
+	.byte $0E, $00, $10, $30
 
-LvlPalBG_Castle1:
-	db $0E, $11, $3C, $30
-	db $0E, $30, $28, $18
-	db $0E, $00, $10, $20
-	db $0E, $27, $17, $37
+lvlPalBG_Castle1:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $20
+	.byte $0E, $27, $17, $37
 
-LvlPalBG_2_1:
-	db $11, $11, $3C, $30
-	db $11, $30, $38, $28
-	db $11, $37, $2A, $1A
-	db $11, $39, $29, $1A
+lvlPalBG_2_1:
+	.byte $11, $11, $3C, $30
+	.byte $11, $30, $38, $28
+	.byte $11, $37, $2A, $1A
+	.byte $11, $39, $29, $1A
 
-LvlPalBG_2_2:
-	db $0A, $31, $11, $30
-	db $0A, $30, $38, $28
-	db $0A, $0E, $2A, $30
-	db $0A, $2A, $19, $39
+lvlPalBG_2_2:
+	.byte $0A, $31, $11, $30
+	.byte $0A, $30, $38, $28
+	.byte $0A, $0E, $2A, $30
+	.byte $0A, $2A, $19, $39
 
-LvlPalBG_GhostHouse1:
-	db $0E, $11, $3C, $30
-	db $0E, $30, $28, $18
-	db $0E, $1C, $2C, $38
-	db $0E, $37, $27, $18
+lvlPalBG_GhostHouse1:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $1C, $2C, $38
+	.byte $0E, $37, $27, $18
 
-LvlPalBG_3_1:
-	db $0E, $21, $11, $30
-	db $0E, $30, $28, $18
-	db $0E, $37, $0C, $1C
-	db $0E, $38, $27, $17
+lvlPalBG_3_1:
+	.byte $0E, $21, $11, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $37, $0C, $1C
+	.byte $0E, $38, $27, $17
 
-LvlPalBG_3_2:
-	db $01, $2C, $1C, $3C
-	db $01, $30, $38, $28
-	db $01, $00, $10, $30
-	db $01, $38, $27, $17
+lvlPalBG_3_2:
+	.byte $01, $2C, $1C, $3C
+	.byte $01, $30, $38, $28
+	.byte $01, $00, $10, $30
+	.byte $01, $38, $27, $17
 
 ofs_FBBC:
-	db $0E, $11, $21, $30
-	db $0E, $30, $28, $18
-	db $0E, $00, $10, $30
-	db $0E, $27, $17, $37
+	.byte $0E, $11, $21, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $30
+	.byte $0E, $27, $17, $37
 
-LvlPalBG_Bridge:
-	db $30, $11, $2C, $0E
-	db $30, $28, $18, $0E
-	db $30, $37, $31, $0E
-	db $30, $30, $2A, $0A
+lvlPalBG_Bridge:
+	.byte $30, $11, $2C, $0E
+	.byte $30, $28, $18, $0E
+	.byte $30, $37, $31, $0E
+	.byte $30, $30, $2A, $0A
 
-LvlPalBG_4_3:
-	db $30, $11, $21, $0E
-	db $30, $28, $18, $0E
-	db $30, $37, $2A, $0A
-	db $30, $0E, $2A, $1A
+lvlPalBG_4_3:
+	.byte $30, $11, $21, $0E
+	.byte $30, $28, $18, $0E
+	.byte $30, $37, $2A, $0A
+	.byte $30, $0E, $2A, $1A
 
-LvlPalBG_4_4:
-	db $0E, $11, $3C, $30
-	db $0E, $30, $28, $18
-	db $0E, $00, $10, $30
-	db $0E, $27, $17, $37
+lvlPalBG_4_4:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $30
+	.byte $0E, $27, $17, $37
 
-LvlPalBG_5_1:
-	db $0E, $2C, $1C, $30
-	db $0E, $30, $28, $18
-	db $0E, $1A, $28, $18
-	db $0E, $1A, $0A, $2A
+lvlPalBG_5_1:
+	.byte $0E, $2C, $1C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $1A, $28, $18
+	.byte $0E, $1A, $0A, $2A
 
-LvlPalBG_5_2:
-	db $0E, $11, $3C, $30
-	db $0E, $30, $28, $18
-	db $0E, $0C, $1C, $2C
-	db $0E, $37, $27, $18
+lvlPalBG_5_2:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $0C, $1C, $2C
+	.byte $0E, $37, $27, $18
 
-LvlPalBG_5_3:
-	db $01, $2C, $1C, $3C
-	db $01, $30, $38, $28
-	db $01, $00, $10, $38
-	db $01, $38, $27, $17
+lvlPalBG_5_3:
+	.byte $01, $2C, $1C, $3C
+	.byte $01, $30, $38, $28
+	.byte $01, $00, $10, $38
+	.byte $01, $38, $27, $17
 
-LvlPalBG_5_4:
-	db $0E, $11, $3C, $30
-	db $0E, $30, $28, $18
-	db $0E, $00, $10, $20
-	db $0E, $27, $17, $37
+lvlPalBG_5_4:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $20
+	.byte $0E, $27, $17, $37
 
-LvlPalBG_6_1:
-	db $0E, $01, $21, $30
-	db $0E, $30, $28, $18
-	db $0E, $29, $38, $18
-	db $0E, $29, $30, $18
+lvlPalBG_6_1:
+	.byte $0E, $01, $21, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $29, $38, $18
+	.byte $0E, $29, $30, $18
 
-LvlPalBG_6_2:
-	db $0E, $11, $3C, $30
-	db $0E, $30, $28, $18
-	db $0E, $0C, $1C, $2C
-	db $0E, $37, $27, $18
+lvlPalBG_6_2:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $0C, $1C, $2C
+	.byte $0E, $37, $27, $18
 
-LvlPalBG_6_3:
-	db $01, $1C, $2C, $30
-	db $01, $30, $28, $18
-	db $01, $37, $2A, $1C
-	db $01, $3C, $2C, $1C
+lvlPalBG_6_3:
+	.byte $01, $1C, $2C, $30
+	.byte $01, $30, $28, $18
+	.byte $01, $37, $2A, $1C
+	.byte $01, $3C, $2C, $1C
 
-LvlPalBG_6_4:
-	db $0E, $01, $31, $30
-	db $0E, $30, $28, $18
-	db $0E, $00, $10, $30
-	db $0E, $27, $17, $37
+lvlPalBG_6_4:
+	.byte $0E, $01, $31, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $30
+	.byte $0E, $27, $17, $37
 
-LvlPalBG_7_1:
-	db $0E, $21, $11, $30
-	db $0E, $30, $38, $28
-	db $0E, $1A, $2A, $30
-	db $0E, $00, $10, $30
+lvlPalBG_7_1:
+	.byte $0E, $21, $11, $30
+	.byte $0E, $30, $38, $28
+	.byte $0E, $1A, $2A, $30
+	.byte $0E, $00, $10, $30
 
-LvlPalBG_7_2:
-	db $0E, $31, $22, $30
-	db $0E, $30, $38, $28
-	db $0E, $1A, $2A, $30
-	db $0E, $00, $10, $30
+lvlPalBG_7_2:
+	.byte $0E, $31, $22, $30
+	.byte $0E, $30, $38, $28
+	.byte $0E, $1A, $2A, $30
+	.byte $0E, $00, $10, $30
 
-LvlPalBG_7_3:
-	db $0E, $11, $3C, $30
-	db $0E, $30, $28, $18
-	db $0E, $0C, $1C, $31
-	db $0E, $37, $27, $18
+lvlPalBG_7_3:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $0C, $1C, $31
+	.byte $0E, $37, $27, $18
 
-LvlPalBG_7_4:
-	db $0E, $15, $1A, $30
-	db $0E, $30, $28, $18
-	db $0E, $00, $10, $30
-	db $0E, $27, $16, $37
+lvlPalBG_7_4:
+	.byte $0E, $15, $1A, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $30
+	.byte $0E, $27, $16, $37
 
-LvlPalBG_GhostHouseIntro:
-	db $0E, $30, $0C, $15
-	db $0E, $01, $31, $30
-	db $0E, $37, $2A, $1A
-	db $0E, $10, $0C, $00
+lvlPalBG_GhostHouseIntro:
+	.byte $0E, $30, $0C, $15
+	.byte $0E, $01, $31, $30
+	.byte $0E, $37, $2A, $1A
+	.byte $0E, $10, $0C, $00
 
-LvlPalBG_CastleIntro:
-	db $0E, $21, $31, $30
-	db $0E, $31, $2A, $1A
-	db $0E, $37, $2A, $1A
-	db $0E, $00, $10, $20
+lvlPalBG_CastleIntro:
+	.byte $0E, $21, $31, $30
+	.byte $0E, $31, $2A, $1A
+	.byte $0E, $37, $2A, $1A
+	.byte $0E, $00, $10, $20
 
-LvlPalBG_MortonBoss:
-	db $0E, $11, $3C, $30
-	db $0E, $30, $28, $18
-	db $0E, $00, $10, $20
-	db $0E, $27, $17, $37
+lvlPalBG_MortonBoss:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $20
+	.byte $0E, $27, $17, $37
 
-LvlPalBG_LemmyBoss:
-	db $0E, $11, $21, $30
-	db $0E, $30, $28, $18
-	db $0E, $00, $10, $30
-	db $0E, $27, $17, $37
+lvlPalBG_LemmyBoss:
+	.byte $0E, $11, $21, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $30
+	.byte $0E, $27, $17, $37
 
-LvlPalBG_Castle2:
-	db $0E, $11, $3C, $30
-	db $0E, $30, $28, $18
-	db $0E, $00, $10, $30
-	db $0E, $27, $17, $37
+lvlPalBG_Castle2:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $30
+	.byte $0E, $27, $17, $37
 
-LvlPalBG_Castle3:
-	db $0E, $11, $3C, $30
-	db $0E, $30, $28, $18
-	db $0E, $00, $10, $30
-	db $0E, $27, $17, $37
+lvlPalBG_Castle3:
+	.byte $0E, $11, $3C, $30
+	.byte $0E, $30, $28, $18
+	.byte $0E, $00, $10, $30
+	.byte $0E, $27, $17, $37
 
-LvlPalBG_YoshisHouse:
-	db $0E, $2A, $2C, $36
-	db $0E, $37, $27, $38
-	db $0E, $2A, $37, $30
-	db $0E, $1C, $2C, $30
+lvlPalBG_YoshisHouse:
+	.byte $0E, $2A, $2C, $36
+	.byte $0E, $37, $27, $38
+	.byte $0E, $2A, $37, $30
+	.byte $0E, $1C, $2C, $30
 
-LvlPalBG_BowserFight:
-	db $1E, $10, $00, $0E
-	db $1E, $27, $22, $20
-	db $1E, $2A, $1A, $20
-	db $1E, $27, $16, $20
+lvlPalBG_BowserFight:
+	.byte $1E, $10, $00, $0E
+	.byte $1E, $27, $22, $20
+	.byte $1E, $2A, $1A, $20
+	.byte $1E, $27, $16, $20
 
-LvlPalBG_BonusRoom:
-	db $0E, $30, $2C, $0E
-	db $0E, $30, $28, $18
-	db $0E, $30, $2A, $19
-	db $0E, $30, $21, $23
+lvlPalBG_BonusRoom:
+	.byte $0E, $30, $2C, $0E
+	.byte $0E, $30, $28, $18
+	.byte $0E, $30, $2A, $19
+	.byte $0E, $30, $21, $23
 
-LvlPalSprP1_1:
-	db $11, $37, $16, $0E
-	db $10, $30, $16, $02
-	db $10, $2A, $20, $0E
-	db $10, $38, $16, $0E
+lvlPalSprP1_1:
+	.byte $11, $37, $16, $0E
+	.byte $10, $30, $16, $02
+	.byte $10, $2A, $20, $0E
+	.byte $10, $38, $16, $0E
 
-LvlPalSprP1_MortonBoss:
-	db $0E, $37, $16, $0E
-	db $0E, $30, $16, $02
-	db $0E, $28, $1A, $30
-	db $0E, $38, $16, $0E
+lvlPalSprP1_MortonBoss:
+	.byte $0E, $37, $16, $0E
+	.byte $0E, $30, $16, $02
+	.byte $0E, $28, $1A, $30
+	.byte $0E, $38, $16, $0E
 
-LvlPalSprP1_LemmyBoss:
-	db $0E, $37, $16, $0E
-	db $10, $30, $16, $02
-	db $10, $28, $06, $30
-	db $10, $38, $16, $0E
+lvlPalSprP1_LemmyBoss:
+	.byte $0E, $37, $16, $0E
+	.byte $10, $30, $16, $02
+	.byte $10, $28, $06, $30
+	.byte $10, $38, $16, $0E
 
-LvlPalSprP1_Castle2:
-	db $0E, $37, $16, $0E
-	db $00, $30, $16, $02
-	db $00, $10, $20, $0E
-	db $00, $38, $16, $0E
+lvlPalSprP1_Castle2:
+	.byte $0E, $37, $16, $0E
+	.byte $00, $30, $16, $02
+	.byte $00, $10, $20, $0E
+	.byte $00, $38, $16, $0E
 
-LvlPalSprP1_Castle3:
-	db $0E, $37, $16, $0E
-	db $00, $30, $16, $02
-	db $00, $10, $20, $0E
-	db $00, $38, $16, $0E
+lvlPalSprP1_Castle3:
+	.byte $0E, $37, $16, $0E
+	.byte $00, $30, $16, $02
+	.byte $00, $10, $20, $0E
+	.byte $00, $38, $16, $0E
 
-LvlPalSprP1_YoshisHouse:
-	db $0E, $37, $16, $0E
-	db $10, $30, $16, $02
-	db $10, $2A, $20, $0E
-	db $10, $38, $16, $0E
+lvlPalSprP1_YoshisHouse:
+	.byte $0E, $37, $16, $0E
+	.byte $10, $30, $16, $02
+	.byte $10, $2A, $20, $0E
+	.byte $10, $38, $16, $0E
 
-LvlPalSprP1_RoyBoss:
-	db $1E, $37, $16, $0E
-	db $1E, $30, $16, $02
-	db $1E, $28, $1C, $30
-	db $1E, $28, $16, $0E
+lvlPalSprP1_RoyBoss:
+	.byte $1E, $37, $16, $0E
+	.byte $1E, $30, $16, $02
+	.byte $1E, $28, $1C, $30
+	.byte $1E, $28, $16, $0E
 
-LvlPalSprP1_BowserFight:
-	db $0E, $37, $16, $0E
-	db $0E, $30, $16, $02
-	db $0E, $28, $15, $30
-	db $0E, $28, $16, $0E
+lvlPalSprP1_BowserFight:
+	.byte $0E, $37, $16, $0E
+	.byte $0E, $30, $16, $02
+	.byte $0E, $28, $15, $30
+	.byte $0E, $28, $16, $0E
 
-LvlPalSprP1_BonusRoom:
-	db $3D, $37, $16, $0E
-	db $3D, $30, $16, $02
-	db $3D, $2A, $30, $0F
-	db $3D, $28, $16, $0E
+lvlPalSprP1_BonusRoom:
+	.byte $3D, $37, $16, $0E
+	.byte $3D, $30, $16, $02
+	.byte $3D, $2A, $30, $0F
+	.byte $3D, $28, $16, $0E
 
-LvlPalSprP2_1:
-	db $11, $37, $2B, $0E
-	db $10, $30, $1B, $02
-	db $10, $2A, $20, $0E
-	db $10, $38, $16, $0E
+lvlPalSprP2_1:
+	.byte $11, $37, $2B, $0E
+	.byte $10, $30, $1B, $02
+	.byte $10, $2A, $20, $0E
+	.byte $10, $38, $16, $0E
 	; What are these extras for exactly?
-	db $0E, $37, $2B, $0E
-	db $10, $30, $1B, $02
-	db $10, $2A, $20, $0E
-	db $10, $38, $16, $0E
-	db $0E, $37, $2B, $0E
-	db $10, $30, $1B, $02
-	db $10, $2A, $20, $0E
-	db $10, $38, $16, $0E
-LvlPalSprP2_MortonBoss:
-	db $0E, $37, $2B, $0E
-	db $0E, $30, $1B, $02
-	db $0E, $28, $1A, $30
-	db $0E, $38, $16, $0E
+	.byte $0E, $37, $2B, $0E
+	.byte $10, $30, $1B, $02
+	.byte $10, $2A, $20, $0E
+	.byte $10, $38, $16, $0E
+	.byte $0E, $37, $2B, $0E
+	.byte $10, $30, $1B, $02
+	.byte $10, $2A, $20, $0E
+	.byte $10, $38, $16, $0E
+lvlPalSprP2_MortonBoss:
+	.byte $0E, $37, $2B, $0E
+	.byte $0E, $30, $1B, $02
+	.byte $0E, $28, $1A, $30
+	.byte $0E, $38, $16, $0E
 
-LvlPalSprP2_LemmyBoss:
-	db $0E, $37, $2B, $0E
-	db $10, $30, $1B, $02
-	db $10, $28, $06, $30
-	db $10, $38, $16, $0E
+lvlPalSprP2_LemmyBoss:
+	.byte $0E, $37, $2B, $0E
+	.byte $10, $30, $1B, $02
+	.byte $10, $28, $06, $30
+	.byte $10, $38, $16, $0E
 
-LvlPalSprP2_Castle2:
-	db $0E, $37, $2B, $0E
-	db $00, $30, $1B, $02
-	db $00, $10, $20, $0E
-	db $00, $38, $16, $0E
+lvlPalSprP2_Castle2:
+	.byte $0E, $37, $2B, $0E
+	.byte $00, $30, $1B, $02
+	.byte $00, $10, $20, $0E
+	.byte $00, $38, $16, $0E
 
-LvlPalSprP2_Castle3:
-	db $0E, $37, $2B, $0E
-	db $00, $30, $1B, $02
-	db $00, $10, $20, $0E
-	db $00, $38, $16, $0E
+lvlPalSprP2_Castle3:
+	.byte $0E, $37, $2B, $0E
+	.byte $00, $30, $1B, $02
+	.byte $00, $10, $20, $0E
+	.byte $00, $38, $16, $0E
 
-LvlPalSprP2_YoshisHouse:
-	db $0E, $37, $2B, $0E
-	db $10, $30, $1B, $02
-	db $10, $2A, $20, $0E
-	db $10, $38, $16, $0E
+lvlPalSprP2_YoshisHouse:
+	.byte $0E, $37, $2B, $0E
+	.byte $10, $30, $1B, $02
+	.byte $10, $2A, $20, $0E
+	.byte $10, $38, $16, $0E
 
-LvlPalSprP2_RoyBoss:
-	db $1E, $37, $2B, $0E
-	db $1E, $30, $1B, $02
-	db $1E, $28, $1C, $30
-	db $1E, $28, $16, $0E
+lvlPalSprP2_RoyBoss:
+	.byte $1E, $37, $2B, $0E
+	.byte $1E, $30, $1B, $02
+	.byte $1E, $28, $1C, $30
+	.byte $1E, $28, $16, $0E
 
-LvlPalSprP2_BowserFight:
-	db $0E, $37, $2B, $0E
-	db $0E, $30, $1B, $02
-	db $0E, $28, $15, $30
-	db $0E, $28, $16, $0E
+lvlPalSprP2_BowserFight:
+	.byte $0E, $37, $2B, $0E
+	.byte $0E, $30, $1B, $02
+	.byte $0E, $28, $15, $30
+	.byte $0E, $28, $16, $0E
 
-LvlPalSprP2_BonusRoom:
-	db $3D, $37, $2B, $0E
-	db $3D, $30, $1B, $02
-	db $3D, $2A, $30, $0F
-	db $3D, $28, $16, $0E
+lvlPalSprP2_BonusRoom:
+	.byte $3D, $37, $2B, $0E
+	.byte $3D, $30, $1B, $02
+	.byte $3D, $2A, $30, $0F
+	.byte $3D, $28, $16, $0E
 
 tbl3_FE8C:
-	dw ofs_FE94
-	dw ofs_FE94
-	dw ofs_FE94
-	dw ofs_FEA4
+	.word ofs_FE94
+	.word ofs_FE94
+	.word ofs_FE94
+	.word ofs_FEA4
 ofs_FE94:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
 ofs_FEA4:
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $0B
-	db $0B
-	db $0B
-	db $0B
-	db $0B
-	db $0B
-	db $0B
-	db $0B
-	db $0B
-	db $0B
-	db $0B
-	db $0B
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $00
-	db $04
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $03
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $03
-	db $03
-	db $01
-	db $03
-	db $01
-	db $03
-	db $01
-	db $68
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $03
-	db $03
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-MapperProtection:
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $00
+	.byte $04
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $03
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $03
+	.byte $03
+	.byte $01
+	.byte $03
+	.byte $01
+	.byte $03
+	.byte $01
+	.byte $68
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $03
+	.byte $03
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+mapperProtection:
 	LDA #$05 ; Use 5 for both values to multiply
 	STA M90_MULTIPLICAND ; First value to multiply (5)
 	STA M90_MULTIPLIER ; Multiplier (5)
 	LDA #$00
 	JSR sub3_F184
-MapperProtectLoop:
+mapperProtectLoop:
 	LDA M90_MULTIPLICAND ; Get product
 	CMP #$19
-	BNE MapperProtectLoop ; If the product isn't 25, send the game into a loop and prevent it from starting
+	BNE mapperProtectLoop ; If the product isn't 25, send the game into a loop and prevent it from starting
 	RTS
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $00
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $02
-	db $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $02
+	.byte $01

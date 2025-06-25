@@ -1,134 +1,134 @@
 ; Disassembled by BZK 6502 Disassembler
 tbl10_8000:
-	dw ofs_8100
-	dw ofs_8104
-	dw ofs_8110
-	dw ofs_8116
-	dw ofs_811C
-	dw ofs_8124
-	dw ofs_8140
-	dw ofs_8146
-	dw ofs_814A
-	dw ofs_8158
-	dw ofs_815C
-	dw ofs_8176
-	dw ofs_8180
-	dw ofs_818A
-	dw ofs_8194
-	dw ofs_819C
-	dw ofs_81A6
-	dw Vol_LongEcho1 ; 0x11
-	dw ofs_81C2 ; 0x12
-	dw ofs_81CD ; 0x13
-	dw ofs_81D9
-	dw ofs_81E3
-	dw ofs_81ED
-	dw ofs_81F7
-	dw ofs_81FF
-	dw ofs_8203
-	dw ofs_821F
-	dw ofs_822B
-	dw ofs_823B
-	dw ofs_8241
-	dw ofs_8245
-	dw ofs_8249
-	dw ofs_824F
-	dw ofs_826F
-	dw ofs_8275
-	dw ofs_827D
-	dw ofs_828D
-	dw ofs_8291
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8293
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_829D
-	dw ofs_82B5
-	dw ofs_82BF
-	dw ofs_82C9
-	dw ofs_82D1
-	dw ofs_82FD
-	dw ofs_831B ; 0x34
-	dw ofs_8100
-	dw ofs_8327
-	dw ofs_8337
-	dw ofs_833F
-	dw ofs_8343 ; 0x39
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_834F
-	dw Vol_PlinkEcho ; 0x41
-	dw ofs_8379
-	dw ofs_8381
-	dw ofs_8397
-	dw ofs_83A1
-	dw ofs_83B3
-	dw ofs_83C7
-	dw ofs_840B
-	dw ofs_840F
-	dw ofs_8413
-	dw ofs_8425
-	dw ofs_842B
-	dw ofs_8431
-	dw ofs_8437
-	dw ofs_8100
-	dw ofs_843D ; 0x50
-	dw ofs_844E ; 0x51
-	dw ofs_845E ; 0x52
-	dw ofs_8462
-	dw ofs_846E
-	dw ofs_8472
-	dw ofs_8486
-	dw ofs_84B0
-	dw ofs_84B4
-	dw ofs_84C0
-	dw ofs_8100
-	dw ofs_84CC ; 0x5B
-	dw ofs_84D0
-	dw ofs_84DE
-	dw ofs_84EE ; 0x5E
-	dw ofs_8508
-	dw ofs_8520 ; 0x60
-	dw ofs_8528 ; 0x61
-	dw ofs_853E
-	dw ofs_8554
-	dw ofs_8576 ; 0x64
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8598
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_859A
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_85A0
-	dw ofs_85A8
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_85B3
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	dw ofs_8100
-	include sound/instruments.asm
+	.word ofs_8100
+	.word ofs_8104
+	.word ofs_8110
+	.word ofs_8116
+	.word ofs_811C
+	.word ofs_8124
+	.word ofs_8140
+	.word ofs_8146
+	.word ofs_814A
+	.word ofs_8158
+	.word ofs_815C
+	.word ofs_8176
+	.word ofs_8180
+	.word ofs_818A
+	.word ofs_8194
+	.word ofs_819C
+	.word ofs_81A6
+	.word Vol_LongEcho1 ; 0x11
+	.word ofs_81C2 ; 0x12
+	.word ofs_81CD ; 0x13
+	.word ofs_81D9
+	.word ofs_81E3
+	.word ofs_81ED
+	.word ofs_81F7
+	.word ofs_81FF
+	.word ofs_8203
+	.word ofs_821F
+	.word ofs_822B
+	.word ofs_823B
+	.word ofs_8241
+	.word ofs_8245
+	.word ofs_8249
+	.word ofs_824F
+	.word ofs_826F
+	.word ofs_8275
+	.word ofs_827D
+	.word ofs_828D
+	.word ofs_8291
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8293
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_829D
+	.word ofs_82B5
+	.word ofs_82BF
+	.word ofs_82C9
+	.word ofs_82D1
+	.word ofs_82FD
+	.word ofs_831B ; 0x34
+	.word ofs_8100
+	.word ofs_8327
+	.word ofs_8337
+	.word ofs_833F
+	.word ofs_8343 ; 0x39
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_834F
+	.word Vol_PlinkEcho ; 0x41
+	.word ofs_8379
+	.word ofs_8381
+	.word ofs_8397
+	.word ofs_83A1
+	.word ofs_83B3
+	.word ofs_83C7
+	.word ofs_840B
+	.word ofs_840F
+	.word ofs_8413
+	.word ofs_8425
+	.word ofs_842B
+	.word ofs_8431
+	.word ofs_8437
+	.word ofs_8100
+	.word ofs_843D ; 0x50
+	.word ofs_844E ; 0x51
+	.word ofs_845E ; 0x52
+	.word ofs_8462
+	.word ofs_846E
+	.word ofs_8472
+	.word ofs_8486
+	.word ofs_84B0
+	.word ofs_84B4
+	.word ofs_84C0
+	.word ofs_8100
+	.word ofs_84CC ; 0x5B
+	.word ofs_84D0
+	.word ofs_84DE
+	.word ofs_84EE ; 0x5E
+	.word ofs_8508
+	.word ofs_8520 ; 0x60
+	.word ofs_8528 ; 0x61
+	.word ofs_853E
+	.word ofs_8554
+	.word ofs_8576 ; 0x64
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8598
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_859A
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_85A0
+	.word ofs_85A8
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_85B3
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8100
+	.word ofs_8100
+	.include sound/instruments.asm
 jmp_58_85BE:
 	LDA sndSfx
 	BMI bra10_85C4
@@ -166,10 +166,10 @@ sndInit:
 ; Clear sound driver RAM
 	LDA #$00
 	LDY #$D5 ; Upper limit of audio RAM
-AudioRAMClearLoop:
+audioRAMClearLoop:
 	STA $0700,Y
 	DEY
-	BNE AudioRAMClearLoop ; Loop backwards until the start of page 7 is reached
+	BNE audioRAMClearLoop ; Loop backwards until the start of page 7 is reached
 
 	LDA #$FF
 	LDX #4
@@ -495,9 +495,9 @@ bra10_884B:
 	ASL
 	TAY
 	LDX sndCurChannelPtrOffs
-	LDA NotePitchTable,Y
+	LDA notePitchTable,Y
 	STA sndChannelPitches,X
-	LDA NotePitchTable+1,Y
+	LDA notePitchTable+1,Y
 	STA sndChannelPitches+1,X
 	JMP loc10_8878
 bra10_8866:
@@ -529,22 +529,22 @@ loc10_887F:
 	STA sndDataPtr+1
 	JMP (sndDataPtr)
 tbl10_8895:
-	dw ofs_88B5
-	dw ofs_88CC
-	dw ofs_88E6
-	dw ofs_8912
-	dw loc10_893A
-	dw ofs_8957
-	dw ofs_897A
-	dw loc10_87E0
-	dw ofs_89A1
-	dw ofs_89BA
-	dw ofs_89D3
-	dw ofs_8A27
-	dw ofs_880B
-	dw bra10_87FB
-	dw loc10_87E0
-	dw ofs_89EC
+	.word ofs_88B5
+	.word ofs_88CC
+	.word ofs_88E6
+	.word ofs_8912
+	.word loc10_893A
+	.word ofs_8957
+	.word ofs_897A
+	.word loc10_87E0
+	.word ofs_89A1
+	.word ofs_89BA
+	.word ofs_89D3
+	.word ofs_8A27
+	.word ofs_880B
+	.word bra10_87FB
+	.word loc10_87E0
+	.word ofs_89EC
 ofs_88B5:
 	LDX sndCurChannelPtrOffs
 	CLC
@@ -1276,231 +1276,231 @@ bra10_8E40_RTS:
 	RTS
 
 tbl10_8E41:
-	dw Empty_Footer
-	dw SpinJump_Footer
-	dw Pause_Footer
-	dw Jump_Footer
-	dw Swim_Footer
-	dw Beep_Footer
-	dw YoshiCoin_Footer
-	dw Life_Footer
-	dw Coin_Footer
-	dw Powerup_Footer
-	dw Warp_Footer
-	dw Block_Footer
-	dw Powerdown_Footer
-	dw YoshiMount_Footer
-	dw Feather_Footer
-	dw Thud_Footer
-	dw Explosion_Footer
-	dw EnemyHit1_Footer
-	dw EnemyHit2_Footer
-	dw EnemyHit3_Footer
-	dw EnemyHit4_Footer
-	dw EnemyHit5_Footer
-	dw EnemyHit6_Footer
-	dw EnemyHit7_Footer
-	dw EnemyHit8_Footer
-	dw YoshiTongue_Footer
-	dw YoshiSwallow_Footer
-	dw YoshiFireSpit_Footer
-	dw Checkpoint_Footer
-	dw Chainsaw_Footer
-	dw Empty_Footer
-	dw Empty_Footer
+	.word empty_Footer
+	.word SpinJump_Footer
+	.word Pause_Footer
+	.word Jump_Footer
+	.word Swim_Footer
+	.word Beep_Footer
+	.word YoshiCoin_Footer
+	.word Life_Footer
+	.word Coin_Footer
+	.word Powerup_Footer
+	.word Warp_Footer
+	.word Block_Footer
+	.word Powerdown_Footer
+	.word YoshiMount_Footer
+	.word Feather_Footer
+	.word Thud_Footer
+	.word Explosion_Footer
+	.word EnemyHit1_Footer
+	.word EnemyHit2_Footer
+	.word EnemyHit3_Footer
+	.word EnemyHit4_Footer
+	.word EnemyHit5_Footer
+	.word EnemyHit6_Footer
+	.word EnemyHit7_Footer
+	.word EnemyHit8_Footer
+	.word YoshiTongue_Footer
+	.word YoshiSwallow_Footer
+	.word YoshiFireSpit_Footer
+	.word Checkpoint_Footer
+	.word Chainsaw_Footer
+	.word empty_Footer
+	.word empty_Footer
 ; Music pointers
-	dw Title_Footer
-	dw GameOver_Footer
-	dw PlayerDown_Footer
-	dw Victory_Footer
-	dw DonutPlains_Footer
-	dw YoshisIsland_Footer
-	dw ValleyofBowser_Footer
-	dw VanillaDome_Footer
-	dw ForestofIllusion_Footer
-	dw Overworld_Footer
-	dw Underground_Footer
-	dw GhostHouse_Footer
-	dw Castle_Footer
-	dw Underwater_Footer
-	dw Empty_Footer
-	dw Ending_Footer
-Empty_Footer:
+	.word Title_Footer
+	.word GameOver_Footer
+	.word PlayerDown_Footer
+	.word Victory_Footer
+	.word DonutPlains_Footer
+	.word YoshisIsland_Footer
+	.word ValleyofBowser_Footer
+	.word VanillaDome_Footer
+	.word ForestofIllusion_Footer
+	.word Overworld_Footer
+	.word Underground_Footer
+	.word GhostHouse_Footer
+	.word Castle_Footer
+	.word Underwater_Footer
+	.word empty_Footer
+	.word Ending_Footer
+empty_Footer:
 	db $00
-	dw UnknownMusPtr
+	.word unknownMusPtr
 	db $01
-	dw UnknownMusPtr
+	.word unknownMusPtr
 	db $02
-	dw UnknownMusPtr
+	.word unknownMusPtr
 	db $03
-	dw UnknownMusPtr
+	.word unknownMusPtr
 	db $04
-	dw UnknownMusPtr
+	.word unknownMusPtr
 	db $80
-	dw UnknownMusPtr
+	.word unknownMusPtr
 	db $81
-	dw UnknownMusPtr
+	.word unknownMusPtr
 	db $82
-	dw UnknownMusPtr
+	.word unknownMusPtr
 	db $83
-	dw UnknownMusPtr
+	.word unknownMusPtr
 	db $84
-	dw UnknownMusPtr
-UnknownMusPtr:
+	.word unknownMusPtr
+unknownMusPtr:
 	db $FF
-NotePitchTable:
-	dw $0000
-	dw $0000
-	dw $0000
-	dw $0000
-	dw $0000
-	dw $0000
-	dw $0000
-	dw $0000
-	dw $0000
-	dw $07F2 ; A-0
-	dw $0780 ; A#0
-	dw $0714 ; B-0
-	dw $06AE ; C-1
-	dw $064E ; C#1
-	dw $05F4 ; D-1
-	dw $059E ; D#1
-	dw $054D ; E-1
-	dw $0501 ; F-1
-	dw $04B9
-	dw $0475
-	dw $0435
-	dw $03F9
-	dw $03C0
-	dw $038A
-	dw $0357
-	dw $0327
-	dw $02FA
-	dw $02CF
-	dw $02A7
-	dw $0281
-	dw $025D
-	dw $023B
-	dw $021B
-	dw $01FC
-	dw $01E0
-	dw $01C5
-	dw $01AC
-	dw $0194
-	dw $017D
-	dw $0168
-	dw $0153
-	dw $0140
-	dw $012E
-	dw $011D
-	dw $010D
-	dw $00FE
-	dw $00F0
-	dw $00E2
-	dw $00D6
-	dw $00CA
-	dw $00BE
-	dw $00B4
-	dw $00AA
-	dw $00A0
-	dw $0097
-	dw $008F
-	dw $0087
-	dw $007F
-	dw $0078
-	dw $0071
-	dw $006B
-	dw $0065
-	dw $005F
-	dw $005A
-	dw $0055
-	dw $0050
-	dw $004C
-	dw $0047
-	dw $0043
-	dw $0040
-	dw $003C
-	dw $0039
-	dw $0035
-	dw $0032
-	dw $0030
-	dw $002D
-	dw $002A
-	dw $0028
-	dw $0026
-	dw $0024
-	dw $0022
-	dw $0020
-	dw $001E
-	dw $001C
-	dw $001B
-	dw $0019
-	dw $0018
-	dw $0016
-	dw $0015
-	dw $0014
-	dw $0013
-	dw $0012
-	dw $0011
-	dw $0010
-	dw $000F
-	dw $000E
-	dw $000D
-	dw $000C
-	dw $000B
-	dw $000A
-	dw $0009
-	dw $0008
-	dw $0007
-	dw $0006
-	dw $0005
-	dw $0004
-	dw $0003
-	dw $0002
- ; include sfx_ data
-	include sound/sfx_SpinJump.asm
-	include sound/sfx_Pause.asm
-	include sound/sfx_Jump.asm
-	include sound/sfx_Swim.asm
-	include sound/sfx_Beep.asm
-	include sound/sfx_DragonCoin.asm
-	include sound/sfx_1UP.asm
-	include sound/sfx_Coin.asm
-	include sound/sfx_Powerup.asm
-	include sound/sfx_Warp.asm
-	include sound/sfx_Block.asm
-	include sound/sfx_Powerdown.asm
-	include sound/sfx_YoshiMount.asm
-	include sound/sfx_Feather.asm
-	include sound/sfx_Thud.asm
-	include sound/sfx_Explosion.asm
-	include sound/sfx_EnemyHit1.asm
-	include sound/sfx_EnemyHit2.asm
-	include sound/sfx_EnemyHit3.asm
-	include sound/sfx_EnemyHit4.asm
-	include sound/sfx_EnemyHit5.asm
-	include sound/sfx_EnemyHit6.asm
-	include sound/sfx_EnemyHit7.asm
-	include sound/sfx_EnemyHit8.asm
-	include sound/sfx_YoshiTongue.asm
-	include sound/sfx_YoshiSwallow.asm
-	include sound/sfx_YoshiFireSpit.asm
-	include sound/sfx_Checkpoint.asm
-	include sound/sfx_Chainsaw.asm
- ; include music data
-	include sound/mus_Title.asm
-	include sound/mus_GameOver.asm
-	include sound/mus_PlayerDown.asm
-	include sound/mus_Victory.asm
-	include sound/mus_DonutPlains.asm
-	include sound/mus_YoshisIsland.asm
-	include sound/mus_ValleyofBowser.asm
-	include sound/mus_VanillaDome.asm
-	include sound/mus_ForestofIllusion.asm
-	include sound/mus_Overworld.asm
-	include sound/mus_Underground.asm
-	include sound/mus_GhostHouse.asm
-	include sound/mus_Castle.asm
-	include sound/mus_Underwater.asm
-	include sound/mus_Ending.asm
-	incbin prg/padding/padding058_59.bin
+notePitchTable:
+	.word $0000
+	.word $0000
+	.word $0000
+	.word $0000
+	.word $0000
+	.word $0000
+	.word $0000
+	.word $0000
+	.word $0000
+	.word $07F2 ; A-0
+	.word $0780 ; A#0
+	.word $0714 ; B-0
+	.word $06AE ; C-1
+	.word $064E ; C#1
+	.word $05F4 ; D-1
+	.word $059E ; D#1
+	.word $054D ; E-1
+	.word $0501 ; F-1
+	.word $04B9
+	.word $0475
+	.word $0435
+	.word $03F9
+	.word $03C0
+	.word $038A
+	.word $0357
+	.word $0327
+	.word $02FA
+	.word $02CF
+	.word $02A7
+	.word $0281
+	.word $025D
+	.word $023B
+	.word $021B
+	.word $01FC
+	.word $01E0
+	.word $01C5
+	.word $01AC
+	.word $0194
+	.word $017D
+	.word $0168
+	.word $0153
+	.word $0140
+	.word $012E
+	.word $011D
+	.word $010D
+	.word $00FE
+	.word $00F0
+	.word $00E2
+	.word $00D6
+	.word $00CA
+	.word $00BE
+	.word $00B4
+	.word $00AA
+	.word $00A0
+	.word $0097
+	.word $008F
+	.word $0087
+	.word $007F
+	.word $0078
+	.word $0071
+	.word $006B
+	.word $0065
+	.word $005F
+	.word $005A
+	.word $0055
+	.word $0050
+	.word $004C
+	.word $0047
+	.word $0043
+	.word $0040
+	.word $003C
+	.word $0039
+	.word $0035
+	.word $0032
+	.word $0030
+	.word $002D
+	.word $002A
+	.word $0028
+	.word $0026
+	.word $0024
+	.word $0022
+	.word $0020
+	.word $001E
+	.word $001C
+	.word $001B
+	.word $0019
+	.word $0018
+	.word $0016
+	.word $0015
+	.word $0014
+	.word $0013
+	.word $0012
+	.word $0011
+	.word $0010
+	.word $000F
+	.word $000E
+	.word $000D
+	.word $000C
+	.word $000B
+	.word $000A
+	.word $0009
+	.word $0008
+	.word $0007
+	.word $0006
+	.word $0005
+	.word $0004
+	.word $0003
+	.word $0002
+ ; .include sfx_ data
+	.include sound/sfx_SpinJump.asm
+	.include sound/sfx_Pause.asm
+	.include sound/sfx_Jump.asm
+	.include sound/sfx_Swim.asm
+	.include sound/sfx_Beep.asm
+	.include sound/sfx_DragonCoin.asm
+	.include sound/sfx_1UP.asm
+	.include sound/sfx_Coin.asm
+	.include sound/sfx_Powerup.asm
+	.include sound/sfx_Warp.asm
+	.include sound/sfx_Block.asm
+	.include sound/sfx_Powerdown.asm
+	.include sound/sfx_YoshiMount.asm
+	.include sound/sfx_Feather.asm
+	.include sound/sfx_Thud.asm
+	.include sound/sfx_Explosion.asm
+	.include sound/sfx_EnemyHit1.asm
+	.include sound/sfx_EnemyHit2.asm
+	.include sound/sfx_EnemyHit3.asm
+	.include sound/sfx_EnemyHit4.asm
+	.include sound/sfx_EnemyHit5.asm
+	.include sound/sfx_EnemyHit6.asm
+	.include sound/sfx_EnemyHit7.asm
+	.include sound/sfx_EnemyHit8.asm
+	.include sound/sfx_YoshiTongue.asm
+	.include sound/sfx_YoshiSwallow.asm
+	.include sound/sfx_YoshiFireSpit.asm
+	.include sound/sfx_Checkpoint.asm
+	.include sound/sfx_Chainsaw.asm
+ ; .include music data
+	.include sound/mus_Title.asm
+	.include sound/mus_GameOver.asm
+	.include sound/mus_PlayerDown.asm
+	.include sound/mus_Victory.asm
+	.include sound/mus_DonutPlains.asm
+	.include sound/mus_YoshisIsland.asm
+	.include sound/mus_ValleyofBowser.asm
+	.include sound/mus_VanillaDome.asm
+	.include sound/mus_ForestofIllusion.asm
+	.include sound/mus_Overworld.asm
+	.include sound/mus_Underground.asm
+	.include sound/mus_GhostHouse.asm
+	.include sound/mus_Castle.asm
+	.include sound/mus_Underwater.asm
+	.include sound/mus_Ending.asm
+	.incbin prg/padding/padding058_59.bin

@@ -1,5 +1,5 @@
 ; disassembled by BZK 6502 Disassembler
-Obj_h36:
+obj0x36:
 	LDA yoshiXLo
 	SEC
 	SBC playerXLoDup
@@ -52,11 +52,11 @@ loc7_805A:
 	STA $33
 	JMP ($32)
 tbl7_806E:
-	dw ptr5_8078
-	dw ptr5_8079
-	dw ptr5_80AB
-	dw ptr5_8150
-	dw ptr5_8197
+	.word ptr5_8078
+	.word ptr5_8079
+	.word ptr5_80AB
+	.word ptr5_8150
+	.word ptr5_8197
 ptr5_8078:
 	RTS
 ptr5_8079:
@@ -400,18 +400,18 @@ bra7_828C:
 	STA $36 ; Use bank 2
 	JMP jmp_52_A463
 tbl7_82A2:
-	dw ofs_82BA ; Baby
-	dw ofs_82C5 ; Baby (Growing)
-	dw ofs_82D0 ; Ducking
-	dw ofs_82E3 ; Standing
-	dw ofs_82F6 ; Mouth Open
-	dw ofs_8309 ; Running
-	dw ofs_831C
-	dw ofs_832F ; Running (Flinching)
-	dw ofs_8342
-	dw ofs_8355 ; Idle w/ item
-	dw ofs_8368 ; Running w/ item
-	dw ofs_837B
+	.word ofs_82BA ; Baby
+	.word ofs_82C5 ; Baby (Growing)
+	.word ofs_82D0 ; Ducking
+	.word ofs_82E3 ; Standing
+	.word ofs_82F6 ; Mouth Open
+	.word ofs_8309 ; Running
+	.word ofs_831C
+	.word ofs_832F ; Running (Flinching)
+	.word ofs_8342
+	.word ofs_8355 ; Idle w/ item
+	.word ofs_8368 ; Running w/ item
+	.word ofs_837B
 ofs_82BA:
 	db $02
 	db $04
@@ -509,7 +509,7 @@ ofs_837B:
 	db $FF, $FF, $FD, $F2
 	db $FF, $FF, $EB, $F5
 
-Obj_YoshiBox:
+objYoshiBox:
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -522,7 +522,7 @@ Obj_YoshiBox:
 	BEQ bra7_83AC
 	CMP #$FF
 	BEQ bra7_83AC
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_83AC:
 	LDA objYLo,X
 	SEC
@@ -585,7 +585,7 @@ bra7_8416:
 	BEQ bra7_8432
 	CMP #$FF
 	BEQ bra7_8432
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_8432:
 	LDA objYLo,X
 	SEC
@@ -652,7 +652,7 @@ loc7_84B3:
 	STA sndSfx
 bra7_84C2_RTS:
 	RTS
-Obj_h6A:
+obj0x6A:
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -665,7 +665,7 @@ Obj_h6A:
 	BEQ bra7_84E1
 	CMP #$FF
 	BEQ bra7_84E1
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_84E1:
 	LDA objYLo,X
 	SEC
@@ -701,7 +701,7 @@ loc7_8523:
 	RTS
 bra7_8529:
 	JSR jmp_54_BD3D
-Obj_PSwitch:
+objPSwitch:
 	LDA #$02
 	STA $25 ; Configure this to stay in Yoshi's mouth when eaten 
 	LDX $A4 ; Get the index for the object's slot
@@ -716,7 +716,7 @@ Obj_PSwitch:
 	BEQ bra7_854E ; Branch if the player and the object are on the same screen
 	CMP #$FF ; If not, check if the object is one screen behind the player
 	BEQ bra7_854E ; If so, branch
-	JMP Obj_RemoveObject ; Otherwise, jump
+	JMP objRemoveObject ; Otherwise, jump
 bra7_854E:
 	LDA objYLo,X
 	SEC
@@ -761,20 +761,20 @@ bra7_8596:
 	STA $33 ; Load pointer into memory
 	JMP ($32) ; Jump to pointer
 tbl7_85AA:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw ptr_AB5D
-	dw ptr5_85B8
-	dw ptr_AE17
-	dw ptr5_8689
-	dw ptr5_8695
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word ptr_AB5D
+	.word ptr5_85B8
+	.word ptr_AE17
+	.word ptr5_8689
+	.word ptr5_8695
 ptr5_85B8:
-	JSR PositionCarriedObject
+	JSR positionCarriedObject
 	LDA frameCount
 	AND #$00
 	BNE bra7_85C6
 	LDA #$27
-	JSR GetMovementData
+	JSR getMovementData
 bra7_85C6:
 	LDA objXLo,X
 	SEC
@@ -787,7 +787,7 @@ bra7_85C6:
 	BEQ bra7_85E2
 	CMP #$FF
 	BEQ bra7_85E2
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_85E2:
 	LDA objYLo,X
 	SEC
@@ -822,9 +822,9 @@ loc7_8624:
 	BEQ bra7_862A
 	RTS
 bra7_862A:
-	JSR Obj_CapeHitCheck
+	JSR objCapeHitCheck
 	JSR jmp_54_A773
-	JSR SetObjectCarryState
+	JSR setObjectCarryState
 	LDA playerYSpd
 	BEQ bra7_8653
 	LDA playerMoveFlags
@@ -875,7 +875,7 @@ ptr5_8689:
 	AND #$00
 	BNE bra7_8694_RTS
 	LDA #$26
-	JSR GetMovementData
+	JSR getMovementData
 bra7_8694_RTS:
 	RTS
 ptr5_8695:
@@ -883,7 +883,7 @@ ptr5_8695:
 	AND #$00
 	BNE bra7_86A0
 	LDA #$04
-	JSR GetMovementData
+	JSR getMovementData
 bra7_86A0:
 	LDA objState,X
 	AND #$20
@@ -932,7 +932,7 @@ bra7_86E1:
 	STA objVar,X
 bra7_86F2_RTS:
 	RTS
-Obj_Spring:
+objSpring:
 	LDA #$03
 	STA $25
 	LDX $A4
@@ -947,7 +947,7 @@ Obj_Spring:
 	BEQ bra7_8715
 	CMP #$FF
 	BEQ bra7_8715
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_8715:
 	LDA objYLo,X
 	SEC
@@ -993,25 +993,25 @@ bra7_875D:
 	STA $33 ; Load pointer into memory
 	JMP ($32) ; Jump to pointer location
 tbl7_8771:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw ptr_AB5D
-	dw ptr5_8789
-	dw ptr_AE17
-	dw ptr5_884C
-	dw ptr5_8695
-	dw ptr5_88BC
-	dw ptr5_88BC
-	dw ptr5_88BC
-	dw ptr5_8931
-	dw ptr5_89C1
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word ptr_AB5D
+	.word ptr5_8789
+	.word ptr_AE17
+	.word ptr5_884C
+	.word ptr5_8695
+	.word ptr5_88BC
+	.word ptr5_88BC
+	.word ptr5_88BC
+	.word ptr5_8931
+	.word ptr5_89C1
 ptr5_8789:
-	JSR PositionCarriedObject
+	JSR positionCarriedObject
 	LDA frameCount
 	AND #$00
 	BNE bra7_8797
 	LDA #$27
-	JSR GetMovementData
+	JSR getMovementData
 bra7_8797:
 	LDA objXLo,X
 	SEC
@@ -1024,7 +1024,7 @@ bra7_8797:
 	BEQ bra7_87B3
 	CMP #$FF
 	BEQ bra7_87B3
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_87B3:
 	LDA objYLo,X
 	SEC
@@ -1061,9 +1061,9 @@ loc7_87F5:
 	RTS
 
 bra7_87FB:
-	JSR Obj_CapeHitCheck
+	JSR objCapeHitCheck
 	JSR jmp_54_A773
-	JSR SetObjectCarryState
+	JSR setObjectCarryState
 	LDA playerYSpd
 	BEQ bra7_881E
 	LDA playerMoveFlags
@@ -1109,7 +1109,7 @@ ptr5_884C:
 	AND #$00
 	BNE bra7_8857
 	LDA #$26
-	JSR GetMovementData
+	JSR getMovementData
 bra7_8857:
 	LDA objXLo,X
 	SEC
@@ -1122,7 +1122,7 @@ bra7_8857:
 	BEQ bra7_8873
 	CMP #$FF
 	BEQ bra7_8873
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_8873:
 	LDA objYLo,X
 	SEC
@@ -1164,7 +1164,7 @@ ptr5_88BC:
 	AND #$00
 	BNE bra7_88C7
 	LDA #$27
-	JSR GetMovementData
+	JSR getMovementData
 bra7_88C7:
 	LDA objXLo,X
 	SEC
@@ -1177,7 +1177,7 @@ bra7_88C7:
 	BEQ bra7_88E3
 	CMP #$FF
 	BEQ bra7_88E3
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_88E3:
 	LDA objYLo,X
 	SEC
@@ -1221,7 +1221,7 @@ ptr5_8931:
 	AND #$00
 	BNE bra7_893C
 	LDA #$27
-	JSR GetMovementData
+	JSR getMovementData
 bra7_893C:
 	LDA objXLo,X
 	SEC
@@ -1234,7 +1234,7 @@ bra7_893C:
 	BEQ bra7_8958
 	CMP #$FF
 	BEQ bra7_8958
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_8958:
 	LDA objYLo,X
 	SEC
@@ -1292,7 +1292,7 @@ ptr5_89C1:
 	AND #$00
 	BNE bra7_89CC
 	LDA #$27
-	JSR GetMovementData
+	JSR getMovementData
 bra7_89CC:
 	LDA objXLo,X
 	SEC
@@ -1305,7 +1305,7 @@ bra7_89CC:
 	BEQ bra7_89E8
 	CMP #$FF
 	BEQ bra7_89E8
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_89E8:
 	LDA objYLo,X
 	SEC
@@ -1347,7 +1347,7 @@ bra7_8A30:
 	ORA #$03
 	STA objState,X
 	RTS
-Obj_h44:
+obj0x44:
 	LDX $A4
 	LDA $0641,X
 	CMP #$F0
@@ -1366,9 +1366,9 @@ Obj_h44:
 bra7_8A60:
 	LDA objFrameCount
 	AND #$03
-	BNE Obj_Shell
+	BNE objShell
 	INC $0641,X
-Obj_Shell:
+objShell:
 	LDA #$04
 	STA $25
 	LDX $A4
@@ -1383,7 +1383,7 @@ Obj_Shell:
 	BEQ bra7_8A8C
 	CMP #$FF
 	BEQ bra7_8A8C
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_8A8C:
 	LDA objYLo,X
 	SEC
@@ -1429,20 +1429,20 @@ bra7_8AD4:
 	STA $33
 	JMP ($32)
 tbl7_8AE8:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr5_8AFA
-	dw Obj_FlipKill
-	dw ptr5_8B55
-	dw ptr_AD79
-	dw ptr5_8B7D
-	dw ptr5_8B91
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr5_8AFA
+	.word objFlipKill
+	.word ptr5_8B55
+	.word ptr_AD79
+	.word ptr5_8B7D
+	.word ptr5_8B91
 ptr5_8AFA:
 	JSR jmp_54_AC20
-	JSR Obj_CapeHitCheck
+	JSR objCapeHitCheck
 	JSR jmp_54_A773
-	JSR SetObjectCarryState
+	JSR setObjectCarryState
 	LDA playerYoshiState
 	BEQ bra7_8B3F
 	LDA playerYSpd
@@ -1511,7 +1511,7 @@ ptr5_8B7D:
 	AND #$00
 	BNE bra7_8B88
 	LDA #$04
-	JSR GetMovementData
+	JSR getMovementData
 bra7_8B88:
 	LDA #$10
 	JSR sub3_AEA8
@@ -1522,10 +1522,10 @@ ptr5_8B91:
 	AND #$00
 	BNE bra7_8B9C_RTS
 	LDA #$27
-	JSR GetMovementData
+	JSR getMovementData
 bra7_8B9C_RTS:
 	RTS
-Obj_h38:
+obj0x38:
 	LDX $A4
 	LDA objState,X
 	AND #$0F
@@ -1537,7 +1537,7 @@ bra7_8BAB:
 	AND #$00
 	BNE bra7_8BB6
 	LDA #$25
-	JSR GetMovementData
+	JSR getMovementData
 bra7_8BB6:
 	LDA objXLo,X
 	SEC
@@ -1550,7 +1550,7 @@ bra7_8BB6:
 	BEQ bra7_8BD2
 	CMP #$FF
 	BEQ bra7_8BD2
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_8BD2:
 	LDA objYLo,X
 	SEC
@@ -1623,7 +1623,7 @@ sub7_8C42:
 	BEQ bra7_8C64
 	CMP #$FF
 	BEQ bra7_8C64
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_8C64:
 	LDA objYLo,X
 	SEC
@@ -1669,15 +1669,15 @@ bra7_8CAC:
 	STA $33
 	JMP ($32)
 tbl7_8CC0:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr5_8CCA
-	dw Obj_FlipKill
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr5_8CCA
+	.word objFlipKill
 ptr5_8CCA:
-	JSR Obj_CapeHitCheck
-	JSR Obj_PlayerHitCheck
-	JSR Obj_KillOnSpinJump
+	JSR objCapeHitCheck
+	JSR objPlayerHitCheck
+	JSR objKillOnSpinJump
 	LDA #$30
 	STA playerYSpd
 	LDA playerMoveFlags
@@ -1700,7 +1700,7 @@ bra7_8CED:
 	LDA #$00
 	STA objVar,X
 	RTS
-Obj_h49:
+obj0x49:
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -1713,7 +1713,7 @@ Obj_h49:
 	BEQ bra7_8D1C
 	CMP #$FF
 	BEQ bra7_8D1C
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_8D1C:
 	LDA objYLo,X
 	SEC
@@ -1751,7 +1751,7 @@ loc7_8D5E:
 bra7_8D64:
 	JSR jmp_54_BD3D
 	JMP loc7_8DD0
-Obj_1UP:
+obj1UP:
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -1764,7 +1764,7 @@ Obj_1UP:
 	BEQ bra7_8D88
 	CMP #$FF
 	BEQ bra7_8D88
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_8D88:
 	LDA objYLo,X
 	SEC
@@ -1811,7 +1811,7 @@ loc7_8DD0:
 	AND #$01
 	BNE bra7_8DE9_RTS
 	LDA #$0B
-	JSR GetMovementData
+	JSR getMovementData
 bra7_8DE9_RTS:
 	RTS
 sub7_8DEA:
@@ -1827,11 +1827,11 @@ sub7_8DEA:
 	STA $33 ; Load pointer into memory
 	JMP ($32) ; Jump to pointer
 tbl7_8E02:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr5_8E0C
-	dw ptr5_8E21
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr5_8E0C
+	.word ptr5_8E21
 ptr5_8E0C:
 	JSR jmp_54_A773
 	INC playerLives
@@ -1840,7 +1840,7 @@ ptr5_8E0C:
 	LDA #$00
 	STA objSlot,X ; Despawn 1UP
 	LDA #$03
-	JSR RewardPoints
+	JSR rewardPoints
 	RTS
 ptr5_8E21:
 	LDA objVar,X
@@ -1850,7 +1850,7 @@ ptr5_8E21:
 	AND #$03
 	BNE bra7_8E33_RTS
 	LDA #$05
-	JSR GetMovementData
+	JSR getMovementData
 bra7_8E33_RTS:
 	RTS
 bra7_8E34:
@@ -1860,7 +1860,7 @@ bra7_8E34:
 	LDA #$00
 	STA objVar,X
 	RTS
-Obj_h06:
+obj0x06:
 	LDX $A4
 	JSR sub7_8F50
 	LDX $A4
@@ -1877,7 +1877,7 @@ bra7_8E5B:
 	AND #$00
 	BNE bra7_8E66 ; Set speed to once every frame
 	LDA #$06
-	JSR GetMovementData
+	JSR getMovementData
 bra7_8E66:
 	LDA #$08
 	JSR sub3_AEA8
@@ -1900,7 +1900,7 @@ bra7_8E7F:
 bra7_8E8B:
 	STA fireballSlot
 	RTS
-Obj_h07:
+obj0x07:
 	LDX $A4
 	JSR sub7_8F50
 	LDX $A4
@@ -1917,7 +1917,7 @@ bra7_8EA8:
 	AND #$00
 	BNE bra7_8EB3
 	LDA #$06
-	JSR GetMovementData
+	JSR getMovementData
 bra7_8EB3:
 	LDA #$08
 	JSR sub3_AEA8
@@ -1940,7 +1940,7 @@ bra7_8ECC:
 bra7_8ED8:
 	STA fireballSlot2
 	RTS
-Obj_h08:
+obj0x08:
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -1953,7 +1953,7 @@ Obj_h08:
 	BEQ bra7_8EFA
 	CMP #$FF
 	BEQ bra7_8EFA
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_8EFA:
 	LDA objYLo,X
 	SEC
@@ -2007,7 +2007,7 @@ sub7_8F50:
 	BEQ bra7_8F6C ; Branch ahead if the player is on the same screen as the object
 	CMP #$FF ; Is the object 1 screen ahead of the player?
 	BEQ bra7_8F6C ; If so, branch ahead
-	JMP Obj_RemoveObject ; Otherwise, jump
+	JMP objRemoveObject ; Otherwise, jump
 bra7_8F6C:
 	LDA objYLo,X
 	SEC
@@ -2044,7 +2044,7 @@ loc7_8FAE:
 	RTS
 bra7_8FB4_RTS:
 	RTS
-Obj_h09:
+obj0x09:
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -2057,7 +2057,7 @@ Obj_h09:
 	BEQ bra7_8FD3
 	CMP #$FF
 	BEQ bra7_8FD3
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_8FD3:
 	LDA objYLo,X
 	SEC
@@ -2106,7 +2106,7 @@ bra7_901B:
 	LDA #$00
 	STA objSlot,X
 	RTS
-Obj_h0A:
+obj0x0A:
 	LDX $A4
 	JSR sub7_9538
 	LDA objYLo,X
@@ -2122,7 +2122,7 @@ Obj_h0A:
 	LDA #$00
 	STA objSlot,X
 	RTS
-Obj_h6B:
+obj0x6B:
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -2135,7 +2135,7 @@ Obj_h6B:
 	BEQ bra7_907C
 	CMP #$FF
 	BEQ bra7_907C
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_907C:
 	LDA objYLo,X
 	SEC
@@ -2173,7 +2173,7 @@ loc7_90BE:
 bra7_90C4:
 	JSR sub7_9149
 	RTS
-Obj_h0B:
+obj0x0B:
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -2186,7 +2186,7 @@ Obj_h0B:
 	BEQ bra7_90E6
 	CMP #$FF
 	BEQ bra7_90E6
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_90E6:
 	LDA objYLo,X
 	SEC
@@ -2232,7 +2232,7 @@ bra7_912E:
 	AND #$01
 	BNE bra7_9148_RTS ; Only continue if on an even frame
 	LDA #$0B
-	JSR GetMovementData ; Get the movement data
+	JSR getMovementData ; Get the movement data
 bra7_9148_RTS:
 	RTS
 sub7_9149:
@@ -2248,22 +2248,22 @@ sub7_9149:
 	STA $33
 	JMP ($32)
 tbl7_9161:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr5_916B
-	dw ptr5_917C
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr5_916B
+	.word ptr5_917C
 ptr5_916B:
 	JSR jmp_54_A773
-	JSR Obj_GetEdiblePowerup
+	JSR objGetEdiblePowerup
 	LDA #$00
 	STA objSlot,Y
 	LDA #$03
-	JSR RewardPoints
+	JSR rewardPoints
 	RTS
 ptr5_917C:
 	LDA objVar,X
-Obj_h3A:
+obj0x3A:
 	CMP #$0E
 	BCS bra7_91A2
 	LDA objSlot,X
@@ -2273,7 +2273,7 @@ Obj_h3A:
 	AND #$00
 	BNE bra7_9195_RTS
 	LDA #$2A
-	JSR GetMovementData
+	JSR getMovementData
 bra7_9195_RTS:
 	RTS
 bra7_9196:
@@ -2281,7 +2281,7 @@ bra7_9196:
 	AND #$03
 	BNE bra7_91A1_RTS
 	LDA #$05
-	JSR GetMovementData
+	JSR getMovementData
 bra7_91A1_RTS:
 	RTS
 bra7_91A2:
@@ -2291,7 +2291,7 @@ bra7_91A2:
 	LDA #$00
 	STA objVar,X
 	RTS
-Obj_h0C:
+obj0x0C:
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -2304,7 +2304,7 @@ Obj_h0C:
 	BEQ bra7_91CE
 	CMP #$FF
 	BEQ bra7_91CE
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_91CE:
 	LDA objYLo,X
 	SEC
@@ -2358,7 +2358,7 @@ bra7_9224:
 	BEQ bra7_9240
 	CMP #$FF
 	BEQ bra7_9240
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_9240:
 	LDA objYLo,X
 	SEC
@@ -2411,18 +2411,18 @@ bra7_9290:
 	STA $33
 	JMP ($32)
 tbl7_92A8:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr5_92B2
-	dw ptr5_92C3
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr5_92B2
+	.word ptr5_92C3
 ptr5_92B2:
 	JSR jmp_54_A773
-	JSR Obj_GetEdiblePowerup
+	JSR objGetEdiblePowerup
 	LDA #$00
 	STA objSlot,Y
 	LDA #$03
-	JSR RewardPoints
+	JSR rewardPoints
 	RTS
 ptr5_92C3:
 	LDX $A4
@@ -2430,7 +2430,7 @@ ptr5_92C3:
 	AND #$E0
 	STA objState,X
 	RTS
-Obj_h0D:
+obj0x0D:
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -2443,7 +2443,7 @@ Obj_h0D:
 	BEQ bra7_92EC
 	CMP #$FF
 	BEQ bra7_92EC
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_92EC:
 	LDA objYLo,X
 	SEC
@@ -2497,7 +2497,7 @@ bra7_9342:
 	BEQ bra7_935E
 	CMP #$FF
 	BEQ bra7_935E
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_935E:
 	LDA objYLo,X
 	SEC
@@ -2550,20 +2550,20 @@ bra7_93AE:
 	STA $33
 	JMP ($32)
 tbl7_93C6:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr5_93D0
-	dw ptr5_92C3
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr5_93D0
+	.word ptr5_92C3
 ptr5_93D0:
 	JSR jmp_54_A773
-	JSR Obj_GetEdiblePowerup
+	JSR objGetEdiblePowerup
 	LDA #$00
 	STA objSlot,Y
 	LDA #$03
-	JSR RewardPoints
+	JSR rewardPoints
 	RTS
-Obj_h0E:
+obj0x0E:
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -2576,7 +2576,7 @@ Obj_h0E:
 	BEQ bra7_93FF
 	CMP #$FF
 	BEQ bra7_93FF
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_93FF:
 	LDA objYLo,X
 	SEC
@@ -2622,7 +2622,7 @@ bra7_9447:
 	AND #$01
 	BNE bra7_9461_RTS
 	LDA #$0E
-	JSR GetMovementData
+	JSR getMovementData
 bra7_9461_RTS:
 	RTS
 sub7_9462:
@@ -2638,11 +2638,11 @@ sub7_9462:
 	STA $33
 	JMP ($32)
 tbl7_947A:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr5_9484
-	dw ptr5_9497
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr5_9484
+	.word ptr5_9497
 ptr5_9484:
 	JSR jmp_54_A773
 	LDA #$01
@@ -2650,7 +2650,7 @@ ptr5_9484:
 	LDA #$00
 	STA objSlot,X
 	LDA #$03
-	JSR RewardPoints
+	JSR rewardPoints
 	RTS
 ptr5_9497:
 	LDA objVar,X
@@ -2660,7 +2660,7 @@ ptr5_9497:
 	AND #$03
 	BNE bra7_94A9_RTS
 	LDA #$05
-	JSR GetMovementData
+	JSR getMovementData
 bra7_94A9_RTS:
 	RTS
 bra7_94AA:
@@ -2670,7 +2670,7 @@ bra7_94AA:
 	LDA #$00
 	STA objVar,X
 	RTS
-Obj_h0F:
+obj0x0F:
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -2683,7 +2683,7 @@ Obj_h0F:
 	BEQ bra7_94D6
 	CMP #$FF
 	BEQ bra7_94D6
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_94D6:
 	LDA objYLo,X
 	SEC
@@ -2767,9 +2767,9 @@ bra7_9573:
 	TYA
 	ASL
 	TAX
-	LDA SprPtrs_CommonObjects,X
+	LDA sprPtrs_CommonObjects,X
 	STA $32
-	LDA SprPtrs_CommonObjects+1,X
+	LDA sprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -2783,9 +2783,9 @@ ptr6_9590:
 	LDA #$01
 	ASL
 	TAX
-	LDA SprPtrs_CommonObjects,X
+	LDA sprPtrs_CommonObjects,X
 	STA $32
-	LDA SprPtrs_CommonObjects+1,X
+	LDA sprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -2793,61 +2793,61 @@ ptr6_9590:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
-SprPtrs_CommonObjects:
-	dw SprMap_Mushroom
-	dw SprMap_PSwitch
-	dw SprMap_KoopaShell1
-	dw SprMap_Spring
-	dw SprMap_SpringPressed
-	dw SprMap_FireFlower
-	dw ofs_95FE
-	dw SprMap_Star
-	dw SprMap_Feather
-	dw SprMap_1UP
-	dw ofs_961A
-	dw ofs_961E
-	dw SprMap_KoopaShell2
-	dw ofs_9622
-	dw ofs_9629
-	dw SprMap_Checkpoint
-	dw SprMap_GoalTape
-SprMap_Mushroom:
+sprPtrs_CommonObjects:
+	.word sprMap_Mushroom
+	.word sprMap_PSwitch
+	.word sprMap_KoopaShell1
+	.word sprMap_Spring
+	.word sprMap_SpringPressed
+	.word sprMap_FireFlower
+	.word ofs_95FE
+	.word sprMap_Star
+	.word sprMap_Feather
+	.word sprMap_1UP
+	.word ofs_961A
+	.word ofs_961E
+	.word sprMap_KoopaShell2
+	.word ofs_9622
+	.word ofs_9629
+	.word sprMap_Checkpoint
+	.word sprMap_GoalTape
+sprMap_Mushroom:
 	db $02 ; Tile Width
 	db $02 ; Tile Height
 	db $90 ; CHR Bank ID
 	db $01, $02
 	db $0B, $0C
-SprMap_PSwitch:
+sprMap_PSwitch:
 	db $02
 	db $02
 	db $90
 	db $03, $04
 	db $0D, $0E
-SprMap_KoopaShell1:
+sprMap_KoopaShell1:
 	db $02
 	db $02
 	db $90
 	db $05, $06
 	db $0F, $10
-SprMap_KoopaShell2:
+sprMap_KoopaShell2:
 	db $02
 	db $02
 	db $90
 	db $0F, $10
 	db $05, $06
-SprMap_Spring:
+sprMap_Spring:
 	db $02
 	db $02
 	db $90
 	db $07, $08
 	db $11, $12
-SprMap_SpringPressed:
+sprMap_SpringPressed:
 	db $02
 	db $02
 	db $90
 	db $FF, $FF
 	db $15, $16
-SprMap_FireFlower:
+sprMap_FireFlower:
 	db $02
 	db $02
 	db $90
@@ -2859,19 +2859,19 @@ ofs_95FE:
 	db $90
 	db $59, $5A
 	db $61, $62
-SprMap_Star:
+sprMap_Star:
 	db $02
 	db $02
 	db $90
 	db $1B, $1C
 	db $23, $24
-SprMap_Feather:
+sprMap_Feather:
 	db $02
 	db $02
 	db $90
 	db $1D, $1E
 	db $25, $26
-SprMap_1UP:
+sprMap_1UP:
 	db $02
 	db $02
 	db $90
@@ -2907,9 +2907,9 @@ ptr6_9630:
 	LDA tbl7_9654,X
 	ASL
 	TAX
-	LDA SprPtrs_CommonObjects,X
+	LDA sprPtrs_CommonObjects,X
 	STA $32
-	LDA SprPtrs_CommonObjects+1,X
+	LDA sprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -2942,9 +2942,9 @@ bra7_966F:
 	LDA #$0C
 	ASL
 	TAX
-	LDA SprPtrs_CommonObjects,X
+	LDA sprPtrs_CommonObjects,X
 	STA $32
-	LDA SprPtrs_CommonObjects+1,X
+	LDA sprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -2956,9 +2956,9 @@ bra7_968A:
 	LDA #$02
 	ASL
 	TAX
-	LDA SprPtrs_CommonObjects,X
+	LDA sprPtrs_CommonObjects,X
 	STA $32
-	LDA SprPtrs_CommonObjects+1,X
+	LDA sprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -2980,9 +2980,9 @@ ptr6_96B7:
 	LDA #$09
 	ASL
 	TAX
-	LDA SprPtrs_CommonObjects,X
+	LDA sprPtrs_CommonObjects,X
 	STA $32
-	LDA SprPtrs_CommonObjects+1,X
+	LDA sprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -2995,9 +2995,9 @@ ptr6_96D5:
 	LDA #$0B
 	ASL
 	TAX
-	LDA SprPtrs_CommonObjects,X
+	LDA sprPtrs_CommonObjects,X
 	STA $32
-	LDA SprPtrs_CommonObjects+1,X
+	LDA sprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$00
 	STA $36
@@ -3018,18 +3018,18 @@ ptr7_96F8:
 	BNE bra7_971A_RTS
 	ASL
 	TAX
-	LDA SprPtrs_HPodoboo,X
+	LDA sprPtrs_HPodoboo,X
 	STA $32
-	LDA SprPtrs_HPodoboo+1,X
+	LDA sprPtrs_HPodoboo+1,X
 	STA $33
 	LDA #$40
 	STA $36
 	JSR jmp_54_A118
 bra7_971A_RTS:
 	RTS
-SprPtrs_HPodoboo:
-	dw SprMap_HPodoboo
-SprMap_HPodoboo:
+sprPtrs_HPodoboo:
+	.word sprMap_HPodoboo
+sprMap_HPodoboo:
 	db $02
 	db $02
 	db $90
@@ -3041,9 +3041,9 @@ ptr6_9727:
 	LDA #$00
 	ASL
 	TAX
-	LDA SprPtrs_CommonObjects,X
+	LDA sprPtrs_CommonObjects,X
 	STA $32
-	LDA SprPtrs_CommonObjects+1,X
+	LDA sprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -3056,9 +3056,9 @@ ptr6_9742:
 	LDA #$05
 	ASL
 	TAX
-	LDA SprPtrs_CommonObjects,X
+	LDA sprPtrs_CommonObjects,X
 	STA $32
-	LDA SprPtrs_CommonObjects+1,X
+	LDA sprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -3076,9 +3076,9 @@ ptr6_9769:
 	LDA #$08
 	ASL
 	TAX
-	LDA SprPtrs_CommonObjects,X
+	LDA sprPtrs_CommonObjects,X
 	STA $32
-	LDA SprPtrs_CommonObjects+1,X
+	LDA sprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -3111,9 +3111,9 @@ bra7_97A9:
 	TYA
 	ASL
 	TAX
-	LDA SprPtrs_CommonObjects,X
+	LDA sprPtrs_CommonObjects,X
 	STA $32
-	LDA SprPtrs_CommonObjects+1,X
+	LDA sprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -3305,11 +3305,11 @@ bra7_98AC:
 	LDA #$C1
 	STA $0212
 	RTS
-Obj_h42:
+obj0x42:
 	LDX $A4
 	LDA objVar,X
 	BPL bra7_9908
-	JSR Obj_FacePlayer
+	JSR objFacePlayer
 	RTS
 bra7_9908:
 	LDA #$07
@@ -3326,7 +3326,7 @@ bra7_9908:
 	BEQ bra7_992A
 	CMP #$FF
 	BEQ bra7_992A
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_992A:
 	LDA objYLo,X
 	SEC
@@ -3372,22 +3372,22 @@ bra7_9972:
 	STA $33
 	JMP ($32)
 tbl7_9986:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr5_9990
-	dw ptr5_99BF
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr5_9990
+	.word ptr5_99BF
 ptr5_9990:
 	LDA frameCount
 	AND #$00
 	BNE bra7_999B
 	LDA #$29
-	JSR GetMovementData
+	JSR getMovementData
 bra7_999B:
-	JSR Obj_CapeHitCheck
-	JSR Obj_PlayerHitCheck
-	JSR Obj_KillOnSpinJump
-	JSR Obj_StompRebound
+	JSR objCapeHitCheck
+	JSR objPlayerHitCheck
+	JSR objKillOnSpinJump
+	JSR objStompRebound
 	INC objSlot,X
 	INC objSlot,X
 	LDA #$00
@@ -3415,9 +3415,9 @@ bra7_99D7:
 	TYA
 	ASL
 	TAX
-	LDA SprPtrs_BuzzyBeetle,X
+	LDA sprPtrs_BuzzyBeetle,X
 	STA $32
-	LDA SprPtrs_BuzzyBeetle+1,X
+	LDA sprPtrs_BuzzyBeetle+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -3432,16 +3432,16 @@ bra7_99F1:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
-SprPtrs_BuzzyBeetle:
-	dw SprMap_BuzzyWalk1
-	dw SprMap_BuzzyWalk2
-SprMap_BuzzyWalk1:
+sprPtrs_BuzzyBeetle:
+	.word sprMap_BuzzyWalk1
+	.word sprMap_BuzzyWalk2
+sprMap_BuzzyWalk1:
 	db $02
 	db $02
 	db $97
 	db $1E, $1F
 	db $26, $27
-SprMap_BuzzyWalk2:
+sprMap_BuzzyWalk2:
 	db $02
 	db $02
 	db $97
@@ -3451,9 +3451,9 @@ ptr6_9A11:
 	LDA #$02
 	ASL
 	TAX
-	LDA SprPtrs_BuzzyShell,X
+	LDA sprPtrs_BuzzyShell,X
 	STA $32
-	LDA SprPtrs_BuzzyShell+1,X
+	LDA sprPtrs_BuzzyShell+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -3473,9 +3473,9 @@ bra7_9A3B:
 	LDA #$04
 	ASL
 	TAX
-	LDA SprPtrs_BuzzyShell,X
+	LDA sprPtrs_BuzzyShell,X
 	STA $32
-	LDA SprPtrs_BuzzyShell+1,X
+	LDA sprPtrs_BuzzyShell+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -3507,9 +3507,9 @@ bra7_9A77:
 	STY $05F0
 	ASL
 	TAX
-	LDA SprPtrs_BuzzyShell,X
+	LDA sprPtrs_BuzzyShell,X
 	STA $32
-	LDA SprPtrs_BuzzyShell+1,X
+	LDA sprPtrs_BuzzyShell+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -3521,37 +3521,37 @@ bra7_9A93:
 	STY $36
 	JSR jmp_54_A118
 	RTS
-SprPtrs_BuzzyShell:
-	dw SprMap_BuzzyShell1
-	dw SprMap_BuzzyShell2
-	dw SprMap_BuzzyShell3
-	dw SprMap_BuzzyShell2
-	dw SprMap_BuzzyShell4
-SprMap_BuzzyShell1:
+sprPtrs_BuzzyShell:
+	.word sprMap_BuzzyShell1
+	.word sprMap_BuzzyShell2
+	.word sprMap_BuzzyShell3
+	.word sprMap_BuzzyShell2
+	.word sprMap_BuzzyShell4
+sprMap_BuzzyShell1:
 	db $02
 	db $02
 	db $97
 	db $1C, $1D
 	db $22, $23
-SprMap_BuzzyShell2:
+sprMap_BuzzyShell2:
 	db $02
 	db $02
 	db $97
 	db $1C, $1D
 	db $24, $25
-SprMap_BuzzyShell3:
+sprMap_BuzzyShell3:
 	db $02
 	db $02
 	db $97
 	db $1C, $1D
 	db $2A, $2B
-SprMap_BuzzyShell4:
+sprMap_BuzzyShell4:
 	db $02
 	db $02
 	db $97
 	db $2A, $2B
 	db $1C, $1D
-Obj_h74:
+obj0x74:
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -3564,7 +3564,7 @@ Obj_h74:
 	BEQ bra7_9ADD
 	CMP #$FF
 	BEQ bra7_9ADD
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_9ADD:
 	LDA objYLo,X
 	SEC
@@ -3635,10 +3635,10 @@ bra7_9B4E:
 	STA $33
 	JMP ($32)
 tbl7_9B66:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr5_9B6E
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr5_9B6E
 ptr5_9B6E:
 	LDA objXDistHi,X
 	BPL bra7_9B80
@@ -3707,9 +3707,9 @@ ptr6_9BDB:
 	LDA #$0F
 	ASL
 	TAX
-	LDA SprPtrs_CommonObjects,X
+	LDA sprPtrs_CommonObjects,X
 	STA $32
-	LDA SprPtrs_CommonObjects+1,X
+	LDA sprPtrs_CommonObjects+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -3717,7 +3717,7 @@ ptr6_9BDB:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
-SprMap_Checkpoint:
+sprMap_Checkpoint:
 	db $02
 	db $01
 	db $90
@@ -3726,9 +3726,9 @@ ptr6_9BFB:
 	LDA #$10
 	ASL
 	TAX
-	LDA SprPtrs_CommonObjects,X
+	LDA sprPtrs_CommonObjects,X
 	STA $32
-	LDA SprPtrs_CommonObjects+1,X
+	LDA sprPtrs_CommonObjects+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -3742,13 +3742,13 @@ bra7_9C16:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
-SprMap_GoalTape:
+sprMap_GoalTape:
 	db $03
 	db $01
 	db $A6
 	db $37, $36, $36
 	db $36 ; Excess byte, can be removed
-Obj_h48:
+obj0x48:
 	LDX $A4
 	LDA objVar,X
 	BMI bra7_9C32
@@ -3765,7 +3765,7 @@ bra7_9C32:
 	BEQ bra7_9C4E
 	CMP #$FF
 	BEQ bra7_9C4E
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_9C4E:
 	LDA objYLo,X
 	SEC
@@ -3804,7 +3804,7 @@ bra7_9C96:
 	LDA objVar,X
 	CMP #$80
 	BNE bra7_9D07
-	JSR Obj_FacePlayer
+	JSR objFacePlayer
 	LDY objCount
 	INC objCount
 	INC objCount
@@ -3866,7 +3866,7 @@ loc7_9D0B:
 	BEQ bra7_9D2D
 	CMP #$FF
 	BEQ bra7_9D2D
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_9D2D:
 	LDA objYLo,X
 	SEC
@@ -3912,11 +3912,11 @@ bra7_9D75:
 	STA $33
 	JMP ($32)
 tbl7_9D89:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr5_9D93
-	dw Obj_FlipKill
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr5_9D93
+	.word objFlipKill
 ptr5_9D93:
 	LDA frameCount
 	AND #$00
@@ -3931,9 +3931,9 @@ ptr5_9DA5:
 	LDA #$00
 	ASL
 	TAX
-	LDA SprPtrs_HPodoboo,X
+	LDA sprPtrs_HPodoboo,X
 	STA $32
-	LDA SprPtrs_HPodoboo+1,X
+	LDA sprPtrs_HPodoboo+1,X
 	STA $33
 	LDA #$40
 	STA $36
@@ -3944,7 +3944,7 @@ ptr5_9DA5:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
-Obj_h4C:
+obj0x4C:
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -3957,7 +3957,7 @@ Obj_h4C:
 	BEQ bra7_9DE5
 	CMP #$FF
 	BEQ bra7_9DE5
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_9DE5:
 	LDA objYLo,X
 	SEC
@@ -4055,10 +4055,10 @@ loc7_9E98:
 	STA $33
 	JMP ($32)
 tbl7_9EB0:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr5_9EB8
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr5_9EB8
 ptr5_9EB8:
 	LDA objXDistHi,X
 	BPL bra7_9EE4_RTS
@@ -4095,7 +4095,7 @@ sub7_9EE5:
 	STA playerPowerupBuffer ; Update the player's sprite
 bra7_9EF6_RTS:
 	RTS
-Obj_h7C:
+obj0x7C:
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -4108,7 +4108,7 @@ Obj_h7C:
 	BEQ bra7_9F15
 	CMP #$FF
 	BEQ bra7_9F15
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra7_9F15:
 	LDA objYLo,X
 	SEC

@@ -1,5 +1,5 @@
 ; disassembled by BZK 6502 Disassembler
-	incbin tilesets/ts_Bowser.bin
+	.incbin tilesets/ts_Bowser.bin
 	
 	db $17
 	db $00
@@ -141,8 +141,8 @@ bra14_8694:
 	STA $33
 	JMP ($32)
 tbl14_86B1:
-	dw loc_86E9
-	dw loc_86B5
+	.word loc_86E9
+	.word loc_86B5
 loc_86B5:
 	LDY #$00
 	LDA objSlot,X
@@ -187,7 +187,7 @@ bra14_86C0:
 	db $00
 	db $00
 	db $12
-	JSR GetMovementData
+	JSR getMovementData
 	RTS
 loc_86E9:
 	JSR sub3_B057
@@ -255,7 +255,7 @@ bra14_8759:
 	AND #$01
 	BNE bra14_8766
 	LDA $25
-	JSR GetMovementData
+	JSR getMovementData
 bra14_8766:
 	LDY #$00
 	LDA objFrameCount
@@ -296,7 +296,7 @@ bra14_8790:
 	BEQ bra14_87BD
 	CMP #$FF
 	BEQ bra14_87BD
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra14_87BD:
 	LDA objYLo,X
 	SEC
@@ -329,7 +329,7 @@ bra14_87EE:
 bra14_87FF:
 loc14_87FF:
 	db $AD
-	incbin tilesets/ts_Bowser.bin
+	.incbin tilesets/ts_Bowser.bin
 	db $00
 	db $00
 	db $00
@@ -677,7 +677,7 @@ tbl14_8F67:
 	BEQ bra14_8FF4
 	CMP #$FF
 	BEQ bra14_8FF4
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra14_8FF4:
 	LDA objYLo,X
 	SEC
@@ -685,7 +685,7 @@ bra14_8FF4:
 	STA objYDistLo,X
 	LDA objYHi,X
 	
-	incbin tilesets/ts_Bowser.bin
+	.incbin tilesets/ts_Bowser.bin
 	db $42
 
 	BCS bra14_960D
@@ -853,7 +853,7 @@ bra14_9762_RTS:
 	BEQ bra14_9782
 	CMP #$FF
 	BEQ bra14_9782
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra14_9782:
 	LDA objYLo,X
 	SEC
@@ -921,4 +921,4 @@ bra14_97F7:
 	STA $06E1
 	db $BD
 	
-incbin tilesets/ts_Bowser.bin
+.incbin tilesets/ts_Bowser.bin

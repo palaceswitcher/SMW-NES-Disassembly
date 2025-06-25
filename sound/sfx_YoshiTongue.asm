@@ -5,17 +5,17 @@ YoshiTongue_P1:
 	pitch 0
 	volenv $13
 	notelen 8
-	db NRest
+	.byte NRest
 	
 	notelen 4
-	db G5-9
+	.byte G5-9
 
 	duty $38
 	pitch $39
 	volenv $41
 	notelen 16
-	db F#6-9
-	db $FF
+	.byte F#6-9
+	.byte $FF
 YoshiTongue_Footer:
 	sfxsq1 YoshiTongue_P1
-	db $FF
+	.byte $FF

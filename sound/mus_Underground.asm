@@ -1,199 +1,199 @@
 Underground_P1:
-	db $F5
-	db $01
-	db Transpose
-	db $05
-	db DutySet
-	db $5B
-	db PitchSet
-	db $39
-	db VolSet
-	db $11
+	.byte $F5
+	.byte $01
+	.byte Transpose
+	.byte $05
+	.byte DutySet
+	.byte $5B
+	.byte PitchSet
+	.byte $39
+	.byte VolSet
+	.byte $11
 	notelen 24
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
 Underground_P1Loop:
 	notelen 24
-	db NRest
-	db $27
-	db $A4
-	db C3
+	.byte NRest
+	.byte $27
+	.byte $A4
+	.byte C3
 	notelen 12
-	db G2
-	db A2
-	db $C8
-	db C3
+	.byte G2
+	.byte A2
+	.byte $C8
+	.byte C3
 	notelen 12
-	db NRest
+	.byte NRest
 	notelen 24
-	db NRest
-	db G2
+	.byte NRest
+	.byte G2
 	notelen 12
-	db C3
-	db $A4
-	db $2B
+	.byte C3
+	.byte $A4
+	.byte $2B
 	notelen 48
-	db $27
+	.byte $27
 	notelen 24
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db $27
-	db $A4
-	db C3
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte $27
+	.byte $A4
+	.byte C3
 	notelen 12
-	db G2
-	db A2
-	db $C8
-	db C3
+	.byte G2
+	.byte A2
+	.byte $C8
+	.byte C3
 	notelen 12
-	db NRest
+	.byte NRest
 	notelen 24
-	db NRest
-	db G2
+	.byte NRest
+	.byte G2
 	notelen 12
-	db C3
-	db $A4
-	db $2B
+	.byte C3
+	.byte $A4
+	.byte $2B
 	notelen 48
-	db $27
+	.byte $27
 	notelen 24
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db NRest
-	db $27
-	db $A4
-	db C3
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte NRest
+	.byte $27
+	.byte $A4
+	.byte C3
 	notelen 12
-	db G2
+	.byte G2
 	notelen 24
-	db $27
-	db $C8
-	db C3
+	.byte $27
+	.byte $C8
+	.byte C3
 	notelen 12
-	db D3
-	db B2
-	db G2
+	.byte D3
+	.byte B2
+	.byte G2
 	notelen 24
-	db $27
-	db $E0
-	db D3
-	db $A4
-	db NRest
+	.byte $27
+	.byte $E0
+	.byte D3
+	.byte $A4
+	.byte NRest
 	notelen 24
-	db NRest
-	db $27
-	db $A4
-	db C3
+	.byte NRest
+	.byte $27
+	.byte $A4
+	.byte C3
 	notelen 12
-	db G2
+	.byte G2
 	notelen 24
-	db $27
-	db $C8
-	db C3
+	.byte $27
+	.byte $C8
+	.byte C3
 	notelen 12
-	db D3
-	db B2
-	db G2
+	.byte D3
+	.byte B2
+	.byte G2
 	notelen 24
-	db $27
-	db $E0
-	db D3
-	db $A4
-	db NRest
+	.byte $27
+	.byte $E0
+	.byte D3
+	.byte $A4
+	.byte NRest
 	sndjump Underground_P1Loop
-	db $FF
+	.byte $FF
 Underground_Tri:
 Underground_TriLoop:
-	db Transpose
-	db $05
-	db DutySet
-	db $38
-	db PitchSet
-	db $39
-	db VolSet
-	db E5
-	db $86
-	db A2
-	db NRest
-	db C3
-	db NRest
-	db $22
-	db NRest
-	db D3
-	db NRest
-	db A2
-	db NRest
-	db C3
-	db NRest
-	db G2
-	db NRest
-	db $20
-	db NRest
+	.byte Transpose
+	.byte $05
+	.byte DutySet
+	.byte $38
+	.byte PitchSet
+	.byte $39
+	.byte VolSet
+	.byte E5
+	.byte $86
+	.byte A2
+	.byte NRest
+	.byte C3
+	.byte NRest
+	.byte $22
+	.byte NRest
+	.byte D3
+	.byte NRest
+	.byte A2
+	.byte NRest
+	.byte C3
+	.byte NRest
+	.byte G2
+	.byte NRest
+	.byte $20
+	.byte NRest
 	sndjump Underground_TriLoop
-	db $FF
+	.byte $FF
 Underground_Noise:
 Underground_NoiseLoop:
-	db Transpose
-	db $01
-	db DutySet
-	db NRest
-	db PitchSet
-	db NRest
-	db VolSet
-	db $53
+	.byte Transpose
+	.byte $01
+	.byte DutySet
+	.byte NRest
+	.byte PitchSet
+	.byte NRest
+	.byte VolSet
+	.byte $53
 	notelen 12
-	db B3
+	.byte B3
 	sndjump Underground_NoiseLoop
-	db $FF
+	.byte $FF
 Underground_End:
-	db $FF
+	.byte $FF
 Underground_Footer:
 	mussq1 Underground_P1
 	mussq2 Underground_End
 	mustri Underground_Tri
 	musnoise Underground_Noise
 	musdpcm Underground_End
-	db $FF
+	.byte $FF

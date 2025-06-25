@@ -1,5 +1,5 @@
 ; disassembled by BZK 6502 Disassembler
-Obj_h88:
+obj0x88:
 	LDX $A4
 	LDA objVar,X
 	BMI bra6_800A
@@ -16,7 +16,7 @@ bra6_800A:
 	BEQ bra6_8026
 	CMP #$FF
 	BEQ bra6_8026
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra6_8026:
 	LDA objYLo,X
 	SEC
@@ -55,7 +55,7 @@ bra6_806E:
 	LDA objVar,X
 	CMP #$81
 	BCS bra6_8078
-	JMP Obj_FacePlayer
+	JMP objFacePlayer
 bra6_8078:
 	CMP #$88
 	BCS bra6_807F
@@ -89,7 +89,7 @@ loc6_809C:
 	BEQ bra6_80BE
 	CMP #$FF
 	BEQ bra6_80BE
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra6_80BE:
 	LDA objYLo,X
 	SEC
@@ -135,11 +135,11 @@ bra6_8106:
 	STA $33
 	JMP ($32)
 tbl6_811A:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr6_8124
-	dw Obj_FlipKill
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr6_8124
+	.word objFlipKill
 ptr6_8124:
 	LDX $A4
 	LDA objVar,X
@@ -165,9 +165,9 @@ bra6_8140:
 	STA $33
 	JSR sub3_B485
 bra6_8151:
-	JSR Obj_CapeHitCheck
-	JSR Obj_PlayerHitCheck
-	JSR Obj_KillOnSpinJump
+	JSR objCapeHitCheck
+	JSR objPlayerHitCheck
+	JSR objKillOnSpinJump
 	LDA #$10
 	STA playerYSpd
 	LDA playerMoveFlags
@@ -177,7 +177,7 @@ bra6_8151:
 	LDA #$10
 	STA playerXSpd
 	LDA #$01
-	JSR RewardPoints
+	JSR rewardPoints
 	LDA #SFX_ENEMYHIT2
 	STA sndSfx
 	LDX $A4
@@ -201,9 +201,9 @@ bra6_8196:
 	TYA
 	ASL
 	TAX
-	LDA SprPtrs_Ninji,X
+	LDA sprPtrs_Ninji,X
 	STA $32
-	LDA SprPtrs_Ninji+1,X
+	LDA sprPtrs_Ninji+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -215,22 +215,22 @@ bra6_81B0:
 	STY $36
 	JSR jmp_54_A118
 	RTS
-SprPtrs_Ninji:
-	dw SprMap_Ninji_Idle
-	dw SprMap_Ninji_Jump
-SprMap_Ninji_Idle:
-	db $02 ; Tile Width
-	db $02 ; Tile Height
-	db $A6 ; 1K CHR Bank
-	db $22, $23
-	db $24, $25
-SprMap_Ninji_Jump:
-	db $02 ; Tile Width
-	db $02 ; Tile Height
-	db $A6 ; 1K CHR Bank
-	db $26, $27
-	db $28, $29
-Obj_h84:
+sprPtrs_Ninji:
+	.word sprMap_Ninji_Idle
+	.word sprMap_Ninji_Jump
+sprMap_Ninji_Idle:
+	.byte $02 ; Tile Width
+	.byte $02 ; Tile Height
+	.byte $A6 ; 1K CHR Bank
+	.byte $22, $23
+	.byte $24, $25
+sprMap_Ninji_Jump:
+	.byte $02 ; Tile Width
+	.byte $02 ; Tile Height
+	.byte $A6 ; 1K CHR Bank
+	.byte $26, $27
+	.byte $28, $29
+obj0x84:
 	LDA #$07
 	STA $25
 	LDX $A4
@@ -245,7 +245,7 @@ Obj_h84:
 	BEQ bra6_81EA
 	CMP #$FF
 	BEQ bra6_81EA
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra6_81EA:
 	LDA objYLo,X
 	SEC
@@ -291,14 +291,14 @@ bra6_8232:
 	STA $33
 	JMP ($32)
 tbl6_8246:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr6_8250
-	dw Obj_FlipKill
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr6_8250
+	.word objFlipKill
 ptr6_8250:
 	JSR sub6_825A
-	JSR Obj_PlayerHitCheck
+	JSR objPlayerHitCheck
 	JSR jmp_54_BF74
 	RTS
 sub6_825A:
@@ -313,11 +313,11 @@ sub6_825A:
 	STA $33
 	JMP ($32)
 tbl6_8270:
-	dw ptr6_827A
-	dw ptr6_82A8
-	dw ptr6_82EA
-	dw ptr6_834C
-	dw ptr6_8366
+	.word ptr6_827A
+	.word ptr6_82A8
+	.word ptr6_82EA
+	.word ptr6_834C
+	.word ptr6_8366
 ptr6_827A:
 	LDA objXDistHi,X
 	AND #$40
@@ -490,9 +490,9 @@ ptr6_83B3:
 	AND #$0F
 	ASL
 	TAX
-	LDA SprPtrs_Thwomp,X
+	LDA sprPtrs_Thwomp,X
 	STA $32
-	LDA SprPtrs_Thwomp+1,X
+	LDA sprPtrs_Thwomp+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -504,36 +504,36 @@ bra6_83DB:
 	STY $36
 	JSR jmp_54_A118
 	RTS
-SprPtrs_Thwomp:
-	dw SprMap_Thwomp_Idle
-	dw SprMap_Thwomp_Glance
-	dw SprMap_Thwomp_Attack
-	dw SprMap_Thwomp_Attack
-	dw SprMap_Thwomp_Attack
-SprMap_Thwomp_Idle:
-	db $03 ; Tile Width
-	db $04 ; Tile Height
-	db $AB ; 1K CHR Bank
-	db $21, $22, $23
-	db $24, $25, $26
-	db $2C, $2D, $2E
-	db $35, $36, $37
-SprMap_Thwomp_Glance:
-	db $03
-	db $04
-	db $AB
-	db $21, $22, $23
-	db $2A, $2B, $26
-	db $32, $33, $34
-	db $35, $36, $37
-SprMap_Thwomp_Attack:
-	db $03
-	db $04
-	db $AB
-	db $21, $22, $23
-	db $27, $28, $29
-	db $2F, $30, $31
-	db $35, $36, $37
+sprPtrs_Thwomp:
+	.word sprMap_Thwomp_Idle
+	.word sprMap_Thwomp_Glance
+	.word sprMap_Thwomp_Attack
+	.word sprMap_Thwomp_Attack
+	.word sprMap_Thwomp_Attack
+sprMap_Thwomp_Idle:
+	.byte $03 ; Tile Width
+	.byte $04 ; Tile Height
+	.byte $AB ; 1K CHR Bank
+	.byte $21, $22, $23
+	.byte $24, $25, $26
+	.byte $2C, $2D, $2E
+	.byte $35, $36, $37
+sprMap_Thwomp_Glance:
+	.byte $03
+	.byte $04
+	.byte $AB
+	.byte $21, $22, $23
+	.byte $2A, $2B, $26
+	.byte $32, $33, $34
+	.byte $35, $36, $37
+sprMap_Thwomp_Attack:
+	.byte $03
+	.byte $04
+	.byte $AB
+	.byte $21, $22, $23
+	.byte $27, $28, $29
+	.byte $2F, $30, $31
+	.byte $35, $36, $37
 	LDX $A4 ; unlogged code start
 	LDA objXLo,X
 	SEC
@@ -546,7 +546,7 @@ SprMap_Thwomp_Attack:
 	BEQ bra6_8436
 	CMP #$FF
 	BEQ bra6_8436
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra6_8436:
 	LDA objYLo,X
 	SEC
@@ -602,10 +602,10 @@ bra6_849D:
 	BNE bra6_84A7
 	JSR jmp_54_BBC3
 bra6_84A7:
-	JSR Obj_PlayerHitCheck
+	JSR objPlayerHitCheck
 	JSR jmp_54_BF74
 	RTS
-Obj_h90:
+obj0x90:
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -618,7 +618,7 @@ Obj_h90:
 	BEQ bra6_84CC
 	CMP #$FF
 	BEQ bra6_84CC
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra6_84CC:
 	LDA objYLo,X
 	SEC
@@ -674,7 +674,7 @@ bra6_8533:
 	BNE bra6_853D
 	JSR jmp_54_BBC3
 bra6_853D:
-	JSR Obj_PlayerHitCheck
+	JSR objPlayerHitCheck
 	JSR jmp_54_BF74
 	RTS
 ptr7_8544:
@@ -703,29 +703,29 @@ bra6_856A:
 	JSR jmp_54_A118
 	RTS ; unlogged code end
 tbl6_8570:
-	dw Unknown1 ; Unused (Fuzzy)
-	dw Unknown2 ; Unused (Fuzzy)
-Unknown1:
-	db $03
-	db $02
-	db $A4
-	db $01
-	db $02
-	db $FF
-	db $0B
-	db $0C
-	db $0D
-Unknown2:
-	db $03
-	db $02
-	db $A4
-	db $03
-	db $04
-	db $FF
-	db $0E
-	db $0C
-	db $0F
-Obj_h86:
+	.word unknown1 ; Unused (Fuzzy)
+	.word unknown2 ; Unused (Fuzzy)
+unknown1:
+	.byte $03
+	.byte $02
+	.byte $A4
+	.byte $01
+	.byte $02
+	.byte $FF
+	.byte $0B
+	.byte $0C
+	.byte $0D
+unknown2:
+	.byte $03
+	.byte $02
+	.byte $A4
+	.byte $03
+	.byte $04
+	.byte $FF
+	.byte $0E
+	.byte $0C
+	.byte $0F
+obj0x86:
 	LDA #$07
 	STA $25
 	LDX $A4
@@ -740,7 +740,7 @@ Obj_h86:
 	BEQ bra6_85A8
 	CMP #$FF
 	BEQ bra6_85A8
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra6_85A8:
 	LDA objYLo,X
 	SEC
@@ -786,13 +786,13 @@ bra6_85F0:
 	STA $33
 	JMP ($32)
 tbl6_8604:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr6_860C
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr6_860C
 ptr6_860C:
 	JSR sub6_8616
-	JSR Obj_PlayerHitCheck
+	JSR objPlayerHitCheck
 	JSR jmp_54_BF74
 	RTS
 sub6_8616:
@@ -808,10 +808,10 @@ sub6_8616:
 	STA $33
 	JMP ($32)
 tbl6_862F:
-	dw ptr6_87DC
-	dw ptr6_8637
-	dw ptr6_87DC
-	dw ptr6_8682
+	.word ptr6_87DC
+	.word ptr6_8637
+	.word ptr6_87DC
+	.word ptr6_8682
 ptr6_8637:
 	LDA #$FF
 	BMI bra6_8652
@@ -887,7 +887,7 @@ loc6_86BC:
 	STA objVar,X
 bra6_86CE_RTS:
 	RTS
-Obj_h92:
+obj0x92:
 	LDA #$07
 	STA $25
 	LDX $A4
@@ -902,7 +902,7 @@ Obj_h92:
 	BEQ bra6_86F1
 	CMP #$FF
 	BEQ bra6_86F1
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra6_86F1:
 	LDA objYLo,X
 	SEC
@@ -948,13 +948,13 @@ bra6_8739:
 	STA $33
 	JMP ($32)
 tbl6_874D:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr6_8755
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr6_8755
 ptr6_8755:
 	JSR sub6_875F
-	JSR Obj_PlayerHitCheck
+	JSR objPlayerHitCheck
 	JSR jmp_54_BF74 ; unlogged
 	RTS ; unlogged
 sub6_875F:
@@ -970,10 +970,10 @@ sub6_875F:
 	STA $33
 	JMP ($32)
 tbl6_8778:
-	dw ptr6_87DC
-	dw ptr6_8780
-	dw ptr6_87DC
-	dw ptr6_87AD
+	.word ptr6_87DC
+	.word ptr6_8780
+	.word ptr6_87DC
+	.word ptr6_87AD
 ptr6_8780:
 	LDA #$FF
 	PHA
@@ -1051,9 +1051,9 @@ bra6_880A:
 	TYA
 	ASL
 	TAX
-	LDA SprPtrs_Urchin,X
+	LDA sprPtrs_Urchin,X
 	STA $32
-	LDA SprPtrs_Urchin+1,X
+	LDA sprPtrs_Urchin+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -1067,300 +1067,300 @@ bra6_8824:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
-SprPtrs_Urchin:
-	dw SprMap_Urchin_Open
-	dw SprMap_Urchin_Close
-SprMap_Urchin_Open:
-	db $04 ; Tile Width
-	db $04 ; Tile Height
-	db $A8 ; 1K CHR Bank
-	db $09, $0A, $0B, $0C
-	db $0D, $0E, $0F, $10
-	db $13, $14, $15, $16
-	db $19, $1A, $1B, $1C
-SprMap_Urchin_Close:
-	db $04
-	db $04
-	db $A8
-	db $09, $0A, $0B, $0C
-	db $0D, $11, $12, $10
-	db $13, $17, $18, $16
-	db $19, $1A, $1B, $1C
-	db $00 ; unlogged data start
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01 ; unlogged data end
+sprPtrs_Urchin:
+	.word sprMap_Urchin_Open
+	.word sprMap_Urchin_Close
+sprMap_Urchin_Open:
+	.byte $04 ; Tile Width
+	.byte $04 ; Tile Height
+	.byte $A8 ; 1K CHR Bank
+	.byte $09, $0A, $0B, $0C
+	.byte $0D, $0E, $0F, $10
+	.byte $13, $14, $15, $16
+	.byte $19, $1A, $1B, $1C
+sprMap_Urchin_Close:
+	.byte $04
+	.byte $04
+	.byte $A8
+	.byte $09, $0A, $0B, $0C
+	.byte $0D, $11, $12, $10
+	.byte $13, $17, $18, $16
+	.byte $19, $1A, $1B, $1C
+	.byte $00 ; unlogged data start
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01 ; unlogged data end
 tbl6_88D9:
-	dw ofs_88E5
-	dw ofs_88DF ; unlogged data start
-	dw ofs_88E2
+	.word ofs_88E5
+	.word ofs_88DF ; unlogged data start
+	.word ofs_88E2
 ofs_88DF:
-	db $03
-	db $00
-	db $80
+	.byte $03
+	.byte $00
+	.byte $80
 ofs_88E2:
-	db $00
-	db $01
-	db $80
+	.byte $00
+	.byte $01
+	.byte $80
 ofs_88E5:
-	db $00
-	db $00	
-	db $00 ; unlogged data end
-	db $00
-	db $00
-	db $FA
-	db $00
-	db $FC
-	db $00
-	db $FD
-	db $00
-	db $FE
-	db $00
-	db $FF
-	db $00
-	db $00
-	db $00
-	db $01
-	db $00
-	db $02
-	db $00
-	db $03
-	db $00
-	db $04
-	db $00
-	db $06
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00 ; unlogged
-	db $00
-	db $F8
-	db $00
-	db $FA
-	db $00
-	db $FC
-	db $00
-	db $FD
-	db $00
-	db $FE
-	db $00
-	db $FF
-	db $00
-	db $00
-	db $00
-	db $01
-	db $00
-	db $02
-	db $00
-	db $03
-	db $00
-	db $04
-	db $00
-	db $06
-	db $00
-	db $08
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00 ; unlogged
-	db $00
-	db $F8
-	db $00
-	db $F8
-	db $00
-	db $F9
-	db $00
-	db $FB
-	db $00
-	db $FD
-	db $00
-	db $FE
-	db $00
-	db $FF
-	db $00
-	db $00
-	db $00
-	db $01
-	db $00
-	db $02
-	db $00
-	db $03
-	db $00
-	db $05
-	db $00
-	db $07
-	db $00
-	db $08
-	db $00
-	db $08
-	db $00
-	db $00 ; unlogged
-	db $00
-	db $F6
-	db $00
-	db $F7
-	db $00
-	db $F8
-	db $00
-	db $F9
-	db $00
-	db $FA
-	db $00
-	db $FB
-	db $00
-	db $FE
-	db $00
-	db $00
-	db $00
-	db $02
-	db $00
-	db $05
-	db $00
-	db $06
-	db $00
-	db $07
-	db $00
-	db $08
-	db $00
-	db $09
-	db $00
-	db $0A
-	db $80
-Obj_h70:
+	.byte $00
+	.byte $00	
+	.byte $00 ; unlogged data end
+	.byte $00
+	.byte $00
+	.byte $FA
+	.byte $00
+	.byte $FC
+	.byte $00
+	.byte $FD
+	.byte $00
+	.byte $FE
+	.byte $00
+	.byte $FF
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $03
+	.byte $00
+	.byte $04
+	.byte $00
+	.byte $06
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00 ; unlogged
+	.byte $00
+	.byte $F8
+	.byte $00
+	.byte $FA
+	.byte $00
+	.byte $FC
+	.byte $00
+	.byte $FD
+	.byte $00
+	.byte $FE
+	.byte $00
+	.byte $FF
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $03
+	.byte $00
+	.byte $04
+	.byte $00
+	.byte $06
+	.byte $00
+	.byte $08
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00 ; unlogged
+	.byte $00
+	.byte $F8
+	.byte $00
+	.byte $F8
+	.byte $00
+	.byte $F9
+	.byte $00
+	.byte $FB
+	.byte $00
+	.byte $FD
+	.byte $00
+	.byte $FE
+	.byte $00
+	.byte $FF
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $03
+	.byte $00
+	.byte $05
+	.byte $00
+	.byte $07
+	.byte $00
+	.byte $08
+	.byte $00
+	.byte $08
+	.byte $00
+	.byte $00 ; unlogged
+	.byte $00
+	.byte $F6
+	.byte $00
+	.byte $F7
+	.byte $00
+	.byte $F8
+	.byte $00
+	.byte $F9
+	.byte $00
+	.byte $FA
+	.byte $00
+	.byte $FB
+	.byte $00
+	.byte $FE
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $02
+	.byte $00
+	.byte $05
+	.byte $00
+	.byte $06
+	.byte $00
+	.byte $07
+	.byte $00
+	.byte $08
+	.byte $00
+	.byte $09
+	.byte $00
+	.byte $0A
+	.byte $80
+obj0x70:
 	LDX $A4
 	LDA objVar,X
 	BPL bra6_8971
-	JSR Obj_FacePlayer
+	JSR objFacePlayer
 	RTS
 bra6_8971:
 	JSR sub6_8BCA
@@ -1374,14 +1374,14 @@ bra6_8971:
 	STA $33
 	JMP ($32)
 tbl6_8988:
-	dw ptr6_899D
-	dw ptr6_89AD
-	dw ptr6_89C4
-	dw ptr6_89F7
-	dw ptr6_8A0C
-	dw ptr6_8A63
-	dw ptr6_8A98
-	dw ptr6_8ADB
+	.word ptr6_899D
+	.word ptr6_89AD
+	.word ptr6_89C4
+	.word ptr6_89F7
+	.word ptr6_8A0C
+	.word ptr6_8A63
+	.word ptr6_8A98
+	.word ptr6_8ADB
 ptr6_899D:
 	LDA enemyAnimFrame,X
 	AND #$40
@@ -1473,22 +1473,22 @@ bra6_8A31:
 bra6_8A52_RTS:
 	RTS
 tbl6_8A53:
-	db $50
-	db $50
-	db $50
-	db $50
-	db $51
-	db $51
-	db $51
-	db $51
-	db $52
-	db $52
-	db $52
-	db $52
-	db $53
-	db $53
-	db $53
-	db $55
+	.byte $50
+	.byte $50
+	.byte $50
+	.byte $50
+	.byte $51
+	.byte $51
+	.byte $51
+	.byte $51
+	.byte $52
+	.byte $52
+	.byte $52
+	.byte $52
+	.byte $53
+	.byte $53
+	.byte $53
+	.byte $55
 ptr6_8A63:
 	INC objActionTimer,X
 	LDA objActionTimer,X
@@ -1699,7 +1699,7 @@ sub6_8BCA:
 	BEQ bra6_8BEC
 	CMP #$FF
 	BEQ bra6_8BEC
-	JMP Obj_RemoveObject ; unlogged
+	JMP objRemoveObject ; unlogged
 bra6_8BEC:
 	LDA objYLo,X
 	SEC
@@ -1745,16 +1745,16 @@ bra6_8C34:
 	STA $33
 	JMP ($32)
 tbl6_8C48:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr6_8C52
-	dw Obj_FlipKill
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr6_8C52
+	.word objFlipKill
 ptr6_8C52:
 	LDA objAction,X
 	CMP #$04
 	BCS bra6_8CA1_RTS
-	JSR Obj_PlayerHitCheck
+	JSR objPlayerHitCheck
 	LDA invincibilityTimer
 	CMP #$F7
 	BCS bra6_8CA1_RTS
@@ -1875,1247 +1875,1247 @@ bra6_8D35:
 	JSR jmp_54_A118
 	RTS
 tbl6_8D45:
-	dw ofs_90CF
-	dw ofs_90ED
-	dw ofs_90FC
-	dw ofs_9129
-	dw ofs_9135
-	dw ofs_9159 ; unlogged
-	dw ofs_9168 ; unlogged
-	dw ofs_9177 ; unlogged
-	dw ofs_90DE ; unlogged
-	dw ofs_910B
-	dw ofs_911A
-	dw ofs_9141
-	dw ofs_914D
-	dw ofs_9186 ; unlogged
-	dw ofs_9195 ; unlogged
-	dw ofs_91A4 ; unlogged
-	dw ofs_91B3
-	dw ofs_91C6
-	dw ofs_91E2
-	dw ofs_91F5
-	dw ofs_9211
-	dw ofs_9224
-	dw ofs_9237
-	dw ofs_9246
-	dw ofs_925D
-	dw ofs_9274
-	dw ofs_928B
-	dw ofs_92A2
-	dw ofs_92B9
-	dw ofs_8F4A
-	dw ofs_8F5D
-	dw ofs_8F70
-	dw ofs_8F83
-	dw ofs_8F96
-	dw ofs_8FA9
-	dw ofs_8FBC
-	dw ofs_8FCF ; unlogged
-	dw ofs_8FE2
-	dw ofs_8FF5
-	dw ofs_9008
-	dw ofs_901B
-	dw ofs_9032
-	dw ofs_9049
-	dw ofs_9058
-	dw ofs_9067
-	dw ofs_9076
-	dw ofs_90CF ; unlogged
-	dw ofs_90CF ; unlogged
-	dw ofs_90CF ; unlogged
-	dw ofs_90CF ; unlogged
-	dw ofs_9089
-	dw ofs_909C
-	dw ofs_90AF
-	dw ofs_90B6
-	dw ofs_90BD
-	dw ofs_90C4
-	dw ofs_90CB
+	.word ofs_90CF
+	.word ofs_90ED
+	.word ofs_90FC
+	.word ofs_9129
+	.word ofs_9135
+	.word ofs_9159 ; unlogged
+	.word ofs_9168 ; unlogged
+	.word ofs_9177 ; unlogged
+	.word ofs_90DE ; unlogged
+	.word ofs_910B
+	.word ofs_911A
+	.word ofs_9141
+	.word ofs_914D
+	.word ofs_9186 ; unlogged
+	.word ofs_9195 ; unlogged
+	.word ofs_91A4 ; unlogged
+	.word ofs_91B3
+	.word ofs_91C6
+	.word ofs_91E2
+	.word ofs_91F5
+	.word ofs_9211
+	.word ofs_9224
+	.word ofs_9237
+	.word ofs_9246
+	.word ofs_925D
+	.word ofs_9274
+	.word ofs_928B
+	.word ofs_92A2
+	.word ofs_92B9
+	.word ofs_8F4A
+	.word ofs_8F5D
+	.word ofs_8F70
+	.word ofs_8F83
+	.word ofs_8F96
+	.word ofs_8FA9
+	.word ofs_8FBC
+	.word ofs_8FCF ; unlogged
+	.word ofs_8FE2
+	.word ofs_8FF5
+	.word ofs_9008
+	.word ofs_901B
+	.word ofs_9032
+	.word ofs_9049
+	.word ofs_9058
+	.word ofs_9067
+	.word ofs_9076
+	.word ofs_90CF ; unlogged
+	.word ofs_90CF ; unlogged
+	.word ofs_90CF ; unlogged
+	.word ofs_90CF ; unlogged
+	.word ofs_9089
+	.word ofs_909C
+	.word ofs_90AF
+	.word ofs_90B6
+	.word ofs_90BD
+	.word ofs_90C4
+	.word ofs_90CB
 tbl6_8DB7:
-	dw WendyLook1
-	dw WendyLook2
-	dw WendyStare
-	dw WendySideLook
-	dw WendyMouthOpen
-	dw WendyWeirdFace1
-	dw WendyWeirdFace2
-	dw ofs_8E6A
-	dw ofs_8E7D
-	dw ofs_8E90
-	dw ofs_8EA3
-	dw ofs_8EB6
-	dw ofs_8ECD
-	dw ofs_8EE4
-	dw ofs_8F02
-	dw ofs_8F02
-	dw ofs_8F11
-	dw ofs_8F37 ; unlogged
-	dw ofs_8F37 ; unlogged
-	dw ofs_8F37 ; unlogged
-	dw ofs_8F37 ; unlogged
-	dw ofs_8F24
-	dw ofs_8F37
-WendyLook1:
-	db $04 ; Tile Width
-	db $04 ; Tile Height
-	db $B8 ; 1K CHR Bank
-	db $FF, $FF, $FF, $FF
-	db $FF, $0F, $10, $FF
-	db $22, $26, $27, $25
-	db $32, $36, $37, $35
-WendyLook2:
-	db $04
-	db $04
-	db $B8
-	db $FF, $FF, $FF, $FF
-	db $FF, $0D, $0E, $FF
-	db $22, $23, $24, $25
-	db $32, $33, $34, $35
-WendyStare:
-	db $04
-	db $04
-	db $B8
-	db $01, $02, $03, $FF
-	db $04, $05, $06, $FF
-	db $11, $12, $13, $FF
-	db $FF, $28, $29, $FF
-WendySideLook:
-	db $04
-	db $04
-	db $B8
-	db $FF, $FF, $FF, $FF
-	db $FF, $07, $08, $FF
-	db $14, $15, $16, $FF
-	db $FF, $28, $29, $FF
-WendyMouthOpen:
-	db $04
-	db $04
-	db $B8
-	db $FF, $FF, $FF, $FF
-	db $09, $0A, $FF, $FF
-	db $17, $18, $19, $FF
-	db $FF, $28, $29, $FF
-WendyWeirdFace1:
-	db $04
-	db $04
-	db $B9
-	db $FF, $FF, $FF, $FF
-	db $FF, $42, $43, $FF
-	db $4E, $4F, $50, $51
-	db $5C, $5D, $5E, $5F
-WendyWeirdFace2:
-	db $04
-	db $04
-	db $B9
-	db $FF, $FF, $FF, $FF
-	db $FF, $44, $45, $FF
-	db $4E, $52, $53, $51
-	db $5C, $60, $61, $5F
+	.word wendyLook1
+	.word wendyLook2
+	.word wendyStare
+	.word wendySideLook
+	.word wendyMouthOpen
+	.word wendyWeirdFace1
+	.word wendyWeirdFace2
+	.word ofs_8E6A
+	.word ofs_8E7D
+	.word ofs_8E90
+	.word ofs_8EA3
+	.word ofs_8EB6
+	.word ofs_8ECD
+	.word ofs_8EE4
+	.word ofs_8F02
+	.word ofs_8F02
+	.word ofs_8F11
+	.word ofs_8F37 ; unlogged
+	.word ofs_8F37 ; unlogged
+	.word ofs_8F37 ; unlogged
+	.word ofs_8F37 ; unlogged
+	.word ofs_8F24
+	.word ofs_8F37
+wendyLook1:
+	.byte $04 ; Tile Width
+	.byte $04 ; Tile Height
+	.byte $B8 ; 1K CHR Bank
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $0F, $10, $FF
+	.byte $22, $26, $27, $25
+	.byte $32, $36, $37, $35
+wendyLook2:
+	.byte $04
+	.byte $04
+	.byte $B8
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $0D, $0E, $FF
+	.byte $22, $23, $24, $25
+	.byte $32, $33, $34, $35
+wendyStare:
+	.byte $04
+	.byte $04
+	.byte $B8
+	.byte $01, $02, $03, $FF
+	.byte $04, $05, $06, $FF
+	.byte $11, $12, $13, $FF
+	.byte $FF, $28, $29, $FF
+wendySideLook:
+	.byte $04
+	.byte $04
+	.byte $B8
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $07, $08, $FF
+	.byte $14, $15, $16, $FF
+	.byte $FF, $28, $29, $FF
+wendyMouthOpen:
+	.byte $04
+	.byte $04
+	.byte $B8
+	.byte $FF, $FF, $FF, $FF
+	.byte $09, $0A, $FF, $FF
+	.byte $17, $18, $19, $FF
+	.byte $FF, $28, $29, $FF
+wendyWeirdFace1:
+	.byte $04
+	.byte $04
+	.byte $B9
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $42, $43, $FF
+	.byte $4E, $4F, $50, $51
+	.byte $5C, $5D, $5E, $5F
+wendyWeirdFace2:
+	.byte $04
+	.byte $04
+	.byte $B9
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $44, $45, $FF
+	.byte $4E, $52, $53, $51
+	.byte $5C, $60, $61, $5F
 ofs_8E6A:
-	db $04
-	db $04
-	db $B8
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $0B
-	db $0C
-	db $FF
-	db $1A
-	db $1B
-	db $1C
-	db $1D
-	db $FF
-	db $30
-	db $31
-	db $FF
+	.byte $04
+	.byte $04
+	.byte $B8
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $0B
+	.byte $0C
+	.byte $FF
+	.byte $1A
+	.byte $1B
+	.byte $1C
+	.byte $1D
+	.byte $FF
+	.byte $30
+	.byte $31
+	.byte $FF
 ofs_8E7D:
-	db $04
-	db $04
-	db $B9
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $6A
-	db $6B
-	db $6C
-	db $6D
-	db $75
-	db $76
-	db $77
-	db $FF
+	.byte $04
+	.byte $04
+	.byte $B9
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $6A
+	.byte $6B
+	.byte $6C
+	.byte $6D
+	.byte $75
+	.byte $76
+	.byte $77
+	.byte $FF
 ofs_8E90:
-	db $04
-	db $04
-	db $B9
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $62
-	db $63
-	db $FF
-	db $66
-	db $67
-	db $68
-	db $69
-	db $5C
-	db $72
-	db $73
-	db $74
+	.byte $04
+	.byte $04
+	.byte $B9
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $62
+	.byte $63
+	.byte $FF
+	.byte $66
+	.byte $67
+	.byte $68
+	.byte $69
+	.byte $5C
+	.byte $72
+	.byte $73
+	.byte $74
 ofs_8EA3:
-	db $04
-	db $04
-	db $B9
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $62
-	db $63
-	db $FF
-	db $FF
-	db $64
-	db $65
-	db $FF
-	db $6E
-	db $6F
-	db $70
-	db $71
+	.byte $04
+	.byte $04
+	.byte $B9
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $62
+	.byte $63
+	.byte $FF
+	.byte $FF
+	.byte $64
+	.byte $65
+	.byte $FF
+	.byte $6E
+	.byte $6F
+	.byte $70
+	.byte $71
 ofs_8EB6:
-	db $04
-	db $05
-	db $B9
-	db $FF
-	db $62
-	db $63
-	db $FF
-	db $66
-	db $67
-	db $68
-	db $69
-	db $5C
-	db $72
-	db $73
-	db $74
-	db $FF
-	db $78
-	db $79
-	db $FF
-	db $7A
-	db $7B
-	db $7C
-	db $7D
+	.byte $04
+	.byte $05
+	.byte $B9
+	.byte $FF
+	.byte $62
+	.byte $63
+	.byte $FF
+	.byte $66
+	.byte $67
+	.byte $68
+	.byte $69
+	.byte $5C
+	.byte $72
+	.byte $73
+	.byte $74
+	.byte $FF
+	.byte $78
+	.byte $79
+	.byte $FF
+	.byte $7A
+	.byte $7B
+	.byte $7C
+	.byte $7D
 ofs_8ECD:
-	db $04
-	db $05
-	db $B9
-	db $FF
-	db $62
-	db $63
-	db $FF
-	db $FF
-	db $64
-	db $65
-	db $FF
-	db $6E
-	db $6F
-	db $70
-	db $71
-	db $FF
-	db $78
-	db $79
-	db $FF
-	db $7A
-	db $7B
-	db $7C
-	db $7D
+	.byte $04
+	.byte $05
+	.byte $B9
+	.byte $FF
+	.byte $62
+	.byte $63
+	.byte $FF
+	.byte $FF
+	.byte $64
+	.byte $65
+	.byte $FF
+	.byte $6E
+	.byte $6F
+	.byte $70
+	.byte $71
+	.byte $FF
+	.byte $78
+	.byte $79
+	.byte $FF
+	.byte $7A
+	.byte $7B
+	.byte $7C
+	.byte $7D
 ofs_8EE4:
-	db $04 ; wendy dummy mappings
-	db $03
-	db $B9
-	db $FF, $FF, $FF, $FF
-	db $4A, $4B, $4C, $4D
-	db $58, $59, $5A, $5B
+	.byte $04 ; wendy dummy mappings
+	.byte $03
+	.byte $B9
+	.byte $FF, $FF, $FF, $FF
+	.byte $4A, $4B, $4C, $4D
+	.byte $58, $59, $5A, $5B
 ; Unused Wendy dummy frame
-	db $04
-	db $03
-	db $B8
-	db $FF, $FF, $FF, $FF
-	db $38, $39, $3A, $3B
-	db $3C, $3D, $3E, $3F
+	.byte $04
+	.byte $03
+	.byte $B8
+	.byte $FF, $FF, $FF, $FF
+	.byte $38, $39, $3A, $3B
+	.byte $3C, $3D, $3E, $3F
 ofs_8F02:
-	db $04
-	db $03
-	db $B9
-	db $FF, $40, $41, $FF
-	db $46, $47, $48, $49
-	db $54, $55, $56, $57
+	.byte $04
+	.byte $03
+	.byte $B9
+	.byte $FF, $40, $41, $FF
+	.byte $46, $47, $48, $49
+	.byte $54, $55, $56, $57
 ofs_8F11:
-	db $04
-	db $04
-	db $B8
-	db $FF, $FF, $FF, $FF
-	db $FF, $0B, $0C, $FF
-	db $1A, $1B, $1C, $1D
-	db $FF, $2A, $2B, $FF
+	.byte $04
+	.byte $04
+	.byte $B8
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $0B, $0C, $FF
+	.byte $1A, $1B, $1C, $1D
+	.byte $FF, $2A, $2B, $FF
 ofs_8F24:
-	db $04
-	db $04
-	db $BA
-	db $FF, $FF, $FF, $FF
-	db $FF, $FF, $FF, $FF
-	db $80, $81, $82, $83
-	db $88, $89, $8A, $8B
+	.byte $04
+	.byte $04
+	.byte $BA
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $FF, $FF, $FF
+	.byte $80, $81, $82, $83
+	.byte $88, $89, $8A, $8B
 ofs_8F37:
-	db $04
-	db $04
-	db $BA
-	db $FF, $FF, $FF, $FF
-	db $FF, $FF, $FF, $FF
-	db $84, $85, $86, $87
-	db $FF, $8C, $8D, $FF
+	.byte $04
+	.byte $04
+	.byte $BA
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $FF, $FF, $FF
+	.byte $84, $85, $86, $87
+	.byte $FF, $8C, $8D, $FF
 ofs_8F4A:
-	db $04
-	db $04
-	db $B4
-	db $FF, $FF, $FF, $FF
-	db $FF, $03, $04, $FF
-	db $0E, $0F, $10, $11
-	db $1D, $1E, $1F, $20
+	.byte $04
+	.byte $04
+	.byte $B4
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $03, $04, $FF
+	.byte $0E, $0F, $10, $11
+	.byte $1D, $1E, $1F, $20
 ofs_8F5D:
-	db $04
-	db $04
-	db $B4
-	db $FF, $FF, $FF, $FF
-	db $FF, $05, $06, $FF
-	db $0E, $12, $13, $11
-	db $1D, $21, $22, $20
+	.byte $04
+	.byte $04
+	.byte $B4
+	.byte $FF, $FF, $FF, $FF
+	.byte $FF, $05, $06, $FF
+	.byte $0E, $12, $13, $11
+	.byte $1D, $21, $22, $20
 ofs_8F70:
-	db $04
-	db $04
-	db $B4
-	db $FF
-	db $01
-	db $FF
-	db $FF
-	db $FF
-	db $07
-	db $08
-	db $FF
-	db $14
-	db $15
-	db $16
-	db $FF
-	db $FF
-	db $23
-	db $24
-	db $FF
+	.byte $04
+	.byte $04
+	.byte $B4
+	.byte $FF
+	.byte $01
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $07
+	.byte $08
+	.byte $FF
+	.byte $14
+	.byte $15
+	.byte $16
+	.byte $FF
+	.byte $FF
+	.byte $23
+	.byte $24
+	.byte $FF
 ofs_8F83:
-	db $04
-	db $04
-	db $B4
-	db $FF
-	db $02
-	db $FF
-	db $FF
-	db $FF
-	db $09
-	db $0A
-	db $FF
-	db $17
-	db $18
-	db $19
-	db $FF
-	db $FF
-	db $25
-	db $24
-	db $FF
+	.byte $04
+	.byte $04
+	.byte $B4
+	.byte $FF
+	.byte $02
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $09
+	.byte $0A
+	.byte $FF
+	.byte $17
+	.byte $18
+	.byte $19
+	.byte $FF
+	.byte $FF
+	.byte $25
+	.byte $24
+	.byte $FF
 ofs_8F96:
-	db $04
-	db $04
-	db $B4
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $0B
-	db $0C
-	db $0D
-	db $FF
-	db $1A
-	db $1B
-	db $1C
-	db $FF
-	db $FF
-	db $25
-	db $24
-	db $FF
+	.byte $04
+	.byte $04
+	.byte $B4
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $0B
+	.byte $0C
+	.byte $0D
+	.byte $FF
+	.byte $1A
+	.byte $1B
+	.byte $1C
+	.byte $FF
+	.byte $FF
+	.byte $25
+	.byte $24
+	.byte $FF
 ofs_8FA9:
-	db $04
-	db $04
-	db $B4
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $26
-	db $27
-	db $FF
-	db $2B
-	db $2C
-	db $2D
-	db $2E
-	db $35
-	db $36
-	db $37
-	db $38
+	.byte $04
+	.byte $04
+	.byte $B4
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $26
+	.byte $27
+	.byte $FF
+	.byte $2B
+	.byte $2C
+	.byte $2D
+	.byte $2E
+	.byte $35
+	.byte $36
+	.byte $37
+	.byte $38
 ofs_8FBC:
-	db $04
-	db $04
-	db $B4
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $28
-	db $29
-	db $FF
-	db $2B
-	db $2F
-	db $30
-	db $2E
-	db $35
-	db $39
-	db $3A
-	db $38
+	.byte $04
+	.byte $04
+	.byte $B4
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $28
+	.byte $29
+	.byte $FF
+	.byte $2B
+	.byte $2F
+	.byte $30
+	.byte $2E
+	.byte $35
+	.byte $39
+	.byte $3A
+	.byte $38
 ofs_8FCF:
-	db $04
-	db $04
-	db $B4
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $28
-	db $2A
-	db $FF
-	db $31
-	db $32
-	db $33
-	db $34
-	db $FF
-	db $3B
-	db $3C
-	db $FF
+	.byte $04
+	.byte $04
+	.byte $B4
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $28
+	.byte $2A
+	.byte $FF
+	.byte $31
+	.byte $32
+	.byte $33
+	.byte $34
+	.byte $FF
+	.byte $3B
+	.byte $3C
+	.byte $FF
 ofs_8FE2:
-	db $04
-	db $04
-	db $B5
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $48
-	db $49
-	db $4A
-	db $4B
-	db $FF
-	db $54
-	db $55
-	db $FF
+	.byte $04
+	.byte $04
+	.byte $B5
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $48
+	.byte $49
+	.byte $4A
+	.byte $4B
+	.byte $FF
+	.byte $54
+	.byte $55
+	.byte $FF
 ofs_8FF5:
-	db $04
-	db $04
-	db $B5
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $40
-	db $41
-	db $FF
-	db $42
-	db $43
-	db $44
-	db $45
-	db $4C
-	db $4D
-	db $4E
-	db $4F
+	.byte $04
+	.byte $04
+	.byte $B5
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $40
+	.byte $41
+	.byte $FF
+	.byte $42
+	.byte $43
+	.byte $44
+	.byte $45
+	.byte $4C
+	.byte $4D
+	.byte $4E
+	.byte $4F
 ofs_9008:
-	db $04
-	db $04
-	db $B5
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $40
-	db $41
-	db $FF
-	db $FF
-	db $46
-	db $47
-	db $FF
-	db $50
-	db $51
-	db $52
-	db $53
+	.byte $04
+	.byte $04
+	.byte $B5
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $40
+	.byte $41
+	.byte $FF
+	.byte $FF
+	.byte $46
+	.byte $47
+	.byte $FF
+	.byte $50
+	.byte $51
+	.byte $52
+	.byte $53
 ofs_901B:
-	db $04
-	db $05
-	db $B5
-	db $FF
-	db $40
-	db $41
-	db $FF
-	db $42
-	db $43
-	db $44
-	db $45
-	db $4C
-	db $4D
-	db $4E
-	db $4F
-	db $56
-	db $57
-	db $58
-	db $59
-	db $5A
-	db $5B
-	db $5C
-	db $5D
+	.byte $04
+	.byte $05
+	.byte $B5
+	.byte $FF
+	.byte $40
+	.byte $41
+	.byte $FF
+	.byte $42
+	.byte $43
+	.byte $44
+	.byte $45
+	.byte $4C
+	.byte $4D
+	.byte $4E
+	.byte $4F
+	.byte $56
+	.byte $57
+	.byte $58
+	.byte $59
+	.byte $5A
+	.byte $5B
+	.byte $5C
+	.byte $5D
 ofs_9032:
-	db $04
-	db $05
-	db $B5
-	db $FF
-	db $40
-	db $41
-	db $FF
-	db $FF
-	db $46
-	db $47
-	db $FF
-	db $50
-	db $51
-	db $52
-	db $53
-	db $56
-	db $57
-	db $58
-	db $59
-	db $5A
-	db $5B
-	db $5C
-	db $5D
+	.byte $04
+	.byte $05
+	.byte $B5
+	.byte $FF
+	.byte $40
+	.byte $41
+	.byte $FF
+	.byte $FF
+	.byte $46
+	.byte $47
+	.byte $FF
+	.byte $50
+	.byte $51
+	.byte $52
+	.byte $53
+	.byte $56
+	.byte $57
+	.byte $58
+	.byte $59
+	.byte $5A
+	.byte $5B
+	.byte $5C
+	.byte $5D
 ofs_9049:
-	db $04
-	db $03
-	db $B5
-	db $FF
-	db $5E
-	db $5F
-	db $FF
-	db $64
-	db $65
-	db $66
-	db $67
-	db $73
-	db $74
-	db $75
-	db $76
+	.byte $04
+	.byte $03
+	.byte $B5
+	.byte $FF
+	.byte $5E
+	.byte $5F
+	.byte $FF
+	.byte $64
+	.byte $65
+	.byte $66
+	.byte $67
+	.byte $73
+	.byte $74
+	.byte $75
+	.byte $76
 ofs_9058:
-	db $04
-	db $03
-	db $B5
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $68
-	db $69
-	db $6A
-	db $FF
-	db $77
-	db $78
-	db $79
-	db $FF
+	.byte $04
+	.byte $03
+	.byte $B5
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $68
+	.byte $69
+	.byte $6A
+	.byte $FF
+	.byte $77
+	.byte $78
+	.byte $79
+	.byte $FF
 ofs_9067:
-	db $04
-	db $03
-	db $B5
-	db $FF
-	db $60
-	db $61
-	db $FF
-	db $6B
-	db $6C
-	db $6D
-	db $6E
-	db $7A
-	db $7B
-	db $7C
-	db $7D
+	.byte $04
+	.byte $03
+	.byte $B5
+	.byte $FF
+	.byte $60
+	.byte $61
+	.byte $FF
+	.byte $6B
+	.byte $6C
+	.byte $6D
+	.byte $6E
+	.byte $7A
+	.byte $7B
+	.byte $7C
+	.byte $7D
 ofs_9076:
-	db $04
-	db $04
-	db $B5
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $62
-	db $63
-	db $FF
-	db $6F
-	db $70
-	db $71
-	db $72
-	db $FF
-	db $7E
-	db $7F
-	db $FF
+	.byte $04
+	.byte $04
+	.byte $B5
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $62
+	.byte $63
+	.byte $FF
+	.byte $6F
+	.byte $70
+	.byte $71
+	.byte $72
+	.byte $FF
+	.byte $7E
+	.byte $7F
+	.byte $FF
 ofs_9089:
-	db $04
-	db $04
-	db $B7
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $BF
-	db $C0
-	db $C1
-	db $C2
-	db $FF
-	db $C7
-	db $C8
-	db $FF
+	.byte $04
+	.byte $04
+	.byte $B7
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $BF
+	.byte $C0
+	.byte $C1
+	.byte $C2
+	.byte $FF
+	.byte $C7
+	.byte $C8
+	.byte $FF
 ofs_909C:
-	db $04
-	db $04
-	db $B7
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $C3
-	db $C4
-	db $C5
-	db $C6
-	db $C9
-	db $CA
-	db $CB
-	db $CC
+	.byte $04
+	.byte $04
+	.byte $B7
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $C3
+	.byte $C4
+	.byte $C5
+	.byte $C6
+	.byte $C9
+	.byte $CA
+	.byte $CB
+	.byte $CC
 ofs_90AF:
-	db $02 ; diagonal podoboo mappings
-	db $02
-	db $A7
-	db $2B
-	db $2C
-	db $36
-	db $37
+	.byte $02 ; diagonal podoboo mappings
+	.byte $02
+	.byte $A7
+	.byte $2B
+	.byte $2C
+	.byte $36
+	.byte $37
 ofs_90B6:
-	db $02
-	db $02
-	db $A7
-	db $2D
-	db $2E
-	db $38
-	db $39
+	.byte $02
+	.byte $02
+	.byte $A7
+	.byte $2D
+	.byte $2E
+	.byte $38
+	.byte $39
 ofs_90BD:
-	db $02
-	db $02
-	db $A7
-	db $36
-	db $37
-	db $2B
-	db $2C
+	.byte $02
+	.byte $02
+	.byte $A7
+	.byte $36
+	.byte $37
+	.byte $2B
+	.byte $2C
 ofs_90C4:
-	db $02
-	db $02
-	db $A7
-	db $38
-	db $39
-	db $2D
-	db $2E
+	.byte $02
+	.byte $02
+	.byte $A7
+	.byte $38
+	.byte $39
+	.byte $2D
+	.byte $2E
 ofs_90CB:
-	db $01
-	db $01
-	db $A7
-	db $FF
+	.byte $01
+	.byte $01
+	.byte $A7
+	.byte $FF
 ofs_90CF:
-	db $03 ; morton mappings (7 unused frames)
-	db $04
-	db $B0
-	db $01
-	db $FF
-	db $FF
-	db $09
-	db $0A
-	db $0B
-	db $18
-	db $19
-	db $1A
-	db $28
-	db $29
-	db $2A
+	.byte $03 ; morton mappings (7 unused frames)
+	.byte $04
+	.byte $B0
+	.byte $01
+	.byte $FF
+	.byte $FF
+	.byte $09
+	.byte $0A
+	.byte $0B
+	.byte $18
+	.byte $19
+	.byte $1A
+	.byte $28
+	.byte $29
+	.byte $2A
 ofs_90DE:
-	db $03
-	db $04
-	db $B0
-	db $28
-	db $29
-	db $2A
-	db $18
-	db $19
-	db $1A
-	db $09
-	db $0A
-	db $0B
-	db $01
-	db $FF
-	db $FF
+	.byte $03
+	.byte $04
+	.byte $B0
+	.byte $28
+	.byte $29
+	.byte $2A
+	.byte $18
+	.byte $19
+	.byte $1A
+	.byte $09
+	.byte $0A
+	.byte $0B
+	.byte $01
+	.byte $FF
+	.byte $FF
 ofs_90ED:
-	db $03
-	db $04
-	db $B0
-	db $01
-	db $FF
-	db $FF
-	db $09
-	db $0A
-	db $0B
-	db $18
-	db $19
-	db $1A
-	db $2B
-	db $2C
-	db $2D
+	.byte $03
+	.byte $04
+	.byte $B0
+	.byte $01
+	.byte $FF
+	.byte $FF
+	.byte $09
+	.byte $0A
+	.byte $0B
+	.byte $18
+	.byte $19
+	.byte $1A
+	.byte $2B
+	.byte $2C
+	.byte $2D
 ofs_90FC:
-	db $03
-	db $04
-	db $B0
-	db $01
-	db $FF
-	db $FF
-	db $09
-	db $0A
-	db $0B
-	db $18
-	db $19
-	db $1A
-	db $2E
-	db $2F
-	db $30
+	.byte $03
+	.byte $04
+	.byte $B0
+	.byte $01
+	.byte $FF
+	.byte $FF
+	.byte $09
+	.byte $0A
+	.byte $0B
+	.byte $18
+	.byte $19
+	.byte $1A
+	.byte $2E
+	.byte $2F
+	.byte $30
 ofs_910B:
-	db $03
-	db $04
-	db $B0
-	db $2B
-	db $2C
-	db $2D
-	db $18
-	db $19
-	db $1A
-	db $09
-	db $0A
-	db $0B
-	db $01
-	db $FF
-	db $FF
+	.byte $03
+	.byte $04
+	.byte $B0
+	.byte $2B
+	.byte $2C
+	.byte $2D
+	.byte $18
+	.byte $19
+	.byte $1A
+	.byte $09
+	.byte $0A
+	.byte $0B
+	.byte $01
+	.byte $FF
+	.byte $FF
 ofs_911A:
-	db $03
-	db $04
-	db $B0
-	db $2E
-	db $2F
-	db $30
-	db $18
-	db $19
-	db $1A
-	db $09
-	db $0A
-	db $0B
-	db $01
-	db $FF
-	db $FF
+	.byte $03
+	.byte $04
+	.byte $B0
+	.byte $2E
+	.byte $2F
+	.byte $30
+	.byte $18
+	.byte $19
+	.byte $1A
+	.byte $09
+	.byte $0A
+	.byte $0B
+	.byte $01
+	.byte $FF
+	.byte $FF
 ofs_9129:
-	db $03
-	db $03
-	db $B0
-	db $0C
-	db $0D
-	db $0E
-	db $1B
-	db $1C
-	db $1D
-	db $31
-	db $32
-	db $33
+	.byte $03
+	.byte $03
+	.byte $B0
+	.byte $0C
+	.byte $0D
+	.byte $0E
+	.byte $1B
+	.byte $1C
+	.byte $1D
+	.byte $31
+	.byte $32
+	.byte $33
 ofs_9135:
-	db $03
-	db $03
-	db $B0
-	db $0C
-	db $0D
-	db $0E
-	db $1E
-	db $1C
-	db $1D
-	db $34
-	db $32
-	db $33
+	.byte $03
+	.byte $03
+	.byte $B0
+	.byte $0C
+	.byte $0D
+	.byte $0E
+	.byte $1E
+	.byte $1C
+	.byte $1D
+	.byte $34
+	.byte $32
+	.byte $33
 ofs_9141:
-	db $03
-	db $03
-	db $B0
-	db $31
-	db $32
-	db $33
-	db $1B
-	db $1C
-	db $1D
-	db $0C
-	db $0D
-	db $0E
+	.byte $03
+	.byte $03
+	.byte $B0
+	.byte $31
+	.byte $32
+	.byte $33
+	.byte $1B
+	.byte $1C
+	.byte $1D
+	.byte $0C
+	.byte $0D
+	.byte $0E
 ofs_914D:
-	db $03
-	db $03
-	db $B0
-	db $34
-	db $32
-	db $33
-	db $1E
-	db $1C
-	db $1D
-	db $0C
-	db $0D
-	db $0E
+	.byte $03
+	.byte $03
+	.byte $B0
+	.byte $34
+	.byte $32
+	.byte $33
+	.byte $1E
+	.byte $1C
+	.byte $1D
+	.byte $0C
+	.byte $0D
+	.byte $0E
 ofs_9159:
-	db $03
-	db $04
-	db $B0
-	db $FF
-	db $02
-	db $03
-	db $0F
-	db $10
-	db $11
-	db $1F
-	db $20
-	db $21
-	db $35
-	db $36
-	db $37
+	.byte $03
+	.byte $04
+	.byte $B0
+	.byte $FF
+	.byte $02
+	.byte $03
+	.byte $0F
+	.byte $10
+	.byte $11
+	.byte $1F
+	.byte $20
+	.byte $21
+	.byte $35
+	.byte $36
+	.byte $37
 ofs_9168:
-	db $03
-	db $04
-	db $B0
-	db $04
-	db $05
-	db $06
-	db $12
-	db $13
-	db $14
-	db $22
-	db $23
-	db $24
-	db $38
-	db $39
-	db $3A
+	.byte $03
+	.byte $04
+	.byte $B0
+	.byte $04
+	.byte $05
+	.byte $06
+	.byte $12
+	.byte $13
+	.byte $14
+	.byte $22
+	.byte $23
+	.byte $24
+	.byte $38
+	.byte $39
+	.byte $3A
 ofs_9177:
-	db $03
-	db $04
-	db $B0
-	db $07
-	db $08
-	db $FF
-	db $15
-	db $16
-	db $17
-	db $25
-	db $26
-	db $27
-	db $3B
-	db $3C
-	db $3D
+	.byte $03
+	.byte $04
+	.byte $B0
+	.byte $07
+	.byte $08
+	.byte $FF
+	.byte $15
+	.byte $16
+	.byte $17
+	.byte $25
+	.byte $26
+	.byte $27
+	.byte $3B
+	.byte $3C
+	.byte $3D
 ofs_9186:
-	db $03
-	db $04
-	db $B0
-	db $35
-	db $36
-	db $37
-	db $1F
-	db $20
-	db $21
-	db $0F
-	db $10
-	db $11
-	db $FF
-	db $02
-	db $03
+	.byte $03
+	.byte $04
+	.byte $B0
+	.byte $35
+	.byte $36
+	.byte $37
+	.byte $1F
+	.byte $20
+	.byte $21
+	.byte $0F
+	.byte $10
+	.byte $11
+	.byte $FF
+	.byte $02
+	.byte $03
 ofs_9195:
-	db $03
-	db $04
-	db $B0
-	db $38
-	db $39
-	db $3A
-	db $22
-	db $23
-	db $24
-	db $12
-	db $13
-	db $14
-	db $04
-	db $05
-	db $06
+	.byte $03
+	.byte $04
+	.byte $B0
+	.byte $38
+	.byte $39
+	.byte $3A
+	.byte $22
+	.byte $23
+	.byte $24
+	.byte $12
+	.byte $13
+	.byte $14
+	.byte $04
+	.byte $05
+	.byte $06
 ofs_91A4:
-	db $03
-	db $04
-	db $B0
-	db $3B
-	db $3C
-	db $3D
-	db $25
-	db $26
-	db $27
-	db $15
-	db $16
-	db $17
-	db $07
-	db $08
-	db $FF
+	.byte $03
+	.byte $04
+	.byte $B0
+	.byte $3B
+	.byte $3C
+	.byte $3D
+	.byte $25
+	.byte $26
+	.byte $27
+	.byte $15
+	.byte $16
+	.byte $17
+	.byte $07
+	.byte $08
+	.byte $FF
 ofs_91B3:
-	db $04
-	db $04
-	db $B1
-	db $45
-	db $46
-	db $47
-	db $48
-	db $55
-	db $56
-	db $57
-	db $58
-	db $67
-	db $68
-	db $69
-	db $6A
-	db $FF
-	db $76
-	db $77
-	db $FF
+	.byte $04
+	.byte $04
+	.byte $B1
+	.byte $45
+	.byte $46
+	.byte $47
+	.byte $48
+	.byte $55
+	.byte $56
+	.byte $57
+	.byte $58
+	.byte $67
+	.byte $68
+	.byte $69
+	.byte $6A
+	.byte $FF
+	.byte $76
+	.byte $77
+	.byte $FF
 ofs_91C6:
-	db $05
-	db $05
-	db $B1
-	db $FF
-	db $40
-	db $41
-	db $FF
-	db $FF
-	db $49
-	db $4A
-	db $4B
-	db $4C
-	db $FF
-	db $59
-	db $5A
-	db $5B
-	db $5C
-	db $5D
-	db $6B
-	db $6C
-	db $6D
-	db $6E
-	db $FF
-	db $FF
-	db $79
-	db $78
-	db $FF
-	db $FF
+	.byte $05
+	.byte $05
+	.byte $B1
+	.byte $FF
+	.byte $40
+	.byte $41
+	.byte $FF
+	.byte $FF
+	.byte $49
+	.byte $4A
+	.byte $4B
+	.byte $4C
+	.byte $FF
+	.byte $59
+	.byte $5A
+	.byte $5B
+	.byte $5C
+	.byte $5D
+	.byte $6B
+	.byte $6C
+	.byte $6D
+	.byte $6E
+	.byte $FF
+	.byte $FF
+	.byte $79
+	.byte $78
+	.byte $FF
+	.byte $FF
 ofs_91E2:
-	db $04
-	db $04
-	db $B1
-	db $4D
-	db $4E
-	db $4F
-	db $50
-	db $5E
-	db $5F
-	db $60
-	db $61
-	db $6F
-	db $70
-	db $71
-	db $72
-	db $FF
-	db $7A
-	db $7B
-	db $7C
+	.byte $04
+	.byte $04
+	.byte $B1
+	.byte $4D
+	.byte $4E
+	.byte $4F
+	.byte $50
+	.byte $5E
+	.byte $5F
+	.byte $60
+	.byte $61
+	.byte $6F
+	.byte $70
+	.byte $71
+	.byte $72
+	.byte $FF
+	.byte $7A
+	.byte $7B
+	.byte $7C
 ofs_91F5:
-	db $05
-	db $05
-	db $B1
-	db $FF
-	db $42
-	db $43
-	db $44
-	db $FF
-	db $51
-	db $52
-	db $53
-	db $54
-	db $FF
-	db $62
-	db $63
-	db $64
-	db $65
-	db $66
-	db $FF
-	db $73
-	db $74
-	db $75
-	db $FF
-	db $FF
-	db $FF
-	db $7D
-	db $FF
-	db $FF
+	.byte $05
+	.byte $05
+	.byte $B1
+	.byte $FF
+	.byte $42
+	.byte $43
+	.byte $44
+	.byte $FF
+	.byte $51
+	.byte $52
+	.byte $53
+	.byte $54
+	.byte $FF
+	.byte $62
+	.byte $63
+	.byte $64
+	.byte $65
+	.byte $66
+	.byte $FF
+	.byte $73
+	.byte $74
+	.byte $75
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $7D
+	.byte $FF
+	.byte $FF
 ofs_9211:
-	db $04
-	db $04
-	db $B2
-	db $FF
-	db $80
-	db $81
-	db $FF
-	db $86
-	db $87
-	db $88
-	db $89
-	db $96
-	db $97
-	db $98
-	db $99
-	db $A6
-	db $A7
-	db $A8
-	db $A9
+	.byte $04
+	.byte $04
+	.byte $B2
+	.byte $FF
+	.byte $80
+	.byte $81
+	.byte $FF
+	.byte $86
+	.byte $87
+	.byte $88
+	.byte $89
+	.byte $96
+	.byte $97
+	.byte $98
+	.byte $99
+	.byte $A6
+	.byte $A7
+	.byte $A8
+	.byte $A9
 ofs_9224:
-	db $04
-	db $04
-	db $B2
-	db $FF
-	db $82
-	db $83
-	db $FF
-	db $8A
-	db $8B
-	db $8C
-	db $8D
-	db $9A
-	db $9B
-	db $9C
-	db $9D
-	db $AA
-	db $AB
-	db $AC
-	db $AD
+	.byte $04
+	.byte $04
+	.byte $B2
+	.byte $FF
+	.byte $82
+	.byte $83
+	.byte $FF
+	.byte $8A
+	.byte $8B
+	.byte $8C
+	.byte $8D
+	.byte $9A
+	.byte $9B
+	.byte $9C
+	.byte $9D
+	.byte $AA
+	.byte $AB
+	.byte $AC
+	.byte $AD
 ofs_9237:
-	db $03
-	db $04
-	db $B2
-	db $84
-	db $85
-	db $FF
-	db $8E
-	db $8F
-	db $90
-	db $9E
-	db $9F
-	db $A0
-	db $AE
-	db $AF
-	db $B0
+	.byte $03
+	.byte $04
+	.byte $B2
+	.byte $84
+	.byte $85
+	.byte $FF
+	.byte $8E
+	.byte $8F
+	.byte $90
+	.byte $9E
+	.byte $9F
+	.byte $A0
+	.byte $AE
+	.byte $AF
+	.byte $B0
 ofs_9246:
-	db $05
-	db $04
-	db $B2
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $91
-	db $92
-	db $93
-	db $94
-	db $95
-	db $A1
-	db $A2
-	db $A3
-	db $A4
-	db $A5
-	db $B1
-	db $B2
-	db $B3
-	db $B4
-	db $B5
+	.byte $05
+	.byte $04
+	.byte $B2
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $91
+	.byte $92
+	.byte $93
+	.byte $94
+	.byte $95
+	.byte $A1
+	.byte $A2
+	.byte $A3
+	.byte $A4
+	.byte $A5
+	.byte $B1
+	.byte $B2
+	.byte $B3
+	.byte $B4
+	.byte $B5
 ofs_925D:
-	db $05
-	db $04
-	db $B2
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $B6
-	db $B7
-	db $B8
-	db $B9
-	db $BA
-	db $BB
-	db $BC
-	db $BD
-	db $BE
-	db $BF
+	.byte $05
+	.byte $04
+	.byte $B2
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $B6
+	.byte $B7
+	.byte $B8
+	.byte $B9
+	.byte $BA
+	.byte $BB
+	.byte $BC
+	.byte $BD
+	.byte $BE
+	.byte $BF
 ofs_9274:
-	db $05
-	db $04
-	db $B3
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $C0
-	db $C1
-	db $FF
-	db $FF
-	db $FF
-	db $C2
-	db $C3
-	db $FF
+	.byte $05
+	.byte $04
+	.byte $B3
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $C0
+	.byte $C1
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $C2
+	.byte $C3
+	.byte $FF
 ofs_928B:
-	db $05
-	db $04
-	db $B3
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $C5
-	db $C6
-	db $FF
-	db $FF
-	db $FF
-	db $CB
-	db $CC
-	db $FF
+	.byte $05
+	.byte $04
+	.byte $B3
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $C5
+	.byte $C6
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $CB
+	.byte $CC
+	.byte $FF
 ofs_92A2:
-	db $05
-	db $04
-	db $B3
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $C7
-	db $C8
-	db $FF
-	db $FF
-	db $FF
-	db $CD
-	db $CE
-	db $FF
+	.byte $05
+	.byte $04
+	.byte $B3
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $C7
+	.byte $C8
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $CD
+	.byte $CE
+	.byte $FF
 ofs_92B9:
-	db $05
-	db $04
-	db $B3
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $C9
-	db $CA
-	db $FF
-	db $FF
-	db $FF
-	db $CF
-	db $D0
-	db $FF
+	.byte $05
+	.byte $04
+	.byte $B3
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $C9
+	.byte $CA
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $CF
+	.byte $D0
+	.byte $FF
 sub6_92D0:
 	LDA #$07
 	STA $25
@@ -3131,7 +3131,7 @@ sub6_92D0:
 	BEQ bra6_92F2
 	CMP #$FF
 	BEQ bra6_92F2
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra6_92F2:
 	LDA objYLo,X
 	SEC
@@ -3177,11 +3177,11 @@ bra6_933A:
 	STA $33
 	JMP ($32)
 tbl6_934E:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr6_9358
-	dw Obj_FlipKill
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr6_9358
+	.word objFlipKill
 ptr6_9358:
 	LDA reznorsDefeated
 	BNE bra6_9363_RTS
@@ -3230,7 +3230,7 @@ bra6_93A9:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
-Obj_h72:
+obj0x72:
 	LDX $A4
 	JSR sub6_9BEA
 	LDA objSlot,X
@@ -3329,13 +3329,13 @@ loc6_9488:
 	STA $33
 	JMP ($32)
 tbl6_949D:
-	dw ptr6_94AB
-	dw ptr6_94E9
-	dw ptr6_9529
-	dw ptr6_955B
-	dw ptr6_958A
-	dw ptr6_9603
-	dw ptr6_9632
+	.word ptr6_94AB
+	.word ptr6_94E9
+	.word ptr6_9529
+	.word ptr6_955B
+	.word ptr6_958A
+	.word ptr6_9603
+	.word ptr6_9632
 ptr6_94AB:
 	LDA objFrameCount
 	AND #$03
@@ -3488,74 +3488,74 @@ bra6_95C1:
 	STA enemyAnimFrame,X
 	RTS
 tbl6_95C5:
-	db $25
-	db $26
-	db $27
-	db $26
+	.byte $25
+	.byte $26
+	.byte $27
+	.byte $26
 tbl6_95C9:
-	db $2A
-	db $2B
-	db $2A
-	db $2B
+	.byte $2A
+	.byte $2B
+	.byte $2A
+	.byte $2B
 tbl6_95CD:
-	db $20
+	.byte $20
 tbl6_95CE:
-	db $21
-	db $20
-	db $1F
-	db $20
-	db $1F
-	db $1D
-	db $1E
-	db $22
-	db $23
-	db $22
-	db $24
-	db $27
-	db $2D
-	db $32
-	db $33
+	.byte $21
+	.byte $20
+	.byte $1F
+	.byte $20
+	.byte $1F
+	.byte $1D
+	.byte $1E
+	.byte $22
+	.byte $23
+	.byte $22
+	.byte $24
+	.byte $27
+	.byte $2D
+	.byte $32
+	.byte $33
 tbl6_95DD:
-	db $02
-	db $04
-	db $06
-	db $01
-	db $03
-	db $04
-	db $06
-	db $01
-	db $03
-	db $00
-	db $02
-	db $04
-	db $05
-	db $00
-	db $02
-	db $04
-	db $01
-	db $06
-	db $06
-	db $01
-	db $03
-	db $02
-	db $04
-	db $06
+	.byte $02
+	.byte $04
+	.byte $06
+	.byte $01
+	.byte $03
+	.byte $04
+	.byte $06
+	.byte $01
+	.byte $03
+	.byte $00
+	.byte $02
+	.byte $04
+	.byte $05
+	.byte $00
+	.byte $02
+	.byte $04
+	.byte $01
+	.byte $06
+	.byte $06
+	.byte $01
+	.byte $03
+	.byte $02
+	.byte $04
+	.byte $06
 tbl6_95F5:
-	db $10
-	db $30
-	db $50
-	db $70
-	db $90
-	db $B0
-	db $D0
+	.byte $10
+	.byte $30
+	.byte $50
+	.byte $70
+	.byte $90
+	.byte $B0
+	.byte $D0
 tbl6_95FC:
-	db $68
-	db $78
-	db $78
-	db $68
-	db $58
-	db $68
-	db $78
+	.byte $68
+	.byte $78
+	.byte $78
+	.byte $68
+	.byte $58
+	.byte $68
+	.byte $78
 ptr6_9603:
 	LDA objYLo,X
 	CMP #$E0
@@ -3627,7 +3627,7 @@ sub6_9670:
 	BEQ bra6_9692
 	CMP #$FF
 	BEQ bra6_9692
-	JMP Obj_RemoveObject ; unlogged
+	JMP objRemoveObject ; unlogged
 bra6_9692:
 	LDA objYLo,X
 	SEC
@@ -3673,11 +3673,11 @@ bra6_96DA:
 	STA $33
 	JMP ($32)
 tbl6_96EE:
-	dw Obj_YoshiTongueCheck
-	dw ptr_AA7B
-	dw Obj_PowerupEatCheck
-	dw ptr6_96F8
-	dw Obj_FlipKill
+	.word objYoshiTongueCheck
+	.word ptr_AA7B
+	.word objPowerupEatCheck
+	.word ptr6_96F8
+	.word objFlipKill
 ptr6_96F8:
 	LDA objAction,X
 	CMP #$02
@@ -3731,7 +3731,7 @@ loc6_9747:
 	SBC #$0C
 	CMP objYLo,X
 	BCC bra6_97A3_RTS
-	JSR Obj_PlayerHitCheck
+	JSR objPlayerHitCheck
 	LDA playerMoveFlags
 	AND #$04
 	BNE bra6_9763
@@ -3771,7 +3771,7 @@ bra6_979A:
 	STA objActionTimer,X ; Clear action timer
 bra6_97A3_RTS:
 	RTS
-Obj_h64:
+obj0x64:
 	LDX $A4
 	LDA objVar,X
 	BMI bra6_97AE
@@ -3788,7 +3788,7 @@ bra6_97AE:
 	BEQ bra6_97CA
 	CMP #$FF
 	BEQ bra6_97CA
-	JMP Obj_RemoveObject ; unlogged
+	JMP objRemoveObject ; unlogged
 bra6_97CA:
 	LDA objYLo,X
 	SEC
@@ -4064,31 +4064,31 @@ bra6_99CC:
 	JSR jmp_54_A118
 	RTS
 tbl6_99D7:
-	db $DD
+	.byte $DD
 tbl6_99D8:
-	db $99
-	db $E4
-	db $99
-	db $EB
-	db $99
-	db $02
-	db $02
-	db $97
-	db $0D
-	db $0E
-	db $11
-	db $12
-	db $02
-	db $02
-	db $97
-	db $0F
-	db $10
-	db $13
-	db $14
-	db $01
-	db $01
-	db $97
-	db $FF
+	.byte $99
+	.byte $E4
+	.byte $99
+	.byte $EB
+	.byte $99
+	.byte $02
+	.byte $02
+	.byte $97
+	.byte $0D
+	.byte $0E
+	.byte $11
+	.byte $12
+	.byte $02
+	.byte $02
+	.byte $97
+	.byte $0F
+	.byte $10
+	.byte $13
+	.byte $14
+	.byte $01
+	.byte $01
+	.byte $97
+	.byte $FF
 sub6_99EF:
 	LDX $A4
 	LDA objVar,X
@@ -4100,7 +4100,7 @@ sub6_99EF:
 	PLA
 bra6_99FF_RTS:
 	RTS
-Obj_h6C:
+obj0x6C:
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -4113,7 +4113,7 @@ Obj_h6C:
 	BEQ bra6_9A1E
 	CMP #$FF
 	BEQ bra6_9A1E
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra6_9A1E:
 	LDA objYLo,X
 	SEC
@@ -4162,9 +4162,9 @@ bra6_9A6F:
 	STA $33
 	JMP ($32)
 tbl6_9A81:
-	dw ptr6_9A87
-	dw ptr6_9ADF
-	dw ptr6_9B7B
+	.word ptr6_9A87
+	.word ptr6_9ADF
+	.word ptr6_9B7B
 ptr6_9A87:
 	LDA #$FF
 	BMI bra6_9AA4
@@ -4367,7 +4367,7 @@ loc6_9BEA:
 	BEQ bra6_9C06
 	CMP #$FF
 	BEQ bra6_9C06
-	JMP Obj_RemoveObject
+	JMP objRemoveObject
 bra6_9C06:
 	LDA objYLo,X
 	SEC
@@ -4455,856 +4455,856 @@ bra6_9C99:
 	STA $03E4,X
 	RTS
 tbl6_9CAD:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $02
-	db $02
-	db $02
-	db $02
-	db $02
-	db $02
-	db $02
-	db $02
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
-	db $03
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $05
-	db $05
-	db $05
-	db $05
-	db $05
-	db $05
-	db $05
-	db $05
-	db $06
-	db $06
-	db $06
-	db $06
-	db $06
-	db $06
-	db $06
-	db $06
-	db $07
-	db $07
-	db $07
-	db $07
-	db $07
-	db $07
-	db $07
-	db $07
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $08
-	db $09
-	db $09
-	db $09
-	db $09
-	db $09
-	db $09
-	db $09
-	db $09
-	db $0A
-	db $0A
-	db $0A
-	db $0A
-	db $0A
-	db $0A
-	db $0A
-	db $0A
-	db $0B
-	db $0B
-	db $0B
-	db $0B
-	db $0B
-	db $0B
-	db $0B
-	db $0B
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0C
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0D
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0E
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $0F
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $10
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $11
-	db $12
-	db $12
-	db $12
-	db $12
-	db $12
-	db $12
-	db $12
-	db $12
-	db $13
-	db $13
-	db $13
-	db $13
-	db $13
-	db $13
-	db $13
-	db $13
-	db $14
-	db $14
-	db $14
-	db $14
-	db $14
-	db $14
-	db $14
-	db $14
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $15
-	db $16
-	db $16
-	db $16
-	db $16
-	db $16
-	db $16
-	db $16
-	db $16
-	db $17
-	db $17
-	db $17
-	db $17
-	db $17
-	db $17
-	db $17
-	db $17
-	db $18
-	db $18
-	db $18
-	db $18
-	db $18
-	db $18
-	db $18
-	db $18
-	db $19
-	db $19
-	db $19
-	db $19
-	db $19
-	db $19
-	db $19
-	db $19
-	db $1A
-	db $1A
-	db $1A
-	db $1A
-	db $1A
-	db $1A
-	db $1A
-	db $1A
-	db $1B
-	db $1B
-	db $1B
-	db $1B
-	db $1B
-	db $1B
-	db $1B
-	db $1B
-	db $1C
-	db $1C
-	db $1C
-	db $1C
-	db $1C
-	db $1C
-	db $1C
-	db $1C
-	db $1D
-	db $1D
-	db $1D
-	db $1D
-	db $1D
-	db $1D
-	db $1D
-	db $1D
-	db $1E
-	db $1E
-	db $1E
-	db $1E
-	db $1E
-	db $1E
-	db $1E
-	db $1E
-	db $1F
-	db $1F
-	db $1F
-	db $1F
-	db $1F
-	db $1F
-	db $1F
-	db $1F
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $06
+	.byte $06
+	.byte $06
+	.byte $06
+	.byte $06
+	.byte $06
+	.byte $06
+	.byte $06
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $09
+	.byte $09
+	.byte $09
+	.byte $09
+	.byte $09
+	.byte $09
+	.byte $09
+	.byte $09
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $0A
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0B
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0C
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0D
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0E
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $0F
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $10
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $11
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $12
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $13
+	.byte $14
+	.byte $14
+	.byte $14
+	.byte $14
+	.byte $14
+	.byte $14
+	.byte $14
+	.byte $14
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $15
+	.byte $16
+	.byte $16
+	.byte $16
+	.byte $16
+	.byte $16
+	.byte $16
+	.byte $16
+	.byte $16
+	.byte $17
+	.byte $17
+	.byte $17
+	.byte $17
+	.byte $17
+	.byte $17
+	.byte $17
+	.byte $17
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $18
+	.byte $19
+	.byte $19
+	.byte $19
+	.byte $19
+	.byte $19
+	.byte $19
+	.byte $19
+	.byte $19
+	.byte $1A
+	.byte $1A
+	.byte $1A
+	.byte $1A
+	.byte $1A
+	.byte $1A
+	.byte $1A
+	.byte $1A
+	.byte $1B
+	.byte $1B
+	.byte $1B
+	.byte $1B
+	.byte $1B
+	.byte $1B
+	.byte $1B
+	.byte $1B
+	.byte $1C
+	.byte $1C
+	.byte $1C
+	.byte $1C
+	.byte $1C
+	.byte $1C
+	.byte $1C
+	.byte $1C
+	.byte $1D
+	.byte $1D
+	.byte $1D
+	.byte $1D
+	.byte $1D
+	.byte $1D
+	.byte $1D
+	.byte $1D
+	.byte $1E
+	.byte $1E
+	.byte $1E
+	.byte $1E
+	.byte $1E
+	.byte $1E
+	.byte $1E
+	.byte $1E
+	.byte $1F
+	.byte $1F
+	.byte $1F
+	.byte $1F
+	.byte $1F
+	.byte $1F
+	.byte $1F
+	.byte $1F
 tbl6_9DAD:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $40
-	db $40
-	db $40
-	db $40
-	db $40
-	db $40
-	db $40
-	db $40
-	db $60
-	db $60
-	db $60
-	db $60
-	db $60
-	db $60
-	db $60
-	db $60
-	db $80
-	db $80
-	db $80
-	db $80
-	db $80
-	db $80
-	db $80
-	db $80
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $40
-	db $40
-	db $40
-	db $40
-	db $40
-	db $40
-	db $40
-	db $40
-	db $60
-	db $60
-	db $60
-	db $60
-	db $60
-	db $60
-	db $60
-	db $60
-	db $80
-	db $80
-	db $80
-	db $80
-	db $80
-	db $80
-	db $80
-	db $80
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $40
-	db $40
-	db $40
-	db $40
-	db $40
-	db $40
-	db $40
-	db $40
-	db $60
-	db $60
-	db $60
-	db $60
-	db $60
-	db $60
-	db $60
-	db $60
-	db $80
-	db $80
-	db $80
-	db $80
-	db $80
-	db $80
-	db $80
-	db $80
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $40
-	db $40
-	db $40
-	db $40
-	db $40
-	db $40
-	db $40
-	db $40
-	db $60
-	db $60
-	db $60
-	db $60
-	db $60
-	db $60
-	db $60
-	db $60
-	db $80
-	db $80
-	db $80
-	db $80
-	db $80
-	db $80
-	db $80
-	db $80
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $A0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $C0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
-	db $E0
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $40
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $60
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $80
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $A0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $C0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
+	.byte $E0
 tbl6_9EAD:
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $20
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $21
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $22
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $23
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $20
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $22
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $23
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
