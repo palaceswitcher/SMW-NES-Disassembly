@@ -4453,6 +4453,7 @@ tbl3_B8BF:
 	.word ptr11_BA96
 	.word ptr11_BAA2
 	.word ptr11_B9DF
+
 ptr11_B8DB:
 	LDY $3F
 	INY
@@ -4474,6 +4475,7 @@ ptr11_B8DB:
 	INC objAction,X
 bra3_B903_RTS:
 	RTS
+
 bra3_B904:
 	LDA ($34),Y
 	STA $28
@@ -5048,7 +5050,7 @@ objStompReboundNoSFX:
 	STA playerMoveFlags ; Reverse the player's horizontal direction
 	LDA #8
 	STA playerXSpd ; Set horizontal rebound speed
-	LDA #$01 ; Give player 200 points
+	LDA #1 ; Give player 200 points
 
 ;----------------------------------------
 ; SUBROUTINE ($BCD4)

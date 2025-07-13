@@ -1368,6 +1368,7 @@ bra7_8A60:
 	AND #$03
 	BNE objShell
 	INC $0641,X
+
 objShell:
 	LDA #$04
 	STA $25

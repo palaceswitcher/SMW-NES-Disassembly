@@ -2111,7 +2111,7 @@ bra5_8F62:
 	TAY
 bra5_8F78:
 	STY $25
-	JSR objPlatformStand
+	JSR objCollAsPlatform
 	RTS
 bra5_8F7E:
 	JSR sub5_82EC
@@ -2369,7 +2369,7 @@ bra5_915B:
 	RTS
 
 ;----------------------------------------
-; P-SWITCH GENERATED OBJECTS CODE ($9164)
+; P-SWITCH OBJECTS CODE ($9164)
 ;----------------------------------------
 obj0x66:
 	LDX $A4 ; Get object index
@@ -2378,7 +2378,7 @@ obj0x66:
 bra5_91CA:
 	LDA pSwitchTimer
 	BNE bra5_91D5 ; Branch if timer is still running
-		LDA #$00
+		LDA #0
 		STA enemyAnimFrame,X ; Make platform invisible if the P-Switch timer runs out
 		RTS
 
@@ -2389,61 +2389,74 @@ bra5_91D5:
 	BCS bra5_91F2 ; Branch if object is a P-Door
 		LDA #OBJ_PSWITCHPLATFORM+3
 		STA enemyAnimFrame,X ; Use turn block platform sprite if this object isn't a P-Door
-		LDA #$00
+		LDA #0
 		STA $28
-		STA $2B
+		STA $2B ; Don't offset player's position
 		LDA #255-53 ; Platform width (53)
 		STA $25
-		JSR objPlatformStand ; Check if player can stand on object
+		JSR objCollAsPlatform ; Check if player can stand on P-Switch platform
 		RTS
 
+;--------------------
+; P-DOOR CODE ($91F2)
+;--------------------
 bra5_91F2:
-	LDA #$6A
+	LDA #OBJ_PDOOR+2
 	STA enemyAnimFrame,X ; Use P-door sprite
 	LDA objXDistHi,X
 	BPL bra5_9209
-	LDA #$00
-	CLC
-	ADC #$10
-	CLC
-	ADC objXDistLo,X
-	BCS bra5_9210
-	BCC bra5_9230
-bra5_9209:
-	LDA objXDistLo,X
-	CMP #$00
-	BCS bra5_9230
+	; If player is to the right of the object
+		LDA #0
+		CLC
+		ADC #16 ; Account for width of the object's hitbox
+		CLC
+		ADC objXDistLo,X
+		BCS bra5_9210 ; If player is within the object's hitbox
+		BCC bra5_9230 ; Stop if player is outside the object's hitbox
+
+	; If the player is to the left of the object
+	bra5_9209:
+		LDA objXDistLo,X
+		CMP #0
+		BCS bra5_9230 ; Stop if the player is outside the object's hitbox
+
 bra5_9210:
 	LDA objYDistHi,X
 	BEQ bra5_9226
-	CMP #$FF
+	CMP #-1
 	BNE bra5_9230
-	LDA #$14
-	CLC
-	ADC #$20
-	CLC
-	ADC objYDistLo,X
-	BCS bra5_922D
-	BCC bra5_9230
-bra5_9226:
-	LDA objYDistLo,X
-	CMP #$00
-	BCS bra5_9230
+	; If player is below object's hitbox
+		LDA #20
+		CLC
+		ADC #32
+		CLC
+		ADC objYDistLo,X
+		BCS bra5_922D
+		BCC bra5_9230
+
+	; If player is above object's hitbox
+	bra5_9226:
+		LDA objYDistLo,X
+		CMP #0
+		BCS bra5_9230
+
 bra5_922D:
 	CLC
-	BCC bra5_9231
+	BCC bra5_9231 ; Clear carry and allow code below to continue
+
 bra5_9230:
-	SEC
+	SEC ; Set carry and skip the below code
+
 bra5_9231:
 	BCS bra5_9262_RTS
 	LDA $1E
-	CMP #$08
+	CMP #8
 	BNE bra5_9262_RTS
 	LDA prgDataBank2
-	CMP #$23
+	CMP #35
 	BEQ bra5_9262_RTS
 	LDA $1E
-	CMP #$08
+	CMP #8
 	BNE bra5_9262_RTS
 	LDA worldNumber
 	ASL
@@ -2452,7 +2465,7 @@ bra5_9231:
 	ADC levelNumber
 	ASL
 	STA warpLvlNumber
-	LDA #$03
+	LDA #3
 	STA gameState
 	LDA #$7E
 	SEC
@@ -2461,6 +2474,7 @@ bra5_9231:
 	ASL
 	ASL
 	STA warpNumber
+
 bra5_9262_RTS:
 	RTS
 
@@ -2710,20 +2724,20 @@ bra5_93A7_RTS:
 
 ;----------------------------------------
 ; SUBROUTINE ($93A8)
-; Checks if player can stand on a platform object and makes them stand on it.
+; Checks if player can stand on a platform object of a specified width and makes them stand on it. Can optionally offset the player as well.
 ; Parameters:
-; > $25: 
+; > $25: Platform Width
 ; > $28: Player X Offset
 ; > $2B: Player Y Offset
 ;----------------------------------------
-objPlatformStand:
+objCollAsPlatform:
 	LDX $A4
 	LDA objState,X
-	BMI bra5_93B2
-	JMP loc5_94B2
+	BMI @isStandingOnPlatform
+	JMP loc5_94B2 ; Jump if the player isn't already standing on the platform
 
 ; Horizontally offset player
-bra5_93B2:
+@isStandingOnPlatform:
 	LDA playerXLoDup
 	CLC
 	ADC $28
@@ -2738,6 +2752,7 @@ bra5_93B2:
 	bra5_93C4:
 		LDA playerXHiDup
 		SBC #$00
+
 loc5_93C8:
 	STA playerXHiDup
 
@@ -2784,22 +2799,24 @@ bra5_9463:
 	LDA #$00
 	STA objState,X
 	LDA objXDistHi,X
-	BEQ bra5_947A
-		CMP #$FF
-		BNE bra5_9481_RTS
+	BEQ @continue
+		CMP #-1
+		BNE @stop
+			; If the player is to the right of the object
 			LDA objXDistLo,X
 			CMP $25
-			BCC bra5_9481_RTS
-			BCS bra5_9482
-	bra5_947A:
+			BCC @stop
+			BCS bra5_9482 ; Continue if the player is within the width of the object
+	; If the player is to the lft of the object
+	@continue:
 		LDA objXDistLo,X
-		CMP #$05
-		BCC bra5_9482
+		CMP #5
+		BCC bra5_9482 ; Only extend the object's hitbox 5 units to the left
 
-bra5_9481_RTS:
+@stop:
 	RTS
 
-; Check if player is moving down is within the bounds of the object
+; Check if player is moving down and is within the bounds of the object
 bra5_9482:
 	LDA playerMoveFlags
 	AND #%00000100
@@ -2810,15 +2827,15 @@ bra5_9482:
 		; If player is within a vertical screen of the object
 			LDA objYDistLo,X
 			CMP #8
-			BCC @standOnObj ; Make player stand on object if it's 8 pixels above the object origin
+			BCC @standOnObj ; Make player stand on object if they're 8 pixels above the object's origin
 			BCS @stop
 	@continue:
-		CMP #$FF
+		CMP #-1
 		BNE @stop
 		; If player is within a vertical screen of the object
 			LDA objYDistLo,X
 			CMP #-6
-			BCS @standOnObj ; Make player stand on object if it's at least 6 pixels below the object origin
+			BCS @standOnObj ; Make player stand on object if they're at least 6 pixels below the object origin
 
 @stop:
 	RTS
@@ -2835,63 +2852,73 @@ bra5_9482:
 
 loc5_94B2:
 	LDA objXDistHi,X
-	BEQ bra5_94C4
-	CMP #$FF
-	BNE bra5_94CB_RTS
+	BEQ @continue
+		CMP #-1
+		BNE @stop
+			; If the player is to the right of the object
+			LDA objXDistLo,X
+			CMP $25
+			BCC @stop
+			BCS bra5_94CC ; Continue if the player is within the width of the object
+
+@continue:
 	LDA objXDistLo,X
-	CMP $25
-	BCC bra5_94CB_RTS
-	BCS bra5_94CC
-bra5_94C4:
-	LDA objXDistLo,X
-	CMP #$05
+	CMP #5
 	BCC bra5_94CC
-bra5_94CB_RTS:
+
+@stop:
 	RTS
+
 bra5_94CC:
 	LDA playerMoveFlags
-	AND #$04
-	BNE bra5_94EB_RTS
-	LDA objYDistHi,X
-	BNE bra5_94E0
-	LDA objYDistLo,X
-	CMP #$08
-	BCC bra5_94EC
-	BCS bra5_94EB_RTS
-bra5_94E0:
-	CMP #$FF
-	BNE bra5_94EB_RTS
-	LDA objYDistLo,X
-	CMP #$FA
-	BCS bra5_94EC
-bra5_94EB_RTS:
+	AND #%00000100
+	BNE @stop
+	; If player is moving down
+		LDA objYDistHi,X
+		BNE @continue
+			LDA objYDistLo,X
+			CMP #8
+			BCC bra5_94EC ; If player is 8 or fewer above the object's origin
+			BCS @stop
+	@continue:
+		CMP #-1
+		BNE @stop
+			LDA objYDistLo,X
+			CMP #-6
+			BCS bra5_94EC ; If they're at least 6 pixels below the object origin
+
+@stop:
 	RTS
+
 bra5_94EC:
 	LDA #$00
 	STA playerYSpd
 	STA objYDistLo,X
-	STA objYDistHi,X
+	STA objYDistHi,X ; Stop player's vertical movement
 	LDA objYLo,X
 	STA playerYLoDup
 	LDA objYHi,X
-	STA playerYHiDup
+	STA playerYHiDup ; Vertically align player with object
 	LDY vertScrollLock
 	CPY playerYHiDup
 	BNE bra5_950E
-	INY
-	STY playerYHiDup
-	LDA #$00
-	STA playerYLoDup
+	; Stop player at upper boundary of level
+		INY
+		STY playerYHiDup
+		LDA #0
+		STA playerYLoDup
+
 bra5_950E:
-	LDA #$00
+	LDA #0
 	STA objYDistLo,X
 	STA objYDistHi,X
-	LDA #$80
-	STA objState,X
-	LDA #$01
-	STA playerAction
-	STA playerYSpd
+	LDA #%10000000
+	STA objState,X ; Set object to "stood on"
+	LDA #PACT_WALK
+	STA playerAction ; Make player enter walk action? Seems to have no effect
+	STA playerYSpd ; Make player dip down 1 pixel when standing on it
 	RTS
+
 sub5_9522:
 	LDA playerState
 	CMP #$03
@@ -3084,9 +3111,9 @@ bra5_967C:
 	TYA
 	ASL
 	TAX
-	LDA tbl5_96A1,X
+	LDA sprTblUrchin,X
 	STA $32
-	LDA tbl5_96A1+1,X
+	LDA sprTblUrchin+1,X
 	STA $33
 	LDY #$80
 	LDX $A4
@@ -3100,10 +3127,11 @@ bra5_9696:
 	STA $05F0
 	JSR jmp_54_A118
 	RTS
-tbl5_96A1:
-	.word wallUrchin1
-	.word wallUrchin2
-wallUrchin1:
+
+sprTblUrchin:
+	.word sprWallUrchin1
+	.word sprWallUrchin2
+sprWallUrchin1:
 	.byte $04
 	.byte $04
 	.byte $A8
@@ -3111,7 +3139,7 @@ wallUrchin1:
 	.byte $0D, $0E, $0F, $10
 	.byte $13, $14, $15, $16
 	.byte $19, $1A, $1B, $1C
-wallUrchin2:
+sprWallUrchin2:
 	.byte $04
 	.byte $04
 	.byte $A8
@@ -3119,6 +3147,7 @@ wallUrchin2:
 	.byte $0D, $11, $12, $10
 	.byte $13, $17, $18, $16
 	.byte $19, $1A, $1B, $1C
+
 ptr6_96CB:
 	LDX $A4
 	LDA enemyAnimFrame,X
@@ -3296,7 +3325,7 @@ bra5_97E3:
 	JSR jmp_54_B896
 	LDA #$DA
 	STA $25
-	JSR objPlatformStand
+	JSR objCollAsPlatform
 	RTS
 tbl5_97F0:
 	.byte $40
