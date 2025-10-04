@@ -1,5 +1,6 @@
 #!/usr/bin/python
-# SMW NES Data Extractor v1.1.0 by PalaceSwitcher
+# SMW NES Data Extractor v1.2.0 by PalaceSwitcher
+import typing
 import os
 import sys
 
@@ -34,6 +35,110 @@ def dump_chunk(data, path, start_offs, end_offs):
 def create_dir(dir):
 	if not os.path.exists(dir):
 		os.makedirs(dir)
+
+# Get little-endian u16 from a byte array
+def bytes_to_u16(bytes: bytearray, index: int) -> int:
+	if index + 1 >= len(bytes):
+		return -1
+	return (bytes[index] & 0xFF) | ((bytes[index+1] & 0xFF) << 8)
+
+class Pointer:
+	def __init__(self, value):
+		self.ptr = value
+
+	def __repr__(self):
+		return "<${0:04X}>".format(self.ptr)
+
+	def __str__(self):
+		return "<${0:04X}>".format(self.ptr)
+
+# Decompiles data to ASM
+def decomp_data(data: bytearray, base_addr: int) -> list:
+	intermediate_data = [] # Intermediate decompilation data
+	ptr_addrs: list[int] = [] # Addresses of each pointer
+
+	# Look for pointers
+	i = 0
+	while i < len(data):
+		current_u16 = bytes_to_u16(data, i) # Currently indexed data as a u16
+		if base_addr + i in ptr_addrs:
+			intermediate_data.append(base_addr + i) # Add a 16-bit number for each pointer location
+		if current_u16 > base_addr and current_u16 < base_addr + len(data):
+			intermediate_data.append(Pointer(current_u16))
+			ptr_addrs.append(current_u16)
+			i += 2 # Go an extra byte ahead for a pointer
+		else:
+			intermediate_data.append(data[i])
+			i += 1
+	
+	return intermediate_data
+
+def decomp_spawndata(bin_data: bytearray, base_addr: int, prefix: str) -> str:
+	data = decomp_data(bin_data, base_addr) # Decomp data
+	out_lines: list[str] = [] # Decompiled lines
+	ptr_names = {}
+
+	i = 0
+	world_num = 1 # World number for each pointer
+	while i < len(data):
+		if type(data[i]) == Pointer:
+			ptr_names[data[i].ptr] = f"{prefix}{world_num}"
+			out_lines.append(f"\t.word {prefix}{world_num}")
+			world_num += 1
+			i += 1
+		else:
+			if data[i] > 255:
+				out_lines.append(f"\n{ptr_names[data[i]]}:")
+				i += 1
+			elif i < len(data):
+				x_pos = "$"+"{0:04X}".format(data[i+2] | (data[i] << 8))
+				y_pos = "$"+"{0:04X}".format(data[i+3] | (data[i+1] << 8))
+				x_lock = "$"+"{0:02X}".format(data[i+4])
+				y_lock = "$"+"{0:02X}".format(data[i+6])
+
+				out_lines.append(f"\tspawndata {x_pos}, {y_pos}, {data[i+5]}, {data[i+7]}, {x_lock}, {y_lock}")
+				i += 8
+	
+	return "\n".join(out_lines)
+
+# Decomp unformatted data
+def decomp_generic(bin_data: bytearray, base_addr: int, split_size=1, split_half: bool = False, ptr_names: dict = {}) -> str:
+	data = decomp_data(bin_data, base_addr) # Decomp data
+	out_lines: list[str] = [] # Decompiled lines
+
+	ptr_count = 0 # Amount of pointers
+	for d in data:
+		if type(d) == Pointer:
+			ptr_count += 1
+
+	ptrs_until_half = ptr_count // 2 # Amount of pointers until the middle of the pointer table is reached
+
+	i = 0
+	while i < len(data):
+		if split_half and ptrs_until_half == 0:
+			out_lines.append("\nplayer2LevelPalettes:")
+
+		if type(data[i]) == Pointer:
+			if data[i].ptr not in ptr_names:
+				ptr_names[data[i].ptr] = f"lbl_{data[i].ptr}"
+			out_lines.append(f"\t.word {ptr_names[data[i].ptr]}")
+			ptrs_until_half -= 1
+			i += 1
+		else:
+			if data[i] > 255:
+				out_lines.append(f"\n{ptr_names[data[i]]}:")
+				i += 1
+			else:
+				line = "\t.byte " # Output line being added
+				for j in range(split_size):
+					if j != split_size - 1:
+						line += "${0:02X}, ".format(data[i]) # Only insert comma until last byte reached
+					else:
+						line += "${0:02X}".format(data[i])
+					i += 1
+				out_lines.append(line)
+	
+	return "\n".join(out_lines)
 
 # Create directories if they don't exist
 create_dir("levels")
@@ -74,6 +179,11 @@ dump_chunk(rom_data, "tilesets/ts_Title.bin", 0x58010, 0x58810)
 dump_chunk(rom_data, "tilesets/ts_Map.bin", 0x58810, 0x59010)
 dump_chunk(rom_data, "tilesets/ts_Unused2.bin", 0x59010, 0x59810)
 dump_chunk(rom_data, "tilesets/ts_Unused3.bin", 0x59810, 0x5A010)
+
+# Dump level metadata
+open("levels/SpawnData.asm", "w").write(decomp_spawndata(rom_data[0x7B686:0x7B77E], 0xB676, "spawnDataWorld"))
+open("levels/CheckpointSpawnData.asm", "w").write(decomp_spawndata(rom_data[0x7B77E:0x7B86C], 0xB76E, "spawnDataCheckpointWorld"))
+#open("levels/Palettes.asm", "w").write(decomp_generic(rom_data[0x7FA0C:0x7FE9C], 0xF9FC, 4, True, PALETTE_LABELS))
 
 # Dump screens
 dump_chunk(rom_data, "screens/TitleLogo.bin", 0x5401A, 0x54123)
