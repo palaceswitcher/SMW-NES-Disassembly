@@ -324,7 +324,7 @@ loc3_E277:
 	LDA #$00
 	STA $062D
 	LDX #$00
-	lDA a:inLvlFlag
+	LDA a:inLvlFlag
 	BNE bra3_E298
 	LDX #$04
 bra3_E298:
@@ -336,7 +336,7 @@ bra3_E298:
 	STA yScroll ; Copy vertical scroll
 	JMP loc3_E277 ; Jump
 sub3_E2AB:
-	lDA a:inLvlFlag
+	LDA a:inLvlFlag
 	BNE loc3_E317 ; Branch if in a level
 	LDX #$04
 	LDA tbl3_EF08,X
@@ -352,7 +352,7 @@ loc3_E2BE:
 
 ;-----UNUSED CODE START-----
 ; Seems to be an early routine for loading levels
-	lDA a:gameState
+	LDA a:gameState
 	ASL
 	TAY ; Get the event pointer
 	LDA tbl3_E2DB,Y 
@@ -383,8 +383,8 @@ bra3_E2FE:
 	BEQ bra3_E315 ; If start is pressed,
 	INC a:inLvlFlag ; Set game state to 'in level'
 	LDA #$00
-	sTA a:gameState ; Clear event triggers
-	LDA #$05
+	STA a:gameState ; Clear event triggers
+	LDA #5
 	STA palTransition
 	JSR sub3_F919 ; Jump
 bra3_E315:
@@ -394,36 +394,37 @@ pnt2_E316:
 ;-----UNUSED CODE END-----
 
 loc3_E317:
-	lDA a:gameState
+	LDA a:gameState
 	ASL
 	TAY ; Get the pointer for the current event
 	LDA tbl3_E329,Y
-	STA $32 ; Load lower byte of pointer
+	STA $32
 	LDA tbl3_E329+1,Y
-	STA $33 ; Load upper byte of pointer
+	STA $33 ; Load pointer
 	JMP ($32) ; Jump to loaded pointer
 tbl3_E329:
 	.word pnt2_E353 ; Game State 0
 	.word pnt2_E372 ; Reentering level
-	.word pnt2_E409 ; Normal/Default
-	.word pnt2_E4CA ; Entering door
-	.word pnt2_E534 ; Death
-	.word pnt2_E610 ; Castle intro
-	.word pnt2_E6ED ; Level complete
+	.word gameStateDefault
+	.word gameStateDoorEnter
+	.word gameStateDeath
+	.word gameStateCutscene
+	.word gameStateLevelComplete
 	.word pnt2_E79E ; Unusable item box use (nothing)
 	.word pnt2_E7A2 ; Game State 8
 	.word pnt2_E7D0 ; Game State 9
 	.word pnt2_E85F ; JY Easter egg
-	.word pnt2_ED75 ; Bonus pipe down
-	.word pnt2_EE02 ; Exiting pipe horizontally
-	.word pnt2_EE23 ; Exiting pipe upwards
-	.word pnt2_EE59 ; Enter 1st cannon pipe
-	.word pnt2_EE96 ; Launch out of 1st cannon
+	.word gameStateBonusPipeDown
+	.word gameStatePipeExitHoriz
+	.word gameStatePipeExitUp
+	.word gameStateCannonPipe1Down
+	.word gameStateCannonPipeLaunch
 	.word pnt2_EEC8 ; Enter 2nd cannon pipe
-	.word pnt2_EE96 ; Launch out of 2nd cannon
+	.word gameStateCannonPipeLaunch
 	.word pnt2_EEC8 ; Enter pipe up
-	.word pnt2_ED75
+	.word gameStateBonusPipeDown
 	.word pnt2_EEFD
+
 pnt2_E353:
 	LDA yoshiExitStatus
 	STA playerYoshiState ; Copy player 2's yoshi to current yoshi
@@ -435,10 +436,10 @@ pnt2_E353:
 	LDA #$3D
 	STA M90_PRG1 ; Swap bank 61 into 2nd PRG slot
 	JSR jmp_61_B19E
-	iNC a:gameState
+	INC a:gameState
 	RTS
 pnt2_E372:
-	lDA a:gameSubstate
+	LDA a:gameSubstate
 	ASL
 	TAY ; Get the pointer for the current event part
 	LDA tbl3_E384,Y
@@ -483,7 +484,7 @@ bra3_E397:
 	LDA #%01
 	STA M90_CHR_CTRL2 ; Set mirroring to horizontal
 	JSR sub3_F0CB ; Jump
-	iNC a:gameSubstate ; Go to next part of event
+	INC a:gameSubstate ; Go to next part of event
 	RTS
 
 TimerSetting: .word 300 ; Timer data for levels
@@ -495,7 +496,7 @@ pnt2_E3DD:
 	JSR sub3_F919
 	LDA #$00
 	STA $52
-	sTA a:gameSubstate ; End level transition
+	STA a:gameSubstate ; End level transition
 	LDA prgDataBank2
 	CMP #$23
 	BNE bra3_E405 ; Check if using the tileset PRG bank for the castle or ghost house intro
@@ -506,18 +507,18 @@ pnt2_E3DD:
 	LDA levelNumber
 	BEQ bra3_E405 ; Make sure the player isn't in the first level of a world
 	LDA #$05
-	sTA a:gameState ; Trigger castle/ghost house intro
+	STA a:gameState ; Trigger castle/ghost house intro
 	RTS
 	; Otherwise, start the level as normal.
 	bra3_E405:
-		iNC a:gameState
+		INC a:gameState
 		RTS
 
 ;----------------------------------------
 ; DEFAULT GAME STATE ($E409)
 ;----------------------------------------
-pnt2_E409:
-	lDA a:gameSubstate
+gameStateDefault:
+	LDA a:gameSubstate
 	BEQ @continue
 	JMP loc3_E498 ; Jump if in the level exit substate
 
@@ -532,20 +533,24 @@ pnt2_E409:
 	LDA endingFreezeFlag
 	BNE bra3_E42B ; Branch if the ending cutscene is playing
 	JSR jmp_57_ACAC ; Jump
+
 bra3_E42B:
 	LDA $06EF
 	BEQ bra3_E437
 	LDA #$00
 	STA $06EF
 	STA playerXSpd ; Clear player's X speed
+
 bra3_E437:
 	LDA levelWaterFlag
 	BEQ bra3_E445 ; Branch if not underwater
 	LDA frameCount
 	AND #$01
 	BEQ bra3_E445
+
 bra3_E442:
 	JMP loc3_E45F ; Jump
+
 bra3_E445:
 	JSR sub3_ED14
 	LDA pSwitchTimer
@@ -583,12 +588,12 @@ bra3_E47C:
 		AND #BTN_SELECT
 		BEQ bra3_E494 ; Stop if select isn't pressed
 		; If select pressed:
-			iNC a:gameSubstate ; Enter level exit state if
+			INC a:gameSubstate ; Enter level exit state if
 			LDX curPlayer
 			INC playerLives,X ; Temporarily increment current player's life count
 
 bra3_E494:
-	JSR hUD_Update ; Update HUD before stopping
+	JSR updateHud ; Update HUD before stopping
 	RTS
 
 loc3_E498:
@@ -600,9 +605,9 @@ loc3_E498:
 	LDA #$00
 	STA pauseFlag ; Unpause the game
 	STA a:inLvlFlag ; Not in a level anymore
-	sTA a:gameSubstate
+	STA a:gameSubstate
 	LDA #GAMESTATE_MAPEXITLEVEL_TRANS
-	sTA a:gameState ; Set to transition state for exiting a level
+	STA a:gameState ; Set to transition state for exiting a level
 	JSR backupplayerPowerups
 	RTS
 
@@ -618,8 +623,8 @@ backupplayerPowerups:
 	STA playerStoredYoshi,X ; Backup the player's Yoshi
 	RTS
 
-pnt2_E4CA:
-	lDA a:gameSubstate
+gameStateDoorEnter:
+	LDA a:gameSubstate
 	ASL
 	TAY
 	LDA tbl3_E4DC,Y
@@ -635,13 +640,13 @@ tbl3_E4DC:
 pnt2_E4E4:
 	LDA #SFX_WARP
 	STA sndSfx ; Play warp sound
-	iNC a:gameSubstate
+	INC a:gameSubstate
 	RTS
 pnt2_E4EC:
 	LDX #$00
 	LDY #$3C
 	JSR sub3_E5B6 ; Jump
-	iNC a:gameSubstate
+	INC a:gameSubstate
 	RTS
 pnt2_E4F7:
 	LDA #$00
@@ -649,7 +654,7 @@ pnt2_E4F7:
 	JSR sub3_E6D5
 	JSR sub3_F919
 	JSR sub3_E904
-	iNC a:gameSubstate ; Go to next part of event
+	INC a:gameSubstate ; Go to next part of event
 	RTS
 pnt2_E509:
 	LDY warpLvlNumber ; Load pointers based on level number of warp
@@ -663,14 +668,14 @@ pnt2_E509:
 	STA $35 ; Store upper byte of 2nd pointer
 	JSR sub3_E870 ; Jump
 	LDA #$01
-	sTA a:gameState ; Trigger door exit
+	STA a:gameState ; Trigger door exit
 	LDA #$00
-	sTA a:gameSubstate ; Go to 1st event part
+	STA a:gameSubstate ; Go to 1st event part
 	STA $06DE
 	STA $06DF
 	RTS
-pnt2_E534:
-	lDA a:gameSubstate ; Load part of event
+gameStateDeath:
+	LDA a:gameSubstate ; Load part of event
 	ASL ; Multiply by 2
 	TAY ; Load pointer based on event part
 	LDA tbl3_E546,Y
@@ -696,8 +701,8 @@ pnt2_E54E:
 	LDX #$00 ; Set action tick count to 1
 	LDY #$28 ; Set tick length to 40 frames
 	JSR sub3_E5B6 ; Jump
-	JSR hUD_Update ; Jump
-	iNC a:gameSubstate ; Start level transition
+	JSR updateHud ; Jump
+	INC a:gameSubstate ; Start level transition
 	RTS
 pnt2_E570:
 	LDA #$00
@@ -708,7 +713,7 @@ pnt2_E570:
 	ORA #$04
 	STA playerMoveFlags ; Make player move up
 	JSR sub3_E5D4
-	iNC a:gameSubstate
+	INC a:gameSubstate
 	RTS
 pnt2_E585:
 	LDA #$00
@@ -717,7 +722,7 @@ pnt2_E585:
 	LDX #$04 ; Set action tick count to 4
 	LDY #$3B ; Set tick length to 59 frames
 	JSR sub3_E5B6 ; Jump
-	iNC a:gameSubstate ; Start level transition
+	INC a:gameSubstate ; Start level transition
 	RTS
 pnt2_E597:
 	LDA #$00
@@ -727,9 +732,9 @@ pnt2_E597:
 	JSR sub3_E904
 	LDA #$00
 	STA a:inLvlFlag ; Set game state for map
-	sTA a:gameSubstate ; Go to first part of event
+	STA a:gameSubstate ; Go to first part of event
 	LDA #$16
-	sTA a:gameState ; Trigger map fade-in
+	STA a:gameState ; Trigger map fade-in
 	JSR backupplayerPowerups
 	RTS
 sub3_E5B6:
@@ -773,9 +778,9 @@ sub3_E5D4:
 	JSR RenderplayerItemBoxSprite ; Jump
 	JSR sub3_E9C4 ; Jump
 	RTS
-pnt2_E610:
+gameStateCutscene:
 	JSR sub3_ED14 ; Jump
-	JSR hUD_Update ; Jump
+	JSR updateHud ; Jump
 	LDA btnPressed
 	AND #BTN_A|BTN_B
 	BEQ bra3_E62F ; If A or B are pressed,
@@ -785,9 +790,9 @@ pnt2_E610:
 	STA M90_PRG1 ; Swap player bank into 2nd PRG slot
 	JSR sub4_A14A ; Jump
 	LDA #$03
-	sTA a:gameSubstate ; Skip to 3rd part of event
+	STA a:gameSubstate ; Skip to 3rd part of event
 bra3_E62F:
-	lDA a:gameSubstate ; Load event part
+	LDA a:gameSubstate ; Load event part
 	ASL ; Multiply by 2
 	TAY ; Load pointer based on event part
 	LDA tbl3_E641,Y
@@ -832,7 +837,7 @@ bra3_E681:
 	LDA playerSprX
 	CMP #$B0 ; If player hasn't reached this point,
 	BCC bra3_E68A ; stop
-	iNC a:gameSubstate ; Set level transition
+	INC a:gameSubstate ; Set level transition
 bra3_E68A:
 	RTS
 pnt2_E68B:
@@ -843,7 +848,7 @@ pnt2_E68B:
 	LDX #$01
 	LDY #$3B
 	JSR sub3_E5B6 ; Jump
-	iNC a:gameSubstate ; Go to next part of event
+	INC a:gameSubstate ; Go to next part of event
 	RTS
 pnt2_E69E:
 	LDA #$01
@@ -853,7 +858,7 @@ pnt2_E69E:
 	LDA playerSprX
 	CMP #$C8 ; If player hasn't reached this point,
 	BCC bra3_E6AF ; stop
-	iNC a:gameSubstate ; Go to next part of event
+	INC a:gameSubstate ; Go to next part of event
 bra3_E6AF:
 	RTS
 pnt2_E6B0:
@@ -867,9 +872,9 @@ pnt2_E6B0:
 	LDA #$00
 	STA warpNumber ; Set level warp to 0
 	LDA #$03
-	sTA a:gameState ; Enter door
+	STA a:gameState ; Enter door
 	LDA #$00
-	sTA a:gameSubstate ; Set event part
+	STA a:gameSubstate ; Set event part
 	STA playerActionFrameCount ; Disable action frame counter
 	STA playerActionTicks ; Disable action timer
 	STA playerAction ; Clear player action
@@ -900,7 +905,7 @@ bra3_E6E9:
 bra3_E6EC:
 	RTS
 
-pnt2_E6ED:
+gameStateLevelComplete:
 	LDA #$39
 	STA M90_PRG1 ; Swap player bank into 2nd PRG slot
 	JSR jmp_57_A000 ; Jump
@@ -913,7 +918,7 @@ pnt2_E6ED:
 	STA M90_PRG1 ; Swap bank 61 into 2nd PRG slot
 	JSR jmp_61_AE8F ; Jump
 	JSR sub3_E9C4
-	lDA a:gameSubstate ; Load event part
+	LDA a:gameSubstate ; Load event part
 	ASL
 	TAY ; Load pointer based on event part
 	LDA tbl3_E71F,Y
@@ -926,6 +931,7 @@ tbl3_E71F:
 	.word pnt2_E748
 	.word pnt2_E769
 	.word pnt2_E774
+
 pnt2_E727:
 	LDA playerYSpd
 	BNE bra3_E747 ; If player not moving vertically,
@@ -940,7 +946,7 @@ pnt2_E727:
 	LDA playerMoveFlags
 	AND #$BE
 	STA playerMoveFlags ; Make player face right
-	iNC a:gameSubstate ; Go to next part of event
+	INC a:gameSubstate ; Go to next part of event
 bra3_E747:
 	RTS
 pnt2_E748:
@@ -957,14 +963,14 @@ pnt2_E748:
 	STA fadeoutMode ; Start BG 'blackout' effect
 	JSR sub3_E6E0 ; Jump
 	JSR sub3_F919 ; Jump
-	iNC a:gameSubstate ; Go to next part of event
+	INC a:gameSubstate ; Go to next part of event
 bra3_E768:
 	RTS
 pnt2_E769:
 	LDX #$02
 	LDY #$3B
 	JSR sub3_E5B6
-	iNC a:gameSubstate ; Go to next part of event
+	INC a:gameSubstate ; Go to next part of event
 	RTS
 pnt2_E774:
 	LDA #$01
@@ -979,13 +985,13 @@ pnt2_E774:
 	JSR sub3_E904 ; Jump
 	LDA #$00
 	STA a:inLvlFlag ; Set game state to be outside a level
-	sTA a:gameSubstate ; Clear event part
+	STA a:gameSubstate ; Clear event part
 	LDA #$16
-	sTA a:gameState ; Set event number to 16h
+	STA a:gameState ; Set event number to 16h
 	JSR backupplayerPowerups ; Jump
 	RTS
 pnt2_E79E:
-	iNC a:gameState ; Increment event number (go right to next event)
+	INC a:gameState ; Increment event number (go right to next event)
 	RTS
 pnt2_E7A2:
 	LDA #$39
@@ -1024,7 +1030,7 @@ pnt2_E7D0:
 	STA $3C
 	JSR jmp_52_A089 ; Jump
 	JSR sub3_E9C4 ; Jump
-	lDA a:gameSubstate
+	LDA a:gameSubstate
 	ASL
 	TAY ; Load pointer based on event part
 	LDA tbl3_E80F,Y
@@ -1039,7 +1045,7 @@ pnt2_E813:
 	LDX #$06
 	LDY #$3B
 	JSR sub3_E5B6
-	iNC a:gameSubstate
+	INC a:gameSubstate
 	RTS
 pnt2_E81E:
 	LDY #$03
@@ -1067,18 +1073,18 @@ bra3_E840:
 	JSR sub3_E904
 	LDA #$00
 	STA a:inLvlFlag ; Set game state to 'not in level'
-	sTA a:gameSubstate ; Set event part
+	STA a:gameSubstate ; Set event part
 	LDA #$16
-	sTA a:gameState
+	STA a:gameState
 	JSR backupplayerPowerups
 	RTS
 pnt2_E85F:
-	lDA a:gameSubstate
+	LDA a:gameSubstate
 	BNE bra3_E86F ; Branch if not on 1st event part
 	LDA #$3D
 	STA M90_PRG1 ; Swap level handling bank into 2nd PRG slot
 	JSR jmp_61_BE85 ; Jump
-	iNC a:gameSubstate ; Go to next event part
+	INC a:gameSubstate ; Go to next event part
 bra3_E86F:
 	RTS
 sub3_E870:
@@ -1172,7 +1178,7 @@ sub3_E904:
 	STA playerMoveFlags
 	STA $1A
 	STA playerAction
-	sTA a:playerState
+	STA a:playerState
 	STA playerActionFrameCount
 	STA playerActionTicks
 	STA $0613
@@ -1275,7 +1281,7 @@ jYButtonComboCheck:
 	CMP #$08
 	BCC jYTriggerDone ; Wait for all 8 inputs to be entered correctly
 	LDA #$0A
-	sTA a:gameState ; Trigger JY Easter egg screen
+	STA a:gameState ; Trigger JY Easter egg screen
 jYTriggerDone:
 	RTS
 clearJYInputs:
@@ -2063,13 +2069,13 @@ sub3_ED48:
 	LDA #$00
 	STA warpNumber ; Set warp number to 0
 	JSR sub3_E870
-	iNC a:gameSubstate ; Go to next part of event
+	INC a:gameSubstate ; Go to next part of event
 	LDA #$00
 	STA $06DE
 	STA $06DF
 	RTS
-pnt2_ED75:
-	lDA a:gameSubstate ; Load event part
+gameStateBonusPipeDown:
+	LDA a:gameSubstate ; Load event part
 	ASL
 	TAY ; Load pointer based on event part
 	LDA tbl3_ED87,Y
@@ -2092,8 +2098,8 @@ pnt2_ED93:
 	JSR sub3_E5D4 ; Jump
 	LDA #SFX_WARP
 	STA sndSfx ; Play warp sound
-	JSR hUD_Update ; Jump
-	iNC a:gameSubstate ; Go to next part of event
+	JSR updateHud ; Jump
+	INC a:gameSubstate ; Go to next part of event
 	RTS
 pnt2_EDAA:
 	LDA #$00
@@ -2112,7 +2118,7 @@ bra3_EDBF:
 	LDX #$01
 	LDY #$16 ; Set action length to 22 frames
 	JSR sub3_E5B6 ; Jump
-	iNC a:gameSubstate ; Go to next part of event
+	INC a:gameSubstate ; Go to next part of event
 	RTS
 pnt2_EDCF:
 	LDA #$00
@@ -2120,7 +2126,7 @@ pnt2_EDCF:
 	JSR sub3_E6D5
 	JSR sub3_F919
 	JSR sub3_E904
-	iNC a:gameSubstate ; Go to next part of event
+	INC a:gameSubstate ; Go to next part of event
 	RTS
 pnt2_EDE1:
 	LDY #$38
@@ -2130,15 +2136,15 @@ pnt2_EDE1:
 	LDA #61
 	STA M90_PRG1
 	LDA BonusEntitySet
-	sTA a:$DC
+	STA a:$DC
 	LDA BonusEntitySet+1
-	sTA a:$DD
+	STA a:$DD
 	LDA #$00
 	STA $06E1
 	RTS
-pnt2_EE02:
+gameStatePipeExitHoriz:
 	JSR sub3_ED14
-	JSR hUD_Update
+	JSR updateHud
 	LDA #$01
 	STA playerAction
 	LDA #$10
@@ -2150,10 +2156,10 @@ pnt2_EE02:
 	LDY #$1E
 	JSR sub3_E5B6
 	LDA #$02
-	sTA a:gameState
+	STA a:gameState
 	RTS
-pnt2_EE23:
-	lDA a:gameSubstate
+gameStatePipeExitUp:
+	LDA a:gameSubstate
 	ASL
 	TAY
 	LDA tbl3_EE35,Y
@@ -2181,9 +2187,9 @@ pnt2_EE3D:
 	LDA #$20
 	STA playerAttrs
 	RTS
-pnt2_EE59:
+gameStateCannonPipe1Down:
 	JSR sub3_ED14
-	JSR hUD_Update
+	JSR updateHud
 	LDA #$00
 	STA playerAction
 	LDA #$10
@@ -2209,10 +2215,10 @@ bra3_EE84:
 	LDA #$00
 	STA playerAttrs
 	LDA #$02
-	sTA a:gameState
+	STA a:gameState
 	RTS
-pnt2_EE96:
-	lDA a:gameSubstate
+gameStateCannonPipeLaunch:
+	LDA a:gameSubstate
 	ASL
 	TAY
 	LDA tbl3_EEA8,Y
@@ -2229,7 +2235,7 @@ tbl3_EEA8:
 	.word pnt2_E3DD
 ofs5_EEB4:
 	LDY #$3A
-	lDA a:gameState
+	LDA a:gameState
 	CMP #$0F
 	BEQ bra3_EEBF
 	LDY #$3C
@@ -2240,7 +2246,7 @@ bra3_EEBF:
 	RTS
 pnt2_EEC8:
 	JSR sub3_ED14
-	JSR hUD_Update
+	JSR updateHud
 	LDA #$0F
 	STA playerAction
 	LDA #$50
@@ -2262,13 +2268,13 @@ bra3_EEEB:
 	LDA #$00
 	STA playerAttrs
 	LDA #$02
-	sTA a:gameState
+	STA a:gameState
 	RTS
 pnt2_EEFD:
 	LDA #$00
-	sTA a:gameSubstate
+	STA a:gameSubstate
 	LDA #$0C
-	sTA a:gameState
+	STA a:gameState
 	RTS
 tbl3_EF08:
 	.word NMI_E062
@@ -2355,7 +2361,7 @@ bra3_EFB4:
 	STA M90_PRG0
 	LDA #$3B
 	STA M90_PRG1
-	lDA a:inLvlFlag
+	LDA a:inLvlFlag
 	BNE bra3_EFD9 ; If in a level, branch
 	JSR jmp_58_85BE ; Otherwise, jump
 	JSR jmp_58_862A
@@ -2749,24 +2755,24 @@ bra3_F270:
 ; SUBROUTINE ($F27F)
 ; Updates HUD counters while in levels.
 ;----------------------------------------
-hUD_Update:
+updateHud:
 	LDA interruptMode
 	CMP #$04
 	BEQ @stop ; Don't render the HUD in the Bowser fight
 	LDA ppuUpdatePtr
 	BNE @stop ; Stop if the upper byte of the PPU pointer is empty
-		LDA hudUpdate
+		LDA hudUpdateState
 		ASL
 		TAY
-		LDA hUD_UpdateFuncs,Y
+		LDA hudUpdateFuncs,Y
 		STA $32
-		LDA hUD_UpdateFuncs+1,Y
+		LDA hudUpdateFuncs+1,Y
 		STA $33 ; Get pointer for current HUD update state
 		JMP ($32) ; Jump to loaded pointer
 @stop:
 	RTS
 	
-hUD_UpdateFuncs:
+hudUpdateFuncs:
 	.word hUD_UpdateLifeCount
 	.word hUD_UpdateDragonCoins
 	.word hUD_UpdateTimer
@@ -2778,7 +2784,7 @@ hUD_UpdateFuncs:
 ;--------------------
 hUD_UpdateLifeCount:
 	JSR hUD_GetPPUUploadParams ; Get PPU upload parameters
-	INC hudUpdate ; Go to next update state after this code is finished
+	INC hudUpdateState ; Go to next update state after this code is finished
 	LDX #0 ; Set index for Player 1
 	LDA curPlayer
 	BEQ @continue ; Continue using Player 1 index if it's their turn
@@ -2808,7 +2814,7 @@ hUD_UpdateLifeCount:
 ;--------------------
 hUD_UpdateDragonCoins:
 	JSR hUD_GetPPUUploadParams ; Get PPU upload parameters
-	INC hudUpdate ; Go to next update state after this code is finished
+	INC hudUpdateState ; Go to next update state after this code is finished
 
 ; Clear PPU buffer for Dragon coins
 	LDX #4 ; Clear 5 tiles starting from the back
@@ -2842,7 +2848,7 @@ bra3_F2E0:
 ;--------------------
 hUD_UpdateTimer:
 	JSR hUD_GetPPUUploadParams ; Get PPU upload parameters
-	INC hudUpdate ; Go to next update state after this code is finished
+	INC hudUpdateState ; Go to next update state after this code is finished
 	LDA levelTimer
 	STA $34
 	LDA levelTimer+1
@@ -2867,7 +2873,7 @@ hUD_UpdateTimer:
 ;--------------------
 hUD_UpdateScore:
 	JSR hUD_GetPPUUploadParams ; Get PPU upload parameters
-	INC hudUpdate ; Go to next update state after this code is finished
+	INC hudUpdateState ; Go to next update state after this code is finished
 	LDX #0 ; Set index for player 1
 	LDA curPlayer
 	BEQ @continue ; Continue using Player 1 index if it's their turn
@@ -2898,7 +2904,7 @@ hUD_UpdateScore:
 hUD_UpdateCoinCount:
 	JSR hUD_GetPPUUploadParams
 	LDA #$00
-	STA hudUpdate
+	STA hudUpdateState
 	LDX #$00 ; Set to Player 1
 	LDA curPlayer
 	BEQ bra3_F369 ; Branch if Player 1 is playing
@@ -2928,7 +2934,7 @@ bra3_F369:
 ; Returns the PPU update parameters for the current HUD update state
 ;----------------------------------------
 hUD_GetPPUUploadParams:
-	LDA hudUpdate ; Get HUD update state
+	LDA hudUpdateState ; Get HUD update state
 	ASL
 	ASL
 	TAX ; Get pointer for current HUD update stage (selects on screen HUD value to update)
@@ -3932,16 +3938,14 @@ clownCarBanks:
 
 ;----------------------------------------
 ; SUBROUTINE ($F919)
-; Backup the player's powerup and Yoshi.
+; Advances palette transition
+; $30 = Sprite palette pointer
+; $32 = BG palette pointer
+; $34 = BG palette fade mask pointer
+; $2E = Sprite palette fade mask pointer
+; $25 = Current color subtraction
 ;----------------------------------------
 sub3_F919:
-	; Local variables
-	@sprPalettePtr = $30
-	@bgPalettePtr = $32
-	@bgPaletteFadeoutMask = $34
-	@sprPaletteFadeoutMask = $2E
-
-
 	LDA bgCurPalette
 	ASL
 	ASL
@@ -3950,68 +3954,71 @@ sub3_F919:
 	BEQ @bra3_F939 ; Load player 1 palettes if player 1 is playing
 	; Otherwise, load palettes for player 2
 	LDA player2LevelPalettes+2,Y
-	STA @sprPalettePtr ; Load lower byte of pointer
+	STA $30 ; Load lower byte of pointer
 	LDA player2LevelPalettes+3,Y
-	STA @sprPalettePtr+1 ; Load upper byte of pointer
+	STA $30+1 ; Load upper byte of pointer
 	LDA player2LevelPalettes,Y
-	STA @bgPalettePtr
+	STA $32
 	LDA player2LevelPalettes+1,Y
 	JMP @loc3_F94B
 
 @bra3_F939:
 	LDA player1LevelPalettes+2,Y
-	STA @sprPalettePtr ; Load lower byte of pointer
+	STA $30 ; Load lower byte of pointer
 	LDA player1LevelPalettes+3,Y
-	STA @sprPalettePtr+1 ; Load upper byte of pointer
+	STA $30+1 ; Load upper byte of pointer
 	LDA player1LevelPalettes,Y
-	STA @bgPalettePtr
+	STA $32
 	LDA player1LevelPalettes+1,Y
 
 @loc3_F94B:
-	; Get fade-out masks for current fade-out mode
-	STA @bgPalettePtr+1
+	; Get color masks for current fade mode
+	STA $32+1
 	LDA fadeoutMode
 	ASL
 	ASL
 	TAY
-	LDA paletteFadeOutMasks,Y
-	STA @bgPaletteFadeoutMask
-	LDA paletteFadeOutMasks+1,Y
-	STA @bgPaletteFadeoutMask+1
-	LDA paletteFadeOutMasks+2,Y
-	STA @sprPaletteFadeoutMask
-	LDA paletteFadeOutMasks+3,Y
-	STA @sprPaletteFadeoutMask+1
+	LDA paletteFadeMasks,Y
+	STA $34
+	LDA paletteFadeMasks+1,Y
+	STA $34+1
+	LDA paletteFadeMasks+2,Y
+	STA $2E
+	LDA paletteFadeMasks+3,Y
+	STA $2E+1
 
 	LDA ppuUpdatePtr
 	BNE @bra3_F9E7
 	LDA frameCount
 	AND #$03
-	BNE @bra3_F9E7 ; Only advance palette fadeout phases every 4 frames
+	BNE @bra3_F9E7 ; Only advance palette fade phases every 4th frame
 		LDX palTransition
-		LDA tbl3_F9F3,X
-		STA $25
+		LDA fadeColorSubtractions,X
+		STA $25 ; Load subtraction for current fade transition phase
 		LDY #$00
 		LDX #$00
 
+	; Mask colors for BG palette
 	@bra3_F97E:
 		LDA ($34),Y
 		BPL @bra3_F987
-		LDA ($32),Y
-		JMP @loc3_F990
+		LDA ($32),Y 
+		JMP @loc3_F990 ; Preserve original palette color if it's masked from the fade transition
 
-	@bra3_F987:
-		LDA ($32),Y
-		SEC
-		SBC $25
-		BPL @loc3_F990
-		LDA #$FF
+		; If color isn't masked from fade:
+		@bra3_F987:
+			LDA ($32),Y
+			SEC
+			SBC $25 ; Darken color
+			BPL @loc3_F990
+			LDA #$FF
 
-	@loc3_F990:
-		CPY #$00
-		BNE @bra3_F99A
-		STA $03B5
-		JMP @loc3_F99D
+		; If color is masked from fade:
+		@loc3_F990:
+			CPY #$00
+			BNE @bra3_F99A
+			STA $03B5
+			JMP @loc3_F99D
 
 	@bra3_F99A:
 		STA ppuDataBuf,X
@@ -4024,53 +4031,61 @@ sub3_F919:
 		LDY #$01
 		LDX #$11
 
+	; Mask colors for sprite palette
 	@bra3_F9A7:
 		LDA ($2E),Y
 		BPL @bra3_F9B0
 		LDA ($30),Y
-		JMP @loc3_F9B9
+		JMP @loc3_F9B9 ; Preserve original palette color if it's masked from the fade transition
 
-	@bra3_F9B0:
-		LDA ($30),Y
-		SEC
-		SBC $25
-		BPL @loc3_F9B9
-		LDA #$FF
+		; If color isn't masked from fade:
+		@bra3_F9B0:
+			LDA ($30),Y
+			SEC
+			SBC $25 ; Darken color
+			BPL @loc3_F9B9
+			LDA #$FF
 
+	; If color is masked from fade:
 	@loc3_F9B9:
 		STA ppuDataBuf,X
 		INX
 		INY
-		CPY #$10
-		BNE @bra3_F9A7
+		CPY #16
+		BNE @bra3_F9A7 ; Loop for each color
+
+		; Initialize palette update
 		LDA #$3F
 		STA ppuUpdatePtr
 		LDA #$00
-		STA ppuUpdatePtr+1
+		STA ppuUpdatePtr+1 ; Set PPU address
 		STA $03A0
-		LDA #$20
-		STA ppuBufSize
-		LDA #$01
+		LDA #32
+		STA ppuBufSize ; Upload size of palette
+
+		LDA #1
 		STA $03A3
-		INC palTransition
+		INC palTransition ; Go to next phase of fade transition
 		LDA palTransition
-		CMP #$05
-		BEQ @bra3_F9EA
-		CMP #$09
-		BEQ @bra3_F9EA
+		CMP #5
+		BEQ @bra3_F9EA ; Stop at end of fade-in
+		CMP #9
+		BEQ @bra3_F9EA ; Stop at end of fade-out
 
 @bra3_F9E7:
 	PLA
 	PLA
 	RTS
 
+; Set high bit to indicate when the fade transition should stop
 @bra3_F9EA:
 	LDA #$80
 	ORA palTransition
 	STA palTransition
 	RTS
 
-tbl3_F9F3:
+; Color subtraction values for each phase of the fade effect
+fadeColorSubtractions:
 	.byte $40
 	.byte $30
 	.byte $20
@@ -4080,6 +4095,7 @@ tbl3_F9F3:
 	.byte $20
 	.byte $30
 	.byte $40
+
 player1LevelPalettes:
 	.word lvlPalBG_1_1 ; Level 1-1 BG Palette
 	.word lvlPalSprP1_1 ; Level 1-1 Sprite Palette
@@ -4554,14 +4570,14 @@ lvlPalSprP2_BonusRoom:
 	.byte $3D, $2A, $30, $0F
 	.byte $3D, $28, $16, $0E
 
-paletteFadeOutMasks:
-	.word paletteFadeOutMask1 ;
-	.word paletteFadeOutMask1 ; Default fade-out (Fade all colors)
-	.word paletteFadeOutMask1 ;
-	.word paletteFadeOutMask2 ; BG-only fade-out (Fade only BG colors)
+paletteFadeMasks:
+	.word paletteFadeMask1 ;
+	.word paletteFadeMask1 ; Default fade-out (Fade all colors)
+	.word paletteFadeMask1 ;
+	.word paletteFadeMask2 ; BG-only fade-out (Fade only BG colors)
 
 ; Filter none
-paletteFadeOutMask1:
+paletteFadeMask1:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -4580,7 +4596,7 @@ paletteFadeOutMask1:
 	.byte $00
 
 ; Filter all
-paletteFadeOutMask2:
+paletteFadeMask2:
 	.byte $FF
 	.byte $FF
 	.byte $FF

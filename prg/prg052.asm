@@ -174,10 +174,10 @@ sub2_A10D:
 ; $2D = Mapping height (tiles)
 ; $2E = Mapping CHR bank ID
 ; $30 = CHR attribute bank pointer
-; $32 = Mapping data pointer
 ; metaspriteBankIndex = Bank (Stored in upper 2 bits)
 ; $A4 = Object index (currently active obj)
 ; Parameters:
+; > $32: Mapping data pointer
 ; > $0036
 ;----------------------------------------
 jmp_52_A118:

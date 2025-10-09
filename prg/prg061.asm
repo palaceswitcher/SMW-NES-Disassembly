@@ -4724,7 +4724,7 @@ bra6_BB0D:
 	BEQ bra6_BB34_RTS
 	LDA ppuUpdatePtr
 	BNE bra6_BB34_RTS
-	LDA hudUpdate
+	LDA hudUpdateState
 	ASL
 	TAY
 	LDA tbl6_BB35,Y
@@ -4742,7 +4742,7 @@ tbl6_BB35:
 	.word off_BBEF
 off_BB3F:
 	JSR sub6_BC1F
-	INC hudUpdate
+	INC hudUpdateState
 	LDX #$00
 	LDA curPlayer
 	BEQ bra6_BB4E
@@ -4766,7 +4766,7 @@ bra6_BB62:
 	RTS
 off_BB6D:
 	JSR sub6_BC1F
-	INC hudUpdate
+	INC hudUpdateState
 	LDX #$04
 	LDA #$00
 bra6_BB77:
@@ -4792,7 +4792,7 @@ bra6_BB99_RTS:
 	RTS
 off_BB9A:
 	JSR sub6_BC1F
-	INC hudUpdate
+	INC hudUpdateState
 	LDA levelTimer
 	STA $34
 	LDA levelTimer+1
@@ -4811,7 +4811,7 @@ bra6_BBB5:
 	RTS
 off_BBC0:
 	JSR sub6_BC1F
-	INC hudUpdate
+	INC hudUpdateState
 	LDX #$00
 	LDA curPlayer
 	BEQ bra6_BBCF
@@ -4836,7 +4836,7 @@ bra6_BBE4:
 off_BBEF:
 	JSR sub6_BC1F
 	LDA #$00
-	STA hudUpdate
+	STA hudUpdateState
 	LDX #$00
 	LDA curPlayer
 	BEQ bra6_BC00
@@ -4859,7 +4859,7 @@ bra6_BC14:
 	BPL bra6_BC14
 	RTS
 sub6_BC1F:
-	LDA hudUpdate
+	LDA hudUpdateState
 	ASL
 	ASL
 	TAX
