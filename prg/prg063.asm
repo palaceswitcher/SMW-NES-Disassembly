@@ -45,11 +45,11 @@ jmp_63_E000:
 	PLA ; Pull the accumulator from the stack
 	PLP ; Pull CPU status from the stack
 	RTI
-nMI_E05C:
+NMI_E05C:
 	JMP loc3_EF10
-nMI_E05F:
+NMI_E05F:
 	JMP loc3_EFE0
-nMI_E062:
+NMI_E062:
 	PHP ; Push CPU status to stack 
 	PHA ; Push A to stack
 	TXA 
@@ -2271,10 +2271,10 @@ pnt2_EEFD:
 	sTA a:gameState
 	RTS
 tbl3_EF08:
-	.word nMI_E062
+	.word NMI_E062
 	.word jmp_63_E000
-	.word nMI_E05C
-	.word nMI_E05F
+	.word NMI_E05C
+	.word NMI_E05F
 loc3_EF10:
 	PHP ; Push the CPU status into the stack
 	PHA ; Push the accumulator into the stack
@@ -3929,122 +3929,147 @@ clownCarBanks:
 	.byte $C9 ; Blinking
 	.byte $CA ; Hurt
 	.byte $CB ; Angry
+
+;----------------------------------------
+; SUBROUTINE ($F919)
+; Backup the player's powerup and Yoshi.
+;----------------------------------------
 sub3_F919:
+	; Local variables
+	@sprPalettePtr = $30
+	@bgPalettePtr = $32
+	@bgPaletteFadeoutMask = $34
+	@sprPaletteFadeoutMask = $2E
+
+
 	LDA bgCurPalette
 	ASL
 	ASL
 	TAY ; Get the pointer index for the BG palette
 	LDA curPlayer
-	BEQ bra3_F939 ; Load player 1 palettes if player 1 is playing
+	BEQ @bra3_F939 ; Load player 1 palettes if player 1 is playing
 	; Otherwise, load palettes for player 2
 	LDA player2LevelPalettes+2,Y
-	STA $30 ; Load lower byte of pointer
+	STA @sprPalettePtr ; Load lower byte of pointer
 	LDA player2LevelPalettes+3,Y
-	STA $31 ; Load upper byte of pointer
+	STA @sprPalettePtr+1 ; Load upper byte of pointer
 	LDA player2LevelPalettes,Y
-	STA $32
+	STA @bgPalettePtr
 	LDA player2LevelPalettes+1,Y
-	JMP loc3_F94B
-bra3_F939:
+	JMP @loc3_F94B
+
+@bra3_F939:
 	LDA player1LevelPalettes+2,Y
-	STA $30 ; Load lower byte of pointer
+	STA @sprPalettePtr ; Load lower byte of pointer
 	LDA player1LevelPalettes+3,Y
-	STA $31 ; Load upper byte of pointer
+	STA @sprPalettePtr+1 ; Load upper byte of pointer
 	LDA player1LevelPalettes,Y
-	STA $32
+	STA @bgPalettePtr
 	LDA player1LevelPalettes+1,Y
-loc3_F94B:
-	STA $33
+
+@loc3_F94B:
+	; Get fade-out masks for current fade-out mode
+	STA @bgPalettePtr+1
 	LDA fadeoutMode
 	ASL
 	ASL
 	TAY
-	LDA tbl3_FE8C,Y
-	STA $34
-	LDA tbl3_FE8C+1,Y
-	STA $35
-	LDA tbl3_FE8C+2,Y
-	STA $2E
-	LDA tbl3_FE8C+3,Y
-	STA $2F
+	LDA paletteFadeOutMasks,Y
+	STA @bgPaletteFadeoutMask
+	LDA paletteFadeOutMasks+1,Y
+	STA @bgPaletteFadeoutMask+1
+	LDA paletteFadeOutMasks+2,Y
+	STA @sprPaletteFadeoutMask
+	LDA paletteFadeOutMasks+3,Y
+	STA @sprPaletteFadeoutMask+1
+
 	LDA ppuUpdatePtr
-	BNE bra3_F9E7
+	BNE @bra3_F9E7
 	LDA frameCount
 	AND #$03
-	BNE bra3_F9E7
-	LDX palTransition
-	LDA tbl3_F9F3,X
-	STA $25
-	LDY #$00
-	LDX #$00
-bra3_F97E:
-	LDA ($34),Y
-	BPL bra3_F987
-	LDA ($32),Y
-	JMP loc3_F990
-bra3_F987:
-	LDA ($32),Y
-	SEC
-	SBC $25
-	BPL bra3_F990
-	LDA #$FF
-bra3_F990:
-loc3_F990:
-	CPY #$00
-	BNE bra3_F99A
-	STA $03B5
-	JMP loc3_F99D
-bra3_F99A:
-	STA ppuDataBuf,X
-loc3_F99D:
-	INX
-	INY
-	CPY #$10
-	BNE bra3_F97E
-	LDY #$01
-	LDX #$11
-bra3_F9A7:
-	LDA ($2E),Y
-	BPL bra3_F9B0
-	LDA ($30),Y
-	JMP loc3_F9B9
-bra3_F9B0:
-	LDA ($30),Y
-	SEC
-	SBC $25
-	BPL bra3_F9B9
-	LDA #$FF
-bra3_F9B9:
-loc3_F9B9:
-	STA ppuDataBuf,X
-	INX
-	INY
-	CPY #$10
-	BNE bra3_F9A7
-	LDA #$3F
-	STA ppuUpdatePtr
-	LDA #$00
-	STA ppuUpdatePtr+1
-	STA $03A0
-	LDA #$20
-	STA ppuBufSize
-	LDA #$01
-	STA $03A3
-	INC palTransition
-	LDA palTransition
-	CMP #$05
-	BEQ bra3_F9EA
-	CMP #$09
-	BEQ bra3_F9EA
-bra3_F9E7:
+	BNE @bra3_F9E7 ; Only advance palette fadeout phases every 4 frames
+		LDX palTransition
+		LDA tbl3_F9F3,X
+		STA $25
+		LDY #$00
+		LDX #$00
+
+	@bra3_F97E:
+		LDA ($34),Y
+		BPL @bra3_F987
+		LDA ($32),Y
+		JMP @loc3_F990
+
+	@bra3_F987:
+		LDA ($32),Y
+		SEC
+		SBC $25
+		BPL @loc3_F990
+		LDA #$FF
+
+	@loc3_F990:
+		CPY #$00
+		BNE @bra3_F99A
+		STA $03B5
+		JMP @loc3_F99D
+
+	@bra3_F99A:
+		STA ppuDataBuf,X
+
+	@loc3_F99D:
+		INX
+		INY
+		CPY #$10
+		BNE @bra3_F97E
+		LDY #$01
+		LDX #$11
+
+	@bra3_F9A7:
+		LDA ($2E),Y
+		BPL @bra3_F9B0
+		LDA ($30),Y
+		JMP @loc3_F9B9
+
+	@bra3_F9B0:
+		LDA ($30),Y
+		SEC
+		SBC $25
+		BPL @loc3_F9B9
+		LDA #$FF
+
+	@loc3_F9B9:
+		STA ppuDataBuf,X
+		INX
+		INY
+		CPY #$10
+		BNE @bra3_F9A7
+		LDA #$3F
+		STA ppuUpdatePtr
+		LDA #$00
+		STA ppuUpdatePtr+1
+		STA $03A0
+		LDA #$20
+		STA ppuBufSize
+		LDA #$01
+		STA $03A3
+		INC palTransition
+		LDA palTransition
+		CMP #$05
+		BEQ @bra3_F9EA
+		CMP #$09
+		BEQ @bra3_F9EA
+
+@bra3_F9E7:
 	PLA
 	PLA
 	RTS
-bra3_F9EA:
+
+@bra3_F9EA:
 	LDA #$80
 	ORA palTransition
 	STA palTransition
 	RTS
+
 tbl3_F9F3:
 	.byte $40
 	.byte $30
@@ -4529,12 +4554,14 @@ lvlPalSprP2_BonusRoom:
 	.byte $3D, $2A, $30, $0F
 	.byte $3D, $28, $16, $0E
 
-tbl3_FE8C:
-	.word ofs_FE94
-	.word ofs_FE94
-	.word ofs_FE94
-	.word ofs_FEA4
-ofs_FE94:
+paletteFadeOutMasks:
+	.word paletteFadeOutMask1 ;
+	.word paletteFadeOutMask1 ; Default fade-out (Fade all colors)
+	.word paletteFadeOutMask1 ;
+	.word paletteFadeOutMask2 ; BG-only fade-out (Fade only BG colors)
+
+; Filter none
+paletteFadeOutMask1:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -4551,7 +4578,9 @@ ofs_FE94:
 	.byte $00
 	.byte $00
 	.byte $00
-ofs_FEA4:
+
+; Filter all
+paletteFadeOutMask2:
 	.byte $FF
 	.byte $FF
 	.byte $FF
