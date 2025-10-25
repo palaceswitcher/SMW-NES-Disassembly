@@ -1953,7 +1953,7 @@ pnt5_AD29:
 	LDA #$00
 	STA $037E
 	STA unlockNextLevel
-	STA $0398
+	STA timeUpFlag
 	STA $039A
 	LDX curPlayer
 	LDA levelId,X
@@ -2029,7 +2029,7 @@ bra_ADA9:
 	sTA a:gameState
 	RTS
 bra_ADB4:
-	LDA $0398
+	LDA timeUpFlag
 	BEQ bra_ADBF
 	LDA #$1F
 	sTA a:gameState
@@ -2341,7 +2341,7 @@ loc_B02C:
 pnt5_B03E:
 	LDA #$00
 	STA $037E
-	STA $0398
+	STA timeUpFlag
 	STA $039A
 	STA $0361
 	STA levelNumber

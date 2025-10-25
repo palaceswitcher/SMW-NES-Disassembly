@@ -2546,13 +2546,15 @@ CapeSettle2: ; settle frame 2
 	db $20
 	db $1F
 	db $1E
-; ***************************************
+;--------------------
+
 jmp_57_ACA5: 
 	LDA playerState
 	CMP #$09
-	BCS bra4_ACCF
+	BCS bra4_ACCF ; Branch if Yoshi has his mouth open at all
 	RTS
-jmp_57_ACAC: ; freeze flag
+
+jmp_57_ACAC:
 	LDA freezeFlag
 	BEQ bra4_ACBE ; Branch if the game isn't frozen
 	LDA playerMoveFlags
@@ -2563,13 +2565,16 @@ jmp_57_ACAC: ; freeze flag
 	STA playerAnimFrame ; Reset the player's animation and action
 bra4_ACBD_RTS:
 	RTS
-bra4_ACBE: ; If game not frozen, go through this list
-	JSR sub4_AD27
+
+; If game not frozen, go through this list
+bra4_ACBE:
+	JSR runLevelTimer
 	JSR playerItemBoxLogicSub
 	JSR sub4_AD8C
 	JSR sub4_ADB3
 	JSR sub4_B0BC
 	LDA playerState
+
 bra4_ACCF:
 	ASL
 	TAY
@@ -2598,6 +2603,7 @@ tbl4_ACDE:
 	.word ofs_B7F7
 	.word ofs_B80F
 	.word ofs_B821
+
 jmp_57_AD04:
 	LDA playerPowerupBuffer
 	BEQ bra4_AD1E
@@ -2611,61 +2617,80 @@ jmp_57_AD04:
 	JSR sub4_A14A
 bra4_AD1D_RTS:
 	RTS
+
 bra4_AD1E:
 	LDA #$02
 	STA gameState
 	LDA #$00
 	STA gameSubstate
 	RTS
-sub4_AD27:
+
+;----------------------------------------
+; SUBROUTINE ($AD27)
+; Counts the timer down.
+;----------------------------------------
+runLevelTimer:
 	LDA prgDataBank2
-	CMP #$26
-	BEQ bra4_AD8B_RTS
+	CMP #38
+	BEQ bra4_AD8B_RTS ; Stop the timer if the final boss room bank is loaded (assumes the level is stored in bank 38)
 	LDA worldNumber
-	CMP #$07
+	CMP #7
 	BCC bra4_AD3E
-	LDA #$00
-	STA levelTimer
-	STA levelTimer+1
-	RTS
+	; Clear the timer and don't count down if in World 8 (Yoshi's House)
+		LDA #$00
+		STA levelTimer
+		STA levelTimer+1
+		RTS
+	
 bra4_AD3E:
 	LDA $0616
-	CMP #$3B
+	CMP #59
 	BCS bra4_AD49
-	INC $0616
-	RTS
-bra4_AD49:
-	LDA #$00
-	STA $0616
-	LDA levelTimer
-	SEC
-	SBC #$01
-	STA levelTimer
-	LDA levelTimer+1
-	SBC #$00
-	STA levelTimer+1
-	BNE bra4_AD8B_RTS
-	LDA levelTimer
-	BNE bra4_AD8B_RTS
-	STA playerPowerup
-	LDA #$01
-	STA $0398
-	LDA playerYoshiState
-	BEQ bra4_AD76
-	JSR dismountYoshiRoutine ; unlogged
-bra4_AD76:
-	LDA #$00
-	STA gameSubstate
-	STA playerState
-	STA $06DC
-	STA $06DD
-	LDA #$04
-	STA gameState
-	JSR sub4_A14A
-	PLA
-	PLA
+		INC $0616 ; Increment frame counter until one second is reached
+		RTS
+
+	; If a second has been counted:
+	bra4_AD49:
+		LDA #$00
+		STA $0616 ; Clear frame counter every second
+		
+		; Tick the timer down one second
+		LDA levelTimer
+		SEC
+		SBC #1
+		STA levelTimer
+		LDA levelTimer+1
+		SBC #0
+		STA levelTimer+1
+
+		BNE bra4_AD8B_RTS
+		LDA levelTimer
+		BNE bra4_AD8B_RTS ; Stop if the timer hasn't reached 0 yet
+
+		; If timer has reached 0:
+			STA playerPowerup
+			LDA #$01
+			STA timeUpFlag
+			LDA playerYoshiState
+			BEQ bra4_AD76
+			; If player is on Yoshi:
+				JSR dismountYoshiRoutine ; Dismount the player from Yoshi
+
+		bra4_AD76:
+			LDA #0
+			STA gameSubstate ; Go to first substate of death state
+			STA playerState ; Set player to default state
+			STA $06DC
+			STA $06DD
+			LDA #GAMESTATE_DEATH
+			STA gameState ; Set game to death state
+			JSR sub4_A14A
+			PLA
+			PLA
+
 bra4_AD8B_RTS:
 	RTS
+
 sub4_AD8C:
 	LDA playerState
 	CMP #$05

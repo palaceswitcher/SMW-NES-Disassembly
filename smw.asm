@@ -194,6 +194,7 @@ playerMapFrame = $0378
 mapMoveFlag = $0379
 mapLevelId = $037F
 castlesDestroyed = $0380
+timeUpFlag = $0398
 mapScreen = $0390
 worldSelectTrigger = $0396
 unlockNextLevel = $0397
