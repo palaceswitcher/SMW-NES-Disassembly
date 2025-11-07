@@ -1,4 +1,4 @@
-SMW NES Hacking Document (2025-10-22)
+SMW NES Hacking Document (2025-10-31)
 Note: Some information here may be inaccurate or wrong.
 
 -----Level Data-----
@@ -1093,6 +1093,7 @@ $06E8:	Clown Car Face
 > 0x01 = Blinking
 > 0x02 = Hurt
 > 0x03 = Angry
+$06EF:	Horizontal Movement Lock Flag
 $0700:	Audio Mute Flag?
 $0701 - $0708:	SFX Queue (Only the first slot is used)
 $0709:	Pause Flag
