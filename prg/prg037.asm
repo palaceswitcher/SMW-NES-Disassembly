@@ -345,13 +345,13 @@ sub_82C9:
 	LDA objXDistHi,X
 	BMI loc_82E9_RTS
 	LDA #$01
-	STA $06EF
+	STA playerXMovementLocked
 	JMP loc_82E9_RTS
 bra_82DF:
 	LDA objXDistHi,X
 	BPL loc_82E9_RTS
 	LDA #$01
-	STA $06EF
+	STA playerXMovementLocked
 loc_82E9_RTS:
 	RTS
 sub_82EA:

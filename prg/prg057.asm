@@ -1,27 +1,14 @@
 ; disassembled by BZK 6502 Disassembler
+;----------------------------------------
+; SUBROUTINE ($A000)
+;----------------------------------------
 jmp_57_A000:
 	LDA playerAction
 	CMP playerPrevAction
 	BEQ bra4_A020 ; Branch here if the player's action stays the same
 	BNE bra4_A014 ; If it doesn't, branch here
-; Unused
-	LDA playerXSpd ; unlogged
-	ROR ; unlogged
-	ROR ; unlogged
-	ROR ; unlogged
-	ROR ; unlogged
-	AND #$0F ; unlogged
-	TAX ; unlogged
-	LDA tbl4_A095,X ; unlogged
-bra4_A014:
-	STA playerAnim ; Update the player's animation
-	LDA #$00
-	STA playerAnimFrame ; Switch to first frame of animation
-	JSR playerAnimSub
-	JMP loc4_A03E
-bra4_A020:
-	CMP #$01
-	BNE bra4_A034
+
+; Unused snippet
 	LDA playerXSpd
 	ROR
 	ROR
@@ -29,38 +16,65 @@ bra4_A020:
 	ROR
 	AND #$0F
 	TAX
-	LDA tbl4_A095,X ; load animation from table
-	TAY ; move it to the y reg
-	JMP loc4_A035 ; jump
-bra4_A034:
-	TAY
+	LDA tbl4_A095,X
+
+	; If player action hasn't changed
+	bra4_A014:
+		STA playerAnim ; Update the player's animation
+		LDA #0
+		STA playerAnimFrame ; Switch to first frame of animation
+		JSR playerAnimSub
+		JMP loc4_A03E
+
+	; If player action has changed
+	bra4_A020:
+		CMP #PACT_WALK
+		BNE bra4_A034 ; Branch if the player has started walking
+		LDA playerXSpd
+		ROR
+		ROR
+		ROR
+		ROR
+		AND #%00001111
+		TAX
+		LDA tbl4_A095,X
+		TAY ; Load animation for given frame
+		JMP loc4_A035 ; Skip ahead
+
+		; Set animation to walking if player has started walking
+		bra4_A034:
+			TAY
+
 loc4_A035:
-	CPY playerAnim ; compare current animation to frame loaded from table
-	BEQ bra4_A03E ; branch if they're equal
-	STY playerAnim ; unlogged
-	JSR playerAnimSub ; unlogged
-bra4_A03E:
+	CPY playerAnim
+	BEQ loc4_A03E ; Branch if the player has changed animations at all
+	STY playerAnim
+	JSR playerAnimSub
+
 loc4_A03E:
 	LDA playerAction
 	STA playerAction+1
 	JSR decPlayerFrameLength
-	JSR LoadPlayerSprite
-	LDA #$14 ; skip past first 5 sprites in OAM
+	JSR loadPlayerSprite
+	LDA #4*5 ; Skip past first 5 sprites in OAM
 	STA $3C ; store in player OAM tracker byte
-	JSR sub3_F176
+	JSR sub3_F176 ; Clear sprites (initialize)
 	LDA playerAction+1
-	CMP $062C
+	CMP playerCapeAction
 	BEQ bra4_A061
-	STA $062C
-	LDA #$00
-	STA $0629
-	STA $0627
+	; Change player cape animation if needed
+		STA playerCapeAction ; Update cape action
+		LDA #0
+		STA $0629
+		STA $0627
+
 bra4_A061:
 	JSR sub4_A0CD
 	LDA gameState
 	CMP #$01
 	BEQ bra4_A06D
 	JSR sub4_B938
+
 bra4_A06D:
 	LDA freezeFlag
 	BNE bra4_A094_RTS
@@ -69,6 +83,7 @@ bra4_A06D:
 	BNE bra4_A07F
 	INC $0629
 	INC $0627
+
 bra4_A07F:
 	INC objFrameCount
 	LDA $4A
@@ -80,10 +95,12 @@ bra4_A07F:
 	LDA #$00
 	STA $4A
 	STA $4B
+
 bra4_A094_RTS:
 	RTS
+
 tbl4_A095: ; Animation table 
-	db $01 ; player walk cycle
+	db $01 ; Player walk cycle
 	db $01
 	db $01
 	db $01
@@ -102,6 +119,7 @@ tbl4_A095: ; Animation table
 	db $05
 	db $05
 	db $60
+
 bubbleXMovement:
 	db $01
 	db $01
@@ -132,15 +150,21 @@ bra4_A0C2:
 	ADC $E4
 	STA $E4
 	RTS
+
+;----------------------------------------
+; SUBROUTINE ($A0CD)
+;----------------------------------------
 sub4_A0CD:
-	LDA gameState ; 
-	CMP #$04 ; if event is set to 04, death
-	BEQ bra4_A0DC ; branch
-	CMP #$07 ; if 07, using item box
-	BEQ bra4_A118_RTS ; branch to end
-	CMP #$08 ; if 08,
-	BNE bra4_A0E0 ; branch
+	LDA gameState
+	CMP #GAMESTATE_DEATH
+	BEQ bra4_A0DC
+	CMP #$07
+	BEQ bra4_A118_RTS
+	CMP #$08
+	BNE bra4_A0E0
 	RTS
+
+; If player is dying
 bra4_A0DC:
 	LDA gameSubstate
 	BEQ bra4_A118_RTS
@@ -152,9 +176,10 @@ bra4_A0E0:
 	LDX levelWaterFlag
 	BEQ bra4_A0EF
 	LDA #$01
+
 bra4_A0EF:
 	STA $32
-	LDA playerMoveFlags ; 
+	LDA playerMoveFlags
 	AND #$04 ; if player isn't jumping/swimming,
 	BEQ bra4_A119 ; branch
 	LDA playerXSpd
@@ -162,21 +187,24 @@ bra4_A0EF:
 	CMP #$20
 	BCS bra4_A101
 	INC playerXSpd
+
 bra4_A101:
 	LDA playerYSpd
 	SEC ; set carry
-	SBC #$03 ; 
+	SBC #$03
 	STA playerYSpd ; subtract 3 from the player's y speed
-	LDA #$F8 ; 
+	LDA #$F8
 	CMP playerYSpd ; if player's y speed exceeds #$F8,
 	BCS bra4_A118_RTS ; branch
 	LDA #$02 ; sets y speed
-	STA playerYSpd ; 
-	LDA playerMoveFlags ; 
+	STA playerYSpd
+	LDA playerMoveFlags
 	AND #$73 ; sets player to be standing (regardless of direction)
-	STA playerMoveFlags ; 
+	STA playerMoveFlags
+
 bra4_A118_RTS:
 	RTS
+
 bra4_A119:
 	LDA playerYSpd
 	CLC
@@ -254,127 +282,155 @@ MakePlayerAnimPtr: ; Select player animation set
 	LDA ($32),Y ; Load upper byte of 2nd pointer
 	STA playerAnimPtr+1 ; Store it
 	RTS ; End
-; **********************************************************************************
+
 decPlayerFrameLength:
 	LDA $18 ; get the current frame duration
 	BMI AdvNextPlayerFrame ; if it's underflown(?), branch ahead
 	DEC $18 ; else decrement frame length 
 	RTS ; end
-; **********************************************************************************
+
 AdvNextPlayerFrame: ; if Player frame ended:
 	INC playerAnimFrame ; advance to next frame
+
+;----------------------------------------
+; SUBROUTINE ($A185)
+;----------------------------------------
 playerAnimSub:
 	LDA playerAnim ; Load player's animation value
-	ASL ; multiply it by 2
-	TAY ; copy to Y 
-	LDA #$24 	
+	ASL
+	TAY
+	LDA #36
 	STA M90_PRG2 ; Load the animation bank into the 3rd PRG slot
+
 ; Unsure exactly what pointer it's making here (pointer is later used to create the playerFramePtr									
-	LDA (playerAnimPtr),Y ; Load the low byte 
-	STA $32 ; store it
+	LDA (playerAnimPtr),Y
+	STA $32
 	INY
-	LDA (playerAnimPtr),Y ; Load the high byte 
-	STA $33 ; store it
-; Make Player Frame Pointer
+	LDA (playerAnimPtr),Y
+	STA $33 ; Load pointer
+
+; Load player frame pointer
 	LDA playerAnimFrame ; Load player's current animation frame
 	ASL
-	ASL ; multiply it by 4
-	TAY ; move it to the Y reg
-	LDA ($32),Y ; Load the low byte of the player's mapping data pointer
+	ASL
+	TAY
+	LDA ($32),Y
 	STA playerFramePtr	
 	INY 
-	LDA ($32),Y ; Load the high byte of the player's mapping data pointer
+	LDA ($32),Y ; Load player mapping data pointer
 	STA playerFramePtr+1
-; Get Frame duration
+
+; Get frame metadata
 	INY	
-	LDA ($32),Y ; if next byte is positive (below 7F)
-	BPL storePlayerFrameLength ; Check bit 7. If it's cleared, treat this byte like a frame length byte and branch.
-	AND #$7F
-	STA playerAnimFrame ; If bit 7 is set, clear it and use the resulting value as the animation loop point.
-	JMP playerAnimSub ; Restart the routine to get the next frame 
-storePlayerFrameLength:
-	STA $18 ; Store the animation frame length
-	RTS ; end
-; **********************************************************************************	
-LoadPlayerSprite: ; loads the player sprite
-; Prep 	
-	LDY #$00 ; Clear Y index/set to read first byte of sprite format (sprite width)
-	LDA #$24
-	STA M90_PRG2 ; Load animation bank into 3rd PRG slot
-; Get sprite object size
-	LDA (playerFramePtr),Y ; get width byte
-	AND #$3F ; Remove attribute bits (%00111111)
-	STA playerWidth	
-	LDA (playerFramePtr),Y ; reload width byte
-	AND #$C0 ; remove width bits (%11000000) 
-	STA playerSprAttrs ; get attributes from width mapping (This is used for sprites that mirror such as the front facing and climbing sprites)
-	INY
-	LDA (playerFramePtr),Y ; get height byte
-	STA playerHeight	
-	INY 
-; Get attribute pointer for the sprite's CHR bank
-	LDA (playerFramePtr),Y ; get CHR bank byte
-	ASL 
-	TAX ; double it and move it to X
-	LDA #$2F
-	STA M90_PRG2 ; load palette mapping bank into 3rd PRG slot
-	LDA CHRSprBankAttrs,X
-	STA playerPalMappingLo ; load low byte of palette mapping pointer
-	LDA CHRSprBankAttrs+1,X
-	STA playerPalMappingHi ; load high byte of palette mapping pointer
-; Set base mirroring 
-	LDA #$24
-	STA M90_PRG2 ; load player animation bank (bank 36) back into 3rd PRG slot
-	LDA playerMoveFlags
-	AND #$F0 ; get the direction the player is facing
-	EOR #$40 ; reverse it
-	STA playerSpriteFlags ; set it to player sprite mirroring
-	LDA #$00
-	STA $24 ; clear UNKNOWN
-	INY ; advance to next byte of mapping (Horizontal offset)
-; Get Horizontal Offset 
-	LDA playerSpriteFlags
-	AND #$40 ; if player's sprite is H mirrored (facing right)
-	BNE bra4_A208 ; branch
-; Else if sprite not mirrored (facing left)
-	LDA playerSprX
-	SEC
-	SBC (playerFramePtr),Y ; subtract x position by mapping offset
-	STA playerSprXOfs ; set it as sprite X offset
-	LDA #$00
-	SBC #$00 ; subtract carry if present
-	STA $20 ; store it
-	JMP loc4_A218 ; Skip past next section
+	LDA ($32),Y
+	BPL storePlayerFrameLength ; If bit 7 is clear, treat this byte as a frame length byte
 	
-bra4_A208: ; If Sprite H Mirrored
+	; Set the current byte to be the loop point if bit 7 is set
+		AND #%01111111
+		STA playerAnimFrame
+		JMP playerAnimSub ; Restart the routine to get the next frame
+
+	; Otherwise, load set duration for next frame
+	storePlayerFrameLength:
+		STA $18 ; Store the animation frame length
+		RTS
+
+;----------------------------------------
+; SUBROUTINE ($A1B4)
+; Loads the player sprite
+;----------------------------------------
+loadPlayerSprite:
+	LDY #$00 ; Clear Y index/set to read first byte of sprite format (sprite width)
+	LDA #36
+	STA M90_PRG2 ; Load animation bank into 3rd PRG slot
+
+; Load width and mirroring flags
+	LDA (playerFramePtr),Y 
+	AND #%00111111 ; Ignore mirroring bits
+	STA playerWidth	; Load width
+
 	LDA (playerFramePtr),Y
-	SEC
-	SBC #$08 ; subtract loaded mapping offset by 8
-	CLC
-	ADC playerSprX  ; add player X position to modified mapping offset
-	STA playerSprXOfs ; set it as sprite X offset	
+	AND #%11000000 ; Filter out mirroring bits
+	STA playerSprAttrs ; Load mirroring flags
+
+; Load height
+	INY
+	LDA (playerFramePtr),Y
+	STA playerHeight
+	INY
+
+; Get attribute pointer for the sprite's CHR bank
+	LDA (playerFramePtr),Y
+	ASL 
+	TAX ; Get index for current mapping's CHR bank
+	LDA #47
+	STA M90_PRG2 ; Load palette mapping bank into 3rd PRG slot
+	LDA CHRSprBankAttrs,X
+	STA playerPalMappingLo
+	LDA CHRSprBankAttrs+1,X
+	STA playerPalMappingHi ; Load palette mappings for this sprite's CHR bank
+
+; Set base mirroring 
+	LDA #36
+	STA M90_PRG2 ; Swap player animation bank in
+	LDA playerMoveFlags
+	AND #%11110000
+	EOR #%01000000
+	STA playerSpriteFlags ; Reverse the player's current direction if needed
 	LDA #$00
-	ADC #$00 ; add carry if present
-	STA $20 ; store it
-; get Vertical Offset
+	STA $24 ; Clear UNKNOWN
+	INY ; Advance to next byte of mapping data
+
+; Apply horizontal offset 
+	LDA playerSpriteFlags
+	AND #$40
+	BNE bra4_A208 ; Branch if player sprite is facing right
+
+	; If sprite is facing left (not mirrored)
+		LDA playerSprX
+		SEC
+		SBC (playerFramePtr),Y
+		STA playerSprXOfs ; Subtract player's position by mapping offset
+		LDA #0
+		SBC #0
+		STA $20
+		JMP loc4_A218 ; Skip past next section
+
+	; If sprite is facing right (mirrored)
+	bra4_A208:
+		LDA (playerFramePtr),Y
+		SEC
+		SBC #8 ; Subtract mapping offset by 8 to account for mirroring
+		CLC
+		ADC playerSprX
+		STA playerSprXOfs ; Add adjusted mapping offset to player's X position
+		LDA #0
+		ADC #0
+		STA $20
+
+; Apply vertical offset
 loc4_A218:
-	LDX #$00 ; set X to #$00
-	LDY playerHeight ; Put player height into Y
-	LDA PlayerSpriteVOffset,Y ; Load players vertical offset based on sprite height 
-	BPL bra4_A223 ; branch if offset is positive (only happens if sprite height is 00, unsure when this would ever occur though)
-	LDX #$FF ; else if offset negative, set X to #$FF
+	LDX #0
+	LDY playerHeight
+	LDA PlayerSpriteVOffset,Y ; Offset player based on their sprite's height in tiles
+	BPL bra4_A223
+	; If offset is negative (it always is)		
+		LDX #$FF ; Sets 
 	
 bra4_A223: ; offset player vertically
 	CLC
-	ADC playerSprY ; add player vertical position to loaded vertical offset
-	STA playerSprYOfs ; set it as sprite Y offset 
-	BCC bra4_A22B ; if carry clear (result less than 255) then branch to end of routine (leaves X untouched)
-	INX ; increment X (Result: 00 or 01) (if X is #$FF this will underflow to be #$00) 
+	ADC playerSprY
+	STA playerSprYOfs ; Add player vertical position to loaded vertical offset
+	BCC bra4_A22B
+	; Handle carry if needed?
+		INX ; increment X (Result: 00 or 01) (if X is #$FF this will underflow to be #$00)
+
 bra4_A22B:
 	STX $22 ; Unknown purpose (possibly something to do with if the players V offset puts them off screen)
-	RTS ; end
-	
-PlayerSpriteVOffset: ; This table adjusts the sprite offset based on the height of the player, listed next to the offsets are the respective heights
+	RTS
+
+; This table adjusts the sprite offset based on the height of the player, listed next to the offsets are the respective heights
+PlayerSpriteVOffset:
 	db $00 ; 00 (unsure when this one is used)
 	db $F8 ; 01 
 	db $F0 ; 02
@@ -2557,12 +2613,13 @@ jmp_57_ACA5:
 jmp_57_ACAC:
 	LDA freezeFlag
 	BEQ bra4_ACBE ; Branch if the game isn't frozen
-	LDA playerMoveFlags
-	AND #$04
-	BNE bra4_ACBD_RTS ; Make sure the player isn't moving up
-	LDA #$00
-	STA playerAction
-	STA playerAnimFrame ; Reset the player's animation and action
+		LDA playerMoveFlags
+		AND #$04
+		BNE bra4_ACBD_RTS ; Make sure the player isn't moving up
+		LDA #$00
+		STA playerAction
+		STA playerAnimFrame ; Reset the player's animation and action
+
 bra4_ACBD_RTS:
 	RTS
 

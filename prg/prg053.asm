@@ -861,13 +861,13 @@ bra7_866B:
 	LDA objXDistHi,X
 	BMI loc7_8688_RTS
 	LDA #$01
-	STA $06EF
+	STA playerXMovementLocked
 	JMP loc7_8688_RTS
 bra7_867E:
 	LDA objXDistHi,X
 	BPL loc7_8688_RTS
 	LDA #$01
-	STA $06EF
+	STA playerXMovementLocked
 loc7_8688_RTS:
 	RTS
 ptr5_8689:
@@ -1094,13 +1094,13 @@ bra7_882E:
 	LDA objXDistHi,X
 	BMI bra7_884B_RTS
 	LDA #$01
-	STA $06EF
+	STA playerXMovementLocked
 	JMP loc7_884B_RTS
 bra7_8841:
 	LDA objXDistHi,X
 	BPL bra7_884B_RTS
 	LDA #$01
-	STA $06EF
+	STA playerXMovementLocked
 bra7_884B_RTS:
 loc7_884B_RTS:
 	RTS

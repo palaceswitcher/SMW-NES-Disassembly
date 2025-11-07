@@ -523,46 +523,50 @@ gameStateDefault:
 	JMP loc3_E498 ; Jump if in the level exit substate
 
 @continue:
-	LDX #$02
+	LDX #2
 	LDA tbl3_EF08,X
 	STA nmiJmpOpcode+1 ; Set the high byte of the NMI jump
 	LDA pauseFlag
 	BNE bra3_E442 ; Branch if the game is paused
-	LDA #$39
-	STA M90_PRG1 ; Swap the player control bank into the 2nd PRG slot
-	LDA endingFreezeFlag
-	BNE bra3_E42B ; Branch if the ending cutscene is playing
-	JSR jmp_57_ACAC ; Jump
+		LDA #57
+		STA M90_PRG1 ; Swap the player control bank into the 2nd PRG slot
+		LDA endingFreezeFlag
+		BNE bra3_E42B ; Branch if the ending cutscene is playing
+		JSR jmp_57_ACAC ; Jump
 
-bra3_E42B:
-	LDA $06EF
-	BEQ bra3_E437
-	LDA #$00
-	STA $06EF
-	STA playerXSpd ; Clear player's X speed
+	; If ending cutscene is playing
+	bra3_E42B:
+		LDA playerXMovementLocked
+		BEQ bra3_E437
+		; Clear X speed if horizontal movement is locked
+			LDA #0
+			STA playerXMovementLocked
+			STA playerXSpd
 
-bra3_E437:
-	LDA levelWaterFlag
-	BEQ bra3_E445 ; Branch if not underwater
-	LDA frameCount
-	AND #$01
-	BEQ bra3_E445
+	bra3_E437:
+		LDA levelWaterFlag
+		BEQ bra3_E445 ; Branch if not underwater
+			LDA frameCount
+			AND #$01
+			BEQ bra3_E445 ; Only run the game's logic code every other frame, effectively running the game at half-speed underwater
 
 bra3_E442:
-	JMP loc3_E45F ; Jump
+	JMP loc3_E45F ; Skip core functions
 
-bra3_E445:
-	JSR sub3_ED14
-	LDA pSwitchTimer
-	BEQ loc3_E45F ; Branch if P-Switch timer is up
-	INC pSwitchFrameCount ; Increment frame count
-	LDA pSwitchFrameCount
-	CMP #$3B
-	BCC loc3_E45F ; After 60 frames pass,
-	DEC pSwitchTimer ; Decrease timer
-	LDA #$00
-	STA pSwitchFrameCount ; Clear frame count
+		; Run main in-level logic loop
+		bra3_E445:
+			JSR sub3_ED14
+			LDA pSwitchTimer
+			BEQ loc3_E45F ; Branch if P-Switch timer is up
+			INC pSwitchFrameCount ; Increment frame count
+			LDA pSwitchFrameCount
+			CMP #59
+			BCC loc3_E45F
+			DEC pSwitchTimer ; Decrease timer by 1 second every 60 frames
+			LDA #$00
+			STA pSwitchFrameCount ; Clear frame count
 
+; Check if the game is paused
 loc3_E45F:
 	LDA endingFreezeFlag
 	BNE bra3_E47C ; Don't let the player unpause at the ending cutscene
@@ -583,7 +587,7 @@ bra3_E47C:
 	LDA pauseFlag
 	BEQ bra3_E494 ; Stop if game isn't paused
 	; If game is paused:
-		JSR jYButtonComboCheck ; Check for Easter egg button combo
+		JSR jyButtonComboCheck ; Check for Easter egg button combo
 		LDA btnPressed
 		AND #BTN_SELECT
 		BEQ bra3_E494 ; Stop if select isn't pressed
@@ -675,19 +679,20 @@ pnt2_E509:
 	STA $06DF
 	RTS
 gameStateDeath:
-	LDA a:gameSubstate ; Load part of event
-	ASL ; Multiply by 2
-	TAY ; Load pointer based on event part
+	LDA a:gameSubstate
+	ASL
+	TAY
 	LDA tbl3_E546,Y
-	STA $32 ; Load lower byte of pointer
+	STA $32
 	LDA tbl3_E546+1,Y
-	STA $33 ; Load upper byte of pointer
-	JMP ($32) ; Jump to loaded pointer
+	STA $33 ; Load pointer for substate
+	JMP ($32) ; Jump to pointer for current substate
 tbl3_E546:
 	.word pnt2_E54E
 	.word pnt2_E570
 	.word pnt2_E585
 	.word pnt2_E597
+
 pnt2_E54E:
 	LDA #$11
 	STA playerAction ; Set action to "dying"
@@ -704,6 +709,7 @@ pnt2_E54E:
 	JSR updateHud ; Jump
 	INC a:gameSubstate ; Start level transition
 	RTS
+
 pnt2_E570:
 	LDA #$00
 	STA playerXSpd ; Clear X speed
@@ -715,6 +721,7 @@ pnt2_E570:
 	JSR sub3_E5D4
 	INC a:gameSubstate
 	RTS
+
 pnt2_E585:
 	LDA #$00
 	STA playerXSpd ; Clear X speed
@@ -724,6 +731,7 @@ pnt2_E585:
 	JSR sub3_E5B6 ; Jump
 	INC a:gameSubstate ; Start level transition
 	RTS
+
 pnt2_E597:
 	LDA #$00
 	STA fadeoutMode ; Disable BG blackout flag
@@ -735,8 +743,9 @@ pnt2_E597:
 	STA a:gameSubstate ; Go to first part of event
 	LDA #$16
 	STA a:gameState ; Trigger map fade-in
-	JSR backupplayerPowerups
+	JSR backupplayerPowerups ; Back up powerup states
 	RTS
+
 sub3_E5B6:
 	INC playerActionFrameCount ; Increment frame count for player action
 	CPY playerActionFrameCount
@@ -754,30 +763,32 @@ bra3_E5CE:
 	LDA #$00
 	STA playerActionTicks ; Clear action tick count
 	RTS
+
 sub3_E5D4:
-	LDA #$39
+	LDA #57
 	STA M90_PRG1 ; Swap player bank into 2nd PRG slot
 	JSR jmp_57_ACA5
 	JSR jmp_57_A000
-	LDA #$36
+	LDA #54
 	STA M90_PRG1 ; Swap bank 54 into 2nd PRG slot
 	JSR jmp_54_A150
 	JSR jmp_54_A0D9
 	JSR jmp_54_A000
-	LDA #$3D
+	LDA #61
 	STA M90_PRG1 ; Swap bank 61 into 2nd PRG slot
 	JSR jmp_61_AE8F
 	LDA #$00
 	STA objFrameCount
-	LDA #$34
+	LDA #52
 	STA M90_PRG1 ; Swap bank 52 into 2nd PRG slot
 	LDA #$80
 	STA $3C
 	JSR jmp_52_A080 ; Jump
 	JSR jmp_52_A089 ; Jump
-	JSR RenderplayerItemBoxSprite ; Jump
+	JSR renderPlayerItemBoxSprite ; Jump
 	JSR sub3_E9C4 ; Jump
 	RTS
+
 gameStateCutscene:
 	JSR sub3_ED14 ; Jump
 	JSR updateHud ; Jump
@@ -1009,7 +1020,7 @@ pnt2_E7A2:
 	STA $3C
 	JSR jmp_52_A080 ; Jump
 	JSR jmp_52_A089 ; Jump
-	JSR RenderplayerItemBoxSprite ; Jump
+	JSR renderPlayerItemBoxSprite ; Jump
 	JSR sub3_E9C4 ; Jump
 	RTS
 pnt2_E7D0:
@@ -1266,7 +1277,7 @@ sub3_E9C4:
 	STA M90_PRG1 ; Swap bank 52 into 2nd PRG slot
 	JSR jmp_52_A0F3
 	RTS
-jYButtonComboCheck:
+jyButtonComboCheck:
 	LDA btnPressed
 	CMP #BTN_START
 	BEQ jYTriggerDone ; Stop if the game is unpaused.
@@ -2034,27 +2045,29 @@ pnt2_ECEC:
 	.byte $00
 	.byte $FF
 	.byte $00
+
 sub3_ED14:
-	LDA #$39
+	LDA #57
 	STA M90_PRG1 ; Swap player bank into 2nd PRG slot
 	JSR jmp_57_A000
-	LDA #$36
+	LDA #54
 	STA M90_PRG1 ; Swap bank 54 into 2nd PRG slot
 	JSR jmp_54_A150
 	JSR jmp_54_A07E
 	JSR jmp_54_A000
-	LDA #$3D
+	LDA #61
 	STA M90_PRG1 ; Swap bank 61 into 2nd PRG slot
 	JSR jmp_61_AE8F
-	LDA #$34
+	LDA #52
 	STA M90_PRG1 ; Swap bank 52 into 2nd PRG slot
 	LDA #$80
 	STA $3C
 	JSR jmp_52_A080
 	JSR jmp_52_A089
-	JSR RenderplayerItemBoxSprite
+	JSR renderPlayerItemBoxSprite
 	JSR sub3_E9C4 ; Jump
 	RTS
+
 sub3_ED48:
 	LDA #$24
 	STA M90_PRG2 ; Swap bank 36 into 3rd PRG slot
@@ -2276,11 +2289,13 @@ pnt2_EEFD:
 	LDA #$0C
 	STA a:gameState
 	RTS
+
 tbl3_EF08:
 	.word NMI_E062
 	.word jmp_63_E000
 	.word NMI_E05C
 	.word NMI_E05F
+
 loc3_EF10:
 	PHP ; Push the CPU status into the stack
 	PHA ; Push the accumulator into the stack
@@ -2597,22 +2612,26 @@ bra3_F15B:
 	LDA ($34),Y
 	STA $33
 	JMP ($32)
+
 ;----------------------------------------
+; SUBROUTINE ($F176)
 ; Clear sprites from screen during gameplay
 ; This must happen before sprites are sent to $0200
 ;----------------------------------------
 sub3_F176:
-	LDA #$F8 ; Y position (offscreen)
+	LDA #$F8 ; Places every sprite off-screen
 	LDX #$00 ; storage offset
-bra3_F17A: ; In level sprite clearing 
-	STA spriteMem,X ; store at sprite Y position
+
+; Position every sprite off-screen
+bra3_F17A:
+	STA spriteMem,X ; Set sprite to be off-screen
 	INX
 	INX
 	INX
-	INX ; increment X until on next Y pos storage byte
-	BNE bra3_F17A ; loop until X overflows to 00  
+	INX ; Go to next sprite's Y position
+	BNE bra3_F17A
 	RTS 
-;-----------------------------************************
+
 sub3_F184:
 	ASL
 	ASL
@@ -2630,9 +2649,11 @@ bra3_F195:
 	DEY
 	BPL bra3_F195
 	RTS
-;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=
-; CONTROLLER READING
-;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=	
+
+;----------------------------------------
+; SUBROUTINE ($F19F)
+; Reads controller input
+;----------------------------------------
 updateJoypad:
 	JSR readJoypad
 	LDX #$00 ; Set the X index for the first controller

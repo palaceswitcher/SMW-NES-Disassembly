@@ -2,7 +2,7 @@
 ; SUBROUTINE ($A000)
 ; Loads OAM data for item box sprite
 ;----------------------------------------
-RenderplayerItemBoxSprite:
+renderPlayerItemBoxSprite:
 	LDY playerItemBox
 	BNE RenderplayerItemBoxSprCont ; Don't render item sprite if the item box is empty
 ptr6_A005:

@@ -272,6 +272,7 @@ checkpointFlag = $06A2
 bowserHitCount = $06E5
 endingFreezeFlag = $06E6
 clownCarFace = $06E8
+playerXMovementLocked = $06EF
 pauseFlag = $0709
 
 ; Sound Driver RAM Defines
