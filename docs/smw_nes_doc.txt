@@ -1,4 +1,4 @@
-SMW NES Hacking Document (2025-10-31)
+SMW NES Hacking Document (2025-12-7)
 Note: Some information here may be inaccurate or wrong.
 
 -----Level Data-----
@@ -311,7 +311,7 @@ Note: Some information here may be inaccurate or wrong.
 6C88B - 6C98A:	Object Horizontal Hitbox Sizes
 6C98B - 6CA8A:	Object Vertical Hitbox Sizes
 6CEA8 - 6CEB7:	Objects 0x0 - 0xF Swallow Powerup
-720A5 - 720A9:	Walk Cycle Animation
+720A5 - 720A9:	Player Walking Transitional Actions
 720B8 - 720BF:	Bubble X Movement Data
 724EE - 72509:	Level Music (after SFX plays)
 72B40 - 72B4B:	Standing Cape Cycle
@@ -320,7 +320,8 @@ Note: Some information here may be inaccurate or wrong.
 72BB6 - 72BBF:	Falling Cape Cycle
 72BE0 - 72BF0:	Cape Animation Table
 72E5B - 72E5E:	Item Box SFX
-73AE2 - 73AE6:	Player X Acceleration Data?
+73AE1 - 73AF0:	Player Horizontal Speed Vector Table
+73AF1 - 73B00:	Player Vertical Speed Vector Table
 7E3EB - 7E3EC:	Default Timer Data
 7EA18 - 7EA1F:	JY Easter Egg Input Data
 7F3B7 - 7F3CA:	HUD Counter Settings [0x4 per display]
@@ -491,7 +492,9 @@ $0025:	Non-Level Scratch RAM?
 $0026:	Non-Level Vertical Sprite Alignment
 $0027:	Non-Level Horizontal Sprite Alignment
 $0028:	Player Horizontal Metasprite Alignment?
+$0028:	Player Horizontal Movement Vector
 $002B:	Player Vertical Metasprite Alignment?
+$002B:	Player Vertical Movement Vector
 $0030:	Non-Level Sprite Count?
 $0031:	Non-Level Sprite Bank Swap Number
 $002E - $0039:	Scratch RAM (!)
@@ -511,6 +514,7 @@ $0049:	Player Climbing State
 > 0x02 = On Climbable Edge
 > 0x03 = Behind Climbable Tile
 $004A:	Shell Hit Counter
+$004B:	Shell Hit Timer (Amount of frames since the shell hit something)
 $004F:	Player Previous X Direction
 $0051:	Scroll/Camera X Screen
 $0052:	X Scroll Sprite Positioning? (while scrolling?)
