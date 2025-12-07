@@ -555,7 +555,9 @@ bra3_E442:
 
 		; Run main in-level logic loop
 		bra3_E445:
-			JSR sub3_ED14
+			JSR sub3_ED14 ; Run main game loop
+
+			; Handle P-Switch
 			LDA pSwitchTimer
 			BEQ loc3_E45F ; Branch if P-Switch timer is up
 			INC pSwitchFrameCount ; Increment frame count
@@ -566,7 +568,7 @@ bra3_E442:
 			LDA #$00
 			STA pSwitchFrameCount ; Clear frame count
 
-; Check if the game is paused
+; Handle pausing/unpausing
 loc3_E45F:
 	LDA endingFreezeFlag
 	BNE bra3_E47C ; Don't let the player unpause at the ending cutscene

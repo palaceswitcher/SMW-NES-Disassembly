@@ -1,6 +1,6 @@
 ; 0x048010-0x04A00F
 lda_36_C000: 
-	.word PlayerAnimTablesTbl   ; 00 No Yoshi
+	.word PlayerAnimTablesTbl  ; 00 No Yoshi
 	.word YoshiAnimTablesTbl_1 ; 01 If Yoshi present (all entries on this table point to the same thing)
 	.word YoshiAnimTablesTbl_2 ; 02
 	.word YoshiAnimTablesTbl_2 ; 03 Because Yoshi Status is doubled for use as an index this table is long

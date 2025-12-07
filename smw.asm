@@ -119,9 +119,9 @@ playerYLoDup = $11
 playerSprX = $12
 playerSprY = $13
 playerXSpd = $14
-playerXSpdScaled = $28
+playerXMoveVec = $28
 playerYSpd = $15
-playerYSpdScaled = $2B
+playerYMoveVec = $2B
 
 playerAnim = $16
 playerAnimFrame = $17
@@ -178,6 +178,9 @@ yoshiTongueState = $0623
 playerPowerup = $0624
 playerItemBox = $0625
 playerStoredPowerup = $06DA
+
+shellHitCount = $4A
+shellHitTimer = $4B
 
 spriteMem = $0200
 scrollSpd = $0326
