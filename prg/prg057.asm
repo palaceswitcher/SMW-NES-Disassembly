@@ -4633,7 +4633,7 @@ cliffDeathCheck:
 		BCC loc4_BA24
 			CLC
 			ADC #$10
-			STA playerYLoDu
+			STA playerYLoDup
 			INC playerYHiDup ; increment the new Y screen
 
 ; ***************************************************************
