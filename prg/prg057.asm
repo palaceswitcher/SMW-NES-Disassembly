@@ -102,35 +102,35 @@ bra4_A094_RTS:
 
 ; Animations to switch to when transitioning between actions
 tbl4_A095:
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $02
-	db $02
-	db $02
-	db $03
-	db $03
-	db $03
-	db $04
-	db $04
-	db $05
-	db $05
-	db $05
-	db $60
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $04
+	.byte $04
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $60
 
 bubbleXMovement:
-	db $01
-	db $01
-	db $01
-	db $01
-	db $FF
-	db $FF
-	db $FF
-	db $FF
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
 	
 sub4_A0B0:
 	TXA
@@ -224,39 +224,39 @@ bra4_A0EF:
 			RTS
 
 ; UNMARKED TABLE?
-	db $00
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $03
-	db $02
-	db $04
-	db $05
-	db $02
-	db $01
-	db $01
-	db $01
-	db $00
-	db $00
-	db $00
-	db $01
-	db $01
-	db $01
-	db $00
-	db $02
-	db $02
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
-	db $01
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $03
+	.byte $02
+	.byte $04
+	.byte $05
+	.byte $02
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $02
+	.byte $02
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
 
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ; PLAYER SPRITES AND ANIMATION
@@ -451,19 +451,19 @@ bra4_A22B:
 
 ; This table adjusts the sprite offset based on the height of the player, listed next to the offsets are the respective heights
 PlayerSpriteVOffset:
-	db $00 ; 00 (unsure when this one is used)
-	db $F8 ; 01 
-	db $F0 ; 02
-	db $E8 ; 03
-	db $E0 ; 04
-	db $D8 ; 05
-	db $D0 ; 06
-	db $C8 ; 07
-	db $C0 ; 08
-	db $B8 ; 09
-	db $B0 ; 0A
-	db $A8 ; 0B
-	db $A0 ; 0C
+	.byte $00 ; 00 (unsure when this one is used)
+	.byte $F8 ; 01 
+	.byte $F0 ; 02
+	.byte $E8 ; 03
+	.byte $E0 ; 04
+	.byte $D8 ; 05
+	.byte $D0 ; 06
+	.byte $C8 ; 07
+	.byte $C0 ; 08
+	.byte $B8 ; 09
+	.byte $B0 ; 0A
+	.byte $A8 ; 0B
+	.byte $A0 ; 0C
 	
 ;--------------------
 ; Bubble spawning
@@ -928,15 +928,15 @@ sub4_A4CE:
 	STA sndMusic
 	RTS
 levelMusicQueue:
-	db MUS_OVERWORLD, MUS_FORESTOFILLUSION, MUS_TITLE, MUS_CASTLE ; World 1
-	db MUS_OVERWORLD, MUS_FORESTOFILLUSION, MUS_GHOSTHOUSE, MUS_CASTLE ; World 2
-	db MUS_UNDERGROUND, MUS_UNDERWATER, MUS_GHOSTHOUSE, MUS_CASTLE ; World 3
-	db MUS_OVERWORLD, MUS_FORESTOFILLUSION, MUS_TITLE, MUS_CASTLE ; World 4
-	db MUS_OVERWORLD, MUS_GHOSTHOUSE, MUS_UNDERWATER, MUS_CASTLE ; World 5
-	db MUS_OVERWORLD, MUS_GHOSTHOUSE, MUS_FORESTOFILLUSION, MUS_CASTLE ; World 6
-	db MUS_OVERWORLD, MUS_FORESTOFILLUSION, MUS_GHOSTHOUSE, MUS_CASTLE ; World 7
-	db MUS_OVERWORLD ; Yoshi's House
-	db $60
+	.byte MUS_OVERWORLD, MUS_FORESTOFILLUSION, MUS_TITLE, MUS_CASTLE ; World 1
+	.byte MUS_OVERWORLD, MUS_FORESTOFILLUSION, MUS_GHOSTHOUSE, MUS_CASTLE ; World 2
+	.byte MUS_UNDERGROUND, MUS_UNDERWATER, MUS_GHOSTHOUSE, MUS_CASTLE ; World 3
+	.byte MUS_OVERWORLD, MUS_FORESTOFILLUSION, MUS_TITLE, MUS_CASTLE ; World 4
+	.byte MUS_OVERWORLD, MUS_GHOSTHOUSE, MUS_UNDERWATER, MUS_CASTLE ; World 5
+	.byte MUS_OVERWORLD, MUS_GHOSTHOUSE, MUS_FORESTOFILLUSION, MUS_CASTLE ; World 6
+	.byte MUS_OVERWORLD, MUS_FORESTOFILLUSION, MUS_GHOSTHOUSE, MUS_CASTLE ; World 7
+	.byte MUS_OVERWORLD ; Yoshi's House
+	.byte $60
 ;-=-=-=-=-=--=-=-=-=-=-=-
 ; END 
 ;-=-=-=-=-=-==-=-=-=--=-=
@@ -999,128 +999,128 @@ bra4_A555:
 	JMP LoadRidingSprite
 ; **********************************	
 tbl4_A558: ; loaded from by bra4_A547
-	db $00
-	db $00
-	db $03
-	db $03
-	db $03
-	db $03
-	db $02
-	db $02
-	db $02
-	db $02
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $80
+	.byte $00
+	.byte $00
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $80
 tbl4_A571: ; loaded from by bra4_A537
-	db $04
-	db $04
-	db $05
-	db $05
-	db $05
-	db $05
-	db $02
-	db $02
-	db $02
-	db $02
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $04
-	db $80
+	.byte $04
+	.byte $04
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $80
 playerRidingActionTable:
-	db $00 ; standing
-	db $01 ; walking
-	db $01 ; running
-	db $01 ; unused
-	db $00 ; jump
-	db $02 ; spinning (unused)
-	db $02 ; unused
-	db $00 ; ducking
-	db $00 ; looking up (unused)
-	db $00 ; leap
-	db $00 ; falling
-	db $00 ; falling (underwater)
-	db $00 ; swimming
-	db $02 ; yoshi tongue out
-	db $02 ; yoshi tongue out (while moving)
-	db $00 ; flying
-	db $03 ; victory pose
+	.byte $00 ; standing
+	.byte $01 ; walking
+	.byte $01 ; running
+	.byte $01 ; unused
+	.byte $00 ; jump
+	.byte $02 ; spinning (unused)
+	.byte $02 ; unused
+	.byte $00 ; ducking
+	.byte $00 ; looking up (unused)
+	.byte $00 ; leap
+	.byte $00 ; falling
+	.byte $00 ; falling (underwater)
+	.byte $00 ; swimming
+	.byte $02 ; yoshi tongue out
+	.byte $02 ; yoshi tongue out (while moving)
+	.byte $00 ; flying
+	.byte $03 ; victory pose
 tbl4_A59B:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $05
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $05
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
 playerRidingTileHorizPos:
-	db $00, $08, $10, $18 ; 1st row
-	db $00, $08, $10, $18 ; 2nd row
-	db $00, $08, $10, $18 ; 3rd row
-	db $00, $08, $10, $18 ; 4th row
+	.byte $00, $08, $10, $18 ; 1st row
+	.byte $00, $08, $10, $18 ; 2nd row
+	.byte $00, $08, $10, $18 ; 3rd row
+	.byte $00, $08, $10, $18 ; 4th row
 playerRidingTileVertPos:
-	db $00, $00, $00, $00 ; 1st column
-	db $08, $08, $08, $08 ; 2nd column
-	db $10, $10, $10, $10 ; 3rd column
-	db $18, $18, $18, $18 ; 4th column
+	.byte $00, $00, $00, $00 ; 1st column
+	.byte $08, $08, $08, $08 ; 2nd column
+	.byte $10, $10, $10, $10 ; 3rd column
+	.byte $18, $18, $18, $18 ; 4th column
 playerRidingSpriteYOffset:
-	db $28, $29 ; walking
-	db $24, $28, $24, $24 ; pointing
-	db $2A ; ducking
-	db $25, $28 ; unknown
+	.byte $28, $29 ; walking
+	.byte $24, $28, $24, $24 ; pointing
+	.byte $2A ; ducking
+	.byte $25, $28 ; unknown
 ridingRightXoffset:
-	db $ED
-	db $ED
-	db $ED
-	db $ED
-	db $ED
-	db $ED
-	db $EF
-	db $EF
-	db $ED
+	.byte $ED
+	.byte $ED
+	.byte $ED
+	.byte $ED
+	.byte $ED
+	.byte $ED
+	.byte $EF
+	.byte $EF
+	.byte $ED
 ridingLeftXoffset:
-	db $F3
-	db $F3
-	db $F3
-	db $F3
-	db $F3
-	db $F3
-	db $F1
-	db $F1
-	db $F3
+	.byte $F3
+	.byte $F3
+	.byte $F3
+	.byte $F3
+	.byte $F3
+	.byte $F3
+	.byte $F1
+	.byte $F1
+	.byte $F3
 tbl4_A5E7:
 	.word ptr4_A5F1
 	.word ptr4_A5FA
@@ -1128,35 +1128,35 @@ tbl4_A5E7:
 	.word ptr4_A5FA
 	.word ptr4_A5FA
 ptr4_A5F1:
-	db $98
-	db $98
-	db $98
-	db $99
-	db $98
-	db $99
-	db $99
-	db $99
-	db $98
+	.byte $98
+	.byte $98
+	.byte $98
+	.byte $99
+	.byte $98
+	.byte $99
+	.byte $99
+	.byte $99
+	.byte $98
 ptr4_A5FA:
-	db $8A
-	db $8A
-	db $8A
-	db $8B
-	db $8A
-	db $8B
-	db $86
-	db $86
-	db $8B
+	.byte $8A
+	.byte $8A
+	.byte $8A
+	.byte $8B
+	.byte $8A
+	.byte $8B
+	.byte $86
+	.byte $86
+	.byte $8B
 ptr4_A603:
-	db $81
-	db $81
-	db $81
-	db $81
-	db $81
-	db $81
-	db $81
-	db $81
-	db $81
+	.byte $81
+	.byte $81
+	.byte $81
+	.byte $81
+	.byte $81
+	.byte $81
+	.byte $81
+	.byte $81
+	.byte $81
 tbl4_A60C:
 	.word ofs_A616
 	.word ofs_A6C8
@@ -1174,170 +1174,170 @@ ofs_A616:
 	.word ofs_A688
 	.word ofs_A6A8
 ofs_A628:
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $01
-	db $02
-	db $FF
-	db $FF
-	db $03
-	db $04
-	db $FF
-	db $FF
-	db $05
-	db $06
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $02
-	db $01
-	db $FF
-	db $FF
-	db $04
-	db $03
-	db $FF
-	db $FF
-	db $06
-	db $05
-	db $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $01
+	.byte $02
+	.byte $FF
+	.byte $FF
+	.byte $03
+	.byte $04
+	.byte $FF
+	.byte $FF
+	.byte $05
+	.byte $06
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $02
+	.byte $01
+	.byte $FF
+	.byte $FF
+	.byte $04
+	.byte $03
+	.byte $FF
+	.byte $FF
+	.byte $06
+	.byte $05
+	.byte $FF
 ofs_A648:
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $07
-	db $08
-	db $FF
-	db $FF
-	db $09
-	db $0A
-	db $FF
-	db $FF
-	db $0B
-	db $0C
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $08
-	db $07
-	db $FF
-	db $FF
-	db $0A
-	db $09
-	db $FF
-	db $FF
-	db $0C
-	db $0B
-	db $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $07
+	.byte $08
+	.byte $FF
+	.byte $FF
+	.byte $09
+	.byte $0A
+	.byte $FF
+	.byte $FF
+	.byte $0B
+	.byte $0C
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $08
+	.byte $07
+	.byte $FF
+	.byte $FF
+	.byte $0A
+	.byte $09
+	.byte $FF
+	.byte $FF
+	.byte $0C
+	.byte $0B
+	.byte $FF
 ofs_A668:
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $64
-	db $65
-	db $FF
-	db $FF
-	db $66
-	db $67
-	db $FF
-	db $FF
-	db $54
-	db $55
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $65
-	db $64
-	db $FF
-	db $FF
-	db $67
-	db $66
-	db $FF
-	db $FF
-	db $55
-	db $54
-	db $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $64
+	.byte $65
+	.byte $FF
+	.byte $FF
+	.byte $66
+	.byte $67
+	.byte $FF
+	.byte $FF
+	.byte $54
+	.byte $55
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $65
+	.byte $64
+	.byte $FF
+	.byte $FF
+	.byte $67
+	.byte $66
+	.byte $FF
+	.byte $FF
+	.byte $55
+	.byte $54
+	.byte $FF
 ofs_A688:
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $44
-	db $45
-	db $FF
-	db $FF
-	db $46
-	db $47
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $45
-	db $44
-	db $FF
-	db $FF
-	db $47
-	db $46
-	db $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $44
+	.byte $45
+	.byte $FF
+	.byte $FF
+	.byte $46
+	.byte $47
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $45
+	.byte $44
+	.byte $FF
+	.byte $FF
+	.byte $47
+	.byte $46
+	.byte $FF
 ofs_A6A8:
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $0E
-	db $0D
-	db $FF
-	db $FF
-	db $15
-	db $16
-	db $FF
-	db $FF
-	db $13
-	db $14
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $0D
-	db $0E
-	db $FF
-	db $FF
-	db $16
-	db $15
-	db $FF
-	db $FF
-	db $14
-	db $13
-	db $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $0E
+	.byte $0D
+	.byte $FF
+	.byte $FF
+	.byte $15
+	.byte $16
+	.byte $FF
+	.byte $FF
+	.byte $13
+	.byte $14
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $0D
+	.byte $0E
+	.byte $FF
+	.byte $FF
+	.byte $16
+	.byte $15
+	.byte $FF
+	.byte $FF
+	.byte $14
+	.byte $13
+	.byte $FF
 ofs_A6C8:
 	.word ofs_A6DA
 	.word ofs_A6FA
@@ -1349,203 +1349,203 @@ ofs_A6C8:
 	.word ofs_A75A
 	.word ofs_A77A
 ofs_A6DA:
-	db $FF
-	db $A1
-	db $A2
-	db $FF
-	db $FF
-	db $A3
-	db $A4
-	db $FF
-	db $FF
-	db $A5
-	db $A6
-	db $FF
-	db $FF
-	db $A8
-	db $A7
-	db $FF
-	db $FF
-	db $A2
-	db $A1
-	db $FF
-	db $FF
-	db $A4
-	db $A3
-	db $FF
-	db $FF
-	db $A6
-	db $A5
-	db $FF
-	db $FF
-	db $A7
-	db $A8
-	db $FF
+	.byte $FF
+	.byte $A1
+	.byte $A2
+	.byte $FF
+	.byte $FF
+	.byte $A3
+	.byte $A4
+	.byte $FF
+	.byte $FF
+	.byte $A5
+	.byte $A6
+	.byte $FF
+	.byte $FF
+	.byte $A8
+	.byte $A7
+	.byte $FF
+	.byte $FF
+	.byte $A2
+	.byte $A1
+	.byte $FF
+	.byte $FF
+	.byte $A4
+	.byte $A3
+	.byte $FF
+	.byte $FF
+	.byte $A6
+	.byte $A5
+	.byte $FF
+	.byte $FF
+	.byte $A7
+	.byte $A8
+	.byte $FF
 ofs_A6FA:
-	db $FF
-	db $A9
-	db $AA
-	db $FF
-	db $FF
-	db $AB
-	db $AC
-	db $FF
-	db $FF
-	db $AD
-	db $AE
-	db $FF
-	db $FF
-	db $AF
-	db $B0
-	db $FF
-	db $FF
-	db $AA
-	db $A9
-	db $FF
-	db $FF
-	db $AC
-	db $AB
-	db $FF
-	db $FF
-	db $AE
-	db $AD
-	db $FF
-	db $FF
-	db $B0
-	db $AF
-	db $FF
+	.byte $FF
+	.byte $A9
+	.byte $AA
+	.byte $FF
+	.byte $FF
+	.byte $AB
+	.byte $AC
+	.byte $FF
+	.byte $FF
+	.byte $AD
+	.byte $AE
+	.byte $FF
+	.byte $FF
+	.byte $AF
+	.byte $B0
+	.byte $FF
+	.byte $FF
+	.byte $AA
+	.byte $A9
+	.byte $FF
+	.byte $FF
+	.byte $AC
+	.byte $AB
+	.byte $FF
+	.byte $FF
+	.byte $AE
+	.byte $AD
+	.byte $FF
+	.byte $FF
+	.byte $B0
+	.byte $AF
+	.byte $FF
 ofs_A71A:
-	db $FF
-	db $A1
-	db $A2
-	db $FF
-	db $FF
-	db $B3
-	db $B4
-	db $FF
-	db $B9
-	db $B5
-	db $B6
-	db $FF
-	db $FF
-	db $B7
-	db $B8
-	db $FF
-	db $FF
-	db $A2
-	db $A1
-	db $FF
-	db $FF
-	db $B4
-	db $B3
-	db $FF
-	db $FF
-	db $B6
-	db $B5
-	db $B9
-	db $FF
-	db $B8
-	db $B7
-	db $FF
+	.byte $FF
+	.byte $A1
+	.byte $A2
+	.byte $FF
+	.byte $FF
+	.byte $B3
+	.byte $B4
+	.byte $FF
+	.byte $B9
+	.byte $B5
+	.byte $B6
+	.byte $FF
+	.byte $FF
+	.byte $B7
+	.byte $B8
+	.byte $FF
+	.byte $FF
+	.byte $A2
+	.byte $A1
+	.byte $FF
+	.byte $FF
+	.byte $B4
+	.byte $B3
+	.byte $FF
+	.byte $FF
+	.byte $B6
+	.byte $B5
+	.byte $B9
+	.byte $FF
+	.byte $B8
+	.byte $B7
+	.byte $FF
 ofs_A73A:
-	db $FF
-	db $E1
-	db $E2
-	db $FF
-	db $FF
-	db $E3
-	db $E4
-	db $FF
-	db $FF
-	db $E5
-	db $E6
-	db $FF
-	db $FF
-	db $E7
-	db $E8
-	db $FF
-	db $FF
-	db $E2
-	db $E1
-	db $FF
-	db $FF
-	db $E4
-	db $E3
-	db $FF
-	db $FF
-	db $E6
-	db $E5
-	db $FF
-	db $FF
-	db $E8
-	db $E7
-	db $FF
+	.byte $FF
+	.byte $E1
+	.byte $E2
+	.byte $FF
+	.byte $FF
+	.byte $E3
+	.byte $E4
+	.byte $FF
+	.byte $FF
+	.byte $E5
+	.byte $E6
+	.byte $FF
+	.byte $FF
+	.byte $E7
+	.byte $E8
+	.byte $FF
+	.byte $FF
+	.byte $E2
+	.byte $E1
+	.byte $FF
+	.byte $FF
+	.byte $E4
+	.byte $E3
+	.byte $FF
+	.byte $FF
+	.byte $E6
+	.byte $E5
+	.byte $FF
+	.byte $FF
+	.byte $E8
+	.byte $E7
+	.byte $FF
 ofs_A75A:
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $B4
-	db $B5
-	db $FF
-	db $FF
-	db $B6
-	db $B7
-	db $FF
-	db $FF
-	db $B8
-	db $B9
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $B5
-	db $B4
-	db $FF
-	db $FF
-	db $B7
-	db $B6
-	db $FF
-	db $FF
-	db $B9
-	db $B8
-	db $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $B4
+	.byte $B5
+	.byte $FF
+	.byte $FF
+	.byte $B6
+	.byte $B7
+	.byte $FF
+	.byte $FF
+	.byte $B8
+	.byte $B9
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $B5
+	.byte $B4
+	.byte $FF
+	.byte $FF
+	.byte $B7
+	.byte $B6
+	.byte $FF
+	.byte $FF
+	.byte $B9
+	.byte $B8
+	.byte $FF
 ofs_A77A:
-	db $FF
-	db $F1
-	db $F2
-	db $FF
-	db $FF
-	db $F3
-	db $F4
-	db $FF
-	db $FF
-	db $F5
-	db $F6
-	db $FF
-	db $FF
-	db $F7
-	db $F8
-	db $FF
-	db $FF
-	db $F2
-	db $F1
-	db $FF
-	db $FF
-	db $F4
-	db $F3
-	db $FF
-	db $FF
-	db $F6
-	db $F5
-	db $FF
-	db $FF
-	db $F8
-	db $F7
-	db $FF
+	.byte $FF
+	.byte $F1
+	.byte $F2
+	.byte $FF
+	.byte $FF
+	.byte $F3
+	.byte $F4
+	.byte $FF
+	.byte $FF
+	.byte $F5
+	.byte $F6
+	.byte $FF
+	.byte $FF
+	.byte $F7
+	.byte $F8
+	.byte $FF
+	.byte $FF
+	.byte $F2
+	.byte $F1
+	.byte $FF
+	.byte $FF
+	.byte $F4
+	.byte $F3
+	.byte $FF
+	.byte $FF
+	.byte $F6
+	.byte $F5
+	.byte $FF
+	.byte $FF
+	.byte $F8
+	.byte $F7
+	.byte $FF
 ofs_A79A:
 	.word ofs_A7AC
 	.word ofs_A7AC
@@ -1557,203 +1557,203 @@ ofs_A79A:
 	.word ofs_A82C
 	.word ofs_A84C
 ofs_A7AC:
-	db $FF
-	db $48
-	db $49
-	db $FF
-	db $FF
-	db $4A
-	db $4B
-	db $FF
-	db $FF
-	db $4C
-	db $4D
-	db $FF
-	db $FF
-	db $4E
-	db $4F
-	db $FF
-	db $FF
-	db $49
-	db $48
-	db $FF
-	db $FF
-	db $4B
-	db $4A
-	db $FF
-	db $FF
-	db $4D
-	db $4C
-	db $FF
-	db $FF
-	db $4F
-	db $4E
+	.byte $FF
+	.byte $48
+	.byte $49
+	.byte $FF
+	.byte $FF
+	.byte $4A
+	.byte $4B
+	.byte $FF
+	.byte $FF
+	.byte $4C
+	.byte $4D
+	.byte $FF
+	.byte $FF
+	.byte $4E
+	.byte $4F
+	.byte $FF
+	.byte $FF
+	.byte $49
+	.byte $48
+	.byte $FF
+	.byte $FF
+	.byte $4B
+	.byte $4A
+	.byte $FF
+	.byte $FF
+	.byte $4D
+	.byte $4C
+	.byte $FF
+	.byte $FF
+	.byte $4F
+	.byte $4E
 ; ofs_A7CC: (Unused?)
-	db $FF
-	db $FF
-	db $50
-	db $51
-	db $FF
-	db $FF
-	db $52
-	db $53
-	db $FF
-	db $FF
-	db $54
-	db $55
-	db $FF
-	db $FF
-	db $56
-	db $3A
-	db $FF
-	db $FF
-	db $51
-	db $50
-	db $FF
-	db $FF
-	db $53
-	db $52
-	db $FF
-	db $FF
-	db $55
-	db $54
-	db $FF
-	db $FF
-	db $3A
-	db $56
-	db $FF
+	.byte $FF
+	.byte $FF
+	.byte $50
+	.byte $51
+	.byte $FF
+	.byte $FF
+	.byte $52
+	.byte $53
+	.byte $FF
+	.byte $FF
+	.byte $54
+	.byte $55
+	.byte $FF
+	.byte $FF
+	.byte $56
+	.byte $3A
+	.byte $FF
+	.byte $FF
+	.byte $51
+	.byte $50
+	.byte $FF
+	.byte $FF
+	.byte $53
+	.byte $52
+	.byte $FF
+	.byte $FF
+	.byte $55
+	.byte $54
+	.byte $FF
+	.byte $FF
+	.byte $3A
+	.byte $56
+	.byte $FF
 ofs_A7EC:
-	db $FF
-	db $48
-	db $59
-	db $FF
-	db $FF
-	db $5A
-	db $5B
-	db $FF
-	db $7F
-	db $5C
-	db $5D
-	db $FF
-	db $FF
-	db $5E
-	db $5F
-	db $FF
-	db $FF
-	db $59
-	db $48
-	db $FF
-	db $FF
-	db $5B
-	db $5A
-	db $FF
-	db $FF
-	db $5D
-	db $5C
-	db $7F
-	db $FF
-	db $5F
-	db $5E
-	db $FF
+	.byte $FF
+	.byte $48
+	.byte $59
+	.byte $FF
+	.byte $FF
+	.byte $5A
+	.byte $5B
+	.byte $FF
+	.byte $7F
+	.byte $5C
+	.byte $5D
+	.byte $FF
+	.byte $FF
+	.byte $5E
+	.byte $5F
+	.byte $FF
+	.byte $FF
+	.byte $59
+	.byte $48
+	.byte $FF
+	.byte $FF
+	.byte $5B
+	.byte $5A
+	.byte $FF
+	.byte $FF
+	.byte $5D
+	.byte $5C
+	.byte $7F
+	.byte $FF
+	.byte $5F
+	.byte $5E
+	.byte $FF
 ofs_A80C:
-	db $FF
-	db $60
-	db $61
-	db $FF
-	db $FF
-	db $62
-	db $63
-	db $FF
-	db $FF
-	db $64
-	db $65
-	db $FF
-	db $FF
-	db $66
-	db $67
-	db $FF
-	db $FF
-	db $61
-	db $60
-	db $FF
-	db $FF
-	db $63
-	db $62
-	db $FF
-	db $FF
-	db $65
-	db $64
-	db $FF
-	db $FF
-	db $67
-	db $66
-	db $FF
+	.byte $FF
+	.byte $60
+	.byte $61
+	.byte $FF
+	.byte $FF
+	.byte $62
+	.byte $63
+	.byte $FF
+	.byte $FF
+	.byte $64
+	.byte $65
+	.byte $FF
+	.byte $FF
+	.byte $66
+	.byte $67
+	.byte $FF
+	.byte $FF
+	.byte $61
+	.byte $60
+	.byte $FF
+	.byte $FF
+	.byte $63
+	.byte $62
+	.byte $FF
+	.byte $FF
+	.byte $65
+	.byte $64
+	.byte $FF
+	.byte $FF
+	.byte $67
+	.byte $66
+	.byte $FF
 ofs_A82C:
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $78
-	db $79
-	db $FF
-	db $FF
-	db $7A
-	db $7B
-	db $FF
-	db $FF
-	db $7C
-	db $7D
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $FF
-	db $79
-	db $78
-	db $FF
-	db $FF
-	db $7B
-	db $7A
-	db $FF
-	db $FF
-	db $7D
-	db $7C
-	db $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $78
+	.byte $79
+	.byte $FF
+	.byte $FF
+	.byte $7A
+	.byte $7B
+	.byte $FF
+	.byte $FF
+	.byte $7C
+	.byte $7D
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $79
+	.byte $78
+	.byte $FF
+	.byte $FF
+	.byte $7B
+	.byte $7A
+	.byte $FF
+	.byte $FF
+	.byte $7D
+	.byte $7C
+	.byte $FF
 ofs_A84C:
-	db $FF
-	db $70
-	db $71
-	db $FF
-	db $FF
-	db $72
-	db $73
-	db $FF
-	db $FF
-	db $74
-	db $75
-	db $FF
-	db $FF
-	db $76
-	db $77
-	db $FF
-	db $FF
-	db $71
-	db $70
-	db $FF
-	db $FF
-	db $73
-	db $72
-	db $FF
-	db $FF
-	db $75
-	db $74
-	db $FF
-	db $FF
-	db $77
-	db $76
-	db $FF
+	.byte $FF
+	.byte $70
+	.byte $71
+	.byte $FF
+	.byte $FF
+	.byte $72
+	.byte $73
+	.byte $FF
+	.byte $FF
+	.byte $74
+	.byte $75
+	.byte $FF
+	.byte $FF
+	.byte $76
+	.byte $77
+	.byte $FF
+	.byte $FF
+	.byte $71
+	.byte $70
+	.byte $FF
+	.byte $FF
+	.byte $73
+	.byte $72
+	.byte $FF
+	.byte $FF
+	.byte $75
+	.byte $74
+	.byte $FF
+	.byte $FF
+	.byte $77
+	.byte $76
+	.byte $FF
 ofs_A86C:
 	.word ofs_A87E
 	.word ofs_A6FA
@@ -1765,104 +1765,104 @@ ofs_A86C:
 	.word ofs_A75A
 	.word ofs_A77A
 ofs_A87E:
-	db $FF
-	db $A1
-	db $A2
-	db $FF
-	db $FF
-	db $A3
-	db $A4
-	db $FF
-	db $FF
-	db $A5
-	db $80
-	db $B1
-	db $FF
-	db $A8
-	db $BF
-	db $B2
-	db $FF
-	db $A2
-	db $A1
-	db $FF
-	db $FF
-	db $A4
-	db $A3
-	db $FF
-	db $B1
-	db $80
-	db $A5
-	db $FF
-	db $B2
-	db $BF
-	db $A8
-	db $FF
+	.byte $FF
+	.byte $A1
+	.byte $A2
+	.byte $FF
+	.byte $FF
+	.byte $A3
+	.byte $A4
+	.byte $FF
+	.byte $FF
+	.byte $A5
+	.byte $80
+	.byte $B1
+	.byte $FF
+	.byte $A8
+	.byte $BF
+	.byte $B2
+	.byte $FF
+	.byte $A2
+	.byte $A1
+	.byte $FF
+	.byte $FF
+	.byte $A4
+	.byte $A3
+	.byte $FF
+	.byte $B1
+	.byte $80
+	.byte $A5
+	.byte $FF
+	.byte $B2
+	.byte $BF
+	.byte $A8
+	.byte $FF
 ofs_A89E:
-	db $FF
-	db $A1
-	db $A2
-	db $FF
-	db $FF
-	db $B3
-	db $B4
-	db $FF
-	db $B9
-	db $B5
-	db $80
-	db $B1
-	db $FF
-	db $B7
-	db $BF
-	db $B2
-	db $FF
-	db $A2
-	db $A1
-	db $FF
-	db $FF
-	db $B4
-	db $B3
-	db $FF
-	db $B1
-	db $80
-	db $B5
-	db $B9
-	db $B2
-	db $BF
-	db $B7
-	db $FF
+	.byte $FF
+	.byte $A1
+	.byte $A2
+	.byte $FF
+	.byte $FF
+	.byte $B3
+	.byte $B4
+	.byte $FF
+	.byte $B9
+	.byte $B5
+	.byte $80
+	.byte $B1
+	.byte $FF
+	.byte $B7
+	.byte $BF
+	.byte $B2
+	.byte $FF
+	.byte $A2
+	.byte $A1
+	.byte $FF
+	.byte $FF
+	.byte $B4
+	.byte $B3
+	.byte $FF
+	.byte $B1
+	.byte $80
+	.byte $B5
+	.byte $B9
+	.byte $B2
+	.byte $BF
+	.byte $B7
+	.byte $FF
 ofs_A8BE:
-	db $FF
-	db $E1
-	db $E2
-	db $FF
-	db $FF
-	db $E3
-	db $E4
-	db $FF
-	db $FF
-	db $E5
-	db $F9
-	db $FB
-	db $FF
-	db $E7
-	db $FA
-	db $FC
-	db $FF
-	db $E2
-	db $E1
-	db $FF
-	db $FF
-	db $E4
-	db $E3
-	db $FF
-	db $FB
-	db $F9
-	db $E5
-	db $FF
-	db $FC
-	db $FA
-	db $E7
-	db $FF
+	.byte $FF
+	.byte $E1
+	.byte $E2
+	.byte $FF
+	.byte $FF
+	.byte $E3
+	.byte $E4
+	.byte $FF
+	.byte $FF
+	.byte $E5
+	.byte $F9
+	.byte $FB
+	.byte $FF
+	.byte $E7
+	.byte $FA
+	.byte $FC
+	.byte $FF
+	.byte $E2
+	.byte $E1
+	.byte $FF
+	.byte $FF
+	.byte $E4
+	.byte $E3
+	.byte $FF
+	.byte $FB
+	.byte $F9
+	.byte $E5
+	.byte $FF
+	.byte $FC
+	.byte $FA
+	.byte $E7
+	.byte $FF
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ; CAPE CODE START
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-	
@@ -2271,18 +2271,18 @@ loc4_AB16:
 bra4_AB2D:
 	JMP loc4_A96C ; jump to check for Yoshi
 standingCapeCycle:
-	db $07
-	db $07
-	db $07
-	db $07
-	db $07
-	db $07
-	db $07
-	db $08
-	db $08
-	db $08
-	db $08
-	db $80 ; end of mapping (negative)
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $80 ; end of mapping (negative)
 	
 ; ******************************************************************
 ; Jumping cape cycle code
@@ -2303,35 +2303,35 @@ bra4_AB52:
 	JMP loc4_A96C ; jump to check for Yoshi 
 
 jumpCapeCycle:
-	db $08
-	db $08
-	db $07
-	db $07
-	db $01
-	db $01
-	db $02
-	db $02
-	db $00
-	db $00
-	db $80
+	.byte $08
+	.byte $08
+	.byte $07
+	.byte $07
+	.byte $01
+	.byte $01
+	.byte $02
+	.byte $02
+	.byte $00
+	.byte $00
+	.byte $80
 ;--------------------
 walkCapeCycle: 
-	db $08
-	db $08
-	db $08
-	db $07
-	db $07
-	db $07
-	db $01
-	db $01
-	db $01
-	db $02
-	db $02
-	db $02
-	db $00
-	db $00
-	db $00
-	db $80
+	.byte $08
+	.byte $08
+	.byte $08
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $80
 ;--------------------
 
 loc4_AB70:
@@ -2363,16 +2363,16 @@ bra4_ABA1:
 bra4_ABA3:
 	JMP loc4_A96C ; jump to check for Yoshi 
 fallingCapeCycle:
-	db $04
-	db $04
-	db $04
-	db $05
-	db $05
-	db $05
-	db $03
-	db $03
-	db $03
-	db $80
+	.byte $04
+	.byte $04
+	.byte $04
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $80
 ; ******************************************************************	
 loc4_ABB0:
 	LDA #$00
@@ -2393,129 +2393,129 @@ bra4_ABCC:
 	TYA
 	JMP loc4_A96C ; jump to check for Yoshi 
 capeAnimTable:
-	db $80 ; standing
-	db $05 ; walking
-	db $01 ; running
-	db $01 ; unused
-	db $03 ; jump
-	db $04 ; spinning
-	db $80 ; unused
-	db $80 ; ducking
-	db $80 ; looking up
-	db $01 ; leap
-	db $03 ; falling	
-	db $03 ; falling (underwater)
-	db $01 ; swimming
-	db $82	
-	db $82
-	db $01 ; flying
-	db $80 ; victory pose
+	.byte $80 ; standing
+	.byte $05 ; walking
+	.byte $01 ; running
+	.byte $01 ; unused
+	.byte $03 ; jump
+	.byte $04 ; spinning
+	.byte $80 ; unused
+	.byte $80 ; ducking
+	.byte $80 ; looking up
+	.byte $01 ; leap
+	.byte $03 ; falling	
+	.byte $03 ; falling (underwater)
+	.byte $01 ; swimming
+	.byte $82	
+	.byte $82
+	.byte $01 ; flying
+	.byte $80 ; victory pose
 YoshicapeAnimTable:
-	db $80 ; standing
-	db $05 ; walking
-	db $01 ; running
-	db $01 ; unused
-	db $03 ; jump
-	db $04 ; spinning
-	db $01 ; unused
-	db $80 ; ducking
-	db $80 ; looking up
-	db $01 ; leap
-	db $03 ; falling
-	db $03 ; falling (underwater)
-	db $01 ; swimming
-	db $01 ; yoshi tongue out
-	db $01 ; yoshi tongue out (while moving)
-	db $01 ; flying
-	db $80 ; victory pose
+	.byte $80 ; standing
+	.byte $05 ; walking
+	.byte $01 ; running
+	.byte $01 ; unused
+	.byte $03 ; jump
+	.byte $04 ; spinning
+	.byte $01 ; unused
+	.byte $80 ; ducking
+	.byte $80 ; looking up
+	.byte $01 ; leap
+	.byte $03 ; falling
+	.byte $03 ; falling (underwater)
+	.byte $01 ; swimming
+	.byte $01 ; yoshi tongue out
+	.byte $01 ; yoshi tongue out (while moving)
+	.byte $01 ; flying
+	.byte $80 ; victory pose
 capeVoffset2:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $06
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $06
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
 tbl4_AC03: ; Cape column spacing table
-	db $00 ; tile 1
-	db $08 ; tile 2
-	db $00 ; tile 3
-	db $08 ; tile 4
+	.byte $00 ; tile 1
+	.byte $08 ; tile 2
+	.byte $00 ; tile 3
+	.byte $08 ; tile 4
 tbl4_AC07: ; Cape row spacing table
-	db $00 ; tile 1
-	db $00 ; tile 2
-	db $08 ; tile 3
-	db $08 ; tile 4
+	.byte $00 ; tile 1
+	.byte $00 ; tile 2
+	.byte $08 ; tile 3
+	.byte $08 ; tile 4
 CapeVoffset: ; Cape vertical alignment table (Mario only)
-	db $11
-	db $19
-	db $11
-	db $1E
-	db $1E
-	db $1E
-	db $1E
-	db $19
-	db $17
+	.byte $11
+	.byte $19
+	.byte $11
+	.byte $1E
+	.byte $1E
+	.byte $1E
+	.byte $1E
+	.byte $19
+	.byte $17
 CapeVoffsetYoshi: ; Cape vertical alignment table (Mario riding Yoshi)
-	db $1B
-	db $23
-	db $1B
-	db $29
-	db $29
-	db $29
-	db $29
-	db $23
-	db $21
+	.byte $1B
+	.byte $23
+	.byte $1B
+	.byte $29
+	.byte $29
+	.byte $29
+	.byte $29
+	.byte $23
+	.byte $21
 tbl4_AC1D: ; Cape X position offset for face right
-	db $EE
-	db $EE
-	db $EE
-	db $EF
-	db $EF
-	db $EF
-	db $EF
-	db $EE
-	db $EE
+	.byte $EE
+	.byte $EE
+	.byte $EE
+	.byte $EF
+	.byte $EF
+	.byte $EF
+	.byte $EF
+	.byte $EE
+	.byte $EE
 tbl4_AC26: ; Cape X position offset for face left
-	db $02
-	db $02
-	db $02
-	db $01
-	db $01
-	db $01
-	db $01
-	db $02
-	db $02
+	.byte $02
+	.byte $02
+	.byte $02
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $01
+	.byte $02
+	.byte $02
 tbl4_AC2F:
-	db $EA
-	db $EA
-	db $EA
-	db $ED
-	db $ED
-	db $ED
-	db $ED
-	db $EA
-	db $EA
+	.byte $EA
+	.byte $EA
+	.byte $EA
+	.byte $ED
+	.byte $ED
+	.byte $ED
+	.byte $ED
+	.byte $EA
+	.byte $EA
 tbl4_AC38:
-	db $06
-	db $06
-	db $06
-	db $03
-	db $03
-	db $03
-	db $03
-	db $06
-	db $06
+	.byte $06
+	.byte $06
+	.byte $06
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $03
+	.byte $06
+	.byte $06
 tbl4_AC41: ; (Redundant?) table that just points to the cape mapping selection table
 	.word CapeMappingTbl
 	.word CapeMappingTbl
@@ -2534,95 +2534,95 @@ CapeMappingTbl: ; Cape mapping selection table 1
 	.word CapeSettle2
 ; Cape mappings 
 CapeFlap1: ; flapping 1
-	db $01
-	db $02
-	db $03
-	db $04
+	.byte $01
+	.byte $02
+	.byte $03
+	.byte $04
 ; Mirrored version	
-	db $02
-	db $01
-	db $04
-	db $03
+	.byte $02
+	.byte $01
+	.byte $04
+	.byte $03
 CapeFlap2: ; flapping 2
-	db $05
-	db $06
-	db $07
-	db $08
+	.byte $05
+	.byte $06
+	.byte $07
+	.byte $08
 ; Mirrored version	
-	db $06
-	db $05
-	db $08
-	db $07
+	.byte $06
+	.byte $05
+	.byte $08
+	.byte $07
 CapeFlap3: ; flapping 3
-	db $0B
-	db $0C
-	db $FF
-	db $FF
+	.byte $0B
+	.byte $0C
+	.byte $FF
+	.byte $FF
 ; Mirrored version	
-	db $0C
-	db $0B
-	db $FF
-	db $FF
+	.byte $0C
+	.byte $0B
+	.byte $FF
+	.byte $FF
 CapeFall1: ; Falling 1
-	db $0D
-	db $0E
-	db $0F
-	db $10
+	.byte $0D
+	.byte $0E
+	.byte $0F
+	.byte $10
 ; Mirrored version	
-	db $0E
-	db $0D
-	db $10
-	db $0F
+	.byte $0E
+	.byte $0D
+	.byte $10
+	.byte $0F
 CapeFall2: ; Falling 2
-	db $11
-	db $12
-	db $13
-	db $14
+	.byte $11
+	.byte $12
+	.byte $13
+	.byte $14
 ; Mirrored version	
-	db $12
-	db $11
-	db $14
-	db $13
+	.byte $12
+	.byte $11
+	.byte $14
+	.byte $13
 CapeFall3: ; Falling 3
-	db $15
-	db $16
-	db $17
-	db $18
+	.byte $15
+	.byte $16
+	.byte $17
+	.byte $18
 ; Mirrored version	
-	db $16
-	db $15
-	db $18
-	db $17
+	.byte $16
+	.byte $15
+	.byte $18
+	.byte $17
 CapeFall4: ; Falling 4
-	db $19
-	db $1A
-	db $1B
-	db $1C
+	.byte $19
+	.byte $1A
+	.byte $1B
+	.byte $1C
 ; Mirrored version	
-	db $1A
-	db $19
-	db $1C
-	db $1B
+	.byte $1A
+	.byte $19
+	.byte $1C
+	.byte $1B
 CapeFlap4: ; flapping 4 (frame 1 of settling)
-	db $FF
-	db $1D
-	db $09
-	db $0A
+	.byte $FF
+	.byte $1D
+	.byte $09
+	.byte $0A
 ; Mirrored version	
-	db $1D
-	db $FF
-	db $0A
-	db $09
+	.byte $1D
+	.byte $FF
+	.byte $0A
+	.byte $09
 CapeSettle2: ; settle frame 2
-	db $20
-	db $FF
-	db $1E
-	db $1F
+	.byte $20
+	.byte $FF
+	.byte $1E
+	.byte $1F
 ; Mirrored version		
-	db $FF
-	db $20
-	db $1F
-	db $1E
+	.byte $FF
+	.byte $20
+	.byte $1F
+	.byte $1E
 ;--------------------
 
 jmp_57_ACA5: 
@@ -2877,10 +2877,10 @@ bra4_AE45:
 playerItemBoxLogicDone:
 	RTS
 playerItemBoxSFX:
-	db $00 ; Empty
-	db SFX_POWERUP ; Mushroom
-	db SFX_POWERUP ; Flower
-	db SFX_FEATHER ; Feather
+	.byte $00 ; Empty
+	.byte SFX_POWERUP ; Mushroom
+	.byte SFX_POWERUP ; Flower
+	.byte SFX_FEATHER ; Feather
 ofs_AE4F:
 	LDA playerPowerup
 	CMP #$03
@@ -4771,40 +4771,40 @@ loc4_BAD0_RTS:
 ; ***************************************************************
 playerXSpdVecs: ; X speed table
 ; the higher the playerXSpd, the further through the table you can move
-	db $00
-	db $01
-	db $02
-	db $03
-	db $04
-	db $05
-	db $06
-	db $07
-	db $07
-	db $07
-	db $07
-	db $07
-	db $07
-	db $07
-	db $07
-	db $07
+	.byte $00
+	.byte $01
+	.byte $02
+	.byte $03
+	.byte $04
+	.byte $05
+	.byte $06
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
+	.byte $07
 
 playerYSpdVecs:
-	db $01
-	db $01
-	db $02
-	db $03
-	db $04
-	db $05
-	db $05
-	db $05
-	db $05
-	db $05
-	db $05
-	db $05
-	db $05
-	db $05
-	db $05
-	db $05
+	.byte $01
+	.byte $01
+	.byte $02
+	.byte $03
+	.byte $04
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ; 
 ;-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
@@ -4977,39 +4977,39 @@ bra4_BC16: ; affects movement between horizontal screens
 	STA playerYHiDup
 	RTS
 tbl4_BC2F:
-	db $05
-	db $05
-	db $05
-	db $05
-	db $05
-	db $05
-	db $05
-	db $05
-	db $00
-	db $05
-	db $05
-	db $05
-	db $05
-	db $08
-	db $05
-	db $05
-	db $05
-	db $05
-	db $05
-	db $05
-	db $05
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $05
-	db $0A
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $00
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $08
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $05
+	.byte $0A
 sub4_BC50:
 	LDY #$10
 	LDA playerPowerup ; if player is small,
@@ -5228,22 +5228,22 @@ bra4_BEAE:
 	STA playerState ; set action to 'climbing'
 	RTS
 tbl4_BEC5: ; Vertical collision table for stage objects?? seems to affect collision with objects from below when jumping
-	db $01
-	db $01
-	db $00
-	db $01
-	db $00
-	db $01
-	db $00
-	db $00
-	db $01
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
+	.byte $01
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $01
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
 loc4_BED5: ; Player bumped head on ceiling
 	LDA playerMoveFlags ; 
 	AND #$04 ; if player isn't moving up,
@@ -5325,8 +5325,8 @@ sub4_BF59:
 bra4_BF5F_RTS:
 	RTS
 	TSX
-	db $AB
-	db $04
+	.byte $AB
+	.byte $04
 	STA objFlags,X
 	LDA #$00
 	STA objVar,X

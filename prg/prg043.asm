@@ -1,43 +1,43 @@
 ; disassembled by BZK 6502 Disassembler
 .incbin tilesets/ts_Bonus.bin
-	db $18
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $19
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $BE
-	db $BC
+	.byte $18
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $19
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $BE
+	.byte $BC
 	LDA #$00
 	STA objFlags,X
 	STA objVar,X
@@ -49,44 +49,44 @@
 	SEC
 	SBC playerXLoDup
 	STA objXDistLo,X
-	db $BD
-	db $18
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $19
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $10
+	.byte $BD
+	.byte $18
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $19
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $10
 	CMP objYHi,X
 	BEQ bra3_8694 ; not sure why its jumping to blank data
 	LDA objYDistHi,X
@@ -98,44 +98,44 @@
 	LDA objYDistHi,X
 	ADC #$00
 	STA objYDistHi,X
-	db $18
-	db $00
-	db $00
+	.byte $18
+	.byte $00
+	.byte $00
 bra3_8683:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $19
-	db $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $19
+	.byte $00
 bra3_8694:
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
 ; Everything below here is (probably) duplicate padding garbage, so it can be ignored.
 	LDA tbl3_86B1,Y
 	STA $32
@@ -143,55 +143,55 @@ bra3_8694:
 	STA $33
 	JMP ($32)
 tbl3_86B1:
-	db $E9
+	.byte $E9
 tbl3_86B2:
-	db $86
-	db $B5
-	db $86
-	db $A0
-	db $00
+	.byte $86
+	.byte $B5
+	.byte $86
+	.byte $A0
+	.byte $00
 	LDA objSlot,X
 	CMP #$E6
 	BCC bra3_86C0
 	LDY #$02
 bra3_86C0:
-	db $18
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $19
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $12
+	.byte $18
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $19
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $12
 	JSR getMovementData
 	RTS
 	JSR sub3_B057
@@ -332,40 +332,40 @@ bra3_87EE:
 	STA objYDistHi,X
 bra3_87FF:
 loc3_87FF:
-	db $AD
+	.byte $AD
 .incbin tilesets/ts_Bonus.bin
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
-	db $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
+	.byte $00
 	ADC objYLo,X
 	STA objYLo,X
 	BCS bra3_8E2C
@@ -478,57 +478,57 @@ bra3_8EEE:
 	JSR jmp_54_A118
 	RTS
 tbl3_8EFC:
-	db $00
+	.byte $00
 tbl3_8EFD:
-	db $8F
-	db $17
-	db $8F
-	db $04
-	db $05
-	db $E3
-	db $FF
-	db $C0
-	db $C1
-	db $FF
-	db $FF
-	db $CB
-	db $CC
-	db $CD
-	db $FF
-	db $DA
-	db $DB
-	db $DC
-	db $E3
-	db $E4
-	db $E5
-	db $E6
-	db $FF
-	db $E9
-	db $EA
-	db $FF
-	db $04
-	db $05
-	db $E3
-	db $FF
-	db $C0
-	db $C1
-	db $FF
-	db $FF
-	db $CE
-	db $CF
-	db $CD
-	db $FF
-	db $DA
-	db $DB
-	db $DC
-	db $E3
-	db $E4
-	db $E5
-	db $E6
-	db $FF
-	db $E9
-	db $EA
-	db $FF
+	.byte $8F
+	.byte $17
+	.byte $8F
+	.byte $04
+	.byte $05
+	.byte $E3
+	.byte $FF
+	.byte $C0
+	.byte $C1
+	.byte $FF
+	.byte $FF
+	.byte $CB
+	.byte $CC
+	.byte $CD
+	.byte $FF
+	.byte $DA
+	.byte $DB
+	.byte $DC
+	.byte $E3
+	.byte $E4
+	.byte $E5
+	.byte $E6
+	.byte $FF
+	.byte $E9
+	.byte $EA
+	.byte $FF
+	.byte $04
+	.byte $05
+	.byte $E3
+	.byte $FF
+	.byte $C0
+	.byte $C1
+	.byte $FF
+	.byte $FF
+	.byte $CE
+	.byte $CF
+	.byte $CD
+	.byte $FF
+	.byte $DA
+	.byte $DB
+	.byte $DC
+	.byte $E3
+	.byte $E4
+	.byte $E5
+	.byte $E6
+	.byte $FF
+	.byte $E9
+	.byte $EA
+	.byte $FF
 	LDX $A4
 	LDA enemyAnimFrame,X
 	AND #$3F
@@ -556,119 +556,119 @@ bra3_8F4E:
 	STA $06E1
 	RTS
 tbl3_8F66:
-	db $76
+	.byte $76
 tbl3_8F67:
-	db $8F
-	db $82
-	db $8F
-	db $8E
-	db $8F
-	db $9A
-	db $8F
-	db $A6
-	db $8F
-	db $B2
-	db $8F
-	db $BE
-	db $8F
-	db $CA
-	db $8F
-	db $03
-	db $03
-	db $E3
-	db $C2
-	db $C3
-	db $C4
-	db $D0
-	db $D1
-	db $D2
-	db $DD
-	db $DE
-	db $DF
-	db $03
-	db $03
-	db $E1
-	db $51
-	db $52
-	db $53
-	db $5E
-	db $5F
-	db $60
-	db $FF
-	db $6C
-	db $6D
-	db $03
-	db $03
-	db $E1
-	db $54
-	db $55
-	db $FF
-	db $61
-	db $62
-	db $63
-	db $FF
-	db $6E
-	db $6F
-	db $03
-	db $03
-	db $E3
-	db $C5
-	db $FF
-	db $FF
-	db $C5
-	db $C5
-	db $FF
-	db $FF
-	db $C5
-	db $C5
-	db $03
-	db $03
-	db $E3
-	db $DD
-	db $DE
-	db $DF
-	db $D0
-	db $D1
-	db $D2
-	db $C2
-	db $C3
-	db $C4
-	db $03
-	db $03
-	db $E1
-	db $FF
-	db $6C
-	db $6D
-	db $5E
-	db $5F
-	db $60
-	db $51
-	db $52
-	db $53
-	db $03
-	db $03
-	db $E1
-	db $FF
-	db $6E
-	db $6F
-	db $61
-	db $62
-	db $63
-	db $54
-	db $55
-	db $FF
-	db $03
-	db $03
-	db $E3
-	db $FF
-	db $C5
-	db $C5
-	db $C5
-	db $C5
-	db $FF
-	db $C5
-	db $FF
-	db $FF
+	.byte $8F
+	.byte $82
+	.byte $8F
+	.byte $8E
+	.byte $8F
+	.byte $9A
+	.byte $8F
+	.byte $A6
+	.byte $8F
+	.byte $B2
+	.byte $8F
+	.byte $BE
+	.byte $8F
+	.byte $CA
+	.byte $8F
+	.byte $03
+	.byte $03
+	.byte $E3
+	.byte $C2
+	.byte $C3
+	.byte $C4
+	.byte $D0
+	.byte $D1
+	.byte $D2
+	.byte $DD
+	.byte $DE
+	.byte $DF
+	.byte $03
+	.byte $03
+	.byte $E1
+	.byte $51
+	.byte $52
+	.byte $53
+	.byte $5E
+	.byte $5F
+	.byte $60
+	.byte $FF
+	.byte $6C
+	.byte $6D
+	.byte $03
+	.byte $03
+	.byte $E1
+	.byte $54
+	.byte $55
+	.byte $FF
+	.byte $61
+	.byte $62
+	.byte $63
+	.byte $FF
+	.byte $6E
+	.byte $6F
+	.byte $03
+	.byte $03
+	.byte $E3
+	.byte $C5
+	.byte $FF
+	.byte $FF
+	.byte $C5
+	.byte $C5
+	.byte $FF
+	.byte $FF
+	.byte $C5
+	.byte $C5
+	.byte $03
+	.byte $03
+	.byte $E3
+	.byte $DD
+	.byte $DE
+	.byte $DF
+	.byte $D0
+	.byte $D1
+	.byte $D2
+	.byte $C2
+	.byte $C3
+	.byte $C4
+	.byte $03
+	.byte $03
+	.byte $E1
+	.byte $FF
+	.byte $6C
+	.byte $6D
+	.byte $5E
+	.byte $5F
+	.byte $60
+	.byte $51
+	.byte $52
+	.byte $53
+	.byte $03
+	.byte $03
+	.byte $E1
+	.byte $FF
+	.byte $6E
+	.byte $6F
+	.byte $61
+	.byte $62
+	.byte $63
+	.byte $54
+	.byte $55
+	.byte $FF
+	.byte $03
+	.byte $03
+	.byte $E3
+	.byte $FF
+	.byte $C5
+	.byte $C5
+	.byte $C5
+	.byte $C5
+	.byte $FF
+	.byte $C5
+	.byte $FF
+	.byte $FF
 	LDX $A4
 	LDA objXLo,X
 	SEC
@@ -691,7 +691,7 @@ bra3_8FF4:
 
 
 .incbin tilesets/ts_Bonus.bin
-	db $42
+	.byte $42
 	BCS bra3_960D
 	LDA #$0F
 	STA objSlot,Y
@@ -902,13 +902,13 @@ bra3_97CA:
 	STA $33
 	JMP ($32)
 tbl3_97DC:
-	db $E2
+	.byte $E2
 tbl3_97DD:
-	db $97
-	db $11
-	db $98
-	db $40
-	db $98
+	.byte $97
+	.byte $11
+	.byte $98
+	.byte $40
+	.byte $98
 	LDA objFrameCount
 	AND #$03
 	BNE bra3_97F6_RTS
@@ -923,5 +923,5 @@ bra3_97F7:
 	INC objVar,X
 	LDA #$20
 	STA $06E1
-	db $BD
+	.byte $BD
 .incbin tilesets/ts_Bonus.bin

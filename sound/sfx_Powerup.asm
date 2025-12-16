@@ -5,20 +5,20 @@ Powerup_Tri:
 	pitch $39
 	volenv $11
 	notelen 2
-	db G4, NRest, G4, NRest
+	.byte G4, NRest, G4, NRest
 	notelen 4
-	db G4
+	.byte G4
 	
 	notelen 2
-	db A4, NRest, A4, NRest
+	.byte A4, NRest, A4, NRest
 	notelen 4
-	db A4
+	.byte A4
 
 	notelen 2
-	db B4, NRest, B4, NRest
+	.byte B4, NRest, B4, NRest
 	notelen 4
-	db B4
-	db $FF
+	.byte B4
+	.byte $FF
 Powerup_Footer:
 	sfxtri Powerup_Tri
-	db $FF
+	.byte $FF

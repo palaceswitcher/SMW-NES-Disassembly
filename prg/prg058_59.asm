@@ -454,25 +454,25 @@ bra10_8816:
 bra10_881F_RTS:
 	RTS
 tbl10_8820:
-	db $03
-	db $00
-	db $06
-	db $09
-	db $0C
-	db $12
-	db $18
-	db $24
-	db $30
+	.byte $03
+	.byte $00
+	.byte $06
+	.byte $09
+	.byte $0C
+	.byte $12
+	.byte $18
+	.byte $24
+	.byte $30
 tbl10_8829:
-	db $02
-	db $03
-	db $04
-	db $06
-	db $08
-	db $0C
-	db $10
-	db $18
-	db $20
+	.byte $02
+	.byte $03
+	.byte $04
+	.byte $06
+	.byte $08
+	.byte $0C
+	.byte $10
+	.byte $18
+	.byte $20
 bra10_8832:
 	BNE bra10_883B
 	JSR sub10_8E20
@@ -1326,28 +1326,28 @@ tbl10_8E41:
 	.word empty_Footer
 	.word Ending_Footer
 empty_Footer:
-	db $00
+	.byte $00
 	.word unknownMusPtr
-	db $01
+	.byte $01
 	.word unknownMusPtr
-	db $02
+	.byte $02
 	.word unknownMusPtr
-	db $03
+	.byte $03
 	.word unknownMusPtr
-	db $04
+	.byte $04
 	.word unknownMusPtr
-	db $80
+	.byte $80
 	.word unknownMusPtr
-	db $81
+	.byte $81
 	.word unknownMusPtr
-	db $82
+	.byte $82
 	.word unknownMusPtr
-	db $83
+	.byte $83
 	.word unknownMusPtr
-	db $84
+	.byte $84
 	.word unknownMusPtr
 unknownMusPtr:
-	db $FF
+	.byte $FF
 notePitchTable:
 	.word $0000
 	.word $0000
