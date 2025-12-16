@@ -5,7 +5,7 @@ sub9_8000:
 	AND #%01111111
 	ASL
 	TAY
-	LDA objState,X
+	LDA objFlags,X
 	AND #%00100000
 	BNE bra9_8013
 	JMP loc9_80A2 ; Jump if goomba is moving up
@@ -36,14 +36,14 @@ bra9_803B:
 	STA objYHi,X
 	JSR sub3_B057
 	BEQ bra9_804B
-	LDA objState,X
+	LDA objFlags,X
 	EOR #$40
-	STA objState,X
+	STA objFlags,X
 bra9_804B:
 	LDY #$00
 	LDA ($32),Y
 	TAY
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BEQ bra9_805C
 	TYA
@@ -82,9 +82,9 @@ bra9_8078:
 	SBC #$10
 bra9_808E:
 	STA objYLo,X
-	LDA objState,X
+	LDA objFlags,X
 	AND #$C0
-	STA objState,X
+	STA objFlags,X
 	LDA objVar,X
 	AND #$80
 	STA objVar,X
@@ -96,9 +96,9 @@ loc9_80A2:
 	BMI bra9_80BD
 	JSR sub3_B077
 	BNE bra9_80BD
-	LDA objState,X
+	LDA objFlags,X
 	ORA #$20
-	STA objState,X
+	STA objFlags,X
 	LDA objVar,X
 	AND #$80
 	STA objVar,X
@@ -108,11 +108,11 @@ bra9_80BD:
 	DEY
 	JSR sub3_B057
 	BEQ bra9_80CB
-	LDA objState,X
+	LDA objFlags,X
 	EOR #$40
-	STA objState,X
+	STA objFlags,X
 bra9_80CB:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BEQ bra9_80DC
 	LDA ($32),Y
@@ -157,9 +157,9 @@ bra9_8112:
 	LDA ($32),Y
 	CMP #$FF
 	BNE bra9_8127
-	LDA objState,X
+	LDA objFlags,X
 	EOR #$40
-	STA objState,X
+	STA objFlags,X
 	JMP loc9_8145
 bra9_8127:
 	AND #$F0
@@ -237,7 +237,7 @@ loc9_81B7:
 	BEQ bra9_81BD
 	RTS
 bra9_81BD:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -262,10 +262,10 @@ ptr2_81D1:
 	LDY #$40
 bra9_81EB:
 	STY $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 	ORA $25
-	STA objState,X
+	STA objFlags,X
 	LDA #$01
 	STA objVar,X
 bra9_81FC:
@@ -379,7 +379,7 @@ bra9_82D4:
 	BEQ bra9_82E1
 	LDY #$01
 bra9_82E1:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 	TYA
@@ -523,7 +523,7 @@ loc9_8408:
 	BEQ bra9_840E
 	RTS
 bra9_840E:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -543,10 +543,10 @@ ptr2_842C:
 	LDA objXDistHi,X
 	EOR #$40
 	STA $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 	ORA $25
-	STA objState,X
+	STA objFlags,X
 	JSR sub9_84FE
 	JSR sub3_B077
 	BEQ bra9_8448
@@ -732,7 +732,7 @@ bra9_85E0:
 	objDistCalc bra9_864A
 
 bra9_864A:
-	LDA objState,X
+	LDA objFlags,X
 	AND #%00011111
 	ASL
 	TAY
@@ -857,7 +857,7 @@ loc9_873A:
 	BEQ bra9_8740
 	RTS
 bra9_8740:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -950,10 +950,10 @@ loc9_87E8:
 	LDA objXDistHi,X
 	AND #$40
 	STA $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 	ORA $25
-	STA objState,X
+	STA objFlags,X
 bra9_880B_RTS:
 	RTS
 bra9_880C:
@@ -964,7 +964,7 @@ bra9_880C:
 	STA objVar,X
 	JMP obj0x94
 sub9_881D:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BEQ bra9_884C
 	LDA objFrameCount
@@ -979,12 +979,12 @@ sub9_881D:
 	STA $33
 	JSR sub9_8000
 bra9_883C:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BNE bra9_884B_RTS
-	LDA objState,X
+	LDA objFlags,X
 	AND #$F0
-	STA objState,X
+	STA objFlags,X
 bra9_884B_RTS:
 	RTS
 bra9_884C:
@@ -1047,7 +1047,7 @@ bra9_88A9:
 	BEQ bra9_88B6
 	LDY #$03
 bra9_88B6:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$C0
 	ORA #$80
 	STA $05F0
@@ -1076,7 +1076,7 @@ ptr6_88E0:
 	BEQ bra9_88ED
 	LDY #$01
 bra9_88ED:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$C0
 	STA $05F0
 	TYA
@@ -1240,7 +1240,7 @@ loc9_8A12:
 	BEQ bra9_8A18
 	RTS
 bra9_8A18:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -1439,7 +1439,7 @@ loc9_8B8B:
 	BEQ bra9_8B91
 	RTS
 bra9_8B91:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -1489,7 +1489,7 @@ bra9_8BB6:
 	RTS
 ptr6_8BF1:
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 	LDA #$00
@@ -1519,10 +1519,10 @@ sprMap_BulletBill:
 	.byte $2C, $2D
 	LDY #$00
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$C0
 	STA $05F0
-	LDA objState,X
+	LDA objFlags,X
 	BPL bra9_8C38
 	LDY #$01
 bra9_8C38:
@@ -1614,7 +1614,7 @@ loc9_8CDA:
 	BEQ bra9_8CE0
 	RTS
 bra9_8CE0:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -1881,7 +1881,7 @@ loc9_8ECF:
 	BEQ bra9_8ED5
 	RTS
 bra9_8ED5:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -1917,7 +1917,7 @@ bra9_8F03:
 	RTS
 ptr6_8F15:
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 	LDY #$00
@@ -2085,7 +2085,7 @@ loc9_9053:
 	BEQ bra9_9059
 	RTS
 bra9_9059:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -2117,7 +2117,7 @@ bra9_907C:
 	JMP jmp_54_BF74
 ptr6_9093:
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 	LDY #$00
@@ -2271,7 +2271,7 @@ loc9_91B3:
 	BEQ bra9_91B9
 	RTS
 bra9_91B9:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -2349,10 +2349,10 @@ bra9_9247:
 	LDY #$40
 bra9_9250:
 	STY $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 	ORA $25
-	STA objState,X
+	STA objFlags,X
 	INC objVar,X
 bra9_925F_RTS:
 	RTS
@@ -2393,7 +2393,7 @@ bra9_9291:
 	LDA tbl9_92C3,Y
 	TAY
 bra9_929B:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 	TYA
@@ -2529,7 +2529,7 @@ bra9_936A:
 	SBC #$02
 	STA objSlot,X
 	LDA #$00
-	STA objState,X
+	STA objFlags,X
 	LDA #$80
 	STA objVar,X
 bra9_9384_RTS:
@@ -2567,7 +2567,7 @@ bra9_93A5:
 ptr6_93B7:
 	LDY #$00
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 	LDA objVar,X
@@ -2718,7 +2718,7 @@ loc9_94D4:
 	BEQ bra9_94DA
 	RTS
 bra9_94DA:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -2754,7 +2754,7 @@ bra9_9507:
 	RTS
 ptr6_9519:
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 	LDY #$00
@@ -3042,7 +3042,7 @@ loc9_9741:
 	BEQ bra9_9747
 	RTS
 bra9_9747:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -3195,7 +3195,7 @@ loc9_987B:
 	BEQ bra9_9881
 	RTS
 bra9_9881:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -3269,10 +3269,10 @@ bra9_9905:
 	LDY #$40
 bra9_990E:
 	STY $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 	ORA $25
-	STA objState,X
+	STA objFlags,X
 	INC objVar,X
 bra9_991D_RTS:
 	RTS
@@ -3310,12 +3310,12 @@ bra9_9925:
 	LDA objYHi,X
 	ADC #$00
 	STA objYHi,Y
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
-	STA objState,Y
+	STA objFlags,Y
 	LDA #$00
 	STA objVar,Y
-	STA objAction,Y
+	STA objState,Y
 	LDA objSlot,X
 	CLC
 	ADC #$04
@@ -3342,7 +3342,7 @@ bra9_9995:
 	BCS bra9_99A2
 	LDY #$02
 bra9_99A2:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 	TYA
@@ -3475,7 +3475,7 @@ bra9_9A63:
 	SBC #$06
 	STA objSlot,X
 	LDA #$00
-	STA objState,X
+	STA objFlags,X
 	LDA #$80
 	STA objVar,X
 bra9_9A86_RTS:
@@ -3483,7 +3483,7 @@ bra9_9A86_RTS:
 ptr7_9A87:
 	LDY #$00
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 	LDA objVar,X

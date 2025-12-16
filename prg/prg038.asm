@@ -40,10 +40,10 @@
 	db $BE
 	db $BC
 	LDA #$00 ; all of the code here is useless padding
-	STA objState,X
+	STA objFlags,X
 	STA objVar,X
 	LDA #$02
-	STA objAction,X
+	STA objState,X
 	RTS
 	LDX $A4
 	LDA objXLo,X
@@ -195,7 +195,7 @@ loc_86E9:
 	LDA objVar,X
 	AND #$80
 	STA objVar,X
-	INC objAction,X
+	INC objState,X
 	LDA #$E0
 	BMI bra14_8716
 	CLC
@@ -222,7 +222,7 @@ bra14_8716:
 bra14_8728:
 loc14_8728:
 	LDY #$08
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BNE bra14_8733
 	LDY #$F8
@@ -268,16 +268,16 @@ bra14_8770:
 	BNE bra14_8790
 	LDA invincibilityTimer
 	BNE bra14_8790
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
-	STA objState,X
+	STA objFlags,X
 	LDA objXDistHi,X
 	BMI bra14_8790
-	LDA objState,X
+	LDA objFlags,X
 	ORA #$40
-	STA objState,X
+	STA objFlags,X
 bra14_8790:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$C0
 	ORA $25
 	STA enemyAnimFrame,X
@@ -692,7 +692,7 @@ bra14_8FF4:
 	LDA #$0F
 	STA objSlot,Y
 	LDA #$00
-	STA objState,Y
+	STA objFlags,Y
 bra14_960D:
 	CPY objCount
 	BCC $95F7 ; Broken corrupted branch
@@ -727,8 +727,8 @@ bra14_9619:
 	LDA #$C4
 	STA enemyAnimFrame,Y
 	LDA #$00
-	STA objAction,Y
 	STA objState,Y
+	STA objFlags,Y
 	LDA objXLo,X
 	STA objXLo+1,Y
 	LDA objXHi,X
@@ -747,9 +747,9 @@ bra14_9619:
 	LDA #$40
 	STA enemyAnimFrame+1,Y
 	LDA #$01
-	STA objAction+1,Y
-	LDA #$00
 	STA objState+1,Y
+	LDA #$00
+	STA objFlags+1,Y
 	LDA objXLo,X
 	CLC
 	ADC #$20
@@ -771,9 +771,9 @@ bra14_9619:
 	LDA #$84
 	STA enemyAnimFrame+2,Y
 	LDA #$02
-	STA objAction+2,Y
-	LDA #$00
 	STA objState+2,Y
+	LDA #$00
+	STA objFlags+2,Y
 	LDA objXLo,X
 	CLC
 	ADC #$20
@@ -795,9 +795,9 @@ bra14_9619:
 	LDA #$00
 	STA enemyAnimFrame+3,Y
 	LDA #$03
-	STA objAction+3,Y
-	LDA #$00
 	STA objState+3,Y
+	LDA #$00
+	STA objFlags+3,Y
 	RTS
 loc14_970B_RTS:
 	RTS
@@ -823,9 +823,9 @@ loc14_970B_RTS:
 	LDA #$B8
 	STA objSlot,Y
 	LDA #$00
-	STA objState,Y
+	STA objFlags,Y
 	STA objVar,Y
-	STA objAction,Y
+	STA objState,Y
 	STA enemyAnimFrame,Y
 	LDA #$01
 	STA $06E6
@@ -889,7 +889,7 @@ loc14_97C4:
 	BEQ bra14_97CA
 	RTS
 bra14_97CA:
-	LDA objAction,X
+	LDA objState,X
 	ASL
 	TAY
 	LDA tbl14_97DC,Y
@@ -911,7 +911,7 @@ tbl14_97DD:
 	LDA objVar,X
 	CMP #$28
 	BCC bra14_97F7
-	INC objAction,X
+	INC objState,X
 	INC $05F7
 bra14_97F6_RTS:
 	RTS

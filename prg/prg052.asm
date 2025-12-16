@@ -145,7 +145,7 @@ jmp_52_A0F3:
 	LDX #$00
 bra2_A0F5:
 	STX $A4
-	LDA objAction,X
+	LDA objState,X
 	CMP #$F2
 	BEQ bra2_A102
 	CMP #$F3
@@ -159,7 +159,7 @@ bra2_A105:
 	BCC bra2_A0F5
 	RTS
 sub2_A10D:
-	LDA objAction,X
+	LDA objState,X
 	AND #$0F
 	STA $2D
 	JSR sub2_A5D0

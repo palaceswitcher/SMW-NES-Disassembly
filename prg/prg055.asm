@@ -49,7 +49,7 @@ objGenKoopa:
 	objDistCalc koopaGetFunction ; Only continue if the game isn't frozen
 
 koopaGetFunction:
-	LDA objState,X
+	LDA objFlags,X
 	AND #%00011111 ; Mask out upper 3 bits of object's state
 	ASL
 	TAY ; Get pointer index
@@ -88,13 +88,13 @@ koopaSpawnBeachKoopa:
 	LDA objYHi,X
 	STA objYHi,Y
 	
-	LDA objState,X
+	LDA objFlags,X
 	AND #%01000000 ; Spawn the Beach Koopa in the same direction
 	ORA #%10000000 ; Set bit 7 (unsure of what this does)
-	STA objState,Y
+	STA objFlags,Y
 	LDA #$80
 	STA objVar,Y ; Set speed to 128?
-	STA objAction,Y ; Spawn shell-less koopa sliding
+	STA objState,Y ; Spawn shell-less koopa sliding
 	LDA objSlot,X
 	AND #$01
 	CLC
@@ -103,7 +103,7 @@ koopaSpawnBeachKoopa:
 	LDA #OBJ_SHELL
 	STA objSlot,X ; Spawn a shell in place of the Koopa
 	LDA #$08
-	STA objState,X ; Make shell bounce off
+	STA objFlags,X ; Make shell bounce off
 	RTS
 
 ; Spawn a shell in place of the Koopa when hit
@@ -137,7 +137,7 @@ ptr6_820E:
 
 @continue:
 	STY $36 ; Set bank number
-	LDA objState,X
+	LDA objFlags,X
 	AND #%01000000
 	STA objAttrs ; Store object's horizontal direction
 	JSR jmp_52_A118 ; Render mapping data
@@ -294,7 +294,7 @@ objGenParatroopa:
 	objDistCalc paratroopa_GetFunction
 
 paratroopa_GetFunction:
-	LDA objState,X
+	LDA objFlags,X
 	AND #%00011111 ; Mask out upper 3 bits
 	ASL
 	TAY ; Get index for object's state
@@ -324,7 +324,7 @@ paratroopa_HitCheck:
 		ADC #OBJ_GREENKOOPA
 		STA objSlot,X ; Turn into green Koopa with same CHR slot
 		LDA #$00
-		STA objState,X ; Clear state
+		STA objFlags,X ; Clear state
 @stop:
 	RTS
 
@@ -355,7 +355,7 @@ rex_Init:
 	LDX $A4 ; Get index for object
 	objDistCalc rex_GetFunction
 rex_GetFunction:
-	LDA objState,X
+	LDA objFlags,X
 	AND #%00011111 ; Mask out upper 3 bits for function number
 	ASL
 	TAY ; Get function index
@@ -398,7 +398,7 @@ bra8_8596:
 		LDA #OBJ_POP
 		STA objSlot,X ; Make Rex pop
 		LDA #$00
-		STA objState,X ; Start at default function
+		STA objFlags,X ; Start at default function
 		JSR objStompReboundNoSFX ; Make player bounce off the Rex without playing a sound
 		RTS
 
@@ -413,7 +413,7 @@ bra8_8648:
 	INC objSlot,X
 	INC objSlot,X ; Make Rex squished
 	LDA #$00
-	STA objState,X ; Clear object's state
+	STA objFlags,X ; Clear object's state
 	JSR objStompRebound ; Make player bounce off the Rex
 	RTS
 
@@ -452,7 +452,7 @@ bra8_8667:
 
 bra8_8681:
 	STY $36
-	LDA objState,X
+	LDA objFlags,X
 	AND #%01000000
 	STA objAttrs ; Store object's horizontal direction
 	JSR jmp_54_A118
@@ -532,7 +532,7 @@ bra8_8730:
 	ADC #$02
 	STA objSlot,Y
 	LDA #$F3
-	STA objAction,Y
+	STA objState,Y
 	RTS
 bra8_8776:
 	LDA #$06
@@ -584,7 +584,7 @@ bra8_87DA:
 	BEQ bra8_87E0
 	RTS
 bra8_87E0:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -757,7 +757,7 @@ bra8_8979:
 		RTS
 
 @objectNotHit:
-	LDA objAction,X
+	LDA objState,X
 	BEQ bra8_89CF ; Branch if the Super Koopa is flying forward
 	CMP #$02
 	BEQ @handleVertSpeed ; Branch if it was killed
@@ -774,10 +774,10 @@ bra8_8979:
 	STA objYHi,Y ; Spawn in the same place as the Super Koopa
 	LDA #$00
 	STA objVar,Y
-	STA objState,Y
+	STA objFlags,Y
 	LDA #OBJ_FEATHER
 	STA objSlot,Y ; Spawn feather
-	INC objAction,X ; Set Super Koopa to "killed" state
+	INC objState,X ; Set Super Koopa to "killed" state
 	RTS
 
 @handleVertSpeed:
@@ -787,7 +787,7 @@ bra8_8979:
 bra8_89CF:
 	JSR objGenSuperKoopa
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #%00001111
 	CMP #$04
 	BNE bra8_89DE ; Stop if Super Koopa was defeated
@@ -819,7 +819,7 @@ objGenSuperKoopa:
 	objDistCalc superKoopaGetFunction
 
 superKoopaGetFunction:
-	LDA objState,X
+	LDA objFlags,X
 	AND #%00011111
 	ASL
 	TAY ; Get pointer index
@@ -844,12 +844,12 @@ superKoopaHitCheck:
 	LDY #$01 ; If the code has reached this point, the player must have hit the Super Koopa, so update its state accordingly
 	LDA objSlot,X
 	CMP #OBJ_SUPERKOOPA_JUMP
-	BCC @setobjState
+	BCC @setobjFlags
 		INY ; Skip feather spawning state if this Super Koopa doesn't have a feather
 
-@setobjState:
+@setobjFlags:
 	TYA
-	STA objAction,X ; Set object's state
+	STA objState,X ; Set object's state
 	LDA #$81
 	STA objVar,X ; Start using motion data as Y speed (high bit set)
 	RTS
@@ -902,7 +902,7 @@ bra8_8AC9:
 
 bra8_8AE3:
 	STY $36 ; Set bank number
-	LDA objState,X
+	LDA objFlags,X
 	AND #%01000000
 	STA objAttrs ; Store object's horizontal direction
 	JSR jmp_54_A118 ; Render mapping data
@@ -1014,7 +1014,7 @@ sprSuperKoopaDefeated:
 
 obj0x24:
 	LDX objLowerSlot ; Get the index for the current object slot
-	LDA objState,X
+	LDA objFlags,X
 	CMP #$04
 	BCS bra8_8BB3
 	LDA objFrameCount
@@ -1083,7 +1083,7 @@ loc8_8C17:
 	BEQ bra8_8C1D
 	RTS ; unlogged
 bra8_8C1D:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -1108,7 +1108,7 @@ ptr3_8C48:
 	LDA #$0F
 	STA objSlot,X
 	LDA #$00
-	STA objState,X
+	STA objFlags,X
 	RTS
 ;-----
 	
@@ -1158,18 +1158,18 @@ spawnLotusPollen:
 ;-----
 ; Initialize the pellet variables
 	LDA #$00
-	STA objState,Y
-	STA objState+1,Y
-	STA objState+2,Y
-	STA objState+3,Y
+	STA objFlags,Y
+	STA objFlags+1,Y
+	STA objFlags+2,Y
+	STA objFlags+3,Y
 	STA objVar,Y
 	STA $0579,Y
 	STA $057A,Y
 	STA $057B,Y
-	STA objAction,Y
-	STA objAction+1,Y
-	STA objAction+2,Y
-	STA objAction+3,Y
+	STA objState,Y
+	STA objState+1,Y
+	STA objState+2,Y
+	STA objState+3,Y
 	RTS
 ;----- (Stops)
 
@@ -1323,7 +1323,7 @@ loc8_8DB6:
 	BEQ bra8_8DBC
 	RTS ; unlogged
 bra8_8DBC:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -1357,7 +1357,7 @@ bra8_8DF1:
 	BCC bra8_8E04
 	LDA #$00
 	STA objSlot,X
-	STA objState,X
+	STA objFlags,X
 	STA objVar,X
 	RTS
 bra8_8E04:
@@ -1368,7 +1368,7 @@ bra8_8E04:
 ptr3_8E0E:
 	LDA #$00
 	STA objSlot,X
-	STA objState,X
+	STA objFlags,X
 	RTS
 ptr6_8E17:
 	LDY #$00
@@ -1539,7 +1539,7 @@ loc8_8F4D:
 	BEQ bra8_8F53
 	RTS ; unlogged
 bra8_8F53:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -1600,7 +1600,7 @@ bra8_8FAB:
 	LDY #$C0
 bra8_8FC5:
 	STY $36
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA objAttrs
 	JSR jmp_54_A118
@@ -1745,7 +1745,7 @@ loc8_90C7:
 	BEQ bra8_90CD
 	RTS
 bra8_90CD:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -1786,7 +1786,7 @@ bra8_910B:
 ptr6_9118:
 	LDY #$00
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$0F
 	CMP #$04
 	BNE bra8_912B
@@ -1794,7 +1794,7 @@ ptr6_9118:
 	LDA #$80
 	BNE bra8_9130
 bra8_912B:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 bra8_9130:
 	STA objAttrs
@@ -1921,17 +1921,17 @@ bra8_91FE:
 	JSR objFacePlayer
 	RTS
 loc8_9202:
-	LDA objAction,X
+	LDA objState,X
 	BNE bra8_920A
 	JMP loc8_9287
 bra8_920A:
 	CMP #$10
 	BCC bra8_9214
 	LDA #$00
-	STA objAction,X
+	STA objState,X
 	RTS
 bra8_9214:
-	INC objAction,X
+	INC objState,X
 	LDA frameCount
 	AND #$01
 	BNE bra8_9222
@@ -2037,7 +2037,7 @@ loc8_92EB:
 	BEQ bra8_92F1
 	RTS
 bra8_92F1:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -2073,9 +2073,9 @@ bra8_931A:
 	LDA #$00
 	STA $0641,X
 	STA objVar,X
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
-	STA objState,X
+	STA objFlags,X
 	RTS
 tbl8_9345:
 	.byte $02
@@ -2101,7 +2101,7 @@ ptr6_9349:
 	LDY #$C0
 bra8_936A:
 	STY $36
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA objAttrs
 loc8_9374:
@@ -2187,7 +2187,7 @@ obj0x3C:
 	ADC #$3A
 	STA objSlot,X
 	LDA #$00
-	STA objState,X
+	STA objFlags,X
 	STA objVar,X
 	STA $0641,X
 	LDA #$F8
@@ -2272,7 +2272,7 @@ loc8_9487:
 	BEQ bra8_948D
 	RTS ; unlogged
 bra8_948D:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -2355,8 +2355,8 @@ bra8_9529:
 	CMP #$05
 	BEQ bra8_9541
 bra8_9535:
-	INC objState,X
-	INC objState,X
+	INC objFlags,X
+	INC objFlags,X
 	LDA #$00
 	STA objVar,X
 	RTS
@@ -2376,19 +2376,19 @@ bra8_9541:
 	LDA #$0F
 	STA objSlot,X
 	LDA #$00
-	STA objState,X
+	STA objFlags,X
 	RTS
 ptr3_9564:
 	LDA objXDistHi,X
 	BPL bra8_9570
-	LDA objState,X
+	LDA objFlags,X
 	ORA #$40
 	BNE bra8_9575
 bra8_9570:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 bra8_9575:
-	STA objState,X
+	STA objFlags,X
 	LDA frameCount
 	AND #$00
 	BNE bra8_9583
@@ -2398,9 +2398,9 @@ bra8_9583:
 	LDA objVar,X
 	CMP #$07
 	BCC bra8_959B_RTS
-	LDA objState,X
+	LDA objFlags,X
 	AND #$E0
-	STA objState,X
+	STA objFlags,X
 	AND #$20
 	BNE bra8_959B_RTS
 	LDA #$00
@@ -2436,7 +2436,7 @@ bra8_95C6:
 	SEC
 	SBC #$1E
 	TAY
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	CMP #$05
 	BNE bra8_95DC
@@ -2460,14 +2460,14 @@ bra8_95DC:
 	LDY #$C0
 bra8_95F6:
 	STY $36
-	LDA objState,X
+	LDA objFlags,X
 	BPL bra8_960A
 	AND #$BF
 	STA $34
 	LDA playerMoveFlags
 	AND #$40
 	ORA $34
-	STA objState,X
+	STA objFlags,X
 bra8_960A:
 	AND #$40
 	STA objAttrs
@@ -2666,7 +2666,7 @@ bra8_9745:
 	CMP #$F0
 	BNE loc8_975A
 	LDA #$40
-	STA objState,X
+	STA objFlags,X
 	LDA #$00
 	STA enemyAnimFrame,X
 	STA objVar,X
@@ -2674,7 +2674,7 @@ bra8_9745:
 loc8_975A:
 	JSR sub8_97B6
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$0F
 	CMP #$04
 	BCC bra8_9769
@@ -2773,7 +2773,7 @@ loc8_981A:
 	BEQ bra8_9820
 	RTS ; unlogged
 bra8_9820:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -2797,7 +2797,7 @@ ptr3_983E:
 	LDA #$0F
 	STA objSlot,X
 	LDA #$00
-	STA objState,X
+	STA objFlags,X
 	RTS
 sub8_9856:
 	LDA #$0F
@@ -2805,10 +2805,10 @@ sub8_9856:
 	LDA #$08
 	JSR sub3_B7A2
 	BNE bra8_9871
-	LDA objAction,X
+	LDA objState,X
 	BEQ bra8_9870_RTS
 	LDA #$00
-	STA objAction,X
+	STA objState,X
 	LDA #$80
 	STA objVar,X
 bra8_9870_RTS:
@@ -2825,7 +2825,7 @@ bra8_9880:
 	LDA #$02
 	STA enemyAnimFrame,X
 	LDA #$01
-	STA objAction,X
+	STA objState,X
 	PLA
 	PLA
 	RTS
@@ -2882,7 +2882,7 @@ bra8_98F3:
 	CMP #$F0
 	BNE bra8_9908
 	LDA #$40
-	STA objState,X
+	STA objFlags,X
 	LDA #$00
 	STA enemyAnimFrame,X
 	STA objVar,X
@@ -2890,13 +2890,13 @@ bra8_98F3:
 bra8_9908:
 	JSR sub8_97B6
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$0F
 	CMP #$04
 	BCC bra8_9917
 	RTS
 bra8_9917:
-	LDA objAction,X
+	LDA objState,X
 	BNE bra8_9940
 	LDA frameCount
 	AND #$00
@@ -2913,7 +2913,7 @@ bra8_9927:
 	LDA #$80
 	STA objVar,X
 	LDA #$01
-	STA objAction,X
+	STA objState,X
 bra8_993F_RTS:
 	RTS
 bra8_9940:

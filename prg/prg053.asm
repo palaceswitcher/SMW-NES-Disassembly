@@ -565,7 +565,7 @@ bra7_83FB:
 	LDA #$00
 	STA objVar,X
 	LDA #$04
-	STA objState,X
+	STA objFlags,X
 	RTS
 bra7_840B:
 	LDA frameCount
@@ -751,7 +751,7 @@ loc7_8590:
 	BEQ bra7_8596 ; Branch if the game isn't freezed
 	RTS ; Otherwise, stop
 bra7_8596:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F ; Mask out lower 5 bits
 	ASL
 	TAY ; Get pointer index for status
@@ -885,7 +885,7 @@ ptr5_8695:
 	LDA #$04
 	JSR getMovementData
 bra7_86A0:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BEQ bra7_86F2_RTS
 	LDA objXDistHi,X
@@ -924,10 +924,10 @@ bra7_86E0:
 	SEC
 bra7_86E1:
 	BCS bra7_86F2_RTS
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	ORA #$04
-	STA objState,X
+	STA objFlags,X
 	LDA #$00
 	STA objVar,X
 bra7_86F2_RTS:
@@ -983,7 +983,7 @@ loc7_8757:
 	BEQ bra7_875D
 	RTS
 bra7_875D:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F ; Mask out the upper 3 bits, limiting it to $00 - $1F
 	ASL
 	TAY ; Get pointer for the object's current state
@@ -1072,10 +1072,10 @@ bra7_87FB:
 	LDA #$00
 	STA playerYSpd
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	CLC
 	ADC #$04
-	STA objState,X
+	STA objFlags,X
 bra7_881D_RTS:
 	RTS
 bra7_881E:
@@ -1214,7 +1214,7 @@ loc7_8925:
 	RTS
 bra7_892B:
 	LDX $A4
-	INC objState,X
+	INC objFlags,X
 	RTS
 ptr5_8931:
 	LDA frameCount
@@ -1283,7 +1283,7 @@ bra7_89B1:
 	LDA #$04
 	STA playerAction
 	LDX $A4
-	INC objState,X
+	INC objFlags,X
 	LDA #SFX_SWIM
 	STA sndSfx ; Play bounce sound
 	RTS
@@ -1342,10 +1342,10 @@ loc7_8A2A:
 	RTS
 bra7_8A30:
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$E0
 	ORA #$03
-	STA objState,X
+	STA objFlags,X
 	RTS
 obj0x44:
 	LDX $A4
@@ -1358,7 +1358,7 @@ obj0x44:
 	ADC #$42
 	STA objSlot,X
 	LDA #$00
-	STA objState,X
+	STA objFlags,X
 	STA objVar,X
 	STA playerHoldFlag
 	STA $0641,X
@@ -1420,7 +1420,7 @@ loc7_8ACE:
 	BEQ bra7_8AD4
 	RTS
 bra7_8AD4:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -1465,7 +1465,7 @@ bra7_8B15:
 	LDA #$0F
 	STA objSlot,X
 	LDA #$00
-	STA objState,X
+	STA objFlags,X
 bra7_8B33_RTS:
 	RTS
 bra7_8B34:
@@ -1479,8 +1479,8 @@ bra7_8B3F:
 	LDA $1E
 	CMP #$05
 	BEQ bra7_8B15
-	INC objState,X
-	INC objState,X
+	INC objFlags,X
+	INC objFlags,X
 	LDA playerHoldFlag
 	BNE bra7_8B33_RTS
 	LDA #$15
@@ -1503,7 +1503,7 @@ bra7_8B6B:
 	BPL bra7_8B74
 	LDA #$40
 bra7_8B74:
-	STA objState,X
+	STA objFlags,X
 	LDA #$80
 	STA objVar,X
 	RTS
@@ -1528,7 +1528,7 @@ bra7_8B9C_RTS:
 	RTS
 obj0x38:
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$0F
 	CMP #$04
 	BNE bra7_8BAB
@@ -1660,7 +1660,7 @@ loc7_8CA6:
 	BEQ bra7_8CAC
 	RTS
 bra7_8CAC:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -1695,9 +1695,9 @@ bra7_8CEB:
 	LDA #$04
 bra7_8CED:
 	STA objSlot,X
-	LDA objState,X
+	LDA objFlags,X
 	AND #$C0
-	STA objState,X
+	STA objFlags,X
 	LDA #$00
 	STA objVar,X
 	RTS
@@ -1804,7 +1804,7 @@ bra7_8DD0:
 loc7_8DD0:
 	JSR sub7_8DEA
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$0F
 	CMP #$04
 	BCS bra7_8DE9_RTS
@@ -1818,7 +1818,7 @@ bra7_8DE9_RTS:
 sub7_8DEA:
 	LDA #$06
 	STA $25 ; Configure Yoshi tongue behavior (instantly swallowed)
-	LDA objState,X
+	LDA objFlags,X
 	AND #%00011111 ; Mask out the upper 3 bits
 	ASL
 	TAY ; Use as pointer index
@@ -1855,9 +1855,9 @@ ptr5_8E21:
 bra7_8E33_RTS:
 	RTS
 bra7_8E34:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$E0
-	STA objState,X
+	STA objFlags,X
 	LDA #$00
 	STA objVar,X
 	RTS
@@ -1897,7 +1897,7 @@ bra7_8E7F:
 	LDA #$0F
 	STA objSlot,Y
 	LDA #$00
-	STA objState,Y
+	STA objFlags,Y
 bra7_8E8B:
 	STA fireballSlot
 	RTS
@@ -1937,7 +1937,7 @@ bra7_8ECC:
 	LDA #$0F
 	STA objSlot,Y
 	LDA #$00
-	STA objState,Y
+	STA objFlags,Y
 bra7_8ED8:
 	STA fireballSlot2
 	RTS
@@ -2225,7 +2225,7 @@ loc7_9128:
 bra7_912E:
 	JSR jmp_54_BD3D
 	JSR sub7_9149
-	LDA objState,X ; Get the current object state
+	LDA objFlags,X ; Get the current object state
 	AND #%00001111 ; Mask the lower 4 bits out
 	CMP #$04
 	BCS bra7_9148_RTS ; Continue if the result is less than $04
@@ -2239,7 +2239,7 @@ bra7_9148_RTS:
 sub7_9149:
 	LDA #$06
 	STA $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -2286,9 +2286,9 @@ bra7_9196:
 bra7_91A1_RTS:
 	RTS
 bra7_91A2:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$E0
-	STA objState,X
+	STA objFlags,X
 	LDA #$00
 	STA objVar,X
 	RTS
@@ -2402,7 +2402,7 @@ bra7_9288:
 bra7_9290:
 	LDA #$06
 	STA $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -2427,9 +2427,9 @@ ptr5_92B2:
 	RTS
 ptr5_92C3:
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$E0
-	STA objState,X
+	STA objFlags,X
 	RTS
 obj0x0D:
 	LDX $A4
@@ -2541,7 +2541,7 @@ bra7_93A6:
 bra7_93AE:
 	LDA #$06
 	STA $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -2615,7 +2615,7 @@ loc7_9441:
 bra7_9447:
 	JSR jmp_54_BD3D
 	JSR sub7_9462
-	LDA objState,X
+	LDA objFlags,X
 	AND #$0F
 	CMP #$04
 	BCS bra7_9461_RTS
@@ -2629,7 +2629,7 @@ bra7_9461_RTS:
 sub7_9462:
 	LDA #$06
 	STA $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -2665,9 +2665,9 @@ ptr5_9497:
 bra7_94A9_RTS:
 	RTS
 bra7_94AA:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$E0
-	STA objState,X
+	STA objFlags,X
 	LDA #$00
 	STA objVar,X
 	RTS
@@ -2720,7 +2720,7 @@ loc7_9518:
 	BEQ bra7_951E
 	RTS
 bra7_951E:
-	LDA objState,X
+	LDA objFlags,X
 	BNE bra7_9527
 	LDY #$0F
 	STY sndSfx
@@ -2729,13 +2729,13 @@ bra7_9527:
 	BCC bra7_9534
 	LDA #$00
 	STA objSlot,X
-	STA objState,X
+	STA objFlags,X
 	RTS
 bra7_9534:
-	INC objState,X
+	INC objFlags,X
 	RTS
 sub7_9538:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BEQ bra7_9550
 	LDA objXLo,X
@@ -2902,7 +2902,7 @@ ofs_9629:
 	db $31, $32
 ptr6_9630:
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	TAX
 	LDA tbl7_9654,X
@@ -2933,7 +2933,7 @@ tbl7_9654:
 	db $04
 ptr6_9660:
 	LDY $A4
-	LDA objState,Y
+	LDA objFlags,Y
 	AND #$1F
 	CMP #$04
 	BEQ bra7_966F
@@ -3012,7 +3012,7 @@ ptr6_96D5:
 	RTS
 ptr7_96F8:
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	STA $05F0
 	LDA objFrameCount
 	AND #$04
@@ -3363,7 +3363,7 @@ loc7_996C:
 	BEQ bra7_9972
 	RTS
 bra7_9972:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -3395,7 +3395,7 @@ bra7_999B:
 	STA $0641,X
 	STA objVar,X
 	LDA #$28
-	STA objState,X
+	STA objFlags,X
 	LDA #$18
 	STA sndSfx
 	RTS
@@ -3428,7 +3428,7 @@ bra7_99D7:
 	LDY #$C0
 bra7_99F1:
 	STY $36
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 	JSR jmp_54_A118
@@ -3464,7 +3464,7 @@ ptr6_9A11:
 	LDY #$C0
 bra7_9A2C:
 	STY $36
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	CMP #$04
 	BEQ bra7_9A3B
@@ -3489,7 +3489,7 @@ bra7_9A56:
 	LDA #$80
 	BNE bra7_9A61
 bra7_9A5C:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 bra7_9A61:
 	STA $05F0
@@ -3626,7 +3626,7 @@ bra7_9B43:
 bra7_9B4E:
 	LDA #$07
 	STA $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -3677,9 +3677,9 @@ bra7_9BA7:
 	SEC
 bra7_9BA8:
 	BCC bra7_9BB3
-	LDA objState,X
+	LDA objFlags,X
 	AND #$E0
-	STA objState,X
+	STA objFlags,X
 	RTS
 bra7_9BB3:
 	JSR sub7_9EE5
@@ -3811,7 +3811,7 @@ bra7_9C96:
 	INC objCount
 	LDA objXLo,X
 	STA $0515,Y
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BNE bra7_9CBC
 	LDA objXLo,X
@@ -3840,13 +3840,13 @@ loc7_9CC2:
 	LDA objSlot,X
 	STA objSlot,Y
 	STA $0501,Y
-	LDA objState,X
-	STA objState,Y
+	LDA objFlags,X
+	STA objFlags,Y
 	STA $0565,Y
 	LDA #$00
 	STA objVar,Y
 	STA $0579,Y
-	STA objAction,Y
+	STA objState,Y
 	STA $066A,Y
 	RTS
 bra7_9D07:
@@ -3903,7 +3903,7 @@ loc7_9D6F:
 	BEQ bra7_9D75
 	RTS
 bra7_9D75:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -3940,7 +3940,7 @@ ptr5_9DA5:
 	STA $36
 	LDX $A4
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 	JSR jmp_54_A118
@@ -3999,7 +3999,7 @@ bra7_9E2D:
 	LDA #$00
 	STA objVar,X
 	STA $0641,X
-	STA objAction,X
+	STA objState,X
 	LDA objXLo,X
 	CLC
 	ADC #$08
@@ -4015,11 +4015,11 @@ bra7_9E4F:
 	BCC bra7_9E66
 	LDA #$00
 	STA $0641,X
-	LDA objAction,X
+	LDA objState,X
 	EOR #$01
-	STA objAction,X
+	STA objState,X
 bra7_9E66:
-	LDA objAction,X
+	LDA objState,X
 	BNE bra7_9E82
 	LDA objYLo,X
 	SEC
@@ -4046,7 +4046,7 @@ bra7_9E98:
 loc7_9E98:
 	LDA #$07
 	STA $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY

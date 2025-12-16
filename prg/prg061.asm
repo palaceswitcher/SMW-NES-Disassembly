@@ -1594,10 +1594,10 @@ bra6_A664:
 	LDA playerCollXHi
 	STA objXHi,X
 	LDA #$00
-	STA objState,X
+	STA objFlags,X
 	STA $0641,X
 	STA enemyAnimFrame,X
-	STA objAction,X
+	STA objState,X
 	JSR sub6_A705
 	INC objCount
 bra6_A683:
@@ -1652,10 +1652,10 @@ bra6_A6E5:
 	LDA playerCollXHi
 	STA objXHi,X
 	LDA #$00
-	STA objState,X
+	STA objFlags,X
 	STA $0641,X
 	STA enemyAnimFrame,X
-	STA objAction,X
+	STA objState,X
 	JSR sub6_A705
 	INC objCount
 bra6_A704_RTS:
@@ -3662,7 +3662,7 @@ bra6_B2DB:
 	STA $06EE
 	LDX #$00
 bra6_B317:
-	STA objAction,X
+	STA objState,X
 	INX
 	CPX #$14
 	BCC bra6_B317
@@ -5524,7 +5524,7 @@ tbl6_BF60:
 	.byte $BA
 	.byte $AB
 	.byte $04
-	STA objState,X
+	STA objFlags,X
 	LDA #$00
 	STA objVar,X
 	PLA
@@ -5548,14 +5548,14 @@ sub6_BF7A:
 bra6_BF87:
 	LDA objXDistHi,X
 	BMI bra6_BF93
-	LDA objState,X
+	LDA objFlags,X
 	ORA #$40
 	BNE bra6_BF98
 bra6_BF93:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 bra6_BF98:
-	STA objState,X
+	STA objFlags,X
 bra6_BF9B:
 	LDA #$00
 	STA playerHoldFlag
@@ -5578,9 +5578,9 @@ loc6_BFC0:
 	STA invincibilityTimer
 	LDA #$0C
 	STA sndSfx
-	LDA objState,X
+	LDA objFlags,X
 	AND #$E0
-	STA objState,X
+	STA objFlags,X
 	RTS
 bra6_BFD2:
 	LDA #$04

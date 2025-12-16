@@ -5,7 +5,7 @@ sub4_8000:
 	AND #$7F
 	ASL
 	TAY
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BNE bra4_8013
 	JMP loc4_809A
@@ -37,7 +37,7 @@ bra4_803B:
 	LDY #$00
 	LDA ($32),Y
 	TAY
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BEQ bra4_8054
 	TYA
@@ -76,9 +76,9 @@ bra4_8070:
 	SBC #$10 ; unlogged
 bra4_8086:
 	STA objYLo,X
-	LDA objState,X
+	LDA objFlags,X
 	AND #$C0
-	STA objState,X
+	STA objFlags,X
 	LDA objVar,X
 	AND #$80
 	STA objVar,X
@@ -89,10 +89,10 @@ loc4_809A:
 	BMI bra4_80B8
 	JSR sub3_B077
 	BNE bra4_80B8
-	LDA objState,X
+	LDA objFlags,X
 	ORA #$20
-	STA objState,X
-	STA objState,X
+	STA objFlags,X
+	STA objFlags,X
 	LDA objVar,X
 	AND #$80
 	STA objVar,X
@@ -104,7 +104,7 @@ bra4_80B8:
 	INY
 	JMP loc4_80F0
 bra4_80C2:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BEQ bra4_80D3
 	LDA ($32),Y
@@ -150,9 +150,9 @@ bra4_8109:
 	LDA ($32),Y
 	CMP #$FF
 	BNE bra4_811E
-	LDA objState,X ; unlogged
+	LDA objFlags,X ; unlogged
 	EOR #$40 ; unlogged
-	STA objState,X ; unlogged
+	STA objFlags,X ; unlogged
 	JMP loc4_813C ; unlogged
 bra4_811E:
 	AND #$F0
@@ -180,7 +180,7 @@ sub4_8140:
 	AND #$7F
 	ASL
 	TAY
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BNE bra4_8153
 	JMP loc4_81D1
@@ -209,14 +209,14 @@ bra4_817B:
 	STA objYHi,X
 	JSR sub3_B057
 	BEQ bra4_818B
-	LDA objState,X
+	LDA objFlags,X
 	EOR #$40
-	STA objState,X
+	STA objFlags,X
 bra4_818B:
 	LDY #$00
 	LDA ($32),Y
 	TAY
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BEQ bra4_819C
 	TYA
@@ -244,9 +244,9 @@ bra4_81B8:
 	LDA objYLo,X
 	AND #$F8
 	STA objYLo,X
-	LDA objState,X
+	LDA objFlags,X
 	AND #$C0
-	STA objState,X
+	STA objFlags,X
 	LDA objVar,X
 	AND #$80
 	STA objVar,X
@@ -257,9 +257,9 @@ loc4_81D1:
 	BMI bra4_81EC
 	JSR sub3_B077
 	BNE bra4_81EC
-	LDA objState,X
+	LDA objFlags,X
 	ORA #$20
-	STA objState,X
+	STA objFlags,X
 	LDA objVar,X
 	AND #$80
 	STA objVar,X
@@ -268,11 +268,11 @@ bra4_81EC:
 	DEY
 	JSR sub3_B057
 	BEQ bra4_81FA
-	LDA objState,X
+	LDA objFlags,X
 	EOR #$40
-	STA objState,X
+	STA objFlags,X
 bra4_81FA:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BEQ bra4_820B
 	LDA ($32),Y
@@ -317,9 +317,9 @@ bra4_8241:
 	LDA ($32),Y
 	CMP #$FF
 	BNE bra4_8256
-	LDA objState,X
+	LDA objFlags,X
 	EOR #$40
-	STA objState,X
+	STA objFlags,X
 	JMP loc4_8274
 bra4_8256:
 	AND #$F0
@@ -450,7 +450,7 @@ loc4_8354:
 	BEQ bra4_835A
 	RTS ; unlogged
 bra4_835A:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -498,7 +498,7 @@ sub4_83B3:
 	LDA objVar,X
 	CMP #$08
 	BCS bra4_8422
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BEQ bra4_83DC
 	LDA objFrameCount ; unlogged
@@ -543,10 +543,10 @@ loc4_83F4:
 	AND #$40
 	EOR #$40
 	STA $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 	ORA $25
-	STA objState,X
+	STA objFlags,X
 bra4_8421_RTS:
 	RTS
 bra4_8422:
@@ -588,7 +588,7 @@ bra4_845D:
 	BEQ bra4_8468
 	LDY #$02
 bra4_8468:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 	TYA
@@ -711,7 +711,7 @@ loc4_855A:
 	BEQ bra4_8560
 	RTS ; unlogged
 bra4_8560:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -779,7 +779,7 @@ bra4_85E2:
 	LDA objVar,X
 	CMP #$11
 	BCS bra4_8611
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BNE bra4_8610_RTS
 	LDA objVar,X
@@ -792,10 +792,10 @@ bra4_85FD:
 	AND #$40
 	EOR #$40
 	STA $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 	ORA $25
-	STA objState,X
+	STA objFlags,X
 bra4_8610_RTS:
 	RTS
 bra4_8611:
@@ -808,10 +808,10 @@ bra4_8611:
 	AND #$40
 	EOR #$40
 	STA $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 	ORA $25
-	STA objState,X
+	STA objFlags,X
 	RTS
 bra4_8631:
 loc4_8631:
@@ -830,7 +830,7 @@ ptr6_8640:
 	LDY #$03
 	BNE bra4_8669
 bra4_864B:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BNE bra4_865E
 	LDA objVar,X
@@ -846,7 +846,7 @@ bra4_865E:
 	LDY #$02
 bra4_8669:
 loc4_8669:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 	TYA
@@ -956,7 +956,7 @@ loc4_874A:
 	BEQ bra4_8750
 	RTS ; unlogged
 bra4_8750:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -977,7 +977,7 @@ ptr9_876E:
 	JSR jmp_54_BC3E
 	RTS
 sub4_8778:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BEQ bra4_879A
 	LDA objFrameCount
@@ -1022,7 +1022,7 @@ ptr6_87C8:
 	LDX $A4
 	LDA objVar,X
 	BPL bra4_87DC
-	LDA objState,X ; unlogged
+	LDA objFlags,X ; unlogged
 	AND #$40 ; unlogged
 	STA $05F0 ; unlogged
 	LDA #$03 ; unlogged
@@ -1032,7 +1032,7 @@ bra4_87DC:
 	BCS bra4_87F1
 	AND #$0F
 	TAY
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 	LDA tbl4_8804,Y
@@ -1119,7 +1119,7 @@ loc4_887C:
 bra4_8882:
 	JSR objFacePlayer
 	LDY #$50
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BNE bra4_8890
 	LDY #$B0
@@ -1243,7 +1243,7 @@ loc4_8984:
 	BEQ bra4_898A
 	RTS ; unlogged
 bra4_898A:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -1282,7 +1282,7 @@ ptr9_89A8:
 	STA objVar,X
 	RTS
 sub4_89DA:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BNE bra4_8A06
 	LDA objVar,X
@@ -1298,10 +1298,10 @@ bra4_89EF:
 	AND #$40
 	EOR #$40
 	STA $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 	ORA $25
-	STA objState,X
+	STA objFlags,X
 bra4_8A06:
 	LDA objFrameCount
 	AND #$04
@@ -1323,7 +1323,7 @@ loc4_8A27:
 	INC objVar,X
 	LDY objCount
 	INC objCount
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BNE bra4_8A49
 	LDA objXLo,X
@@ -1347,12 +1347,12 @@ loc4_8A55:
 	LDA objYHi,X
 	ADC #$00
 	STA objYHi,Y
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
-	STA objState,Y
+	STA objFlags,Y
 	LDA #$00
 	STA objVar,Y
-	STA objAction,Y
+	STA objState,Y
 	LDA objSlot,X
 	AND #$01
 	ORA #$B0
@@ -1367,7 +1367,7 @@ ptr6_8A81:
 	BNE bra4_8A9F
 bra4_8A8C:
 	LDY #$0C
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BNE bra4_8A9F
 	LDA objVar,X
@@ -1376,7 +1376,7 @@ bra4_8A8C:
 	LDA tbl4_8AAB,Y
 	TAY
 bra4_8A9F:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 	TYA
@@ -1463,7 +1463,7 @@ loc4_8B2B:
 	BEQ bra4_8B31
 	RTS ; unlogged
 bra4_8B31:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$0F
 	CMP #$04
 	BCC bra4_8B45
@@ -1471,7 +1471,7 @@ bra4_8B3A:
 	LDA #$0F
 	STA objSlot,X
 	LDA #$00
-	STA objState,X
+	STA objFlags,X
 	RTS
 bra4_8B45:
 	LDA #$08
@@ -1610,7 +1610,7 @@ loc4_8C5B:
 	BEQ bra4_8C61
 	RTS ; unlogged
 bra4_8C61:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -1656,13 +1656,13 @@ sub4_8CB1:
 	AND #$40
 	EOR #$40
 	STA $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 	ORA $25
-	STA objState,X
+	STA objFlags,X
 bra4_8CCC:
 	LDY #$0E
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BEQ bra4_8CD7
 	LDY #$00
@@ -1680,7 +1680,7 @@ bra4_8CD7:
 	STA $33
 	JSR sub4_8140
 bra4_8CF1:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BNE bra4_8D58_RTS
 	LDA objVar,X
@@ -1689,7 +1689,7 @@ bra4_8CF1:
 	INC objVar,X
 	LDY objCount
 	INC objCount
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BNE bra4_8D21
 	LDA objXLo,X
@@ -1713,12 +1713,12 @@ loc4_8D2D:
 	LDA objYHi,X
 	ADC #$00
 	STA objYHi,Y
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
-	STA objState,Y
+	STA objFlags,Y
 	LDA #$06
 	STA objVar,Y
-	STA objAction,Y
+	STA objState,Y
 	LDA objSlot,X
 	AND #$01
 	ORA #$B2
@@ -1728,7 +1728,7 @@ bra4_8D58_RTS:
 ptr6_8D59:
 	LDX $A4
 	LDY #$03
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BNE bra4_8D71
 	LDY #$0E
@@ -1739,7 +1739,7 @@ ptr6_8D59:
 	BCC bra4_8D71
 	DEY
 bra4_8D71:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 	TYA
@@ -1797,7 +1797,7 @@ bra4_8DE6:
 	JSR jmp_54_BC3E
 	JMP jmp_54_BF74
 sub4_8DEC:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BNE bra4_8E0B
 	LDA objVar,X
@@ -1897,10 +1897,10 @@ bra4_8EAB:
 	AND #$40
 	EOR #$40
 	STA $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 	ORA $25
-	STA objState,X
+	STA objFlags,X
 	LDA objFrameCount
 	AND #$00
 	BNE bra4_8ED6
@@ -1913,7 +1913,7 @@ bra4_8EAB:
 	STA $33
 	JSR sub4_8140
 bra4_8ED6:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BNE bra4_8EE2_RTS
 	LDA #$00
@@ -1971,7 +1971,7 @@ loc4_8F47:
 	BEQ bra4_8F4D
 	RTS ; unlogged
 bra4_8F4D:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -2029,7 +2029,7 @@ bra4_8FBA:
 	INC objVar,X
 	LDY objCount
 	INC objCount
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BNE bra4_8FE2
 	LDA objXLo,X
@@ -2053,12 +2053,12 @@ loc4_8FEE:
 	LDA objYHi,X
 	ADC #$00
 	STA objYHi,Y
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
-	STA objState,Y
+	STA objFlags,Y
 	LDA #$06
 	STA objVar,Y
-	STA objAction,Y
+	STA objState,Y
 	LDA objSlot,X
 	AND #$01
 	ORA #$B4
@@ -2076,7 +2076,7 @@ ptr6_901A:
 	TAY
 	LDA tbl4_9038,Y
 	TAY
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 bra4_9034:
@@ -2469,7 +2469,7 @@ bra4_9318:
 	STA objXHi,X
 	LDY $25
 	LDA tbl4_935F,Y
-	STA objState,X
+	STA objFlags,X
 	LDA tbl4_9355,Y
 	TAY
 	LDA booBuddiesSineTable,Y
@@ -2530,7 +2530,7 @@ obj0xB4:
 	BEQ bra4_937B
 	LDA #$00
 	STA objSlot,X
-	STA objState,X
+	STA objFlags,X
 	STA objVar,X
 	RTS
 bra4_937B:
@@ -2712,7 +2712,7 @@ loc4_94D9:
 	BEQ bra4_94DF
 	RTS
 bra4_94DF:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -2805,13 +2805,13 @@ bra4_9582:
 	BMI bra4_95AD
 	LDA #$00
 	STA objVar,X
-	LDA objState,X
+	LDA objFlags,X
 	AND #$DF
-	STA objState,X
+	STA objFlags,X
 	JMP loc4_95BC
 bra4_95AD:
 	LDY #$00
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BEQ bra4_95B8
 	LDY #$10
@@ -2824,13 +2824,13 @@ loc4_95BC:
 	AND #$40
 	EOR #$40
 	STA $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 	ORA $25
-	STA objState,X
+	STA objFlags,X
 	RTS
 bra4_95D0:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BNE bra4_962E
 	LDA playerMoveFlags
@@ -2862,18 +2862,18 @@ bra4_95F2:
 	BNE bra4_961A
 	LDA #$10
 	STA objVar,X
-	LDA objState,X
+	LDA objFlags,X
 	ORA #$20
-	STA objState,X
+	STA objFlags,X
 bra4_961A:
 	LDA objXDistHi,X
 	AND #$40
 	EOR #$40
 	STA $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 	ORA $25
-	STA objState,X
+	STA objFlags,X
 	RTS
 bra4_962E:
 	LDA playerMoveFlags
@@ -2906,18 +2906,18 @@ bra4_965E:
 	BNE bra4_9671
 	LDA #$00
 	STA objVar,X
-	LDA objState,X
+	LDA objFlags,X
 	AND #$DF
-	STA objState,X
+	STA objFlags,X
 bra4_9671:
 	LDA objXDistHi,X
 	AND #$40
 	EOR #$40
 	STA $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 	ORA $25
-	STA objState,X
+	STA objFlags,X
 	RTS
 
 ;----------------------------------------
@@ -2986,8 +2986,8 @@ bra4_96F5:
 	JSR objFacePlayer
 	LDA $A4
 	AND #$03 ; Mask out lower 2 bits of current object index
-	ORA objState,X
-	STA objState,X
+	ORA objFlags,X
+	STA objFlags,X
 	RTS
 
 loc4_9703:
@@ -3053,7 +3053,7 @@ sub4_976B:
 	STA $33
 	JSR getSpeedData
 bra4_9783:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BNE bra4_97A7 ; Branch if Boo is already facing left
 	LDA objXDistHi,X
@@ -3064,9 +3064,9 @@ bra4_9783:
 	LDA frameCount
 	AND #$1F
 	BNE bra4_97A4 ; Branch if not on a 32nd frame
-	LDA objState,X 
+	LDA objFlags,X 
 	EOR #$40
-	STA objState,X ; Turn Boo around
+	STA objFlags,X ; Turn Boo around
 bra4_97A4:
 	JMP loc4_97C1
 bra4_97A7:
@@ -3078,15 +3078,15 @@ bra4_97A7:
 	LDA frameCount
 	AND #$7E
 	BNE loc4_97C1 ; Continue every 2 frames for every 128 frames
-	LDA objState,X
+	LDA objFlags,X
 	EOR #$40
-	STA objState,X ; Turn Boo around
+	STA objFlags,X ; Turn Boo around
 loc4_97C1:
 	LDA frameCount
 	AND #$7F
 	BNE bra4_97E7_RTS ; Only continue every 128th frame
 	LDA objXDistHi,X
-	EOR objState,X
+	EOR objFlags,X
 	AND #$40
 	BEQ bra4_97E7_RTS ; Stop if player is facing left?
 	LDA objSlot,X
@@ -3095,9 +3095,9 @@ loc4_97C1:
 	STA objSlot,X ; Turn Boo into Boo Crew Boo
 	LDA #$00
 	STA objVar,X ; Clear variable
-	LDA objState,X
+	LDA objFlags,X
 	AND #%11011111
-	STA objState,X ; Mask out bit 5 of Boo's state
+	STA objFlags,X ; Mask out bit 5 of Boo's state
 bra4_97E7_RTS:
 	RTS
 
@@ -3166,7 +3166,7 @@ sub4_9857:
 	STA $33
 	JSR getSpeedData
 bra4_986F:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BNE bra4_9896
 	LDA frameCount
@@ -3178,9 +3178,9 @@ bra4_986F:
 	CMP #$D0
 	BCC bra4_9895_RTS
 bra4_9888:
-	LDA objState,X
+	LDA objFlags,X
 	ORA #$20
-	STA objState,X
+	STA objFlags,X
 	LDA #$10
 	STA objVar,X
 bra4_9895_RTS:
@@ -3209,10 +3209,10 @@ ptr6_98B7:
 	RTS
 bra4_98BE:
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
-	LDA objState,X
+	LDA objFlags,X
 	AND #$03
 	TAY
 	LDA tbl4_98DD,Y
@@ -3231,7 +3231,7 @@ tbl4_98DD:
 	.byte $02
 ptr6_98E1:
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 	LDY #$03
@@ -3239,8 +3239,8 @@ ptr6_98E1:
 	CMP #$20
 	BCC bra4_990A
 	LDY #$05
-	INC objAction,X
-	LDA objAction,X
+	INC objState,X
+	LDA objState,X
 	BMI bra4_990A
 	CMP #$20
 	BCS bra4_990A
@@ -3254,7 +3254,7 @@ bra4_990A:
 ptr6_990E:
 	LDX $A4
 	LDY #$00
-	LDA objState,X
+	LDA objFlags,X
 	ROL
 	ROL
 	ROL

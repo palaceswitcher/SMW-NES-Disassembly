@@ -125,7 +125,7 @@ loc6_8100:
 	BEQ bra6_8106
 	RTS ; unlogged
 bra6_8106:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -186,7 +186,7 @@ bra6_8151:
 	RTS
 ptr6_817B:
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 	LDY #$00
@@ -281,7 +281,7 @@ loc6_822C:
 	BEQ bra6_8232
 	RTS
 bra6_8232:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -323,10 +323,10 @@ ptr6_827A:
 	AND #$40
 	EOR #$40
 	STA $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 	ORA $25
-	STA objState,X
+	STA objFlags,X
 	LDA objXDistLo,X
 	TAY
 	LDA objXDistHi,X
@@ -348,10 +348,10 @@ ptr6_82A8
 	AND #$40
 	EOR #$40
 	STA $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 	ORA $25
-	STA objState,X
+	STA objFlags,X
 	LDA objXDistHi,X
 	BEQ bra6_82C6
 	CMP #$FF
@@ -483,7 +483,7 @@ bra6_83B2_RTS:
 	RTS
 ptr6_83B3:
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $05F0
 	LDA objVar,X
@@ -776,7 +776,7 @@ loc6_85EA:
 	BEQ bra6_85F0
 	RTS
 bra6_85F0:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -938,7 +938,7 @@ loc6_8733:
 	BEQ bra6_8739
 	RTS
 bra6_8739:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -1365,7 +1365,7 @@ obj0x70:
 bra6_8971:
 	JSR sub6_8BCA
 	LDX $A4
-	LDA objAction,X
+	LDA objState,X
 	ASL
 	TAY
 	LDA tbl6_8988,Y
@@ -1386,7 +1386,7 @@ ptr6_899D:
 	LDA enemyAnimFrame,X
 	AND #$40
 	STA enemyAnimFrame,X
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BNE bra6_89AA
 	JMP loc6_8B8F
@@ -1397,7 +1397,7 @@ ptr6_89AD:
 	AND #$C0
 	ORA #$40
 	STA enemyAnimFrame,X
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BNE bra6_89C1
 	JMP loc6_8B44
@@ -1419,12 +1419,12 @@ bra6_89DB:
 	BCS bra6_89EA
 bra6_89DF:
 	LDA #$04
-	STA objAction,X
+	STA objState,X
 	LDA #$00
-	STA objActionTimer,X
+	STA objStateTimer,X
 	RTS
 bra6_89EA:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BNE bra6_89F4
 	JMP loc6_8B6D
@@ -1434,28 +1434,28 @@ ptr6_89F7:
 	LDA enemyAnimFrame,X
 	AND #$80
 	STA enemyAnimFrame,X
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BNE bra6_8A09
 	JMP loc6_8B20
 bra6_8A09:
 	JMP loc6_8B44
 ptr6_8A0C:
-	LDY objActionTimer,X
+	LDY objStateTimer,X
 	LDA tbl6_8A53,Y
 	STA enemyAnimFrame,X
 	LDA objFrameCount
 	AND #$01
 	BNE bra6_8A52_RTS
-	LDA objActionTimer,X
+	LDA objStateTimer,X
 	LSR
 	CLC
 	ADC objYLo,X
 	STA objYLo,X
-	LDA objActionTimer,X
+	LDA objStateTimer,X
 	CMP #$0F
 	BCS bra6_8A31
-	INC objActionTimer,X
+	INC objStateTimer,X
 bra6_8A31:
 	JSR sub3_B077
 	BEQ bra6_8A52_RTS
@@ -1468,8 +1468,8 @@ bra6_8A31:
 	AND #$F8
 	STA objYLo,X
 	LDA #$00
-	STA objActionTimer,X
-	INC objAction,X
+	STA objStateTimer,X
+	INC objState,X
 bra6_8A52_RTS:
 	RTS
 tbl6_8A53:
@@ -1490,8 +1490,8 @@ tbl6_8A53:
 	.byte $53
 	.byte $55
 ptr6_8A63:
-	INC objActionTimer,X
-	LDA objActionTimer,X
+	INC objStateTimer,X
+	LDA objStateTimer,X
 	CMP #$10
 	BCC bra6_8A97_RTS
 	CMP #$18
@@ -1503,8 +1503,8 @@ ptr6_8A63:
 	BMI bra6_8A7E
 	LDA #$40
 bra6_8A7E:
-	STA objState,X
-	LDA objState,X
+	STA objFlags,X
+	LDA objFlags,X
 	AND #$40
 	ORA #$16
 	STA enemyAnimFrame,X
@@ -1512,8 +1512,8 @@ bra6_8A7E:
 bra6_8A8C:
 	LDA #$00
 	STA freezeFlag
-	STA objAction,X
-	STA objActionTimer,X
+	STA objState,X
+	STA objStateTimer,X
 bra6_8A97_RTS:
 	RTS
 ptr6_8A98:
@@ -1521,15 +1521,15 @@ ptr6_8A98:
 	CMP objVar,X
 	BCS bra6_8AAF
 	LDA #$07
-	STA objAction,X
+	STA objState,X
 	LDA #$00
-	STA objActionTimer,X
+	STA objStateTimer,X
 	LDA #$18
 	STA enemyAnimFrame,X
 	RTS
 bra6_8AAF:
-	INC objActionTimer,X
-	LDA objActionTimer,X
+	INC objStateTimer,X
+	LDA objStateTimer,X
 	CMP #$18
 	BCS bra6_8ABD
 	LDA #playerAnimFrame
@@ -1547,13 +1547,13 @@ bra6_8AC7:
 	LDA #$15
 	STA enemyAnimFrame,X
 	LDA #$05
-	STA objAction,X
+	STA objState,X
 	LDA #$00
-	STA objActionTimer,X
+	STA objStateTimer,X
 bra6_8ADA_RTS:
 	RTS
 ptr6_8ADB:
-	LDA objActionTimer,X
+	LDA objStateTimer,X
 	CMP #$30
 	BCC bra6_8B13
 	BNE bra6_8AEA
@@ -1587,7 +1587,7 @@ bra6_8B0A:
 bra6_8B10:
 	STA enemyAnimFrame,X
 bra6_8B13:
-	INC objActionTimer,X
+	INC objStateTimer,X
 	RTS
 bra6_8B17:
 	LDA #MUS_VICTORY
@@ -1600,7 +1600,7 @@ loc6_8B20:
 	CMP #$20
 	BCS bra6_8B2D
 	LDA #$02
-	STA objAction,X
+	STA objState,X
 	RTS
 bra6_8B2D:
 	DEC objYLo,X
@@ -1618,7 +1618,7 @@ loc6_8B44:
 	CMP #$80
 	BCC bra6_8B51
 	LDA #$00
-	STA objAction,X
+	STA objState,X
 	RTS
 bra6_8B51:
 	INC objYLo,X
@@ -1639,7 +1639,7 @@ loc6_8B6D:
 	CMP #$20
 	BCS bra6_8B7A
 	LDA #$01
-	STA objAction,X
+	STA objState,X
 	RTS
 bra6_8B7A:
 	DEC objXLo,X
@@ -1656,7 +1656,7 @@ loc6_8B8F:
 	CMP #$C8
 	BCC bra6_8B9C
 	LDA #$03
-	STA objAction,X
+	STA objState,X
 	RTS
 bra6_8B9C:
 	INC objXLo,X
@@ -1670,7 +1670,7 @@ bra6_8BA9:
 loc6_8BAE:
 	STA enemyAnimFrame,X
 	LDY #$01
-	LDA objAction,X
+	LDA objState,X
 	BEQ bra6_8BBA
 	LDY #$09
 bra6_8BBA:
@@ -1735,7 +1735,7 @@ loc6_8C2E:
 	BEQ bra6_8C34
 	RTS
 bra6_8C34:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -1751,14 +1751,14 @@ tbl6_8C48:
 	.word ptr6_8C52
 	.word objFlipKill
 ptr6_8C52:
-	LDA objAction,X
+	LDA objState,X
 	CMP #$04
 	BCS bra6_8CA1_RTS
 	JSR objPlayerHitCheck
 	LDA invincibilityTimer
 	CMP #$F7
 	BCS bra6_8CA1_RTS
-	LDA objAction,X
+	LDA objState,X
 	BEQ bra6_8C86
 	CMP #$01
 	BNE bra6_8C78
@@ -1780,9 +1780,9 @@ bra6_8C86:
 	LDA #SFX_FEATHER
 	STA sndSfx
 	LDA #$06
-	STA objAction,X
+	STA objState,X
 	LDA #$00
-	STA objActionTimer,X
+	STA objStateTimer,X
 	INC objVar,X
 	LDA playerMoveFlags
 	ORA #$04
@@ -3167,7 +3167,7 @@ loc6_9334:
 	BEQ bra6_933A
 	RTS ; unlogged
 bra6_933A:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -3306,13 +3306,13 @@ bra6_93E8:
 	LDA #$2C
 	STA enemyAnimFrame+2,X
 	LDA #$00
+	STA objFlags,X
+	STA objFlags+1,X
+	STA objFlags+2,X
 	STA objState,X
 	STA objState+1,X
 	STA objState+2,X
-	STA objAction,X
-	STA objAction+1,X
-	STA objAction+2,X
-	STA objActionTimer,X
+	STA objStateTimer,X
 	STA $0642,X
 	STA $0643,X
 	INC objCount
@@ -3320,7 +3320,7 @@ bra6_93E8:
 	RTS
 loc6_9488:
 	JSR sub6_9670
-	LDA objAction,X
+	LDA objState,X
 	ASL
 	TAY
 	LDA tbl6_949D,Y
@@ -3340,16 +3340,16 @@ ptr6_94AB:
 	LDA objFrameCount
 	AND #$03
 	BNE bra6_94C1_RTS
-	LDA objActionTimer,X
+	LDA objStateTimer,X
 	CMP #$18
 	BCC bra6_94C2
 	LDA #$00
-	STA objActionTimer,X
-	INC objAction,X
+	STA objStateTimer,X
+	INC objState,X
 bra6_94C1_RTS:
 	RTS
 bra6_94C2:
-	INC objActionTimer,X
+	INC objStateTimer,X
 	LDA objSlot,X
 	CMP #$72
 	BEQ bra6_94E5
@@ -3374,16 +3374,16 @@ ptr6_94E9:
 	LDA objFrameCount
 	AND #$03
 	BNE bra6_94FF_RTS
-	LDA objActionTimer,X
+	LDA objStateTimer,X
 	CMP #$18
 	BCC bra6_9500
 	LDA #$00
-	STA objActionTimer,X
-	INC objAction,X
+	STA objStateTimer,X
+	INC objState,X
 bra6_94FF_RTS:
 	RTS
 bra6_9500:
-	INC objActionTimer,X
+	INC objStateTimer,X
 	LDA objSlot,X
 	CMP #$72
 	BEQ bra6_950E
@@ -3409,16 +3409,16 @@ ptr6_9529:
 	LDA objFrameCount
 	AND #$03
 	BNE bra6_953F_RTS
-	LDA objActionTimer,X
+	LDA objStateTimer,X
 	CMP #$1C
 	BCC bra6_9540
 	LDA #$00
-	STA objActionTimer,X
-	INC objAction,X
+	STA objStateTimer,X
+	INC objState,X
 bra6_953F_RTS:
 	RTS
 bra6_9540:
-	INC objActionTimer,X
+	INC objStateTimer,X
 	INC objYLo,X
 	LDA objSlot,X
 	CMP #$72
@@ -3435,12 +3435,12 @@ ptr6_955B:
 	LDA objFrameCount
 	AND #$03
 	BNE bra6_9585_RTS
-	LDA objActionTimer,X
+	LDA objStateTimer,X
 	CMP #$18
 	BCC bra6_9586
 	LDA #$00
-	STA objActionTimer,X
-	STA objAction,X
+	STA objStateTimer,X
+	STA objState,X
 	LDA objVar,X
 	ORA #$80
 	STA objVar,X
@@ -3452,14 +3452,14 @@ ptr6_955B:
 bra6_9585_RTS:
 	RTS
 bra6_9586:
-	INC objActionTimer,X
+	INC objStateTimer,X
 	RTS
 ptr6_958A:
-	LDA objActionTimer,X
+	LDA objStateTimer,X
 	CMP #$30
 	BCC bra6_95A6
 	LDA #$00
-	STA objActionTimer,X
+	STA objStateTimer,X
 	LDY #$02
 	LDA objSlot,X
 	CMP #$72
@@ -3467,10 +3467,10 @@ ptr6_958A:
 	LDY #$06
 bra6_95A1:
 	TYA
-	STA objAction,X
+	STA objState,X
 	RTS
 bra6_95A6:
-	INC objActionTimer,X
+	INC objStateTimer,X
 	LDA objFrameCount
 	AND #$18
 	LSR
@@ -3560,7 +3560,7 @@ ptr6_9603:
 	LDA objYLo,X
 	CMP #$E0
 	BCS bra6_9611
-	LDA objActionTimer,X
+	LDA objStateTimer,X
 	CMP #$50
 	BCC bra6_961A
 bra6_9611:
@@ -3578,7 +3578,7 @@ bra6_961A:
 bra6_9624:
 	TYA
 	STA enemyAnimFrame,X
-	INC objActionTimer,X
+	INC objStateTimer,X
 	INC objYLo,X
 	INC objYLo,X
 	RTS
@@ -3586,17 +3586,17 @@ ptr6_9632:
 	LDA objFrameCount
 	AND #$03
 	BNE bra6_964A_RTS
-	LDA objActionTimer,X
+	LDA objStateTimer,X
 	CMP #$1C
 	BCC bra6_964B
 	LDA #$00
-	STA objActionTimer,X
+	STA objStateTimer,X
 	LDA #$03
-	STA objAction,X
+	STA objState,X
 bra6_964A_RTS:
 	RTS
 bra6_964B:
-	INC objActionTimer,X
+	INC objStateTimer,X
 	LDY $0667
 	LDA tbl6_95DD,Y
 	TAY
@@ -3663,7 +3663,7 @@ loc6_96D4:
 	BEQ bra6_96DA
 	RTS ; unlogged
 bra6_96DA:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -3679,7 +3679,7 @@ tbl6_96EE:
 	.word ptr6_96F8
 	.word objFlipKill
 ptr6_96F8:
-	LDA objAction,X
+	LDA objState,X
 	CMP #$02
 	BCC bra6_9700
 bra6_96FF_RTS:
@@ -3766,9 +3766,9 @@ bra6_9767:
 	STY reznorsDefeated ; Also store here (why??)
 bra6_979A:
 	TYA
-	STA objAction,X ; Trigger loaded action
+	STA objState,X ; Trigger loaded action
 	LDA #$00
-	STA objActionTimer,X ; Clear action timer
+	STA objStateTimer,X ; Clear action timer
 bra6_97A3_RTS:
 	RTS
 obj0x64:
@@ -3838,7 +3838,7 @@ bra6_981E:
 	LDY #$C0 ; If the player isn't, load down-left direction
 bra6_982C:
 	TYA
-	STA objAction,X ; Store loaded direction
+	STA objState,X ; Store loaded direction
 	RTS
 loc6_9831:
 	JSR sub6_92D0
@@ -3846,19 +3846,19 @@ loc6_9831:
 	BEQ bra6_9845
 	CMP #$02
 	BEQ bra6_9845
-	LDA objAction,X
+	LDA objState,X
 	EOR #$40
-	STA objAction,X ; Horizontally flip the podoboo
+	STA objState,X ; Horizontally flip the podoboo
 bra6_9845:
 	JSR sub6_9997
 	BEQ bra6_9856
 	CMP #$02
 	BEQ bra6_9856
-	LDA objAction,X
+	LDA objState,X
 	EOR #$80
-	STA objAction,X ; Vertically flip the podoboo
+	STA objState,X ; Vertically flip the podoboo
 bra6_9856:
-	LDA objAction,X
+	LDA objState,X
 	AND #$40 ; Get the horizontal direction of the podoboo
 	BEQ bra6_9860 ; If it's facing right, branch
 	JMP loc6_98EB ; If it's facing left, jump
@@ -3878,7 +3878,7 @@ bra6_9874:
 	SBC #$00 ; Subtract (nothing?) from it's X screen value
 bra6_9879:
 	STA objXHi,X
-	LDA objAction,X
+	LDA objState,X
 	AND #$80 ; Get the vertical diagonal of the podoboo
 	BNE bra6_98B7 ; If facing up, branch
 	LDA #$FF
@@ -3951,7 +3951,7 @@ bra6_98FF:
 	SBC #$00
 bra6_9904:
 	STA objXHi,X
-	LDA objAction,X
+	LDA objState,X
 	AND #$80
 	BNE bra6_9941
 	LDA #$FF
@@ -4019,7 +4019,7 @@ bra6_997A:
 	JMP loc6_9BEA ; Jump
 sub6_9981:
 	STY $2B
-	LDA objAction,X
+	LDA objState,X
 	AND #$40
 	BEQ bra6_998E
 	LDA #$00
@@ -4034,7 +4034,7 @@ sub6_9997:
 	STY $2B
 	LDA #$08
 	STA $36
-	LDA objAction,X
+	LDA objState,X
 	AND #$80
 	BEQ bra6_99A6
 	LDA #$10
@@ -4148,12 +4148,12 @@ loc6_9A60:
 	LDA $06DF
 	BEQ bra6_9A6C
 	LDA #$02
-	STA objAction,X
+	STA objState,X
 	BNE bra6_9A6F
 bra6_9A6C:
 	JSR jmp_54_BD3D
 bra6_9A6F:
-	LDA objAction,X
+	LDA objState,X
 	ASL
 	TAY
 	LDA tbl6_9A81,Y
@@ -4200,15 +4200,15 @@ bra6_9AB6:
 bra6_9AC4:
 	TYA
 	STA enemyAnimFrame,X
-	INC objActionTimer,X
-	LDA objActionTimer,X
+	INC objStateTimer,X
+	LDA objStateTimer,X
 	CMP #$10
 	BCC bra6_9ADE_RTS
 	LDA objYLo,X
 	CLC
 	ADC #$12
 	STA $06DE
-	INC objAction,X
+	INC objState,X
 bra6_9ADE_RTS:
 	RTS
 ptr6_9ADF:
@@ -4243,7 +4243,7 @@ bra6_9B0E:
 	BEQ bra6_9B28
 	LDA #$00
 	STA freezeFlag
-	INC objAction,X
+	INC objState,X
 	LDA objYLo,X
 	STA $06DF
 	RTS

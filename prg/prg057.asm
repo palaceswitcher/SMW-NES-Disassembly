@@ -3145,7 +3145,7 @@ spawnFireball:
 	INC fireballSlot,X ; Set selected fire slot to occupied
 	LDY objCount ; Load next open object slot
 	LDA $32
-	STA objState,Y ; Store the fireball direction in object memory
+	STA objFlags,Y ; Store the fireball direction in object memory
 	TXA ; set A to usedFireballSlots
 	CLC
 	ADC #$06 ; add 6 to A (Used slots +6)
@@ -3205,7 +3205,7 @@ bra4_B08C:
 	LDA #$00
 	STA $058C,Y
 	STA objVar,Y
-	STA objAction,Y
+	STA objState,Y
 	INC objCount ; Add it to the total object count
 	LDA usedFireballSlots
 	EOR #$01
@@ -3339,7 +3339,7 @@ loc4_B17F:
 	STA objYHi,Y
 bra4_B182:
 	LDA #$00
-	STA objState,Y
+	STA objFlags,Y
 	STA objVar,Y
 	LDA $0632
 	STA $058C,Y
@@ -3413,9 +3413,9 @@ spawnYoshiFire:
 	LDA #$0A
 	STA objSlot+2,Y ; Load top fireball
 	LDA playerMoveFlags
-	STA objState,Y
-	STA objState+1,Y
-	STA objState+2,Y ; Set fireballs to the player's direction
+	STA objFlags,Y
+	STA objFlags+1,Y
+	STA objFlags+2,Y ; Set fireballs to the player's direction
 	
 	AND #$40 ; bitmask playerMoveFlags 
 	BNE bra4_B225
@@ -3473,7 +3473,7 @@ loc4_B26C:
 bra4_B26F: ; Bottom Fireball
 	LDA #$00 
 	STA $058C,Y ; clear UNKNOWN offset by Object count 
-	STA objAction,Y ; clear object action of middle firebaall
+	STA objState,Y ; clear object action of middle firebaall
 	INY ; increment Y offset (select bottom fireball)
 	LDA playerMoveFlags
 	AND #$40
@@ -3530,7 +3530,7 @@ loc4_B2D4:
 bra4_B2D7: ; Top fireball
 	LDA #$00
 	STA $058C,Y
-	STA objAction,Y
+	STA objState,Y
 	INY ; select top fireball
 	LDA playerMoveFlags
 	AND #$40
@@ -3586,7 +3586,7 @@ loc4_B33C:
 bra4_B33F:
 	LDA #$00
 	STA $058C,Y
-	STA objAction,Y
+	STA objState,Y
 	INY ; increment Y
 	STY objCount ; Update object count
 	LDA #SFX_YOSHIFIRESPIT
@@ -5327,7 +5327,7 @@ bra4_BF5F_RTS:
 	TSX
 	db $AB
 	db $04
-	STA objState,X
+	STA objFlags,X
 	LDA #$00
 	STA objVar,X
 	PLA
@@ -5351,14 +5351,14 @@ sub4_BF7A:
 bra4_BF87:
 	LDA objXDistHi,X
 	BMI bra4_BF93
-	LDA objState,X
+	LDA objFlags,X
 	ORA #$40
 	BNE bra4_BF98
 bra4_BF93:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 bra4_BF98:
-	STA objState,X
+	STA objFlags,X
 bra4_BF9B:
 	LDA #$00
 	STA playerHoldFlag
@@ -5381,9 +5381,9 @@ loc4_BFC0:
 	STA invincibilityTimer
 	LDA #SFX_POWERDOWN
 	STA sndSfx
-	LDA objState,X
+	LDA objFlags,X
 	AND #$E0
-	STA objState,X
+	STA objFlags,X
 	RTS
 bra4_BFD2:
 	LDA #$04

@@ -193,9 +193,9 @@ loc_E173:
 	STA invincibilityTimer
 	LDA #SFX_POWERDOWN
 	STA sndSfx
-	LDA objState,X
+	LDA objFlags,X
 	AND #$E0
-	STA objState,X
+	STA objFlags,X
 	RTS
 bra_E185:
 	LDA #$04

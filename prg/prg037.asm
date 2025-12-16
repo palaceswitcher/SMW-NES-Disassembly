@@ -104,7 +104,7 @@ loc_80C2:
 	RTS
 bra_80C8:
 	LDY #$46
-	LDA objAction,X
+	LDA objState,X
 	BEQ bra_80D0
 	INY
 bra_80D0:
@@ -210,9 +210,9 @@ bra_8196:
 	LDA #$00
 	STA objVar,X
 	STA $0579,Y
-	STA objState,Y
+	STA objFlags,Y
+	STA objFlags+1,Y
 	STA objState+1,Y
-	STA objAction+1,Y
 	LDA objSlot,X
 	AND #$01
 	CLC
@@ -284,8 +284,8 @@ bra_8234:
 	LDA objYHi,X
 	STA objYHi,Y
 	LDA #$00
-	STA objAction,Y
 	STA objState,Y
+	STA objFlags,Y
 	STA objVar,Y
 	LDA #$D6
 	STA objSlot,Y
@@ -297,12 +297,12 @@ bra_8234:
 	ADC #$00
 	STA objXHi,Y
 	LDA #$00
-	STA objAction,Y
+	STA objState,Y
 	LDA objSlot,X
 	CMP #$F8
 	BCC bra_82A6_RTS
 	LDA #$01
-	STA objAction,Y
+	STA objState,Y
 	LDA objYLo,Y
 	CLC
 	ADC #$38
@@ -630,13 +630,13 @@ obj0xE4:
 	objDistCalc bra_854E
 
 bra_854E:
-	LDA objAction,X
+	LDA objState,X
 	CMP #$02
 	BEQ bra_8558
 	JSR sub_8592
 bra_8558:
 	LDX $A4
-	LDA objAction,X
+	LDA objState,X
 	ASL
 	TAY
 	LDA tbl_856C,Y
@@ -656,14 +656,14 @@ ptr7_8572:
 ptr7_857C:
 	LDA #$04
 	STA enemyAnimFrame,X
-	LDA objState,X
+	LDA objFlags,X
 	CMP #$10
 	BCC bra_858E
 	LDA #$00
 	STA objSlot,X
 	RTS
 bra_858E:
-	INC objState,X
+	INC objFlags,X
 	RTS
 sub_8592:
 	LDA #$06
@@ -716,7 +716,7 @@ loc_85F6:
 	BEQ bra_85FC
 	RTS
 bra_85FC:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -737,10 +737,10 @@ ptr7_861A:
 	JSR objKillOnSpinJump
 	JSR objStompRebound
 	LDA #$00
-	STA objState,X
+	STA objFlags,X
 	STA objVar,X
 	LDA #$02
-	STA objAction,X
+	STA objState,X
 	RTS
 
 obj0xE2:
@@ -750,7 +750,7 @@ obj0xE2:
 bra_869A:
 	JSR sub_879B
 	LDX $A4
-	LDA objAction,X
+	LDA objState,X
 	ASL
 	TAY
 	LDA tbl_86B1,Y
@@ -770,7 +770,7 @@ ptr7_86B5:
 	LDY #$02
 bra_86C0:
 	STY $25
-	LDA objState,X
+	LDA objFlags,X
 	AND #$C0
 	ORA $25
 	STA enemyAnimFrame,X
@@ -779,7 +779,7 @@ bra_86C0:
 	LDA objVar,X
 	AND #$80
 	STA objVar,X
-	DEC objAction,X
+	DEC objState,X
 	RTS
 
 bra_86DD:
@@ -797,7 +797,7 @@ sub_86E9:
 	LDA objVar,X
 	AND #$80
 	STA objVar,X
-	INC objAction,X
+	INC objState,X
 	LDA #$E0
 	BMI bra_8716
 	CLC
@@ -826,7 +826,7 @@ bra_8716:
 
 loc_8728:
 	LDY #$08
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BNE bra_8733
 	LDY #$F8
@@ -872,16 +872,16 @@ bra_8770:
 	BNE bra_8790
 	LDA invincibilityTimer
 	BNE bra_8790
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
-	STA objState,X
+	STA objFlags,X
 	LDA objXDistHi,X
 	BMI bra_8790
-	LDA objState,X
+	LDA objFlags,X
 	ORA #$40
-	STA objState,X
+	STA objFlags,X
 bra_8790:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$C0
 	ORA $25
 	STA enemyAnimFrame,X
@@ -938,7 +938,7 @@ loc_87FF:
 	BEQ bra_8805
 	RTS
 bra_8805:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -1031,9 +1031,9 @@ bra_88BC:
 	INC objSlot,X
 	INC objSlot,X
 	LDA #$00
-	STA objState,X
+	STA objFlags,X
 	STA objVar,X
-	STA objAction,X
+	STA objState,X
 	JSR objStompRebound
 	RTS
 ptr6_88D1:
@@ -1903,13 +1903,13 @@ bra_8CE6:
 	LDA objYHi,X
 	SBC #$00
 	STA objYHi+1,Y
-	LDA objState,X
-	STA objState,Y
-	STA objState+1,Y
+	LDA objFlags,X
+	STA objFlags,Y
+	STA objFlags+1,Y
 	LDA #$00
 	STA objVar,Y
 	STA $0579,Y
-	STA objAction,Y
+	STA objState,Y
 	STA $0641,Y
 	STA $05F6
 	STA bowserState
@@ -2369,7 +2369,7 @@ loc_9036:
 	BEQ bra_903C
 	RTS
 bra_903C:
-	LDA objAction,X
+	LDA objState,X
 	CLC
 	ADC #$50
 	STA $25
@@ -2393,7 +2393,7 @@ bra_904F:
 	INC enemyAnimFrame,X
 	RTS
 bra_906C:
-	LDA objAction,X
+	LDA objState,X
 	BNE bra_9074
 	INC bowserState
 bra_9074:
@@ -2502,9 +2502,9 @@ loc_9147:
 	RTS
 bra_914D:
 	JSR sub_9159
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
-	STA objState,X
+	STA objFlags,X
 	RTS
 sub_9159:
 	LDX $A4
@@ -2554,7 +2554,7 @@ tbl_916D:
 	.word ptr7_93B9
 	.word ptr7_9763
 sub_91B5:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	CMP #$04
 	BNE bra_91D9_RTS
@@ -2562,9 +2562,9 @@ sub_91B5:
 	STA bowserState
 	LDA #$00
 	STA $05F6
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
-	STA objState,X
+	STA objFlags,X
 	LDA objXLo,X
 	SEC
 	SBC #$04
@@ -2681,9 +2681,9 @@ bra_9296_RTS:
 bra_9297:
 	LDA #$00
 	STA $05F6
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
-	STA objState,X
+	STA objFlags,X
 	INC bowserState
 	RTS
 tbl_92A8:
@@ -2721,10 +2721,10 @@ bra_92C8:
 	LDA objYHi,X
 	STA objYHi,Y
 	LDA #$00
-	STA objState,Y
+	STA objFlags,Y
 	STA objVar,Y
 	LDA #$01
-	STA objAction,Y
+	STA objState,Y
 	LDA #$3A
 	STA objSlot,Y
 bra_92F8:
@@ -2739,11 +2739,11 @@ bra_92F8:
 	LDA objYHi,X
 	STA objYHi,Y
 	LDA #$40
-	STA objState,Y
+	STA objFlags,Y
 	LDA #$00
 	STA objVar,Y
 	LDA #$01
-	STA objAction,Y
+	STA objState,Y
 	LDA #$3A
 	STA objSlot,Y
 	RTS
@@ -2848,10 +2848,10 @@ ptr7_93D9:
 	LDA #$00
 	STA $05F6
 obj0xB8:
-	STA objAction,X
+	STA objState,X
 	STA $0641,X
 	STA objVar,X
-	STA objState,X
+	STA objFlags,X
 	STA $06E2
 	STA $06E3
 	LDA objYLo,X
@@ -2901,11 +2901,11 @@ bra_942A:
 	LDA #$BF
 	STA objSlot,Y
 	LDA #$00
-	STA objAction,Y
+	STA objState,Y
 	LDA #$80
 	STA objVar,Y
 	LDA #$40
-	STA objState,Y
+	STA objFlags,Y
 	RTS
 bra_9464:
 	CMP #$D0
@@ -2946,10 +2946,10 @@ bra_949E:
 	STA enemyAnimFrame,X
 	LDA #$00
 	STA $05F6
-	STA objAction,X
+	STA objState,X
 	STA $0641,X
 	STA objVar,X
-	STA objState,X
+	STA objFlags,X
 	STA $06E2
 	STA $06E3
 	LDA objYLo,X
@@ -2984,9 +2984,9 @@ ptr7_94F6:
 	JSR sub_91B5
 	JSR sub3_B057
 	BEQ bra_9506
-	LDA objState,X
+	LDA objFlags,X
 	EOR #$40
-	STA objState,X
+	STA objFlags,X
 bra_9506:
 	LDA frameCount
 	AND #$01
@@ -3003,7 +3003,7 @@ bra_9511:
 	TAY
 	LDA tbl_9261,Y
 	STA enemyAnimFrame,X
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $25
 	LDA enemyAnimFrame,X
@@ -3042,9 +3042,9 @@ ptr7_956A:
 	JSR sub_91B5
 	JSR sub3_B057
 	BEQ bra_957A
-	LDA objState,X
+	LDA objFlags,X
 	EOR #$40
-	STA objState,X
+	STA objFlags,X
 bra_957A:
 	LDA frameCount
 	AND #$01
@@ -3061,7 +3061,7 @@ bra_9585:
 	TAY
 	LDA tbl_9261,Y
 	STA enemyAnimFrame,X
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	STA $25
 	LDA enemyAnimFrame,X
@@ -3117,7 +3117,7 @@ bra_95F7:
 	LDA #playerXLoDup
 	STA objSlot,Y
 	LDA #$00
-	STA objState,Y
+	STA objFlags,Y
 bra_960D:
 	CPY objCount
 	BCC bra_95F7
@@ -3153,8 +3153,8 @@ bra_9619:
 	LDA #$C4
 	STA enemyAnimFrame,Y
 	LDA #$00
-	STA objAction,Y
 	STA objState,Y
+	STA objFlags,Y
 	LDA objXLo,X
 	STA objXLo+1,Y
 	LDA objXHi,X
@@ -3173,9 +3173,9 @@ bra_9619:
 	LDA #$40
 	STA enemyAnimFrame+1,Y
 	LDA #$01
-	STA objAction+1,Y
-	LDA #$00
 	STA objState+1,Y
+	LDA #$00
+	STA objFlags+1,Y
 	LDA objXLo,X
 	CLC
 	ADC #$20
@@ -3197,9 +3197,9 @@ bra_9619:
 	LDA #$84
 	STA enemyAnimFrame+2,Y
 	LDA #$02
-	STA objAction+2,Y
-	LDA #$00
 	STA objState+2,Y
+	LDA #$00
+	STA objFlags+2,Y
 	LDA objXLo,X
 	CLC
 	ADC #$20
@@ -3221,9 +3221,9 @@ bra_9619:
 	LDA #$00
 	STA $0658,Y
 	LDA #$03
-	STA objAction+3,Y
-	LDA #$00
 	STA objState+3,Y
+	LDA #$00
+	STA objFlags+3,Y
 	RTS
 loc_970B_RTS:
 	RTS
@@ -3250,9 +3250,9 @@ ptr7_970C:
 	LDA #$B8
 	STA objSlot,Y
 	LDA #$00
-	STA objState,Y
+	STA objFlags,Y
 	STA objVar,Y
-	STA objAction,Y
+	STA objState,Y
 	STA enemyAnimFrame,Y
 	LDA #$01
 	STA $06E6
@@ -3318,7 +3318,7 @@ loc_97C4:
 	BEQ bra_97CA
 	RTS
 bra_97CA:
-	LDA objAction,X
+	LDA objState,X
 	ASL
 	TAY
 	LDA tbl_97DC,Y
@@ -3337,7 +3337,7 @@ ptr7_97E2:
 	LDA objVar,X
 	CMP #$28
 	BCC bra_97F7
-	INC objAction,X
+	INC objState,X
 	INC bowserState
 bra_97F6_RTS:
 	RTS
@@ -3376,7 +3376,7 @@ bra_9820:
 bra_983B_RTS:
 	RTS
 bra_983C:
-	INC objAction,X
+	INC objState,X
 	RTS
 ptr7_9840:
 	LDA #$09

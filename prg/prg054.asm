@@ -206,8 +206,8 @@ bra3_A160:
 	STA objYHi,X
 	LDA objSlot,Y
 	STA objSlot,X
-	LDA objState,Y
-	STA objState,X
+	LDA objFlags,Y
+	STA objFlags,X
 	LDA objVar,Y
 	STA objVar,X
 	LDA $058C,Y
@@ -216,8 +216,8 @@ bra3_A160:
 	STA $0641,X
 	LDA enemyAnimFrame,Y
 	STA enemyAnimFrame,X
-	LDA objAction,Y
-	STA objAction,X
+	LDA objState,Y
+	STA objState,X
 	LDA #$00
 	STA objSlot,Y
 	INX
@@ -1323,9 +1323,9 @@ tbl3_A635:
 ;----------------------------------------
 objRemoveObject:
 	LDA #$00
-	STA objAction,X
-	STA objSlot,X
 	STA objState,X
+	STA objSlot,X
+	STA objFlags,X
 	STA objVar,X ; Wipe the object from memory
 	LDA $058C,X
 	TAY
@@ -1409,10 +1409,10 @@ skipCapeKill:
 	
 checkIfCapeKill:
 	BCS @stop ; Stop if the carry flag was set
-		LDA objState,X
+		LDA objFlags,X
 		AND #%11100000
 		ORA #%00000100 ; Enable collision check
-		STA objState,X
+		STA objFlags,X
 		LDA #$00
 		STA objVar,X ; Reset object animation(?)
 		LDA #$01
@@ -1446,7 +1446,7 @@ objKillOnSpinJump:
 	LDA #$0F
 	STA objSlot,X ; Make object pop
 	LDA #$00
-	STA objState,X ; Remove object
+	STA objFlags,X ; Remove object
 	PLA
 	PLA ; Go back two calls and stop running code for this object
 @stop:
@@ -1489,9 +1489,9 @@ bra3_A7AC:
 	SEC
 bra3_A7AD:
 	BCC bra3_A7BA_RTS
-	LDA objState,X
+	LDA objFlags,X
 	AND #$E0
-	STA objState,X
+	STA objFlags,X
 	PLA
 	PLA
 	RTS
@@ -1602,17 +1602,17 @@ bra3_A83E:
 	LDA tbl3_A86D,X
 	STA playerAnimFrame
 	LDX $A4
-	INC objState,X
+	INC objFlags,X
 	LDA $25
 	STA yoshiTongueState
 	RTS
 
 yoshiEatStop:
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$E0 ; Mask out the lower 5 bits
 	ORA #$03
-	STA objState,X ; Run main collision code
+	STA objFlags,X ; Run main collision code
 	RTS
 tbl3_A85F:
 	.byte $00
@@ -2171,10 +2171,10 @@ ptr_AA7B:
 	CPX #$0C
 	BCC @continue ; Only continue if the player isn't underwater or doing a special animation
 	; Otherwise, move to the next object function
-		LDA objState,Y
+		LDA objFlags,Y
 		CLC
 		ADC #$01
-		STA objState,Y ; Move to next object function
+		STA objFlags,Y ; Move to next object function
 		RTS
 
 @continue:
@@ -2354,9 +2354,9 @@ setObjectCarryState:
 	BEQ setObjectCarryStateDone ; Make sure the B button is held
 	STA playerHoldFlag
 	LDY $A4 ; Get index for current object
-	LDA objState,Y
+	LDA objFlags,Y
 	ORA #$80
-	STA objState,Y ; Set object to "held"
+	STA objFlags,Y ; Set object to "held"
 	PLA
 	PLA ; Add 2 to stack pointer? The accumulator is overwritten after every call to this routine, so this is seemingly useless.
 setObjectCarryStateDone:
@@ -2368,7 +2368,7 @@ setObjectCarryStateDone:
 ;----------------------------------------
 positionCarriedObject:
 	LDY $A4
-	LDA objState,Y
+	LDA objFlags,Y
 	AND #$80
 	BNE bra3_AB9C ; Branch if the object is being carried
 	; Otherwise, stop
@@ -2456,7 +2456,7 @@ bra3_AC08:
 bra3_AC17:
 	TYA
 	LDY $A4
-	STA objState,Y
+	STA objFlags,Y
 	PLA
 	PLA
 	RTS
@@ -2464,7 +2464,7 @@ jmp_54_AC20:
 	LDA playerYoshiState
 	BNE bra3_ACA1_RTS
 	LDY $A4
-	LDA objState,Y
+	LDA objFlags,Y
 	AND #$80
 	BEQ bra3_ACA1_RTS
 	LDA btnHeld
@@ -2531,16 +2531,16 @@ loc3_AC97:
 bra3_ACA1_RTS:
 	RTS
 bra3_ACA2:
-	LDA objState,Y
+	LDA objFlags,Y
 	AND #$7F
-	STA objState,Y
+	STA objFlags,Y
 	LDA btnHeld
 	AND #$08
 	BEQ bra3_ACC2_RTS
-	LDA objState,Y
+	LDA objFlags,Y
 	AND #$F0
 	ORA #$07
-	STA objState,Y
+	STA objFlags,Y
 	LDA #$00
 	STA objVar,Y
 	PLA
@@ -2551,7 +2551,7 @@ jmp_54_ACC3:
 	LDA playerYoshiState
 	BNE bra3_ACA1_RTS
 	LDY $A4
-	LDA objState,Y
+	LDA objFlags,Y
 	AND #$80
 	BEQ bra3_ACA1_RTS
 	LDA btnHeld
@@ -2611,11 +2611,11 @@ jmp_54_AD37:
 bra3_AD3A:
 	JMP loc3_AC97
 sub3_AD3D:
-	LDA objState,Y
+	LDA objFlags,Y
 	AND #$40
 	PHA
 	ORA #$06
-	STA objState,Y
+	STA objFlags,Y
 	LDA #$00
 	STA playerHoldFlag
 	STA objVar,Y
@@ -2623,16 +2623,16 @@ sub3_AD3D:
 	JMP loc3_AD5C
 jmp_54_AD54:
 	JSR sub3_BD03
-	LDA objState,Y
+	LDA objFlags,Y
 	AND #$40
 loc3_AD5C:
 	EOR #$40
 	STA $34
-	LDA objState,X
+	LDA objFlags,X
 	AND #$80
 	ORA $34
 	ORA #$04
-	STA objState,X
+	STA objFlags,X
 	LDA objSlot,X
 	CMP #$E1
 	BEQ bra3_AD78_RTS
@@ -2643,7 +2643,7 @@ bra3_AD78_RTS:
 ptr_AD79:
 	LDY #$FE
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BEQ bra3_AD95
 	LDY #$02
@@ -2656,7 +2656,7 @@ ptr_AD79:
 objFlipKill:
 	LDY #2
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	AND #%01000000
 	BNE bra3_AD95 ; Offset object position to the right if facing right
 		LDY #-2 ; Otherwise, if facing left, offset it to the left
@@ -2685,7 +2685,7 @@ bra3_ADAD:
 	BCC bra3_ADC3 ; Branch if object above the kill zone
 		LDA #$00
 		STA objSlot,X
-		STA objState,X
+		STA objFlags,X
 		STA objVar,X ; Despawn object if it goes below the kill zone
 		RTS
 
@@ -2749,14 +2749,14 @@ tbl3_AE0F:
 ptr_AE17:
 	LDA objXDistHi,X
 	BPL bra3_AE23
-	LDA objState,X
+	LDA objFlags,X
 	ORA #$40
 	BNE bra3_AE28
 bra3_AE23:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
 bra3_AE28:
-	STA objState,X
+	STA objFlags,X
 	LDA frameCount
 	AND #$00
 	BNE bra3_AE36_RTS
@@ -3232,7 +3232,7 @@ sub3_B057:
 	STY $2B
 	LDX $A4
 	LDY objSlot,X
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BEQ bra3_B069
 	LDA #$00
@@ -3262,7 +3262,7 @@ sub3_B077:
 	STY $2B
 	LDX $A4
 	LDY objSlot,X ; Load current object
-	LDA objState,X ; Get state of current object
+	LDA objFlags,X ; Get state of current object
 	AND #%01000000
 	BEQ @setObjXPosOfs ; Offset position by 0 if the object isn't mirrored
 	LDA objectXHitBoxSizes,Y ; Offset the object by its hitbox width during the calculation if it's mirrored
@@ -3395,7 +3395,7 @@ getSpeedData:
 	AND #%01111111 ; Clear upper bit of object variable
 	ASL
 	TAY ; Get movement data index
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BEQ loadObjSpeedRight ; Branch if object is facing right
 	; If the object is facing left, invert its X movement value
@@ -3474,9 +3474,9 @@ changeObjDirection:
 	CMP #$FF
 	BNE updateObjSpeedDataIndex ; Branch if delimiter byte isn't reached
 	; Turn the object around and stop if the delimiter byte is reached
-		LDA objState,X
+		LDA objFlags,X
 		EOR #%01000000
-		STA objState,X ; Turn object around
+		STA objFlags,X ; Turn object around
 		JMP getSpeedDataDone ; Go to next vector and end routine
 	; If the X movement byte isn't the delimiter, check if it's an index change vector
 	updateObjSpeedDataIndex:
@@ -3525,7 +3525,7 @@ sub3_B1EF:
 	AND #%01111111 ; Mask out upper bit to not affect carry
 	ASL
 	TAY
-	LDA objState,X
+	LDA objFlags,X
 	AND #%00100000
 	BNE bra3_B202
 	JMP loc3_B2B4
@@ -3573,14 +3573,14 @@ loc3_B24C:
 	BEQ bra3_B25D
 	CMP #$02
 	BEQ bra3_B25D
-	LDA objState,X
+	LDA objFlags,X
 	EOR #$40
-	STA objState,X
+	STA objFlags,X
 bra3_B25D:
 	LDY #$00 ; Clear Y reg
 	LDA ($32),Y ; Load movement data
 	TAY ; Copy it to the Y reg
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BEQ bra3_B26E ; Branch if the object is facing right
 	TYA ; Load the movement data
@@ -3618,9 +3618,9 @@ loc3_B28A:
 	SBC #$10
 bra3_B2A0:
 	STA objYLo,X
-	LDA objState,X
+	LDA objFlags,X
 	AND #$C0
-	STA objState,X
+	STA objFlags,X
 	LDA objVar,X
 	AND #$80
 	STA objVar,X
@@ -3634,9 +3634,9 @@ loc3_B2B4:
 	CMP #$02
 	BNE bra3_B2F8
 bra3_B2C2:
-	LDA objState,X
+	LDA objFlags,X
 	ORA #$20
-	STA objState,X
+	STA objFlags,X
 	LDA objVar,X
 	AND #$80
 	STA objVar,X
@@ -3665,11 +3665,11 @@ bra3_B2F8:
 	BEQ bra3_B30A
 	CMP #$02
 	BEQ bra3_B30A
-	LDA objState,X
+	LDA objFlags,X
 	EOR #$40
-	STA objState,X
+	STA objFlags,X
 bra3_B30A:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BEQ bra3_B31B
 	LDA ($32),Y
@@ -3724,9 +3724,9 @@ loc3_B367:
 	LDA ($32),Y
 	CMP #$FF
 	BNE bra3_B379
-	LDA objState,X
+	LDA objFlags,X
 	EOR #$40
-	STA objState,X
+	STA objFlags,X
 	JMP loc3_B397
 bra3_B379:
 	AND #$F0
@@ -3791,12 +3791,12 @@ sub3_B3C9:
 	BEQ loc3_B3E4
 
 loc3_B3DC:
-	LDA objState,X
+	LDA objFlags,X
 	EOR #$40
-	STA objState,X ; Flip the object horizontally
+	STA objFlags,X ; Flip the object horizontally
 
 loc3_B3E4:
-	LDA objState,X
+	LDA objFlags,X
 	AND #%01000000
 	BEQ bra3_B3F5 ; If the object is facing right, branch
 	LDA ($32),Y
@@ -3850,9 +3850,9 @@ bra3_B441:
 	LDA ($32),Y
 	CMP #$FF
 	BNE bra3_B453
-	LDA objState,X
+	LDA objFlags,X
 	EOR #$40
-	STA objState,X
+	STA objFlags,X
 	JMP bra3_B46C
 bra3_B453:
 	AND #$F0
@@ -4002,7 +4002,7 @@ sub_54_B4FC:
 		BCC bra3_B556 ; Don't clear object if it's above the death barrier
 			LDA #$00
 			STA objSlot,X
-			STA objState,X
+			STA objFlags,X
 			STA objVar,X ; Clear object from memory
 
 bra3_B556:
@@ -4024,7 +4024,7 @@ objFacePlayer:
 		LDY #$40 ; If the object is ahead of the player, set object direction to left
 @setDirection:
 	TYA
-	STA objState,X ; Store object direction
+	STA objFlags,X ; Store object direction
 	RTS
 
 sub_54_B5CD:
@@ -4358,7 +4358,7 @@ sub3_B807:
 	LDA ($32),Y
 	CMP #$80
 	BNE bra3_B82F
-	INC objAction,X
+	INC objState,X
 	LDA #$FF
 	STA $0641,X
 bra3_B82F:
@@ -4411,7 +4411,7 @@ loc3_B883:
 	LDA ($32),Y
 	CMP #$80
 	BNE bra3_B892
-	INC objAction,X
+	INC objState,X
 	LDA #$FF
 	STA $0641,X
 bra3_B892:
@@ -4422,7 +4422,7 @@ jmp_54_B896:
 	STA $34
 	LDA tbl_51_F000+1,Y
 	STA $35
-	LDA objAction,X
+	LDA objState,X
 	ASL
 	ASL ; Multiply the object's action value by 4
 	STA $3F ; Back up in RAM
@@ -4472,7 +4472,7 @@ ptr11_B8DB:
 	BCC bra3_B903_RTS
 	LDA #$00
 	STA $0641,X
-	INC objAction,X
+	INC objState,X
 bra3_B903_RTS:
 	RTS
 
@@ -4527,7 +4527,7 @@ loc3_B954:
 	BCC bra3_B967_RTS
 	LDA #$00
 	STA $0641,X
-	INC objAction,X
+	INC objState,X
 bra3_B967_RTS:
 	RTS
 ptr11_B968:
@@ -4549,18 +4549,18 @@ bra3_B982_RTS:
 	RTS
 ptr11_B983:
 	LDA #$00
-	STA objAction,X
+	STA objState,X
 	RTS
 ptr11_B989:
 	LDA $0668
 	BNE bra3_B992
-	INC objAction,X
+	INC objState,X
 	RTS
 bra3_B992:
 	LDY $3F
 	INY
 	LDA ($34),Y
-	STA objAction,X
+	STA objState,X
 	RTS
 ptr11_B99B:
 	RTS
@@ -4599,7 +4599,7 @@ ptr11_B9D6:
 	LDY $3F
 	INY
 	LDA ($34),Y
-	STA objAction,X
+	STA objState,X
 	RTS
 ptr11_B9DF:
 	LDA objXDistHi,X
@@ -4684,7 +4684,7 @@ loc3_BA56:
 	LDY $3F
 	INY
 	LDA ($34),Y
-	STA objAction,X
+	STA objState,X
 bra3_BA6A_RTS:
 	RTS
 ptr11_BA6B:
@@ -4692,13 +4692,13 @@ ptr11_BA6B:
 	INY
 	LDA ($34),Y
 	CLC
-	ADC objAction,X
-	STA objAction,X
+	ADC objState,X
+	STA objState,X
 	RTS
 ptr11_BA78:
 	LDA $06DC
 	BEQ bra3_BA80_RTS
-	INC objAction,X
+	INC objState,X
 bra3_BA80_RTS:
 	RTS
 ptr11_BA81:
@@ -4711,13 +4711,13 @@ bra3_BA8B:
 	INY
 	LDA ($34),Y
 	CLC
-	ADC objAction,X
-	STA objAction,X
+	ADC objState,X
+	STA objState,X
 	RTS
 ptr11_BA96:
 	INC $05F7
 	LDA #$00
-	STA objAction,X
+	STA objState,X
 	STA $05F6
 	RTS
 ptr11_BAA2:
@@ -4747,7 +4747,7 @@ bra3_BABD:
 	STA objVar,X
 	DEC enemyAnimFrame,X
 	BNE bra3_BADB_RTS
-	INC objAction,X
+	INC objState,X
 bra3_BADB_RTS:
 	RTS
 	LDX $A4
@@ -5004,9 +5004,9 @@ bra3_BC99:
 	SEC
 bra3_BC9A:
 	BCC bra3_BCA6_RTS
-	LDA objState,X
+	LDA objFlags,X
 	AND #$E0
-	STA objState,X
+	STA objFlags,X
 	PLA
 	PLA
 bra3_BCA6_RTS:
@@ -5098,7 +5098,7 @@ sub3_BD03:
 	BEQ bra3_BD17_RTS
 	STY $2B
 	STX $28
-	LDA objState,X
+	LDA objFlags,X
 	AND #$0F
 	CMP #$04
 	BNE bra3_BD18
@@ -5142,8 +5142,8 @@ jmp_54_BD3D:
 bra3_BD56:
 	LDA #$00
 	STA objSlot,X
+	STA objFlags,X
 	STA objState,X
-	STA objAction,X
 	LDA #$FF
 	STA objVar,X
 bra3_BD66:
@@ -5154,7 +5154,7 @@ bra3_BD6B_RTS:
 	RTS
 bra3_BD6C:
 	LDA #$F2
-	STA objAction,X
+	STA objState,X
 	LDY #$22
 	LDA playerPowerup
 	BNE bra3_BD7F
@@ -5236,13 +5236,13 @@ bra3_BDE6:
 	STA objSlot,Y ; Copy the slot value to the mushroom
 	LDA #$00
 	STA objVar,Y
-	STA objAction,Y
-	STA objActionTimer,Y
+	STA objState,Y
+	STA objStateTimer,Y
 	STA enemyAnimFrame,Y
-	LDA objState,Y
+	LDA objFlags,Y
 	AND #$E0
 	ORA #$04
-	STA objState,Y
+	STA objFlags,Y
 	PLA
 	PLA
 	RTS
@@ -5259,12 +5259,12 @@ loc3_BE29:
 	BEQ bra3_BE46
 	CMP #$04
 	BNE bra3_BE4D
-	LDA objState,X
+	LDA objFlags,X
 	AND #$0F
 	CMP #$07
 	BNE bra3_BE4D
 bra3_BE46:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$20
 	BEQ bra3_BE54
 bra3_BE4D:
@@ -5400,9 +5400,9 @@ skipPlayerObjectColl:
 checkIfCollided:
 	BCC objHandlePlayerColl ; If not set, handle collision accordingly
 bra3_BF1A:
-	LDA objState,X
+	LDA objFlags,X
 	AND #%11100000
-	STA objState,X ; Stop checking for collision
+	STA objFlags,X ; Stop checking for collision
 	PLA
 	PLA
 	RTS ; Go back two calls and stop running code for this object
@@ -5441,10 +5441,10 @@ objHandlePlayerColl:
 	BCS bra3_BF1A ; Stop collision check if the player has invulnerability frames
 	; Otherwise, if player has star power:
 		LDX $A4
-		LDA objState,X
+		LDA objFlags,X
 		AND #%11100000 ; Ignore function number bits
 		ORA #%00000100 ; Kill object
-		STA objState,X
+		STA objFlags,X
 		LDA #$00
 		STA objVar,X ; Clear object variables
 		PLA
@@ -5478,16 +5478,16 @@ dealDamage:
 @turnObject:
 	LDA objXDistHi,X
 	BMI @turnObjectRight ; Turn object right if the player is damaged from the right
-	LDA objState,X
+	LDA objFlags,X
 	ORA #%01000000 ; Turn object left if the player is damaged from the left 
 	BNE @setObjectDirection
 
 @turnObjectRight:
-	LDA objState,X
+	LDA objFlags,X
 	AND #%10111111
 
 @setObjectDirection:
-	STA objState,X ; Turn object right
+	STA objFlags,X ; Turn object right
 
 @damagePlayer:
 	LDA #$00
@@ -5516,9 +5516,9 @@ dealDamage:
 	STA invincibilityTimer ; Give player (128) invulnerability frames
 	LDA #SFX_POWERDOWN
 	STA sndSfx ; Play hurt sound
-	LDA objState,X
+	LDA objFlags,X
 	AND #%11100000
-	STA objState,X ; End collision check for this frame
+	STA objFlags,X ; End collision check for this frame
 	RTS
 
 @killPlayer:

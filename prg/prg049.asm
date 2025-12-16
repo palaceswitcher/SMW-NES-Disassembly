@@ -566,7 +566,7 @@ loc5_8350:
 	BEQ bra5_8356
 	RTS
 bra5_8356:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -672,14 +672,14 @@ bra5_83DF:
 	STA objSlot,Y
 	STA objSlot+1,Y
 	LDA #$00
+	STA objFlags,Y
+	STA objFlags+1,Y
 	STA objState,Y
 	STA objState+1,Y
-	STA objAction,Y
-	STA objAction+1,Y
 	RTS
 bra5_844D:
 	JSR sub5_85C6
-	LDA objAction,X
+	LDA objState,X
 	ASL
 	TAY
 	LDA tbl5_8462,Y
@@ -709,8 +709,8 @@ bra5_847B:
 	BPL bra5_8493_RTS
 	LDA #$00
 	STA $0641,X
-	INC objAction,X
-	INC objAction,X
+	INC objState,X
+	INC objState,X
 bra5_8493_RTS:
 	RTS
 ptr10_8494:
@@ -727,7 +727,7 @@ bra5_849F:
 	BMI bra5_84B4_RTS
 	LDA #$00
 	STA $0641,X
-	INC objAction,X
+	INC objState,X
 bra5_84B4_RTS:
 	RTS
 ptr10_84B5:
@@ -748,13 +748,13 @@ bra5_84D0:
 	LDA objXDistHi,X
 	BMI bra5_84DE
 	LDA #$00
-	STA objAction,X
+	STA objState,X
 	STA $0641,X
 	RTS
 bra5_84DE:
 	LDA #$00
 	STA $0641,X
-	DEC objAction,X
+	DEC objState,X
 	RTS
 ptr10_84E7:
 	LDA frameCount
@@ -773,15 +773,15 @@ bra5_84F2:
 	BCC bra5_8513_RTS
 	LDA #$00
 	STA $0641,X
-	DEC objAction,X
-	DEC objAction,X
-	DEC objAction,X
+	DEC objState,X
+	DEC objState,X
+	DEC objState,X
 bra5_8513_RTS:
 	RTS
 bra5_8514:
 	JSR sub5_8599
 	LDA #$40
-	STA objState,Y
+	STA objFlags,Y
 	RTS
 ptr10_851D:
 	LDA frameCount
@@ -800,15 +800,15 @@ bra5_8528:
 	BCC bra5_854E_RTS
 	LDA #$00
 	STA $0641,X
-	DEC objAction,X
-	DEC objAction,X
-	DEC objAction,X
+	DEC objState,X
+	DEC objState,X
+	DEC objState,X
 bra5_854E_RTS:
 	RTS
 bra5_854A:
 	JSR sub5_8599
 	LDA #$00
-	STA objState,Y
+	STA objFlags,Y
 	RTS
 ptr10_8553:
 	LDA frameCount
@@ -842,9 +842,9 @@ sub5_8580:
 	BCC bra5_8598_RTS
 	LDA #$00
 	STA $0641,X
-	INC objAction,X
-	INC objAction,X
-	INC objAction,X
+	INC objState,X
+	INC objState,X
+	INC objState,X
 bra5_8598_RTS:
 	RTS
 sub5_8599:
@@ -863,7 +863,7 @@ sub5_8599:
 	LDA #$00
 	STA objVar,Y
 	STA $0641,Y
-	STA objAction,Y
+	STA objState,Y
 	RTS
 sub5_85C6:
 	LDA #$07
@@ -916,7 +916,7 @@ loc5_862A:
 	BEQ bra5_8630
 	RTS
 bra5_8630:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -933,7 +933,7 @@ tbl5_8644:
 	.word objFlipKill
 ptr10_864E:
 	LDX $A4
-	LDA objAction,X
+	LDA objState,X
 	CMP #$05
 	BCS bra5_86BC_RTS
 	JSR sub5_86BD
@@ -951,7 +951,7 @@ ptr10_864E:
 	LDA #$0F
 	STA sndSfx
 	LDA #$05
-	STA objAction,X
+	STA objState,X
 	LDA #$00
 	STA $0641,X
 	LDY objCount
@@ -971,11 +971,11 @@ ptr10_864E:
 	LDA #$77
 	STA objSlot,Y
 	LDA #$04
-	STA objState,Y
+	STA objFlags,Y
 	LDA #$00
 	STA objVar,Y
 	LDA #$06
-	STA objAction,Y
+	STA objState,Y
 	INC reznorsDefeated
 bra5_86BC_RTS:
 	RTS
@@ -1022,9 +1022,9 @@ bra5_86FF:
 	SEC
 bra5_8700:
 	BCC bra5_870C_RTS
-	LDA objState,X
+	LDA objFlags,X
 	AND #$E0
-	STA objState,X
+	STA objFlags,X
 	PLA
 	PLA
 bra5_870C_RTS:
@@ -1081,7 +1081,7 @@ loc5_8772:
 	RTS
 bra5_8778:
 	LDA #$00
-	STA objAction,X
+	STA objState,X
 	JSR objFacePlayer
 	LDA #$47
 	STA enemyAnimFrame,X
@@ -1089,7 +1089,7 @@ bra5_8778:
 bra5_8786:
 	JSR sub5_8A0D
 	LDX $A4
-	LDA objAction,X
+	LDA objState,X
 	ASL
 	TAY
 	LDA tbl5_879D,Y
@@ -1106,7 +1106,7 @@ ptr10_87A5:
 	LDA enemyAnimFrame,X
 	AND #$4F
 	STA enemyAnimFrame,X
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BNE bra5_87E4
 	LDA #$02
@@ -1120,7 +1120,7 @@ ptr10_87A5:
 	JSR sub3_B7A2
 	BNE bra5_87D0
 	LDA #$01
-	STA objAction,X
+	STA objState,X
 	RTS
 bra5_87D0:
 	LDA #$0E
@@ -1129,7 +1129,7 @@ bra5_87D0:
 	JSR sub3_B7A2
 	BEQ bra5_87E1
 	LDA #$03
-	STA objAction,X
+	STA objState,X
 	RTS
 bra5_87E1:
 	JMP loc5_89D4
@@ -1145,7 +1145,7 @@ bra5_87E4:
 	JSR sub3_B7A2
 	BNE bra5_8800
 	LDA #$03
-	STA objAction,X
+	STA objState,X
 	RTS
 bra5_8800:
 	LDA #$00
@@ -1154,7 +1154,7 @@ bra5_8800:
 	JSR sub3_B7A2
 	BEQ bra5_8811
 	LDA #$01
-	STA objAction,X
+	STA objState,X
 	RTS
 bra5_8811:
 	JMP loc5_89B2
@@ -1163,7 +1163,7 @@ ptr10_8814:
 	AND #$CF
 	ORA #$40
 	STA enemyAnimFrame,X
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BNE bra5_8855
 	LDA #$FB
@@ -1177,7 +1177,7 @@ ptr10_8814:
 	JSR sub3_B7A2
 	BNE bra5_8841
 	LDA #$02
-	STA objAction,X
+	STA objState,X
 	RTS
 bra5_8841:
 	LDA #$08
@@ -1186,7 +1186,7 @@ bra5_8841:
 	JSR sub3_B7A2
 	BEQ bra5_8852
 	LDA #$00
-	STA objAction,X
+	STA objState,X
 	RTS
 bra5_8852:
 	JMP loc5_898B
@@ -1202,7 +1202,7 @@ bra5_8855:
 	JSR sub3_B7A2
 	BNE bra5_8871
 	LDA #$00
-	STA objAction,X
+	STA objState,X
 	RTS
 bra5_8871:
 	LDA #$08
@@ -1213,7 +1213,7 @@ bra5_8871:
 	LDA #$0E
 	STA sndSfx
 	LDA #$02
-	STA objAction,X
+	STA objState,X
 	RTS
 bra5_8886:
 	JMP loc5_8969
@@ -1222,7 +1222,7 @@ ptr10_8889:
 	AND #$CF
 	ORA #$80
 	STA enemyAnimFrame,X
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BNE bra5_88CA
 	LDA #$10
@@ -1236,7 +1236,7 @@ ptr10_8889:
 	JSR sub3_B7A2
 	BNE bra5_88B6
 	LDA #$03
-	STA objAction,X
+	STA objState,X
 	RTS
 bra5_88B6:
 	LDA #$00
@@ -1245,7 +1245,7 @@ bra5_88B6:
 	JSR sub3_B7A2
 	BEQ bra5_88C7
 	LDA #$01
-	STA objAction,X
+	STA objState,X
 	RTS
 bra5_88C7:
 	JMP loc5_89B2
@@ -1261,7 +1261,7 @@ bra5_88CA:
 	JSR sub3_B7A2
 	BNE bra5_88E6
 	LDA #$01
-	STA objAction,X
+	STA objState,X
 	RTS
 bra5_88E6:
 	LDA #$0F
@@ -1270,7 +1270,7 @@ bra5_88E6:
 	JSR sub3_B7A2
 	BEQ bra5_88F7
 	LDA #$03
-	STA objAction,X
+	STA objState,X
 	RTS
 bra5_88F7:
 	JMP loc5_89D4
@@ -1278,7 +1278,7 @@ ptr10_88FA:
 	LDA enemyAnimFrame,X
 	AND #$8F
 	STA enemyAnimFrame,X
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BNE bra5_8939
 	LDA #$14
@@ -1292,7 +1292,7 @@ ptr10_88FA:
 	JSR sub3_B7A2
 	BNE bra5_8925
 	LDA #$00
-	STA objAction,X
+	STA objState,X
 	RTS
 bra5_8925:
 	LDA #$08
@@ -1301,7 +1301,7 @@ bra5_8925:
 	JSR sub3_B7A2
 	BEQ bra5_8936
 	LDA #$02
-	STA objAction,X
+	STA objState,X
 	RTS
 bra5_8936:
 	JMP loc5_8969
@@ -1317,7 +1317,7 @@ bra5_8939:
 	JSR sub3_B7A2
 	BNE bra5_8955
 	LDA #$02
-	STA objAction,X
+	STA objState,X
 	RTS
 bra5_8955:
 	LDA #$08
@@ -1326,7 +1326,7 @@ bra5_8955:
 	JSR sub3_B7A2
 	BEQ bra5_8966
 	LDA #$00
-	STA objAction,X
+	STA objState,X
 	RTS
 bra5_8966:
 	JMP loc5_898B
@@ -1398,7 +1398,7 @@ bra5_89EC:
 loc5_89F1:
 	STA enemyAnimFrame,X
 	LDY #$07
-	LDA objAction,X
+	LDA objState,X
 	BEQ bra5_89FD
 	LDY #$0C
 bra5_89FD:
@@ -1463,7 +1463,7 @@ loc5_8A71:
 	BEQ bra5_8A77
 	RTS
 bra5_8A77:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -1551,7 +1551,7 @@ loc5_8B21:
 	LDA objSlot,X
 	CMP #$50
 	BCS bra5_8B83
-	LDA objState,X
+	LDA objFlags,X
 	AND #$40
 	BNE bra5_8B59
 	LDA #$18
@@ -1560,9 +1560,9 @@ loc5_8B21:
 	JSR sub3_B7A2
 	CMP #$02
 	BEQ bra5_8B48
-	LDA objState,X
+	LDA objFlags,X
 	ORA #$40
-	STA objState,X
+	STA objFlags,X
 	RTS
 bra5_8B48:
 	LDA objXLo,X
@@ -1579,9 +1579,9 @@ bra5_8B59:
 	JSR sub3_B7A2
 	CMP #$02
 	BEQ bra5_8B6F
-	LDA objState,X
+	LDA objFlags,X
 	AND #$BF
-	STA objState,X
+	STA objFlags,X
 	RTS
 bra5_8B6F:
 	LDA objXLo,X
@@ -1594,7 +1594,7 @@ loc5_8B7D:
 	STA objXHi,X
 	JMP loc5_8C17
 bra5_8B83:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$80
 	BNE bra5_8BD2
 	LDA #$08
@@ -1603,9 +1603,9 @@ bra5_8B83:
 	JSR sub3_B7A2
 	CMP #$02
 	BEQ bra5_8BA0
-	LDA objState,X
+	LDA objFlags,X
 	ORA #$80
-	STA objState,X
+	STA objFlags,X
 	RTS
 bra5_8BA0:
 	LDA #$01
@@ -1641,9 +1641,9 @@ bra5_8BD2:
 	JSR sub3_B7A2
 	CMP #$02
 	BEQ bra5_8BE8
-	LDA objState,X
+	LDA objFlags,X
 	AND #$7F
-	STA objState,X
+	STA objFlags,X
 	RTS
 bra5_8BE8:
 	LDA #$FF
@@ -1730,7 +1730,7 @@ loc5_8C8B:
 	BEQ bra5_8C91
 	RTS ; unlogged
 bra5_8C91:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -1886,7 +1886,7 @@ loc5_8DCB:
 	BEQ bra5_8DD1
 	RTS
 bra5_8DD1:
-	LDA objState,X
+	LDA objFlags,X
 	AND #$1F
 	ASL
 	TAY
@@ -1937,9 +1937,9 @@ bra5_8E26:
 	SEC
 bra5_8E27:
 	BCC bra5_8E32
-	LDA objState,X
+	LDA objFlags,X
 	AND #$E0
-	STA objState,X
+	STA objFlags,X
 	RTS
 bra5_8E32:
 	LDA playerMoveFlags
@@ -2732,7 +2732,7 @@ bra5_93A7_RTS:
 ;----------------------------------------
 objCollAsPlatform:
 	LDX $A4
-	LDA objState,X
+	LDA objFlags,X
 	BMI @isStandingOnPlatform
 	JMP loc5_94B2 ; Jump if the player isn't already standing on the platform
 
@@ -2797,7 +2797,7 @@ loc5_93FF:
 
 bra5_9463:
 	LDA #$00
-	STA objState,X
+	STA objFlags,X
 	LDA objXDistHi,X
 	BEQ @continue
 		CMP #-1
@@ -2847,7 +2847,7 @@ bra5_9482:
 	STA objYDistLo,X
 	STA objYDistHi,X
 	LDA #%10000000
-	STA objState,X ; Set state to being stood on
+	STA objFlags,X ; Set state to being stood on
 	RTS
 
 loc5_94B2:
@@ -2913,7 +2913,7 @@ bra5_950E:
 	STA objYDistLo,X
 	STA objYDistHi,X
 	LDA #%10000000
-	STA objState,X ; Set object to "stood on"
+	STA objFlags,X ; Set object to "stood on"
 	LDA #PACT_WALK
 	STA playerAction ; Make player enter walk action? Seems to have no effect
 	STA playerYSpd ; Make player dip down 1 pixel when standing on it
@@ -3650,7 +3650,7 @@ loc5_9A0C:
 bra5_9A12:
 	LDA #$03
 	STA enemyAnimFrame,X
-	LDA objAction,X
+	LDA objState,X
 	ASL
 	TAY
 	LDA tbl5_9A29,Y
@@ -3672,63 +3672,23 @@ bra5_9A38:
 	AND #$0F
 	CMP #$0E
 	BNE bra5_9A44_RTS
-	INC objAction,X
+	INC objState,X
 bra5_9A44_RTS:
 	RTS
 ptr10_9A45:
 	LDA #$00
 	STA objSlot,X
 	RTS
+
+;----------------------------------------
+; KOOPA OBJECT CODE ($9A4B)
+;----------------------------------------
 obj0xE8:
-	LDX $A4 ; Get index for current object?
-	LDA objXLo,X
-	SEC
-	SBC playerXLoDup
-	STA objXDistLo,X
-	LDA objXHi,X
-	SBC playerXHiDup
-	STA objXDistHi,X ; Calculate horizontal distance between the player and the object
-	STA $28
-	BEQ bra5_9A69
-	CMP #$FF
-	BEQ bra5_9A69
-	JMP objRemoveObject
-bra5_9A69:
-	LDA objYLo,X
-	SEC
-	SBC playerYLoDup
-	STA objYDistLo,X
-	LDA objYHi,X
-	SBC playerYHiDup
-	STA objYDistHi,X ; Calculate vertical distance between the player and the object
-	LDA playerYHiDup
-	CMP objYHi,X
-	BEQ bra5_9AAB
-	LDA objYDistHi,X
-	BPL bra5_9A9A
-	LDA objYDistLo,X
-	CLC
-	ADC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	ADC #$00
-	STA objYDistHi,X
-	JMP loc5_9AAB
-bra5_9A9A:
-	LDA objYDistLo,X
-	SEC
-	SBC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	SBC #$00
-	STA objYDistHi,X
-bra5_9AAB:
-loc5_9AAB:
-	LDA freezeFlag
-	BEQ bra5_9AB1
-	RTS
+	LDX $A4
+	objDistCalc bra5_9AB1
+
 bra5_9AB1:
-	LDA objAction,X
+	LDA objState,X
 	ASL
 	TAY ; Get pointer for current action
 	LDA tbl5_9AC3,Y
@@ -3744,6 +3704,7 @@ tbl5_9AC3:
 	.word ptr10_9B8B
 	.word ptr10_9B8C
 	.word ptr10_9BEC
+
 ptr10_9AD1:
 	LDA #$40
 	STA enemyAnimFrame,X
@@ -3753,6 +3714,7 @@ ptr10_9AD1:
 	LDA playerYoshiState
 	BNE bra5_9AE4 ; Branch ahead if the player is riding Yoshi
 	LDY #$18
+
 bra5_9AE4:
 	STY $25
 	LDA objXDistHi,X
@@ -3764,10 +3726,12 @@ bra5_9AE4:
 	ADC objXDistLo,X
 	BCS bra5_9AFF
 	BCC bra5_9B1F
+
 bra5_9AF8:
 	LDA objXDistLo,X
 	CMP #$06
 	BCS bra5_9B1F
+
 bra5_9AFF:
 	LDA objYDistHi,X
 	BEQ bra5_9B15
@@ -3780,15 +3744,19 @@ bra5_9AFF:
 	ADC objYDistLo,X
 	BCS bra5_9B1C
 	BCC bra5_9B1F
+
 bra5_9B15:
 	LDA objYDistLo,X
 	CMP #$00
 	BCS bra5_9B1F
+
 bra5_9B1C:
 	CLC
 	BCC bra5_9B20
+
 bra5_9B1F:
 	SEC
+
 bra5_9B20:
 	BCS bra5_9B2F_RTS
 	LDA playerYSpd
@@ -3796,9 +3764,10 @@ bra5_9B20:
 	LDA playerMoveFlags
 	AND #$04
 	BEQ bra5_9B2F_RTS
-	INC objAction,X
+	INC objState,X
 bra5_9B2F_RTS:
 	RTS
+
 ptr10_9B30:
 	LDA frameCount
 	AND #$00
@@ -3810,9 +3779,10 @@ bra5_9B3B:
 	AND #$0F
 	CMP #$09
 	BNE bra5_9B47_RTS
-	INC objAction,X
+	INC objState,X
 bra5_9B47_RTS:
 	RTS
+
 ptr10_9B48:
 	LDA $06EA
 	BMI bra5_9B68
@@ -3827,11 +3797,12 @@ ptr10_9B48:
 	AND #$01
 	BNE bra5_9B68
 bra5_9B62:
-	INC objAction,X
-	INC objAction,X
+	INC objState,X
+	INC objState,X
 bra5_9B68:
-	INC objAction,X
+	INC objState,X
 	RTS
+
 ptr10_9B6C:
 	LDA objSlot,X
 	STA $25
@@ -3841,7 +3812,7 @@ bra5_9B73:
 	LDA objSlot,Y
 	CMP $25
 	BNE bra5_9B87
-	LDA objAction,Y
+	LDA objState,Y
 	CMP #$05
 	BCS bra5_9B87
 	LDA #$00
@@ -3851,6 +3822,7 @@ bra5_9B87:
 	BCC bra5_9B73
 ptr10_9B8B:
 	RTS
+
 ptr10_9B8C:
 	LDA objSlot,X
 	SEC
@@ -3874,8 +3846,8 @@ ptr10_9B8C:
 	LDA objYHi,X
 	STA objYHi,Y
 	LDA #$00
-	STA objAction,Y
 	STA objState,Y
+	STA objFlags,Y
 	LDA #$80
 	STA objVar,Y
 	LDA $25
@@ -3893,10 +3865,11 @@ bra5_9BDA:
 	LDA #$E9 ; Spawn coin sprite
 bra5_9BE5:
 	STA objSlot,Y ; Store sprite in memory
-	INC objAction,X
+	INC objState,X
 	RTS
 ptr10_9BEC:
 	RTS
+
 ptr6_9BED:
 	LDA #$04
 	ASL
@@ -3963,7 +3936,7 @@ loc5_9C70:
 	BEQ bra5_9C76
 	RTS
 bra5_9C76:
-	LDA objAction,X
+	LDA objState,X
 	BNE bra5_9C9B
 	LDA frameCount
 	AND #$00
@@ -3975,10 +3948,10 @@ bra5_9C86:
 	AND #$1F
 	CMP #$0F
 	BCC bra5_9C9A_RTS
-	INC objAction,X
+	INC objState,X
 	LDA #$00
 	STA objVar,X
-	STA objState,X
+	STA objFlags,X
 bra5_9C9A_RTS:
 	RTS
 bra5_9C9B:
