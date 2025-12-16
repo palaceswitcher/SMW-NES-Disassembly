@@ -2485,7 +2485,7 @@ bra7_9334:
 	AND #$03
 	BNE bra7_9342
 	LDA #$0D
-	JSR jmp_54_B470
+	JSR parseMovementData
 bra7_9342:
 	LDA objXLo,X
 	SEC

@@ -75,7 +75,7 @@ tbl_51_E000:
 	.word ofs_E828
 	.word ofs_E1EB
 	.word ofs_E298
-	.word ofs_E1D6
+	.word ofs_E1D6 ; 0x48
 	.word ofs_E1B7
 	.word ofs_E194
 	.word ofs_E17F
@@ -399,28 +399,20 @@ ofs_E1B7:
 	.byte $00
 	.byte $00
 	.byte $81
+
 ofs_E1D6:
-	.byte $00
-	.byte $FC
-	.byte $00
-	.byte $FD
-	.byte $00
-	.byte $FE
-	.byte $00
-	.byte $FF
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $01
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $03
-	.byte $00
-	.byte $04
-	.byte $00
-	.byte $00
+	.byte 0, -4
+	.byte 0, -3
+	.byte 0, -2
+	.byte 0, -1
+	.byte 0, 0
+	.byte 0, 1
+	.byte 0, 2
+	.byte 0, 3
+	.byte 0, 4
+	.byte 0, 0
 	.byte $81
+
 ofs_E1EB:
 	.byte $00
 	.byte $00

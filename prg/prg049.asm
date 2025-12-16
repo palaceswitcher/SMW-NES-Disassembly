@@ -700,7 +700,7 @@ ptr10_8470:
 	AND #$07
 	BNE bra5_847B
 	LDA #$2B
-	JSR jmp_54_B470
+	JSR parseMovementData
 bra5_847B:
 	JSR sub5_8580
 	LDA #$68
@@ -718,7 +718,7 @@ ptr10_8494:
 	AND #$07
 	BNE bra5_849F
 	LDA #$2B
-	JSR jmp_54_B470
+	JSR parseMovementData
 bra5_849F:
 	JSR sub5_8580
 	LDA #$28
@@ -735,7 +735,7 @@ ptr10_84B5:
 	AND #$07
 	BNE bra5_84C0
 	LDA #$2B
-	JSR jmp_54_B470
+	JSR parseMovementData
 bra5_84C0:
 	LDA #$02
 	STA enemyAnimFrame,X
@@ -761,7 +761,7 @@ ptr10_84E7:
 	AND #$07
 	BNE bra5_84F2
 	LDA #$2B
-	JSR jmp_54_B470
+	JSR parseMovementData
 bra5_84F2:
 	LDA #$41
 	STA enemyAnimFrame,X
@@ -788,7 +788,7 @@ ptr10_851D:
 	AND #$07
 	BNE bra5_8528
 	LDA #$2B
-	JSR jmp_54_B470
+	JSR parseMovementData
 bra5_8528:
 	LDA #$01
 	STA enemyAnimFrame,X
@@ -815,7 +815,7 @@ ptr10_8553:
 	AND #$07
 	BNE bra5_855E
 	LDA #$2B
-	JSR jmp_54_B470
+	JSR parseMovementData
 bra5_855E:
 	LDA #$05
 	STA enemyAnimFrame,X
@@ -3666,7 +3666,7 @@ ptr10_9A2D:
 	AND #$00
 	BNE bra5_9A38
 	LDA #$49
-	JSR jmp_54_B470
+	JSR parseMovementData
 bra5_9A38:
 	LDA objVar,X
 	AND #$0F
@@ -3681,7 +3681,7 @@ ptr10_9A45:
 	RTS
 
 ;----------------------------------------
-; KOOPA OBJECT CODE ($9A4B)
+; BONUS QUESTION BLOCK CODE ($9A4B)
 ;----------------------------------------
 obj0xE8:
 	LDX $A4
@@ -3697,143 +3697,151 @@ bra5_9AB1:
 	STA $33 ; Load upper byte
 	JMP ($32) ; Jump to loaded pointer
 tbl5_9AC3:
-	.word ptr10_9AD1
-	.word ptr10_9B30
-	.word ptr10_9B48
-	.word ptr10_9B6C
-	.word ptr10_9B8B
-	.word ptr10_9B8C
-	.word ptr10_9BEC
+	.word bonusBlockDefault
+	.word bonusBlockHit
+	.word bonusBlockSuccessCheck
+	.word bonusBlockFail
+	.word ptr10_9B8B ; Unused
+	.word bonusBlockSuccess
+	.word bonusBlockSuccessDone
 
-ptr10_9AD1:
+bonusBlockDefault:
 	LDA #$40
 	STA enemyAnimFrame,X
-	LDY #$22
+	LDY #34 ; Default hitbox size
 	LDA playerPowerup
-	BNE bra5_9AE4 ; Branch ahead if the player has no powerup
+	BNE @horizHitboxCheck ; Branch ahead if the player has no powerup
 	LDA playerYoshiState
-	BNE bra5_9AE4 ; Branch ahead if the player is riding Yoshi
-	LDY #$18
+	BNE @horizHitboxCheck ; Branch ahead if the player is riding Yoshi
+		LDY #24 ; Use smaller hitbox if player is small and not riding Yoshi
 
-bra5_9AE4:
+@horizHitboxCheck:
 	STY $25
 	LDA objXDistHi,X
-	BPL bra5_9AF8
-	LDA #$06
-	CLC
-	ADC #$10
-	CLC
-	ADC objXDistLo,X
-	BCS bra5_9AFF
-	BCC bra5_9B1F
+	BPL @horizHitboxCheckLeft
+		LDA #6 ; Extend 6 pixels to the right
+		CLC
+		ADC #16
+		CLC
+		ADC objXDistLo,X
+		BCS @vertHitboxCheck ; Move to the vertical check if player is within 5 pixels of the object's hitbox horizontally
+		BCC @noColl ; Otherwise, stop
 
-bra5_9AF8:
-	LDA objXDistLo,X
-	CMP #$06
-	BCS bra5_9B1F
+	@horizHitboxCheckLeft:
+		LDA objXDistLo,X
+		CMP #6 ; Extend hitbox 6 pixels to the left
+		BCS @noColl
 
-bra5_9AFF:
+@vertHitboxCheck:
 	LDA objYDistHi,X
-	BEQ bra5_9B15
+	BEQ @vertHitboxCheckAbove ; Separate check if the player is above the object
 	CMP #$FF
-	BNE bra5_9B1F
-	LDA $25
-	CLC
-	ADC #$10
-	CLC
-	ADC objYDistLo,X
-	BCS bra5_9B1C
-	BCC bra5_9B1F
+	BNE @noColl ; Stop if the object is off-screen
+		LDA $25
+		CLC
+		ADC #16
+		CLC
+		ADC objYDistLo,X
+		BCS @collOccurred ; If hitboxes overlap
+		BCC @noColl ; If hitboxes don't overlap
 
-bra5_9B15:
-	LDA objYDistLo,X
-	CMP #$00
-	BCS bra5_9B1F
+	@vertHitboxCheckAbove:
+		LDA objYDistLo,X
+		CMP #0
+		BCS @noColl ; Stop if the player is above the object
 
-bra5_9B1C:
+@collOccurred:
 	CLC
 	BCC bra5_9B20
 
-bra5_9B1F:
+@noColl:
 	SEC
 
 bra5_9B20:
-	BCS bra5_9B2F_RTS
+	BCS @stop
 	LDA playerYSpd
-	BEQ bra5_9B2F_RTS
+	BEQ @stop
 	LDA playerMoveFlags
-	AND #$04
-	BEQ bra5_9B2F_RTS
-	INC objState,X
-bra5_9B2F_RTS:
+	AND #PMOVE_VERT
+	BEQ @stop
+		INC objState,X ; Only register a hit if the player is moving up
+
+@stop:
 	RTS
 
-ptr10_9B30:
+bonusBlockHit:
 	LDA frameCount
-	AND #$00
+	AND #0
 	BNE bra5_9B3B
-	LDA #$48
-	JSR jmp_54_B470
+		LDA #$48
+		JSR parseMovementData ; Advance through object movement vectors every other frame
+	
 bra5_9B3B:
 	LDA objVar,X
-	AND #$0F
+	AND #%00001111
 	CMP #$09
-	BNE bra5_9B47_RTS
-	INC objState,X
+	BNE bra5_9B47_RTS ; Continue until the last movement vector is reached
+		INC objState,X
+
 bra5_9B47_RTS:
 	RTS
 
-ptr10_9B48:
-	LDA $06EA
-	BMI bra5_9B68
+bonusBlockSuccessCheck:
+	LDA bonusBlockHitCounts
+	BMI bra5_9B68 ; Automatically fail if there is a negative amount of hits
 	LDA objSlot,X
 	SEC
-	SBC #$EA
+	SBC #OBJ_BONUSBLOCK ; Get correct block index based on the ID
 	TAY
-	LDA $06EA,Y
-	CMP #$02
+	LDA bonusBlockHitCounts,Y
+	CMP #2
 	BEQ bra5_9B62
-	JSR jmp_54_B785
-	AND #$01
-	BNE bra5_9B68
-bra5_9B62:
-	INC objState,X
-	INC objState,X
+		JSR updateRng
+		AND #$01
+		BNE bra5_9B68 ; Fail if the random number is even
+
+	bra5_9B62:
+		INC objState,X
+		INC objState,X ; Hit was correct
+
 bra5_9B68:
-	INC objState,X
+	INC objState,X ; Hit was incorrect
 	RTS
 
-ptr10_9B6C:
+bonusBlockFail:
 	LDA objSlot,X
 	STA $25
-	LDY #$FF
+	LDY #$FF ; This wraps around for zero so the loop can increment at the start
+
+; Despawn other blocks in the row that haven't been hit
 bra5_9B73:
-	INY
+	INY ; Go to next slot
 	LDA objSlot,Y
 	CMP $25
-	BNE bra5_9B87
+	BNE @skipDespawn ; Don't despawn if this block has an ID and is therefore in a different row
 	LDA objState,Y
-	CMP #$05
-	BCS bra5_9B87
-	LDA #$00
-	STA objSlot,Y
-bra5_9B87:
-	CPY objCount
-	BCC bra5_9B73
+	CMP #5
+	BCS @skipDespawn ; Don't despawn block if it was already hit
+		LDA #0
+		STA objSlot,Y ; Despawn object
+	@skipDespawn:
+		CPY objCount
+		BCC bra5_9B73 ; Loop until all unhit blocks are removed as needed
+
 ptr10_9B8B:
 	RTS
 
-ptr10_9B8C:
+bonusBlockSuccess:
 	LDA objSlot,X
 	SEC
-	SBC #$EA
+	SBC #OBJ_BONUSBLOCK
 	TAY
-	LDA $06EA,Y
+	LDA bonusBlockHitCounts,Y
 	CLC
-	ADC #$01
-	STA $06EA,Y
-	STA $25
-	LDA #$01
+	ADC #1
+	STA bonusBlockHitCounts,Y
+	STA $25 ; Increase total correct hits for this row
+	LDA #1
 	STA enemyAnimFrame,X
 	LDY objCount
 	INC objCount
@@ -3844,30 +3852,35 @@ ptr10_9B8C:
 	LDA objYLo,X
 	STA objYLo,Y
 	LDA objYHi,X
-	STA objYHi,Y
-	LDA #$00
+	STA objYHi,Y ; Spawn a coin in the same position as the bonus block
+	LDA #0
 	STA objState,Y
-	STA objFlags,Y
+	STA objFlags,Y ; Default spawn state
 	LDA #$80
 	STA objVar,Y
+
 	LDA $25
 	CMP #$03
-	BNE bra5_9BDA
-	LDA #SFX_BLOCKRELEASE
-	STA sndSfx ; Play block release sound
-	LDA #$E8
-	BNE bra5_9BE5 ; Spawn 1UP
-bra5_9BDA:
-	LDA #$00
-	JSR rewardPoints ; Give the player 100 points
-	LDA #SFX_COIN
-	STA sndSfx ; Play coin sound
-	LDA #$E9 ; Spawn coin sprite
+	BNE @spawnCoin
+	; If all three blocks hit:
+		LDA #SFX_BLOCKRELEASE
+		STA sndSfx ; Play block release sound
+		LDA #$E8
+		BNE bra5_9BE5 ; Spawn 1UP
+
+	@spawnCoin:
+		LDA #0
+		JSR rewardPoints ; Give the player 100 points
+		LDA #SFX_COIN
+		STA sndSfx ; Play coin sound
+		LDA #OBJ_BONUSBLOCKCOIN ; Spawn coin sprite
+
 bra5_9BE5:
 	STA objSlot,Y ; Store sprite in memory
 	INC objState,X
 	RTS
-ptr10_9BEC:
+
+bonusBlockSuccessDone:
 	RTS
 
 ptr6_9BED:
@@ -3911,7 +3924,7 @@ bra5_9C2E:
 	STA objYDistHi,X
 	LDA playerYHiDup
 	CMP objYHi,X
-	BEQ bra5_9C70
+	BEQ loc5_9C70
 	LDA objYDistHi,X
 	BPL bra5_9C5F
 	LDA objYDistLo,X
@@ -3930,7 +3943,7 @@ bra5_9C5F:
 	LDA objYDistHi,X
 	SBC #$00
 	STA objYDistHi,X
-bra5_9C70:
+
 loc5_9C70:
 	LDA freezeFlag
 	BEQ bra5_9C76
@@ -3942,7 +3955,7 @@ bra5_9C76:
 	AND #$00
 	BNE bra5_9C86
 	LDA #$4A
-	JSR jmp_54_B470
+	JSR parseMovementData
 bra5_9C86:
 	LDA objVar,X
 	AND #$1F

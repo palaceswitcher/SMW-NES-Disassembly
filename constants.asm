@@ -144,6 +144,11 @@ VolSet = $F8
 DutySet = $F9
 PitchSet = $FA
 
+; Player Movement Flags
+PMOVE_HORIZ = %00000001
+PMOVE_VERT = %00000100
+PMOVE_SPRHORIZ = %01000000
+
 ; Player Actions
 PACT_IDLE = $00
 PACT_WALK = $01

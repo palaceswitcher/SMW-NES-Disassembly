@@ -113,7 +113,7 @@ bra_80D0:
 	AND #$01
 	BNE bra_80DD
 	LDA $32
-	JSR jmp_54_B470
+	JSR parseMovementData
 bra_80DD:
 	JSR sub_82EA
 	JSR jmp_54_BF74
@@ -334,7 +334,7 @@ bra_82B4:
 	AND #$01
 	BNE bra_82C8_RTS
 	LDA $32
-	JSR jmp_54_B470
+	JSR parseMovementData
 bra_82C8_RTS:
 	RTS
 sub_82C9:
@@ -2377,7 +2377,7 @@ bra_903C:
 	AND #$00
 	BNE bra_904F
 	LDA $25
-	JSR jmp_54_B470
+	JSR parseMovementData
 bra_904F:
 	LDX $A4
 	LDA objVar,X
@@ -3024,7 +3024,7 @@ bra_9545:
 	LDA $05F6
 	CMP #$50
 	BCC bra_955E_RTS
-	JSR jmp_54_B785
+	JSR updateRng
 	AND #$03
 	BNE bra_955E_RTS
 	INC bowserState
@@ -3084,7 +3084,7 @@ bra_95BE:
 	LDA $05F6
 	CMP #$50
 	BCC bra_95D7_RTS
-	JSR jmp_54_B785
+	JSR updateRng
 	AND #$03
 	BNE bra_95D7_RTS
 	INC bowserState

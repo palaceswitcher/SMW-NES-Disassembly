@@ -1350,7 +1350,7 @@ ptr3_8DDA:
 	AND #$03
 	BNE bra8_8DF1
 	LDA $25
-	JSR jmp_54_B470
+	JSR parseMovementData
 bra8_8DF1:
 	LDA objYLo,X
 	CMP #$E0
@@ -2820,7 +2820,7 @@ bra8_9871:
 	AND #$00
 	BNE bra8_9880
 	LDA #$3D
-	JSR jmp_54_B470
+	JSR parseMovementData
 bra8_9880:
 	LDA #$02
 	STA enemyAnimFrame,X
@@ -2902,7 +2902,7 @@ bra8_9917:
 	AND #$00
 	BNE bra8_9927
 	LDA #$3E
-	JSR jmp_54_B470
+	JSR parseMovementData
 bra8_9927:
 	LDA #$02
 	STA enemyAnimFrame,X

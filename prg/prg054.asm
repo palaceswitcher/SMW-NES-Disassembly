@@ -1008,16 +1008,13 @@ tbl3_A435:
 	OBJ_BONUSBLOCKCOIN = ($-tbl3_A435)/2 + $80
 	.word obj0xE7
 
-	OBJ_BONUSBLOCK1 = ($-tbl3_A435)/2 + $80
-	.word obj0xE8 ; 1st bonus block (EA)
-	.word obj0xE8
+	OBJ_BONUSBLOCK = ($-tbl3_A435)/2 + $80
+	.word obj0xE8 ; Row 1
+	.word obj0xE8 ; Row 2
+	.word obj0xE8 ; Row 3
+	.word obj0xE8 ; Row 4
+	.word obj0xE8 ; Row 5
 
-	OBJ_BONUSBLOCK2 = ($-tbl3_A435)/2 + $80
-	.word obj0xE8 ; 2nd bonus block (EC)
-	.word obj0xE8
-
-	OBJ_BONUSBLOCK3 = ($-tbl3_A435)/2 + $80
-	.word obj0xE8 ; 3rd bonus block (EE)
 	.word obj0xED
 
 	OBJ_PSWITCHPLATFORM3 = ($-tbl3_A435)/2 + $80 ; Verify this
@@ -3871,84 +3868,99 @@ bra3_B461:
 bra3_B46C:
 	INC objVar,X
 	RTS
-jmp_54_B470:
+
+;----------------------------------------
+; SUBROUTINE ($B470)
+; Applies movement data vectors to an object, one vector at a time.
+; Parameters:
+; > A: Movement Data
+;----------------------------------------
+parseMovementData:
 	ASL
 	TAY
 	LDA tbl_51_E000,Y
 	STA $32
 	LDA tbl_51_E000+1,Y
-	STA $33
+	STA $33 ; Get movement data pointer
 	JSR sub3_B485
 	LDA curObjPrgBank
 	STA M90_PRG0
 	RTS
+
 sub3_B485:
 	LDX $A4
 	LDA objVar,X
 	ASL
 	TAY
 	LDA ($32),Y
-	PHA
+	PHA ; Push to stack to save cycles
 	CLC
 	ADC objXLo,X
-	STA objXLo,X
+	STA objXLo,X ; The horizontal vector can be added like normal as its a signed value
 	PLA
 	BMI bra3_B4A0
-	LDA objXHi,X
-	ADC #$00
-	BPL bra3_B4A5
-bra3_B4A0:
-	LDA objXHi,X
-	SBC #$00
+		LDA objXHi,X
+		ADC #0 ; Carry if vector is positive
+		BPL bra3_B4A5
+
+	bra3_B4A0:
+		LDA objXHi,X
+		SBC #0 ; Borrow if vector is negative
+
 bra3_B4A5:
 	STA objXHi,X
 	INY
 	LDA ($32),Y
 	BMI bra3_B4C6
-	CLC
-	ADC objYLo,X
-	STA objYLo,X
-	BCS bra3_B4BA
-	CMP #$F0
-	BCC bra3_B4D8
-bra3_B4BA:
-	CLC
-	ADC #$10
-	STA objYLo,X
-	INC objYHi,X
-	JMP loc3_B4D8
-bra3_B4C6:
-	CLC
-	ADC objYLo,X
-	STA objYLo,X
-	BCS bra3_B4D8
-	SEC
-	SBC #$10
-	STA objYLo,X
-	DEC objYHi,X
+	; If vertical movement is positive:
+		CLC
+		ADC objYLo,X
+		STA objYLo,X ; Apply vertical offset
+		BCS bra3_B4BA
+		CMP #$F0
+		BCC bra3_B4D8
+
+	bra3_B4BA:
+		CLC
+		ADC #16
+		STA objYLo,X
+		INC objYHi,X ; Skip past 16 pixels before screen boundary
+		JMP bra3_B4D8
+
+	; If vertical movement is negative:
+	bra3_B4C6:
+		CLC
+		ADC objYLo,X
+		STA objYLo,X
+		BCS bra3_B4D8
+		SEC
+		SBC #16
+		STA objYLo,X
+		DEC objYHi,X ; Skip past 16 pixels before screen boundary
+
 bra3_B4D8:
-loc3_B4D8:
 	INY
 	LDA ($32),Y
-	AND #$F0
+	AND #%11110000
 	BEQ bra3_B4F8
-	CMP #$F0
+	CMP #%11110000
 	BEQ bra3_B4F8
-	LDA ($32),Y
-	AND #$3F
-	BNE bra3_B4ED
-	STA objVar,X
-	RTS
-bra3_B4ED:
-	STA $32
-	LDA objVar,X
-	SEC
-	SBC $32
-	STA objVar,X
-bra3_B4F8:
-	INC objVar,X
-	RTS
+		LDA ($32),Y
+		AND #%00111111
+		BNE bra3_B4ED
+			STA objVar,X ; Set index to be the lower 6 bits of the vector
+			RTS
 
+		bra3_B4ED:
+			STA $32
+			LDA objVar,X
+			SEC
+			SBC $32
+			STA objVar,X
+
+bra3_B4F8:
+	INC objVar,X ; Go to next movement vector
+	RTS
 
 ;----------------------------------------
 ; SUBROUTINE ($B4FC)
@@ -4262,26 +4274,39 @@ bra3_B767:
 	LDA yoshiYHi
 	STA $AB
 	JMP loc3_B0A8
-jmp_54_B785:
+
+;----------------------------------------
+; SUBROUTINE ($B785)
+; Updates the RNG state, using the X and Y registers as inputs
+; Parameters:
+; > X = Input 1
+; > Y = Input 2
+; Returns:
+; > A = RNG State. Also found in RAM
+;----------------------------------------
+updateRng:
 	TXA
-	ADC $E4
-	STA $E4
+	ADC rngState
+	STA rngState
 	AND #$01
-	BNE bra3_B797
-	TXA
-	ADC $E4
-	TYA
-	ADC $E4
-	STA $E4
-	RTS
-bra3_B797:
-	ADC $E4
-	STA $E4
-	ROR
-	ROR
-	ADC $E4
-	STA $E4
-	RTS
+	BNE @isOdd
+	; If state is even:
+		TXA
+		ADC rngState ; This seems to be pointless
+		TYA
+		ADC rngState
+		STA rngState ; Add Y input
+		RTS
+	; If state is odd:
+	@isOdd:
+		ADC rngState
+		STA rngState ; Make RNG value even
+		ROR
+		ROR
+		ADC rngState
+		STA rngState ; rngState = rngState + rngState / 4
+		RTS
+
 sub3_B7A2:
 	STY $2B
 	TAY
@@ -4296,7 +4321,7 @@ sub3_B7A2:
 	STA $AA
 	BCS bra3_B7BD
 	CMP #$F0
-	BCC bra3_B7D5
+	BCC loc3_B7D5
 bra3_B7BD:
 	CLC
 	ADC #$10
@@ -4307,12 +4332,12 @@ bra3_B7C7:
 	CLC
 	ADC $AA
 	STA $AA
-	BCS bra3_B7D5
+	BCS loc3_B7D5
 	SEC
 	SBC #$10
 	STA $AA
 	DEC $AB
-bra3_B7D5:
+
 loc3_B7D5:
 	LDA $36
 	TAY
@@ -4341,6 +4366,7 @@ sub3_B7F2:
 	LDA curObjPrgBank
 	STA M90_PRG0
 	RTS
+
 sub3_B807:
 	LDX $A4
 	LDA $0641,X
@@ -5387,7 +5413,7 @@ objPlayerHitCheck:
 	; If the player's origin is above or at the object's:
 	@vertHitboxCheckAbove:
 		LDA objYDistLo,X
-		CMP #$00
+		CMP #0
 		BCS skipPlayerObjectColl ; Stop if the player is above the object
 	; Otherwise, continue and handle collision with player
 	@handleCollision:
@@ -5399,6 +5425,7 @@ skipPlayerObjectColl:
 
 checkIfCollided:
 	BCC objHandlePlayerColl ; If not set, handle collision accordingly
+
 bra3_BF1A:
 	LDA objFlags,X
 	AND #%11100000

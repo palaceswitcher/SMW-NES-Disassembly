@@ -28,6 +28,7 @@ scrollY = $03
 frameCount = $06
 bank42Backup = $08
 bank41Backup = $09
+rngState = $E4
 btnHeld = $030A
 btnPressed = $030C
 btnMirrored = $030E
@@ -229,6 +230,7 @@ objState = $0669 ; Object-specific states. Not used by all objects
 objStateTimer = $0641
 enemyAnimFrame = $0655
 objFrameCount = $062B
+bonusBlockHitCounts = $06EA
 
 ; Special objects
 bubbleX = $0619

@@ -3245,7 +3245,7 @@ bra6_93CB:
 	AND #$7F
 	STA objVar,X
 bra6_93D3:
-	JSR jmp_54_B785
+	JSR updateRng
 	AND #$07
 	ASL
 	CMP $0668
@@ -3255,7 +3255,7 @@ bra6_93D3:
 	LDA tbl6_95CD,Y
 	STA enemyAnimFrame,X
 bra6_93E8:
-	JSR jmp_54_B785
+	JSR updateRng
 	AND #$07
 	STA $32
 	ASL
