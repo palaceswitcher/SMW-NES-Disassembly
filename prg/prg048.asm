@@ -156,7 +156,7 @@ bra4_8109:
 	JMP loc4_813C ; unlogged
 bra4_811E:
 	AND #$F0
-	BEQ bra4_813C
+	BEQ loc4_813C
 	LDA ($32),Y
 	AND #$3F
 	BNE bra4_8131
@@ -170,288 +170,232 @@ bra4_8131:
 	SEC
 	SBC $32
 	STA objVar,X
-bra4_813C:
+
 loc4_813C:
 	INC objVar,X
 	RTS
+
 sub4_8140:
 	LDX $A4
 	LDA objVar,X
-	AND #$7F
+	AND #%01111111
 	ASL
 	TAY
 	LDA objFlags,X
-	AND #$20
+	AND #%00100000
 	BNE bra4_8153
 	JMP loc4_81D1
-bra4_8153:
-	JSR sub3_B077
-	BNE bra4_81B8
-	LDA objVar,X
-	AND #$7F
-	CMP #$07
-	BCS bra4_8164
-	INC objVar,X
-bra4_8164:
-	PHA
-	CLC
-	ADC objYLo,X
-	STA objYLo,X
-	PLA
-	BMI bra4_8176
-	LDA objYHi,X
-	ADC #$00
-	BPL bra4_817B
-bra4_8176:
-	LDA objYHi,X
-	SBC #$00
-bra4_817B:
-	STA objYHi,X
-	JSR sub3_B057
-	BEQ bra4_818B
-	LDA objFlags,X
-	EOR #$40
-	STA objFlags,X
-bra4_818B:
-	LDY #$00
-	LDA ($32),Y
-	TAY
-	LDA objFlags,X
-	AND #$40
-	BEQ bra4_819C
-	TYA
-	EOR #$FF
-	TAY
-	INY
-bra4_819C:
-	TYA
-	PHA
-	CLC
-	ADC objXLo,X
-	STA objXLo,X
-	PLA
-	BMI bra4_81AF
-	LDA objXHi,X
-	ADC #$00
-	BPL bra4_81B4
-bra4_81AF:
-	LDA objXHi,X
-	SBC #$00
-bra4_81B4:
-	STA objXHi,X
-	RTS
-bra4_81B8:
-	LDA objYLo,X
-	AND #$F8
-	STA objYLo,X
-	LDA objFlags,X
-	AND #$C0
-	STA objFlags,X
-	LDA objVar,X
-	AND #$80
-	STA objVar,X
-	RTS
-loc4_81D1:
-	INY
-	LDA ($32),Y
-	BMI bra4_81EC
-	JSR sub3_B077
-	BNE bra4_81EC
-	LDA objFlags,X
-	ORA #$20
-	STA objFlags,X
-	LDA objVar,X
-	AND #$80
-	STA objVar,X
-	RTS
-bra4_81EC:
-	DEY
-	JSR sub3_B057
-	BEQ bra4_81FA
-	LDA objFlags,X
-	EOR #$40
-	STA objFlags,X
-bra4_81FA:
-	LDA objFlags,X
-	AND #$40
-	BEQ bra4_820B
-	LDA ($32),Y
-	EOR #$FF
-	CLC
-	ADC #$01
-	JMP loc4_820D
-bra4_820B:
-	LDA ($32),Y
-loc4_820D:
-	PHA
-	CLC
-	ADC objXLo,X
-	STA objXLo,X
-	PLA
-	BMI bra4_821F
-	LDA objXHi,X
-	ADC #$00
-	BPL bra4_8224
-bra4_821F:
-	LDA objXHi,X
-	SBC #$00
-bra4_8224:
-	STA objXHi,X
-	INY
-	LDA ($32),Y
-	PHA
-	CLC
-	ADC objYLo,X
-	STA objYLo,X
-	PLA
-	BMI bra4_823C
-	LDA objYHi,X
-	ADC #$00
-	BPL bra4_8241
-bra4_823C:
-	LDA objYHi,X
-	SBC #$00
-bra4_8241:
-	STA objYHi,X
-	INY
-	LDA ($32),Y
-	CMP #$FF
-	BNE bra4_8256
-	LDA objFlags,X
-	EOR #$40
-	STA objFlags,X
-	JMP loc4_8274
-bra4_8256:
-	AND #$F0
-	BEQ bra4_8274
-	LDA ($32),Y
-	AND #$3F
-	BNE bra4_8269
-	LDA objVar,X
-	AND #$80
-	STA objVar,X
-	RTS
+
+	; When Chargin' Chuck is moving downwards
+	bra4_8153:
+		JSR sub3_B077
+		BNE bra4_81B8
+			LDA objVar,X
+			AND #%01111111
+			CMP #$07 ; Maximum speed
+			BCS bra4_8164
+				INC objVar,X ; Accelerate the object's vertical speed
+		bra4_8164:
+			PHA
+			CLC
+			ADC objYLo,X
+			STA objYLo,X ; Apply speed to object's position
+			PLA
+			; Handle signed speed values
+			BMI bra4_8176
+				LDA objYHi,X
+				ADC #0
+				BPL bra4_817B
+			bra4_8176:
+				LDA objYHi,X
+				SBC #0
+		
+		bra4_817B:
+			STA objYHi,X
+			JSR sub3_B057
+			BEQ bra4_818B
+			LDA objFlags,X
+			EOR #$40
+			STA objFlags,X
+
+		bra4_818B:
+			LDY #$00
+			LDA ($32),Y
+			TAY
+			LDA objFlags,X
+			AND #%01000000
+			BEQ bra4_819C
+			TYA
+			EOR #$FF
+			TAY
+			INY
+
+		bra4_819C:
+			TYA
+			PHA
+			CLC
+			ADC objXLo,X
+			STA objXLo,X
+			PLA
+			BMI bra4_81AF
+			LDA objXHi,X
+			ADC #$00
+			BPL bra4_81B4
+
+		bra4_81AF:
+			LDA objXHi,X
+			SBC #$00
+
+		bra4_81B4:
+			STA objXHi,X
+			RTS
+
+		bra4_81B8:
+			LDA objYLo,X
+			AND #%11111000
+			STA objYLo,X
+			LDA objFlags,X
+			AND #%11000000
+			STA objFlags,X
+			LDA objVar,X
+			AND #$80
+			STA objVar,X
+			RTS
+
+	; When Chargin' Chuck isn't falling
+	loc4_81D1:
+		INY
+		LDA ($32),Y ; Get vertical movement vector
+		BMI bra4_81EC
+		JSR sub3_B077
+		BNE bra4_81EC ; Ignore downwards speed if the chuck is standing on solid ground
+		; Chuck has started falling down
+			LDA objFlags,X
+			ORA #%00100000
+			STA objFlags,X ; Make the chuck move down
+			LDA objVar,X
+			AND #%10000000
+			STA objVar,X ; Reset the chuck's movement
+			RTS
+
+		; Chuck hasn't started falling down
+		bra4_81EC:
+			DEY
+			JSR sub3_B057
+			BEQ bra4_81FA
+				LDA objFlags,X
+				EOR #%01000000
+				STA objFlags,X ; Turn the chuck around
+		bra4_81FA:
+			LDA objFlags,X
+			AND #%01000000
+			BEQ bra4_820B
+			; Chuck is facing left
+				LDA ($32),Y
+				EOR #%11111111
+				CLC
+				ADC #1 ; Invert horizontal vector if the chuck is moving left
+				JMP loc4_820D
+
+			; Chuck if facing right
+			bra4_820B:
+				LDA ($32),Y
+
+		loc4_820D:
+			PHA
+			CLC
+			ADC objXLo,X
+			STA objXLo,X
+			PLA
+			BMI bra4_821F
+			LDA objXHi,X
+			ADC #0
+			BPL bra4_8224
+
+		bra4_821F:
+			LDA objXHi,X
+			SBC #0
+
+		bra4_8224:
+			STA objXHi,X
+			INY
+			LDA ($32),Y
+			PHA
+			CLC
+			ADC objYLo,X
+			STA objYLo,X
+			PLA
+			BMI bra4_823C
+			LDA objYHi,X
+			ADC #0
+			BPL bra4_8241
+
+		bra4_823C:
+			LDA objYHi,X
+			SBC #0
+
+		bra4_8241:
+			STA objYHi,X
+			INY
+			LDA ($32),Y
+			CMP #$FF
+			BNE bra4_8256
+			LDA objFlags,X
+			EOR #$40
+			STA objFlags,X
+			JMP loc4_8274
+
+		bra4_8256:
+			AND #$F0
+			BEQ loc4_8274
+			LDA ($32),Y
+			AND #$3F
+			BNE bra4_8269
+			LDA objVar,X
+			AND #$80
+			STA objVar,X
+			RTS
+
 bra4_8269:
 	STA $32
 	LDA objVar,X
 	SEC
 	SBC $32
 	STA objVar,X
-bra4_8274:
+
 loc4_8274:
 	INC objVar,X
 	RTS
-obj0xBE:
+
+;----------------------------------------
+; CHARGIN' CHUCK OBJECT CODE ($8728)
+;----------------------------------------
+objCharginChuck:
 	LDX $A4
 	LDA objVar,X
 	BMI bra4_8282
 	JMP loc4_82F0
+
 bra4_8282:
 	CMP #$80
 	BEQ bra4_8289
 	JMP sub_54_B4FC
+
 bra4_8289:
-	LDA objXLo,X ; unlogged
-	SEC ; unlogged
-	SBC playerXLoDup ; unlogged
-	STA objXDistLo,X ; unlogged
-	LDA objXHi,X ; unlogged
-	SBC playerXHiDup ; unlogged
-	STA objXDistHi,X ; unlogged
-	STA $28 ; unlogged
-	BEQ bra4_82A5 ; unlogged
-	CMP #$FF ; unlogged
-	BEQ bra4_82A5 ; unlogged
-	JMP objRemoveObject ; unlogged
-bra4_82A5:
-	LDA objYLo,X ; unlogged
-	SEC ; unlogged
-	SBC playerYLoDup ; unlogged
-	STA objYDistLo,X ; unlogged
-	LDA objYHi,X ; unlogged
-	SBC playerYHiDup ; unlogged
-	STA objYDistHi,X ; unlogged
-	LDA playerYHiDup ; unlogged
-	CMP objYHi,X ; unlogged
-	BEQ bra4_82E7 ; unlogged
-	LDA objYDistHi,X ; unlogged
-	BPL bra4_82D6 ; unlogged
-	LDA objYDistLo,X ; unlogged
-	CLC ; unlogged
-	ADC #$10 ; unlogged
-	STA objYDistLo,X ; unlogged
-	LDA objYDistHi,X ; unlogged
-	ADC #$00 ; unlogged
-	STA objYDistHi,X ; unlogged
-	JMP loc4_82E7 ; unlogged
-bra4_82D6:
-	LDA objYDistLo,X ; unlogged
-	SEC ; unlogged
-	SBC #$10 ; unlogged
-	STA objYDistLo,X ; unlogged
-	LDA objYDistHi,X ; unlogged
-	SBC #$00 ; unlogged
-	STA objYDistHi,X ; unlogged
-bra4_82E7:
-loc4_82E7:
-	LDA freezeFlag ; unlogged
-	BEQ bra4_82ED ; unlogged
-	RTS ; unlogged
+	objDistCalc bra4_82ED
+
 bra4_82ED:
-	JMP objFacePlayer ; unlogged
+	JMP objFacePlayer
+
 loc4_82F0:
 	LDA #$07
-	STA $25
+	STA $25 ; Chucks can't be eaten
 	LDX $A4
-	LDA objXLo,X
-	SEC
-	SBC playerXLoDup
-	STA objXDistLo,X
-	LDA objXHi,X
-	SBC playerXHiDup
-	STA objXDistHi,X
-	STA $28
-	BEQ bra4_8312
-	CMP #$FF
-	BEQ bra4_8312
-	JMP objRemoveObject
-bra4_8312:
-	LDA objYLo,X
-	SEC
-	SBC playerYLoDup
-	STA objYDistLo,X
-	LDA objYHi,X
-	SBC playerYHiDup
-	STA objYDistHi,X
-	LDA playerYHiDup
-	CMP objYHi,X
-	BEQ bra4_8354
-	LDA objYDistHi,X
-	BPL bra4_8343
-	LDA objYDistLo,X ; unlogged
-	CLC ; unlogged
-	ADC #$10 ; unlogged
-	STA objYDistLo,X ; unlogged
-	LDA objYDistHi,X ; unlogged
-	ADC #$00 ; unlogged
-	STA objYDistHi,X ; unlogged
-	JMP loc4_8354 ; unlogged
-bra4_8343:
-	LDA objYDistLo,X
-	SEC
-	SBC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	SBC #$00
-	STA objYDistHi,X
-bra4_8354:
-loc4_8354:
-	LDA freezeFlag
-	BEQ bra4_835A
-	RTS ; unlogged
+	objDistCalc bra4_835A
+
 bra4_835A:
 	LDA objFlags,X
-	AND #$1F
+	AND #%00011111
 	ASL
 	TAY
 	LDA tbl4_836E,Y
@@ -465,6 +409,7 @@ tbl4_836E:
 	.word objPowerupEatCheck
 	.word ptr9_8378
 	.word objFlipKill
+
 ptr9_8378:
 	JSR sub4_83B3
 	JSR objCapeHitCheck
@@ -472,83 +417,92 @@ ptr9_8378:
 	LDA #$30
 	STA playerYSpd
 	LDA playerMoveFlags
-	ORA #$04
-	EOR #$01
-	STA playerMoveFlags
-	LDA #$30
+	ORA #PMOVE_VERT
+	EOR #PMOVE_HORIZ
+	STA playerMoveFlags ; Move player up and backwards
+	LDA #48
 	STA playerXSpd
-	LDA #$01
-	JSR rewardPoints
-	LDA #$12
-	STA sndSfx
+
+	LDA #1
+	JSR rewardPoints ; Give player 200 points
+	LDA #SFX_ENEMYHIT2
+	STA sndSfx ; Play hit sound
 	LDA objSlot,X
 	CLC
-	ADC #$04
-	CMP #$D0
+	ADC #4
+	CMP #OBJ_CHARGINCHUCK_CHASE_HIT2+2 ; The ID will go past this pointer if the chuck is hit more than twice
 	BCC bra4_83AA
-	LDA #$81
-	STA objVar,X
-	RTS
-bra4_83AA:
-	STA objSlot,X
-	LDA #$00
-	STA objVar,X
-	RTS
+		LDA #$81
+		STA objVar,X ; Defeat chuck if on third hit
+		RTS
+
+	bra4_83AA:
+		STA objSlot,X
+		LDA #$00
+		STA objVar,X
+		RTS
+
 sub4_83B3:
 	LDA objVar,X
 	CMP #$08
 	BCS bra4_8422
-	LDA objFlags,X
-	AND #$20
-	BEQ bra4_83DC
-	LDA objFrameCount ; unlogged
-	AND #$00 ; unlogged
-	BNE bra4_83D9 ; unlogged
-	LDA #$80 ; unlogged
-	ASL ; unlogged
-	TAY ; unlogged
-	LDA tbl4_9A83,Y ; unlogged
-	STA $32 ; unlogged
-	LDA tbl4_9A83+1,Y ; unlogged
-	STA $33 ; unlogged
-	JSR sub4_8140 ; unlogged
-bra4_83D9:
-	JMP loc4_83F4 ; unlogged
-bra4_83DC:
-	LDA objFrameCount
-	AND #$0E
-	BNE bra4_83F4
-	LDA #$80
-	ASL
-	TAY
-	LDA tbl4_9A83,Y
-	STA $32
-	LDA tbl4_9A83+1,Y
-	STA $33
-	JSR sub4_8140
-bra4_83F4:
-loc4_83F4:
-	LDA objVar,X
-	CMP #$04
-	BCC bra4_8421_RTS
-	LDA objYDistHi,X
-	BPL bra4_8421_RTS
-	LDA objSlot,X
-	CLC
-	ADC #$02
-	STA objSlot,X
-	LDA #$11
-	STA objVar,X
-	LDA objXDistHi,X
-	AND #$40
-	EOR #$40
-	STA $25
-	LDA objFlags,X
-	AND #$BF
-	ORA $25
-	STA objFlags,X
-bra4_8421_RTS:
-	RTS
+	; Looking around
+		LDA objFlags,X
+		AND #%00100000
+		BEQ bra4_83DC
+		; Chuck is moving down:
+			LDA objFrameCount
+			AND #$00
+			BNE bra4_83D9
+				LDA #$80
+				ASL
+				TAY
+				LDA tbl4_9A83,Y
+				STA $32
+				LDA tbl4_9A83+1,Y
+				STA $33
+				JSR sub4_8140
+
+			bra4_83D9:
+				JMP loc4_83F4
+
+		; Chuck is moving up or on level ground:
+		bra4_83DC:
+			LDA objFrameCount
+			AND #%00001110
+			BNE loc4_83F4
+				LDA #$80
+				ASL
+				TAY
+				LDA tbl4_9A83,Y
+				STA $32
+				LDA tbl4_9A83+1,Y
+				STA $33
+				JSR sub4_8140
+
+	loc4_83F4:
+		LDA objVar,X
+		CMP #$04
+		BCC bra4_8421_RTS
+		LDA objYDistHi,X
+		BPL bra4_8421_RTS
+		LDA objSlot,X
+		CLC
+		ADC #2
+		STA objSlot,X
+		LDA #$11
+		STA objVar,X
+		LDA objXDistHi,X
+		AND #$40
+		EOR #$40
+		STA $25
+		LDA objFlags,X
+		AND #$BF
+		ORA $25
+		STA objFlags,X
+	bra4_8421_RTS:
+		RTS
+
 bra4_8422:
 	LDA objFrameCount
 	AND #$00
@@ -601,6 +555,7 @@ bra4_8468:
 	.byte $40
 	.byte $01
 	.byte $00
+
 obj0xC0:
 	LDX $A4
 	LDA objVar,X
@@ -612,52 +567,8 @@ bra4_8488:
 	BEQ bra4_848F
 	JMP sub_54_B4FC ; unlogged
 bra4_848F:
-	LDA objXLo,X
-	SEC
-	SBC playerXLoDup
-	STA objXDistLo,X
-	LDA objXHi,X
-	SBC playerXHiDup
-	STA objXDistHi,X
-	STA $28
-	BEQ bra4_84AB
-	CMP #$FF
-	BEQ bra4_84AB
-	JMP objRemoveObject ; unlogged
-bra4_84AB:
-	LDA objYLo,X
-	SEC
-	SBC playerYLoDup
-	STA objYDistLo,X
-	LDA objYHi,X
-	SBC playerYHiDup
-	STA objYDistHi,X
-	LDA playerYHiDup
-	CMP objYHi,X
-	BEQ bra4_84ED
-	LDA objYDistHi,X
-	BPL bra4_84DC
-	LDA objYDistLo,X ; unlogged
-	CLC ; unlogged
-	ADC #$10 ; unlogged
-	STA objYDistLo,X ; unlogged
-	LDA objYDistHi,X ; unlogged
-	ADC #$00 ; unlogged
-	STA objYDistHi,X ; unlogged
-	JMP loc4_84ED ; unlogged
-bra4_84DC:
-	LDA objYDistLo,X
-	SEC
-	SBC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	SBC #$00
-	STA objYDistHi,X
-bra4_84ED:
-loc4_84ED:
-	LDA freezeFlag
-	BEQ bra4_84F3
-	RTS ; unlogged
+	objDistCalc bra4_84F3
+
 bra4_84F3:
 	JMP objFacePlayer
 loc4_84F6:
@@ -3736,100 +3647,53 @@ ofs_9A9B:
 	.byte $0A
 	.byte $80
 ofs_9B1C:
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $FF
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $02
-	.byte $00
-	.byte $00
-	.byte $00
+	.byte 0, 0
+	.byte 0, 0
+	.byte 0, 0
+	.byte 0, 0
+	.byte 0, 0
+	.byte 0, 0
+	.byte 0, 0
+	.byte 0, 0
+	.byte -1, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0 ;
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 2, 0
+	.byte 0, 0
 	.byte $80
 ofs_9B7B:
 	.byte $04
@@ -4640,361 +4504,4 @@ ofs_9D33:
 	.byte $00
 	.byte $00
 	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
-	.byte $00
+

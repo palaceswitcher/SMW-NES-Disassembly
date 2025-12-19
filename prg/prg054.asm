@@ -921,8 +921,8 @@ tbl3_A435:
 	.word obj0xBD
 
 	OBJ_CHARGINCHUCK = ($-tbl3_A435)/2 + $80
-	.word obj0xBE
-	.word obj0xBE
+	.word objCharginChuck
+	.word objCharginChuck
 
 	OBJ_CHARGINCHUCK_CHASE = ($-tbl3_A435)/2 + $80
 	.word obj0xC0
@@ -933,8 +933,8 @@ tbl3_A435:
 	.word obj0xC2
 
 	OBJ_CHARGINCHUCK_HIT = ($-tbl3_A435)/2 + $80
-	.word obj0xBE
-	.word obj0xBE
+	.word objCharginChuck
+	.word objCharginChuck
 
 	OBJ_CHARGINCHUCK_CHASE_HIT = ($-tbl3_A435)/2 + $80
 	.word obj0xC0
@@ -945,8 +945,8 @@ tbl3_A435:
 	.word obj0xC2
 
 	OBJ_CHARGINCHUCK_HIT2 = ($-tbl3_A435)/2 + $80
-	.word obj0xBE
-	.word obj0xBE
+	.word objCharginChuck
+	.word objCharginChuck
 
 	OBJ_CHARGINCHUCK_CHASE_HIT2 = ($-tbl3_A435)/2 + $80
 	.word obj0xC0
@@ -3225,24 +3225,27 @@ sub3_B043:
 	ADC #$04 ; Object's hitbox height + 4
 	JMP loc3_B08D
 
+;----------------------------------------
+; SUBROUTINE ($B057)
+;----------------------------------------
 sub3_B057:
-	STY $2B
+	STY $2B ; Back up Y register
 	LDX $A4
 	LDY objSlot,X
 	LDA objFlags,X
-	AND #$40
+	AND #%01000000
 	BEQ bra3_B069
-	LDA #$00
-	BEQ bra3_B06C
+		LDA #0
+		BEQ bra3_B06C
 
-bra3_B069:
-	LDA objectXHitBoxSizes,Y
+	bra3_B069:
+		LDA objectXHitBoxSizes,Y
 
 bra3_B06C:
 	STA $36
 	LDA objectYHitBoxSizes,Y
 	SEC
-	SBC #$08
+	SBC #8
 	JMP loc3_B08D
 
 ;----------------------------------------
@@ -3256,7 +3259,7 @@ bra3_B06C:
 ; $32 - $33 = Movement data pointer
 ;----------------------------------------
 sub3_B077:
-	STY $2B
+	STY $2B ; Back up Y register
 	LDX $A4
 	LDY objSlot,X ; Load current object
 	LDA objFlags,X ; Get state of current object

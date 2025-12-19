@@ -134,23 +134,23 @@ bubbleXMovement:
 	
 sub4_A0B0:
 	TXA
-	ADC $E4
-	STA $E4
+	ADC rngState
+	STA rngState
 	AND #$01
 	BNE bra4_A0C2
 	TXA
-	ADC $E4
+	ADC rngState
 	TYA
-	ADC $E4
-	STA $E4
+	ADC rngState
+	STA rngState
 	RTS
 bra4_A0C2:
-	ADC $E4
-	STA $E4
+	ADC rngState
+	STA rngState
 	ROR
 	ROR
-	ADC $E4
-	STA $E4
+	ADC rngState
+	STA rngState
 	RTS
 
 ;----------------------------------------

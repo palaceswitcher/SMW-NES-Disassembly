@@ -1862,20 +1862,20 @@ tbl2_A93B:
 	.word ptr6_A005 ; (different)
 	.word ptr6_A005 ; (different)
 	.word obj0xBD
-	.word obj0xBE
-	.word obj0xBE
+	.word objCharginChuck
+	.word objCharginChuck
 	.word obj0xC0
 	.word obj0xC0
 	.word obj0xC2
 	.word obj0xC2
-	.word obj0xBE
-	.word obj0xBE
+	.word objCharginChuck
+	.word objCharginChuck
 	.word obj0xC0
 	.word obj0xC0
 	.word obj0xC2
 	.word obj0xC2
-	.word obj0xBE
-	.word obj0xBE
+	.word objCharginChuck
+	.word objCharginChuck
 	.word obj0xC0
 	.word obj0xC0
 	.word obj0xCE

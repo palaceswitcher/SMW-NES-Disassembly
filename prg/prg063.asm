@@ -313,7 +313,7 @@ clearMemory:
 	STA ppuMaskMirror ; Set PPU mask
 
 loc3_E277:
-	INC $00E4
+	INC a:rngState
 	LDA frameCount
 	CMP frameCount+1
 	BEQ loc3_E277 ; Loop if the duplicate frame counter is the same as the main counter
@@ -2755,23 +2755,23 @@ bra3_F24C:
 bra3_F258:
 	RTS
 	TXA
-	ADC $00E4
-	STA $00E4
+	ADC a:rngState
+	STA a:rngState
 	AND #$01
 	BNE bra3_F270
 	TXA
-	ADC $00E4
+	ADC a:rngState
 	TYA
-	ADC $00E4
-	STA $00E4
+	ADC a:rngState
+	STA a:rngState
 	RTS
 bra3_F270:
-	ADC $00E4
-	STA $00E4
+	ADC a:rngState
+	STA a:rngState
 	ROR
 	ROR
-	ADC $00E4
-	STA $00E4
+	ADC a:rngState
+	STA a:rngState
 	RTS
 
 ;----------------------------------------
