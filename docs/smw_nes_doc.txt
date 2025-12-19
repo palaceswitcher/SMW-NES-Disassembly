@@ -1,4 +1,4 @@
-SMW NES Hacking Document (2025-12-7)
+SMW NES Hacking Document (2025-12-17)
 Note: Some information here may be inaccurate or wrong.
 
 -----Level Data-----
@@ -455,8 +455,9 @@ $0016:	Player Animation (Seems to mirror $001D)
 $0017:	Player Animation Frame
 $0018:	Player Animation Frame Length (In video frames, stops once it loops back)
 $0019:	Player Movement Flags
-> Bit 0/6 = Horizontal Direction (0 = Right, 1 = Left)
+> Bit 0 = Horizontal Direction (0 = Right, 1 = Left)
 > Bit 2 = Vertical Direction (0 = Down, 1 = Up)
+> Bit 6 = Sprite Horizontal Direction (0 = Right, 1 = Left)
 $001A:	Player Sprite Attributes
 $001B - $001C:	Player Frame Pointer
 $001D:	Player Action
@@ -661,6 +662,7 @@ $00E1:	Player State
 > 0x0C = Yoshi spit out
 > 0x0D = Yoshi spit out (Walking)
 > 0x0E = Yoshi spit out (Ducking)
+$00E4:	RNG State
 $00E5 - $00E6:	Player Animation Pointer
 $00FE - $00FF:	Sound Driver Pointer
 $030A - $030B:	Controller 1/2 Buttons Held
@@ -917,9 +919,11 @@ $0500 - $0513:	Object Slots
 > 0xE6 = Dino Torch
 > 0xE8 = Bonus block 1UP (behind BG layer)
 > 0xE9 = Bonus block coin
-> 0xEA = Bonus question block 1
-> 0xEC = Bonus question block 2
-> 0xEE = Bonus question block 3
+> 0xEA = Bonus Question Block (Row 1)
+> 0xEB = Bonus Question Block (Row 2)
+> 0xEC = Bonus Question Block (Row 3)
+> 0xED = Bonus Question Block (Row 4)
+> 0xEE = Bonus Question Block (Row 5)
 > 0xF0 = Nothing?
 > 0xF2 = BG Priority Flag Up (Applies to sprites above this)
 > 0xF3 = BG Priority Flag Down (Applies to sprites below this)
@@ -933,7 +937,7 @@ $0514 - $0527:	Object X Positions
 $0528 - $053B:	Object X Screens
 $053C - $054F:	Object Y Positions
 $0550 - $0563:	Object Y Screens
-$0564 - $0577:	Object Statuses (Also generally used for variables, though these are primarily used for things like flipping objects)
+$0564 - $0577:	Object Status Bits (Sometimes used for variables, though generally used as state flags)
 > Bit 7 = Carried Flag (Not applicable for all objects)
 > Bit 6 = Direction
  > 0 = Right
@@ -1078,7 +1082,7 @@ $0641 - $0654:	Object Action Timer
 $0655 - $065C:	Enemy Animation Frames (not all enemies)
 $0666:	Reznor Counter
 $0668:	ON/OFF Block Flag
-$0669 - $067D:	Object Action? (See below for more details)
+$0669 - $067D:	Object States/Variables? (See below for more details)
 $067C:	Unused P-Switch Timer
 $067D:	Game Freeze Flag
 $06A2 - $06BD:	Checkpoint Flags
@@ -1097,6 +1101,7 @@ $06E8:	Clown Car Face
 > 0x01 = Blinking
 > 0x02 = Hurt
 > 0x03 = Angry
+$06EA - $06EE:	Bonus Block Correct Block Counts (One per row of blocks)
 $06EF:	Horizontal Movement Lock Flag
 $0700:	Audio Mute Flag?
 $0701 - $0708:	SFX Queue (Only the first slot is used)
@@ -1151,6 +1156,16 @@ The way this game tracks its objects' variables isn't very consistent. Some use 
 	> 00 = Active
 	> 01 = Spawn Feather
 	> 02 = Killed
+> 0xEA - 0xEE (Bonus Question Block)
+	> 00 = Default
+	> 01 = Hit
+	> 02 = Determining Success
+	> 03 = Hit Failed
+	> 05 = Hit Successful
+	> 06 = Hit Complete
+> 0xC0 (Chargin' Chuck)
+	> 00 - 07 = Looking Around
+	> 08 - 2E = Scouting
 
 
 
