@@ -1,4 +1,3 @@
-; disassembled by BZK 6502 Disassembler
 sub4_8000:
 	LDX $A4
 	LDA objVar,X
@@ -182,7 +181,7 @@ sub4_8140:
 	ASL
 	TAY
 	LDA objFlags,X
-	AND #%00100000
+	AND #OBJFLAG_VERT
 	BNE bra4_8153
 	JMP loc4_81D1
 
@@ -271,7 +270,7 @@ sub4_8140:
 		BNE bra4_81EC ; Ignore downwards speed if the chuck is standing on solid ground
 		; Chuck has started falling down
 			LDA objFlags,X
-			ORA #%00100000
+			ORA #OBJFLAG_VERT
 			STA objFlags,X ; Make the chuck move down
 			LDA objVar,X
 			AND #%10000000
@@ -284,23 +283,24 @@ sub4_8140:
 			JSR sub3_B057
 			BEQ bra4_81FA
 				LDA objFlags,X
-				EOR #%01000000
-				STA objFlags,X ; Turn the chuck around
+				EOR #OBJFLAG_HORIZ
+				STA objFlags,X ; Turn the chuck around if it hits a wall
+
+		; Invert vector if needed
 		bra4_81FA:
 			LDA objFlags,X
-			AND #%01000000
+			AND #OBJFLAG_HORIZ
 			BEQ bra4_820B
-			; Chuck is facing left
 				LDA ($32),Y
 				EOR #%11111111
 				CLC
 				ADC #1 ; Invert horizontal vector if the chuck is moving left
 				JMP loc4_820D
 
-			; Chuck if facing right
 			bra4_820B:
 				LDA ($32),Y
 
+		; Apply horizontal vector
 		loc4_820D:
 			PHA
 			CLC
@@ -308,14 +308,14 @@ sub4_8140:
 			STA objXLo,X
 			PLA
 			BMI bra4_821F
-			LDA objXHi,X
-			ADC #0
-			BPL bra4_8224
+				LDA objXHi,X
+				ADC #0
+				BPL bra4_8224 ; Positive carry
+			bra4_821F:
+				LDA objXHi,X
+				SBC #0 ; Negative borrow
 
-		bra4_821F:
-			LDA objXHi,X
-			SBC #0
-
+		; Apply vertical vector
 		bra4_8224:
 			STA objXHi,X
 			INY
@@ -326,13 +326,12 @@ sub4_8140:
 			STA objYLo,X
 			PLA
 			BMI bra4_823C
-			LDA objYHi,X
-			ADC #0
-			BPL bra4_8241
-
-		bra4_823C:
-			LDA objYHi,X
-			SBC #0
+				LDA objYHi,X
+				ADC #0
+				BPL bra4_8241 ; Positive carry
+			bra4_823C:
+				LDA objYHi,X
+				SBC #0 ; Negative borrow
 
 		bra4_8241:
 			STA objYHi,X
@@ -340,32 +339,34 @@ sub4_8140:
 			LDA ($32),Y
 			CMP #$FF
 			BNE bra4_8256
-			LDA objFlags,X
-			EOR #$40
-			STA objFlags,X
-			JMP loc4_8274
+				LDA objFlags,X
+				EOR #OBJFLAG_HORIZ
+				STA objFlags,X
+				JMP loc4_8274
 
-		bra4_8256:
-			AND #$F0
-			BEQ loc4_8274
-			LDA ($32),Y
-			AND #$3F
-			BNE bra4_8269
-			LDA objVar,X
-			AND #$80
-			STA objVar,X
+			bra4_8256:
+				AND #%11110000
+				BEQ loc4_8274
+					LDA ($32),Y
+					AND #%00111111
+					BNE bra4_8269
+					; Loop to the first vector if the value is 0
+						LDA objVar,X
+						AND #%10000000
+						STA objVar,X
+						RTS
+
+					; Go back the specified amount of vectors
+					bra4_8269:
+						STA $32
+						LDA objVar,X
+						SEC
+						SBC $32
+						STA objVar,X
+
+		loc4_8274:
+			INC objVar,X
 			RTS
-
-bra4_8269:
-	STA $32
-	LDA objVar,X
-	SEC
-	SBC $32
-	STA objVar,X
-
-loc4_8274:
-	INC objVar,X
-	RTS
 
 ;----------------------------------------
 ; CHARGIN' CHUCK OBJECT CODE ($8728)
@@ -3655,7 +3656,7 @@ ofs_9B1C:
 	.byte 0, 0
 	.byte 0, 0
 	.byte 0, 0
-	.byte -1, 0
+	.byte $FF, 0
 	.byte 2, 0
 	.byte 2, 0
 	.byte 2, 0
@@ -3688,7 +3689,7 @@ ofs_9B1C:
 	.byte 2, 0
 	.byte 2, 0
 	.byte 2, 0
-	.byte 2, 0 ;
+	.byte 2, 0
 	.byte 2, 0
 	.byte 2, 0
 	.byte 2, 0

@@ -3222,11 +3222,14 @@ sub3_B043:
 	STA $36
 	LDA objectYHitBoxSizes,Y
 	CLC
-	ADC #$04 ; Object's hitbox height + 4
+	ADC #4 ; Object's hitbox height + 4
 	JMP loc3_B08D
 
 ;----------------------------------------
 ; SUBROUTINE ($B057)
+; Returns the tile behavior of the tile the object is facing
+; Returns:
+; > A = Tile behavior
 ;----------------------------------------
 sub3_B057:
 	STY $2B ; Back up Y register
