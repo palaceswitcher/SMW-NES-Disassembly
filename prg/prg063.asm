@@ -57,16 +57,16 @@ NMI_E062:
 	TYA
 	PHA ; Push Y to stack
 	
-	LDA columnFinishFlag
+	LDA ppuTileAddr
 	BEQ bra3_E0E8
 	LDA PPUSTATUS ; Clear PPU address data latch
 	LDA ppuCtrlMirror
 	ORA #$04
 	STA PPUCTRL
 	LDA PPUSTATUS ; Clear PPU address data latch
-	LDA columnFinishFlag
+	LDA ppuTileAddr
 	STA PPUADDR
-	LDA nextBgColumn
+	LDA ppuTileAddr+1
 	STA PPUADDR
 	LDX #$00
 bra3_E088:
@@ -76,10 +76,10 @@ bra3_E088:
 	CPX #$1E
 	BCC bra3_E088
 	LDA PPUSTATUS ; Clear PPU address data latch
-	LDA columnFinishFlag
+	LDA ppuTileAddr
 	ORA #$08
 	STA PPUADDR
-	LDA nextBgColumn
+	LDA ppuTileAddr+1
 	STA PPUADDR
 bra3_E0A4:
 	LDA tileColumnMem,X
@@ -111,7 +111,7 @@ bra3_E0C0:
 	STA palAssignPtr
 bra3_E0E1:
 	LDA #$00
-	STA columnFinishFlag
+	STA ppuTileAddr
 	BEQ bra3_E0F0
 bra3_E0E8:
 	LDA ppuUpdatePtr
@@ -481,7 +481,7 @@ bra3_E397:
 	LDA #%10001000
 	STA PPUCTRL
 	STA ppuCtrlMirror ; Set PPU control
-	LDA #%01
+	LDA #%00000001
 	STA M90_CHR_CTRL2 ; Set mirroring to horizontal
 	JSR sub3_F0CB ; Jump
 	INC a:gameSubstate ; Go to next part of event
@@ -553,20 +553,20 @@ gameStateDefault:
 bra3_E442:
 	JMP loc3_E45F ; Skip core functions
 
-		; Run main in-level logic loop
-		bra3_E445:
-			JSR sub3_ED14 ; Run main game loop
+; Run main in-level logic loop
+bra3_E445:
+	JSR sub3_ED14 ; Run main game loop
 
-			; Handle P-Switch
-			LDA pSwitchTimer
-			BEQ loc3_E45F ; Branch if P-Switch timer is up
-			INC pSwitchFrameCount ; Increment frame count
-			LDA pSwitchFrameCount
-			CMP #59
-			BCC loc3_E45F
-			DEC pSwitchTimer ; Decrease timer by 1 second every 60 frames
-			LDA #$00
-			STA pSwitchFrameCount ; Clear frame count
+	; Handle P-Switch
+	LDA pSwitchTimer
+	BEQ loc3_E45F ; Branch if P-Switch timer is up
+	INC pSwitchFrameCount ; Increment frame count
+	LDA pSwitchFrameCount
+	CMP #59
+	BCC loc3_E45F
+	DEC pSwitchTimer ; Decrease timer by 1 second every 60 frames
+	LDA #0
+	STA pSwitchFrameCount ; Clear frame count
 
 ; Handle pausing/unpausing
 loc3_E45F:
@@ -577,7 +577,7 @@ loc3_E45F:
 		AND #BTN_START
 		BEQ bra3_E47C
 		; If start was pressed:
-			LDA #$00
+			LDA #0
 			STA jyEasterEggInput ; Clear Easter egg button combo input
 			LDA pauseFlag
 			EOR #$01
@@ -614,14 +614,14 @@ loc3_E498:
 	STA a:gameSubstate
 	LDA #GAMESTATE_MAPEXITLEVEL_TRANS
 	STA a:gameState ; Set to transition state for exiting a level
-	JSR backupplayerPowerups
+	JSR backupPlayerPowerups
 	RTS
 
 ;----------------------------------------
 ; SUBROUTINE ($E4BA)
 ; Backup the player's powerup and Yoshi.
 ;----------------------------------------
-backupplayerPowerups:
+backupPlayerPowerups:
 	LDX curPlayer ; Set index for current player
 	LDA playerPowerup
 	STA playerStoredPowerup,X ; Backup player's powerup
@@ -745,7 +745,7 @@ pnt2_E597:
 	STA a:gameSubstate ; Go to first part of event
 	LDA #$16
 	STA a:gameState ; Trigger map fade-in
-	JSR backupplayerPowerups ; Back up powerup states
+	JSR backupPlayerPowerups ; Back up powerup states
 	RTS
 
 sub3_E5B6:
@@ -1001,7 +1001,7 @@ pnt2_E774:
 	STA a:gameSubstate ; Clear event part
 	LDA #$16
 	STA a:gameState ; Set event number to 16h
-	JSR backupplayerPowerups ; Jump
+	JSR backupPlayerPowerups ; Jump
 	RTS
 pnt2_E79E:
 	INC a:gameState ; Increment event number (go right to next event)
@@ -1089,7 +1089,7 @@ bra3_E840:
 	STA a:gameSubstate ; Set event part
 	LDA #$16
 	STA a:gameState
-	JSR backupplayerPowerups
+	JSR backupPlayerPowerups
 	RTS
 pnt2_E85F:
 	LDA a:gameSubstate
@@ -1134,10 +1134,10 @@ sub3_E870:
 	STA playerSprY ; Get Y position
 	INY ; Move to next byte
 	LDA ($32),Y
-	STA horizScrollLock ; Set horizontal scroll lock
+	STA scrollBoundLeft ; Set horizontal scroll lock
 	INY ; Move to next byte
 	LDA ($32),Y
-	STA levelXScreenCount ; Set horizontal screen count
+	STA scrollBoundRight ; Set horizontal screen count
 	INY ; Move to next byte
 	LDA ($32),Y
 	STA vertScrollLock ; Set vertical scroll lock
@@ -2307,12 +2307,12 @@ loc3_EF10:
 	PHA ; Push the Y register into the stack
 	LDA #$3D
 	STA M90_PRG1
-	LDA columnFinishFlag
+	LDA ppuTileAddr
 	BEQ bra3_EF2B
 	JSR sub3_F055
 	JSR sub3_F0A2
 	LDA #$00
-	STA columnFinishFlag
+	STA ppuTileAddr
 bra3_EF2B:
 	LDA ppuUpdatePtr
 	BEQ bra3_EF33
@@ -2460,9 +2460,9 @@ sub3_F055:
 	ORA #$04 ; Do OR operation, effectively adding 4
 	STA PPUCTRL ; Store in PPU control hardware reg
 	LDA PPUSTATUS
-	LDA columnFinishFlag
+	LDA ppuTileAddr
 	STA PPUADDR ; Load upper byte of PPU address (20 when scrolling)
-	LDA nextBgColumn
+	LDA ppuTileAddr+1
 	STA PPUADDR ; Load current column into low byte of PPU address
 	LDX #$00 ; Set row to 0
 bra3_F070:
@@ -2472,10 +2472,10 @@ bra3_F070:
 	CPX #$1E ; Keep looping until row 30 is reached
 	BCC bra3_F070
 	LDA PPUSTATUS ; Clear address latch
-	LDA columnFinishFlag ; Load upper byte (20 when scrolling)
+	LDA ppuTileAddr ; Load upper byte (20 when scrolling)
 	ORA #$08 ; Do OR operation, effectively adding 8
 	STA PPUADDR ; Store as upper byte of PPU address
-	LDA nextBgColumn
+	LDA ppuTileAddr+1
 	STA PPUADDR ; Load current column into lower byte of PPU address
 bra3_F08C:
 	LDA tileColumnMem,X ; Load 8x8 tile row data

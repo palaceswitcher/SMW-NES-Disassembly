@@ -38,6 +38,7 @@ scratchRam = $2E
 playerAnimPtr = $E5
 nmiJmpOpcode = $063A
 cameraXHi = $51
+cameraXLo = $52
 vertScrollFlag = $5B
 tileRowCount = $B0
 bgAttrRowCount = $B1
@@ -62,7 +63,9 @@ ppuDataBuf = $03A5
 warpLvlNumber = $060B
 warpNumber = $060C
 vertScrollLock = $060D
-horizScrollLock = $060F
+levelYScreenCount = $060E
+scrollBoundLeft = $060F
+scrollBoundRight = $0610
 
 ; Sprite rendering variables
 oamFreeIndex = $3C ; Free space index
@@ -205,8 +208,7 @@ unlockNextLevel = $0397
 levelId = $039C
 player1LevelsUnlocked = $039E
 player2LevelsUnlocked = $039F
-columnFinishFlag = $0480
-nextBgColumn = $0481
+ppuTileAddr = $0480
 
 ; Object RAM
 
@@ -257,8 +259,6 @@ yoshiYDistHi = $05FC
 jyEasterEggInput = $05EF
 bowserState = $05F7
 interruptMode = $0606 ; TODO: Rename this
-levelYScreenCount = $060E
-levelXScreenCount = $0610
 levelWaterFlag = $061D
 levelVerticalScreenOffs = $04FA
 lvlBottomScreenOffs = $04FB

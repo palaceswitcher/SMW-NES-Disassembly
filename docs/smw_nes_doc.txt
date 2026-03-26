@@ -1,4 +1,4 @@
-SMW NES Hacking Document (2025-12-17)
+SMW NES Hacking Document (2026-3-26)
 Note: Some information here may be inaccurate or wrong.
 
 -----Level Data-----
@@ -439,13 +439,13 @@ $0006:	Frame Counter
 $0007:	Frame Counter (Duplicate/Delayed)
 $0008:	Bank 42 Swap Value Backup
 $0009:	Bank 41 Swap Value Backup
-$000A:	Player X Screen
+$000A:	Player X Pos Hi
 $000B:	Player X Coords
-$000C:	Player Y Screen
+$000C:	Player Y Pos Hi
 $000D:	Player Y Coords
-$000E:	Player X Screen (Duplicate?)
+$000E:	Player X Pos Hi (Duplicate?)
 $000F:	Player X Coords (Duplicate?)
-$0010:	Player Y Screen (Duplicate?)
+$0010:	Player Y Pos Hi (Duplicate?)
 $0011:	Player Y Coords (Duplicate?)
 $0012:	Player Sprite X Position
 $0013:	Player Sprite Y Position
@@ -517,8 +517,8 @@ $0049:	Player Climbing State
 $004A:	Shell Hit Counter
 $004B:	Shell Hit Timer (Amount of frames since the shell hit something)
 $004F:	Player Previous X Direction
-$0051:	Scroll/Camera X Screen
-$0052:	X Scroll Sprite Positioning? (while scrolling?)
+$0051:	Scroll Camera X Pos Hi
+$0052:	Scroll Camera X Pos
 $005B:	Vertical Scroll Flag?
 > 0x00 = Camera moved vertically up
 > 0x02 = Camera at lowest y position

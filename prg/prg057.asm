@@ -3908,10 +3908,12 @@ doLookUp:
 	LDA btnHeld
 	AND #BTN_UP
 	BEQ lookupDuckDone ; Make sure up is held
-	LDA #$08
-	STA playerAction ; Set the player's action to looking up
+		LDA #$08
+		STA playerAction ; Set the player's action to looking up
+
 lookupDuckDone:
 	RTS
+
 ofs_B57C:
 	JSR spinCapeRoutine
 	LDA playerAction+1

@@ -2886,41 +2886,47 @@ tbl6_AABA:
 	.byte $FF
 sub6_ADA2:
 	LDA PPUSTATUS
-	LDA $00
-	ORA #$04
-	STA PPUCTRL
+	LDA ppuCtrlMirror
+	ORA #%00000100
+	STA PPUCTRL ; Set PPU to load tiles row-by-row
 	LDA PPUSTATUS
-	LDA $0480
+	LDA ppuTileAddr
 	STA PPUADDR
-	LDA nextBgColumn
+	LDA ppuTileAddr+1
 	STA PPUADDR
-	LDX #$00
+	LDX #0
+
+; Draw column on upper nametable
 bra6_ADBD:
-	LDA $0485,X
-	STA PPUDATA
-	INX
-	CPX #$1E
-	BCC bra6_ADBD
+		LDA tileColumnMem,X
+		STA PPUDATA
+		INX
+		CPX #30 ; Upper screen is 30 rows tall
+		BCC bra6_ADBD
 	LDA PPUSTATUS
-	LDA $0480
-	ORA #$08
+	LDA ppuTileAddr
+	ORA #$08 ; Move to the nametable below the current one
 	STA PPUADDR
-	LDA nextBgColumn
+	LDA ppuTileAddr+1
 	STA PPUADDR
+
+; Draw column on lower nametable
 bra6_ADD9:
-	LDA $0485,X
-	STA PPUDATA
-	INX
-	CPX #$38
-	BCC bra6_ADD9
+		LDA tileColumnMem,X
+		STA PPUDATA
+		INX
+		CPX #56 ; 56 rows should be rendered total (2 * 30 tile nametables - 4 tiles for the HUD)
+		BCC bra6_ADD9
 	LDA PPUSTATUS
-	LDA $00
-	AND #$FB
+	LDA ppuCtrlMirror
+	AND #%11111011 ; Set PPU to load tiles column-by-column
 	STA PPUCTRL
 	RTS
+
 	LDA palAssignPtr
 	BEQ bra6_AE17_RTS
-	LDX #$00
+	LDX #0
+
 bra6_ADF6:
 	LDA PPUSTATUS
 	LDA palAssignPtr,X
@@ -2932,12 +2938,14 @@ bra6_ADF6:
 	INX
 	INX
 	INX
-	CPX #$30
+	CPX #48
 	BCC bra6_ADF6
 	LDA #$00
 	STA palAssignPtr
+
 bra6_AE17_RTS:
 	RTS
+
 	LDA btnPressed
 	AND #$80
 	BEQ bra6_AE2D
@@ -2995,8 +3003,9 @@ bra6_AE7F:
 	STA $0327
 bra6_AE8E_RTS:
 	RTS
+
 jmp_61_AE8F:
-	JSR sub6_B85C
+	JSR updateCamera
 	JSR sub6_BA4A
 	JSR sub6_B9CF
 	JSR sub6_BAD1
@@ -3108,10 +3117,10 @@ sub6_AF11:
 	LSR
 	LSR
 	STA $59
-	STA nextBgColumn
+	STA ppuTileAddr+1
 	LDA #$20
 	STA $5A
-	STA $0480
+	STA ppuTileAddr
 	LDA $59
 	AND #$01
 	EOR #$01
@@ -3157,7 +3166,7 @@ loc6_AF70:
 loc6_AF72:
 	LDA a:$60,Y
 	LDX $9C
-	STA $0485,X
+	STA tileColumnMem,X
 	LDA $9B
 	BEQ bra6_AFB4
 	LDY $5F
@@ -3617,10 +3626,10 @@ loc6_B275:
 	STA playerSprY ; Load the player's Y spawn coordinate
 	INY ; (Move one byte ahead)
 	LDA ($32),Y
-	STA horizScrollLock ; Set horizontal scroll lock (If present. Very broken)
+	STA scrollBoundLeft ; Set horizontal scroll lock (If present. Very broken)
 	INY ; (Move one byte ahead)
 	LDA ($32),Y
-	STA levelXScreenCount ; Get horizontal screen count
+	STA scrollBoundRight ; Get horizontal screen count
 	INY ; (Move one byte ahead)
 	LDA ($32),Y
 	STA vertScrollLock ; Set the vertical scroll lock (If it's set)
@@ -3718,9 +3727,10 @@ bra6_B365:
 	LDA #$3F
 	STA M90_PRG3 ; Swap bank 63 back in
 	RTS
+
 jmp_61_B38E:
 	LDA PPUSTATUS
-	LDA $00
+	LDA ppuCtrlMirror
 	AND #$7F
 	STA PPUCTRL
 	LDA #$36
@@ -3754,10 +3764,10 @@ bra6_B3CB:
 	JSR sub6_B658
 	LDX $2D
 	LDA $60
-	STA $0485,X
+	STA tileColumnMem,X
 	INX
 	LDA $61
-	STA $0485,X
+	STA tileColumnMem,X
 	INX
 	STX $2D
 	INC $27
@@ -3765,10 +3775,10 @@ bra6_B3CB:
 	CPX #$1C
 	BCC bra6_B3CB
 	LDA $5A
-	STA $0480
+	STA ppuTileAddr
 	STA $31
 	LDA $59
-	STA nextBgColumn
+	STA ppuTileAddr+1
 	STA $30
 	JSR sub6_ADA2
 	LDA $2A
@@ -4324,104 +4334,119 @@ tbl6_B676:
 tbl6_B76E:
 	.include levels/CheckpointSpawnData.asm
 
-sub6_B85C:
+;----------------------------------------
+; SUBROUTINE ($B85C)
+; Scrolls the camera if needed
+;----------------------------------------
+updateCamera:
 	LDA playerXLoDup
 	SEC
-	SBC $52
+	SBC cameraXLo
 	STA $28
 	LDA playerXHiDup
-	SBC $51
-	BPL bra6_B872
-	LDA $28
-	EOR #$FF
-	SEC
-	ADC #$00
-	STA $28
+	SBC cameraXHi
+	BPL bra6_B872 ; Don't allow camera to be a screen ahead of the player
+		LDA $28
+		EOR #$FF
+		SEC
+		ADC #0
+		STA $28 ; Seemingly redundant check, as the camera is never ahead of the player
 bra6_B872:
 	LDA $28
 	CMP #$40
 	BCS bra6_B8C1
-	LDA #$40
-	STA playerSprX
-	LDA playerXLoDup
-	SEC
-	SBC playerSprX
-	STA $56
-	LDA playerXHiDup
-	SBC #$00
-	STA $55
-	BPL bra6_B894
-	LDA $56
-	EOR #$FF
-	SEC
-	ADC #$00
-	STA $56
-bra6_B894:
-	LDA horizScrollLock
-	CMP $55
-	BNE bra6_B8BE
-	LDA #$00
-	STA $56
-	LDY horizScrollLock
-	INY
-	STY $55
-	LDA playerXLoDup
-	SEC
-	SBC $56
-	STA playerSprX
-	CMP #$10
-	BCS bra6_B8BE
-	LDA #$10
-	STA playerXLoDup
-	STA playerSprX
-	LDA $55
-	STA playerXHiDup
-	LDA #$00
-	STA playerXSpd
-bra6_B8BE:
-	JMP loc6_B90C
-bra6_B8C1:
-	LDA $28
-	CMP #$90
-	BCC bra6_B902
-	LDA #$90
-	STA playerSprX
-	LDA playerXLoDup
-	SEC
-	SBC playerSprX
-	STA $56
-	LDA playerXHiDup
-	SBC #$00
-	STA $55
-	BPL bra6_B8E3
-	LDA $56
-	EOR #$FF
-	SEC
-	ADC #$00
-	STA $56
-bra6_B8E3:
-	LDA levelXScreenCount
-	CMP $55
-	BNE bra6_B8FF
-	STA $55
-	LDA #$00
-	STA $56
-	LDA playerXLoDup
-	SEC
-	SBC $56
-	STA playerSprX
-	LDA playerXHiDup
-	SBC $55
-	BPL bra6_B8FF
-	STA playerSprX
-bra6_B8FF:
-	JMP loc6_B90C
-bra6_B902:
-	STA playerSprX
-	LDA cameraXHi
-	STA $55
-	LDA $52
-	STA $56
+		LDA #$40
+		STA playerSprX ; Don't move the player sprite past the left scroll point
+		LDA playerXLoDup
+		SEC
+		SBC playerSprX
+		STA $56
+		LDA playerXHiDup
+		SBC #0
+		STA $55
+		BPL bra6_B894
+			LDA $56
+			EOR #$FF
+			SEC
+			ADC #0
+			STA $56
+	bra6_B894:
+		LDA scrollBoundLeft
+		CMP $55
+		BNE bra6_B8BE
+		; If at the left scroll boundary
+			LDA #$00
+			STA $56
+			LDY scrollBoundLeft
+			INY
+			STY $55 ; Don't scroll any further left
+			LDA playerXLoDup
+			SEC
+			SBC $56
+			STA playerSprX ; Position the player sprite accordingly
+			CMP #16
+			BCS bra6_B8BE
+			; Clamp position to 16 units before the left scroll boundary
+				LDA #16
+				STA playerXLoDup
+				STA playerSprX
+				LDA $55
+				STA playerXHiDup
+				LDA #$00
+				STA playerXSpd
+	bra6_B8BE:
+		JMP loc6_B90C
+
+	; If player is to the right of the left scroll point
+	bra6_B8C1:
+		LDA $28
+		CMP #$90
+		BCC bra6_B902
+			; If the player is past the right scroll point
+			LDA #$90
+			STA playerSprX ; Don't move the player sprite past the right scroll point
+			LDA playerXLoDup
+			SEC
+			SBC playerSprX
+			STA $56
+			LDA playerXHiDup
+			SBC #0
+			STA $55
+			BPL bra6_B8E3
+				LDA $56
+				EOR #$FF
+				SEC
+				ADC #$00
+				STA $56
+		bra6_B8E3:
+			LDA scrollBoundRight
+			CMP $55
+			BNE bra6_B8FF
+			; If at the right scroll boundary
+				STA $55
+				LDA #$00
+				STA $56 ; Don't scroll right any further
+				LDA playerXLoDup
+				SEC
+				SBC $56
+				STA playerSprX
+				LDA playerXHiDup
+				SBC $55
+				BPL bra6_B8FF
+					STA playerSprX ; Seemingly useless, possibly unfinished check?
+
+			bra6_B8FF:
+				JMP loc6_B90C
+
+		; If between the left and right scroll points
+		bra6_B902:
+			STA playerSprX
+			LDA cameraXHi
+			STA $55
+			LDA cameraXLo
+			STA $56
+
+; Handle vertical scrolling
 loc6_B90C:
 	LDA playerYLoDup
 	SEC
@@ -4525,6 +4550,7 @@ bra6_B9B6:
 	LDA $54
 	STA $58
 	RTS
+
 loc6_B9C1:
 	LDA $57
 	CMP playerYHiDup
@@ -4535,6 +4561,7 @@ loc6_B9C1:
 	STA $58
 bra6_B9CE_RTS:
 	RTS
+
 sub6_B9CF:
 	SEC
 	LDA $56

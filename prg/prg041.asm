@@ -3129,25 +3129,25 @@ sub_B399:
 	ORA #$04
 	STA PPUCTRL
 	LDA PPUSTATUS
-	LDA $0480
+	LDA ppuTileAddr
 	STA PPUADDR
-	LDA nextBgColumn
+	LDA ppuTileAddr+1
 	STA PPUADDR
 	LDX #$00
 bra_B3B4:
-	LDA $0485,X
+	LDA tileColumnMem,X
 	STA PPUDATA
 	INX
 	CPX #$1E
 	BCC bra_B3B4
 	LDA PPUSTATUS
-	LDA $0480
+	LDA ppuTileAddr
 	ORA #$08
 	STA PPUADDR
-	LDA nextBgColumn
+	LDA ppuTileAddr+1
 	STA PPUADDR
 bra_B3D0:
-	LDA $0485,X
+	LDA tileColumnMem,X
 	STA PPUDATA
 	INX
 	CPX #$38
@@ -3364,10 +3364,10 @@ sub_B52B:
 	LSR
 	LSR
 	STA $59
-	STA nextBgColumn
+	STA ppuTileAddr+1
 	LDA #$20
 	STA $5A
-	STA $0480
+	STA ppuTileAddr
 	LDA $59
 	AND #$01
 	EOR #$01
@@ -3413,7 +3413,7 @@ loc_B58A:
 loc_B58C:
 	lDA a:$0060,Y
 	LDX $9C
-	STA $0485,X
+	STA tileColumnMem,X
 	LDA $9B
 	BEQ bra_B5CE
 	LDY $5F
@@ -3747,10 +3747,10 @@ sub_B75D:
 	STA $13
 	INY
 	LDA ($32),Y
-	STA horizScrollLock
+	STA scrollBoundLeft
 	INY
 	LDA ($32),Y
-	STA levelXScreenCount
+	STA scrollBoundRight
 	INY
 	LDA ($32),Y
 	STA vertScrollLock
@@ -3793,10 +3793,10 @@ bra_B834:
 	JSR sub_BA0F
 	LDX $2D
 	LDA $60
-	STA $0485,X
+	STA tileColumnMem,X
 	INX
 	LDA $61
-	STA $0485,X
+	STA tileColumnMem,X
 	INX
 	STX $2D
 	INC $27
@@ -3804,10 +3804,10 @@ bra_B834:
 	CPX #$1C
 	BCC bra_B834
 	LDA $5A
-	STA $0480
+	STA ppuTileAddr
 	STA $31
 	LDA $59
-	STA nextBgColumn
+	STA ppuTileAddr+1
 	STA $30
 	JSR sub_B399
 	LDA $2A
@@ -4680,7 +4680,7 @@ bra_BC84:
 	ADC #$00
 	STA $56
 bra_BCA6:
-	LDA horizScrollLock
+	LDA scrollBoundLeft
 	CMP $55
 	BNE bra_BCC0
 	LDA #$00
@@ -4715,7 +4715,7 @@ bra_BCC3:
 	ADC #$00
 	STA $56
 bra_BCE5:
-	LDA levelXScreenCount
+	LDA scrollBoundRight
 	CMP $55
 	BNE bra_BD01
 	STA $55
