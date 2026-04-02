@@ -2783,7 +2783,7 @@ loc5_93C8:
 			SBC #16
 			STA playerYLoDup
 			DEC playerYHiDup ; Subtract 16 and borrow if needed
-			LDY vertScrollLock
+			LDY scrollBoundTop
 			CPY playerYHiDup
 			BNE loc5_93FF
 			; If player goes above level boundaries
@@ -2899,7 +2899,7 @@ bra5_94EC:
 	STA playerYLoDup
 	LDA objYHi,X
 	STA playerYHiDup ; Vertically align player with object
-	LDY vertScrollLock
+	LDY scrollBoundTop
 	CPY playerYHiDup
 	BNE bra5_950E
 	; Stop player at upper boundary of level
@@ -2964,7 +2964,7 @@ bra5_955E:
 	SBC #$10
 	STA playerYLoDup
 	DEC playerYHiDup
-	LDY vertScrollLock
+	LDY scrollBoundTop
 	CPY playerYHiDup
 	BNE bra5_957A
 	INY

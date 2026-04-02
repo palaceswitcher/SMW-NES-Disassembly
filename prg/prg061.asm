@@ -1588,10 +1588,10 @@ bra6_A607:
 	BEQ bra6_A664
 	DEC objYLo,X
 bra6_A664:
-	LDA playerCollXLo
+	LDA pTilePosXLo
 	AND #$F0
 	STA objXLo,X
-	LDA playerCollXHi
+	LDA pTilePosXHi
 	STA objXHi,X
 	LDA #$00
 	STA objFlags,X
@@ -1646,10 +1646,10 @@ bra6_A683:
 	BEQ bra6_A6E5
 	DEC objYLo,X
 bra6_A6E5:
-	LDA playerCollXLo
+	LDA pTilePosXLo
 	AND #$F0
 	STA objXLo,X
-	LDA playerCollXHi
+	LDA pTilePosXHi
 	STA objXHi,X
 	LDA #$00
 	STA objFlags,X
@@ -1933,7 +1933,7 @@ tbl6_A728:
 	.byte $80
 	.byte $80
 	.byte $80
-GetEntitySetPtr:
+getEntitySetPtr:
 	LDA worldNumber
 	ASL
 	TAX ; Get pointer index for current world
@@ -2949,63 +2949,63 @@ bra6_AE17_RTS:
 	LDA btnPressed
 	AND #$80
 	BEQ bra6_AE2D
-	INC scrollSpd
+	INC scrollVecX
 	LDA #$08
-	CMP scrollSpd
+	CMP scrollVecX
 	BCS bra6_AE2C_RTS
-	STA scrollSpd
+	STA scrollVecX
 bra6_AE2C_RTS:
 	RTS
 bra6_AE2D:
 	LDA btnPressed
 	AND #$40
 	BEQ bra6_AE42
-	INC $0327
+	INC scrollVecY
 	LDA #$08
-	CMP $0327
+	CMP scrollVecY
 	BCS bra6_AE41_RTS
-	STA $0327
+	STA scrollVecY
 bra6_AE41_RTS:
 	RTS
 bra6_AE42:
-	LDA scrollSpd
+	LDA scrollVecX
 	AND #$07
-	STA scrollSpd
-	LDA $0327
+	STA scrollVecX
+	LDA scrollVecY
 	AND #$07
-	STA $0327
+	STA scrollVecY
 	LDA btnHeld
 	AND #$01
 	BEQ bra6_AE61
-	LDA scrollSpd
+	LDA scrollVecX
 	AND #$7F
-	STA scrollSpd
+	STA scrollVecX
 bra6_AE61:
 	LDA btnHeld
 	AND #$02
 	BEQ bra6_AE70
-	LDA scrollSpd
+	LDA scrollVecX
 	ORA #$80
-	STA scrollSpd
+	STA scrollVecX
 bra6_AE70:
 	LDA btnHeld
 	AND #$04
 	BEQ bra6_AE7F
-	LDA $0327
+	LDA scrollVecY
 	AND #$7F
-	STA $0327
+	STA scrollVecY
 bra6_AE7F:
 	LDA btnHeld
 	AND #$08
 	BEQ bra6_AE8E_RTS
-	LDA $0327
+	LDA scrollVecY
 	ORA #$80
-	STA $0327
+	STA scrollVecY
 bra6_AE8E_RTS:
 	RTS
 
 jmp_61_AE8F:
-	JSR updateCamera
+	JSR updateCameraPos
 	JSR sub6_BA4A
 	JSR sub6_B9CF
 	JSR sub6_BAD1
@@ -3018,12 +3018,13 @@ jmp_61_AE8F:
 	STA playerYHi
 	LDA playerYLoDup
 	STA playerYLo
-	LDA $55
+	LDA cameraXHiDup
 	STA cameraXHi
-	LDA $56
-	STA $52
+	LDA cameraXLoDup
+	STA cameraXLo
 	RTS
-	RTS
+	RTS ; Possible remnant of empty function
+
 sub6_AEB8:
 	LDA levelNumber
 	ASL
@@ -3039,7 +3040,7 @@ bra6_AEC2:
 	INX ; Move to the next byte in the table
 	CPX #$0C
 	BCC bra6_AEC2 ; Loop until 12 bytes from the table have been copied to RAM
-	JSR GetEntitySetPtr
+	JSR getEntitySetPtr
 	RTS
 tbl6_AED1:
 	.byte $00
@@ -3122,27 +3123,27 @@ sub6_AF11:
 	STA $5A
 	STA ppuTileAddr
 	LDA $59
-	AND #$01
-	EOR #$01
-	STA $9B
-	LDX #$00
-	LDA playerCollXLo
-	AND #$08
+	AND #%00000001
+	EOR #%00000001
+	STA $9B ; 1 if even tile, 0 if odd tile?
+	LDX #0
+	LDA pTilePosXLo
+	AND #%00001000
 	BEQ bra6_AF37
-	INX
+		INX
 bra6_AF37:
-	STX $2A
-	LDX #$00
-	LDA playerCollYLo
-	AND #$08
+	STX $2A ; 0 if 1st column of metatile, 1 if 2nd column of metatile
+	LDX #0
+	LDA pTilePosYLo
+	AND #%00001000
 	BEQ bra6_AF42
-	INX
+		INX
 bra6_AF42:
 	STX $2D
 	JSR sub6_B056
 	LDA prgDataBank2
 	STA M90_PRG0
-	LDX #$00
+	LDX #0
 	STX $28
 loc6_AF51:
 	LDX $28
@@ -3161,6 +3162,7 @@ bra6_AF68:
 	STA $60
 	LDA ($D6),Y
 	STA $61
+
 loc6_AF70:
 	LDY $2D
 loc6_AF72:
@@ -3169,134 +3171,137 @@ loc6_AF72:
 	STA tileColumnMem,X
 	LDA $9B
 	BEQ bra6_AFB4
-	LDY $5F
-	LDA ($D8),Y
-	STA $6A
-	LDY $59
-	LDA tbl6_A000,Y
-	STA $25
-	LDA $5A
-	AND #$0F
-	TAX
-	LDA tbl6_A100,X
-	ORA $25
-	STA $5C
-	TYA
-	AND #$7F
-	TAX
-	LDA tbl6_A200,X
-	TAX
-	AND $6A
-	STA $37
-	TXA
-	EOR #$FF
-	STA $25
-	LDY $5C
-	LDA bgTileAttrs,Y
-	AND $25
-	ORA $37
-	STA bgTileAttrs,Y
+		LDY $5F
+		LDA ($D8),Y
+		STA $6A
+		LDY $59
+		LDA tbl6_A000,Y
+		STA $25
+		LDA $5A
+		AND #$0F
+		TAX
+		LDA tbl6_A100,X
+		ORA $25
+		STA $5C
+		TYA
+		AND #$7F
+		TAX
+		LDA tbl6_A200,X
+		TAX
+		AND $6A
+		STA $37
+		TXA
+		EOR #$FF
+		STA $25
+		LDY $5C
+		LDA bgTileAttrs,Y
+		AND $25
+		ORA $37
+		STA bgTileAttrs,Y
+
 bra6_AFB4:
 	INC $9C
 	LDA $9C
 	CMP #$38
 	BCS bra6_AFF8
-	LDA $59
-	CLC
-	ADC #$20
-	STA $59
-	BCC bra6_AFC7
-	INC $5A
-bra6_AFC7:
-	LDA $5A
-	AND #$03
-	CMP #$03
-	BNE bra6_AFE4
-	LDA $59
-	CMP #$C0
-	BCC bra6_AFE4
-	AND #$1F
-	STA $59
-	STA $0484
-	LDA $5A
-	AND #$F8
-	EOR #$08
-	STA $5A
-bra6_AFE4:
-	INC $2D
-	LDY $2D
-	CPY #$02
-	BCS bra6_AFEF
-	JMP loc6_AF72
-bra6_AFEF:
-	LDA #$00
-	STA $2D
-	INC $28
-	JMP loc6_AF51
-bra6_AFF8:
-	LDA scrollX
-	ROR
-	ROR
-	ROR
-	ROR
-	ROR
-	AND #$07
-	STA $5C
-	LDX #$00
-bra6_B005:
-	LDY $5C
-	LDA bgTileAttrs,Y
-	STA palAssignData,X
-	TYA
-	AND #$3F
-	ORA #$C0
-	STA palAssignPtr+1,X
-	TYA
-	LDY #$23
-	AND #$40
-	BEQ bra6_B01E
-	LDY #$2B
-bra6_B01E:
-	TYA
-	STA palAssignPtr,X
-	LDA $5C
-	CLC
-	ADC #$08
-	AND #$7F
-	STA $5C
-	INX
-	INX
-	INX
-	CPX #$30
-	BCC bra6_B005
-	RTS
-	LDA scrollX
-	LSR
-	LSR
-	LSR
-	STA $25
-	LDA $03
-	ASL
-	ASL
-	AND #$E0
-	ORA $25
-	STA $59
-	LDA $03
-	ROL
-	ROL
-	ROL
-	AND #$03
-	ORA #$20
-	LDY $5B
-	BEQ bra6_B053
-	ORA #$08
-bra6_B053:
-	STA $5A
-	RTS
+		LDA $59
+		CLC
+		ADC #$20
+		STA $59
+		BCC bra6_AFC7
+		INC $5A
+	bra6_AFC7:
+		LDA $5A
+		AND #$03
+		CMP #$03
+		BNE bra6_AFE4
+		LDA $59
+		CMP #$C0
+		BCC bra6_AFE4
+		AND #$1F
+		STA $59
+		STA $0484
+		LDA $5A
+		AND #$F8
+		EOR #$08
+		STA $5A
+	bra6_AFE4:
+		INC $2D
+		LDY $2D
+		CPY #$02
+		BCS bra6_AFEF
+			JMP loc6_AF72
+	bra6_AFEF:
+		LDA #$00
+		STA $2D
+		INC $28
+		JMP loc6_AF51
+
+	bra6_AFF8:
+		LDA scrollX
+		ROR
+		ROR
+		ROR
+		ROR
+		ROR
+		AND #$07
+		STA $5C
+		LDX #$00
+	bra6_B005:
+		LDY $5C
+		LDA bgTileAttrs,Y
+		STA palAssignData,X
+		TYA
+		AND #$3F
+		ORA #$C0
+		STA palAssignPtr+1,X
+		TYA
+		LDY #$23
+		AND #$40
+		BEQ bra6_B01E
+		LDY #$2B
+	bra6_B01E:
+		TYA
+		STA palAssignPtr,X
+		LDA $5C
+		CLC
+		ADC #$08
+		AND #$7F
+		STA $5C
+		INX
+		INX
+		INX
+		CPX #$30
+		BCC bra6_B005
+		RTS
+		LDA scrollX
+		LSR
+		LSR
+		LSR
+		STA $25
+		LDA $03
+		ASL
+		ASL
+		AND #$E0
+		ORA $25
+		STA $59
+		LDA $03
+		ROL
+		ROL
+		ROL
+		AND #$03
+		ORA #$20
+		LDY $5B
+		BEQ bra6_B053
+		ORA #$08
+	bra6_B053:
+		STA $5A
+		RTS
+
 sub6_B056:
-	LDA playerCollYHi
+	LDA pTilePosYHi
 	PHA
-	LDA playerCollYLo
+	LDA pTilePosYLo
 	PHA
 	LDX #$00
 loc6_B05E:
@@ -3331,13 +3336,13 @@ bra6_B08F:
 	LDA $04F4
 	STA M90_PRG0
 loc6_B095:
-	LDA playerCollXLo
+	LDA pTilePosXLo
 	LSR
 	LSR
 	LSR
 	LSR
 	STA $25
-	LDA playerCollYLo
+	LDA pTilePosYLo
 	AND #$F0
 	ORA $25
 	TAY
@@ -3358,7 +3363,7 @@ bra6_B0BB:
 	TAY
 	LDA tbl6_BE75,Y
 	STA $28
-	LDA playerCollXHi
+	LDA pTilePosXHi
 	ASL
 	CLC
 	ADC tbl6_BE65,Y
@@ -3387,9 +3392,9 @@ bra6_B0DF:
 	LDY $2B
 	CMP #$F0
 	BCC bra6_B0A6
-	INC playerCollYHi
+	INC pTilePosYHi
 	LDA #$00
-	STA playerCollYLo
+	STA pTilePosYLo
 	JMP loc6_B05E
 bra6_B0FC:
 	LDA $2B
@@ -3403,9 +3408,9 @@ bra6_B0FC:
 bra6_B10C:
 	LDX $28
 	PLA
-	STA playerCollYLo
+	STA pTilePosYLo
 	PLA
-	STA playerCollYHi
+	STA pTilePosYHi
 	RTS
 	.byte $00
 	.byte $F0
@@ -3599,26 +3604,26 @@ loc6_B275:
 	TAY ; Get index for current level
 	LDA ($32),Y
 	STA cameraXHi
-	STA playerCollXHi
+	STA pTilePosXHi
 	LDA #$00
-	STA $52
-	STA playerCollXLo
+	STA cameraXLo
+	STA pTilePosXLo
 	INY
 	LDA ($32),Y
-	STA $53
+	STA cameraYHi
 	ASL
 	STA $5B
 	LDA #$00
-	STA playerCollYHi
-	STA $54
-	STA playerCollYLo
+	STA pTilePosYHi
+	STA cameraYLo
+	STA pTilePosYLo
 	LDA cameraXHi
 	STA playerXHi
 	INY ; (Move one byte ahead)
 	LDA ($32),Y
 	STA playerXLo
 	STA playerSprX ; Load the player's X spawn coordinate
-	LDA $53
+	LDA cameraYHi
 	STA playerYHi
 	INY ; (Move one byte ahead)
 	LDA ($32),Y
@@ -3632,10 +3637,10 @@ loc6_B275:
 	STA scrollBoundRight ; Get horizontal screen count
 	INY ; (Move one byte ahead)
 	LDA ($32),Y
-	STA vertScrollLock ; Set the vertical scroll lock (If it's set)
+	STA scrollBoundTop ; Set the vertical scroll lock (If it's set)
 	INY ; (Move one byte ahead)
 	LDA ($32),Y
-	STA levelYScreenCount ; Get vertical screen count
+	STA scrollBoundBottom ; Get vertical screen count
 	LDA #$01
 	STA interruptMode ; Set the horizontal split/interrupt for levels
 	LDX #$00
@@ -3830,10 +3835,10 @@ bra6_B438:
 bra6_B44F:
 	LDA $26
 	BEQ bra6_B461
-	LDA playerCollXLo
+	LDA pTilePosXLo
 	CLC
 	ADC #$10
-	STA playerCollXLo
+	STA pTilePosXLo
 	BCC bra6_B45E
 	INC $64
 bra6_B45E:
@@ -4336,9 +4341,9 @@ tbl6_B76E:
 
 ;----------------------------------------
 ; SUBROUTINE ($B85C)
-; Scrolls the camera if needed
+; Checks if the camera needs to be updated and does so accordingly
 ;----------------------------------------
-updateCamera:
+updateCameraPos:
 	LDA playerXLoDup
 	SEC
 	SBC cameraXLo
@@ -4360,29 +4365,29 @@ bra6_B872:
 		LDA playerXLoDup
 		SEC
 		SBC playerSprX
-		STA $56
+		STA cameraXLoDup
 		LDA playerXHiDup
 		SBC #0
-		STA $55
+		STA cameraXHiDup
 		BPL bra6_B894
-			LDA $56
+			LDA cameraXLoDup
 			EOR #$FF
 			SEC
 			ADC #0
-			STA $56
+			STA cameraXLoDup
 	bra6_B894:
 		LDA scrollBoundLeft
-		CMP $55
+		CMP cameraXHiDup
 		BNE bra6_B8BE
-		; If at the left scroll boundary
+		; If past the left scroll point
 			LDA #$00
-			STA $56
+			STA cameraXLoDup
 			LDY scrollBoundLeft
 			INY
-			STY $55 ; Don't scroll any further left
+			STY cameraXHiDup ; Don't scroll any further left
 			LDA playerXLoDup
 			SEC
-			SBC $56
+			SBC cameraXLoDup
 			STA playerSprX ; Position the player sprite accordingly
 			CMP #16
 			BCS bra6_B8BE
@@ -4390,7 +4395,7 @@ bra6_B872:
 				LDA #16
 				STA playerXLoDup
 				STA playerSprX
-				LDA $55
+				LDA cameraXHiDup
 				STA playerXHiDup
 				LDA #$00
 				STA playerXSpd
@@ -4408,30 +4413,30 @@ bra6_B872:
 			LDA playerXLoDup
 			SEC
 			SBC playerSprX
-			STA $56
+			STA cameraXLoDup
 			LDA playerXHiDup
 			SBC #0
-			STA $55
+			STA cameraXHiDup
 			BPL bra6_B8E3
-				LDA $56
+				LDA cameraXLoDup
 				EOR #$FF
 				SEC
 				ADC #$00
-				STA $56
+				STA cameraXLoDup
 		bra6_B8E3:
 			LDA scrollBoundRight
-			CMP $55
+			CMP cameraXHiDup
 			BNE bra6_B8FF
 			; If at the right scroll boundary
-				STA $55
+				STA cameraXHiDup
 				LDA #$00
-				STA $56 ; Don't scroll right any further
+				STA cameraXLoDup ; Don't scroll right any further
 				LDA playerXLoDup
 				SEC
-				SBC $56
+				SBC cameraXLoDup
 				STA playerSprX
 				LDA playerXHiDup
-				SBC $55
+				SBC cameraXHiDup
 				BPL bra6_B8FF
 					STA playerSprX ; Seemingly useless, possibly unfinished check?
 
@@ -4442,248 +4447,263 @@ bra6_B872:
 		bra6_B902:
 			STA playerSprX
 			LDA cameraXHi
-			STA $55
+			STA cameraXHiDup
 			LDA cameraXLo
-			STA $56
+			STA cameraXLoDup ; Camera did not change so the previous camera X position should match the current position?
 
 ; Handle vertical scrolling
 loc6_B90C:
 	LDA playerYLoDup
 	SEC
-	SBC $54
+	SBC cameraYLo
 	STA $2B
 	LDA playerYHiDup
-	SBC $53
+	SBC cameraYHi
 	BPL bra6_B922
-	LDA $2B
-	EOR #$FF
-	SEC
-	ADC #$00
-	STA $2B
+		LDA $2B
+		EOR #$FF
+		SEC
+		ADC #$00
+		STA $2B
 bra6_B922:
 	LDA playerYHiDup
-	CMP $53
+	CMP cameraYHi
 	BEQ bra6_B92F
-	LDA $2B
-	SEC
-	SBC #$10
-	STA $2B
+		LDA $2B
+		SEC
+		SBC #16
+		STA $2B
 bra6_B92F:
 	LDA $2B
 	CMP #$40
 	BCS bra6_B96E
-	LDA #$40
-	STA playerSprY
-	LDA playerYLoDup
-	SEC
-	SBC playerSprY
-	STA $58
-	LDA playerYHiDup
-	SBC #$00
-	STA $57
-	BPL bra6_B951
-	LDA $58
-	EOR #$FF
-	SEC
-	ADC #$00
-	STA $58
-bra6_B951:
-	LDA vertScrollLock
-	CMP $57
-	BNE bra6_B96B
-	LDA #$00
-	STA $57
-	STA $58
-	LDA playerYLoDup
-	SEC
-	SBC $58
-	STA playerSprY
-	LDA playerYHiDup
-	SBC $57
-	BPL bra6_B96B
-bra6_B96B:
-	JMP loc6_B9C1
-bra6_B96E:
-	LDA $2B
-	CMP #$B0
-	BCC bra6_B9B6
-	LDA #$B0
-	STA playerSprY
-	LDA playerYLoDup
-	SEC
-	SBC playerSprY
-	STA $58
-	LDA playerYHiDup
-	SBC #$00
-	STA $57
-	BPL bra6_B999
-	LDA $58
-	EOR #$FF
-	SEC
-	ADC #$00
-	STA $58
-	LDA $57
-	EOR #$FF
-	SEC
-	ADC #$00
-	STA $57
-bra6_B999:
-	LDA levelYScreenCount
-	CMP $57
-	BNE bra6_B9B3
-	STA $57
-	LDA #$00
-	STA $58
-	LDA playerYLoDup
-	SEC
-	SBC $58
-	STA playerSprY
-	LDA playerYHiDup
-	SBC $57
-	BPL bra6_B9B3
-bra6_B9B3:
-	JMP loc6_B9C1
-bra6_B9B6:
-	STA playerSprY
-	LDA $53
-	STA $57
-	LDA $54
-	STA $58
-	RTS
+		LDA #$40
+		STA playerSprY ; Don't move the player sprite past the top scroll point
+		LDA playerYLoDup
+		SEC
+		SBC playerSprY
+		STA cameraYLoDup
+		LDA playerYHiDup
+		SBC #$00
+		STA cameraYHiDup
+		BPL bra6_B951
+			LDA cameraYLoDup
+			EOR #$FF
+			SEC
+			ADC #$00
+			STA cameraYLoDup
+	bra6_B951:
+		LDA scrollBoundTop
+		CMP cameraYHiDup
+		BNE bra6_B96B
+		; If past the top scroll point
+			LDA #$00
+			STA cameraYHiDup
+			STA cameraYLoDup
+			LDA playerYLoDup
+			SEC
+			SBC cameraYLoDup
+			STA playerSprY
+			LDA playerYHiDup
+			SBC cameraYHiDup
+			BPL bra6_B96B
+		bra6_B96B:
+			JMP loc6_B9C1
+	
+	; If player is below the top scroll point
+	bra6_B96E:
+		LDA $2B
+		CMP #$B0
+		BCC bra6_B9B6
+			; If the player is past the bottom scroll point
+			LDA #$B0
+			STA playerSprY ; Don't move the player sprite past the bottom scroll point
+			LDA playerYLoDup
+			SEC
+			SBC playerSprY
+			STA cameraYLoDup
+			LDA playerYHiDup
+			SBC #$00
+			STA cameraYHiDup
+			BPL bra6_B999
+				LDA cameraYLoDup
+				EOR #$FF
+				SEC
+				ADC #$00
+				STA cameraYLoDup
+				LDA cameraYHiDup
+				EOR #$FF
+				SEC
+				ADC #$00
+				STA cameraYHiDup
+		bra6_B999:
+			LDA scrollBoundBottom
+			CMP cameraYHiDup
+			BNE bra6_B9B3
+			; If at the bottom scroll boundary
+				STA cameraYHiDup
+				LDA #$00
+				STA cameraYLoDup ; Don't scroll down any further
+				LDA playerYLoDup
+				SEC
+				SBC cameraYLoDup
+				STA playerSprY
+				LDA playerYHiDup
+				SBC cameraYHiDup
+				BPL bra6_B9B3
+		bra6_B9B3:
+			JMP loc6_B9C1
+	
+	; If between the top and bottom scroll points
+	bra6_B9B6:
+		STA playerSprY
+		LDA cameraYHi
+		STA cameraYHiDup
+		LDA cameraYLo
+		STA cameraYLoDup
+		RTS
 
 loc6_B9C1:
-	LDA $57
+	LDA cameraYHiDup
 	CMP playerYHiDup
 	BEQ bra6_B9CE_RTS
-	LDA $58
-	SEC
-	SBC #$10
-	STA $58
+		LDA cameraYLoDup
+		SEC
+		SBC #16
+		STA cameraYLoDup
 bra6_B9CE_RTS:
 	RTS
 
 sub6_B9CF:
 	SEC
-	LDA $56
-	SBC $52
-	STA scrollSpd
-	LDA $55
-	SBC $51
+	LDA cameraXLoDup
+	SBC cameraXLo
+	STA scrollVecX ; Scroll as much as the camera moved
+	LDA cameraXHiDup
+	SBC cameraXHi
 	BPL bra6_B9EA
-	LDA scrollSpd
-	EOR #$FF
-	SEC
-	ADC #$00
-	ORA #$80
-	STA scrollSpd
+		LDA scrollVecX
+		EOR #$FF
+		SEC
+		ADC #$00
+		ORA #%10000000 ; Negate number in sign-magnitude format
+		STA scrollVecX
 bra6_B9EA:
-	LDA scrollSpd
+	LDA scrollVecX
 	BEQ bra6_BA20_RTS
-	LDA $52
-	EOR $56
-	AND #$F8
-	BEQ bra6_BA20_RTS
-	LDA cameraXHi
-	STA playerCollXHi
-	LDA $52
-	STA playerCollXLo
-	LDA #$00
-	STA playerCollYHi
-	LDA #$00
-	STA playerCollYLo
-	LDA scrollSpd
-	BMI bra6_BA18
-	INC $64
-	JSR sub6_AF11
-	LDX $51
-	INX
-	STX $04F2
-	RTS
-bra6_BA18:
-	JSR sub6_AF11
-	LDA cameraXHi
-	STA $04F2
+		LDA cameraXLo
+		EOR cameraXLoDup
+		AND #%11111000
+		BEQ bra6_BA20_RTS
+			LDA cameraXHi
+			STA pTilePosXHi
+			LDA cameraXLo
+			STA pTilePosXLo
+			LDA #$00
+			STA pTilePosYHi
+			LDA #$00
+			STA pTilePosYLo ; Pass the tile position for the top left edge of the camera
+			LDA scrollVecX
+			BMI bra6_BA18
+				INC pTilePosXHi ; Pass the tile to the top right edge of the camera instead if scrolling left
+				JSR sub6_AF11
+				LDX cameraXHi
+				INX
+				STX $04F2
+				RTS
+			bra6_BA18:
+				JSR sub6_AF11
+				LDA cameraXHi
+				STA $04F2
 bra6_BA20_RTS:
 	RTS
+
 sub6_BA21:
-	LDA scrollSpd
+	LDA scrollVecX
 	BMI bra6_BA34
 	CLC
 	ADC scrollX
 	STA scrollX
-	LDA $56
-	STA $52
-	LDA $55
+	LDA cameraXLoDup
+	STA cameraXLo
+	LDA cameraXHiDup
 	STA cameraXHi
 	RTS
 bra6_BA34:
 	AND #$7F
-	STA scrollSpd
+	STA scrollVecX
 	LDA scrollX
 	SEC
-	SBC scrollSpd
+	SBC scrollVecX
 	STA scrollX
-	LDA $56
-	STA $52
-	LDA $55
+	LDA cameraXLoDup
+	STA cameraXLo
+	LDA cameraXHiDup
 	STA cameraXHi
 	RTS
+
+;----------------------------------------
+; SUBROUTINE ($BA4A)
+;----------------------------------------
 sub6_BA4A:
 	SEC
-	LDA $58
-	SBC $54
-	STA $0327
-	LDA $57
-	SBC $53
+	LDA cameraYLoDup
+	SBC cameraYLo
+	STA scrollVecY ; Scroll as much as the camera moved
+	LDA cameraYHiDup
+	SBC cameraYHi
 	BPL bra6_BA65
-	LDA $0327
-	EOR #$FF
-	SEC
-	ADC #$00
-	ORA #$80
-	STA $0327
+		LDA scrollVecY
+		EOR #$FF
+		SEC
+		ADC #$00
+		ORA #%10000000 ; Negate number in sign-magnitude format
+		STA scrollVecY
 bra6_BA65:
-	LDA $57
-	CMP $53
+	LDA cameraYHiDup
+	CMP cameraYHi
 	BEQ bra6_BA73_RTS
-	LDA $0327
-	AND #$8F
-	STA $0327
+		LDA scrollVecY
+		AND #%10001111 ;Cap vertical scroll vector to 15
+		STA scrollVecY
 bra6_BA73_RTS:
 	RTS
-	LDA $0327
+
+	LDA scrollVecY
 	BEQ bra6_BA81_RTS
-	LDA $54
-	EOR $58
-	AND #$F8
-	BNE bra6_BA82
+		LDA cameraYLo
+		EOR cameraYLoDup
+		AND #%11111000
+		BNE bra6_BA82
 bra6_BA81_RTS:
 	RTS
+
+; Unused snippet
 bra6_BA82:
 	LDA cameraXHi
-	STA playerCollXHi
-	LDA $52
-	STA playerCollXLo
-	LDA $53
-	STA playerCollYHi
-	LDA $54
-	STA playerCollYLo
-	LDA $0327
+	STA pTilePosXHi
+	LDA cameraXLo
+	STA pTilePosXLo
+	LDA cameraYHi
+	STA pTilePosYHi
+	LDA cameraYLo
+	STA pTilePosYLo
+	LDA scrollVecY
 	BMI bra6_BA9A
-	INC playerCollYHi
+	INC pTilePosYHi
 	RTS
 bra6_BA9A:
-	LDA playerCollYLo
+	LDA pTilePosYLo
 	SEC
 	SBC #$08
 	BCS bra6_BAAA
-	DEC playerCollYHi
+	DEC pTilePosYHi
 	CMP #$F0
 	BCC bra6_BAAA
 	SEC
 	SBC #$10
 bra6_BAAA:
-	STA playerCollYLo
+	STA pTilePosYLo
 	LDA $5B
 	STA $28
 	LDA $03
@@ -4705,8 +4725,9 @@ bra6_BAC8:
 	LDA $28
 	STA $5B
 	RTS
+
 sub6_BAD1:
-	LDA $0327
+	LDA scrollVecY
 	BMI bra6_BAF3
 	CLC
 	ADC $03
@@ -4720,10 +4741,10 @@ sub6_BAD1:
 	EOR #$02
 	STA $5B
 bra6_BAEA:
-	LDA $58
-	STA $54
-	LDA $57
-	STA $53
+	LDA cameraYLoDup
+	STA cameraYLo
+	LDA cameraYHiDup
+	STA cameraYHi
 	RTS
 bra6_BAF3:
 	AND #$07
@@ -4741,10 +4762,10 @@ bra6_BAF3:
 	EOR #$02
 	STA $5B
 bra6_BB0D:
-	LDA $58
-	STA $54
-	LDA $57
-	STA $53
+	LDA cameraYLoDup
+	STA cameraYLo
+	LDA cameraYHiDup
+	STA cameraYHi
 	RTS
 	LDA interruptMode
 	CMP #$04

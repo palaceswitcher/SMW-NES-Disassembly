@@ -1,4 +1,4 @@
-SMW NES Hacking Document (2026-3-26)
+SMW NES Hacking Document (2026-4-2)
 Note: Some information here may be inaccurate or wrong.
 
 -----Level Data-----
@@ -517,16 +517,22 @@ $0049:	Player Climbing State
 $004A:	Shell Hit Counter
 $004B:	Shell Hit Timer (Amount of frames since the shell hit something)
 $004F:	Player Previous X Direction
-$0051:	Scroll Camera X Pos Hi
-$0052:	Scroll Camera X Pos
+$0051:	Camera X Pos Hi
+$0052:	Camera X Pos
+$0053:	Camera Y Pos Hi
+$0054:	Camera Y Pos
+$0055:	Camera X Pos Hi (Duplicate? Functions similar to the duplicate player positions)
+$0056:	Camera X Pos (Duplicate?)
+$0057:	Camera Y Pos Hi (Duplicate?)
+$0058:	Camera Y Pos (Duplicate?)
 $005B:	Vertical Scroll Flag?
 > 0x00 = Camera moved vertically up
 > 0x02 = Camera at lowest y position
 $005C:	32x32 Vertical Scroll Strip?
-$0064:	Player Collision X Screen?
-$0065:	Player Collision X Position?
-$0066:	Player Collision Y Screen?
-$0067:	Player Collision Y Position?
+$0064:	Tile X Pos Hi (Used as parameter)
+$0065:	Tile X Pos Lo (Used as parameter)
+$0066:	Tile Y Pos Hi (Used as parameter)
+$0067:	Tile Y Pos Lo (Used as parameter)
 $008C - $008D:	Level Screen Order Pointer
 $008E:	Music Play Register (!)
 > 0x20 = Title
@@ -672,7 +678,8 @@ $0310:	Current BG Palette
 $0311:	Fadeout Mode (0 = BG and Sprites, 1 = Only BG)
 $0312:	Palette Transition?
 $0313:	Second Counter (unused, Somari leftover)
-$0326:	Scroll Speed
+$0326:	Scroll X Vector
+$0327:	Scroll Y Vector
 $032D:	Enable 8x8 Tile Screen Offset
 $032F:	Current 8x8 Tile Screen
 $032F:	Overworld Map Timer
@@ -1028,10 +1035,10 @@ $0607:	HUD Display Thing?
 > 0x02 = Sprite Only
 $060B:	Warp Level Number
 $060C:	Warp Number
-$060D:	Level Vertical Scroll Lock Flag
-$060E:	Level Vertical Screen Count
-$060F:	Level Horizontal Scroll Lock (Severely broken when set to zero)
-$0610:	Level Horizontal Screen Count
+$060D:	Top Scroll Boundary Hi
+$060E:	Bottom Scroll Boundary Hi
+$060F:	Left Scroll Boundary Hi
+$0610:	Right Scroll Boundary Hi
 $0611:	Player Timer Frame Count
 $0612:	Player Timer Seconds
 $0613:	Yoshi Swallow Frame Count

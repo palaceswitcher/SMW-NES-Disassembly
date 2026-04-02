@@ -4172,7 +4172,7 @@ sub_42_99D6:
 	TAX
 	LDA tbl2_9A8D,X
 	STA cameraXHi
-	STA playerCollXHi
+	STA pTilePosXHi
 	STA playerXHi
 	LDA tbl2_9A8D+1,X
 	STA $52
@@ -5120,7 +5120,7 @@ bra2_9E0B:
 	DEC $32
 bra2_9E31:
 	LDA $32
-	CMP $51
+	CMP cameraXHi
 	BNE bra2_9E4C ; If the sprite is off-screen, stop rendering it
 	LDA tbl2_9E5C+2,X
 	STA $32 ; Set the sprite's vertical screen

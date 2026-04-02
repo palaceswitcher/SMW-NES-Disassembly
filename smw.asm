@@ -37,9 +37,6 @@ secFrameCount = $0313
 scratchRam = $2E
 playerAnimPtr = $E5
 nmiJmpOpcode = $063A
-cameraXHi = $51
-cameraXLo = $52
-vertScrollFlag = $5B
 tileRowCount = $B0
 bgAttrRowCount = $B1
 metaspriteRowAlignment = $B2
@@ -62,8 +59,24 @@ ppuDataBuf = $03A5
 
 warpLvlNumber = $060B
 warpNumber = $060C
-vertScrollLock = $060D
-levelYScreenCount = $060E
+
+cameraXHi = $51
+cameraXLo = $52
+cameraYHi = $53
+cameraYLo = $54
+cameraXHiDup = $55
+cameraXLoDup = $56
+cameraYHiDup = $57
+cameraYLoDup = $58
+pTilePosXHi = $64
+pTilePosXLo = $65
+pTilePosYHi = $66
+pTilePosYLo = $67
+scrollVecX = $0326
+scrollVecY = $0327
+vertScrollFlag = $5B
+scrollBoundTop = $060D
+scrollBoundBottom = $060E
 scrollBoundLeft = $060F
 scrollBoundRight = $0610
 
@@ -152,10 +165,6 @@ playerAttrs = $06E0
 
 playerBackColl = $96 ; TODO: Get a better name for this
 playerScreenId = $99
-playerCollXHi = $64
-playerCollXLo = $65
-playerCollYHi = $66
-playerCollYLo = $67
 
 fireballSlot = $062F
 fireballSlot2 = $0630
@@ -187,7 +196,6 @@ shellHitCount = $4A
 shellHitTimer = $4B
 
 spriteMem = $0200
-scrollSpd = $0326
 logoFlag = $032D
 logoXOffs = $0330
 logoYOffs = $0331

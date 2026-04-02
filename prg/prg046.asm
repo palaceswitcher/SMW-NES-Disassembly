@@ -186,7 +186,7 @@ bra13_99CC:
 	TAX
 	LDA tbl13_9A8D,X
 	STA cameraXHi
-	STA playerCollXHi
+	STA pTilePosXHi
 	STA playerXHi
 	LDA tbl13_9A8E,X
 	STA $52
@@ -1092,7 +1092,7 @@ bra13_9E0B:
 	DEC $32
 bra13_9E31:
 	LDA $32
-	CMP $51
+	CMP cameraXHi
 	BNE bra13_9E4C
 	LDA tbl13_9E5E,X
 	STA $32

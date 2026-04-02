@@ -4259,7 +4259,7 @@ bra6_9B31:
 	LDA objXLo,X
 	STA $65
 	LDA objXHi,X
-	STA playerCollXHi
+	STA pTilePosXHi
 	LDA objYLo,X
 	STA $67
 	LDA objYHi,X
@@ -4413,10 +4413,10 @@ sub6_9C4F:
 	STA $28
 	LDA $67
 	SEC
-	SBC $54
+	SBC cameraYLo
 	TAX
 	LDA $66
-	CMP $53
+	CMP cameraYHi
 	BEQ bra6_9C6C
 	LDA $5B
 	EOR #$02

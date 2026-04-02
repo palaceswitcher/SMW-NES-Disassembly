@@ -1374,7 +1374,7 @@ notePitchTable:
 	.word $03C0
 	.word $038A
 	.word $0357
-	.word $0327
+	.word scrollVecY
 	.word $02FA
 	.word $02CF
 	.word $02A7

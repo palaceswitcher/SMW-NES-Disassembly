@@ -1107,26 +1107,26 @@ sub3_E870:
 	LDA ($32),Y ; Load warp X screen from pointer
 	AND #%01111111 ; Mask out bit 7
 	STA cameraXHi ; Store as camera X screen
-	STA playerCollXHi ; Store as wall collision position
+	STA pTilePosXHi ; Store as wall collision position
 	LDA #$00
 	STA $52
-	STA playerCollXLo ; reset player collision and sprite positioning?
+	STA pTilePosXLo ; reset player collision and sprite positioning?
 	INY ; Move to next byte
 	LDA ($32),Y
-	STA $53
+	STA cameraYHi
 	ASL
 	STA vertScrollFlag
 	LDA #$00
-	STA playerCollYHi
-	STA $54
-	STA playerCollYLo
+	STA pTilePosYHi
+	STA cameraYLo
+	STA pTilePosYLo
 	LDA cameraXHi
 	STA playerXHi ; Move player to same X screen as the camera
 	INY
 	LDA ($32),Y
 	STA playerXLo
 	STA playerSprX ; Get X position
-	LDA $53
+	LDA cameraYHi
 	STA playerYHi ; Move the player to the same Y screen as the camera
 	INY
 	LDA ($32),Y
@@ -1140,10 +1140,10 @@ sub3_E870:
 	STA scrollBoundRight ; Set horizontal screen count
 	INY ; Move to next byte
 	LDA ($32),Y
-	STA vertScrollLock ; Set vertical scroll lock
+	STA scrollBoundTop ; Set vertical scroll lock
 	INY ; Move to next byte
 	LDA ($32),Y
-	STA levelYScreenCount ; Set vertical screen count
+	STA scrollBoundBottom ; Set vertical screen count
 	LDA warpNumber ; Load warp number
 	LSR ; Divide it by 2
 	TAY ; Load pointer based on the result
@@ -2198,7 +2198,7 @@ pnt2_EE3D:
 	JSR sub3_ED48
 	LDA #$3D
 	STA M90_PRG1
-	JSR GetEntitySetPtr
+	JSR getEntitySetPtr
 	LDA #$20
 	STA playerAttrs
 	RTS

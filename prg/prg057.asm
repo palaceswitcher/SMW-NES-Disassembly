@@ -491,7 +491,7 @@ bra4_A25B:
 	STA spriteMem+3
 	LDA bubbleY
 	SEC
-	SBC $54
+	SBC cameraYLo
 	LDX playerYHi
 	BEQ bra4_A275
 	LDX scrollY
@@ -4818,21 +4818,21 @@ sub4_BAF1:
 	LDA tbl4_BC2F,X ; Load the player's horizontal collision offset based on their current action
 	CLC
 	ADC playerXLoDup ; add collision offset to new X position
-	STA playerCollXLo ; set as colision X postion
+	STA pTilePosXLo ; set as colision X postion
 	LDA playerXHiDup ; get new X screen
 	ADC #$00 ; if prior sum made a carry, apply it
-	STA playerCollXHi ; store as collision X screen
+	STA pTilePosXHi ; store as collision X screen
 	LDA playerYHiDup ; get new Y screen
-	STA playerCollYHi ; set as collision Y screen
+	STA pTilePosYHi ; set as collision Y screen
 	LDA playerYLoDup ; get new Y position
-	STA playerCollYLo ; Set the player's vertical collision position
+	STA pTilePosYLo ; Set the player's vertical collision position
 loc4_BB09:
 	LDA #$00
 	STA $26 ; clear $26
-	LDY playerCollYHi
+	LDY pTilePosYHi
 	LDA levelVerticalScreenOffs,Y ; Get screen offset for the vertical hitbox screen
 	CLC
-	ADC playerCollXHi ; Add hitbox X screen to get total screen number (Y screen offset + X screen = total screen)
+	ADC pTilePosXHi ; Add hitbox X screen to get total screen number (Y screen offset + X screen = total screen)
 	TAY ; move result to Y
 	LDA prgDataBank2
 	STA M90_PRG0 ; Load tileset bank in
@@ -4856,8 +4856,8 @@ bra4_BB3D:
 	LDA $04F4
 	STA M90_PRG0 ; Likely an unused function
 loc4_BB43:
-	LDY playerCollXLo ; Get the horizontal hitbox position (will be reused soon)
-	LDA playerCollYLo
+	LDY pTilePosXLo ; Get the horizontal hitbox position (will be reused soon)
+	LDA pTilePosYLo
 	AND #%11110000 ; Get the vertical metatile number of the player's hitbox
 	ORA upperNybbleShiftTable,Y ; Pack the horizontal and vertical metatile numbers into one byte, with the horizontal metatile being in the lower nybble and the vertical metatile in the upper nybble
 	TAY
@@ -4891,20 +4891,20 @@ bra4_BB80:
 	LDA tbl4_BC2F,X
 	ASL
 	STA $25
-	LDA playerCollXLo
+	LDA pTilePosXLo
 	SEC
 	SBC $25
-	STA playerCollXLo
-	LDA playerCollXHi
+	STA pTilePosXLo
+	LDA pTilePosXHi
 	SBC #$00
-	STA playerCollXHi
+	STA pTilePosXHi
 loc4_BB95:
 	LDA #$00
 	STA $26
-	LDY playerCollYHi
+	LDY pTilePosYHi
 	LDA levelVerticalScreenOffs,Y
 	CLC
-	ADC playerCollXHi
+	ADC pTilePosXHi
 	TAY
 	LDA prgDataBank2
 	STA M90_PRG0
@@ -4928,8 +4928,8 @@ bra4_BBC9:
 	LDA $04F4 ; unlogged
 	STA M90_PRG0 ; unlogged
 loc4_BBCF:
-	LDY playerCollXLo
-	LDA playerCollYLo
+	LDY pTilePosXLo
+	LDA pTilePosYLo
 	AND #$F0
 	ORA upperNybbleShiftTable,Y
 	TAY
@@ -4966,16 +4966,16 @@ bra4_BC0D:
 	JMP loc4_BB95
 bra4_BC16: ; affects movement between horizontal screens
 	LDX playerAction
-	LDA playerCollXLo
+	LDA pTilePosXLo
 	CLC
 	ADC tbl4_BC2F,X
 	STA playerXLoDup
-	LDA playerCollXHi
+	LDA pTilePosXHi
 	ADC #$00
 	STA playerXHiDup
-	LDA playerCollYLo
+	LDA pTilePosYLo
 	STA playerYLoDup
-	LDA playerCollYHi
+	LDA pTilePosYHi
 	STA playerYHiDup
 	RTS
 tbl4_BC2F:
@@ -5023,28 +5023,28 @@ bra4_BC59:
 	LDA tbl4_BC2F,X
 	CLC
 	ADC playerXLoDup
-	STA playerCollXLo
+	STA pTilePosXLo
 	LDA playerXHiDup
 	ADC #$00
-	STA playerCollXHi
+	STA pTilePosXHi
 	LDA playerYLoDup
 	SEC
 	SBC playerMetaspriteVAlign
-	STA playerCollYLo
+	STA pTilePosYLo
 	BCS bra4_BC7E
 	SEC
 	SBC #$10
-	STA playerCollYLo
+	STA pTilePosYLo
 	LDY playerYHiDup
 	DEY
-	STY playerCollYHi
+	STY pTilePosYHi
 bra4_BC7E:
 	LDA #$00
 	STA $26
-	LDY playerCollYHi ; Use the vertical screen of the player's collision as the index
+	LDY pTilePosYHi ; Use the vertical screen of the player's collision as the index
 	LDA levelVerticalScreenOffs,Y ; Determines what to offset the player's collision X screen number based on what vertical screen they're on. If they're on the top screen, offset it by #$12. If they're on the bottom, don't offset it.
 	CLC
-	ADC playerCollXHi ; Player X Screen + Offset = Absolute Screen
+	ADC pTilePosXHi ; Player X Screen + Offset = Absolute Screen
 	TAY ; Set the ordered screen value as the index
 	LDA prgDataBank2
 	STA M90_PRG0 ; Move the second bank into the first bank slot ($8000-$9FFF)
@@ -5068,8 +5068,8 @@ bra4_BCB2:
 	LDA $04F4
 	STA M90_PRG0
 loc4_BCB8:
-	LDY playerCollXLo
-	LDA playerCollYLo
+	LDY pTilePosXLo
+	LDA pTilePosYLo
 	AND #$F0
 	ORA upperNybbleShiftTable,Y
 	TAY
@@ -5084,17 +5084,17 @@ loc4_BCB8:
 	LDA tbl4_BC2F,X
 	ASL
 	STA $25
-	LDA playerCollXLo
+	LDA pTilePosXLo
 	SEC
 	SBC $25
-	STA playerCollXLo
-	LDA playerCollXHi
+	STA pTilePosXLo
+	LDA pTilePosXHi
 	SBC #$00
-	STA playerCollXHi
-	LDY playerCollYHi
+	STA pTilePosXHi
+	LDY pTilePosYHi
 	LDA levelVerticalScreenOffs,Y
 	CLC
-	ADC playerCollXHi
+	ADC pTilePosXHi
 	TAY
 	LDA prgDataBank2
 	STA M90_PRG0
@@ -5118,8 +5118,8 @@ bra4_BD17:
 	LDA $04F4
 	STA M90_PRG0
 loc4_BD1D:
-	LDY playerCollXLo
-	LDA playerCollYLo
+	LDY pTilePosXLo
+	LDA pTilePosYLo
 	AND #$F0
 	ORA upperNybbleShiftTable,Y
 	TAY
@@ -5132,11 +5132,11 @@ loc4_BD1D:
 	JSR sub4_BE6D
 	JSR sub4_BE91
 	LDX playerAction
-	LDA playerCollXLo
+	LDA pTilePosXLo
 	CLC
 	ADC tbl4_BC2F,X
 	STA playerXLoDup
-	LDA playerCollXHi
+	LDA pTilePosXHi
 	ADC #$00
 	STA playerXHiDup
 	LDY #$10
@@ -5145,7 +5145,7 @@ loc4_BD1D:
 	LDY #$18
 bra4_BD53:
 	STY $2B
-	LDA playerCollYLo
+	LDA pTilePosYLo
 	CLC
 	ADC playerMetaspriteVAlign
 	STA playerYLoDup
@@ -5156,7 +5156,7 @@ bra4_BD62:
 	CLC
 	ADC #$10
 	STA playerYLoDup
-	LDY playerCollYHi
+	LDY pTilePosYHi
 	INY
 	STY playerYHiDup
 bra4_BD6C_RTS:
@@ -5262,17 +5262,17 @@ loc4_BED5: ; Player bumped head on ceiling
 	LDA #SFX_THUD
 	STA sndSfx ; play "thud" sound
 bra4_BEF1: ; If player bumps head whilst climbing
-	LDA playerCollYLo
+	LDA pTilePosYLo
 	CLC
 	ADC #$10
 	AND #$F0
-	STA playerCollYLo
+	STA pTilePosYLo
 	CMP #$F0
 	BCC bra4_BF05_RTS
 	CLC
 	ADC #$10
-	STA playerCollYLo
-	INC playerCollYHi
+	STA pTilePosYLo
+	INC pTilePosYHi
 bra4_BF05_RTS:
 	RTS
 bra4_BF06:
@@ -5280,29 +5280,29 @@ bra4_BF06:
 	STA playerXSpd ; Clear player X Speed
 	LDA playerXLoDup
 	SEC
-	SBC playerCollXLo ; Subtract from duplicate X position
+	SBC pTilePosXLo ; Subtract from duplicate X position
 	LDA playerXHiDup
-	SBC playerCollXHi ; Subtract value from duplicate X screen
+	SBC pTilePosXHi ; Subtract value from duplicate X screen
 	BMI bra4_BF25 ; if result negative, branch
-	LDA playerCollXLo  ; otherwise get player X collision position
+	LDA pTilePosXLo  ; otherwise get player X collision position
 	CLC
 	ADC #$10 ; add #$10
 	AND #$F0 ; mask it
-	STA playerCollXLo ; update player X collision position
-	LDA playerCollXHi
+	STA pTilePosXLo ; update player X collision position
+	LDA pTilePosXHi
 	ADC #$00 ; apply carry if present 
-	STA playerCollXHi ; update player X collision screen
+	STA pTilePosXHi ; update player X collision screen
 	RTS
 bra4_BF25:
-	LDA playerCollXLo
+	LDA pTilePosXLo
 	SEC
 	SBC #$10
 	ORA #$0F
-	STA playerCollXLo
-	LDA playerCollXHi
+	STA pTilePosXLo
+	LDA pTilePosXHi
 	SBC #$00
 bra4_BF32:
-	STA playerCollXHi
+	STA pTilePosXHi
 	RTS
 	LDA ($32),Y ; everything below here is useless/leftover
 	STA PPUDATA

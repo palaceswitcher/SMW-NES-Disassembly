@@ -1314,7 +1314,7 @@ pnt5_A933:
 	TAX
 	LDA tbl_A98F,X
 	STA cameraXHi
-	STA playerCollXHi
+	STA pTilePosXHi
 	STA playerXHi
 	LDA tbl_A98F+1,X
 	STA $52
@@ -3180,58 +3180,58 @@ bra_B40E_RTS:
 	LDA btnPressed
 	AND #$80
 	BEQ bra_B424
-	INC scrollSpd
+	INC scrollVecX
 	LDA #$08
-	CMP scrollSpd
+	CMP scrollVecX
 	BCS bra_B423_RTS
-	STA scrollSpd
+	STA scrollVecX
 bra_B423_RTS:
 	RTS
 bra_B424:
 	LDA btnPressed
 	AND #$40
 	BEQ bra_B439
-	INC $0327
+	INC scrollVecY
 	LDA #$08
-	CMP $0327
+	CMP scrollVecY
 	BCS bra_B438_RTS
-	STA $0327
+	STA scrollVecY
 bra_B438_RTS:
 	RTS
 bra_B439:
-	LDA scrollSpd
+	LDA scrollVecX
 	AND #$07
-	STA scrollSpd
-	LDA $0327
+	STA scrollVecX
+	LDA scrollVecY
 	AND #$07
-	STA $0327
+	STA scrollVecY
 	LDA btnHeld
 	AND #$01
 	BEQ bra_B458
-	LDA scrollSpd
+	LDA scrollVecX
 	AND #$7F
-	STA scrollSpd
+	STA scrollVecX
 bra_B458:
 	LDA btnHeld
 	AND #$02
 	BEQ bra_B467
-	LDA scrollSpd
+	LDA scrollVecX
 	ORA #$80
-	STA scrollSpd
+	STA scrollVecX
 bra_B467:
 	LDA btnHeld
 	AND #$04
 	BEQ bra_B476
-	LDA $0327
+	LDA scrollVecY
 	AND #$7F
-	STA $0327
+	STA scrollVecY
 bra_B476:
 	LDA btnHeld
 	AND #$08
 	BEQ bra_B485_RTS
-	LDA $0327
+	LDA scrollVecY
 	ORA #$80
-	STA $0327
+	STA scrollVecY
 bra_B485_RTS:
 	RTS
 sub_B486:
@@ -3720,18 +3720,18 @@ sub_B75D:
 	TAY
 	LDA ($32),Y
 	STA cameraXHi
-	STA playerCollXHi
+	STA pTilePosXHi
 	LDA #$00
 	STA $52
 	STA $65
 	INY
 	LDA ($32),Y
-	STA $53
+	STA cameraYHi
 	ASL
 	STA $5B
 	LDA #$00
 	STA $66
-	STA $54
+	STA cameraYLo
 	STA $67
 	LDA cameraXHi
 	STA playerXHi
@@ -3739,7 +3739,7 @@ sub_B75D:
 	LDA ($32),Y
 	STA playerXLo
 	STA $12
-	LDA $53
+	LDA cameraYHi
 	STA playerYHi
 	INY
 	LDA ($32),Y
@@ -3753,10 +3753,10 @@ sub_B75D:
 	STA scrollBoundRight
 	INY
 	LDA ($32),Y
-	STA vertScrollLock
+	STA scrollBoundTop
 	INY
 	LDA ($32),Y
-	STA levelYScreenCount
+	STA scrollBoundBottom
 	RTS
 	RTS
 sub_B800:
@@ -4681,7 +4681,7 @@ bra_BC84:
 	STA $56
 bra_BCA6:
 	LDA scrollBoundLeft
-	CMP $55
+	CMP cameraXHiDup
 	BNE bra_BCC0
 	LDA #$00
 	STA $55
@@ -4716,7 +4716,7 @@ bra_BCC3:
 	STA $56
 bra_BCE5:
 	LDA scrollBoundRight
-	CMP $55
+	CMP cameraXHiDup
 	BNE bra_BD01
 	STA $55
 	LDA #$00
@@ -4740,10 +4740,10 @@ bra_BD04:
 loc_BD0E:
 	LDA playerYLoDup
 	SEC
-	SBC $54
+	SBC cameraYLo
 	STA $2B
 	LDA playerYHiDup
-	SBC $53
+	SBC cameraYHi
 	BPL bra_BD24
 	LDA $2B
 	EOR #$FF
@@ -4752,7 +4752,7 @@ loc_BD0E:
 	STA $2B
 bra_BD24:
 	LDA playerYHiDup
-	CMP $53
+	CMP cameraYHi
 	BEQ bra_BD31
 	LDA $2B
 	SEC
@@ -4767,29 +4767,29 @@ bra_BD31:
 	LDA playerYLoDup
 	SEC
 	SBC $13
-	STA $58
+	STA cameraYLoDup
 	LDA playerYHiDup
 	SBC #$00
-	STA $57
+	STA cameraYHiDup
 	BPL bra_BD53
-	LDA $58
+	LDA cameraYLoDup
 	EOR #$FF
 	SEC
 	ADC #$00
-	STA $58
+	STA cameraYLoDup
 bra_BD53:
-	LDA vertScrollLock
-	CMP $57
+	LDA scrollBoundTop
+	CMP cameraYHiDup
 	BNE bra_BD6D
 	LDA #$00
-	STA $57
-	STA $58
+	STA cameraYHiDup
+	STA cameraYLoDup
 	LDA playerYLoDup
 	SEC
-	SBC $58
+	SBC cameraYLoDup
 	STA $13
 	LDA playerYHiDup
-	SBC $57
+	SBC cameraYHiDup
 	BPL bra_BD6D
 bra_BD6D:
 	JMP loc_BDC3
@@ -4802,84 +4802,84 @@ bra_BD70:
 	LDA playerYLoDup
 	SEC
 	SBC $13
-	STA $58
+	STA cameraYLoDup
 	LDA playerYHiDup
 	SBC #$00
-	STA $57
+	STA cameraYHiDup
 	BPL bra_BD9B
-	LDA $58
+	LDA cameraYLoDup
 	EOR #$FF
 	SEC
 	ADC #$00
-	STA $58
-	LDA $57
+	STA cameraYLoDup
+	LDA cameraYHiDup
 	EOR #$FF
 	SEC
 	ADC #$00
-	STA $57
+	STA cameraYHiDup
 bra_BD9B:
-	LDA levelYScreenCount
-	CMP $57
+	LDA scrollBoundBottom
+	CMP cameraYHiDup
 	BNE bra_BDB5
-	STA $57
+	STA cameraYHiDup
 	LDA #$00
-	STA $58
+	STA cameraYLoDup
 	LDA playerYLoDup
 	SEC
-	SBC $58
+	SBC cameraYLoDup
 	STA $13
 	LDA playerYHiDup
-	SBC $57
+	SBC cameraYHiDup
 	BPL bra_BDB5
 bra_BDB5:
 	JMP loc_BDC3
 bra_BDB8:
 	STA $13
-	LDA $53
-	STA $57
-	LDA $54
-	STA $58
+	LDA cameraYHi
+	STA cameraYHiDup
+	LDA cameraYLo
+	STA cameraYLoDup
 	RTS
 loc_BDC3:
-	LDA $57
+	LDA cameraYHiDup
 	CMP $10
 	BEQ bra_BDD0_RTS
-	LDA $58
+	LDA cameraYLoDup
 	SEC
 	SBC #$10
-	STA $58
+	STA cameraYLoDup
 bra_BDD0_RTS:
 	RTS
 sub_BDD1:
 	SEC
 	LDA $56
 	SBC $52
-	STA scrollSpd
+	STA scrollVecX
 	LDA $55
 	SBC $51
 	BPL bra_BDEC
-	LDA scrollSpd
+	LDA scrollVecX
 	EOR #$FF
 	SEC
 	ADC #$00
 	ORA #$80
-	STA scrollSpd
+	STA scrollVecX
 bra_BDEC:
-	LDA scrollSpd
+	LDA scrollVecX
 	BEQ bra_BE22_RTS
 	LDA $52
-	EOR $56
+	EOR cameraXLoDup
 	AND #$F8
 	BEQ bra_BE22_RTS
 	LDA cameraXHi
-	STA playerCollXHi
+	STA pTilePosXHi
 	LDA $52
 	STA $65
 	LDA #$00
 	STA $66
 	LDA #$00
 	STA $67
-	LDA scrollSpd
+	LDA scrollVecX
 	BMI bra_BE1A
 	INC $64
 	JSR sub_B52B
@@ -4894,7 +4894,7 @@ bra_BE1A:
 bra_BE22_RTS:
 	RTS
 sub_BE23:
-	LDA scrollSpd
+	LDA scrollVecX
 	BMI bra_BE36
 	CLC
 	ADC $02
@@ -4906,10 +4906,10 @@ sub_BE23:
 	RTS
 bra_BE36:
 	AND #$7F
-	STA scrollSpd
+	STA scrollVecX
 	LDA $02
 	SEC
-	SBC scrollSpd
+	SBC scrollVecX
 	STA $02
 	LDA $56
 	STA $52
@@ -4920,7 +4920,7 @@ bra_BE36:
 ; Unused (possibly duplicate) code starts here
 sub_BE4D:
 	LDA playerXHiDup
-	STA playerCollXHi
+	STA pTilePosXHi
 	LDA playerXLoDup
 	STA $65
 	LDA playerYHiDup
@@ -4980,7 +4980,7 @@ bra_BEBC:
 	JMP loc_BEC1
 	STA $95
 loc_BEC1:
-	LDA playerCollXHi
+	LDA pTilePosXHi
 	STA playerXHiDup
 	LDA $65
 	STA playerXLoDup
@@ -4991,7 +4991,7 @@ loc_BEC1:
 	RTS
 sub_BED2:
 	LDA playerXHi
-	STA playerCollXHi
+	STA pTilePosXHi
 	LDA playerXLo
 	SEC
 	SBC #$08
@@ -5004,7 +5004,7 @@ sub_BED2:
 	STA $67
 	JSR sub_BF31
 	LDA playerXHi
-	STA playerCollXHi
+	STA pTilePosXHi
 	LDA playerXLo
 	CLC
 	ADC #$08
@@ -5017,7 +5017,7 @@ sub_BED2:
 	STA $67
 	JSR sub_BF31
 	LDA playerXHi
-	STA playerCollXHi
+	STA pTilePosXHi
 	LDA playerXLo
 	SEC
 	SBC #$08
@@ -5028,7 +5028,7 @@ sub_BED2:
 	STA $67
 	JSR sub_BF31
 	LDA playerXHi
-	STA playerCollXHi
+	STA pTilePosXHi
 	LDA playerXLo
 	SEC
 	SBC #$08

@@ -4013,7 +4013,7 @@ sub_54_B4FC:
 	; Despawn object if it crosses the death barrier
 	loc3_B53C:
 		LDA objYHi,X
-		CMP levelYScreenCount
+		CMP scrollBoundBottom
 		BCC bra3_B556
 		LDA objYLo,X
 		CMP #$E0
