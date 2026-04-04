@@ -1543,144 +1543,154 @@ tbl6_A200:
 	.byte $23
 	.byte $23
 	.byte $23
-sub6_A600:
-	LDY $2B
-	LDA ($32),Y
+
+;----------------------------------------
+; SUBROUTINE ($A600)
+;----------------------------------------
+.proc sub6_A600
+metatileIndex = $2B ; The metatile index relative to the screen
+pScreenPtr = $32
+
+	LDY metatileIndex
+	LDA (pScreenPtr),Y
 	BNE bra6_A607
-	RTS
-bra6_A607:
-	STA $3E
-	TYA
-	CLC
-	ADC #$10
-	STA $2C
-	TAY
-	LDA ($32),Y
-	CMP #$FF
-	BEQ bra6_A683
-	STA $3F
-	LDX objCount
-	LDA $3E
-	ASL
-	STA $058C,X
-	TAY
-	LDX tbl6_AA3A,Y
-	LDA $03CE,X
-	AND tbl6_AABA,Y
-	BNE bra6_A683
-	LDX objCount
-	LDA $058C,X
-	TAY
-	LDX tbl6_AA3A,Y
-	LDA $03CE,X
-	ORA tbl6_AABA,Y
-	STA $03CE,X
-	LDA $3F
-	AND #$0F
-	TAY
-	LDX objCount
-	LDA ($DC),Y
-	STA objSlot,X
-	TAY
-	LDA tbl6_A728,Y
-	STA objVar,X
-	LDA #$00
-	STA objYHi,X
-	LDY $2C
-	LDA ($32),Y
-	AND #$F0
-	STA objYLo,X
-	BEQ bra6_A664
-	DEC objYLo,X
-bra6_A664:
-	LDA pTilePosXLo
-	AND #$F0
-	STA objXLo,X
-	LDA pTilePosXHi
-	STA objXHi,X
-	LDA #$00
-	STA objFlags,X
-	STA $0641,X
-	STA enemyAnimFrame,X
-	STA objState,X
-	JSR sub6_A705
-	INC objCount
-bra6_A683:
-	LDA $2B
-	CLC
-	ADC #$20
-	TAY
-	STY $2C
-	LDA ($32),Y
-	CMP #$FF
-	BEQ bra6_A704_RTS
-	STA $3F
-	LDX objCount
-	LDA $3E
-	ASL
-	STA $058C,X
-	INC $058C,X
-	LDA $058C,X
-	TAY
-	LDX tbl6_AA3A,Y
-	LDA $03CE,X
-	AND tbl6_AABA,Y
-	BNE bra6_A704_RTS
-	LDX objCount
-	LDA $058C,X
-	TAY
-	LDX tbl6_AA3A,Y
-	LDA $03CE,X
-	ORA tbl6_AABA,Y
-	STA $03CE,X
-	LDA $3F
-	AND #$0F
-	TAY
-	LDX objCount
-	LDA ($DC),Y
-	STA objSlot,X
-	TAY
-	LDA tbl6_A728,Y
-	STA objVar,X
-	LDA #$01
-	STA objYHi,X
-	LDY $2C
-	LDA ($32),Y
-	AND #$F0
-	STA objYLo,X
-	BEQ bra6_A6E5
-	DEC objYLo,X
-bra6_A6E5:
-	LDA pTilePosXLo
-	AND #$F0
-	STA objXLo,X
-	LDA pTilePosXHi
-	STA objXHi,X
-	LDA #$00
-	STA objFlags,X
-	STA $0641,X
-	STA enemyAnimFrame,X
-	STA objState,X
-	JSR sub6_A705
-	INC objCount
-bra6_A704_RTS:
-	RTS
-sub6_A705:
-	LDA objXLo,X
-	SEC
-	SBC playerXLoDup
-	STA objXDistLo,X
-	LDA objXHi,X
-	SBC playerXHiDup
-	STA objXDistHi,X
-	LDA objYLo,X
-	SEC
-	SBC playerYLoDup
-	STA objYDistLo,X
-	LDA objYHi,X
-	SBC playerYHiDup
-	STA objYDistHi,X
-	RTS
+		RTS
+
+	bra6_A607:
+		STA $3E
+		TYA
+		CLC
+		ADC #$10
+		STA $2C
+		TAY
+		LDA (pScreenPtr),Y
+		CMP #$FF
+		BEQ bra6_A683
+		STA $3F
+		LDX objCount
+		LDA $3E
+		ASL
+		STA $058C,X
+		TAY
+		LDX tbl6_AA3A,Y
+		LDA $03CE,X
+		AND tbl6_AABA,Y
+		BNE bra6_A683
+		LDX objCount
+		LDA $058C,X
+		TAY
+		LDX tbl6_AA3A,Y
+		LDA $03CE,X
+		ORA tbl6_AABA,Y
+		STA $03CE,X
+		LDA $3F
+		AND #$0F
+		TAY
+		LDX objCount
+		LDA ($DC),Y
+		STA objSlot,X
+		TAY
+		LDA tbl6_A728,Y
+		STA objVar,X
+		LDA #$00
+		STA objYHi,X
+		LDY $2C
+		LDA (pScreenPtr),Y
+		AND #$F0
+		STA objYLo,X
+		BEQ bra6_A664
+		DEC objYLo,X
+	bra6_A664:
+		LDA pTilePosXLo
+		AND #$F0
+		STA objXLo,X
+		LDA pTilePosXHi
+		STA objXHi,X
+		LDA #$00
+		STA objFlags,X
+		STA $0641,X
+		STA enemyAnimFrame,X
+		STA objState,X
+		JSR sub6_A705
+		INC objCount
+	bra6_A683:
+		LDA metatileIndex
+		CLC
+		ADC #$20
+		TAY
+		STY $2C
+		LDA (pScreenPtr),Y
+		CMP #$FF
+		BEQ bra6_A704_RTS
+		STA $3F
+		LDX objCount
+		LDA $3E
+		ASL
+		STA $058C,X
+		INC $058C,X
+		LDA $058C,X
+		TAY
+		LDX tbl6_AA3A,Y
+		LDA $03CE,X
+		AND tbl6_AABA,Y
+		BNE bra6_A704_RTS
+		LDX objCount
+		LDA $058C,X
+		TAY
+		LDX tbl6_AA3A,Y
+		LDA $03CE,X
+		ORA tbl6_AABA,Y
+		STA $03CE,X
+		LDA $3F
+		AND #$0F
+		TAY
+		LDX objCount
+		LDA ($DC),Y
+		STA objSlot,X
+		TAY
+		LDA tbl6_A728,Y
+		STA objVar,X
+		LDA #$01
+		STA objYHi,X
+		LDY $2C
+		LDA (pScreenPtr),Y
+		AND #$F0
+		STA objYLo,X
+		BEQ bra6_A6E5
+		DEC objYLo,X
+	bra6_A6E5:
+		LDA pTilePosXLo
+		AND #$F0
+		STA objXLo,X
+		LDA pTilePosXHi
+		STA objXHi,X
+		LDA #$00
+		STA objFlags,X
+		STA $0641,X
+		STA enemyAnimFrame,X
+		STA objState,X
+		JSR sub6_A705
+		INC objCount
+	bra6_A704_RTS:
+		RTS
+	sub6_A705:
+		LDA objXLo,X
+		SEC
+		SBC playerXLoDup
+		STA objXDistLo,X
+		LDA objXHi,X
+		SBC playerXHiDup
+		STA objXDistHi,X
+		LDA objYLo,X
+		SEC
+		SBC playerYLoDup
+		STA objYDistLo,X
+		LDA objYHi,X
+		SBC playerYHiDup
+		STA objYDistHi,X
+		RTS
+.endproc
+
 tbl6_A728:
 	.byte $00
 	.byte $80
@@ -3120,7 +3130,14 @@ tbl6_AED1:
 	.byte $86
 	.byte $00
 	.byte $00
-sub6_AF11:
+
+;----------------------------------------
+; SUBROUTINE ($AF11)
+;----------------------------------------
+.proc sub6_AF11
+isRightTile = $2A
+isBottomTile = $2D
+
 	LDA #$00
 	STA $9C
 	LDA scrollX
@@ -3142,14 +3159,14 @@ sub6_AF11:
 	BEQ bra6_AF37
 		INX
 bra6_AF37:
-	STX $2A ; 0 if 1st column of metatile, 1 if 2nd column of metatile
+	STX isRightTile ; 0 if 1st column of metatile, 1 if 2nd column of metatile
 	LDX #0
 	LDA pTilePosYLo
 	AND #%00001000
 	BEQ bra6_AF42
 		INX
 bra6_AF42:
-	STX $2D
+	STX isBottomTile
 	JSR sub6_B056
 	LDA prgDataBank2
 	STA M90_PRG0
@@ -3160,7 +3177,7 @@ loc6_AF51:
 	LDA $6E,X
 	STA $5F
 	LDY $5F
-	LDA $2A
+	LDA isRightTile
 	BNE bra6_AF68
 	LDA ($D0),Y
 	STA $60
@@ -3174,7 +3191,7 @@ bra6_AF68:
 	STA $61
 
 loc6_AF70:
-	LDY $2D
+	LDY isBottomTile
 loc6_AF72:
 	LDA a:$60,Y
 	LDX $9C
@@ -3228,22 +3245,22 @@ bra6_AFB4:
 		LDA $59
 		CMP #$C0
 		BCC bra6_AFE4
-		AND #$1F
-		STA $59
-		STA $0484
-		LDA $5A
-		AND #$F8
-		EOR #$08
-		STA $5A
+			AND #$1F
+			STA $59
+			STA $0484
+			LDA $5A
+			AND #$F8
+			EOR #$08
+			STA $5A
 	bra6_AFE4:
-		INC $2D
-		LDY $2D
+		INC isBottomTile
+		LDY isBottomTile
 		CPY #$02
 		BCS bra6_AFEF
 			JMP loc6_AF72
 	bra6_AFEF:
 		LDA #$00
-		STA $2D
+		STA isBottomTile
 		INC $28
 		JMP loc6_AF51
 
@@ -3284,6 +3301,8 @@ bra6_AFB4:
 		CPX #$30
 		BCC bra6_B005
 		RTS
+.endproc
+
 		LDA scrollX
 		LSR
 		LSR
@@ -3308,7 +3327,14 @@ bra6_AFB4:
 		STA $5A
 		RTS
 
-sub6_B056:
+;----------------------------------------
+; SUBROUTINE ($B056)
+;----------------------------------------
+.proc sub6_B056
+pMetatileXColumn = $25 ; The actual metatile index
+metatileIndex = $2B ; The metatile index relative to the screen
+screenPtr = $32
+
 	LDA pTilePosYHi
 	PHA
 	LDA pTilePosYLo
@@ -3317,111 +3343,124 @@ sub6_B056:
 loc6_B05E:
 	CLC
 	LDA #$00
-	LDY $66
+	LDY pTilePosYHi
 	BEQ bra6_B06A
-bra6_B065:
-	ADC $6D
-	DEY
-	BNE bra6_B065
+
+	; Tile Screen Index = Level Width Screen * Tile Y Screen + Tile X Pos
+	bra6_B065:
+		ADC $6D
+		DEY
+		BNE bra6_B065
+
 bra6_B06A:
 	CLC
-	ADC $64
-	TAY
+	ADC pTilePosXHi
+	TAY ; Screen index of the tile
 	LDA prgDataBank2
 	STA M90_PRG0
-	LDA ($8C),Y
+	LDA (levelScreenOrderPtr),Y
 	TAY
-	AND #$1F
-	ORA #$80
-	STA $33
+	AND #%00011111 ; Maximum of 32 screens?
+	ORA #%10000000 ; This turns the screen number into the high byte of the screen address
+	STA screenPtr+1
 	LDA #$00
-	STA $32
+	STA screenPtr
 	TYA
 	AND #$20
 	BNE bra6_B08F
-	LDA prgDataBank1
-	STA M90_PRG0
-	JMP loc6_B095
-bra6_B08F:
-	LDA $04F4
-	STA M90_PRG0
+		LDA prgDataBank1
+		STA M90_PRG0
+		JMP loc6_B095
+	bra6_B08F:
+		LDA $04F4
+		STA M90_PRG0
+
+; Calculate metatile index
 loc6_B095:
 	LDA pTilePosXLo
 	LSR
 	LSR
 	LSR
 	LSR
-	STA $25
+	STA pMetatileXColumn
 	LDA pTilePosYLo
-	AND #$F0
-	ORA $25
+	AND #%11110000
+	ORA pMetatileXColumn
 	TAY
-	STA $2B
+	STA metatileIndex
+
 bra6_B0A6:
-	LDA ($32),Y
+	LDA (screenPtr),Y
 	BPL bra6_B0DF
-	STY $2B
-	STA $25
-	CMP #$A0
-	BNE bra6_B0BB
-	LDY $06DE
-	BEQ bra6_B0DF
-	LDA #$E0
-	BMI bra6_B0DF
-bra6_B0BB:
-	AND #$0F
-	TAY
-	LDA tbl6_BE75,Y
-	STA $28
-	LDA pTilePosXHi
-	ASL
-	CLC
-	ADC tbl6_BE65,Y
-	TAY
-	LDA $067E,Y
-	AND $28
-	BNE bra6_B0DD
-	LDY #$90
-	LDA $25
-	AND #$08
-	BEQ bra6_B0DB
-	INY
-bra6_B0DB:
-	STY $25
-bra6_B0DD:
-	LDA $25
+		STY metatileIndex
+		STA pMetatileXColumn
+		CMP #$A0
+		BNE bra6_B0BB
+		LDY $06DE
+		BEQ bra6_B0DF
+		LDA #$E0
+		BMI bra6_B0DF
+	bra6_B0BB:
+		AND #$0F
+		TAY
+		LDA tbl6_BE75,Y
+		STA $28
+		LDA pTilePosXHi
+		ASL
+		CLC
+		ADC tbl6_BE65,Y
+		TAY
+		LDA $067E,Y
+		AND $28
+		BNE bra6_B0DD
+		LDY #$90
+		LDA pMetatileXColumn
+		AND #$08
+		BEQ bra6_B0DB
+		INY
+	bra6_B0DB:
+		STY pMetatileXColumn
+	bra6_B0DD:
+		LDA pMetatileXColumn
+
 bra6_B0DF:
 	STA $6E,X
 	INX
-	CPX #$1C
+	CPX #28 ; Buffer 28 metatiles
 	BCS bra6_B0FC
-	LDA $2B
-	CLC
-	ADC #$10
-	STA $2B
-	LDY $2B
-	CMP #$F0
-	BCC bra6_B0A6
-	INC pTilePosYHi
-	LDA #$00
-	STA pTilePosYLo
-	JMP loc6_B05E
+		LDA metatileIndex
+		CLC
+		ADC #16
+		STA metatileIndex ; Move down a row
+		LDY metatileIndex
+		CMP #$F0
+		BCC bra6_B0A6 ; Less recalulation needed if not moving to another screen
+			INC pTilePosYHi
+			LDA #$00
+			STA pTilePosYLo ; Carry as needed
+			JMP loc6_B05E ; Carry requires the whole index to be recalculated
+	
+; End of loop
+;--------------------
+
 bra6_B0FC:
-	LDA $2B
+	LDA metatileIndex
 	CLC
-	ADC #$10
-	STA $2B
+	ADC #16
+	STA metatileIndex
 	STX $28
 	LDA $2A
 	BEQ bra6_B10C
-	JSR sub6_A600
+		JSR sub6_A600
 bra6_B10C:
 	LDX $28
 	PLA
 	STA pTilePosYLo
 	PLA
-	STA pTilePosYHi
+	STA pTilePosYHi ; Restore original parameter values
 	RTS
+.endproc
+
 	.byte $00
 	.byte $F0
 	.byte $00
