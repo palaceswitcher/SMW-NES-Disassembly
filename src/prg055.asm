@@ -3160,7 +3160,7 @@ tbl8_9AB8:
 	.byte $97
 	.byte $2A, $2B
 	.byte $1C, $1D
-.incbin "prg/padding/padding055.bin"
+.incbin "src/padding/padding055.bin"
 	.byte $23
 	.byte $23
 	.byte $23

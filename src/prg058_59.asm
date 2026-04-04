@@ -1515,4 +1515,4 @@ notePitchTable:
 	.include "mus_Castle.asm"
 	.include "mus_Underwater.asm"
 	.include "mus_Ending.asm"
-	.incbin "prg/padding/padding058_59.bin"
+	.incbin "src/padding/padding058_59.bin"

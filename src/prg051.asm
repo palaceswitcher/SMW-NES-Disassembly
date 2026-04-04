@@ -3478,7 +3478,7 @@ ofs_ED5A:
 	.byte $D0
 	.byte $E0
 	.byte $F0
-.incbin "prg/padding/padding051.bin"
+.incbin "src/padding/padding051.bin"
 	.byte $00
 	.byte $00
 	.byte $00

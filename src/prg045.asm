@@ -4,4 +4,4 @@
 	.repeat 4418 ; Fills in 0x1142 of 00s
 	.byte $00
 	.endrep
-	.incbin "prg/padding/padding045.bin"
+	.incbin "src/padding/padding045.bin"
