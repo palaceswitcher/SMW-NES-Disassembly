@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# SMW NES Data Extractor v1.2.0 by PalaceSwitcher
+# SMW NES Data Extractor v1.3.0 by PalaceSwitcher
 import typing
 import os
 import sys
@@ -75,7 +75,7 @@ def decomp_data(data: bytearray, base_addr: int) -> list:
 
 def decomp_spawndata(bin_data: bytearray, base_addr: int, prefix: str) -> str:
 	data = decomp_data(bin_data, base_addr) # Decomp data
-	out_lines: list[str] = [] # Decompiled lines
+	out_lines: list[str] = [".include \"macros.asm\""] # Decompiled lines
 	ptr_names = {}
 
 	i = 0
@@ -144,9 +144,13 @@ def decomp_generic(bin_data: bytearray, base_addr: int, split_size=1, split_half
 create_dir("levels")
 create_dir("tilesets")
 create_dir("screens")
+create_dir("chr")
 
-dump_chunk(rom_data, "SMW.chr", 0x80010, 0xC0010) # Dump CHR
+print("Dumping CHR... ")
+for i in range(256):
+	dump_chunk(rom_data, f"chr/chr{i:03d}.chr", 0x80010+(i*0x400), 0x80010+(i*0x400)+0x400) # Dump CHR
 
+print("Dumping levels... ")
 # Dump levels
 dump_chunk(rom_data, "levels/lvl_1-1.bin", 0x10, 0x2010)
 dump_chunk(rom_data, "levels/lvl_1-2.bin", 0x2010, 0x4010)
@@ -166,6 +170,7 @@ dump_chunk(rom_data, "levels/lvl_ClownCar.bin", 0x37810, 0x38010)
 dump_chunk(rom_data, "levels/lvl_Title.bin", 0x5A010, 0x5AE10)
 dump_chunk(rom_data, "levels/lvl_Map.bin", 0x5C010, 0x5D910)
 
+print("Dumping tilesets... ")
 # Dump tilesets
 for i in range(28):
 	dump_chunk(rom_data, f"tilesets/ts_{i//4+1}-{i%4+1}.bin", 0x800*i+0x38010, 0x800*i+0x38810)
@@ -181,11 +186,13 @@ dump_chunk(rom_data, "tilesets/ts_Unused2.bin", 0x59010, 0x59810)
 dump_chunk(rom_data, "tilesets/ts_Unused3.bin", 0x59810, 0x5A010)
 
 # Dump level metadata
+print("Dumping level metadata... ")
 open("levels/SpawnData.asm", "w").write(decomp_spawndata(rom_data[0x7B686:0x7B77E], 0xB676, "spawnDataWorld"))
 open("levels/CheckpointSpawnData.asm", "w").write(decomp_spawndata(rom_data[0x7B77E:0x7B86C], 0xB76E, "spawnDataCheckpointWorld"))
 #open("levels/Palettes.asm", "w").write(decomp_generic(rom_data[0x7FA0C:0x7FE9C], 0xF9FC, 4, True, PALETTE_LABELS))
 
 # Dump screens
+print("Dumping tilemaps... ")
 dump_chunk(rom_data, "screens/TitleLogo.bin", 0x5401A, 0x54123)
 dump_chunk(rom_data, "screens/EndingScreen.bin", 0x54123, 0x541F2)
 dump_chunk(rom_data, "screens/ThankYouScreen.bin", 0x541F2, 0x5448C)

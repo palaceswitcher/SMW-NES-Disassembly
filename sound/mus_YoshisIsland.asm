@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 YoshisIsland_P1:
 	sndspeed 1
 	transpose 0
@@ -48,10 +51,10 @@ YoshisIsland_P1:
 	notelen 12
 	.byte C3
 	.byte B2
-	.byte A#2
+	.byte As2
 	.byte A2
 	notelen 48
-	.byte G#2
+	.byte Gs2
 	sndjump YoshisIsland_P1
 	.byte $FF
 YoshisIsland_P2:
@@ -122,9 +125,9 @@ YoshisIsland_P2:
 	pitch 0
 	volenv $11
 	notelen 12
-	.byte A#2
+	.byte As2
 	.byte A2
-	.byte G#2
+	.byte Gs2
 	.byte G2
 	notelen 48
 	.byte $1E
@@ -177,12 +180,12 @@ YoshisIsland_Tri:
 	.byte C4
 	.byte G3
 	notelen 12
-	.byte D#3
+	.byte Ds3
 	.byte D3
-	.byte C#3
+	.byte Cs3
 	.byte B2
 	notelen 48
-	.byte A#2
+	.byte As2
 	sndjump YoshisIsland_Tri
 	.byte $FF
 YoshisIsland_End:

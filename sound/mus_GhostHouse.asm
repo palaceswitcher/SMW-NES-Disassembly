@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 GhostHouse_P1:
 GhostHouse_P1Loop:
 	.byte $F5

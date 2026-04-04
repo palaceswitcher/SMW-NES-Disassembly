@@ -62,22 +62,22 @@ Example:
 
 ```asm
 sprTblSuperKoopa:
-	dw sprSuperKoopaWalk1		; Walking animation (Feather)
-	dw sprSuperKoopaWalk2		;
-	dw sprSuperKoopaWalk1		; Walking animation (Normal)
-	dw sprSuperKoopaWalk2		;
+	.word sprSuperKoopaWalk1		; Walking animation (Feather)
+	.word sprSuperKoopaWalk2		;
+	.word sprSuperKoopaWalk1		; Walking animation (Normal)
+	.word sprSuperKoopaWalk2		;
 
-	dw sprSuperKoopaTakeoff2	; Takeoff animation (Feather)
-	dw sprSuperKoopaRedTakeoff	;
-	dw sprSuperKoopaTakeoff2	; Takeoff animation (Normal)
-	dw sprSuperKoopaTakeoff1	;
+	.word sprSuperKoopaTakeoff2	; Takeoff animation (Feather)
+	.word sprSuperKoopaRedTakeoff	;
+	.word sprSuperKoopaTakeoff2	; Takeoff animation (Normal)
+	.word sprSuperKoopaTakeoff1	;
 
-	dw sprSuperKoopaFly2		; Fly animation (Feather)
-	dw sprSuperKoopaRedFly		;
-	dw sprSuperKoopaFly2		; Fly animation (Normal)
-	dw sprSuperKoopaFly1		;
+	.word sprSuperKoopaFly2		; Fly animation (Feather)
+	.word sprSuperKoopaRedFly		;
+	.word sprSuperKoopaFly2		; Fly animation (Normal)
+	.word sprSuperKoopaFly1		;
 
-	dw sprSuperKoopaDefeated
+	.word sprSuperKoopaDefeated
 ```
 
 #### Description Blocks
@@ -126,6 +126,7 @@ Sprite mapping pointers: `sprTblObject`
 Specific formatting should be used for code that serves a specific and common purpose. The naming scheme for these can be found below, with words like "Purpose" being replaced by the purpose of the code or data the label represents.
 
 #### Objects
+
 `objObject`: The start of an object's code\
 `objPurpose`: Routine or subroutine used by multiple objects\
 `genObjPurpose`: Generic object code that's either shared or used by object(s) via a subroutine call\
@@ -135,7 +136,7 @@ Specific formatting should be used for code that serves a specific and common pu
 
 ## Constants
 
-- Outside of special cases like object IDs, constants should be put in `constants.asm`.
+- Outside of special cases like object IDs, constants should be put in `include/constants.asm`.
 - Avoid modifying existing constants unless they contain typos or are innacurate.
 - The correct type of constant should be used in the right scenario. For example, you shouldn't use a constant meant to represent the IDs of a sound effect for something related to objects, even if they have the same value.
 
@@ -151,6 +152,6 @@ Below is a list of every type of constant currently used.\
 
 ## Directives and Macros
 
-- Built-in directives should always have a "." before them, and should be the most widely compatible directives. Such as `.word` and `.byte` rather than `dw` and `db`.
+- All directives should be compatible with CA65.
 - Avoid creating macros for something that can reasonably done with a existing directive like `.word`.
 - Use macros for specialized data formats that would otherwise be tedious or impossible to do with existing directives. Macros should also be used for chunks of code that are repeated frequently (preferably over 10 times).

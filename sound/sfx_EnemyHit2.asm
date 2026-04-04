@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 EnemyHit2_P1:
 	sndspeed 1
 	transpose 9

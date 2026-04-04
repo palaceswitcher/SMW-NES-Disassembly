@@ -1,3 +1,5 @@
+.include "macros.asm"
+
 ofs_8100:
 	.byte 0, 0
 	ofs_8100Loop:

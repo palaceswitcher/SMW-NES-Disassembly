@@ -1,3 +1,5 @@
 screens
 tilesets
 levels
+chr
+*.o

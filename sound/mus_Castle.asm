@@ -1,3 +1,5 @@
+.include "macros.asm"
+
 Castle_P1:
 	sndspeed 1
 	transpose 3
@@ -44,7 +46,7 @@ Castle_P1:
 	.byte D3
 	.byte E3
 	.byte F3
-	.byte D#3
+	.byte Ds3
 	notelen 96
 	.byte E3
 	notelen 24
@@ -169,7 +171,7 @@ Castle_P1Loop:
 	.byte A3
 	notelen 48
 	.byte B3
-	.byte F#3
+	.byte Fs3
 	notelen 24
 	.byte NRest
 	.byte B3
@@ -177,7 +179,7 @@ Castle_P1Loop:
 	.byte B3
 	notelen 48
 	.byte A3
-	.byte G#3
+	.byte Gs3
 	sndjump Castle_P1Loop
 	.byte $FF
 Castle_P1Seg:

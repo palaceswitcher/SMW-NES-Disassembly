@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 PlayerDown_P1:
 	.byte $F5
 	.byte $01
@@ -36,7 +39,7 @@ PlayerDown_P1:
 	.byte $2B
 	.byte A3
 	.byte C4
-	.byte G#3
+	.byte Gs3
 	.byte A3
 	.byte E3
 	.byte C3

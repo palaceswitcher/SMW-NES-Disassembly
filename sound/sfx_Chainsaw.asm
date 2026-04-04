@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 Chainsaw_Noise:
 	sndspeed 3
 	transpose 1

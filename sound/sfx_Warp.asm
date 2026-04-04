@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 Warp_Tri:
 	sndspeed 1
 	transpose 24

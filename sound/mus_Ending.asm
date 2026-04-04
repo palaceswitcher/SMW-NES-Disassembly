@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 Ending_P1:
 Ending_P1Loop:
 	.byte $F5

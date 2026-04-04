@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 SpinJump_P1:
 	sndspeed 1
 	transpose 0
@@ -5,7 +8,7 @@ SpinJump_P1:
 	pitch $39
 	volenv $40
 	notelen 2
-	.byte E3, NRest, A4, NRest, G#4, NRest, A4
+	.byte E3, NRest, A4, NRest, Gs4, NRest, A4
 	.byte $FF
 SpinJump_P2:
 	transpose 0
@@ -16,7 +19,7 @@ SpinJump_P2:
 	.byte NRest
 
 	notelen 2
-	.byte E3, NRest, A4, NRest, G#4, NRest, A4
+	.byte E3, NRest, A4, NRest, Gs4, NRest, A4
 	.byte $FF
 SpinJump_Footer:
 	sfxsq1 SpinJump_P1

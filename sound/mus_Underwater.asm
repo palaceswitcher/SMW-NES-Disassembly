@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 Underwater_P1:
 	.byte $F5
 	.byte $01
@@ -279,8 +282,8 @@ Underwater_P2Loop:
 	.byte F3
 	.byte F3
 	.byte NRest
-	.byte F#3
-	.byte F#3
+	.byte Fs3
+	.byte Fs3
 	.byte NRest
 	.byte F3
 	.byte F3
@@ -303,8 +306,8 @@ Underwater_P2Loop:
 	.byte F3
 	.byte F3
 	.byte NRest
-	.byte F#3
-	.byte F#3
+	.byte Fs3
+	.byte Fs3
 	.byte NRest
 	.byte F3
 	.byte F3
@@ -438,8 +441,8 @@ Underwater_P2Loop:
 	.byte F3
 	.byte F3
 	.byte NRest
-	.byte F#3
-	.byte F#3
+	.byte Fs3
+	.byte Fs3
 	.byte NRest
 	.byte F3
 	.byte F3
@@ -506,7 +509,7 @@ Underwater_TriLoop:
 	.byte C3
 	.byte E3
 	.byte F3
-	.byte F#3
+	.byte Fs3
 	.byte F3
 	.byte E3
 	.byte D3
@@ -518,7 +521,7 @@ Underwater_TriLoop:
 	.byte C3
 	.byte E3
 	.byte F3
-	.byte F#3
+	.byte Fs3
 	.byte $2B
 	.byte G2
 	.byte $8E
@@ -530,7 +533,7 @@ Underwater_TriLoop:
 	.byte C3
 	.byte E3
 	.byte F3
-	.byte F#3
+	.byte Fs3
 	.byte F3
 	.byte E3
 	.byte D3
@@ -542,7 +545,7 @@ Underwater_TriLoop:
 	.byte C3
 	.byte E3
 	.byte F3
-	.byte F#3
+	.byte Fs3
 	.byte $2B
 	.byte G2
 	.byte $8E
@@ -578,7 +581,7 @@ Underwater_TriLoop:
 	.byte C3
 	.byte E3
 	.byte F3
-	.byte F#3
+	.byte Fs3
 	.byte $2B
 	.byte G2
 	.byte $8E

@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 Jump_P1:
 	sndspeed 1
 	transpose 0

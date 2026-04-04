@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 Title_P1:
 	sndspeed $01
 	transpose $07
@@ -5,7 +8,7 @@ Title_P1:
 	pitch $00
 	volenv $11
 	notelen 12
-	.byte G3, G3, G3, G2, G3, G3, G3, G2, NLen+48, G#3, NLen+36, G3, NLen+12, G2
+	.byte G3, G3, G3, G2, G3, G3, G3, G2, NLen+48, Gs3, NLen+36, G3, NLen+12, G2
 Title_P1Loop:
 	transpose $13
 	duty $38
@@ -100,7 +103,7 @@ Title_P1Loop:
 	notelen 12
 	.byte B3
 	notelen 24
-	.byte G#3
+	.byte Gs3
 	.byte A3
 	notelen 36
 	.byte D4
@@ -135,7 +138,7 @@ Title_P1Loop:
 	notelen 12
 	.byte B3
 	notelen 24
-	.byte G#3
+	.byte Gs3
 	.byte A3
 	notelen 36
 	.byte D4
@@ -147,7 +150,7 @@ Title_P1Loop:
 	notelen 24
 	.byte B3
 	notelen 12
-	.byte A#3
+	.byte As3
 	.byte B3
 	notelen 36
 	.byte F4
@@ -226,15 +229,15 @@ Title_P1Loop:
 	volenv $11
 	notelen 12
 	.byte G4
-	.byte F#4
+	.byte Fs4
 	.byte G4
 	.byte D4
 	.byte D4
-	.byte C#4
+	.byte Cs4
 	.byte D4
 	.byte G3
 	notelen 48
-	.byte G#3
+	.byte Gs3
 	.byte G3
 	notelen 12
 	.byte NRest
@@ -259,7 +262,7 @@ Title_P2:
 	.byte G3
 	.byte G2
 	notelen 48
-	.byte G#3
+	.byte Gs3
 	notelen 36
 	.byte G3
 	notelen 12
@@ -495,22 +498,22 @@ Title_P2Loop:
 	pitch $16
 	volenv $14
 	.byte G4
-	.byte F#4
+	.byte Fs4
 	.byte G4
 	.byte D4
 	.byte D4
-	.byte C#4
+	.byte Cs4
 	.byte D4
 	.byte G3
 	notelen 48
-	.byte G#3
+	.byte Gs3
 	transpose $13
 	duty $38
 	pitch $39
 	volenv $40
 	notelen 12
 	.byte G3
-	.byte F#3
+	.byte Fs3
 	.byte C4
 	.byte E4
 	.byte G4
@@ -602,7 +605,7 @@ Title_TriLoop:
 	.byte NRest
 	.byte NRest
 	notelen 24
-	.byte F#3
+	.byte Fs3
 	notelen 12
 	.byte NRest
 	.byte NRest
@@ -627,7 +630,7 @@ Title_TriLoop:
 	.byte C3
 	.byte E3
 	.byte F3
-	.byte F#3
+	.byte Fs3
 	.byte G3
 	.byte D3
 	.byte E3
@@ -635,7 +638,7 @@ Title_TriLoop:
 	.byte C3
 	.byte E3
 	.byte F3
-	.byte F#3
+	.byte Fs3
 	.byte G3
 	.byte B2
 	.byte C3

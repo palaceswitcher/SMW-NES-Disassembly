@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 ValleyofBowser_P1:
 	.byte $F5
 	.byte $01
@@ -25,7 +28,7 @@ ValleyofBowser_P1:
 	.byte NRest
 	.byte NRest
 	.byte NRest
-	.byte G#3
+	.byte Gs3
 ValleyofBowser_P1Loop:
 	.byte $C0
 	.byte $2B
@@ -43,7 +46,7 @@ ValleyofBowser_P1Loop:
 	.byte NRest
 	.byte $2B
 	.byte $C0
-	.byte G#3
+	.byte Gs3
 	.byte $90
 	.byte NRest
 	.byte NRest
@@ -56,7 +59,7 @@ ValleyofBowser_P1Loop:
 	.byte NRest
 	.byte NRest
 	.byte NRest
-	.byte G#3
+	.byte Gs3
 	sndjump ValleyofBowser_P1Loop
 	.byte $FF
 ValleyofBowser_P2:
@@ -126,7 +129,7 @@ ValleyofBowser_Tri:
 	.byte NRest
 	.byte NRest
 	.byte NRest
-	.byte G#3
+	.byte Gs3
 ValleyofBowser_TriLoop:
 	.byte $C0
 	.byte $2B
@@ -144,7 +147,7 @@ ValleyofBowser_TriLoop:
 	.byte NRest
 	.byte $2B
 	.byte $C0
-	.byte G#3
+	.byte Gs3
 	.byte $90
 	.byte NRest
 	.byte NRest
@@ -157,7 +160,7 @@ ValleyofBowser_TriLoop:
 	.byte NRest
 	.byte NRest
 	.byte NRest
-	.byte G#3
+	.byte Gs3
 	sndjump ValleyofBowser_TriLoop
 	.byte $FF
 ValleyofBowser_Noise:

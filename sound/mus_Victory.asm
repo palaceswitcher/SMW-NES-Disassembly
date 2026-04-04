@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 Victory_P1:
 	.byte $F5
 	.byte $01

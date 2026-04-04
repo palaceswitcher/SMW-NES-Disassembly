@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 YoshiTongue_P1:
 	sndspeed 1
 	transpose 9
@@ -14,7 +17,7 @@ YoshiTongue_P1:
 	pitch $39
 	volenv $41
 	notelen 16
-	.byte F#6-9
+	.byte Fs6-9
 	.byte $FF
 YoshiTongue_Footer:
 	sfxsq1 YoshiTongue_P1

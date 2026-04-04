@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 Pause_P2:
 	sndspeed 1
 	transpose 24

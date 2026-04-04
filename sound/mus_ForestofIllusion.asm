@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 ForestofIllusion_P1:
 ForestofIllusion_P1Loop:
 	.byte $F5
@@ -63,14 +66,14 @@ ForestofIllusion_P1Loop:
 	.byte $A0
 	.byte D4
 	.byte $90
-	.byte C#4
+	.byte Cs4
 	.byte B3
 	.byte B3
-	.byte C#4
+	.byte Cs4
 	.byte B3
 	.byte B3
 	.byte $A0
-	.byte C#4
+	.byte Cs4
 	.byte $90
 	.byte D4
 	.byte C4
@@ -185,7 +188,7 @@ ForestofIllusion_TriLoop:
 	.byte $C0
 	.byte $39
 	.byte $A0
-	.byte G#3
+	.byte Gs3
 	.byte E4
 	.byte $90
 	.byte NRest
@@ -198,7 +201,7 @@ ForestofIllusion_TriLoop:
 	.byte $C0
 	.byte $39
 	.byte $A0
-	.byte G#3
+	.byte Gs3
 	.byte E4
 	.byte $90
 	.byte NRest

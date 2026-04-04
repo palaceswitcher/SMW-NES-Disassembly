@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 Feather_P1Noise:
 	sndspeed 1
 	transpose 7

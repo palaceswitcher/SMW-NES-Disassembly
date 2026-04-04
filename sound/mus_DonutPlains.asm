@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 DonutPlains_P1:
 DonutPlains_P1Loop:
 	.byte $F5

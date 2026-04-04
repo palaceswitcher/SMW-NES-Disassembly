@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 YoshiFireSpit_Noise:
 	sndspeed 3
 	transpose 24

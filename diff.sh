@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [[ $1 == *h* ]]; then
-	printf "Optional Arugments:\n\
+	printf "Optional Arguments:\n\
  -h, --help\n\
    Display this message.\n\
  -o <path>\n\
@@ -22,7 +22,7 @@ function oct2dec(oct, dec) {
 	printf "%08X %02X %02X\n", $1, oct2dec($2), oct2dec($3)
 }'
 
-./asm6 -q smw.asm smw.nes
+make
 diff $orig $built && echo 'Files are identical.' && exit
 if [[ -z $1 ]]; then
 	cmp -l SuperMarioWorld.nes smw.nes | mawk "$diffscript"

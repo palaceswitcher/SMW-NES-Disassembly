@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 VanillaDome_P1Tri:
 	sndspeed 1
 	transpose 5
@@ -171,7 +174,7 @@ VanillaDome_P2Loop:
 	.byte $85
 	.byte $33
 	.byte C4
-	.byte G#3
+	.byte Gs3
 	.byte $BC
 	.byte $33
 	.byte $85

@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 EnemyHit7_P1:
 	sndspeed 1
 	transpose 9
@@ -5,7 +8,7 @@ EnemyHit7_P1:
 	pitch $39
 	volenv $41
 	notelen 4
-	.byte G#5-9, A5-9
+	.byte Gs5-9, A5-9
 	.byte $FF
 EnemyHit7_Footer:
 	sfxsq1 EnemyHit7_P1

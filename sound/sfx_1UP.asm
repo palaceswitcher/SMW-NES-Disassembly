@@ -1,3 +1,6 @@
+.include "macros.asm"
+.include "constants.asm"
+
 Life_P1:
 	sndspeed 1
 	transpose 12
