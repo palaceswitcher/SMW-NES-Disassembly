@@ -33,8 +33,7 @@ fadeoutMode = $0311
 palTransition = $0312
 bgTileAttrs = $0400
 tileColumnMem = $0485 ; TODO: Get a better name for this
-palAssignPtr = $04C1
-palAssignData = $04C3
+ppuWriteTasks = $04C1
 ppuUpdatePtr = $03A1
 ppuBufSize = $03A4
 ppuDataBuf = $03A5
@@ -54,6 +53,8 @@ pTilePosXHi = $64
 pTilePosXLo = $65
 pTilePosYHi = $66
 pTilePosYLo = $67
+metatileBuf = $6E
+tilesetDataPtrs = $D0
 scrollVecX = $0326
 scrollVecY = $0327
 vertScrollFlag = $5B
@@ -61,6 +62,7 @@ scrollBoundTop = $060D
 scrollBoundBottom = $060E
 scrollBoundLeft = $060F
 scrollBoundRight = $0610
+dynamicTileStates = $067E
 
 ; Sprite rendering variables
 oamFreeIndex = $3C ; Free space index

@@ -2815,14 +2815,14 @@ ptr8_EE29:
 	CLC
 	ADC tbl_EF17,X
 	TAY
-	LDA $067E,Y
+	LDA dynamicTileStates,Y
 	AND tbl_EF27,X
 	BNE bra_EE3F
 	RTS
 bra_EE3F:
-	LDA $067E,Y
+	LDA dynamicTileStates,Y
 	AND tbl_EF37,X
-	STA $067E,Y
+	STA dynamicTileStates,Y
 	LDX curPlayer
 	TXA
 	ASL

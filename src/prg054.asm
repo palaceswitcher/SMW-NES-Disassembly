@@ -3412,7 +3412,7 @@ bra3_B0D8:
 	TAY
 	LDA prgDataBank2
 	STA M90_PRG0
-	LDA ($DA),Y ; Get tile behavior
+	LDA (tilesetDataPtrs+10),Y ; Get tile behavior
 	TAY
 	LDA tbl_51_FF00,Y ; Return upper nybble of behavior
 	PHA

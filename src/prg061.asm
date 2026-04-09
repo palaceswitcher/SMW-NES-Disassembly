@@ -4,7 +4,8 @@
 .include "macros.asm"
 .include "variables.asm"
 
-tbl6_A000:
+; Quick lookup table for (A >> 2) & 0b00000111
+addrToAttrIndexLo:
 	.byte $00
 	.byte $00
 	.byte $00
@@ -261,7 +262,8 @@ tbl6_A000:
 	.byte $0F
 	.byte $0F
 	.byte $0F
-tbl6_A100:
+
+addrToAttrIndexHi:
 	.byte $00
 	.byte $10
 	.byte $20
@@ -518,6 +520,7 @@ tbl6_A100:
 	.byte $50
 	.byte $60
 	.byte $70
+
 tbl6_A200:
 	.byte $03
 	.byte $03
@@ -775,6 +778,7 @@ tbl6_A200:
 	.byte $30
 	.byte $C0
 	.byte $C0
+
 	.byte $00
 	.byte $00
 	.byte $00
@@ -1587,7 +1591,7 @@ pScreenPtr = $32
 		AND #$0F
 		TAY
 		LDX objCount
-		LDA ($DC),Y
+		LDA (tilesetDataPtrs+12),Y
 		STA objSlot,X
 		TAY
 		LDA tbl6_A728,Y
@@ -1645,7 +1649,7 @@ pScreenPtr = $32
 		AND #$0F
 		TAY
 		LDX objCount
-		LDA ($DC),Y
+		LDA (tilesetDataPtrs+12),Y
 		STA objSlot,X
 		TAY
 		LDA tbl6_A728,Y
@@ -2942,17 +2946,17 @@ bra6_ADD9:
 	STA PPUCTRL
 	RTS
 
-	LDA palAssignPtr
+	LDA ppuWriteTasks
 	BEQ bra6_AE17_RTS
 	LDX #0
 
 bra6_ADF6:
 	LDA PPUSTATUS
-	LDA palAssignPtr,X
+	LDA ppuWriteTasks,X
 	STA PPUADDR
-	LDA palAssignPtr+1,X
+	LDA ppuWriteTasks+1,X
 	STA PPUADDR
-	LDA palAssignData,X
+	LDA ppuWriteTasks+2,X
 	STA PPUDATA
 	INX
 	INX
@@ -2960,7 +2964,7 @@ bra6_ADF6:
 	CPX #48
 	BCC bra6_ADF6
 	LDA #$00
-	STA palAssignPtr
+	STA ppuWriteTasks
 
 bra6_AE17_RTS:
 	RTS
@@ -3133,26 +3137,42 @@ tbl6_AED1:
 
 ;----------------------------------------
 ; SUBROUTINE ($AF11)
+; Buffers the next column of tiles and tile attributes to prepare them to be uploaded to the PPU.
+; Parameters:
+; > $64 - $65: Tile X Pos
+; > $66 - $67: Tile Y Pos
 ;----------------------------------------
-.proc sub6_AF11
+; TODO: Potentially find a better name for this to better distinguish it from bufferMetatileCol
+.proc bufferPpuTileCol
+metatileBufIndex = $28
+isOddSubtile = $9B
+tileColumnIndex = $9C
+attrIndexLo = $25
+attrIndex = $5C
 isRightTile = $2A
 isBottomTile = $2D
+metatileAddrLo = $59 ; Starts at the top left corner of a metatile
+metatileAddrHi = $5A
+metatileAttr = $6A
+curMetatile = $5F
+upperSubtile = $60
+lowerSubtile = $61
 
 	LDA #$00
-	STA $9C
+	STA tileColumnIndex
 	LDA scrollX
 	LSR
 	LSR
 	LSR
-	STA $59
+	STA metatileAddrLo
 	STA ppuTileAddr+1
 	LDA #$20
-	STA $5A
+	STA metatileAddrHi
 	STA ppuTileAddr
-	LDA $59
+	LDA metatileAddrLo
 	AND #%00000001
 	EOR #%00000001
-	STA $9B ; 1 if even tile, 0 if odd tile?
+	STA isOddSubtile ; 1 if odd tile
 	LDX #0
 	LDA pTilePosXLo
 	AND #%00001000
@@ -3167,138 +3187,143 @@ bra6_AF37:
 		INX
 bra6_AF42:
 	STX isBottomTile
-	JSR sub6_B056
+	JSR bufferMetatileCol
 	LDA prgDataBank2
 	STA M90_PRG0
 	LDX #0
-	STX $28
-loc6_AF51:
-	LDX $28
-	LDA $6E,X
-	STA $5F
-	LDY $5F
+	STX metatileBufIndex
+
+loadNextMetatile:
+	LDX metatileBufIndex
+	LDA metatileBuf,X
+	STA curMetatile ; Load metatile
+	LDY curMetatile
 	LDA isRightTile
 	BNE bra6_AF68
-	LDA ($D0),Y
-	STA $60
-	LDA ($D4),Y
-	STA $61
-	JMP loc6_AF70
-bra6_AF68:
-	LDA ($D2),Y
-	STA $60
-	LDA ($D6),Y
-	STA $61
+	; Load left side of metatile into buffer
+		LDA (tilesetDataPtrs),Y
+		STA upperSubtile
+		LDA (tilesetDataPtrs+4),Y
+		STA lowerSubtile
+		JMP loc6_AF70
+	; Load right side of metatile into buffer
+	bra6_AF68:
+		LDA (tilesetDataPtrs+2),Y
+		STA upperSubtile
+		LDA (tilesetDataPtrs+6),Y
+		STA lowerSubtile
 
 loc6_AF70:
 	LDY isBottomTile
+
 loc6_AF72:
-	LDA a:$60,Y
-	LDX $9C
+	LDA a:upperSubtile,Y
+	LDX tileColumnIndex
 	STA tileColumnMem,X
-	LDA $9B
-	BEQ bra6_AFB4
-		LDY $5F
-		LDA ($D8),Y
-		STA $6A
-		LDY $59
-		LDA tbl6_A000,Y
-		STA $25
-		LDA $5A
-		AND #$0F
+	LDA isOddSubtile
+	BEQ bra6_AFB4 ; Only update attributes every full metatile
+		LDY curMetatile
+		LDA (tilesetDataPtrs+8),Y
+		STA metatileAttr
+		LDY metatileAddrLo
+		LDA addrToAttrIndexLo,Y
+		STA attrIndexLo
+		LDA metatileAddrHi
+		AND #%00001111
 		TAX
-		LDA tbl6_A100,X
-		ORA $25
-		STA $5C
-		TYA
-		AND #$7F
+		LDA addrToAttrIndexHi,X
+		ORA attrIndexLo
+		STA attrIndex
+		TYA ; Low byte of metatile PPU address
+		AND #%01111111
 		TAX
 		LDA tbl6_A200,X
 		TAX
-		AND $6A
-		STA $37
+		AND metatileAttr
+		STA $37 ; Get bitmask for metatile's attributes
 		TXA
-		EOR #$FF
+		EOR #%11111111 ; Invert bitmask to ensure only this metatile's attrobute is changed?
 		STA $25
-		LDY $5C
+		LDY attrIndex
 		LDA bgTileAttrs,Y
 		AND $25
 		ORA $37
-		STA bgTileAttrs,Y
+		STA bgTileAttrs,Y ; Buffer attributes for current metatile
 
 bra6_AFB4:
-	INC $9C
-	LDA $9C
-	CMP #$38
-	BCS bra6_AFF8
-		LDA $59
+	INC tileColumnIndex ; Go to next column
+	LDA tileColumnIndex
+	CMP #56 ; A full column is 56 tiles
+	BCS createAttrWriteTasks
+		LDA metatileAddrLo
 		CLC
 		ADC #$20
-		STA $59
+		STA metatileAddrLo
 		BCC bra6_AFC7
-		INC $5A
+		INC metatileAddrHi
 	bra6_AFC7:
-		LDA $5A
+		LDA metatileAddrHi
 		AND #$03
 		CMP #$03
 		BNE bra6_AFE4
-		LDA $59
+		LDA metatileAddrLo
 		CMP #$C0
 		BCC bra6_AFE4
 			AND #$1F
-			STA $59
+			STA metatileAddrLo
 			STA $0484
-			LDA $5A
+			LDA metatileAddrHi
 			AND #$F8
 			EOR #$08
-			STA $5A
+			STA metatileAddrHi
 	bra6_AFE4:
 		INC isBottomTile
 		LDY isBottomTile
-		CPY #$02
+		CPY #$02 ; Gof rom the top and bottom halfs of the metatile
 		BCS bra6_AFEF
-			JMP loc6_AF72
+			JMP loc6_AF72 ; If not switching back to a top tile, buffer as normal
 	bra6_AFEF:
 		LDA #$00
 		STA isBottomTile
-		INC $28
-		JMP loc6_AF51
+		INC metatileBufIndex
+		JMP loadNextMetatile ; If done with the metatile, load the vertical half of the next metatile
 
-	bra6_AFF8:
+	; After uploading tiles and attributes to buffers, create the write tasks for the column of attributes that were just buffered
+	createAttrWriteTasks:
 		LDA scrollX
 		ROR
 		ROR
 		ROR
 		ROR
 		ROR
-		AND #$07
-		STA $5C
+		AND #%00000111
+		STA attrIndex ; Repurpose to represent the starting attribute index
 		LDX #$00
 	bra6_B005:
-		LDY $5C
+		LDY attrIndex
 		LDA bgTileAttrs,Y
-		STA palAssignData,X
+		STA ppuWriteTasks+2,X
 		TYA
-		AND #$3F
-		ORA #$C0
-		STA palAssignPtr+1,X
+		AND #~($C0)
+		ORA #$C0 ; Attribute data always starts at $xxC0
+		STA ppuWriteTasks+1,X ; PPU address low byte
 		TYA
-		LDY #$23
+		LDY #$23 ; Upper screen attribute address high byte
 		AND #$40
 		BEQ bra6_B01E
-		LDY #$2B
+			LDY #$2B ; Lower screen attribute address low byte
 	bra6_B01E:
 		TYA
-		STA palAssignPtr,X
-		LDA $5C
+		STA ppuWriteTasks,X ; PPU address high byet
+		LDA attrIndex
 		CLC
-		ADC #$08
-		AND #$7F
-		STA $5C
+		ADC #8 ; Go down a row
+		AND #%01111111
+		STA attrIndex
 		INX
 		INX
 		INX
-		CPX #$30
+		CPX #(16*3) ; 16 attributes
 		BCC bra6_B005
 		RTS
 .endproc
@@ -3329,10 +3354,15 @@ bra6_AFB4:
 
 ;----------------------------------------
 ; SUBROUTINE ($B056)
+; Buffers the next column of metatiles
+; Parameters:
+; > $64 - $65: Column Start X Pos
+; > $66 - $67: Column Start Y Pos
 ;----------------------------------------
-.proc sub6_B056
-pMetatileXColumn = $25 ; The actual metatile index
+.proc bufferMetatileCol
+metatileCol = $25 ; The actual metatile index
 metatileIndex = $2B ; The metatile index relative to the screen
+dynamicTileBitmask = $28
 screenPtr = $32
 
 	LDA pTilePosYHi
@@ -3344,9 +3374,9 @@ loc6_B05E:
 	CLC
 	LDA #$00
 	LDY pTilePosYHi
-	BEQ bra6_B06A
+	BEQ bra6_B06A ; No mulitplication needed if level is only one screen tall
 
-	; Tile Screen Index = Level Width Screen * Tile Y Screen + Tile X Pos
+; Tile Screen Index = Level Width Screen * Tile Y Screen + Tile X Screen
 	bra6_B065:
 		ADC $6D
 		DEY
@@ -3355,18 +3385,19 @@ loc6_B05E:
 bra6_B06A:
 	CLC
 	ADC pTilePosXHi
+
 	TAY ; Screen index of the tile
 	LDA prgDataBank2
 	STA M90_PRG0
 	LDA (levelScreenOrderPtr),Y
-	TAY
+	TAY ; Screen number
 	AND #%00011111 ; Maximum of 32 screens?
 	ORA #%10000000 ; This turns the screen number into the high byte of the screen address
 	STA screenPtr+1
 	LDA #$00
 	STA screenPtr
 	TYA
-	AND #$20
+	AND #%00100000 ; Seemingly unused feature where screen numbers with bit 5 set (aka higher than 32) will load screen data from another bank. Possibly suggests that levels with more than 32 screens were supported at one point and not fully removed
 	BNE bra6_B08F
 		LDA prgDataBank1
 		STA M90_PRG0
@@ -3382,49 +3413,52 @@ loc6_B095:
 	LSR
 	LSR
 	LSR
-	STA pMetatileXColumn
+	STA metatileCol
 	LDA pTilePosYLo
 	AND #%11110000
-	ORA pMetatileXColumn
-	TAY
+	ORA metatileCol
+	TAY ; Metatile index
 	STA metatileIndex
 
 bra6_B0A6:
 	LDA (screenPtr),Y
-	BPL bra6_B0DF
+	BPL bra6_B0DF ; Metatiles 0-127 are never dynamic
 		STY metatileIndex
-		STA pMetatileXColumn
+		STA $25
 		CMP #$A0
-		BNE bra6_B0BB
+		BNE drawDynamicTile
 		LDY $06DE
 		BEQ bra6_B0DF
 		LDA #$E0
 		BMI bra6_B0DF
-	bra6_B0BB:
-		AND #$0F
-		TAY
-		LDA tbl6_BE75,Y
-		STA $28
-		LDA pTilePosXHi
-		ASL
-		CLC
-		ADC tbl6_BE65,Y
-		TAY
-		LDA $067E,Y
-		AND $28
-		BNE bra6_B0DD
-		LDY #$90
-		LDA pMetatileXColumn
-		AND #$08
-		BEQ bra6_B0DB
-		INY
-	bra6_B0DB:
-		STY pMetatileXColumn
-	bra6_B0DD:
-		LDA pMetatileXColumn
+		drawDynamicTile:
+			AND #%00001111
+			TAY ; Dynamic tile number
+			LDA tbl6_BE75,Y
+			STA dynamicTileBitmask
+			LDA pTilePosXHi
+			ASL
+			CLC
+			ADC tbl6_BE65,Y
+			TAY ; Index of dynamic tile memory
+			LDA dynamicTileStates,Y
+			AND dynamicTileBitmask
+			BNE bra6_B0DD
+			; Draw modified dynamic tile style
+				LDY #$90
+				LDA $25
+				AND #%00001000
+				BEQ bra6_B0DB
+					INY ; Draw as metatile 0x91 if this is dynamic tile 0x88-0x8F
+			bra6_B0DB:
+				STY $25
+
+			; Draw unmodified dynamic tile
+			bra6_B0DD:
+				LDA $25
 
 bra6_B0DF:
-	STA $6E,X
+	STA metatileBuf,X
 	INX
 	CPX #28 ; Buffer 28 metatiles
 	BCS bra6_B0FC
@@ -3481,12 +3515,12 @@ bra6_B10C:
 sub6_B126:
 	LDA $59
 	TAY
-	LDA tbl6_A000,Y
+	LDA addrToAttrIndexLo,Y
 	STA $25
 	LDA $5A
 	AND #$0F
 	TAX
-	LDA tbl6_A100,X
+	LDA addrToAttrIndexHi,X
 	ORA $25
 	STA $5C
 	TYA
@@ -3507,12 +3541,12 @@ sub6_B126:
 	RTS
 	LDA $59
 	TAY
-	LDA tbl6_A000,Y
+	LDA addrToAttrIndexLo,Y
 	STA $25
 	LDA $5A
 	AND #$0F
 	TAX
-	LDA tbl6_A100,X
+	LDA addrToAttrIndexHi,X
 	ORA $25
 	STA $5C
 	RTS
@@ -3697,7 +3731,7 @@ loc6_B275:
 	LDX #$00
 	LDA #$FF
 bra6_B2D1:
-	STA $067E,X
+	STA dynamicTileStates,X
 	INX
 	CPX #$24
 	BCC bra6_B2D1
@@ -3807,7 +3841,7 @@ jmp_61_B38E:
 	LDA #$20
 	STA $26
 loc6_B3B6:
-	JSR sub6_B056
+	JSR bufferMetatileCol
 	LDA prgDataBank2
 	STA M90_PRG0
 	LDA #$00
@@ -3818,7 +3852,7 @@ loc6_B3C3:
 	STA $2D
 	LDX $27
 bra6_B3CB:
-	LDA $6E,X
+	LDA metatileBuf,X
 	STA $5F
 	JSR sub6_B658
 	LDX $2D
@@ -3846,9 +3880,9 @@ bra6_B3CB:
 	STX $36
 	LDX $36
 bra6_B405:
-	LDA $6E,X
+	LDA metatileBuf,X
 	TAY
-	LDA ($D8),Y
+	LDA (tilesetDataPtrs+8),Y
 	STA $6A
 	JSR sub6_B126
 	LDA $59
@@ -4375,15 +4409,15 @@ sub6_B658:
 	LDY $5F
 	LDA $2A
 	BNE bra6_B66D
-	LDA ($D0),Y
+	LDA (tilesetDataPtrs),Y
 	STA $60
-	LDA ($D4),Y
+	LDA (tilesetDataPtrs+4),Y
 	STA $61
 	RTS
 bra6_B66D:
-	LDA ($D2),Y
+	LDA (tilesetDataPtrs+2),Y
 	STA $60
-	LDA ($D6),Y
+	LDA (tilesetDataPtrs+6),Y
 	STA $61
 	RTS
 
@@ -4660,13 +4694,13 @@ bra6_B9EA:
 			LDA scrollVecX
 			BMI bra6_BA18
 				INC pTilePosXHi ; Pass the tile to the top right edge of the camera instead if scrolling left
-				JSR sub6_AF11
+				JSR bufferPpuTileCol
 				LDX cameraXHi
 				INX
 				STX $04F2
 				RTS
 			bra6_BA18:
-				JSR sub6_AF11
+				JSR bufferPpuTileCol
 				LDA cameraXHi
 				STA $04F2
 bra6_BA20_RTS:
@@ -5466,6 +5500,7 @@ tbl6_BDE5:
 	.byte $00
 	.byte $00
 	.byte $00
+
 tbl6_BE65:
 	.byte $00
 	.byte $00
@@ -5483,23 +5518,24 @@ tbl6_BE65:
 	.byte $01
 	.byte $01
 	.byte $01
+
 tbl6_BE75:
-	.byte $01
-	.byte $02
-	.byte $04
-	.byte $08
-	.byte $10
-	.byte $20
-	.byte $40
-	.byte $80
-	.byte $01
-	.byte $02
-	.byte $04
-	.byte $08
-	.byte $10
-	.byte $20
-	.byte $40
-	.byte $80
+	.byte %00000001
+	.byte %00000010
+	.byte %00000100
+	.byte %00001000
+	.byte %00010000
+	.byte %00100000
+	.byte %01000000
+	.byte %10000000
+	.byte %00000001
+	.byte %00000010
+	.byte %00000100
+	.byte %00001000
+	.byte %00010000
+	.byte %00100000
+	.byte %01000000
+	.byte %10000000
 
 .export jmp_61_BE85
 jmp_61_BE85:

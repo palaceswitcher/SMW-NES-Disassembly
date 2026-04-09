@@ -3229,16 +3229,16 @@ bra_B3D0:
 	AND #$FB
 	STA PPUCTRL
 	RTS
-	LDA palAssignPtr
+	LDA ppuWriteTasks
 	BEQ bra_B40E_RTS
 	LDX #$00
 bra_B3ED:
 	LDA PPUSTATUS
-	LDA palAssignPtr,X
+	LDA ppuWriteTasks,X
 	STA PPUADDR
-	LDA palAssignPtr+1,X
+	LDA ppuWriteTasks+1,X
 	STA PPUADDR
-	LDA palAssignData,X
+	LDA ppuWriteTasks+2,X
 	STA PPUDATA
 	INX
 	INX
@@ -3246,7 +3246,7 @@ bra_B3ED:
 	CPX #$30
 	BCC bra_B3ED
 	LDA #$00
-	STA palAssignPtr
+	STA ppuWriteTasks
 bra_B40E_RTS:
 	RTS
 	LDA btnPressed
@@ -3471,15 +3471,15 @@ loc_B56B:
 	LDY $5F
 	LDA $2A
 	BNE bra_B582
-	LDA ($D0),Y
+	LDA (tilesetDataPtrs),Y
 	STA $60
-	LDA ($D4),Y
+	LDA (tilesetDataPtrs+4),Y
 	STA $61
 	JMP loc_B58A
 bra_B582:
-	LDA ($D2),Y
+	LDA (tilesetDataPtrs+2),Y
 	STA $60
-	LDA ($D6),Y
+	LDA (tilesetDataPtrs+6),Y
 	STA $61
 loc_B58A:
 	LDY $2D
@@ -3490,7 +3490,7 @@ loc_B58C:
 	LDA $9B
 	BEQ bra_B5CE
 	LDY $5F
-	LDA ($D8),Y
+	LDA (tilesetDataPtrs+8),Y
 	STA $6A
 	LDY $59
 	LDA tbl_B209,Y
@@ -3566,11 +3566,11 @@ bra_B612:
 bra_B61F:
 	LDY $5C
 	LDA bgTileAttrs,Y
-	STA palAssignData,X
+	STA ppuWriteTasks+2,X
 	TYA
 	AND #$3F
 	ORA #$C0
-	STA palAssignPtr+1,X
+	STA ppuWriteTasks+1,X
 	TYA
 	LDY #$23
 	AND #$40
@@ -3578,7 +3578,7 @@ bra_B61F:
 	LDY #$2B
 bra_B638:
 	TYA
-	STA palAssignPtr,X
+	STA ppuWriteTasks,X
 	LDA $5C
 	CLC
 	ADC #$08
@@ -3665,7 +3665,7 @@ loc_B6AF:
 bra_B6C0:
 	LDY $2B
 	LDA ($32),Y
-	STA $6E,X
+	STA metatileBuf,X
 	INX
 	CPX #$1C
 	BCS bra_B6DE
@@ -3861,7 +3861,7 @@ loc_B82C:
 	STA $2D
 	LDX $27
 bra_B834:
-	LDA $6E,X
+	LDA metatileBuf,X
 	STA $5F
 	JSR sub_BA0F
 	LDX $2D
@@ -3889,9 +3889,9 @@ bra_B834:
 	STX $36
 	LDX $36
 bra_B86E:
-	LDA $6E,X
+	LDA metatileBuf,X
 	TAY
-	LDA ($D8),Y
+	LDA (tilesetDataPtrs+8),Y
 	STA $6A
 	JSR sub_B6E5
 	LDA $59
@@ -4240,15 +4240,15 @@ sub_BA0F:
 	LDY $5F
 	LDA $2A
 	BNE bra_BA24
-	LDA ($D0),Y
+	LDA (tilesetDataPtrs),Y
 	STA $60
-	LDA ($D4),Y
+	LDA (tilesetDataPtrs+4),Y
 	STA $61
 	RTS
 bra_BA24:
-	LDA ($D2),Y
+	LDA (tilesetDataPtrs+2),Y
 	STA $60
-	LDA ($D6),Y
+	LDA (tilesetDataPtrs+6),Y
 	STA $61
 	RTS
 .export tbl_BA2D
@@ -5048,7 +5048,7 @@ loc_BE91:
 	TAY
 	LDA prgDataBank2
 	STA M90_PRG0
-	LDA ($DA),Y
+	LDA (tilesetDataPtrs+10),Y
 	STA playerBackColl
 	LDA #60
 	STA M90_PRG0
@@ -5149,7 +5149,7 @@ sub_BF31:
 	TAY
 	LDA prgDataBank2
 	STA M90_PRG0
-	LDA ($DA),Y
+	LDA (tilesetDataPtrs+10),Y
 	CMP #$78
 	BCC bra_BF7A_RTS
 	STA playerBackColl

@@ -97,16 +97,16 @@ bra3_E0A4:
 	LDA ppuCtrlMirror
 	AND #$FB
 	STA PPUCTRL
-	LDA palAssignPtr
+	LDA ppuWriteTasks
 	BEQ bra3_E0E1
 	LDX #$00
 bra3_E0C0:
 	LDA PPUSTATUS ; Clear PPU address data latch
-	LDA palAssignPtr,X
+	LDA ppuWriteTasks,X
 	STA PPUADDR
-	LDA palAssignPtr+1,X
+	LDA ppuWriteTasks+1,X
 	STA PPUADDR
-	LDA palAssignData,X
+	LDA ppuWriteTasks+2,X
 	STA PPUDATA
 	INX
 	INX
@@ -114,7 +114,7 @@ bra3_E0C0:
 	CPX #$30
 	BCC bra3_E0C0
 	LDA #$00
-	STA palAssignPtr
+	STA ppuWriteTasks
 bra3_E0E1:
 	LDA #$00
 	STA ppuTileAddr
@@ -2510,16 +2510,16 @@ bra3_F08C:
 	RTS
 .export sub3_F0A2
 sub3_F0A2:
-	LDA palAssignPtr
+	LDA ppuWriteTasks
 	BEQ bra3_F0CA ; Stop if upper byte of mapping pointer is empty
 	LDX #$00
 bra3_F0A9:
 	LDA PPUSTATUS ; Clear address latch
-	LDA palAssignPtr,X
+	LDA ppuWriteTasks,X
 	STA PPUADDR
-	LDA palAssignPtr+1,X
+	LDA ppuWriteTasks+1,X
 	STA PPUADDR ; Load attribute pointer
-	LDA palAssignData,X
+	LDA ppuWriteTasks+2,X
 	STA PPUDATA ; Store attributes
 	INX
 	INX
@@ -2527,7 +2527,7 @@ bra3_F0A9:
 	CPX bgAttrRowCount ; Keep going until pointer count is reached
 	BCC bra3_F0A9
 	LDA #$00
-	STA palAssignPtr ; Clear upper byte of pointer
+	STA ppuWriteTasks ; Clear upper byte of pointer
 bra3_F0CA:
 	RTS
 .export sub3_F0CB

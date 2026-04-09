@@ -4877,7 +4877,7 @@ loc4_BB43:
 	TAY
 	LDA prgDataBank2
 	STA M90_PRG0 ; Swap in tileset PRG bank
-	LDA ($DA),Y ; Get current metatile's behavior
+	LDA (tilesetDataPtrs+10),Y ; Get current metatile's behavior
 	STA playerBackColl
 	LDA #$27
 	STA M90_PRG3 ; Swap the collision bank into the 4th PRG slot
@@ -4949,7 +4949,7 @@ loc4_BBCF:
 	TAY
 	LDA prgDataBank2
 	STA M90_PRG0
-	LDA ($DA),Y
+	LDA (tilesetDataPtrs+10),Y
 	STA playerBackColl
 	LDA playerSprY
 	CMP #$C8
@@ -5089,7 +5089,7 @@ loc4_BCB8:
 	TAY
 	LDA prgDataBank2
 	STA M90_PRG0
-	LDA ($DA),Y
+	LDA (tilesetDataPtrs+10),Y
 	STA playerBackColl
 	JSR sub4_BE6D
 	LDX playerAction
@@ -5139,7 +5139,7 @@ loc4_BD1D:
 	TAY
 	LDA prgDataBank2 ; get 2nd data bank
 	STA M90_PRG0 ; swap into to first prg bank ($8000)
-	LDA ($DA),Y
+	LDA (tilesetDataPtrs+10),Y
 	STA playerBackColl
 	JSR sub4_BE6D
 	JSR sub4_BE91
