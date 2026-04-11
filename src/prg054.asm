@@ -299,7 +299,7 @@ tbl3_A1B5:
 	.word objKoopa
 	.word objKoopa
 
-	.export OBJ_BEACHKOOPA := (*-tbl3_A1B5)/2
+	.export OBJ_UNSHELLEDKOOPA := (*-tbl3_A1B5)/2
 	.word obj0x12
 	.word obj0x12
 
@@ -495,7 +495,7 @@ tbl3_A1B5:
 	.word obj0x6C
 	.word obj0x6C
 
-	.export OBJ_BEACHKOOPA_SLIDING := (*-tbl3_A1B5)/2
+	.export OBJ_UNSHELLEDKOOPA_SLIDING := (*-tbl3_A1B5)/2
 	.word obj0x6E
 	.word obj0x6E
 
@@ -529,14 +529,14 @@ tbl3_A1B5:
 	.export OBJ_FUZZY := (*-tbl3_A1B5)/2
 	.word obj0x54 ; Object 0x79 (Fuzzy)
 
-	.export OBJ_BEACHKOOPA_SLIDING_ALT := (*-tbl3_A1B5)/2 ; Verify this
+	.export OBJ_UNSHELLEDKOOPA_SLIDING_ALT := (*-tbl3_A1B5)/2 ; Verify this
 	.word obj0x7A
 	.word obj0x7A
 
 	.export OBJ_LEVELEXIT := (*-tbl3_A1B5)/2
 	.word obj0x7C
 
-	.export OBJ_CASTLECANVAS := (*-tbl3_A1B5)/2
+	.export OBJ_BGPRIORITY_LEFT := (*-tbl3_A1B5)/2
 	.word obj0x7D
 
 	.export OBJ_URCHIN := (*-tbl3_A1B5)/2
@@ -1040,12 +1040,12 @@ tbl3_A435:
 
 	.export OBJ_BGPRIORITY_ABOVE := (*-tbl3_A435)/2 + $80
 	.word obj0xF0 ; F2
-	.word obj0xF0
 
 	.export OBJ_BGPRIORITY_BELOW := (*-tbl3_A435)/2 + $80
-	.word obj0xED
+	.word obj0xF0
 
-	.export OBJ_PIPEEXIT := (*-tbl3_A435)/2 + $80
+	.export OBJ_PIPEEXIT := (*-tbl3_A435)/2 + $80	
+	.word obj0xED
 	.word obj0xED ; F5
 
 	.export OBJ_SPIKE_DOWN := (*-tbl3_A435)/2 + $80

@@ -655,7 +655,7 @@ bra5_83DF:
 	LDA #$18
 	STA objVar,Y
 	LDA #$40
-	STA $0641,Y
+	STA objStateTimer,Y
 	LDA #$0C
 	STA $0579,Y
 	LDA #$80
@@ -719,7 +719,7 @@ bra5_847B:
 	LDA objXDistHi,X
 	BPL bra5_8493_RTS
 	LDA #$00
-	STA $0641,X
+	STA objStateTimer,X
 	INC objState,X
 	INC objState,X
 bra5_8493_RTS:
@@ -737,7 +737,7 @@ bra5_849F:
 	LDA objXDistHi,X
 	BMI bra5_84B4_RTS
 	LDA #$00
-	STA $0641,X
+	STA objStateTimer,X
 	INC objState,X
 bra5_84B4_RTS:
 	RTS
@@ -750,21 +750,21 @@ ptr10_84B5:
 bra5_84C0:
 	LDA #$02
 	STA enemyAnimFrame,X
-	LDA $0641,X
+	LDA objStateTimer,X
 	CMP #$20
 	BCS bra5_84D0
-	INC $0641,X
+	INC objStateTimer,X
 	RTS
 bra5_84D0:
 	LDA objXDistHi,X
 	BMI bra5_84DE
 	LDA #$00
 	STA objState,X
-	STA $0641,X
+	STA objStateTimer,X
 	RTS
 bra5_84DE:
 	LDA #$00
-	STA $0641,X
+	STA objStateTimer,X
 	DEC objState,X
 	RTS
 ptr10_84E7:
@@ -776,14 +776,14 @@ ptr10_84E7:
 bra5_84F2:
 	LDA #$41
 	STA enemyAnimFrame,X
-	INC $0641,X
-	LDA $0641,X
+	INC objStateTimer,X
+	LDA objStateTimer,X
 	CMP #$20
 	BEQ bra5_8514
 	CMP #$40
 	BCC bra5_8513_RTS
 	LDA #$00
-	STA $0641,X
+	STA objStateTimer,X
 	DEC objState,X
 	DEC objState,X
 	DEC objState,X
@@ -803,14 +803,14 @@ ptr10_851D:
 bra5_8528:
 	LDA #$01
 	STA enemyAnimFrame,X
-	INC $0641,X
-	LDA $0641,X
+	INC objStateTimer,X
+	LDA objStateTimer,X
 	CMP #$20
 	BEQ bra5_854A
 	CMP #$40
 	BCC bra5_854E_RTS
 	LDA #$00
-	STA $0641,X
+	STA objStateTimer,X
 	DEC objState,X
 	DEC objState,X
 	DEC objState,X
@@ -847,12 +847,12 @@ ptr10_8564:
 bra5_857F_RTS:
 	RTS
 sub5_8580:
-	INC $0641,X
-	LDA $0641,X
+	INC objStateTimer,X
+	LDA objStateTimer,X
 	CMP #$E0
 	BCC bra5_8598_RTS
 	LDA #$00
-	STA $0641,X
+	STA objStateTimer,X
 	INC objState,X
 	INC objState,X
 	INC objState,X
@@ -873,7 +873,7 @@ sub5_8599:
 	STA objSlot,Y
 	LDA #$00
 	STA objVar,Y
-	STA $0641,Y
+	STA objStateTimer,Y
 	STA objState,Y
 	RTS
 sub5_85C6:
@@ -964,7 +964,7 @@ ptr10_864E:
 	LDA #$05
 	STA objState,X
 	LDA #$00
-	STA $0641,X
+	STA objStateTimer,X
 	LDY objCount
 	INC objCount
 	LDA objXLo,X

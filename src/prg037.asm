@@ -1940,7 +1940,7 @@ bra_8CE6:
 	STA objVar,Y
 	STA $0579,Y
 	STA objState,Y
-	STA $0641,Y
+	STA objStateTimer,Y
 	STA $05F6
 	STA bowserState
 	LDA #$E1
@@ -2902,7 +2902,7 @@ ptr7_93D9:
 .export obj0xB8
 obj0xB8:
 	STA objState,X
-	STA $0641,X
+	STA objStateTimer,X
 	STA objVar,X
 	STA objFlags,X
 	STA $06E2
@@ -3001,7 +3001,7 @@ bra_949E:
 	LDA #$00
 	STA $05F6
 	STA objState,X
-	STA $0641,X
+	STA objStateTimer,X
 	STA objVar,X
 	STA objFlags,X
 	STA $06E2

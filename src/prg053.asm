@@ -1361,7 +1361,7 @@ bra7_8A30:
 .export obj0x44
 obj0x44:
 	LDX $A4
-	LDA $0641,X
+	LDA objStateTimer,X
 	CMP #$F0
 	BCC bra7_8A60
 	LDA objSlot,X
@@ -1373,13 +1373,13 @@ obj0x44:
 	STA objFlags,X
 	STA objVar,X
 	STA playerHoldFlag
-	STA $0641,X
+	STA objStateTimer,X
 	RTS
 bra7_8A60:
 	LDA objFrameCount
 	AND #$03
 	BNE objShell
-	INC $0641,X
+	INC objStateTimer,X
 
 .export objShell
 objShell:
@@ -2287,8 +2287,6 @@ ptr5_916B:
 	RTS
 ptr5_917C:
 	LDA objVar,X
-.export obj0x3A
-obj0x3A:
 	CMP #$0E
 	BCS bra7_91A2
 	LDA objSlot,X
@@ -3435,7 +3433,7 @@ bra7_999B:
 	INC objSlot,X
 	INC objSlot,X
 	LDA #$00
-	STA $0641,X
+	STA objStateTimer,X
 	STA objVar,X
 	LDA #$28
 	STA objFlags,X
@@ -4051,7 +4049,7 @@ bra7_9E2D:
 	BPL bra7_9E4F
 	LDA #$00
 	STA objVar,X
-	STA $0641,X
+	STA objStateTimer,X
 	STA objState,X
 	LDA objXLo,X
 	CLC
@@ -4062,12 +4060,12 @@ bra7_9E2D:
 	STA objXHi,X
 	RTS
 bra7_9E4F:
-	INC $0641,X
-	LDA $0641,X
+	INC objStateTimer,X
+	LDA objStateTimer,X
 	CMP #$60
 	BCC bra7_9E66
 	LDA #$00
-	STA $0641,X
+	STA objStateTimer,X
 	LDA objState,X
 	EOR #$01
 	STA objState,X
