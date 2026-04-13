@@ -1558,7 +1558,7 @@ tbl2_A71F:
 	.byte $95
 	.byte $DF
 	.byte $95
-; Extra (sprite animation?) code for objects $00-7F
+; Sprite rendering code for objects $00-7F
 tbl2_A83B:
 	.word ptr6_A005 ; 0
 	.word ptr6_9562 ; 1

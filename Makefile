@@ -70,6 +70,35 @@ PRG52_OBJS := \
 	$(OBJ_DIR)/src/prg052.o
 
 PRG53_OBJS := \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Yoshi.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_Yoshi.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_ItemBoxYoshi.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_ItemBoxPSwitch.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_PSwitch.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_ThrowUpwards.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Spring.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Shell.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_ShellKicked.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_1UP.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_PlayerFireball1.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_PlayerFireball2.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_YoshiFireballBottom.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_DistCalc.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_YoshiFireballMiddle.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_YoshiFireballTop.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_SuperMushroomIdle.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_SuperMushroom.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhvShared_SuperMushroom.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_FireFlower.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_ResetFunction.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Feather.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Star.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Pop.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_MoveYoshiFireball.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_ItemBlockYoshi.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_PSwitch_ItemBlock.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_GlobalObjects.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_Spring.o \
 	$(OBJ_DIR)/src/prg053.o
 
 PRG54_OBJS := \
@@ -77,7 +106,7 @@ PRG54_OBJS := \
 
 PRG55_OBJS := \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Koopa.o \
-	$(OBJ_DIR)/src/obj/render/ObjDraw_GenKoopa.o \
+	$(OBJ_DIR)/src/obj/render/ObjDrawShared_Koopas.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Paratroopa.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Rex.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Rex.o \

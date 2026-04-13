@@ -200,7 +200,7 @@ ptr3_959C:
 	JSR getMovementData
 bra8_95A7:
 	LDA #$20
-	JSR sub3_AEA8
+	JSR objObjectHitCheck
 tbl8_95AC:
 	JSR jmp_54_AD54
 	LDA #$01

@@ -24,7 +24,7 @@ bra3_A006:
 	STA M90_PRG0 ; Swap the current object bank in
 	LDA #$33
 	STA M90_PRG3 ; Swap bank 51 into the 4th PRG slot
-	JSR obj0x36 ; Jump
+	JSR objBhvYoshi ; Jump
 	LDA #$3F
 	STA M90_PRG3 ; Swap bank 63 back in
 	RTS
@@ -250,8 +250,8 @@ bra3_A1AD:
 tbl3_A1B5:
 	.word ptr4_A0D8
 	
-	.export OBJ_YOSHI := (*-tbl3_A1B5)/2
-	.word objYoshiBox
+	.export OBJ_ITEMBOX_YOSHI := (*-tbl3_A1B5)/2
+	.word objBhvItemBoxYoshi
 
 	.export OBJ_PSWITCH := (*-tbl3_A1B5)/2
 	.word objPSwitch
@@ -271,13 +271,13 @@ tbl3_A1B5:
 	.export OBJ_PFIREBALL2 := (*-tbl3_A1B5)/2
 	.word obj0x07
 
-	.export OBJ_YOSHIFIRE_TOP := (*-tbl3_A1B5)/2
+	.export OBJ_YOSHIFIRE_BOTTOM := (*-tbl3_A1B5)/2
 	.word obj0x08
 
 	.export OBJ_YOSHIFIRE_MIDDLE := (*-tbl3_A1B5)/2
 	.word obj0x09
 
-	.export OBJ_YOSHIFIRE_BOTTOM := (*-tbl3_A1B5)/2
+	.export OBJ_YOSHIFIRE_TOP := (*-tbl3_A1B5)/2
 	.word obj0x0A
 
 	.export OBJ_MUSHROOM := (*-tbl3_A1B5)/2
@@ -378,10 +378,10 @@ tbl3_A1B5:
 	.word obj0x30
 
 	.export OBJ_GREENKOOPA := (*-tbl3_A1B5)/2
-	.word obj0x36
-	.word obj0x36
+	.word objKoopa
+	.word objKoopa
 
-	.export OBJ_KOOPASHELL_ALT := (*-tbl3_A1B5)/2 ; Verify this
+	.export OBJ_KOOPASHELL_KICKED := (*-tbl3_A1B5)/2
 	.word obj0x38
 
 	.export OBJ_MUSHROOM_HIDDEN := (*-tbl3_A1B5)/2
@@ -677,134 +677,134 @@ tbl3_A1B5:
 ;----------------------------------------
 ; OBJECTS 00 - 7F PRG BANKS ($A3B5)
 tbl3_A3B5:
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $35
-	.byte $35
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $37
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $35
-	.byte $31
-	.byte $31
-	.byte $35
-	.byte $35
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $37
-	.byte $37
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $37
-	.byte $37
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $32
-	.byte $32
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $35
-	.byte $35
-	.byte $32
-	.byte $32
-	.byte $37
-	.byte $37
-	.byte $32
-	.byte $32
-	.byte $32
-	.byte $32
-	.byte $35
-	.byte $32
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $37
-	.byte $37
-	.byte $35
-	.byte $37
-	.byte $31
-	.byte $31
+	.byte .bank(objBhvItemBoxYoshi)
+	.byte .bank(objBhvItemBoxYoshi)
+	.byte .bank(objPSwitch)
+	.byte .bank(objSpring)
+	.byte .bank(objShell)
+	.byte .bank(obj1UP)
+	.byte .bank(obj0x06)
+	.byte .bank(obj0x07)
+	.byte .bank(obj0x08)
+	.byte .bank(obj0x09)
+	.byte .bank(obj0x0A)
+	.byte .bank(obj0x0B)
+	.byte .bank(obj0x0C)
+	.byte .bank(obj0x0D)
+	.byte .bank(obj0x0E)
+	.byte .bank(obj0x0F)
+	.byte .bank(objKoopa)
+	.byte .bank(objKoopa)
+	.byte .bank(obj0x12)
+	.byte .bank(obj0x12)
+	.byte .bank(obj0x14)
+	.byte .bank(obj0x14)
+	.byte .bank(obj0x16)
+	.byte .bank(obj0x16)
+	.byte .bank(obj0x16)
+	.byte .bank(obj0x16)
+	.byte .bank(obj0x1A)
+	.byte .bank(obj0x1A)
+	.byte .bank(obj0x1C)
+	.byte .bank(obj0x1C)
+	.byte .bank(obj0x1E)
+	.byte .bank(obj0x1E)
+	.byte .bank(obj0x1E)
+	.byte .bank(obj0x1E)
+	.byte .bank(obj0x1E)
+	.byte .bank(obj0x1E)
+	.byte .bank(obj0x24)
+	.byte .bank(obj0x24)
+	.byte .bank(obj0x26)
+	.byte .bank(obj0x26)
+	.byte .bank(obj0x26)
+	.byte .bank(obj0x26)
+	.byte .bank(obj0x26)
+	.byte .bank(obj0x26)
+	.byte .bank(obj0x26)
+	.byte .bank(obj0x26)
+	.byte .bank(obj0x2E)
+	.byte .bank(obj0x2E)
+	.byte .bank(obj0x30)
+	.byte .bank(obj0x30)
+	.byte .bank(obj0x30)
+	.byte .bank(obj0x30)
+	.byte .bank(obj0x30)
+	.byte .bank(obj0x30)
+	.byte .bank(objKoopa)
+	.byte .bank(objKoopa)
+	.byte .bank(obj0x38)
+	.byte .bank(obj0x0B)
+	.byte .bank(obj0x3A)
+	.byte .bank(obj0x3A)
+	.byte .bank(obj0x3C)
+	.byte .bank(obj0x3C)
+	.byte .bank(obj0x3C)
+	.byte .bank(obj0x3C)
+	.byte .bank(obj0x3C)
+	.byte .bank(obj0x3C)
+	.byte .bank(obj0x42)
+	.byte .bank(obj0x42)
+	.byte .bank(obj0x44)
+	.byte .bank(obj0x44)
+	.byte .bank(obj0x38)
+	.byte .bank(obj0x38)
+	.byte .bank(obj0x48)
+	.byte .bank(obj0x49)
+	.byte .bank(obj0x4A)
+	.byte .bank(obj0x4A)
+	.byte .bank(obj0x4C)
+	.byte .bank(obj0x4C)
+	.byte .bank(obj0x4E)
+	.byte .bank(obj0x4E)
+	.byte .bank(obj0x4E) ; 50
+	.byte .bank(obj0x4E) ; 51
+	.byte .bank(obj0x30) ; 52 (Blurp)
+	.byte .bank(obj0x30)
+	.byte .bank(obj0x54) ; 54 (Line Platform)
+	.byte .bank(obj0x54)
+	.byte .bank(obj0x54)
+	.byte .bank(obj0x54)
+	.byte .bank(obj0x58)
+	.byte .bank(obj0x58)
+	.byte .bank(obj0x5A)
+	.byte .bank(obj0x5A)
+	.byte .bank(obj0x5C)
+	.byte .bank(obj0x5C)
+	.byte .bank(obj0x5C)
+	.byte .bank(obj0x5C)
+	.byte .bank(obj0x5A)
+	.byte .bank(obj0x5A)
+	.byte .bank(obj0x5A)
+	.byte .bank(obj0x5A)
+	.byte .bank(obj0x64)
+	.byte .bank(obj0x64)
+	.byte .bank(obj0x66)
+	.byte .bank(obj0x66)
+	.byte .bank(obj0x66)
+	.byte .bank(obj0x66)
+	.byte .bank(obj0x6A)
+	.byte .bank(obj0x6B)
+	.byte .bank(obj0x6C)
+	.byte .bank(obj0x6C)
+	.byte .bank(obj0x6E)
+	.byte .bank(obj0x6E)
+	.byte .bank(obj0x70)
+	.byte .bank(obj0x64)
+	.byte .bank(obj0x72)
+	.byte .bank(obj0x72)
+	.byte .bank(obj0x74)
+	.byte .bank(obj0x72)
+	.byte .bank(obj0x76)
+	.byte .bank(obj0x77)
+	.byte .bank(obj0x78) ; Object 0x78 (Reznor Fire)
+	.byte .bank(obj0x54) ; Object 0x79 (Fuzzy)
+	.byte .bank(obj0x7A)
+	.byte .bank(obj0x7A)
+	.byte .bank(obj0x7C)
+	.byte .bank(obj0x7D)
+	.byte .bank(obj0x7E)
+	.byte .bank(obj0x7E) ; Object 0x7F (Urchin)
 
 ;----------------------------------------
 ; OBJECTS 80-FF ($A435)
@@ -1202,140 +1202,139 @@ tbl3_A435:
 ;------------------------------------
 ; OBJECTS 80-FF PRG BANKS ($A635)
 tbl3_A635:
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $32
-	.byte $32
-	.byte $32
-	.byte $32
-	.byte $32
-	.byte $32
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $32
-	.byte $32
-	.byte $32
-	.byte $32
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $38
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $25
-	.byte $25
-	.byte $25
-	.byte $30
-	.byte $25
-	.byte $30
-	.byte $30
-	.byte $25
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $25
-	.byte $25
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $30
-	.byte $25
-	.byte $25
-	.byte $25
-	.byte $25
-	.byte $25
-	.byte $25
-	.byte $25
-	.byte $25
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $37
-	.byte $37
-	.byte $31
-	.byte $31
-	.byte $25
-	.byte $25
-	.byte $25
-	.byte $25
-	.byte $37
-	.byte $37
-	.byte $31
-	.byte $31
-	.byte $31
-	.byte $31
+	.byte .bank(obj0x80)
+	.byte .bank(obj0x80)
+	.byte .bank(obj0x82)
+	.byte .bank(obj0x82)
+	.byte .bank(obj0x84)
+	.byte .bank(obj0x84)
+	.byte .bank(obj0x86)
+	.byte .bank(obj0x86)
+	.byte .bank(obj0x88)
+	.byte .bank(obj0x88)
+	.byte .bank(obj0x8A)
+	.byte .bank(obj0x8A)
+	.byte .bank(obj0x8C)
+	.byte .bank(obj0x8C)
+	.byte .bank(obj0x8E)
+	.byte .bank(obj0x8E)
+	.byte .bank(obj0x90)
+	.byte .bank(obj0x90)
+	.byte .bank(obj0x92)
+	.byte .bank(obj0x92)
+	.byte .bank(obj0x94)
+	.byte .bank(obj0x94)
+	.byte .bank(obj0x96)
+	.byte .bank(obj0x96)
+	.byte .bank(obj0x98)
+	.byte .bank(obj0x98)
+	.byte .bank(obj0x9A)
+	.byte .bank(obj0x9A)
+	.byte .bank(obj0x9C)
+	.byte .bank(obj0x9C)
+	.byte .bank(obj0x9E)
+	.byte .bank(obj0x9E)
+	.byte .bank(obj0xA0)
+	.byte .bank(obj0xA0)
+	.byte .bank(obj0xA2)
+	.byte .bank(obj0xA2)
+	.byte .bank(obj0xA4)
+	.byte .bank(obj0xA4)
+	.byte .bank(obj0xA6)
+	.byte .bank(obj0xA6)
+	.byte .bank(obj0xA8)
+	.byte .bank(obj0xA8)
+	.byte .bank(obj0xA8) ; AA
+	.byte .bank(obj0xA8) ; AB
+	.byte .bank(obj0xAA) ; AC
+	.byte .bank(obj0xAA) ; AD
+	.byte .bank(obj0xAC) ; AE
+	.byte .bank(obj0xAC) ; AF
+	.byte .bank(obj0xAE)
+	.byte .bank(obj0xAE)
+	.byte .bank(obj0xB0)
+	.byte .bank(obj0xB0)
+	.byte .bank(obj0xB2)
+	.byte .bank(obj0xB2)
+	.byte .bank(obj0xB4)
+	.byte .bank(obj0xB4)
+	.byte .bank(obj0xB6)
+	.byte .bank(obj0xB6) ; UNUSED/NULL
+	.byte .bank(obj0xB8)
+	.byte .bank(objCharginChuck) ; UNUSED/NULL
+	.byte .bank(obj0xBA)
+	.byte .bank(objCharginChuck) ; UNUSED/NULL
+	.byte .bank(objCharginChuck) ; UNUSED/NULL
+	.byte .bank(obj0xBD)
+	.byte .bank(objCharginChuck)
+	.byte .bank(objCharginChuck)
+	.byte .bank(obj0xC0)
+	.byte .bank(obj0xC0) ; Actually C2
+	.byte .bank(obj0xC2)
+	.byte .bank(obj0xC2)
+	.byte .bank(objCharginChuck)
+	.byte .bank(objCharginChuck)
+	.byte .bank(obj0xC0)
+	.byte .bank(obj0xC0)
+	.byte .bank(obj0xC2)
+	.byte .bank(obj0xC2)
+	.byte .bank(objCharginChuck)
+	.byte .bank(objCharginChuck)
+	.byte .bank(obj0xC0)
+	.byte .bank(obj0xC0)
+	.byte .bank(obj0xCE)
+	.byte .bank(obj0xCE)
+	.byte .bank(obj0xD0)
+	.byte .bank(obj0xD0)
+	.byte .bank(obj0xD2)
+	.byte .bank(obj0xD2)
+	.byte .bank(obj0xD4)
+	.byte .bank(obj0xD5)
+	.byte .bank(obj0xD6) ; D8
+	.byte .bank(obj0xD6)
+	.byte .bank(obj0xD8) ; DA
+	.byte .bank(obj0xD8)
+	.byte .bank(obj0xDA) ; DC
+	.byte .bank(obj0xDA)
+	.byte .bank(obj0xDC) ; DE
+	.byte .bank(obj0xDC)
+	.byte .bank(obj0xDE) ; E0
+	.byte .bank(obj0xDF)
+	.byte .bank(obj0xE0)
+	.byte .bank(obj0xE0)
+	.byte .bank(obj0xE2) ; E4
+	.byte .bank(obj0xE2)
+	.byte .bank(obj0xE4)
+	.byte .bank(obj0xE4)
+	.byte .bank(obj0xE6)
+	.byte .bank(obj0xE7)
+	.byte .bank(obj0xE8) ; Row 1
+	.byte .bank(obj0xE8) ; Row 2
+	.byte .bank(obj0xE8) ; Row 3
+	.byte .bank(obj0xE8) ; Row 4
+	.byte .bank(obj0xE8) ; Row 5
+	.byte .bank(obj0xED)
+	.byte .bank(obj0xED) ; F0
+	.byte .bank(obj0xED)
+	.byte .bank(obj0xF0) ; F2
+	.byte .bank(obj0xF0)
+	.byte .bank(obj0xED)
+	.byte .bank(obj0xED) ; F5
+	.byte .bank(obj0xF4) ; F6
+	.byte .bank(obj0xF4)
+	.byte .bank(obj0xF4) ; F8
+	.byte .bank(obj0xF4)
+	.byte .bank(obj0x58)
+	.byte .bank(obj0x58)
+	.byte .bank(obj0xFA) ; FC
+	.byte .bank(obj0xFA)
+	.byte .bank(obj0xFA) ; FE
+	.byte .bank(obj0xFA)
 
 ;----------------------------------------
 ; ROUTINE ($A6B5)
 ; Removes the object of the X index from memory.
 ;----------------------------------------
-.export objRemoveObject
 .export objRemoveObject
 objRemoveObject:
 	LDA #$00
@@ -1529,7 +1528,6 @@ bra3_A7BA_RTS:
 ; > 06 = Swallow
 ; > 07 = Inedible
 ;----------------------------------------
-.export objYoshiTongueCheck
 .export objYoshiTongueCheck
 objYoshiTongueCheck:
 	LDA $25
@@ -2558,7 +2556,7 @@ jmp_54_AC94:
 bra3_AC97:
 loc3_AC97:
 	LDA #$10
-	JSR sub3_AEA8
+	JSR objObjectHitCheck
 	JSR sub3_AD3D
 	PLA
 	PLA
@@ -2907,22 +2905,42 @@ objectPowerupTbl:
 	.byte $00
 	.byte $00
 
-.export sub3_AEA8
-sub3_AEA8:
-	STA $38
-	LDX #$FF
+;----------------------------------------
+; SUBROUTINE ($AEA8)
+; Checks if a collision between the current object and another occurs. Exits the parent routine if no collision occurs.
+; Returns:
+; > X = Index of colliding object
+;----------------------------------------
+.export objObjectHitCheck
+.proc objObjectHitCheck
+; Parameters
+; A = Hitbox size (width and height)
+xDistLo = $32
+xDistHi = $33
+yDistLo = $34
+yDistHi = $35
+obj2HitboxW = $36
+obj2HitboxH = $37
+obj1HitboxSize = $38
 
+	STA $38
+	LDX #-1
+
+; Check if object exists and should collide with an object (for lower 128 objects)
 loc3_AEAC:
 	INX
 	LDY objSlot,X
-	BMI bra3_AEBE
+	BMI bra3_AEBE ; Use different check for objects 128-255
 	LDA tbl3_AF43,Y
 	BNE bra3_AECF
 	CPX objCount
-	BCC loc3_AEAC
-	PLA
-	PLA
-	RTS
+	BCC loc3_AEAC ; Iterate through every occupied object slot
+		; Cut off previous subroutine if no collision has occurred
+		PLA
+		PLA
+		RTS
+
+; Check if object exists and should collide with an object (for upper 128 objects)
 bra3_AEBE:
 	TYA
 	SEC
@@ -2932,70 +2950,85 @@ bra3_AEBE:
 	BNE bra3_AECF
 	CPX objCount
 	BCC loc3_AEAC
-	PLA
-	PLA
-	RTS
+		PLA
+		PLA
+		RTS
+
 bra3_AECF:
 	LDA objectXHitBoxSizes,Y
-	STA $36
+	STA obj2HitboxW
 	LDA objectYHitBoxSizes,Y
-	STA $37
+	STA obj2HitboxH
 	LDY $A4
 	STY $32
 	CPX $32
-	BEQ loc3_AEAC
+	BEQ loc3_AEAC ; Skip past the object if its of the same type
+
+; Y index = Current object (Object 1)
+; X index = Object colliding with (Object 2)
+; Calculate distance
 	LDA objXLo,X
 	SEC
 	SBC objXLo,Y
-	STA $32
+	STA xDistLo
 	LDA objXHi,X
 	SBC objXHi,Y
-	STA $33
+	STA xDistHi
 	LDA objYLo,X
 	SEC
 	SBC objYLo,Y
-	STA $34
+	STA yDistLo
 	LDA objYHi,X
 	SBC objYHi,Y
-	STA $35
-	LDA $33
+	STA yDistHi
+
+; Check for collision on X axis
+	LDA xDistHi
 	BPL bra3_AF17
-	CMP #$FF
-	BNE loc3_AEAC
-	LDA #$00
-	CLC
-	ADC $36
-	CLC
-	ADC $32
-	BCS bra3_AF1F
-	BCC loc3_AEAC
-bra3_AF17:
-	BNE loc3_AEAC
-	LDA $32
-	CMP $38
-	BCS loc3_AEAC
-bra3_AF1F:
-	LDA $35
-	BPL bra3_AF34
-	CMP #$FF
-	BNE loc3_AEAC
-	LDA #$00
-	CLC
-	ADC $37
-	CLC
-	ADC $34
-	BCS bra3_AF42_RTS
-	JMP loc3_AEAC
-bra3_AF34:
-	BEQ bra3_AF39
-	JMP loc3_AEAC
-bra3_AF39:
-	LDA $34
-	CMP $38
-	BCC bra3_AF42_RTS
-	JMP loc3_AEAC
-bra3_AF42_RTS:
-	RTS
+	CMP #-1
+	BNE loc3_AEAC ; Object 1 can't be more than a screen behind object 2
+	; If distance is negative (object 1 to the right of object 2)
+		LDA #$00
+		CLC
+		ADC obj2HitboxW
+		CLC
+		ADC xDistLo
+		BCS bra3_AF1F
+		BCC loc3_AEAC
+
+	; If distance is positive (object 1 to the left of object 2)
+	bra3_AF17:
+		BNE loc3_AEAC ; Must be within a screen (256 pixels) of each other
+		LDA xDistLo
+		CMP obj1HitboxSize
+		BCS loc3_AEAC
+
+; Check for collision on Y axis
+	bra3_AF1F:
+		LDA yDistHi
+		BPL bra3_AF34
+		CMP #$FF
+		BNE loc3_AEAC
+			LDA #$00
+			CLC
+			ADC obj2HitboxH
+			CLC
+			ADC yDistLo
+			BCS bra3_AF42_RTS
+				JMP loc3_AEAC
+
+		bra3_AF34:
+			BEQ bra3_AF39
+				JMP loc3_AEAC
+
+	bra3_AF39:
+		LDA yDistLo
+		CMP obj1HitboxSize
+		BCC bra3_AF42_RTS
+			JMP loc3_AEAC
+	bra3_AF42_RTS:
+		RTS
+.endproc
 tbl3_AF43:
 	.byte $00
 	.byte $00
@@ -5262,12 +5295,12 @@ jmp_54_BD3D:
 	CMP #$40
 	BCC bra3_BD66
 	LDA objSlot,X
-	AND #$FE
-	CMP #$6C
+	AND #%11111110
+	CMP #OBJ_VINE
 	BNE bra3_BD56
-	PLA
-	PLA
-	RTS
+		PLA
+		PLA
+		RTS
 bra3_BD56:
 	LDA #$00
 	STA objSlot,X
