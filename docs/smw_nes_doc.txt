@@ -1,4 +1,4 @@
-SMW NES Hacking Document (2026-4-2)
+SMW NES Hacking Document (2026-4-8)
 Note: Some information here may be inaccurate or wrong.
 
 -----Level Data-----
@@ -195,7 +195,7 @@ Note: Some information here may be inaccurate or wrong.
 6BAB3 - 6BACE:	Buzzy Beetle Shell Mappings
 6BC06 - 6BC0A:	Checkpoint Tape Mappings
 6BC31 - 6BC36:	Goal Tape Mappings
-6E258 - 6E26C:	Shell-less Koopa Mappings
+6E258 - 6E26C:	Unshelled Koopa Mappings
 6E26D - 6E282:	Koopa Mappings
 6E283 - 6E2A8:	Paratroopa Mappings
 6E6A9 - 6E6D9:	Rex Mappings (1 unused frame)
@@ -394,7 +394,7 @@ Note: Some information here may be inaccurate or wrong.
 66704 - 667B8:	Rotating Platform Movement Data
 667C2 - 667C4:	Buzzy Beetle Movement Data
 667C5 - 667DE:	P-Switch Movement Data
-667E0 - 66820:	Shell-less Koopa Movement Data
+667E0 - 66820:	Unshelled Koopa Movement Data
 66863 - 66865:	Shell/Horizontal Podoboo Movement Data
 66866 - 66870:	Fireball Movement Data
 66871 - 6688D:	Mushroom Movement Data
@@ -458,6 +458,7 @@ $0019:	Player Movement Flags
 > Bit 0 = Horizontal Direction (0 = Right, 1 = Left)
 > Bit 2 = Vertical Direction (0 = Down, 1 = Up)
 > Bit 6 = Sprite Horizontal Direction (0 = Right, 1 = Left)
+
 $001A:	Player Sprite Attributes
 $001B - $001C:	Player Frame Pointer
 $001D:	Player Action
@@ -480,6 +481,7 @@ $001D:	Player Action
 > 0x11 = Dead/Shoot Fireball (Mid-air)
 > 0x12 = Shoot Fireball (Underwater)
 > 0x13 = Shoot Fireball
+
 $001E:	Player Previous Action (Used to detect action changes)
 $0023:	Player Sprite Mirroring
 $0025:	Current Object Edibility
@@ -489,6 +491,7 @@ $0025:	Current Object Edibility
 > 0x04 = Fire Breath
 > 0x06 = Swallow
 > 0x07 = Not edible
+
 $0025:	Non-Level Scratch RAM?
 $0026:	Non-Level Vertical Sprite Alignment
 $0027:	Non-Level Horizontal Sprite Alignment
@@ -514,6 +517,7 @@ $0041 - $0045:	Non-Level Sprite X Positions
 $0049:	Player Climbing State
 > 0x02 = On Climbable Edge
 > 0x03 = Behind Climbable Tile
+
 $004A:	Shell Hit Counter
 $004B:	Shell Hit Timer (Amount of frames since the shell hit something)
 $004F:	Player Previous X Direction
@@ -528,11 +532,13 @@ $0058:	Camera Y Pos (Duplicate?)
 $005B:	Vertical Scroll Flag?
 > 0x00 = Camera moved vertically up
 > 0x02 = Camera at lowest y position
+
 $005C:	32x32 Vertical Scroll Strip?
 $0064:	Tile X Pos Hi (Used as parameter)
 $0065:	Tile X Pos Lo (Used as parameter)
 $0066:	Tile Y Pos Hi (Used as parameter)
 $0067:	Tile Y Pos Lo (Used as parameter)
+$006E - $0089:	Metatile Buffer (Next column of metatiles)
 $008C - $008D:	Level Screen Order Pointer
 $008E:	Music Play Register (!)
 > 0x20 = Title
@@ -580,6 +586,7 @@ $008F:	Sound Effects Play Register (!)
 > 0x1B = Yoshi Fire Spit
 > 0x1C = Checkpoint
 > 0x1D = Chainsaw
+
 $0090:	Music ID Backup/Queue
 $0096:	Player Behind Collision (like coins, vines, etc)
 $0099:	Player Screen ID/Number
@@ -596,6 +603,7 @@ $00B2 - $00B6:	Non-Level Sprite Frames/Animations (!)
 > 0x11 - 12 = Title Mario (Walking)
 > 0x13 - 14 = Title Yoshi (Walking)
 > 0x15 = Title Yoshi (Jumping)
+
 $00B2:	Metasprite Row Y Position Buffer
 $00B2:	Sprite 1st Row Alignment
 $00B3:	Sprite 2nd Row Alignment
@@ -612,6 +620,7 @@ $00DC - $00DD:	Level Entity Set Pointer
 $00DE:	In Level Flag (!)
 > 0x00 = Outside of a level (Map, title screen, etc)
 > 0x01 = In a level
+
 $00DF:	Game State
 -Level States-
 > 0x00 = Restart Level
@@ -654,6 +663,7 @@ $00DF:	Game State
 > 0x22 = Game Over
 > 0x25 = Switch Player
 > 0x2E = Enter Yoshi house
+
 $00E0:	Game Substate
 $00E1:	Player State
 > 0x01 = Underwater(?)
@@ -668,6 +678,7 @@ $00E1:	Player State
 > 0x0C = Yoshi spit out
 > 0x0D = Yoshi spit out (Walking)
 > 0x0E = Yoshi spit out (Ducking)
+
 $00E4:	RNG State
 $00E5 - $00E6:	Player Animation Pointer
 $00FE - $00FF:	Sound Driver Pointer
@@ -692,6 +703,7 @@ $033B - $0342:	Non-Level Sprite Slots/Types (!)
 > 0x02 = Super Koopa
 > 0x03 = "Pop" Effect
 > 0x05 = Rex
+
 $034D - $0355:	Non-Level Sprite Flags
 $0356 - $035E:	Non-Level Sprite Y Positions
 $035F:	Player Count (0 = 1 Player, 1 = 2 Players)
@@ -717,6 +729,7 @@ $0361:	Player Map Animation
 > 0x12 = Swim Right
 > 0x13 = Yoshi Walk Right
 > 0x14 = Yoshi Swim Right
+
 $0365:	Title Demo Player Animation? (Possibly tied to action)
 $0366:	Title Demo Jump Timer? (Increments every 2 frames while player jumps, resets when they hit the ground)
 $0367:	Title Demo Walk Timer? (Increments every 8 frames while player is walking, doesn't reset)
@@ -739,6 +752,7 @@ $037D:	HUD Updater
 > 0x02 = Update timer
 > 0x03 = Update score
 > 0x04 = Update coin count
+
 $037F:	Map Spot Number
 $0381 - $0386:	Player 1 Castle Completion Flags
 $0389 - $038E:	Player 2 Castle Completion Flags
@@ -751,6 +765,7 @@ $0398:	Time Up Flag
 $0399:	Current Player
 > 0x00 = Player 1
 > 0x01 = Player 2
+
 $039E:	Levels Completed
 $03A1 - $03A2:	PPU Update Pointer
 $03A4:	PPU Data Buffer Write Count
@@ -769,11 +784,13 @@ $0400 - $047F:	16x16 Palette Assignments
 $0480:	BG Render Next Column Flag? (Set to 20)
 $0481:	Next BG Column
 $0485 - $04BC:	8x8 Tile Rows
-$04C1 - $04F0:	BG column tile attribute write buffer? (Contains 16 3-byte arrays, with all but the first being for attributes)
+$04C1 - $04F0:	PPU Write Tasks. Contains 16 3-byte structs that each write a single byte to a specified PPU address
 Format:
 > 0x1 - 0x2 = PPU address
 > 0x3 = Data
+
 $04F3:	1st Data Bank
+$04F4:	Unused Data Bank
 $04F5:	2nd Data Bank/Tilemap Bank
 $04F6:	World Number
 $04F7:	3rd Data Bank/Level Bank/Level Number
@@ -782,7 +799,7 @@ $04FB:	Level Bottom Screen Offset (Collision/level handling, is hardcoded to #$1
 $0500 - $0513:	Object Slots
 -Object IDs-
 > 0x00 = Null/Empty
-> 0x01 = Yoshi Box
+> 0x01 = Item Box w/ Yoshi
 > 0x02 = P-Switch
 > 0x03 = Spring
 > 0x04 = Koopa Shell
@@ -798,7 +815,7 @@ $0500 - $0513:	Object Slots
 > 0x0E = Star
 > 0x0F = Pop effect
 > 0x10 = Red Koopa
-> 0x12 = Red Shell-less Koopa
+> 0x12 = Red Unshelled Koopa
 > 0x14 = Bouncing Green Paratroopa
 > 0x16 = Rex
 > 0x18 = Squashed Rex
@@ -820,7 +837,7 @@ $0500 - $0513:	Object Slots
 > 0x34 = Blurp (Glitched?)
 > 0x35 = Blurp (Rightward?)
 > 0x36 = Red Koopa, walks off ledges (Functional Green Koopa)
-> 0x38 = Koopa Shell, glitched?
+> 0x38 = Koopa Shell (Kicked/moving)
 > 0x39 = Mushroom in ground
 > 0x3A = Mechakoopa
 > 0x3C = Stomped Mechakoopa A
@@ -847,10 +864,10 @@ $0500 - $0513:	Object Slots
 > 0x64 = Diagonal Podoboo
 > 0x66 = P-Switch Platform
 > 0x68 = P-Door
-> 0x6A = P-Switch (From block)
-> 0x6B = Standing Mushroom
+> 0x6A = Item Block w/ P-Switch
+> 0x6B = Stationary Mushroom
 > 0x6C = Vine
-> 0x6E = Sliding Shell-less Koopa
+> 0x6E = Sliding Unshelled Koopa
 > 0x70 = Morton/Roy
 > 0x71 = Diagonal Podoboo (Lemmy/Wendy room)
 > 0x72 = Lemmy/Wendy Koopa, may crash outside of boss room
@@ -861,9 +878,9 @@ $0500 - $0513:	Object Slots
 > 0x77 = Reznor
 > 0x78 = Reznor fire
 > 0x79 = Fuzzy
-> 0x7A = Sliding Shell-less Koopa
+> 0x7A = Sliding Unshelled Koopa (4-3 Variant, moves in a specific way)
 > 0x7C = Yoshi House Exit
-> 0x7D = BG Priority Toggle
+> 0x7D = BG Priority Toggle Left
 > 0x7E = Urchin (Follow ground)
 > 0x80 = Bullet Bill
 > 0x82 = Eerie
@@ -940,6 +957,7 @@ $0500 - $0513:	Object Slots
 > 0xFA = Green Paratroopa, vertical
 > 0xFC = Countdown Platform (1 second)
 > 0xFE = Countdown Platform (4 seconds)
+
 $0514 - $0527:	Object X Positions
 $0528 - $053B:	Object X Screens
 $053C - $054F:	Object Y Positions
@@ -956,9 +974,11 @@ $0564 - $0577:	Object Status Bits (Sometimes used for variables, though generall
  > 2 (010) = About to be eaten by Yoshi? (Varies with object)
  > 3 (011) = Checking for collision/hit
  > 4 (100) = Responding to being hit
+
 $0578 - $058B:	Miscellaneous Object Variables (Typically used track which motion vector an object is on)
 > 0x1E (Super Koopa w/ Cape Feather): Movement vector, uses bit 7 to track if it should be vertical displacement
 > 0xDC (Boo): Current X and Y speed setting (Based on table)
+
 $05A0 - $05B3:	Object X Distance From Player (Object X Position - Player X Position)
 $05B4 - $05C7:	Object X Screen Distance From Player
 $05C8 - $05DB:	Object Y Distance From Player (Object Y Position - Player Y Position)
@@ -970,6 +990,7 @@ $05F1:	Yoshi Unmounted State
 > 0x01 = Hatching
 > 0x02 = Standing
 > 0x03 = Running
+
 $05F2:	Idle Yoshi X Coords
 $05F3:	Idle Yoshi X Screen
 $05F4:	Idle Yoshi Y Coords
@@ -1007,6 +1028,7 @@ $05F7:	Bowser Action/State
 > 0x21 = Peach fly out
 > 0x22 = Flying up (after defeat)
 > 0x23 = Defeated/Inactive
+
 $05F8:	Idle Yoshi Animation
 > 0x00 = Baby
 > 0x01 = Baby (growing)
@@ -1017,6 +1039,7 @@ $05F8:	Idle Yoshi Animation
 > 0x07 - 08 = Running (Flinching)
 > 0x09 = Idle with item in mouth
 > 0x0A - 0B = Running with item in mouth
+
 $05F9:	Yoshi X Distance From Player
 $05FA:	Yoshi X Screen Distance From Player
 $05FB:	Yoshi Y Distance From Player
@@ -1029,10 +1052,12 @@ $0606:	Interrupt Mode (which byte to use for interrupt)
 > 0x0A = Title Screen
 > 0x0B = Map
 > 0x0C = End Screen
+
 $0607:	HUD Display Thing?
 > 0x00 = Garbage, Sprite Only
 > 0x01 = Shifted/glitched?
 > 0x02 = Sprite Only
+
 $060B:	Warp Level Number
 $060C:	Warp Number
 $060D:	Top Scroll Boundary Hi
@@ -1055,6 +1080,7 @@ $061F:	Player Yoshi State
 > 0x07 = Swallowing P-Switch
 > 0x08 = Swallowing spring
 > 0x09 = Swalling shell
+
 $0620:	Player Yoshi Exit State (The state that will be stored when the player leaves)
 $0622:	Yoshi Idle Movement
 $0624:	Player Power-up State
@@ -1063,11 +1089,13 @@ $0624:	Player Power-up State
 > 0x02 = Fire
 > 0x03 = Cape
 > 0x04 = Cape (moving)
+
 $0625:	Item Box
 > 0x00 = Empty
 > 0x01 = Mushroom
 > 0x02 = Fire Flower
 > 0x03 = Feather
+
 $062B:	Object Frame Counter Thing?
 $062C:	Cape Action/Animation
 $062F:	Fireball Slot Number/Counter
@@ -1083,6 +1111,7 @@ $0638:	Star/Invincibility Timer
 > 0x01 - 0xCF = Star Power
 > 0xF6 - 0xF8 = Stop Flickering
 > 0xD0 - 0xF8 = Invulnerability Frames
+
 $063A - $063C:	NMI "Fake" JMP Opcode
 $063E:	Controller 2 Buttons Pressed
 $0641 - $0654:	Object Action Timer
@@ -1092,6 +1121,9 @@ $0668:	ON/OFF Block Flag
 $0669 - $067D:	Object States/Variables? (See below for more details)
 $067C:	Unused P-Switch Timer
 $067D:	Game Freeze Flag
+$067E - $06A1:	Dynamic Tile Memory
+Each has 16 dynamic tiles for each horizontal screen that are hardcoded to be metatiles 0x80 to 0x8F. Every horizontal screen has two bytes with 16 bits representing which of these 16 tiles have been modified, with bits 0 through 7 of the first byte representing the first 8 tiles and bites 0 through 7 of the second byte representing the remaining 8 tiles. A value of 1 indicates that a tile has not changed, where a value of 0 indicates that it has. If a tile is changed, ti will instead be treated as metatile 0x90 if it is dynamic tiles 0-7, and metatile 0x91 if it is dynamic tiles 0-15. 
+
 $06A2 - $06BD:	Checkpoint Flags
 $06DA:	Player 1 Power-up Backup
 $06DB:	Player 2 Power-up Backup
