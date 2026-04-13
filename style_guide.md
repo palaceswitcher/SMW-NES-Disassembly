@@ -8,6 +8,10 @@
 - Immediate values for instructions should be represented by hexadecimal in most cases, unless used for math or PRG bank switching, where decimal should instead be used. Bitwise instructions should always use binary literals, unless they're used for modulo operations.
 	- Example: `AND #$07` should not be written as `AND #%00000111` if it's used to run code every 8th frame.
 
+### Filenames
+
+- Filenames should be written in TitleCase, with the type of code they belong to being preceeded by an underscore, such as code for object behavior being `ObjBhv_ObjectName`.
+
 ### Label Styling
 
 - Jumps, branches, tables, and RAM addresses should always be written in camelCase and should not be too verbose.
@@ -127,9 +131,9 @@ Specific formatting should be used for code that serves a specific and common pu
 
 #### Objects
 
-`objObject`: The start of an object's code\
+`objBhvObject`: The start of an object's behavior code\
 `objPurpose`: Routine or subroutine used by multiple objects\
-`genObjPurpose`: Generic object code that's either shared or used by object(s) via a subroutine call\
+`genObjBhvPurpose`: Generic object code that's either shared or used by object(s) via a subroutine call\
 `objectGetFunction`: The code that an object uses to call from its function table\
 `objectHitCheck`: The function that checks if the player successfully hit and object\
 `objectHitRespond`: The object's response to being hit by the player\
