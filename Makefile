@@ -4,6 +4,13 @@ LD = ld65
 CONFIG = smw.cfg
 FLAGS = -g --feature force_range -U -I include -I sound -I levels
 
+# OS Detection
+ifeq ($(OS),Windows_NT)
+    MKDIR_P = if not exist "$(subst /,\,$1)" mkdir "$(subst /,\,$1)"
+else
+    MKDIR_P = mkdir -p "$1"
+endif
+
 # Output filename
 TARGET = smw.nes
 
@@ -189,5 +196,5 @@ $(TARGET): $(OBJECTS)
 
 # Assemble every asm file to an object
 $(OBJ_DIR)/%.o: %.asm
-	@if not exist "$(dir $@)" mkdir "$(subst /,\,$(dir $@))"
+	@$(call MKDIR_P,$(dir $@))
 	$(AS) $(FLAGS) $< -o $@
