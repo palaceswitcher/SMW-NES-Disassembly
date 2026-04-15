@@ -176,7 +176,8 @@ PRG55_OBJS := \
 	$(OBJ_DIR)/src/padding/padding055.o
 
 PRG56_OBJS := \
-	$(OBJ_DIR)/src/prg056.o
+	$(OBJ_DIR)/src/prg056.o \
+	$(OBJ_DIR)/src/padding/padding056.o
 
 PRG57_OBJS := \
 	$(OBJ_DIR)/src/prg057.o
