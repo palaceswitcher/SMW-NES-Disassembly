@@ -106,7 +106,33 @@ PRG53_OBJS := \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_PSwitch_ItemBlock.o \
 	$(OBJ_DIR)/src/obj/data/sprites/Spr_GlobalObjects.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Spring.o \
-	$(OBJ_DIR)/src/prg053.o
+	$(OBJ_DIR)/src/obj/render/ObjDraw_KoopaShell.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_1UP.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_PlayerFireball.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_YoshiFireball.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_HorizontalPodoboo.o \
+	$(OBJ_DIR)/src/obj/render/ObjDrawShared_SuperMushroom.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_FireFlower.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_Feather.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_StopIfInBlock.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_Star.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_Pop.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_BuzzyBeetle.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_BuzzyBeetle.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_BuzzyBeetle.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_BuzzyShell.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_BuzzyShellKicked.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_BuzzyShell.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Checkpoint.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_Checkpoint.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_Checkpoint.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_GoalTape.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_GoalTape.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_HorizontalPodoboo.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_HorizontalPodoboo.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_GoalTape.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_MakePlayerBig.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_LevelExit.o \
 
 PRG54_OBJS := \
 	$(OBJ_DIR)/src/prg054.o

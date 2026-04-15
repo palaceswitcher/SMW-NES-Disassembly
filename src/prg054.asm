@@ -511,7 +511,7 @@ tbl3_A1B5:
 	.export OBJ_LEMMYWENDYDUMMY1 := (*-tbl3_A1B5)/2
 	.word obj0x72
 
-	.export OBJ_MIDWAYPOINT := (*-tbl3_A1B5)/2
+	.export OBJ_CHECKPOINT := (*-tbl3_A1B5)/2
 	.word obj0x74
 
 	.export OBJ_LEMMYWENDYDUMMY2 := (*-tbl3_A1B5)/2

@@ -21,8 +21,8 @@ sprPtrs_CommonObjects:
 	.word sprMap_KoopaShell2
 	.word ofs_9622
 	.word ofs_9629
-	.word sprMap_Checkpoint
-	.word sprMap_GoalTape
+	.word sprMap_Checkpoint ; This is in another file
+	.word sprMap_GoalTape ; This is in another file
 sprMap_Mushroom:
 	.byte $02 ; Tile Width
 	.byte $02 ; Tile Height
