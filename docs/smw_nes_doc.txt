@@ -1,4 +1,4 @@
-SMW NES Hacking Document (2026-4-8)
+SMW NES Hacking Document (2026-4-15)
 Note: Some information here may be inaccurate or wrong.
 
 -----Level Data-----
@@ -872,7 +872,7 @@ $0500 - $0513:	Object Slots
 > 0x71 = Diagonal Podoboo (Lemmy/Wendy room)
 > 0x72 = Lemmy/Wendy Koopa, may crash outside of boss room
 > 0x73 = Lemmy/Wendy Dummy 1
-> 0x74 = Midway Point
+> 0x74 = Checkpoint
 > 0x75 = Lemmy/Wendy Dummy 2
 > 0x76 = ON/OFF sign
 > 0x77 = Reznor
