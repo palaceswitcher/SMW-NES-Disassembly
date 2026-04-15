@@ -140,26 +140,36 @@ PRG54_OBJS := \
 PRG55_OBJS := \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Koopa.o \
 	$(OBJ_DIR)/src/obj/render/ObjDrawShared_Koopas.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_Koopas.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Paratroopa.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Rex.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Rex.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_Rex.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_PiranhaPlant.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_PiranhaPlant.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_PiranhaPlant.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_PiranhaPlantMask.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_SuperKoopa.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_SuperKoopa.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_SuperKoopa.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_VolcanoLotus.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_VolcanoLotus.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_VolcanoLotus.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_LotusPollen.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_LotusPollen.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_LotusPollen.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Swooper.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Swooper.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_Swooper.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Blurp.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Blurp.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_Blurp.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Mechakoopa.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Mechakoopa.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_Mechakoopa.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_MechakoopaStunned.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_MechakoopaStunned.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_MechakoopaStunned.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_UnshelledKoopa.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_BgPriorityToggleLeft.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_BgPriorityToggleVertical.o \
