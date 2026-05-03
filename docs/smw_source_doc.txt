@@ -1,0 +1,292 @@
+-----Background Info-----
+For whatever reason, Hummer Team left chunks of source code in the form of assembler object files in various parts of the CHR. They were likely intended for use with 2500 AD Linker, the suite Hummer Team used, though the specific format for this is unknown and full object files have yet to be reconstructed from the CHR data. Below is a note of every interesting label found amidst the object data, as well as binary chunks of an intermediate build of the game between the prototype and final game.
+
+-----Binary Chunks-----
+CHR Bank 003 - Bank 56 ($8C00-$8FFF)
+CHR Bank 007 - Bank 56 ($9C00-$9FFF)
+CHR Bank 009 - Bank 57 ($A400-$A7FF)
+CHR Bank 011 - Bank 57 ($AC00-$AFFF)
+CHR Bank 014 - Bank 57 ($B800-$BBFF)
+CHR Bank 016 - Bank 58 ($8000-$83FF)
+CHR Bank 029 - Bank 57 ($B400-$B7FF)
+CHR Bank 047 - Bank 61 ($BC00-$BFFF)
+CHR Bank 050 - Bank 47 ($C800-$CBFF)
+CHR Bank 062 - Bank 63 ($F800-$FBFF)
+
+-----Enemy List-----	
+At 0x90010, there is a truncated list of pointers to the sprite drawing code for several objects. Some pointers differ from those and the final game.
+Bulu = Buru/Charging Chuck
+Calon = Karon/Dry Bones
+Honmate = Honemetto/Bony Beetle
+Telisa = Teresa/Boo Buddy
+Killer = Bullet Bill
+
+-----Assembler Label Format-----
+Most symbol entries are 59 bytes long, with the first 32 bytes containing the name as a string, followed by the address of the symbol and some other data. Some entries are a bit longer (Possibly overwritten?) and may have more bytes for the symbol name. Either way, the address should be the first non-zero value after the symbol's name string.
+
+-----Internal Register Names-----
+speed_lr = $0014/Player X Speed
+speed_ud = $0015/Player Y Speed
+son_sts1 = $0019/Player Movement Type
+a0 = $0025
+x0 = $0028
+y0 / y007 = $002B
+p0 = $002E
+c0 = $0030
+r0 = $0032/Scratch RAM
+ptmp = $0040
+yposreg = $0049
+_Sound = $008F/SFX Play Register
+pspr_1 = $00A4
+_EneBank = $00AC
+COM_FLAG = $00C3/Boo Buddies Flag
+CENTER_YLO = $00C6/Boo Buddies Y Position
+_BankBuf = $00C8
+man_timer = $036E/Level Timer
+man_score = $0372/Player 1 Score
+marib (cut-off) = $0399/Current Player
+sbuf_nme = $0500/Object Slots
+sbuf_cnt = $0564/Object States
+sbuf_ctl = $0578/Misc Object Variables
+_YosiNme = $05F1/Unmounted Yoshi State
+_YosiXlo = $05F2/Unmounted Yoshi X Position
+_YosiXhi = $05F3/Unmounted Yoshi X Screen
+_YosiYlo = $05F4/Unmounted Yoshi Y Position
+_YosiYhi = $05F5/Unmounted Yoshi Y Screen
+_YosiCnt = $05F6
+_YosiNdx = $05F8/Unmounted Yoshi Animation
+_YosiRxl = $05F9
+_YosiRxh = $05FA
+_YosiRyl = $05FB
+_YosiRyh = $05FC
+_Yosi = $061F/Yoshi Status
+_YosiSts = $0622/Unmounted Yoshi Movement
+_Apple = $0624/Player Powerup
+_NmiCnt = $062B
+_FireCnt = $062F/Fireball Flag
+_Sp200 = $0639
+sbuf_num = $0655/Enemy Animation Frame
+sbuf_bos = $0669/Guided Object States
+_Priority = $06E0
+_KoopaX = $06E2/Bowser X Position
+_KoopaY = $06E3/Bowser Y Position
+
+-----Code Labels/Symbols-----
+Below is a list of symbols and their associated addresses, along with a description of what they do. Addresses with a '?' at the end may be inaccurate due to their symbol data being a different length. For moved addresses, their final game address will be provided after their bank number (if the bank number is known). If their address in the final game is unknown, it will simply say "MOVED".
+Also note that many of these are for local labels (denoted with '?'), which use the same name but have different addresses.
+Ponch1 ($8D66, Bank 55?, $8D52): Volcano Lotus upper left pollen code start(?)
+SPSBank ($A43A, MOVED): Unknown. Possibly related to title screen
+N_ball ($9577): Spike Ball code
+E_tuson ($83B3): Thwomp rendering code
+ETuson ($83B3): Thwomp rendering code
+Mech ($9193, Bank 55, $917F): Mechakoopa code
+Mech1 ($93DE, Bank 55, $93CA): Stomped Mechakoopa code
+bs7_spr0A ($8A93, MOVED): Unknown
+bs7_spr0B ($8ABA, MOVED): Unknown
+a0007 ($831F, MOVED): Unknown, possibly related to object handler
+a0008 ($8380, MOVED?): Unknown, possibly related to object handler
+EMech1 ($95C9, Bank 55, $95B5): Stomped Mechakoopa rendering code?
+EHonmate ($9279, Bank 53): Bony Beetle rendering code
+honmvtbl3 ($9A83?, Bank 48, LIKELY MOVED): Crumbled Bony Beetle function table. Source code address unknown ($9A83)
+Rop ($8FA9, Bank 49): Climbable Rope code
+psprclr ($FD80): Currently unknown AND table for objects (bank 51)
+a0004 ($A03B, POSSIBLY MOVED): Unknown. Could be part of the OAM routine or calculating Yoshi's distance from the player
+a0008 ($A100, POSSIBLY MOVED): Unknown. Could possibly be part of the object handler or be a table
+Killer ($8AAA): Bullet Bill code
+EveF ($86DE, MOVED): Unknown. Likely an object
+Hone_lay ($92F4): Bony Beetle code
+EBoss01X ($9389): Diagonal Podoboo OAM code?
+DriverTbl ($B8C5, Bank 54, POSSIBLY MOVED): Likely a pointer table used by an object routine
+c0016 ($AC80, POSSIBLY MOVED): May be a branch in an object handler routine
+c0017 ($AD23, POSSIBLY MOVED): May be a branch in an object handler routine
+GwaKoTbl ($AE0F, Bank 54): Enemy Koopa Shell fall velocity table
+sprc_sub ($A1B5, Bank 54?): Likely the object pointer table
+KMove2 ($93D6, MOVED): Unknown
+N_ball ($9577): Spike Ball code start
+ETuson ($83B3): Thwomp OAM code
+hon200sub ($A535): Unused object OAM code pointers
+u0045 ($B626):
+u0048 ($B703):
+u0049 ($B7CD):
+DGoNo ($BAA8):
+f0012 ($A7A2):
+f0013 ($A833):
+Tokeso ($8939):
+YXGnd ($B749):
+XYGnd ($B7A8):
+c0043 ($B5BA):
+b0051 ($B854):
+b0053 ($B925):
+MAtteyosieat2 ($A7E8):
+EneTouch ($BEBB, Bank 54, MOVED): Likely the routine for checking if the object and player are touching ($BEBC)
+MFb_ud ($9CF0):
+ETokeso ($8A5E):
+bmove4 ($B3E4):
+YGndPub ($B76D):
+BeTouch ($BF73, Bank 54, MOVED): Likely the code responsible for dealing damage to the player ($BF74)
+it100 ($92F4):
+yosieat1 ($A852): Yoshi eat failed code
+Calon_lay ($99FD):
+MechEFball_UD ($8D95): Vertical Podoboo OAM code?
+KBe ($91E8):
+ly0001 ($8057):
+b0056 ($9318):
+Elve ($8418):
+Elve1 ($84AE):
+take1 ($AC08):
+GwaKoTouch ($AD3D, Bank 54): Routine possibly related to objects being hit with a Koopa shell
+GwaKoTouch1 ($AD54):
+GwaKoTouchPub ($AD5C):
+MC_fall ($9CED):
+Calon_lay ($99FD):
+A0Tbl ($A44F):
+EDolap1 ($866F):
+ma010056 ($B9DB):
+TlsTbl ($94F3):
+ma010019 ($AE0E):
+ma010049 ($B7DB):
+d0070 ($976A):
+d0071BeXTbl ($AF43):
+GndPub ($B08D):
+ma010028 ($B1AB):
+EHonmate ($9279): Bony Beetle OAM code
+Rop ($8FA9): Climbable Rope code
+Egg01 ($9629): Yoshi cracked egg sprite mapping
+Tuson_prc4 ($834C):
+ETelisa ($990E):
+f_yhibehon ($AFC3):
+EHone_lay ($93B7):
+EColon_B ($9980):
+c0022 ($86BC):
+c0024 ($8733):
+EBuluPress ($87C8):
+TESTING ($BB0D?):
+a0047 ($99CC):
+ly0015 ($84FD):
+ly0035 ($9323):
+b0027 ($B178):
+a0031 ($B281):
+a0034 ($B32F):
+EBulubase ($8A81):
+EBulufoot ($8D59):
+EFootball ($8E28):
+AppleTbl ($AE98):
+Unila_prc3 ($8682):
+Boss01Nomo ($9831):
+EBasaTbltmove8 ($B2C2):
+EI_telisa ($9286):
+ma010030 ($B24C):
+d0041 ($9020):
+d0042 ($8B0D):
+ly0024 ($8722):
+c0052 ($8D41):
+tmove1 ($B38C):
+enetouch3 ($BF50?, Bank 54, LIKELY MOVED): Likely player collision check routine, checks if player is invincible when colliding with an object. Source code address unknown ($BF51)
+?1 ($B835):
+?1 ($B898):
+enetouchle ($BF16? or $BF17?, Bank 54, LIKELY MOVED): Either checks if the player ended up hitting the object or indicates that the object and player didn't collide ($BF17 or $BF18)
+?1 ($B909):
+?1 ($B96D):
+?1 ($B998):
+?1 ($B9AE):
+EnemyTall ($A87A?, Bank 54, LIKELY MOVED): Object hitbox heights, source code address unknown ($A87B)
+?1 ($BA70):
+?1 ($BA86):
+?2 ($BA91):
+?1 ($BA9B):
+?1 ($BAE1):
+?gchk ($BB87):
+?gchk ($BBBC):
+?2 ($BC5C):
+?1 ($BC64):
+?3 ($BD17):
+?1 ($BD2B):
+?2 ($BD30):
+?2 ($BD55):
+?3 ($BD65):
+?4 ($BD6A):
+?1 ($BD6B):
+?5 ($BD7E):
+?2 ($BDE0):
+?1 ($BDE5):
+?1 ($BE28):
+?4 ($BE45):
+?3 ($BE4C):
+?2 ($BE53):
+?d ($BE8E):
+?e ($BE96):
+?f ($BEA8):
+?x ($BEAD):
+?a ($BEB6):
+?2 ($BED3, Bank 54, MOVED): Player collision check routine, sets player hitbox for ducking ($BED4)
+?1 ($BEDB, Bank 54, MOVED): Player collision check routine, horizontal hitbox check ($BEDC)
+?1 ($BF40, Bank 54, MOVED): Player collision check routine, gives player points if the player jumps on the object ($BF41)
+?1 ($BF4A, Bank 54, MOVED): Player collision check routine, gives player points immediately if they don't already have invulnerability frame ($BF4B)
+?7 ($BF86, Bank 54, MOVED): Object player hurt routine, turns object around if it hit the player ($BF87)
+?4 ($BF92, Bank 54, MOVED):
+?5 ($BF97, Bank 54, MOVED):
+?6 ($BF9A, Bank 54, MOVED):
+?3 ($BFAC, Bank 54, MOVED):
+?1 ($BFBF, Bank 54, MOVED):
+?2 ($BFD1, Bank 54, MOVED):
+falldie1 ($B55C, Bank 57?, POSSIBLY MOVED): Possibly related to the player either walking or falling off a cliff
+InPut ($BE27?, Bank 54?):
+GwaApple ($BE27?, Bank 54?):
+YMoveSubX ($B5D3):
+YMoveSub ($B5E8):
+AppleBorn ($BD3C):
+b0046 ($B661):
+b0047 ($B6E2):
+a0051 ($B84F):
+a0053 ($B920):
+a0055 ($B988):
+a0057 ($BA1B):
+a0058 ($BA58):
+a0059 ($BABE):
+sbufymove4 ($B665?):
+Up_gnd ($BB79):
+AppleShow ($BDCE?, Bank 54):
+YYGnd ($B75E):
+?5 ($BD7E?, Bank 54, LIKELY MOVED): Object-related, source code address unknown ($BD7F)
+TrackX ($B7F8):
+Driver ($B89C):
+?2 ($BD55?, Bank 54, LIKELY MOVED): Object-related, source code address unknown ($BD7F)
+?3 ($BD65?, Bank 54, LIKELY MOVED): Object-related, source code address unknown ($BD66)
+Go0 ($B8EB):
+Go1 ($B90A):
+?4 ($BD6A?, Bank 54, LIKELY MOVED): Object-related, source code address unknown ($BD6B)
+d0057 ($B9F7):
+c0064 ($BCA0):
+c0066 ($BDBA):
+c0067 ($BF17):
+e0057 ($B9FE):
+e0058 ($BA3B):
+d0064 ($BC78):
+d0066 ($BD92):
+d0067 ($BEEF):
+f0057 ($BA14):
+f0058 ($BA51):
+e0064 ($BC7F):
+e0066 ($BD99):
+e0067 ($BEF6):
+b0057 ($BA1E):
+b0058 ($BA5B):
+b0059 ($BAC3):
+a0060 ($BAFD):
+a0062 ($BBE4):
+a0064 ($BC9C):
+a0066 ($BDB6):
+a0067 ($BF13):
+DPushPub ($BA5C):
+MarUp1 ($BCC1?, Bank 54, LIKELY MOVED): Bounces the player up when they hit an object without making a sound. Source code address unknown ($BCC2)
+
+
+
+-----Random Hex Numbers-----
+There's various hex numbers (in text form) also found in here. They seem to be hex for compiled ASM code, though I couldn't perfectly match them with any existing code.
+0x94F56
+0x95C11
+0x98810
+0x98932
+0x98BC0
+0x99150

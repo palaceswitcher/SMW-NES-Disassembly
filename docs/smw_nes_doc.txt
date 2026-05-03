@@ -908,8 +908,7 @@ $0500 - $0513:	Object Slots
 > 0xAD = Bony Beetle, right?
 > 0xAE = Crumbled Bony Beetle
 > 0xAF = Crumbled Bony Beetle
-> 0xB0 = Weird fly thing???
-> 0xB1 = Weird fly thing, blocky???
+> 0xB0 = Baseball
 > 0xB2 = Football
 > 0xB4 = Bouncing rock
 > 0xB6 = Boo Buddies Boo
@@ -931,7 +930,8 @@ $0500 - $0513:	Object Slots
 > 0xD0 = Baseball Chuck
 > 0xD2 = Football Chuck
 > 0xD4 = Diggin' Chuck
-> 0xD6 = Spike Tip
+> 0xD6 = Spike Tip/Hitbox
+> 0xD7 = Clown Car Hitbox
 > 0xD8 = Boo Buddies Center
 > 0xDA = Boo
 > 0xDC = Boo Crew Boo
@@ -952,11 +952,11 @@ $0500 - $0513:	Object Slots
 > 0xF2 = BG Priority Flag Up (Applies to sprites above this)
 > 0xF3 = BG Priority Flag Down (Applies to sprites below this)
 > 0xF4/F5 = Exit Pipe
-> 0xF6 = Spike Down
-> 0xF8 = Spike Up (Alt?)
+> 0xF6 = Spike Up (Alt?)
+> 0xF8 = Spike Down
 > 0xFA = Green Paratroopa, vertical
-> 0xFC = Countdown Platform (1 second)
-> 0xFE = Countdown Platform (4 seconds)
+> 0xFC = Timed Platform (1 second)
+> 0xFE = Timed Platform (4 seconds)
 
 $0514 - $0527:	Object X Positions
 $0528 - $053B:	Object X Screens
