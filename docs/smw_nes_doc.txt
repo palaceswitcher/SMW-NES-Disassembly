@@ -1,4 +1,4 @@
-SMW NES Hacking Document (2026-4-15)
+SMW NES Hacking Document (2026-5-3)
 Note: Some information here may be inaccurate or wrong.
 
 -----Level Data-----
@@ -914,9 +914,9 @@ $0500 - $0513:	Object Slots
 > 0xB6 = Boo Buddies Boo
 > 0xB8 = Princess Peach
 > 0xB9 = Nothing? (Princess Peach duplicate)
-> 0xBA = Black cloud?
-> 0xBB = Nothing?
-> 0xBC = Clown Car Explosion Smoke (Has null behavior, movement data and mappings are handled in Bowser code)
+> 0xBA = Unused Explosion Smoke?
+> 0xBB = Unused
+> 0xBC = Clown Car Explosion Smoke (Has no behavior, movement data and mappings are handled in Bowser code)
 > 0xBD = Nothing?
 > 0xBF = Princess Mushroom
 > 0xC0 = Chargin' Chuck
@@ -995,7 +995,8 @@ $05F2:	Idle Yoshi X Coords
 $05F3:	Idle Yoshi X Screen
 $05F4:	Idle Yoshi Y Coords
 $05F5:	Idle Yoshi Y Screen
-$05F7:	Bowser Action/State
+$05F6:	Bowser State Timer (Counts down)
+$05F7:	Bowser State
 -1st Phase-
 > 0x00 = Flying down
 > 0x01 = Rise from Clown Car (after flying down)
@@ -1130,9 +1131,9 @@ $06DB:	Player 2 Power-up Backup
 $06E0:	Player Attribute Override (Used for BG priority)
 $06E1:	Object Attribute Override (Used for BG priority)
 $06E2:	Bowser X Position?
-$06E2:	Object X Speed?
+$06E2:	Object X Velocity
 $06E3:	Bowser Y Position?
-$06E3:	Object Y Speed?
+$06E3:	Object Y Velocity
 $06E5:	Bowser Hit Counter
 $06E6:	Ending Freeze Flag
 $06E8:	Clown Car Face
