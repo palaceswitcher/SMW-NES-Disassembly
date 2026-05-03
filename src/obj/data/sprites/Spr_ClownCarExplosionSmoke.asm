@@ -1,0 +1,120 @@
+.segment "PRG37"
+
+.include "constants.asm"
+.include "macros.asm"
+.include "variables.asm"
+
+.export tbl_8F66
+tbl_8F66:
+	.word ofs_8F76
+	.word ofs_8F82
+	.word ofs_8F8E
+	.word ofs_8F9A
+	.word ofs_8FA6
+	.word ofs_8FB2
+	.word ofs_8FBE
+	.word ofs_8FCA
+ofs_8F76:
+	.byte $03
+	.byte $03
+	.byte $E3
+	.byte $C2
+	.byte $C3
+	.byte $C4
+	.byte $D0
+	.byte $D1
+	.byte $D2
+	.byte $DD
+	.byte $DE
+	.byte $DF
+ofs_8F82:
+	.byte $03
+	.byte $03
+	.byte $E1
+	.byte $51
+	.byte $52
+	.byte $53
+	.byte $5E
+	.byte $5F
+	.byte $60
+	.byte $FF
+	.byte $6C
+	.byte $6D
+ofs_8F8E:
+	.byte $03
+	.byte $03
+	.byte $E1
+	.byte $54
+	.byte $55
+	.byte $FF
+	.byte $61
+	.byte $62
+	.byte $63
+	.byte $FF
+	.byte $6E
+	.byte $6F
+ofs_8F9A:
+	.byte $03
+	.byte $03
+	.byte $E3
+	.byte $C5
+	.byte $FF
+	.byte $FF
+	.byte $C5
+	.byte $C5
+	.byte $FF
+	.byte $FF
+	.byte $C5
+	.byte $C5
+ofs_8FA6:
+	.byte $03
+	.byte $03
+	.byte $E3
+	.byte $DD
+	.byte $DE
+	.byte $DF
+	.byte $D0
+	.byte $D1
+	.byte $D2
+	.byte $C2
+	.byte $C3
+	.byte $C4
+ofs_8FB2:
+	.byte $03
+	.byte $03
+	.byte $E1
+	.byte $FF
+	.byte $6C
+	.byte $6D
+	.byte $5E
+	.byte $5F
+	.byte $60
+	.byte $51
+	.byte $52
+	.byte $53
+ofs_8FBE:
+	.byte $03
+	.byte $03
+	.byte $E1
+	.byte $FF
+	.byte $6E
+	.byte $6F
+	.byte $61
+	.byte $62
+	.byte $63
+	.byte $54
+	.byte $55
+	.byte $FF
+ofs_8FCA:
+	.byte $03
+	.byte $03
+	.byte $E3
+	.byte $FF
+	.byte $C5
+	.byte $C5
+	.byte $C5
+	.byte $C5
+	.byte $FF
+	.byte $C5
+	.byte $FF
+	.byte $FF

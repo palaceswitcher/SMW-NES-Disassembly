@@ -910,7 +910,7 @@ tbl3_A435:
 	.word obj0xAE
 
 	.export OBJ_FOOTBALL := (*-tbl3_A435)/2 + $80
-	.word obj0xB0
+	.word obj0xB0 ; B2
 	.word obj0xB0
 
 	.export OBJ_ROCK := (*-tbl3_A435)/2 + $80
@@ -925,9 +925,10 @@ tbl3_A435:
 	.word obj0xB6
 	.word ptr4_A0D8
 
-	.export OBJ_SMOKE := (*-tbl3_A435)/2 + $80 ; Verify this
 	.word obj0xB8
 	.word ptr4_A0D8
+
+	.export OBJ_SMOKE := (*-tbl3_A435)/2 + $80
 	.word obj0xBA
 
 	.export OBJ_PSWITCHPLATFORM2 := (*-tbl3_A435)/2 + $80 ; Verify this
@@ -4575,9 +4576,9 @@ jmp_54_B896:
 	ASL ; Multiply the object's action value by 4
 	STA $3F ; Back up in RAM
 	TAY ; Use as pointer index
-	LDA ($34),Y ; Load value pointer 
+	LDA ($34),Y
 	ASL
-	TAY ; Get the index for the previously loaded value
+	TAY ; Get movement macro type?
 	LDA tbl3_B8BF,Y
 	STA $32
 	LDA tbl3_B8BF+1,Y
@@ -4678,6 +4679,7 @@ loc3_B954:
 	INC objState,X
 bra3_B967_RTS:
 	RTS
+
 ptr11_B968:
 	LDY $3F
 	INY

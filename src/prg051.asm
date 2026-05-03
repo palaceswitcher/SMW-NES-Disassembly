@@ -2,6 +2,12 @@
 
 .include "macros.asm"
 
+; Movement vector macros?
+; Format (0x4 per macro):
+; > 0x1: Macro type?
+; > 0x2: unknown
+; > 0x3: unknown
+; > 0x4: Sentinel (usually 0)
 .export tbl_51_F000
 tbl_51_F000:
 	.word ofs_F2C7
@@ -59,8 +65,8 @@ tbl_51_F000:
 	.word ofs_F298
 	.word ofs_F2AD
 	.word ofs_F2C2
-	.word ofs_F110
-	.word ofs_F125
+	.word ofs_F110 ; bowser arc horiz?
+	.word ofs_F125 ; bowser arc vert?
 	.word ofs_F136
 	.word ofs_F0BC
 	.word ofs_F0D1

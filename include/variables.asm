@@ -249,7 +249,11 @@ yoshiYDist = $05FB
 yoshiYDistHi = $05FC
 
 jyEasterEggInput = $05EF
+bowserStateTimer = $05F6
 bowserState = $05F7
+bowserXVel = $06E2
+bowserYVel = $06E3
+
 interruptMode = $0606 ; TODO: Rename this
 levelWaterFlag = $061D
 levelVerticalScreenOffs = $04FA

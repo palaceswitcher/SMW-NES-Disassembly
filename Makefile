@@ -43,7 +43,15 @@ PRG37_OBJS := \
 	$(OBJ_DIR)/src/obj/data/sprites/Spr_FinalBossObjects.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_ClownCarHitbox.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Propeller.o \
-	$(OBJ_DIR)/src/prg037.o
+	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_ApplyBowserVel.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_Princess.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_Princess.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_ClownCarExplosionSmoke.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_ClownCarExplosionSmoke.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_ClownCarExplosionSmokeAlt.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Bowser.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Princess.o \
+	$(OBJ_DIR)/src/padding/padding037.o
 
 PRG38_OBJS := \
 	$(OBJ_DIR)/src/prg038.o
