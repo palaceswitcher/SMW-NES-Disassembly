@@ -9,12 +9,13 @@ objYHitbox = 0x6C97B
 -- Flags
 local decimalObjPos = false
 local relativeObjPos = false
+local showObjList = true
 local displayObjState = false
 local displayHitBoxes = false
 local pInfoCollapsed = false
 local musicDisabled = false
 local trajectoryEnabled = false
-local show0669 = false
+local showObjStates = false
 local curSong = 0 -- Track the song
 -- Colors
 local trans <const> = 0xFF000000
@@ -85,10 +86,11 @@ function clickBox(rectX, rectY, w, h, color, mState)
 	emu.drawRectangle(rectX, rectY, w, h, color, true, 1)
 	return (mState.left and not oldMouseState.left) and (mState.x >= rectX and mState.x <= rectX+w) and (mState.y >= rectY and mState.y <= rectY+h)
 end
+
 -- Draws a clickable box at the specified coordinates (with text) and returns true if clicked
-function clickBoxString(rectX, rectY, w, h, color, text, mState)
+function clickBoxString(mState, rectX, rectY, w, h, color, text)
 	emu.drawRectangle(rectX, rectY, w, h, color, true, 1)
-	emu.drawString(rectX, rectY, text, white, color)
+	emu.drawString(rectX, rectY, text, white, trans)
 	return (mState.left and not oldMouseState.left) and (mState.x >= rectX and mState.x <= rectX+w) and (mState.y >= rectY and mState.y <= rectY+h)
 end
 
@@ -96,67 +98,60 @@ end
 function buttonHandler()
 	local mouseState = emu.getMouseState()
 	-- Object page buttons
-	if objPage ~= 0 and clickBox(200, 64, 8, 7, blue, mouseState) then
-		objPage = objPage - 1
-	end
-	if objPage ~= 2 and clickBox(248, 64, 8, 7, blue, mouseState) then
-		objPage = objPage + 1
-	end
-	-- Object page strings
-	if objPage ~= 0 then
-		emu.drawString(200, 64, "<<", white, 0xFF000000)
-	end
-	if objPage ~= 2 then
-		emu.drawString(248, 64, ">>", white, 0xFF000000)
+	if showObjList then
+		if objPage ~= 0 and clickBoxString(mouseState, 200, 64, 8, 7, blue, "<<") then
+			objPage = objPage - 1
+		end
+		if objPage ~= 2 and clickBoxString(mouseState, 248, 64, 8, 7, blue, ">>") then
+			objPage = objPage + 1
+		end
 	end
 	
 	-- Decimal toggle
-	if clickBox(208, 64, 8, 7, lblue, mouseState) then
-		decimalObjPos = not decimalObjPos
-	end
-	-- Object position decimal toggle characters
 	if decimalObjPos then
-		emu.drawString(208, 64, "D", white, 0xFF000000)
+		if clickBoxString(mouseState, 144, 232, 8, 8, lblue, "D") then
+			decimalObjPos = not decimalObjPos
+		end
 	else
-		emu.drawString(208, 64, "H", white, 0xFF000000)
+		if clickBoxString(mouseState, 144, 232, 8, 8, lblue, "H") then
+			decimalObjPos = not decimalObjPos
+		end
 	end
 	
 	-- Position type toggle
-	if clickBox(216, 64, 16, 7, red, mouseState) then
-		relativeObjPos = not relativeObjPos
-	end
-	-- Object positioning type toggle
 	if relativeObjPos then
-		emu.drawString(216, 64, "Rel", white, trans)
+		if clickBoxString(mouseState, 152, 232, 16, 8, red, "Rel") then
+			relativeObjPos = not relativeObjPos
+		end
 	else
-		emu.drawString(216, 64, "Abs", white, trans)
+		if clickBoxString(mouseState, 152, 232, 16, 8, red, "Abs") then
+			relativeObjPos = not relativeObjPos
+		end
 	end
 	
 	-- Display state button toggle
-	if clickBox(232, 64, 8, 7, green, mouseState) then
+	if clickBoxString(mouseState, 168, 232, 8, 8, green, "S") then
 		displayObjState = not displayObjState
 	end
-	-- Object state display toggle
-	emu.drawString(232, 64, "S", white, trans, 0, 1)
 	
 	-- Display hitbox button toggle
-	if clickBox(240, 64, 8, 7, red, mouseState) then
+	if clickBoxString(mouseState, 176, 232, 8, 8, red, "B") then
 		displayHitboxes = not displayHitboxes
 	end
-	-- Hitbox button text
-	emu.drawString(240, 64, "B", white, trans, 0, 1)
 	
 	-- Draw trajectory view toggle
-	if clickBox(248, 232, 8, 8, red, mouseState) then
+	if clickBoxString(mouseState, 248, 232, 8, 8, red, "T") then
 		trajectoryEnabled = not trajectoryEnabled
 	end
-	emu.drawString(248, 232, "T", white, trans, 0, 1)
 
 	-- Draw object range 0669 toggle
-	if clickBox(240, 232, 8, 8, blue, mouseState) then
-		show0669 = not show0669
+	if clickBoxString(mouseState, 240, 232, 8, 8, blue, "A") then
+		showObjStates = not showObjStates
 	end
-	emu.drawString(240, 232, "A", white, trans, 0, 1)
+
+	if clickBoxString(mouseState, 232, 232, 8, 8, green, "L") then
+		showObjList = not showObjList
+	end
 	
 	-- Collapsible player info
 	local w = 144
@@ -270,26 +265,46 @@ function main()
 	str = "" -- Blank return string
 	p = emu.read(0x399, emu.memType.nesMemory) -- Current player
 	
+	-- Draw list of object IDs
 	if emu.read(0xDE, emu.memType.nesMemory) == 1 then
-	local userNum = 0 -- Init input variable
-	-- Draw and allow editing of object IDs
-	for i=0,3 do
-		emu.drawString(0, i*8, "ID: 0x", white, lavender)
-		if clickBoxString(30, i*8, 12, 8, lavender, string.format("%X", getObjID(i)), mouseState) or idBoxClicked then
-			--[[if not idBoxClicked then -- Don't reset the clicked box number if one was already clicked
-				clickedObjBoxNum = i+objPage*8 -- Get index of object being changed
+	if showObjList then
+		for i=0,3 do
+			emu.drawString(0, i*8, "ID: 0x", white, lavender)
+			emu.drawString(30, i*8, string.format("%X", getObjID(i)), white, lavender)
+		end
+		
+		if objPage < 2 then
+			for i=4,7 do
+				emu.drawString(0, i*8, "ID: 0x", white, lavender)
+				emu.drawString(30, i*8, string.format("%X", getObjID(i)), white, lavender)
 			end
-			idBoxClicked = true
-			userNum = getHexString(2) -- Hex number entered by the user
-			if userNum ~= -1 then
-				emu.log("Valid")
-				emu.write(0x500+clickedObjBoxNum, tonumber(userNum, 16), emu.memType.nesMemory)
-				idBoxClicked = false
-				clickedObjBoxNum = 0 -- Set values back to default
-			end]]-- 
+		end
+		-- Draw object coordinates
+		emu.drawString(200, 0, getObjCoords(0, 0) .. "," .. getObjCoords(0, 1), white, lavender)
+		emu.drawString(200, 8, getObjCoords(1, 0) .. "," .. getObjCoords(1, 1), white, lavender)
+		emu.drawString(200, 16, getObjCoords(2, 0) .. "," .. getObjCoords(2, 1), white, lavender)
+		emu.drawString(200, 24, getObjCoords(3, 0) .. "," .. getObjCoords(3, 1), white, lavender)
+		if objPage < 2 then
+			emu.drawString(200, 32, getObjCoords(4, 0) .. "," .. getObjCoords(4, 1), white, lavender)
+			emu.drawString(200, 40, getObjCoords(5, 0) .. "," .. getObjCoords(5, 1), white, lavender)
+			emu.drawString(200, 48, getObjCoords(6, 0) .. "," .. getObjCoords(6, 1), white, lavender)
+			emu.drawString(200, 56, getObjCoords(7, 0) .. "," .. getObjCoords(7, 1), white, lavender)
+		end
+		-- Object state bits
+		if displayObjState then
+			emu.drawString(144, 0, getObjState(0), white, lavender)
+			emu.drawString(144, 8, getObjState(1), white, lavender)
+			emu.drawString(144, 16, getObjState(2), white, lavender)
+			emu.drawString(144, 24, getObjState(3), white, lavender)
+			if objPage < 2 then
+				emu.drawString(144, 32, getObjState(4), white, lavender)
+				emu.drawString(144, 40, getObjState(5), white, lavender)
+				emu.drawString(144, 48, getObjState(6), white, lavender)
+				emu.drawString(144, 56, getObjState(7), white, lavender)
+			end
 		end
 	end
-	
+
 	-- Draw object hitboxes
 	if displayHitboxes then
 		local playerSprXRAM = emu.read(0x12, emu.memType.nesMemory)
@@ -344,49 +359,18 @@ function main()
 		end]]-- 
 	end
 
-	if show0669 then
+	if showObjStates then
 		for i=0,20 do
 			if emu.read(0x500+i, emu.memType.nesMemory) ~= 0 then
 				local objX = getObjSprX(i)
 				local objY = getObjSprY(i) + 1
 
 				emu.drawString(objX, objY-8, string.format("%X", emu.read(0x578+i, emu.memType.nesMemory)), white, red)
-				emu.drawString(objX, objY+8, string.format("%X", emu.read(0x669+i, emu.memType.nesMemory)), white, green)
 				emu.drawString(objX, objY, string.format("%X", emu.read(0x500+i, emu.memType.nesMemory)), white, lavender)
+				emu.drawString(objX, objY+8, string.format("%X", emu.read(0x669+i, emu.memType.nesMemory)), white, green)
 			end
 		end
 
-	end
-	
-	if objPage < 2 then
-		for i=4,7 do
-			emu.drawString(0, i*8, "ID: 0x", white, lavender)
-			clickBoxString(30, i*8, 12, 8, lavender, string.format("%X", getObjID(i)), mouseState)
-		end
-	end
-	-- Draw object coordinates
-	emu.drawString(200, 0, getObjCoords(0, 0) .. "," .. getObjCoords(0, 1), white, lavender)
-	emu.drawString(200, 8, getObjCoords(1, 0) .. "," .. getObjCoords(1, 1), white, lavender)
-	emu.drawString(200, 16, getObjCoords(2, 0) .. "," .. getObjCoords(2, 1), white, lavender)
-	emu.drawString(200, 24, getObjCoords(3, 0) .. "," .. getObjCoords(3, 1), white, lavender)
-	if objPage < 2 then
-		emu.drawString(200, 32, getObjCoords(4, 0) .. "," .. getObjCoords(4, 1), white, lavender)
-		emu.drawString(200, 40, getObjCoords(5, 0) .. "," .. getObjCoords(5, 1), white, lavender)
-		emu.drawString(200, 48, getObjCoords(6, 0) .. "," .. getObjCoords(6, 1), white, lavender)
-		emu.drawString(200, 56, getObjCoords(7, 0) .. "," .. getObjCoords(7, 1), white, lavender)
-	end
-	-- Object state bits
-	if displayObjState then
-		emu.drawString(144, 0, getObjState(0), white, lavender)
-		emu.drawString(144, 8, getObjState(1), white, lavender)
-		emu.drawString(144, 16, getObjState(2), white, lavender)
-		emu.drawString(144, 24, getObjState(3), white, lavender)
-		if objPage < 2 then
-			emu.drawString(144, 32, getObjState(4), white, lavender)
-			emu.drawString(144, 40, getObjState(5), white, lavender)
-			emu.drawString(144, 48, getObjState(6), white, lavender)
-			emu.drawString(144, 56, getObjState(7), white, lavender)
-		end
 	end
 	
 	-- Draw on-screen buttons
@@ -428,7 +412,8 @@ function main()
 	
 	-- Draw Bowser info
 	if getObjID(1) == 0xE1 then
-		emu.drawString(144, 232, "Bowser: " .. getBowserState(), white, 0x007F5F3F)
+		local bowserState = emu.read(0x5F7, emu.memType.nesMemory)
+		emu.drawString(0, 232, string.format("Bowser: %02X", bowserState), white, 0x007F5F3F)
 	end
 	
 	-- Disable music (if applicable)
