@@ -276,7 +276,7 @@ bra9_81EB:
 	STA objVar,X
 bra9_81FC:
 	JSR sub9_82AE
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR objKillOnSpinJump
 	LDA #$10
 	STA playerYSpd
@@ -562,7 +562,7 @@ ptr2_842C:
 	JMP loc9_846E
 bra9_8448:
 	JSR objCapeHitCheck
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR objKillOnSpinJump
 	LDA #$10
 	STA playerYSpd
@@ -762,7 +762,7 @@ tbl9_865E:
 
 ptr2_8668:
 	JSR sub9_8698
-	JSR objPlayerHitCheck ; Handle collision with the player
+	JSR objCollStompOrHurt ; Handle collision with the player
 	JSR objKillOnSpinJump ; Kill if spinjumped on
 	LDA #16
 	STA playerYSpd ; Give player vertical speed boost
@@ -1487,7 +1487,7 @@ bra9_8BB6:
 	STA $33
 	JSR getSpeedData
 	JSR objCapeHitCheck
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR objKillOnSpinJump
 	LDA #$10
 	STA playerYSpd
@@ -2322,7 +2322,7 @@ bra9_91E4:
 	JSR sub9_9260
 loc9_91E7:
 	JSR objCapeHitCheck
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR objKillOnSpinJump
 	LDA objVar,X
 	CMP #$40
@@ -2764,7 +2764,7 @@ tbl9_94EE:
 	.word ptr2_94F6
 ptr2_94F6:
 	JSR sub9_9500
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR jmp_54_BF74
 	RTS
 sub9_9500:
@@ -2924,7 +2924,7 @@ bra9_9621:
 	BNE bra9_962B
 	JSR jmp_54_BBC3
 bra9_962B:
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR jmp_54_BF74
 	RTS
 .export ptr7_9632
@@ -3094,7 +3094,7 @@ tbl9_975B:
 ptr2_9765:
 	JSR sub9_978D
 	JSR objCapeHitCheck
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR objKillOnSpinJump
 	LDA #$10
 	STA playerYSpd
@@ -3255,7 +3255,7 @@ bra9_98AC:
 	JSR sub9_991E
 loc9_98AF:
 	JSR objCapeHitCheck
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR objKillOnSpinJump
 	LDA #$10
 	STA playerYSpd
@@ -3664,7 +3664,7 @@ bra9_9B62:
 	LDA tbl9_9C5E+1,Y
 	STA $33
 	JSR getSpeedData
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JMP jmp_54_BF74
 .export ptr6_9B79
 ptr6_9B79:

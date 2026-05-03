@@ -950,7 +950,7 @@ tbl3_A435:
 	.word obj0xC2
 
 	.export OBJ_CHARGINCHUCK_HIT := (*-tbl3_A435)/2 + $80
-	.word objCharginChuck
+	.word objCharginChuck ; Actually C6
 	.word objCharginChuck
 
 	.export OBJ_CHARGINCHUCK_CHASE_HIT := (*-tbl3_A435)/2 + $80
@@ -958,7 +958,7 @@ tbl3_A435:
 	.word obj0xC0
 
 	.export OBJ_CHARGINCHUCK_STUNNED_HIT := (*-tbl3_A435)/2 + $80
-	.word obj0xC2
+	.word obj0xC2 ; CA
 	.word obj0xC2
 
 	.export OBJ_CHARGINCHUCK_HIT2 := (*-tbl3_A435)/2 + $80
@@ -966,7 +966,7 @@ tbl3_A435:
 	.word objCharginChuck
 
 	.export OBJ_CHARGINCHUCK_CHASE_HIT2 := (*-tbl3_A435)/2 + $80
-	.word obj0xC0
+	.word obj0xC0 ; CE
 	.word obj0xC0
 
 	.export OBJ_BASEBALLCHUCK := (*-tbl3_A435)/2 + $80
@@ -981,8 +981,10 @@ tbl3_A435:
 	.word obj0xD2
 	.word obj0xD2
 
-	.export OBJ_BOOBUDDIESCENTER_ALT := (*-tbl3_A435)/2 + $80 ; Verify this
-	.word obj0xD4
+	.export OBJ_SPIKE_HURTBOX := (*-tbl3_A435)/2 + $80
+	.word obj0xD4 ; D6
+
+	.export OBJ_CLOWNCAR_HURTBOX := (*-tbl3_A435)/2 + $80
 	.word obj0xD5
 
 	.export OBJ_BOOBUDDIESCENTER := (*-tbl3_A435)/2 + $80 ; Verify this
@@ -1048,11 +1050,11 @@ tbl3_A435:
 	.word obj0xED
 	.word obj0xED ; F5
 
-	.export OBJ_SPIKE_DOWN := (*-tbl3_A435)/2 + $80
+	.export OBJ_SPIKE_UP_ALT := (*-tbl3_A435)/2 + $80
 	.word obj0xF4 ; F6
 	.word obj0xF4
 
-	.export OBJ_SPIKE_UP_ALT := (*-tbl3_A435)/2 + $80 ; Verify this
+	.export OBJ_SPIKE_DOWN := (*-tbl3_A435)/2 + $80 ; Verify this
 	.word obj0xF4 ; F8
 	.word obj0xF4
 
@@ -1318,7 +1320,7 @@ tbl3_A635:
 	.byte .bank(obj0xED)
 	.byte .bank(obj0xF0) ; F2
 	.byte .bank(obj0xF0)
-	.byte .bank(obj0xED)
+	.byte .bank(obj0xED) ; F4
 	.byte .bank(obj0xED) ; F5
 	.byte .bank(obj0xF4) ; F6
 	.byte .bank(obj0xF4)
@@ -1469,6 +1471,10 @@ objKillOnSpinJump:
 @stop:
 	RTS
 
+;----------------------------------------
+; SUBROUTINE ($A773)
+; Checks if the player collide with a roughly 16x16 object, stopping the object if no collision occurs.
+;----------------------------------------
 .export jmp_54_A773
 jmp_54_A773:
 	LDA objXDistHi,X
@@ -1486,9 +1492,9 @@ bra3_A785:
 	BCS bra3_A7AC ; Branch if the player isn't within 8 horizontal pixels of the object's hitbox
 bra3_A78C:
 	LDA objYDistHi,X
-	BEQ bra3_A7A2 ; Branch if the player is to the left of the object
+	BEQ bra3_A7A2 ; Skip these checks if the player's origin is already above or at the object's origin
 	CMP #$FF
-	BNE bra3_A7AC ; Branch if the player isn't to the right of the object
+	BNE bra3_A7AC ; Stop if the object is off-screen
 	LDA #$14
 	CLC
 	ADC #$10
@@ -1532,7 +1538,7 @@ bra3_A7BA_RTS:
 objYoshiTongueCheck:
 	LDA $25
 	CMP #$07
-	BNE bra3_A7C4 ; Branch if the object is completely inedible
+	BNE bra3_A7C4 ; Branch if the object isn't completely inedible
 	JMP yoshiEatStop ; Otherwise, jump
 
 bra3_A7C4:
@@ -2186,7 +2192,6 @@ objectYHitBoxSizes:
 ; FUNCTION ($AA7B)
 ; Offsets the player's position for the current object? Doesn't seem to do anything when disabled.
 ;----------------------------------------
-.export ptr_AA7B
 .export ptr_AA7B
 ptr_AA7B:
 	LDY $A4 ; Get index for the current object
@@ -5494,8 +5499,8 @@ bra3_BEB7:
 ; SUBROUTINE ($BEBC)
 ; Checks if the player collides with the object's hitbox. If the player stomps the object, they are rewarded 200 points. Otherwise, if the player takes damage or isn't touching the object, it will stop the object's code.
 ;----------------------------------------
-.export objPlayerHitCheck
-objPlayerHitCheck:
+.export objCollStompOrHurt
+objCollStompOrHurt:
 	LDX $A4 ; Get current object index
 	LDY objSlot,X
 	LDA objectXHitBoxSizes,Y

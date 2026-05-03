@@ -422,7 +422,7 @@ tbl4_836E:
 ptr9_8378:
 	JSR sub4_83B3
 	JSR objCapeHitCheck
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	LDA #$30
 	STA playerYSpd
 	LDA playerMoveFlags
@@ -652,7 +652,7 @@ tbl4_8574:
 ptr9_857E:
 	JSR sub4_85B9
 	JSR objCapeHitCheck
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	LDA #$30
 	STA playerYSpd
 	LDA playerMoveFlags
@@ -1190,7 +1190,7 @@ tbl4_899E:
 ptr9_89A8:
 	JSR sub4_89DA
 	JSR objCapeHitCheck
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	LDA #$30
 	STA playerYSpd
 	LDA playerMoveFlags
@@ -1423,7 +1423,7 @@ bra4_8B45:
 	JSR getSpeedData
 bra4_8B68:
 	JSR objCapeHitCheck
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JMP jmp_54_BF74
 .export ptr6_8B71
 ptr6_8B71:
@@ -1562,7 +1562,7 @@ tbl4_8C75:
 ptr9_8C7F:
 	JSR sub4_8CB1
 	JSR objCapeHitCheck
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	LDA #$30
 	STA playerYSpd
 	LDA playerMoveFlags
@@ -1928,7 +1928,7 @@ tbl4_8F61:
 ptr9_8F6B:
 	JSR sub4_8F9D
 	JSR objCapeHitCheck
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	LDA #$30
 	STA playerYSpd
 	LDA playerMoveFlags

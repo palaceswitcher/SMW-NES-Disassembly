@@ -116,7 +116,7 @@ funcTbl_Paratroopa:
 	.word paratroopa_HitRespond
 
 paratroopa_HitCheck:
-	JSR objPlayerHitCheck ; Check for collision with player
+	JSR objCollStompOrHurt ; Check for collision with player
 	JSR objKillOnSpinJump ; Kill if spin jumped on
 	LDA invincibilityTimer
 	CMP #$F7

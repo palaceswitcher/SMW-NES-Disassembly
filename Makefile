@@ -27,6 +27,22 @@ PRG36_OBJS := \
 	$(OBJ_DIR)/src/prg036.o
 
 PRG37_OBJS := \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_Spike.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_Spike.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_SpikeHitbox.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Spike.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_CollPlayer.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_PrincessMushroom.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_PrincessMushroom.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_PrincessMushroom.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_DinoRhinos.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_DinoRhinos.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_DinoRhinos.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_Propeller.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_Bowser.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_FinalBossObjects.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_ClownCarHitbox.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Propeller.o \
 	$(OBJ_DIR)/src/prg037.o
 
 PRG38_OBJS := \

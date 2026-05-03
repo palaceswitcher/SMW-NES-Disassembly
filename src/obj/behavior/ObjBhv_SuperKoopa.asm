@@ -109,7 +109,7 @@ funcTbl_SuperKoopa:
 
 superKoopaHitCheck:
 	JSR objCapeHitCheck ; Kill if hit by cape
-	JSR objPlayerHitCheck ; Check for collision with player
+	JSR objCollStompOrHurt ; Check for collision with player
 	JSR objKillOnSpinJump ; Kill if spin-jumped on
 	JSR objStompRebound ; Make player bounce if they stomp on it
 	LDX $A4 ; Get current object index

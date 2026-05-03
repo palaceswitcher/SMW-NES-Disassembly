@@ -173,7 +173,7 @@ bra6_8140:
 	JSR sub3_B485
 bra6_8151:
 	JSR objCapeHitCheck
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR objKillOnSpinJump
 	LDA #$10
 	STA playerYSpd
@@ -308,7 +308,7 @@ tbl6_8246:
 .export ptr6_8250
 ptr6_8250:
 	JSR sub6_825A
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR jmp_54_BF74
 	RTS
 sub6_825A:
@@ -618,7 +618,7 @@ bra6_849D:
 	BNE bra6_84A7
 	JSR jmp_54_BBC3
 bra6_84A7:
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR jmp_54_BF74
 	RTS
 .export obj0x90
@@ -691,7 +691,7 @@ bra6_8533:
 	BNE bra6_853D
 	JSR jmp_54_BBC3
 bra6_853D:
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR jmp_54_BF74
 	RTS
 .export ptr7_8544
@@ -812,7 +812,7 @@ tbl6_8604:
 .export ptr6_860C
 ptr6_860C:
 	JSR sub6_8616
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR jmp_54_BF74
 	RTS
 sub6_8616:
@@ -978,7 +978,7 @@ tbl6_874D:
 .export ptr6_8755
 ptr6_8755:
 	JSR sub6_875F
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR jmp_54_BF74 ; unlogged
 	RTS ; unlogged
 sub6_875F:
@@ -1792,7 +1792,7 @@ ptr6_8C52:
 	LDA objState,X
 	CMP #$04
 	BCS bra6_8CA1_RTS
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	LDA invincibilityTimer
 	CMP #$F7
 	BCS bra6_8CA1_RTS
@@ -3783,7 +3783,7 @@ loc6_9747:
 	SBC #$0C
 	CMP objYLo,X
 	BCC bra6_97A3_RTS
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	LDA playerMoveFlags
 	AND #$04
 	BNE bra6_9763

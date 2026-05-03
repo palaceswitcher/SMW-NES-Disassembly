@@ -75,7 +75,7 @@ koopaFuncTbl:
 
 koopaHitCheck:
 	JSR objCapeHitCheck ; Kill if hit by cape
-	JSR objPlayerHitCheck ; Check for collision with player
+	JSR objCollStompOrHurt ; Check for collision with player
 	JSR objKillOnSpinJump ; Kill if spin-jumped on
 	JSR objStompRebound ; Make player bounce if they stomp on it
 	objVertOffset 16, loc8_8159 ; Position the Beach Koopa 16 pixels lower

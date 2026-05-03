@@ -156,7 +156,7 @@ tbl7_8CC0:
 	.word objFlipKill
 ptr5_8CCA:
 	JSR objCapeHitCheck
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR objKillOnSpinJump
 	LDA #$30
 	STA playerYSpd

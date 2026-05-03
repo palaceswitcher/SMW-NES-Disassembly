@@ -746,7 +746,7 @@ bra14_9619:
 	ADC #$00
 	STA objYHi+1,Y
 	LDA #$00
-	STA $0579,Y
+	STA objVar+1,Y
 	LDA #$BC
 	STA objSlot+1,Y
 	LDA #$40
@@ -794,7 +794,7 @@ bra14_9619:
 	ADC #$00
 	STA objYHi+3,Y
 	LDA #$00
-	STA $057B,Y
+	STA objVar+3,Y
 	LDA #$BC
 	STA objSlot+3,Y
 	LDA #$00

@@ -74,7 +74,7 @@ ptr3_930F:
 	LDA #$13
 	JSR getMovementData
 bra8_931A:
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR objKillOnSpinJump
 	JSR objStompRebound
 	LDA objVar,X

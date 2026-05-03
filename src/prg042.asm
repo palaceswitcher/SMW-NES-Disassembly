@@ -301,7 +301,7 @@ tbl2_8900:
 	.word SprMap_MapplayerSwimLeft2 ; unused
 	.word SprMap_MapplayerSwimUp1
 	.word SprMap_MapplayerSwimUp2
-	.word SprMap_MapBoo ; unused
+	.word SprMap_MapBoo ; unused (26)
 	.word SprMap_MapHalo ; unused
 	.word SprMap_MapYoshi_Down1
 	.word SprMap_MapYoshi_Down2
@@ -4281,18 +4281,22 @@ ofs2_9A30:
 	.byte $10
 	.byte $01
 	.byte $10
+
 	.byte $11
 	.byte $0E
 	.byte $26
 	.byte $30
+
 	.byte $11
 	.byte $0E
 	.byte $26
 	.byte $30
+
 	.byte $11
 	.byte $0E
 	.byte $26
 	.byte $30
+
 	.byte $11
 	.byte $0E
 	.byte $26

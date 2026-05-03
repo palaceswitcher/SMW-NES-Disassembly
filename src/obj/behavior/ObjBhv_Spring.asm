@@ -9,52 +9,8 @@ objSpring:
 	LDA #$03
 	STA $25
 	LDX $A4
-	LDA objXLo,X
-	SEC
-	SBC playerXLoDup
-	STA objXDistLo,X
-	LDA objXHi,X
-	SBC playerXHiDup
-	STA objXDistHi,X
-	STA $28
-	BEQ bra7_8715
-	CMP #$FF
-	BEQ bra7_8715
-	JMP objRemoveObject
-bra7_8715:
-	LDA objYLo,X
-	SEC
-	SBC playerYLoDup
-	STA objYDistLo,X
-	LDA objYHi,X
-	SBC playerYHiDup
-	STA objYDistHi,X
-	LDA playerYHiDup
-	CMP objYHi,X
-	BEQ bra7_8757
-	LDA objYDistHi,X
-	BPL bra7_8746
-	LDA objYDistLo,X
-	CLC
-	ADC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	ADC #$00
-	STA objYDistHi,X
-	JMP loc7_8757
-bra7_8746:
-	LDA objYDistLo,X
-	SEC
-	SBC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	SBC #$00
-	STA objYDistHi,X
-bra7_8757:
-loc7_8757:
-	LDA freezeFlag
-	BEQ bra7_875D
-	RTS
+	objDistCalc bra7_875D
+
 bra7_875D:
 	LDA objFlags,X
 	AND #$1F ; Mask out the upper 3 bits, limiting it to $00 - $1F
@@ -72,7 +28,7 @@ tbl7_8771:
 	.word ptr5_8789
 	.word ptr_AE17
 	.word ptr5_884C
-	.word ptr5_8695 ; FIXME PUT THIS FUNCTION ELSEWHEREE
+	.word ptr5_8695
 	.word ptr5_88BC
 	.word ptr5_88BC
 	.word ptr5_88BC
@@ -86,52 +42,7 @@ ptr5_8789:
 	LDA #$27
 	JSR getMovementData
 bra7_8797:
-	LDA objXLo,X
-	SEC
-	SBC playerXLoDup
-	STA objXDistLo,X
-	LDA objXHi,X
-	SBC playerXHiDup
-	STA objXDistHi,X
-	STA $28
-	BEQ bra7_87B3
-	CMP #$FF
-	BEQ bra7_87B3
-	JMP objRemoveObject
-bra7_87B3:
-	LDA objYLo,X
-	SEC
-	SBC playerYLoDup
-	STA objYDistLo,X
-	LDA objYHi,X
-	SBC playerYHiDup
-	STA objYDistHi,X
-	LDA playerYHiDup
-	CMP objYHi,X
-	BEQ bra7_87F5
-	LDA objYDistHi,X
-	BPL bra7_87E4
-	LDA objYDistLo,X
-	CLC
-	ADC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	ADC #$00
-	STA objYDistHi,X
-	JMP loc7_87F5
-bra7_87E4:
-	LDA objYDistLo,X
-	SEC
-	SBC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	SBC #$00
-	STA objYDistHi,X
-bra7_87F5:
-loc7_87F5:
-	LDA freezeFlag
-	BEQ bra7_87FB
-	RTS
+	objDistCalc bra7_87FB
 
 bra7_87FB:
 	JSR objCapeHitCheck
@@ -151,6 +62,7 @@ bra7_87FB:
 	STA objFlags,X
 bra7_881D_RTS:
 	RTS
+
 bra7_881E:
 	LDA playerYoshiState
 	BEQ bra7_882E
@@ -165,18 +77,19 @@ bra7_882E:
 	AND #$01
 	BNE bra7_8841
 	LDA objXDistHi,X
-	BMI bra7_884B_RTS
+	BMI loc7_884B_RTS
 	LDA #$01
 	STA playerXMovementLocked
 	JMP loc7_884B_RTS
 bra7_8841:
 	LDA objXDistHi,X
-	BPL bra7_884B_RTS
+	BPL loc7_884B_RTS
 	LDA #$01
 	STA playerXMovementLocked
-bra7_884B_RTS:
+
 loc7_884B_RTS:
 	RTS
+
 ptr5_884C:
 	LDA frameCount
 	AND #$00

@@ -68,7 +68,7 @@ ptr3_8F71:
 	JSR jmp_54_B11D
 bra8_8F7C:
 	JSR objCapeHitCheck
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR objKillOnSpinJump
 	JSR objStompRebound
 	LDX $A4

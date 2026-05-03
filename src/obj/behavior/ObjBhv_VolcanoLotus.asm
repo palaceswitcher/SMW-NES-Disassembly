@@ -156,9 +156,9 @@ spawnLotusPollen:
 	STA objFlags+2,Y
 	STA objFlags+3,Y
 	STA objVar,Y
-	STA $0579,Y
+	STA objVar+1,Y
 	STA $057A,Y
-	STA $057B,Y
+	STA objVar+3,Y
 	STA objState,Y
 	STA objState+1,Y
 	STA objState+2,Y

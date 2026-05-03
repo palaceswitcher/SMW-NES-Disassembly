@@ -242,7 +242,7 @@ tbl8_9834:
 	.word objFlipKill
 ptr3_983E:
 	JSR objCapeHitCheck
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR objStompReboundNoSFX
 	LDA #$04
 	STA playerAction

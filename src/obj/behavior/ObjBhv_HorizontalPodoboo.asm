@@ -101,7 +101,7 @@ loc7_9CC2:
 	STA $0565,Y
 	LDA #$00
 	STA objVar,Y
-	STA $0579,Y
+	STA objVar+1,Y
 	STA objState,Y
 	STA $066A,Y
 	RTS

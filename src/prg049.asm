@@ -657,7 +657,7 @@ bra5_83DF:
 	LDA #$40
 	STA objStateTimer,Y
 	LDA #$0C
-	STA $0579,Y
+	STA objVar+1,Y
 	LDA #$80
 	STA $0642,Y
 	LDA objXHi,X
@@ -1760,7 +1760,7 @@ tbl5_8CA5:
 	.word objFlipKill
 ptr10_8CAF:
 	JSR objCapeHitCheck
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR objKillOnSpinJump
 	LDA #SFX_ENEMYHIT2
 	STA sndSfx

@@ -85,7 +85,7 @@ ptr5_9990:
 	JSR getMovementData
 bra7_999B:
 	JSR objCapeHitCheck
-	JSR objPlayerHitCheck
+	JSR objCollStompOrHurt
 	JSR objKillOnSpinJump
 	JSR objStompRebound
 	INC objSlot,X

@@ -56,7 +56,7 @@ bra8_8589:
 
 bra8_8596:
 	JSR objCapeHitCheck ; Kill if hit by cape
-	JSR objPlayerHitCheck ; Check for collision with player
+	JSR objCollStompOrHurt ; Check for collision with player
 	JSR objKillOnSpinJump ; Kill if spin-jumped on
 	LDA objSlot,X
 	LSR ; Ignore lower bit of Rex ID
