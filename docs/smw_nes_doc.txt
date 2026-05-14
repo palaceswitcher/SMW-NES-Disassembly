@@ -1,4 +1,4 @@
-SMW NES Hacking Document (2026-5-3)
+SMW NES Hacking Document (2026-5-13)
 Note: Some information here may be inaccurate or wrong.
 
 -----Level Data-----
@@ -890,7 +890,7 @@ $0500 - $0513:	Object Slots
 > 0x8A = Fishbone
 > 0x8C/8D = Spike Ball
 > 0x8E = Crashes game, seems to be variant of the parachute goomba
-> 0x90 = Fuzzy
+> 0x90 = Fuzzy (Alt?)
 > 0x92 = Urchin (Horizontal)
 > 0x94 = Goomba
 > 0x96 = Upside Down Goomba
@@ -1117,7 +1117,8 @@ $063A - $063C:	NMI "Fake" JMP Opcode
 $063E:	Controller 2 Buttons Pressed
 $0641 - $0654:	Object Action Timer
 $0655 - $065C:	Enemy Animation Frames (not all enemies)
-$0666:	Reznor Counter
+$0666:	Reznors Defeated
+$0666:	Lemmy/Wendy Defeated Flag
 $0668:	ON/OFF Block Flag
 $0669 - $067D:	Object States/Variables? (See below for more details)
 $067C:	Unused P-Switch Timer
