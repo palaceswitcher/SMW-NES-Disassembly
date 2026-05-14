@@ -214,24 +214,6 @@ function getObjSprY(i)
 	return objY
 end
 
--- Return player's powerup state as string
-function getPlayerState()
-	if emu.read(0xDE, emu.memType.nesMemory) == 0 then -- On map
-		if emu.read(0x6DA+p, emu.memType.nesMemory) == 0 then return "Small"
-		elseif emu.read(0x6DA+p, emu.memType.nesMemory) == 1 then return "Big"
-		elseif emu.read(0x6DA+p, emu.memType.nesMemory) == 2 then return "Fire"
-		elseif emu.read(0x6DA+p, emu.memType.nesMemory) == 3 then return "Cape"
-		else return "Cape (Moving)"
-		end
-	else -- In level
-		if emu.read(0x624, emu.memType.nesMemory) == 0 then return "Small"
-		elseif emu.read(0x624, emu.memType.nesMemory) == 1 then return "Big"
-		elseif emu.read(0x624, emu.memType.nesMemory) == 2 then return "Fire"
-		elseif emu.read(0x624, emu.memType.nesMemory) == 3 then return "Cape"
-		else return "Cape (Moving)"
-		end
-	end
-end
 -- Return player's position at given axis. X is 0 and 1 is Y
 function getPlayerCoords(axis)
 	local result = 0
@@ -382,7 +364,7 @@ function main()
 	if pInfoCollapsed then
 		emu.drawString(0, 207, "P<", 0x00FFFFFF, 0x007F3F3F)
 	else
-		emu.drawString(0, 207, "P" .. p+1 .. ": " .. getPlayerState() .. " | " .. getPlayerCoords(0) .. "," .. getPlayerCoords(1), white, 0x007F3F3F)
+		emu.drawString(0, 207, string.format("P%d: %s,%s", p+1, getPlayerCoords(0), getPlayerCoords(1)), white, 0x007F3F3F)
 	end
 	-- Draw player sprite position
 	-- emu.drawString(0, 216, "PS: " .. string.format("%X", emu.read(0x12, emu.memType.nesMemory)) .. ", " .. string.format("%X", emu.read(0x13, emu.memType.nesMemory)), white, 0x007F3F3F)
