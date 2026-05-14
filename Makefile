@@ -90,7 +90,36 @@ PRG49_OBJS := \
 	$(OBJ_DIR)/src/prg049.o
 
 PRG50_OBJS := \
-	$(OBJ_DIR)/src/prg050.o
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Ninji.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_Ninji.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_Ninji.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Thwomp.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_Thwomp.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_Thwomp.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_UnusedObj.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_FuzzyAlt.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_FuzzyAlt.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_FuzzyAlt.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_UrchinVertical.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_UrchinHorizontal.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_Urchin.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_Urchin.o \
+	$(OBJ_DIR)/src/obj/data/Obj_NinjiMovementData.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_MortonRoy.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_MortonRoy.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_LemmyWendy.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_Koopalings.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_PodobooDiagonalBossColl.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_PodobooDiagonalBoss.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_PodobooDiagonal.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_LemmyWendy.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_PodobooDiagonal.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_VinePlant.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_VinePlant.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_ItemBoxVine.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_VinePlant.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_DistCalc2.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_DrawVineTile.o
 
 PRG51_OBJS := \
 	$(OBJ_DIR)/src/obj/data/Obj_MovementData.o \
@@ -134,7 +163,7 @@ PRG53_OBJS := \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_1UP.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_PlayerFireball.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_YoshiFireball.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_HorizontalPodoboo.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_PodobooHorizontal.o \
 	$(OBJ_DIR)/src/obj/render/ObjDrawShared_SuperMushroom.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_FireFlower.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Feather.o \
@@ -152,8 +181,8 @@ PRG53_OBJS := \
 	$(OBJ_DIR)/src/obj/data/sprites/Spr_Checkpoint.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_GoalTape.o \
 	$(OBJ_DIR)/src/obj/data/sprites/Spr_GoalTape.o \
-	$(OBJ_DIR)/src/obj/behavior/ObjBhv_HorizontalPodoboo.o \
-	$(OBJ_DIR)/src/obj/render/ObjDraw_HorizontalPodoboo.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_PodobooHorizontal.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_PodobooHorizontal.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_GoalTape.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_MakePlayerBig.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_LevelExit.o \

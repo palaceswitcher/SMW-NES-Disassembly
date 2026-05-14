@@ -267,6 +267,7 @@ playerHoldFlag = $0636
 playerHoldFlag2 = $0637
 invincibilityTimer = $0638
 reznorsDefeated = $0666
+lemmyWendyDefeated = $0666
 switchBlockFlag = $0668
 freezeFlag = $067D
 checkpointFlag = $06A2
