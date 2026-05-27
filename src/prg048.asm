@@ -4,376 +4,6 @@
 .include "macros.asm"
 .include "variables.asm"
 
-sub4_8000:
-	LDX $A4
-	LDA objVar,X
-	AND #$7F
-	ASL
-	TAY
-	LDA objFlags,X
-	AND #$20
-	BNE bra4_8013
-	JMP loc4_809A
-bra4_8013:
-	JSR sub3_B077
-	BNE bra4_8070
-	LDA objVar,X
-	AND #$7F
-	CMP #$07
-	BCS bra4_8024
-	INC objVar,X
-bra4_8024:
-	PHA
-	CLC
-	ADC objYLo,X
-	STA objYLo,X
-	PLA
-	BMI bra4_8036
-	LDA objYHi,X
-	ADC #$00
-	BPL bra4_803B
-bra4_8036:
-	LDA objYHi,X ; unlogged
-	SBC #$00 ; unlogged
-bra4_803B:
-	STA objYHi,X
-	JSR sub3_B057
-	BNE bra4_806F_RTS
-	LDY #$00
-	LDA ($32),Y
-	TAY
-	LDA objFlags,X
-	AND #$40
-	BEQ bra4_8054
-	TYA
-	EOR #$FF
-	TAY
-	INY
-bra4_8054:
-	TYA
-	PHA
-	CLC
-	ADC objXLo,X
-	STA objXLo,X
-	PLA
-	BMI bra4_8067
-	LDA objXHi,X
-	ADC #$00
-	BPL bra4_806C
-bra4_8067:
-	LDA objXHi,X
-	SBC #$00
-bra4_806C:
-	STA objXHi,X
-bra4_806F_RTS:
-	RTS
-bra4_8070:
-	LDA $AA
-	AND #$0F
-	STA $25
-	LDX $A4
-	LDA objYLo,X
-	SEC
-	SBC $25
-	BCS bra4_8086
-	DEC objYHi,X ; unlogged
-	SEC ; unlogged
-	SBC #$10 ; unlogged
-bra4_8086:
-	STA objYLo,X
-	LDA objFlags,X
-	AND #$C0
-	STA objFlags,X
-	LDA objVar,X
-	AND #$80
-	STA objVar,X
-	RTS
-loc4_809A:
-	INY
-	LDA ($32),Y
-	BMI bra4_80B8
-	JSR sub3_B077
-	BNE bra4_80B8
-	LDA objFlags,X
-	ORA #$20
-	STA objFlags,X
-	STA objFlags,X
-	LDA objVar,X
-	AND #$80
-	STA objVar,X
-	RTS
-bra4_80B8:
-	DEY
-	JSR sub3_B057
-	BEQ bra4_80C2
-	INY
-	JMP loc4_80F0
-bra4_80C2:
-	LDA objFlags,X
-	AND #$40
-	BEQ bra4_80D3
-	LDA ($32),Y
-	EOR #$FF
-	CLC
-	ADC #$01
-	JMP loc4_80D5
-bra4_80D3:
-	LDA ($32),Y
-loc4_80D5:
-	PHA
-	CLC
-	ADC objXLo,X
-	STA objXLo,X
-	PLA
-	BMI bra4_80E7
-	LDA objXHi,X
-	ADC #$00
-	BPL bra4_80EC
-bra4_80E7:
-	LDA objXHi,X
-	SBC #$00
-bra4_80EC:
-	STA objXHi,X
-	INY
-loc4_80F0:
-	LDA ($32),Y
-	PHA
-	CLC
-	ADC objYLo,X
-	STA objYLo,X
-	PLA
-	BMI bra4_8104
-	LDA objYHi,X
-	ADC #$00
-	BPL bra4_8109
-bra4_8104:
-	LDA objYHi,X
-	SBC #$00
-bra4_8109:
-	STA objYHi,X
-	INY
-	LDA ($32),Y
-	CMP #$FF
-	BNE bra4_811E
-	LDA objFlags,X ; unlogged
-	EOR #$40 ; unlogged
-	STA objFlags,X ; unlogged
-	JMP loc4_813C ; unlogged
-bra4_811E:
-	AND #$F0
-	BEQ loc4_813C
-	LDA ($32),Y
-	AND #$3F
-	BNE bra4_8131
-	LDA objVar,X ; unlogged
-	AND #$80 ; unlogged
-	STA objVar,X ; unlogged
-	RTS ; unlogged
-bra4_8131:
-	STA $32
-	LDA objVar,X
-	SEC
-	SBC $32
-	STA objVar,X
-
-loc4_813C:
-	INC objVar,X
-	RTS
-
-sub4_8140:
-	LDX $A4
-	LDA objVar,X
-	AND #%01111111
-	ASL
-	TAY
-	LDA objFlags,X
-	AND #OBJFLAG_VERT
-	BNE bra4_8153
-	JMP loc4_81D1
-
-	; When Chargin' Chuck is moving downwards
-	bra4_8153:
-		JSR sub3_B077
-		BNE bra4_81B8
-			LDA objVar,X
-			AND #%01111111
-			CMP #$07 ; Maximum speed
-			BCS bra4_8164
-				INC objVar,X ; Accelerate the object's vertical speed
-		bra4_8164:
-			PHA
-			CLC
-			ADC objYLo,X
-			STA objYLo,X ; Apply speed to object's position
-			PLA
-			; Handle signed speed values
-			BMI bra4_8176
-				LDA objYHi,X
-				ADC #0
-				BPL bra4_817B
-			bra4_8176:
-				LDA objYHi,X
-				SBC #0
-		
-		bra4_817B:
-			STA objYHi,X
-			JSR sub3_B057
-			BEQ bra4_818B
-			LDA objFlags,X
-			EOR #$40
-			STA objFlags,X
-
-		bra4_818B:
-			LDY #$00
-			LDA ($32),Y
-			TAY
-			LDA objFlags,X
-			AND #%01000000
-			BEQ bra4_819C
-			TYA
-			EOR #$FF
-			TAY
-			INY
-
-		bra4_819C:
-			TYA
-			PHA
-			CLC
-			ADC objXLo,X
-			STA objXLo,X
-			PLA
-			BMI bra4_81AF
-			LDA objXHi,X
-			ADC #$00
-			BPL bra4_81B4
-
-		bra4_81AF:
-			LDA objXHi,X
-			SBC #$00
-
-		bra4_81B4:
-			STA objXHi,X
-			RTS
-
-		bra4_81B8:
-			LDA objYLo,X
-			AND #%11111000
-			STA objYLo,X
-			LDA objFlags,X
-			AND #%11000000
-			STA objFlags,X
-			LDA objVar,X
-			AND #$80
-			STA objVar,X
-			RTS
-
-	; When Chargin' Chuck isn't falling
-	loc4_81D1:
-		INY
-		LDA ($32),Y ; Get vertical movement vector
-		BMI bra4_81EC
-		JSR sub3_B077
-		BNE bra4_81EC ; Ignore downwards speed if the chuck is standing on solid ground
-		; Chuck has started falling down
-			LDA objFlags,X
-			ORA #OBJFLAG_VERT
-			STA objFlags,X ; Make the chuck move down
-			LDA objVar,X
-			AND #%10000000
-			STA objVar,X ; Reset the chuck's movement
-			RTS
-
-		; Chuck hasn't started falling down
-		bra4_81EC:
-			DEY
-			JSR sub3_B057
-			BEQ bra4_81FA
-				LDA objFlags,X
-				EOR #OBJFLAG_HORIZ
-				STA objFlags,X ; Turn the chuck around if it hits a wall
-
-		; Invert vector if needed
-		bra4_81FA:
-			LDA objFlags,X
-			AND #OBJFLAG_HORIZ
-			BEQ bra4_820B
-				LDA ($32),Y
-				EOR #%11111111
-				CLC
-				ADC #1 ; Invert horizontal vector if the chuck is moving left
-				JMP loc4_820D
-
-			bra4_820B:
-				LDA ($32),Y
-
-		; Apply horizontal vector
-		loc4_820D:
-			PHA
-			CLC
-			ADC objXLo,X
-			STA objXLo,X
-			PLA
-			BMI bra4_821F
-				LDA objXHi,X
-				ADC #0
-				BPL bra4_8224 ; Positive carry
-			bra4_821F:
-				LDA objXHi,X
-				SBC #0 ; Negative borrow
-
-		; Apply vertical vector
-		bra4_8224:
-			STA objXHi,X
-			INY
-			LDA ($32),Y
-			PHA
-			CLC
-			ADC objYLo,X
-			STA objYLo,X
-			PLA
-			BMI bra4_823C
-				LDA objYHi,X
-				ADC #0
-				BPL bra4_8241 ; Positive carry
-			bra4_823C:
-				LDA objYHi,X
-				SBC #0 ; Negative borrow
-
-		bra4_8241:
-			STA objYHi,X
-			INY
-			LDA ($32),Y
-			CMP #$FF
-			BNE bra4_8256
-				LDA objFlags,X
-				EOR #OBJFLAG_HORIZ
-				STA objFlags,X
-				JMP loc4_8274
-
-			bra4_8256:
-				AND #%11110000
-				BEQ loc4_8274
-					LDA ($32),Y
-					AND #%00111111
-					BNE bra4_8269
-					; Loop to the first vector if the value is 0
-						LDA objVar,X
-						AND #%10000000
-						STA objVar,X
-						RTS
-
-					; Go back the specified amount of vectors
-					bra4_8269:
-						STA $32
-						LDA objVar,X
-						SEC
-						SBC $32
-						STA objVar,X
-
-		loc4_8274:
-			INC objVar,X
-			RTS
-
 ;----------------------------------------
 ; CHARGIN' CHUCK OBJECT CODE ($8728)
 ;----------------------------------------
@@ -586,55 +216,11 @@ loc4_84F6:
 	LDA #$07
 	STA $25
 	LDX $A4
-	LDA objXLo,X
-	SEC
-	SBC playerXLoDup
-	STA objXDistLo,X
-	LDA objXHi,X
-	SBC playerXHiDup
-	STA objXDistHi,X
-	STA $28
-	BEQ bra4_8518
-	CMP #$FF
-	BEQ bra4_8518
-	JMP objRemoveObject
-bra4_8518:
-	LDA objYLo,X
-	SEC
-	SBC playerYLoDup
-	STA objYDistLo,X
-	LDA objYHi,X
-	SBC playerYHiDup
-	STA objYDistHi,X
-	LDA playerYHiDup
-	CMP objYHi,X
-	BEQ bra4_855A
-	LDA objYDistHi,X
-	BPL bra4_8549
-	LDA objYDistLo,X ; unlogged
-	CLC ; unlogged
-	ADC #$10 ; unlogged
-	STA objYDistLo,X ; unlogged
-	LDA objYDistHi,X ; unlogged
-	ADC #$00 ; unlogged
-	STA objYDistHi,X ; unlogged
-	JMP loc4_855A ; unlogged
-bra4_8549:
-	LDA objYDistLo,X
-	SEC
-	SBC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	SBC #$00
-	STA objYDistHi,X
-bra4_855A:
-loc4_855A:
-	LDA freezeFlag
-	BEQ bra4_8560
-	RTS ; unlogged
+	objDistCalc bra4_8560
+
 bra4_8560:
 	LDA objFlags,X
-	AND #$1F
+	AND #%00011111
 	ASL
 	TAY
 	LDA tbl4_8574,Y
@@ -648,7 +234,6 @@ tbl4_8574:
 	.word objPowerupEatCheck
 	.word ptr9_857E
 	.word objFlipKill
-.export ptr9_857E
 ptr9_857E:
 	JSR sub4_85B9
 	JSR objCapeHitCheck
@@ -663,7 +248,7 @@ ptr9_857E:
 	STA playerXSpd
 	LDA #$01
 	JSR rewardPoints
-	LDA #$12
+	LDA #SFX_ENEMYHIT2
 	STA sndSfx
 	LDA objSlot,X
 	CLC
@@ -703,7 +288,7 @@ bra4_85E2:
 	CMP #$11
 	BCS bra4_8611
 	LDA objFlags,X
-	AND #$20
+	AND #OBJFLAG_VERT
 	BNE bra4_8610_RTS
 	LDA objVar,X
 	BNE bra4_8610_RTS
@@ -782,104 +367,16 @@ obj0xC2:
 	BMI bra4_867F
 	JMP loc4_86E6
 bra4_867F:
-	LDA objXLo,X ; unlogged
-	SEC ; unlogged
-	SBC playerXLoDup ; unlogged
-	STA objXDistLo,X ; unlogged
-	LDA objXHi,X ; unlogged
-	SBC playerXHiDup ; unlogged
-	STA objXDistHi,X ; unlogged
-	STA $28 ; unlogged
-	BEQ bra4_869B ; unlogged
-	CMP #$FF ; unlogged
-	BEQ bra4_869B ; unlogged
-	JMP objRemoveObject ; unlogged
-bra4_869B:
-	LDA objYLo,X ; unlogged
-	SEC ; unlogged
-	SBC playerYLoDup ; unlogged
-	STA objYDistLo,X ; unlogged
-	LDA objYHi,X ; unlogged
-	SBC playerYHiDup ; unlogged
-	STA objYDistHi,X ; unlogged
-	LDA playerYHiDup ; unlogged
-	CMP objYHi,X ; unlogged
-	BEQ bra4_86DD ; unlogged
-	LDA objYDistHi,X ; unlogged
-	BPL bra4_86CC ; unlogged
-	LDA objYDistLo,X ; unlogged
-	CLC ; unlogged
-	ADC #$10 ; unlogged
-	STA objYDistLo,X ; unlogged
-	LDA objYDistHi,X ; unlogged
-	ADC #$00 ; unlogged
-	STA objYDistHi,X ; unlogged
-	JMP loc4_86DD ; unlogged
-bra4_86CC:
-	LDA objYDistLo,X ; unlogged
-	SEC ; unlogged
-	SBC #$10 ; unlogged
-	STA objYDistLo,X ; unlogged
-	LDA objYDistHi,X ; unlogged
-	SBC #$00 ; unlogged
-	STA objYDistHi,X ; unlogged
-bra4_86DD:
-loc4_86DD:
-	LDA freezeFlag ; unlogged
-	BEQ bra4_86E3 ; unlogged
-	RTS ; unlogged
+	objDistCalc bra4_86E3
+
 bra4_86E3:
 	JMP objFacePlayer ; unlogged
 loc4_86E6:
 	LDA #$07
 	STA $25
 	LDX $A4
-	LDA objXLo,X
-	SEC
-	SBC playerXLoDup
-	STA objXDistLo,X
-	LDA objXHi,X
-	SBC playerXHiDup
-	STA objXDistHi,X
-	STA $28
-	BEQ bra4_8708
-	CMP #$FF
-	BEQ bra4_8708
-	JMP objRemoveObject ; unlogged
-bra4_8708:
-	LDA objYLo,X
-	SEC
-	SBC playerYLoDup
-	STA objYDistLo,X
-	LDA objYHi,X
-	SBC playerYHiDup
-	STA objYDistHi,X
-	LDA playerYHiDup
-	CMP objYHi,X
-	BEQ bra4_874A
-	LDA objYDistHi,X
-	BPL bra4_8739
-	LDA objYDistLo,X ; unlogged
-	CLC ; unlogged
-	ADC #$10 ; unlogged
-	STA objYDistLo,X ; unlogged
-	LDA objYDistHi,X ; unlogged
-	ADC #$00 ; unlogged
-	STA objYDistHi,X ; unlogged
-	JMP loc4_874A ; unlogged
-bra4_8739:
-	LDA objYDistLo,X
-	SEC
-	SBC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	SBC #$00
-	STA objYDistHi,X
-bra4_874A:
-loc4_874A:
-	LDA freezeFlag
-	BEQ bra4_8750
-	RTS ; unlogged
+	objDistCalc bra4_8750
+
 bra4_8750:
 	LDA objFlags,X
 	AND #$1F
@@ -3740,38 +3237,22 @@ ofs_9B1C:
 	.byte 0, 0
 	.byte $80
 ofs_9B7B:
-	.byte $04
-	.byte $00
-	.byte $04
-	.byte $F8
-	.byte $04
-	.byte $F8
-	.byte $04
-	.byte $F8
-	.byte $04
-	.byte $FA
-	.byte $04
-	.byte $FA
-	.byte $04
-	.byte $FC
-	.byte $04
-	.byte $FC
-	.byte $04
-	.byte $FC
-	.byte $04
-	.byte $FD
-	.byte $04
-	.byte $FD
-	.byte $04
-	.byte $FE
-	.byte $04
-	.byte $FE
-	.byte $04
-	.byte $FF
-	.byte $04
-	.byte $00
-	.byte $00
-	.byte $00
+	.byte 4, 0
+	.byte 4, -8
+	.byte 4, -8
+	.byte 4, -8
+	.byte 4, -6
+	.byte 4, -6
+	.byte 4, -4
+	.byte 4, -4
+	.byte 4, -4
+	.byte 4, -3
+	.byte 4, -3
+	.byte 4, -2
+	.byte 4, -2
+	.byte 4, -1
+	.byte 4, 0
+	.byte 0, 0
 	.byte $81
 	.byte $00
 	.byte $03

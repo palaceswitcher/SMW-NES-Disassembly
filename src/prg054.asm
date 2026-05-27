@@ -2972,7 +2972,7 @@ bra3_AECF:
 
 ; Y index = Current object (Object 1)
 ; X index = Object colliding with (Object 2)
-; Calculate distance
+; Now we start calculating distance
 	LDA objXLo,X
 	SEC
 	SBC objXLo,Y
@@ -3345,13 +3345,15 @@ bra3_B06C:
 
 ;----------------------------------------
 ; SUBROUTINE ($B077)
+; Returns the tile behavior of the tile below the object's feet
 ; $A8 = X Pos Lo
 ; $A9 = X Pos Hi
 ; $AA = Y Pos Lo
 ; $AB = Y Pos Hi
 ; $36 = Calculated X hitbox?
 ; $38 = Calculated Y hitbox?
-; $32 - $33 = Movement data pointer
+; Returns:
+; > A = Tile behavior
 ;----------------------------------------
 .export sub3_B077
 sub3_B077:

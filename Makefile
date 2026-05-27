@@ -84,6 +84,7 @@ PRG47_OBJS := \
 	$(OBJ_DIR)/src/prg047.o
 
 PRG48_OBJS := \
+	$(OBJ_DIR)/src/obj/Obj_ChuckMovementParsing.o \
 	$(OBJ_DIR)/src/prg048.o
 
 PRG49_OBJS := \
