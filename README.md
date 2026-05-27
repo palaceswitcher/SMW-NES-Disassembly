@@ -19,5 +19,6 @@ The most simple way to install make on Windows is to install it via [GnuWin](htt
 
 ## To-do
 
+- Split every object code bank into separate `.asm` files for each object. 
 - Better document some of the collision and object code.
 - Finish fixing the labels, cleaning, and organizing the music ASM. As of right now, they're extremely messy.
