@@ -1,4 +1,4 @@
-SMW NES Hacking Document (2026-5-13)
+SMW NES Hacking Document (2026-5-18)
 Note: Some information here may be inaccurate or wrong.
 
 -----Level Data-----
@@ -1124,7 +1124,7 @@ $0669 - $067D:	Object States/Variables? (See below for more details)
 $067C:	Unused P-Switch Timer
 $067D:	Game Freeze Flag
 $067E - $06A1:	Dynamic Tile Memory
-Each has 16 dynamic tiles for each horizontal screen that are hardcoded to be metatiles 0x80 to 0x8F. Every horizontal screen has two bytes with 16 bits representing which of these 16 tiles have been modified, with bits 0 through 7 of the first byte representing the first 8 tiles and bites 0 through 7 of the second byte representing the remaining 8 tiles. A value of 1 indicates that a tile has not changed, where a value of 0 indicates that it has. If a tile is changed, ti will instead be treated as metatile 0x90 if it is dynamic tiles 0-7, and metatile 0x91 if it is dynamic tiles 0-15. 
+Each has 16 dynamic tiles for each horizontal screen that are hardcoded to be metatiles 0x80 to 0x8F. Every horizontal screen has two bytes with 16 bits representing which of these 16 tiles have been modified, with bits 0 through 7 of the first byte representing the first 8 tiles and bites 0 through 7 of the second byte representing the remaining 8 tiles. A value of 1 indicates that a tile has not changed, where a value of 0 indicates that it has. If a tile is changed, it will instead be treated as metatile 0x90 if it is dynamic tiles 0-7, and metatile 0x91 if it is dynamic tiles 0-15. 
 
 $06A2 - $06BD:	Checkpoint Flags
 $06DA:	Player 1 Power-up Backup
