@@ -1,4 +1,4 @@
-SMW NES Hacking Document (2026-5-18)
+SMW NES Hacking Document (2026-6-3)
 Note: Some information here may be inaccurate or wrong.
 
 -----Level Data-----
@@ -134,12 +134,12 @@ Note: Some information here may be inaccurate or wrong.
 54DA2 - 54E07:	Player Flipped OW Mappings + Attributes (2 unused frames)
 61102 - 61105:	Baseball Mappings
 61106 - 6110C:	Football Mappings
-6110D - 61113:	Bouncing Rock Mappings
+6110D - 61113:	Rock Mappings
 61158 - 611DB:	Charging Chuck Mappings
 611DC - 611EE:	Clappin' Chuck Mappings (unused)
 611EF - 6122A:	Diggin' Chuck Mappings
-6122B - 61248:	Football Chuck Mappings
-6124B - 61295:	Baseball Chuck Mappings (1 unused frame)
+6122B - 61248:	Puntin' Chuck Mappings
+6124B - 61295:	Pitchin' Chuck Mappings (1 unused frame)
 61969 - 61992:	Boo Mappings
 620C4 - 620D2:	P-Switch Platform Mappings
 620D3 - 620DD:	P-Switch Door Mappings
@@ -910,8 +910,8 @@ $0500 - $0513:	Object Slots
 > 0xAF = Crumbled Bony Beetle
 > 0xB0 = Baseball
 > 0xB2 = Football
-> 0xB4 = Bouncing rock
-> 0xB6 = Boo Buddies Boo
+> 0xB4 = Rock
+> 0xB6 = Boo Buddy
 > 0xB8 = Princess Peach
 > 0xB9 = Nothing? (Princess Peach duplicate)
 > 0xBA = Unused Explosion Smoke?
@@ -927,15 +927,15 @@ $0500 - $0513:	Object Slots
 > 0xCA = Chargin' Chuck (Hit once, stunned)
 > 0xCC = Chargin' Chuck (Hit twice)
 > 0xCE = Chargin' Chuck (Hit twice, chasing)
-> 0xD0 = Baseball Chuck
-> 0xD2 = Football Chuck
+> 0xD0 = Pitchin' Chuck
+> 0xD2 = Puntin' Chuck
 > 0xD4 = Diggin' Chuck
 > 0xD6 = Spike Tip/Hitbox
 > 0xD7 = Clown Car Hitbox
-> 0xD8 = Boo Buddies Center
+> 0xD8 = Boo Buddies Generator
 > 0xDA = Boo
-> 0xDC = Boo Crew Boo
-> 0xDE = Boo, flies off?
+> 0xDC = Swarm Boo (Patrolling)
+> 0xDE = Swarm Boo (Attacking)
 > 0xE0 = Propeller
 > 0xE1 = Bowser
 > 0xE2 = Spike Up
