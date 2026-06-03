@@ -84,8 +84,41 @@ PRG47_OBJS := \
 	$(OBJ_DIR)/src/prg047.o
 
 PRG48_OBJS := \
-	$(OBJ_DIR)/src/obj/Obj_ChuckMovementParsing.o \
-	$(OBJ_DIR)/src/prg048.o
+	$(OBJ_DIR)/src/obj/ObjBhvFunc_ParseChuckMovement.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_CharginChuck.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_CharginChuck.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_CharginChuckChase.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_CharginChuckChase.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_CharginChuckStunned.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_CharginChuckStunned.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_PitchinChuck.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_PitchinChuck.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Baseball.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_Baseball.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_PuntinChuck.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_PuntinChuck.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Football.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_Football.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_DigginChuck.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_DigginChuck.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Rock.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_Rock.o \
+	$(OBJ_DIR)/src/obj/render/ObjDrawShared_ChuckProjectiles.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_ChuckProjectiles.o \
+	$(OBJ_DIR)/src/obj/render/ObjDrawShared_Chucks.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_Chucks.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_BooBuddiesGenerator.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_BooBuddiesGenerator.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_BooBuddy.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Boo.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_SwarmBooPatrolling.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_SwarmBooAttacking.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_SwarmBoo.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_Boo.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_BooBuddy.o \
+	$(OBJ_DIR)/src/obj/render/ObjDrawShared_Boos.o \
+	$(OBJ_DIR)/src/obj/data/sprites/Spr_Boos.o \
+	$(OBJ_DIR)/src/obj/data/Obj_ChuckBooMovementData.o \
 
 PRG49_OBJS := \
 	$(OBJ_DIR)/src/prg049.o

@@ -905,7 +905,7 @@ tbl3_A435:
 	.word obj0xAC ; AE
 	.word obj0xAC ; AF
 
-	.export OBJ_THING := (*-tbl3_A435)/2 + $80 ; Verify this
+	.export OBJ_BASEBALL := (*-tbl3_A435)/2 + $80 ; Verify this
 	.word obj0xAE
 	.word obj0xAE
 
@@ -925,7 +925,7 @@ tbl3_A435:
 	.word obj0xB6
 	.word ptr4_A0D8
 
-	.word obj0xB8
+	.word obj0xB8 ; BA
 	.word ptr4_A0D8
 
 	.export OBJ_SMOKE := (*-tbl3_A435)/2 + $80
@@ -970,11 +970,11 @@ tbl3_A435:
 	.word obj0xC0 ; CE
 	.word obj0xC0
 
-	.export OBJ_BASEBALLCHUCK := (*-tbl3_A435)/2 + $80
+	.export OBJ_PITCHINCHUCK := (*-tbl3_A435)/2 + $80
 	.word obj0xCE
 	.word obj0xCE
 
-	.export OBJ_FOOTBALLCHUCK := (*-tbl3_A435)/2 + $80
+	.export OBJ_PUNTINCHUCK := (*-tbl3_A435)/2 + $80
 	.word obj0xD0
 	.word obj0xD0
 
@@ -988,7 +988,7 @@ tbl3_A435:
 	.export OBJ_CLOWNCAR_HURTBOX := (*-tbl3_A435)/2 + $80
 	.word obj0xD5
 
-	.export OBJ_BOOBUDDIESCENTER := (*-tbl3_A435)/2 + $80 ; Verify this
+	.export OBJ_BOOBUDDIES_GENERATOR := (*-tbl3_A435)/2 + $80 ; Verify this
 	.word obj0xD6 ; D8
 	.word obj0xD6
 
@@ -996,11 +996,11 @@ tbl3_A435:
 	.word obj0xD8 ; DA
 	.word obj0xD8
 
-	.export OBJ_BOOCREWBOO := (*-tbl3_A435)/2 + $80 ; Verify this
+	.export OBJ_SWARMBOO_PATROLLING := (*-tbl3_A435)/2 + $80 ; Verify this
 	.word obj0xDA ; DC
 	.word obj0xDA
 
-	.export OBJ_BOO_FLYAWAY := (*-tbl3_A435)/2 + $80 ; Verify this
+	.export OBJ_SWARMBOO_ATTACKING := (*-tbl3_A435)/2 + $80 ; Verify this
 	.word obj0xDC ; DE
 	.word obj0xDC
 

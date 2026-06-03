@@ -4,6 +4,7 @@
 .include "macros.asm"
 .include "variables.asm"
 
+; Sets the object to its first function while preserving status bits
 .export ptr5_92C3
 ptr5_92C3:
 	LDX $A4

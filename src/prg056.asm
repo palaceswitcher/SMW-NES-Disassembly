@@ -4,6 +4,7 @@
 .include "macros.asm"
 .include "variables.asm"
 
+; Small enemy movement function?
 sub9_8000:
 	LDX $A4
 	LDA objVar,X
