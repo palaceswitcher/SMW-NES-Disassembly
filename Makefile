@@ -2,7 +2,7 @@
 AS = ca65
 LD = ld65
 CONFIG = smw.cfg
-FLAGS = -g --feature force_range -U -I include -I sound -I levels
+FLAGS = -g --feature force_range -U -I include -I data/sound -I data/levels
 
 # OS Detection
 ifeq ($(OS),Windows_NT)
@@ -28,26 +28,26 @@ PRG36_OBJS := \
 
 PRG37_OBJS := \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Spike.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_Spike.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_Spike.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_SpikeHitbox.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Spike.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_CollPlayer.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_PrincessMushroom.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_PrincessMushroom.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_PrincessMushroom.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_PrincessMushroom.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_DinoRhinos.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_DinoRhinos.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_DinoRhinos.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_DinoRhinos.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Propeller.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Bowser.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_FinalBossObjects.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_FinalBossObjects.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_ClownCarHitbox.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Propeller.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_ApplyBowserVel.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Princess.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_Princess.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_Princess.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_ClownCarExplosionSmoke.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_ClownCarExplosionSmoke.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_ClownCarExplosionSmoke.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_ClownCarExplosionSmokeAlt.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Bowser.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Princess.o \
@@ -84,7 +84,7 @@ PRG47_OBJS := \
 	$(OBJ_DIR)/src/prg047.o
 
 PRG48_OBJS := \
-	$(OBJ_DIR)/src/obj/ObjBhvFunc_ParseChuckMovement.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_ParseChuckMovement.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_CharginChuck.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_CharginChuck.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_CharginChuckChase.o \
@@ -104,9 +104,9 @@ PRG48_OBJS := \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Rock.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Rock.o \
 	$(OBJ_DIR)/src/obj/render/ObjDrawShared_ChuckProjectiles.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_ChuckProjectiles.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_ChuckProjectiles.o \
 	$(OBJ_DIR)/src/obj/render/ObjDrawShared_Chucks.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_Chucks.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_Chucks.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_BooBuddiesGenerator.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_BooBuddiesGenerator.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_BooBuddy.o \
@@ -117,8 +117,8 @@ PRG48_OBJS := \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Boo.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_BooBuddy.o \
 	$(OBJ_DIR)/src/obj/render/ObjDrawShared_Boos.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_Boos.o \
-	$(OBJ_DIR)/src/obj/data/Obj_ChuckBooMovementData.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_Boos.o \
+	$(OBJ_DIR)/data/obj/Obj_ChuckBooMovementData.o \
 
 PRG49_OBJS := \
 	$(OBJ_DIR)/src/prg049.o
@@ -126,37 +126,37 @@ PRG49_OBJS := \
 PRG50_OBJS := \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Ninji.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Ninji.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_Ninji.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_Ninji.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Thwomp.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Thwomp.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_Thwomp.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_Thwomp.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_UnusedObj.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_FuzzyAlt.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_FuzzyAlt.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_FuzzyAlt.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_FuzzyAlt.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_UrchinVertical.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_UrchinHorizontal.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Urchin.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_Urchin.o \
-	$(OBJ_DIR)/src/obj/data/Obj_NinjiMovementData.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_Urchin.o \
+	$(OBJ_DIR)/data/obj/Obj_NinjiMovementData.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_MortonRoy.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_MortonRoy.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_LemmyWendy.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_Koopalings.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_Koopalings.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_PodobooDiagonalBossColl.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_PodobooDiagonalBoss.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_PodobooDiagonal.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_LemmyWendy.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_PodobooDiagonal.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_VinePlant.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_VinePlant.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_VinePlant.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_ItemBoxVine.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_VinePlant.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_DistCalc2.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_DrawVineTile.o
 
 PRG51_OBJS := \
-	$(OBJ_DIR)/src/obj/data/Obj_MovementData.o \
+	$(OBJ_DIR)/data/obj/Obj_MovementData.o \
 	$(OBJ_DIR)/src/padding/padding051.o \
 	$(OBJ_DIR)/src/prg051.o
 
@@ -191,13 +191,13 @@ PRG53_OBJS := \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_MoveYoshiFireball.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_ItemBlockYoshi.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_PSwitch_ItemBlock.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_GlobalObjects.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_GlobalObjects.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Spring.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_KoopaShell.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_1UP.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_PlayerFireball.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_YoshiFireball.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_PodobooHorizontal.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_PodobooHorizontal.o \
 	$(OBJ_DIR)/src/obj/render/ObjDrawShared_SuperMushroom.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_FireFlower.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Feather.o \
@@ -206,15 +206,15 @@ PRG53_OBJS := \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Pop.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_BuzzyBeetle.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_BuzzyBeetle.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_BuzzyBeetle.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_BuzzyBeetle.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_BuzzyShell.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_BuzzyShellKicked.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_BuzzyShell.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_BuzzyShell.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Checkpoint.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Checkpoint.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_Checkpoint.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_Checkpoint.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_GoalTape.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_GoalTape.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_GoalTape.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_PodobooHorizontal.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_PodobooHorizontal.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_GoalTape.o \
@@ -227,36 +227,36 @@ PRG54_OBJS := \
 PRG55_OBJS := \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Koopa.o \
 	$(OBJ_DIR)/src/obj/render/ObjDrawShared_Koopas.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_Koopas.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_Koopas.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Paratroopa.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Rex.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Rex.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_Rex.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_Rex.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_PiranhaPlant.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_PiranhaPlant.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_PiranhaPlant.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_PiranhaPlant.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_PiranhaPlantMask.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_SuperKoopa.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_SuperKoopa.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_SuperKoopa.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_SuperKoopa.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_VolcanoLotus.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_VolcanoLotus.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_VolcanoLotus.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_VolcanoLotus.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_LotusPollen.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_LotusPollen.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_LotusPollen.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_LotusPollen.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Swooper.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Swooper.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_Swooper.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_Swooper.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Blurp.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Blurp.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_Blurp.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_Blurp.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Mechakoopa.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_Mechakoopa.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_Mechakoopa.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_Mechakoopa.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_MechakoopaStunned.o \
 	$(OBJ_DIR)/src/obj/render/ObjDraw_MechakoopaStunned.o \
-	$(OBJ_DIR)/src/obj/data/sprites/Spr_MechakoopaStunned.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_MechakoopaStunned.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_UnshelledKoopa.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_BgPriorityToggleLeft.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_BgPriorityToggleVertical.o \

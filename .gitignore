@@ -1,5 +1,6 @@
-screens
-tilesets
-levels
-chr
+data/screens
+data/tilesets
+data/levels
+data/chr
+bin
 *.o

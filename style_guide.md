@@ -159,3 +159,39 @@ Below is a list of every type of constant currently used.\
 - All directives should be compatible with CA65.
 - Avoid creating macros for something that can reasonably done with a existing directive like `.word`.
 - Use macros for specialized data formats that would otherwise be tedious or impossible to do with existing directives. Macros should also be used for chunks of code that are repeated frequently (preferably over 10 times).
+
+## File Naming Conventions and Structure
+
+### General File Conventions
+
+Filenames (excluding CHR banks) should be in TitleCase, with a prefix separated by and underscore signifying what they are for. For example, `ObjDraw_Goomba` should represent the drawing code for the Goomba object.
+
+### Basic File Structure
+
+```
+├── data
+│   ├── chr
+│   ├── levels
+│   ├── obj
+│   │   └── sprites
+│   ├── screens
+│   ├── sound
+│   └── tilesets
+├── docs
+├── include
+├── scripts
+└── src
+    ├── obj
+    │   ├── behavior
+    │   └── render
+    └── padding
+```
+
+### Object Code Conventions
+
+- Every unique object ID (excluding odd IDs used for alternative banking) should be treated as a unique object, regardless of what it represents.
+- Due to many banks having haphazardly placed subroutines between object code, some subroutines may have to be put in their own code. They should be prefixed with `ObjBhvFunc` and placed under `src/obj/behavior`.
+- Code that is shared or used between multiple objects should be prefixed with `ObjBhvShared` or `ObjDrawShared` depending on the type of code.
+- The rendering code, behavior code, and sprite mappings of each object should be in separate files, each prefixed with `ObjBhv`, `ObjDraw`, and `ObjSpr` respectively.
+- If object code or data has to be lumped together or needs to exist within the same structure, they should instead 
+

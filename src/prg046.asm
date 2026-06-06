@@ -4,7 +4,7 @@
 .include "macros.asm"
 .include "variables.asm"
 
-	.incbin "levels/lvl_Map.bin" ; Include tilemap data for the overworld map
+	.incbin "data/levels/lvl_Map.bin" ; Include tilemap data for the overworld map
 	
 	.byte $2D
 	.byte $00

@@ -4,7 +4,7 @@
 .include "macros.asm"
 .include "variables.asm"
 
-.incbin "tilesets/ts_Bonus.bin"
+.incbin "data/tilesets/ts_Bonus.bin"
 	.byte $18
 	.byte $00
 	.byte $00
@@ -338,7 +338,7 @@ bra3_87EE:
 bra3_87FF:
 loc3_87FF:
 	.byte $AD
-.incbin "tilesets/ts_Bonus.bin"
+.incbin "data/tilesets/ts_Bonus.bin"
 	.byte $00
 	.byte $00
 	.byte $00
@@ -695,7 +695,7 @@ bra3_8FF4:
 	LDA objYHi,X
 
 
-.incbin "tilesets/ts_Bonus.bin"
+.incbin "data/tilesets/ts_Bonus.bin"
 	.byte $42
 	BCS bra3_960D
 	LDA #$0F
@@ -929,4 +929,4 @@ bra3_97F7:
 	LDA #$20
 	STA $06E1
 	.byte $BD
-.incbin "tilesets/ts_Bonus.bin"
+.incbin "data/tilesets/ts_Bonus.bin"

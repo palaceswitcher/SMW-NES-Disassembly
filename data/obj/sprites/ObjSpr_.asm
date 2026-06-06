@@ -1,4 +1,4 @@
-.segment "PRG50"
+.segment "PRG48"
 
 .include "constants.asm"
 .include "macros.asm"

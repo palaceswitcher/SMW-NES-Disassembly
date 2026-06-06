@@ -4,7 +4,7 @@
 .include "macros.asm"
 .include "variables.asm"
 
-	.incbin "tilesets/ts_Bowser.bin"
+	.incbin "data/tilesets/ts_Bowser.bin"
 	
 	.byte $17
 	.byte $00
@@ -334,7 +334,7 @@ bra14_87EE:
 bra14_87FF:
 loc14_87FF:
 	.byte $AD
-	.incbin "tilesets/ts_Bowser.bin"
+	.incbin "data/tilesets/ts_Bowser.bin"
 	.byte $00
 	.byte $00
 	.byte $00
@@ -690,7 +690,7 @@ bra14_8FF4:
 	STA objYDistLo,X
 	LDA objYHi,X
 	
-	.incbin "tilesets/ts_Bowser.bin"
+	.incbin "data/tilesets/ts_Bowser.bin"
 	.byte $42
 
 	BCS bra14_960D
@@ -926,4 +926,4 @@ bra14_97F7:
 	STA $06E1
 	.byte $BD
 	
-.incbin "tilesets/ts_Bowser.bin"
+.incbin "data/tilesets/ts_Bowser.bin"

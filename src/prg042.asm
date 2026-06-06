@@ -11,15 +11,15 @@ TilemapPointers:
 	.word CopyrightScreen
 	.word YoshiHouse ; Unused
 TitleLogo:
-	.incbin "screens/TitleLogo.bin"
+	.incbin "data/screens/TitleLogo.bin"
 EndingScreen:
-	.incbin "screens/EndingScreen.bin"
+	.incbin "data/screens/EndingScreen.bin"
 ThankYouScreen:
-	.incbin "screens/ThankYouScreen.bin"
+	.incbin "data/screens/ThankYouScreen.bin"
 CopyrightScreen:
-	.incbin "screens/CopyrightScreen.bin"
+	.incbin "data/screens/CopyrightScreen.bin"
 YoshiHouse:
-	.incbin "screens/YoshiHouse.bin" ; Unused
+	.incbin "data/screens/YoshiHouse.bin" ; Unused
 	.byte $11, $30, $2A, $0E
 	.byte $11, $38, $26, $0E
 	.byte $11, $37, $2A, $1A
@@ -556,30 +556,9 @@ pnt3_8AAD:
 SprMap_PlayerText:
 	.byte $08
 	.byte $03
-	.byte $8F
-	.byte $FF
-	.byte $90
-	.byte $91
-	.byte $92
-	.byte $93
-	.byte $94
-	.byte $95
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $98
-	.byte $FF
-	.byte $90
-	.byte $91
-	.byte $92
-	.byte $93
-	.byte $94
-	.byte $95
+	.byte $8F, $FF, $90, $91, $92, $93, $94, $95
+	.byte $FF, $FF, $FF, $FF, $FF, $FF, $FF, $FF
+	.byte $98, $FF, $90, $91, $92, $93, $94, $95
 pnt3_8ACC:
 	.byte $08
 	.byte $03
