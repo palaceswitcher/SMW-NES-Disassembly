@@ -350,6 +350,7 @@ function main()
 				emu.drawString(objX, objY-8, string.format("%X", emu.read(0x578+i, emu.memType.nesMemory)), white, red)
 				emu.drawString(objX, objY, string.format("%X", emu.read(0x500+i, emu.memType.nesMemory)), white, lavender)
 				emu.drawString(objX, objY+8, string.format("%X", emu.read(0x669+i, emu.memType.nesMemory)), white, green)
+				emu.drawString(objX, objY+16, string.format("%X", emu.read(0x655+i, emu.memType.nesMemory)), white, blue)
 			end
 		end
 
