@@ -187,7 +187,7 @@ Filenames (excluding CHR banks) should be in TitleCase, with a prefix separated 
     └── padding
 ```
 
-### Object Code Conventions
+### Object Code File Conventions
 
 - Every unique object ID (excluding odd IDs used for alternative banking) should be treated as a unique object, regardless of what it represents.
 - Due to many banks having haphazardly placed subroutines between object code, some subroutines may have to be put in their own code. They should be prefixed with `ObjBhvFunc` and placed under `src/obj/behavior`.
