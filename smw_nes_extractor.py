@@ -1,8 +1,52 @@
 #!/usr/bin/python3
-# SMW NES Data Extractor v1.4.0 by PalaceSwitcher
+# SMW NES Data Extractor v1.5.0 by PalaceSwitcher
+# For use with the disassembly
+import argparse
 import typing
 import os
 import sys
+
+# Argument parsing
+
+parser = argparse.ArgumentParser(usage="Extracts data from a Super Mario World NES ROM for use with the disassembly. All data will be extracted unless any of the arguments below are passed.")
+
+parser.add_argument("filename", type=str, help="Extracted ROM filename")
+
+parser.add_argument("--chr", help="Extract the CHR ROM", action="store_true")
+parser.add_argument("--chr-full", help="Extracted the CHR as a single file rather than banks", action="store_true")
+parser.add_argument("--levels", help="Extract all level data, including the title screen", action="store_true")
+parser.add_argument("--overworld", help="Extract all overworld-related data", action="store_true")
+parser.add_argument("--rle", help="Extract all RLE-compressed 8x8 tilemaps", action="store_true")
+parser.add_argument("--rle-title", help="Extract the title screen logo RLE data", action="store_true")
+parser.add_argument("--rle-ending", help="Extract the ending screen RLE data", action="store_true")
+parser.add_argument("--rle-copyright", help="Extract the copyright screen RLE data", action="store_true")
+parser.add_argument("--rle-thank-you", help="Extract the \"Thank You\" screen RLE data", action="store_true")
+parser.add_argument("--rle-yoshi-house", help="Extract the unused Yoshi House RLE data", action="store_true")
+parser.add_argument("-v", "--version", action="version", version="%(prog)s 1.5.0")
+args = parser.parse_args()
+
+extract_chr = True
+extract_levels = True
+extract_overworld = True
+filename = args.filename
+extract_single_chr = args.chr_full
+extract_rle_title = True
+extract_rle_ending= True
+extract_rle_copyright = True
+extract_rle_thankyou = True
+extract_rle_yoshihouse = True
+
+if True in [args.chr, args.levels, args.overworld, args.rle, args.rle_title, args.rle_ending, args.rle_copyright, args.rle_thank_you, args.rle_yoshi_house]:
+	extract_chr = args.chr
+	extract_levels = args.levels
+	extract_overworld = args.overworld
+
+	if not args.rle:
+		extract_rle_title = args.rle_title
+		extract_rle_ending= args.rle_ending
+		extract_rle_copyright = args.rle_copyright
+		extract_rle_thankyou = args.rle_thank_you
+		extract_rle_yoshihouse = args.rle_yoshi_house
 
 # Drag and drop functionality
 try:
@@ -13,13 +57,13 @@ except IndexError:
 # File error handling
 while True:
 	try:
-		f = open(filename, "rb") #Get file
+		f = open(filename, "rb") # Get file
 		break
 	except FileNotFoundError as not_found:
 		print("File \""+not_found.filename+"\" not found!")
 		filename = input("Filename: ")
 
-rom_data = f.read() #Read file
+rom_data = f.read() # Read file
 
 # Export part of rom
 def dump_chunk(data, path, start_offs, end_offs):
@@ -146,57 +190,73 @@ create_dir("data/tilesets")
 create_dir("data/screens")
 create_dir("data/chr")
 
-print("Dumping CHR... ")
-for i in range(256):
-	dump_chunk(rom_data, f"data/chr/chr{i:03d}.chr", 0x80010+(i*0x400), 0x80010+(i*0x400)+0x400) # Dump CHR
+if extract_chr:
+	print("Extracting CHR...")
+	if extract_single_chr:
+		dump_chunk(rom_data, f"data/chr/smw.chr", 0x80010, 0xC0010)
+	for i in range(256):
+		dump_chunk(rom_data, f"data/chr/chr{i:03d}.chr", 0x80010+(i*0x400), 0x80010+(i*0x400)+0x400)
 
-print("Dumping levels... ")
-# Dump levels
-dump_chunk(rom_data, "data/levels/lvl_1-1.bin", 0x10, 0x2010)
-dump_chunk(rom_data, "data/levels/lvl_1-2.bin", 0x2010, 0x4010)
-dump_chunk(rom_data, "data/levels/lvl_1-3.bin", 0x4010, 0x6010)
-dump_chunk(rom_data, "data/levels/lvl_1-4_1.bin", 0x6010, 0x6910) # 1st part of 1-4
-dump_chunk(rom_data, "data/levels/lvl_GhostHouseIntro.bin", 0x6910, 0x6C10) # Unused screen at end of this
-dump_chunk(rom_data, "data/levels/lvl_CastleIntro.bin", 0x6C10, 0x6D10)
-dump_chunk(rom_data, "data/levels/lvl_YoshiHouse.bin", 0x6D10, 0x7210) # 0x300 bytes of 0 after this
-dump_chunk(rom_data, "data/levels/lvl_1-4_2.bin", 0x7210, 0x7810) # 2nd part of 1-4
-dump_chunk(rom_data, "data/levels/lvl_Bonus.bin", 0x7810, 0x8010)
+if extract_levels:
+	print("Extracting level data...")
+	# Dump levels
+	dump_chunk(rom_data, "data/levels/lvl_1-1.bin", 0x10, 0x2010)
+	dump_chunk(rom_data, "data/levels/lvl_1-2.bin", 0x2010, 0x4010)
+	dump_chunk(rom_data, "data/levels/lvl_1-3.bin", 0x4010, 0x6010)
+	dump_chunk(rom_data, "data/levels/lvl_1-4_1.bin", 0x6010, 0x6910) # 1st part of 1-4
+	dump_chunk(rom_data, "data/levels/lvl_GhostHouseIntro.bin", 0x6910, 0x6C10) # Unused screen at end of this
+	dump_chunk(rom_data, "data/levels/lvl_CastleIntro.bin", 0x6C10, 0x6D10)
+	dump_chunk(rom_data, "data/levels/lvl_YoshiHouse.bin", 0x6D10, 0x7210) # 0x300 bytes of 0 after this
+	dump_chunk(rom_data, "data/levels/lvl_1-4_2.bin", 0x7210, 0x7810) # 2nd part of 1-4
+	dump_chunk(rom_data, "data/levels/lvl_Bonus.bin", 0x7810, 0x8010)
 
-for i in range(4, 27):
-	dump_chunk(rom_data, f"data/levels/lvl_{i//4+1}-{i%4+1}.bin", 0x2000*i+0x10, 0x2000*i+0x2010)
-dump_chunk(rom_data, "data/levels/lvl_7-4.bin", 0x36010, 0x37710)
-dump_chunk(rom_data, "data/levels/lvl_BowserRoom.bin", 0x37710, 0x37810)
-dump_chunk(rom_data, "data/levels/lvl_ClownCar.bin", 0x37810, 0x38010)
-dump_chunk(rom_data, "data/levels/lvl_Title.bin", 0x5A010, 0x5AE10)
-dump_chunk(rom_data, "data/levels/lvl_Map.bin", 0x5C010, 0x5D910)
+	for i in range(4, 27):
+		dump_chunk(rom_data, f"data/levels/lvl_{i//4+1}-{i%4+1}.bin", 0x2000*i+0x10, 0x2000*i+0x2010)
+	dump_chunk(rom_data, "data/levels/lvl_7-4.bin", 0x36010, 0x37710)
+	dump_chunk(rom_data, "data/levels/lvl_BowserRoom.bin", 0x37710, 0x37810)
+	dump_chunk(rom_data, "data/levels/lvl_ClownCar.bin", 0x37810, 0x38010)
+	dump_chunk(rom_data, "data/levels/lvl_Title.bin", 0x5A010, 0x5AE10)
 
-print("Dumping tilesets... ")
-# Dump tilesets
-for i in range(28):
-	dump_chunk(rom_data, f"data/tilesets/ts_{i//4+1}-{i%4+1}.bin", 0x800*i+0x38010, 0x800*i+0x38810)
-dump_chunk(rom_data, "data/tilesets/ts_YoshiHouse.bin", 0x46010, 0x46810)
-dump_chunk(rom_data, "data/tilesets/ts_Unused1.bin", 0x46810, 0x47010)
-dump_chunk(rom_data, "data/tilesets/ts_GhostHouseIntro.bin", 0x47010, 0x47810)
-dump_chunk(rom_data, "data/tilesets/ts_CastleIntro.bin", 0x47810, 0x48010)
-dump_chunk(rom_data, "data/tilesets/ts_Bowser.bin", 0x4D810, 0x4DE10)
-dump_chunk(rom_data, "data/tilesets/ts_Bonus.bin", 0x56010, 0x56610)
-dump_chunk(rom_data, "data/tilesets/ts_Title.bin", 0x58010, 0x58810)
-dump_chunk(rom_data, "data/tilesets/ts_Map.bin", 0x58810, 0x59010)
-dump_chunk(rom_data, "data/tilesets/ts_Unused2.bin", 0x59010, 0x59810)
-dump_chunk(rom_data, "data/tilesets/ts_Unused3.bin", 0x59810, 0x5A010)
+	# Dump tilesets
+	for i in range(28):
+		dump_chunk(rom_data, f"data/tilesets/ts_{i//4+1}-{i%4+1}.bin", 0x800*i+0x38010, 0x800*i+0x38810)
+	dump_chunk(rom_data, "data/tilesets/ts_YoshiHouse.bin", 0x46010, 0x46810)
+	dump_chunk(rom_data, "data/tilesets/ts_Unused1.bin", 0x46810, 0x47010)
+	dump_chunk(rom_data, "data/tilesets/ts_GhostHouseIntro.bin", 0x47010, 0x47810)
+	dump_chunk(rom_data, "data/tilesets/ts_CastleIntro.bin", 0x47810, 0x48010)
+	dump_chunk(rom_data, "data/tilesets/ts_Bowser.bin", 0x4D810, 0x4DE10)
+	dump_chunk(rom_data, "data/tilesets/ts_Bonus.bin", 0x56010, 0x56610)
+	dump_chunk(rom_data, "data/tilesets/ts_Title.bin", 0x58010, 0x58810)
+	dump_chunk(rom_data, "data/tilesets/ts_Unused2.bin", 0x59010, 0x59810)
+	dump_chunk(rom_data, "data/tilesets/ts_Unused3.bin", 0x59810, 0x5A010)
+	
+	# Dump level metadata
+	print("Decompiling level metadata...")
+	open("data/levels/SpawnData.asm", "w").write(decomp_spawndata(rom_data[0x7B686:0x7B77E], 0xB676, "spawnDataWorld"))
+	open("data/levels/CheckpointSpawnData.asm", "w").write(decomp_spawndata(rom_data[0x7B77E:0x7B86C], 0xB76E, "spawnDataCheckpointWorld"))
+	#open("data/levels/Palettes.asm", "w").write(decomp_generic(rom_data[0x7FA0C:0x7FE9C], 0xF9FC, 4, True, PALETTE_LABELS))
 
-# Dump level metadata
-print("Dumping level metadata... ")
-open("data/levels/SpawnData.asm", "w").write(decomp_spawndata(rom_data[0x7B686:0x7B77E], 0xB676, "spawnDataWorld"))
-open("data/levels/CheckpointSpawnData.asm", "w").write(decomp_spawndata(rom_data[0x7B77E:0x7B86C], 0xB76E, "spawnDataCheckpointWorld"))
-#open("data/levels/Palettes.asm", "w").write(decomp_generic(rom_data[0x7FA0C:0x7FE9C], 0xF9FC, 4, True, PALETTE_LABELS))
+# Dump overworld data
+if extract_overworld:
+	print("Extracting overworld data...")
+	dump_chunk(rom_data, "data/levels/lvl_Map.bin", 0x5C010, 0x5D910)
+	dump_chunk(rom_data, "data/tilesets/ts_Map.bin", 0x58810, 0x59010)
 
 # Dump screens
-print("Dumping tilemaps... ")
-dump_chunk(rom_data, "data/screens/TitleLogo.bin", 0x5401A, 0x54123)
-dump_chunk(rom_data, "data/screens/EndingScreen.bin", 0x54123, 0x541F2)
-dump_chunk(rom_data, "data/screens/ThankYouScreen.bin", 0x541F2, 0x5448C)
-dump_chunk(rom_data, "data/screens/CopyrightScreen.bin", 0x5448C, 0x544E2)
-dump_chunk(rom_data, "data/screens/YoshiHouse.bin", 0x544E2, 0x5473B)
+if extract_rle_title:
+	print("Extracting compressed tilemaps...")
+	dump_chunk(rom_data, "data/screens/TitleLogo.bin", 0x5401A, 0x54123)
+if extract_rle_ending:
+	print("Extracting compressed tilemaps...")
+	dump_chunk(rom_data, "data/screens/EndingScreen.bin", 0x54123, 0x541F2)
+if extract_rle_thankyou:
+	print("Extracting compressed tilemaps...")
+	dump_chunk(rom_data, "data/screens/ThankYouScreen.bin", 0x541F2, 0x5448C)
+if extract_rle_copyright:
+	print("Extracting compressed tilemaps...")
+	dump_chunk(rom_data, "data/screens/CopyrightScreen.bin", 0x5448C, 0x544E2)
+if extract_rle_yoshihouse:
+	print("Extracting compressed tilemaps...")
+	dump_chunk(rom_data, "data/screens/YoshiHouse.bin", 0x544E2, 0x5473B)
 
 print("Data dumped successfully.")
