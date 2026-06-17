@@ -121,6 +121,12 @@ PRG48_OBJS := \
 	$(OBJ_DIR)/data/obj/Obj_ChuckBooMovementData.o \
 
 PRG49_OBJS := \
+	$(OBJ_DIR)/src/obj/render/ObjDrawShared_SpecialObjects.o \
+	$(OBJ_DIR)/src/obj/render/ObjDrawShared_LineGuidedObjects.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_SpecialObjects.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_ReznorFireball.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_HurtPlayerColl.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Reznor.o \
 	$(OBJ_DIR)/src/prg049.o
 
 PRG50_OBJS := \

@@ -442,11 +442,15 @@ tbl3_A1B5:
 	.word obj0x30
 
 	.export OBJ_LINEPLATFORM := (*-tbl3_A1B5)/2
-	.word obj0x54 ; 54 (Line Platform)
+	.word obj0x54 ;54 (Line Platform)
+
+	.export OBJ_LINEPLATFORM_ALT := (*-tbl3_A1B5)/2
 	.word obj0x54
 
-	.export OBJ_SHORTPLATFORM := (*-tbl3_A1B5)/2
+	.export OBJ_CHAINPLATFORM_GREEN := (*-tbl3_A1B5)/2
 	.word obj0x54
+
+	.export OBJ_CHAINPLATFORM_RED := (*-tbl3_A1B5)/2
 	.word obj0x54
 
 	.export OBJ_PARATROOPA_GREEN := (*-tbl3_A1B5)/2 ; Verify this
@@ -460,13 +464,13 @@ tbl3_A1B5:
 	.export OBJ_ROPE := (*-tbl3_A1B5)/2
 	.word obj0x5C
 	.word obj0x5C
-	.word obj0x5C
 
 	.export OBJ_ROPE_LONG := (*-tbl3_A1B5)/2
-	.word obj0x5C
+	.word obj0x5C ; 5E
+	.word obj0x5C ; 5F
 
 	.export OBJ_CHAINSAW_DOWN := (*-tbl3_A1B5)/2
-	.word obj0x5A
+	.word obj0x5A ; 60
 	.word obj0x5A
 
 	.export OBJ_CHAINSAW_UP_ALT := (*-tbl3_A1B5)/2 ; Verify this
@@ -1037,7 +1041,7 @@ tbl3_A435:
 
 	.word obj0xED
 
-	.export OBJ_PSWITCHPLATFORM3 := (*-tbl3_A435)/2 + $80 ; Verify this
+	.export OBJ_PIPE_CANNON := (*-tbl3_A435)/2 + $80 ; Verify this
 	.word obj0xED ; F0
 	.word obj0xED
 
@@ -1047,8 +1051,10 @@ tbl3_A435:
 	.export OBJ_BGPRIORITY_BELOW := (*-tbl3_A435)/2 + $80
 	.word obj0xF0
 
-	.export OBJ_PIPEEXIT := (*-tbl3_A435)/2 + $80	
+	.export OBJ_PIPE_BONUS := (*-tbl3_A435)/2 + $80
 	.word obj0xED
+
+	.export OBJ_PIPE_BONUS_EXIT := (*-tbl3_A435)/2 + $80
 	.word obj0xED ; F5
 
 	.export OBJ_SPIKE_UP_ALT := (*-tbl3_A435)/2 + $80
@@ -1792,7 +1798,7 @@ objectXHitBoxSizes:
 	.byte $10
 	.byte $10
 	.byte $10
-	.byte $20
+	.byte $20 ; Reznor
 	.byte $10
 	.byte $10
 	.byte $10
@@ -4611,21 +4617,21 @@ ptr11_B8DB:
 	LDA interruptMode
 	CMP #$04
 	BNE bra3_B904
-	LDA ($34),Y
-	STA $06E2
-	INY
-	LDA ($34),Y
-	STA $06E3
-	INC $0641,X
-	LDA $0641,X
-	INY
-	CMP ($34),Y
-	BCC bra3_B903_RTS
-	LDA #$00
-	STA $0641,X
-	INC objState,X
-bra3_B903_RTS:
-	RTS
+		LDA ($34),Y
+		STA $06E2
+		INY
+		LDA ($34),Y
+		STA $06E3
+		INC $0641,X
+		LDA $0641,X
+		INY
+		CMP ($34),Y
+		BCC bra3_B903_RTS
+		LDA #$00
+		STA $0641,X
+		INC objState,X
+	bra3_B903_RTS:
+		RTS
 
 bra3_B904:
 	LDA ($34),Y
@@ -5169,7 +5175,7 @@ bra3_BC99:
 bra3_BC9A:
 	BCC bra3_BCA6_RTS
 	LDA objFlags,X
-	AND #$E0
+	AND #OBJFLAG_HELD|OBJFLAG_HORIZ|OBJFLAG_VERT
 	STA objFlags,X
 	PLA
 	PLA

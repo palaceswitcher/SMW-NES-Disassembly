@@ -4,1042 +4,6 @@
 .include "macros.asm"
 .include "variables.asm"
 
-.export ptr6_8000
-ptr6_8000:
-	LDA objFrameCount
-	AND #$01
-	BEQ bra5_8008
-	RTS
-
-.export bra5_8008
-bra5_8008:
-	LDX $A4
-	LDA enemyAnimFrame,X
-	BNE bra5_8010
-	RTS
-bra5_8010:
-	AND #$3F
-	ASL
-	TAX
-	LDA tbl5_805E,X
-	STA $32
-	LDA tbl5_805E+1,X
-	STA $33
-	LDY #$80
-	LDX $A4
-	LDA objSlot,X
-	AND #$01
-	BEQ bra5_802B
-	LDY #$C0
-bra5_802B:
-	STY $36
-	LDA enemyAnimFrame,X
-	AND #$C0
-	STA $05F0
-	JSR jmp_54_A118
-	RTS
-.export ptr6_8039
-ptr6_8039:
-	LDX $A4
-	LDA enemyAnimFrame,X
-	AND #$3F
-	ASL
-	TAX
-	LDA tbl5_805E,X
-	STA $32
-	LDA tbl5_805E+1,X
-	STA $33
-	LDA #$80
-	STA $36
-	LDX $A4
-	LDA enemyAnimFrame,X
-	AND #$C0
-	STA $05F0
-	JSR jmp_54_A118
-	RTS
-tbl5_805E:
-	.word ofs2_80CE
-	.word ofs2_8278
-	.word ofs2_828F
-	.word ofs2_82A6
-	.word ofs2_82AD
-	.word ofs2_82B4
-	.word ofs2_82BB
-	.word spikeTop_Walk1
-	.word spikeTop_Walk2
-	.word spikeTop_SideWalk1
-	.word spikeTop_SideWalk2
-	.word spikeTop_Diag
-	.word spikeTop_Walk1_VMir
-	.word spikeTop_Walk2_VMir
-	.word spikeTop_SideWalk1_VMir
-	.word spikeTop_SideWalk2_VMir
-	.word spikeTop_Diag_VMir
-	.word fenceKoopa
-	.word redPlatform
-	.word redPlatform
-	.word greenPlatform
-	.word fuzzySpr
-	.word fuzzySpr2
-	.word onOffSwitch_Off
-	.word onOffSwitch_On
-	.word chainsaw1
-	.word chainsaw2
-	.word chainsaw3
-	.word rope1
-	.word rope2
-	.word rope3
-	.word Longrope1
-	.word Longrope2
-	.word Longrope3
-; Unused upside-down sprites--->
-	.word chainsaw_VMir1
-	.word chainsaw_VMir2
-	.word chainsaw_VMir3
-; <---
-	.word chainsaw1
-	.word chainsaw2
-	.word chainsaw3
-	.word ofs2_8261
-	.word pSwitchPlatform
-	.word pSwitchDoor
-pSwitchPlatform:
-	.byte $06
-	.byte $02
-	.byte $A4
-	.byte $32, $33, $32, $33, $32, $33
-	.byte $34, $35, $34, $35, $34, $35
-pSwitchDoor:
-	.byte $02
-	.byte $04
-	.byte $AB
-	.byte $38, $39
-	.byte $3A, $3B
-	.byte $3C, $3D
-	.byte $3E, $3F
-ofs2_80CE:
-	.byte $01
-	.byte $01
-	.byte $95
-	.byte $FF
-chainsaw1:
-	.byte $02
-	.byte $05
-	.byte $95
-	.byte $01, $02
-	.byte $05, $06
-	.byte $09, $0A
-	.byte $0D, $0E
-	.byte $13, $14
-chainsaw2:
-	.byte $02
-	.byte $05
-	.byte $95
-	.byte $03, $04
-	.byte $07, $08
-	.byte $0B, $0C
-	.byte $0F, $10
-	.byte $15, $16
-chainsaw3:
-	.byte $02
-	.byte $05
-	.byte $95
-	.byte $03, $04
-	.byte $07, $08
-	.byte $0B, $0C
-	.byte $11, $12
-	.byte $15, $16
-
-; These 3 go unused
-chainsaw_VMir1:
-	.byte $02
-	.byte $05
-	.byte $95
-	.byte $13, $14
-	.byte $0D, $0E
-	.byte $09, $0A
-	.byte $05, $06
-	.byte $01, $02
-chainsaw_VMir2:
-	.byte $02
-	.byte $05
-	.byte $95
-	.byte $15, $16
-	.byte $0F, $10
-	.byte $0B, $0C
-	.byte $07, $08
-	.byte $03, $04
-chainsaw_VMir3:
-	.byte $02
-	.byte $05
-	.byte $95
-	.byte $15, $16
-	.byte $11, $12
-	.byte $0B, $0C
-	.byte $07, $08
-	.byte $03, $04
-
-rope1:
-	.byte $02
-	.byte $0A
-	.byte $95
-	.byte $1B, $1C
-	.byte $13, $14
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1F, $FF
-rope2:
-	.byte $02
-	.byte $0A
-	.byte $95
-	.byte $17, $18
-	.byte $15, $16
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1F, $FF
-rope3:
-	.byte $02
-	.byte $0A
-	.byte $95
-	.byte $19, $1A
-	.byte $15, $16
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1F, $FF
-Longrope1:
-	.byte $02
-	.byte $11
-	.byte $95
-	.byte $1B, $1C
-	.byte $13, $14
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1F, $FF
-Longrope2:
-	.byte $02
-	.byte $11
-	.byte $95
-	.byte $17, $18
-	.byte $15, $16
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1F, $FF
-Longrope3:
-	.byte $02
-	.byte $11
-	.byte $95
-	.byte $19, $1A
-	.byte $15, $16
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1E, $FF
-	.byte $1F, $FF
-onOffSwitch_Off:
-	.byte $02
-	.byte $02
-	.byte $A4
-	.byte $2E, $2F
-	.byte $30, $31
-onOffSwitch_On:
-	.byte $02
-	.byte $02
-	.byte $A4
-	.byte $2A, $2B
-	.byte $2C, $2D
-redPlatform:
-	.byte $06
-	.byte $02
-	.byte $A4
-	.byte $39, $3A, $3A, $3A, $3A, $3B
-	.byte $3C, $3D, $3D, $3D, $3D, $3E
-greenPlatform:
-	.byte $05
-	.byte $02
-	.byte $A4
-	.byte $24, $25, $25, $25, $26
-	.byte $27, $28, $28, $28, $29
-fuzzySpr:
-	.byte $03
-	.byte $02
-	.byte $A4
-	.byte $01, $02, $FF
-	.byte $0B, $0C, $0D
-fuzzySpr2:
-	.byte $03
-	.byte $02
-	.byte $A4
-	.byte $03, $04, $FF
-	.byte $0E, $0C, $0F
-fenceKoopa:
-	.byte $02
-	.byte $04
-	.byte $94
-	.byte $14, $15
-	.byte $20, $21
-	.byte $2F, $30
-	.byte $3B, $3C
-spikeTop_Walk1:
-	.byte $02
-	.byte $02
-	.byte $97
-	.byte $2C, $2D
-	.byte $32, $33
-spikeTop_Walk2:
-	.byte $02
-	.byte $02
-	.byte $97
-	.byte $2E, $2F
-	.byte $34, $35
-spikeTop_SideWalk1:
-	.byte $02
-	.byte $02
-	.byte $97
-	.byte $38, $39
-	.byte $3C, $3D
-spikeTop_SideWalk2:
-	.byte $02
-	.byte $02
-	.byte $97
-	.byte $3A, $3B
-	.byte $3E, $3F
-; Unused--->
-spikeTop_Diag:
-	.byte $02
-	.byte $02
-	.byte $97
-	.byte $30, $31
-	.byte $36, $37
-; <---
-spikeTop_Walk1_VMir:
-	.byte $02
-	.byte $02
-	.byte $97
-	.byte $32, $33
-	.byte $2C, $2D
-spikeTop_Walk2_VMir:
-	.byte $02
-	.byte $02
-	.byte $97
-	.byte $34, $35
-	.byte $2E, $2F
-spikeTop_SideWalk1_VMir:
-	.byte $02
-	.byte $02
-	.byte $97
-	.byte $3C, $3D
-	.byte $38, $39
-spikeTop_SideWalk2_VMir:
-	.byte $02
-	.byte $02
-	.byte $97
-	.byte $3E, $3F
-	.byte $3A, $3B
-; Unused--->
-spikeTop_Diag_VMir:
-	.byte $02
-	.byte $02
-	.byte $97
-	.byte $36, $37
-	.byte $30, $31
-; <---
-ofs2_8261:
-	.byte $04
-	.byte $05
-	.byte $B6
-	.byte $80
-	.byte $81
-	.byte $82
-	.byte $83
-	.byte $8B
-	.byte $8C
-	.byte $8D
-	.byte $8E
-	.byte $99
-	.byte $9A
-	.byte $9B
-	.byte $9C
-	.byte $A7
-	.byte $A8
-	.byte $A9
-	.byte $AA
-	.byte $B2
-	.byte $B3
-	.byte $B3
-	.byte $B4
-ofs2_8278:
-	.byte $04
-	.byte $05
-	.byte $B6
-	.byte $84
-	.byte $85
-	.byte $86
-	.byte $FF
-	.byte $8F
-	.byte $90
-	.byte $91
-	.byte $92
-	.byte $9D
-	.byte $9E
-	.byte $9F
-	.byte $A0
-	.byte $AB
-	.byte $AC
-	.byte $AD
-	.byte $AA
-	.byte $B2
-	.byte $B3
-	.byte $B3
-	.byte $B4
-ofs2_828F:
-	.byte $04
-	.byte $05
-	.byte $B6
-	.byte $87
-	.byte $88
-	.byte $89
-	.byte $8A
-	.byte $93
-	.byte $94
-	.byte $95
-	.byte $96
-	.byte $A1
-	.byte $A2
-	.byte $A3
-	.byte $A4
-	.byte $AE
-	.byte $AF
-	.byte $B0
-	.byte $B1
-	.byte $B2
-	.byte $B3
-	.byte $B3
-	.byte $B4
-ofs2_82A6:
-	.byte $02
-	.byte $02
-	.byte $B6
-	.byte $97
-	.byte $98
-	.byte $A5
-	.byte $A6
-ofs2_82AD:
-	.byte $02
-	.byte $02
-	.byte $B6
-	.byte $A5
-	.byte $A6
-	.byte $97
-	.byte $98
-ofs2_82B4:
-	.byte $04
-	.byte $01
-	.byte $B6
-	.byte $B2
-	.byte $B3
-	.byte $B3
-	.byte $B4
-ofs2_82BB:
-	.byte $04
-	.byte $04
-	.byte $B6
-	.byte $80
-	.byte $81
-	.byte $82
-	.byte $83
-	.byte $8B
-	.byte $8C
-	.byte $8D
-	.byte $8E
-	.byte $99
-	.byte $9A
-	.byte $9B
-	.byte $9C
-	.byte $A7
-	.byte $A8
-	.byte $A9
-	.byte $AA
-.export obj0x78
-obj0x78:
-	JSR sub5_82EC
-	LDA frameCount
-	AND #$00
-	BNE bra5_82DC
-	LDA #$2C
-	JSR jmp_54_B11D
-bra5_82DC:
-	LDY #$03
-	LDA objFrameCount
-	AND #$04
-	BEQ bra5_82E7
-	LDY #$C4
-bra5_82E7:
-	TYA
-	STA enemyAnimFrame,X
-	RTS
-sub5_82EC:
-	LDA #$07
-	STA $25
-	LDX $A4
-	LDA objXLo,X
-	SEC
-	SBC playerXLoDup
-	STA objXDistLo,X
-	LDA objXHi,X
-	SBC playerXHiDup
-	STA objXDistHi,X
-	STA $28
-	BEQ bra5_830E
-	CMP #$FF
-	BEQ bra5_830E
-	JMP objRemoveObject
-bra5_830E:
-	LDA objYLo,X
-	SEC
-	SBC playerYLoDup
-	STA objYDistLo,X
-	LDA objYHi,X
-	SBC playerYHiDup
-	STA objYDistHi,X
-	LDA playerYHiDup
-	CMP objYHi,X
-	BEQ loc5_8350
-	LDA objYDistHi,X
-	BPL bra5_833F
-	LDA objYDistLo,X
-	CLC
-	ADC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	ADC #$00
-	STA objYDistHi,X
-	JMP loc5_8350
-bra5_833F:
-	LDA objYDistLo,X
-	SEC
-	SBC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	SBC #$00
-	STA objYDistHi,X
-loc5_8350:
-	LDA freezeFlag
-	BEQ bra5_8356
-	RTS
-bra5_8356:
-	LDA objFlags,X
-	AND #$1F
-	ASL
-	TAY
-	LDA tbl5_836A,Y
-	STA $32
-	LDA tbl5_836A+1,Y
-	STA $33
-	JMP ($32)
-tbl5_836A:
-	.word objYoshiTongueCheck
-	.word ptr_AA7B
-	.word objPowerupEatCheck
-	.word ptr10_8372
-ptr10_8372:
-	JSR jmp_54_BC3E
-	JSR jmp_54_BF74
-	RTS
-.export obj0x77
-obj0x77:
-	LDX $A4
-	LDA objXLo,X
-	SEC
-	SBC playerXLoDup
-	STA objXDistLo,X
-	LDA objXHi,X
-	SBC playerXHiDup
-	STA objXDistHi,X
-	STA $28
-	BEQ bra5_8397
-	CMP #$FF
-	BEQ bra5_8397
-	JMP objRemoveObject
-bra5_8397:
-	LDA objYLo,X
-	SEC
-	SBC playerYLoDup
-	STA objYDistLo,X
-	LDA objYHi,X
-	SBC playerYHiDup
-	STA objYDistHi,X
-	LDA playerYHiDup
-	CMP objYHi,X
-	BEQ bra5_83D9
-	LDA objYDistHi,X
-	BPL bra5_83C8
-	LDA objYDistLo,X
-	CLC
-	ADC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	ADC #$00
-	STA objYDistHi,X
-	JMP loc5_83D9
-bra5_83C8:
-	LDA objYDistLo,X
-	SEC
-	SBC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	SBC #$00
-	STA objYDistHi,X
-bra5_83D9:
-loc5_83D9:
-	LDA freezeFlag
-	BEQ bra5_83DF
-	RTS
-bra5_83DF:
-	LDA objVar,X
-	BPL bra5_844D
-	LDA #$00
-	STA reznorsDefeated
-	STA objVar,X
-	LDY objCount
-	INC objCount
-	INC objCount
-	LDA #$18
-	STA objVar,Y
-	LDA #$40
-	STA objStateTimer,Y
-	LDA #$0C
-	STA objVar+1,Y
-	LDA #$80
-	STA $0642,Y
-	LDA objXHi,X
-	STA objXHi,Y
-	STA objXHi+1,Y
-	LDA objYHi,X
-	STA objYHi,Y
-	STA objYHi+1,Y
-	LDA objXLo,X
-	CLC
-	ADC #$27
-	STA objXLo,Y
-	LDA objXLo,X
-	SEC
-	SBC #$2A
-	STA objXLo+1,Y
-	LDA objYLo,X
-	CLC
-	ADC #$45
-	STA objYLo,Y
-	STA objYLo+1,Y
-	LDA #$77
-	STA objSlot,Y
-	STA objSlot+1,Y
-	LDA #$00
-	STA objFlags,Y
-	STA objFlags+1,Y
-	STA objState,Y
-	STA objState+1,Y
-	RTS
-bra5_844D:
-	JSR sub5_85C6
-	LDA objState,X
-	ASL
-	TAY
-	LDA tbl5_8462,Y
-	STA $32
-	LDA tbl5_8462+1,Y
-	STA $33
-	JMP ($32)
-tbl5_8462:
-	.word ptr10_8470
-	.word ptr10_8494
-	.word ptr10_84B5
-	.word ptr10_84E7
-	.word ptr10_851D
-	.word ptr10_8553
-	.word ptr10_8564
-ptr10_8470:
-	LDA frameCount
-	AND #$07
-	BNE bra5_847B
-	LDA #$2B
-	JSR parseMovementData
-bra5_847B:
-	JSR sub5_8580
-	LDA #$68
-	STA enemyAnimFrame,X
-	LDA objXDistHi,X
-	BPL bra5_8493_RTS
-	LDA #$00
-	STA objStateTimer,X
-	INC objState,X
-	INC objState,X
-bra5_8493_RTS:
-	RTS
-ptr10_8494:
-	LDA frameCount
-	AND #$07
-	BNE bra5_849F
-	LDA #$2B
-	JSR parseMovementData
-bra5_849F:
-	JSR sub5_8580
-	LDA #$28
-	STA enemyAnimFrame,X
-	LDA objXDistHi,X
-	BMI bra5_84B4_RTS
-	LDA #$00
-	STA objStateTimer,X
-	INC objState,X
-bra5_84B4_RTS:
-	RTS
-ptr10_84B5:
-	LDA frameCount
-	AND #$07
-	BNE bra5_84C0
-	LDA #$2B
-	JSR parseMovementData
-bra5_84C0:
-	LDA #$02
-	STA enemyAnimFrame,X
-	LDA objStateTimer,X
-	CMP #$20
-	BCS bra5_84D0
-	INC objStateTimer,X
-	RTS
-bra5_84D0:
-	LDA objXDistHi,X
-	BMI bra5_84DE
-	LDA #$00
-	STA objState,X
-	STA objStateTimer,X
-	RTS
-bra5_84DE:
-	LDA #$00
-	STA objStateTimer,X
-	DEC objState,X
-	RTS
-ptr10_84E7:
-	LDA frameCount
-	AND #$07
-	BNE bra5_84F2
-	LDA #$2B
-	JSR parseMovementData
-bra5_84F2:
-	LDA #$41
-	STA enemyAnimFrame,X
-	INC objStateTimer,X
-	LDA objStateTimer,X
-	CMP #$20
-	BEQ bra5_8514
-	CMP #$40
-	BCC bra5_8513_RTS
-	LDA #$00
-	STA objStateTimer,X
-	DEC objState,X
-	DEC objState,X
-	DEC objState,X
-bra5_8513_RTS:
-	RTS
-bra5_8514:
-	JSR sub5_8599
-	LDA #$40
-	STA objFlags,Y
-	RTS
-ptr10_851D:
-	LDA frameCount
-	AND #$07
-	BNE bra5_8528
-	LDA #$2B
-	JSR parseMovementData
-bra5_8528:
-	LDA #$01
-	STA enemyAnimFrame,X
-	INC objStateTimer,X
-	LDA objStateTimer,X
-	CMP #$20
-	BEQ bra5_854A
-	CMP #$40
-	BCC bra5_854E_RTS
-	LDA #$00
-	STA objStateTimer,X
-	DEC objState,X
-	DEC objState,X
-	DEC objState,X
-bra5_854E_RTS:
-	RTS
-bra5_854A:
-	JSR sub5_8599
-	LDA #$00
-	STA objFlags,Y
-	RTS
-ptr10_8553:
-	LDA frameCount
-	AND #$07
-	BNE bra5_855E
-	LDA #$2B
-	JSR parseMovementData
-bra5_855E:
-	LDA #$05
-	STA enemyAnimFrame,X
-	RTS
-ptr10_8564:
-	LDA #$06
-	STA enemyAnimFrame,X
-	LDA reznorsDefeated
-	CMP #$03
-	BCC bra5_857F_RTS
-	LDA objYLo,X
-	CMP #$B0
-	BCC bra5_857F_RTS
-	LDA #$23
-	STA sndMusic
-	LDA #$09
-	STA gameState
-bra5_857F_RTS:
-	RTS
-sub5_8580:
-	INC objStateTimer,X
-	LDA objStateTimer,X
-	CMP #$E0
-	BCC bra5_8598_RTS
-	LDA #$00
-	STA objStateTimer,X
-	INC objState,X
-	INC objState,X
-	INC objState,X
-bra5_8598_RTS:
-	RTS
-sub5_8599:
-	LDY objCount
-	INC objCount
-	LDA objXLo,X
-	STA objXLo,Y
-	LDA objYLo,X
-	STA objYLo,Y
-	LDA objXHi,X
-	STA objXHi,Y
-	LDA objYHi,X
-	STA objYHi,Y
-	LDA #$78
-	STA objSlot,Y
-	LDA #$00
-	STA objVar,Y
-	STA objStateTimer,Y
-	STA objState,Y
-	RTS
-sub5_85C6:
-	LDA #$07
-	STA $25
-	LDX $A4
-	LDA objXLo,X
-	SEC
-	SBC playerXLoDup
-	STA objXDistLo,X
-	LDA objXHi,X
-	SBC playerXHiDup
-	STA objXDistHi,X
-	STA $28
-	BEQ bra5_85E8
-	CMP #$FF
-	BEQ bra5_85E8
-	JMP objRemoveObject
-bra5_85E8:
-	LDA objYLo,X
-	SEC
-	SBC playerYLoDup
-	STA objYDistLo,X
-	LDA objYHi,X
-	SBC playerYHiDup
-	STA objYDistHi,X
-	LDA playerYHiDup
-	CMP objYHi,X
-	BEQ bra5_862A
-	LDA objYDistHi,X
-	BPL bra5_8619
-	LDA objYDistLo,X
-	CLC
-	ADC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	ADC #$00
-	STA objYDistHi,X
-	JMP loc5_862A
-bra5_8619:
-	LDA objYDistLo,X
-	SEC
-	SBC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	SBC #$00
-	STA objYDistHi,X
-bra5_862A:
-loc5_862A:
-	LDA freezeFlag
-	BEQ bra5_8630
-	RTS
-bra5_8630:
-	LDA objFlags,X
-	AND #$1F
-	ASL
-	TAY
-	LDA tbl5_8644,Y
-	STA $32
-	LDA tbl5_8644+1,Y
-	STA $33
-	JMP ($32)
-tbl5_8644:
-	.word objYoshiTongueCheck
-	.word ptr_AA7B
-	.word objPowerupEatCheck
-	.word ptr10_864E
-	.word objFlipKill
-ptr10_864E:
-	LDX $A4
-	LDA objState,X
-	CMP #$05
-	BCS bra5_86BC_RTS
-	JSR sub5_86BD
-	JSR sub5_86C6
-	LDA playerMoveFlags
-	AND #$04
-	BEQ bra5_86BC_RTS
-	LDA #$F7
-	STA invincibilityTimer
-	LDA playerMoveFlags
-	AND #$FB
-	STA playerMoveFlags
-	LDA #$30
-	STA playerYSpd
-	LDA #$0F
-	STA sndSfx
-	LDA #$05
-	STA objState,X
-	LDA #$00
-	STA objStateTimer,X
-	LDY objCount
-	INC objCount
-	LDA objXLo,X
-	STA objXLo,Y
-	LDA objYLo,X
-	STA objYLo,Y
-	LDA objYLo,X
-	CLC
-	ADC #$20
-	STA objYLo,X
-	LDA objXHi,X
-	STA objXHi,Y
-	LDA objYHi,X
-	STA objYHi,Y
-	LDA #$77
-	STA objSlot,Y
-	LDA #$04
-	STA objFlags,Y
-	LDA #$00
-	STA objVar,Y
-	LDA #$06
-	STA objState,Y
-	INC reznorsDefeated
-bra5_86BC_RTS:
-	RTS
-sub5_86BD:
-	JSR jmp_54_BC3E
-	JSR jmp_54_BF74
-	PLA
-	PLA
-	RTS
-sub5_86C6:
-	LDA objXDistHi,X
-	BPL bra5_86D8
-	LDA #$08
-	CLC
-	ADC #$20
-	CLC
-	ADC objXDistLo,X
-	BCS bra5_86DF
-	BCC bra5_86FF
-bra5_86D8:
-	LDA objXDistLo,X
-	CMP #$08
-	BCS bra5_86FF
-bra5_86DF:
-	LDA objYDistHi,X
-	BEQ bra5_86F5
-	CMP #$FF
-	BNE bra5_86FF
-	LDA #$10
-	CLC
-	ADC #$28
-	CLC
-	ADC objYDistLo,X
-	BCS bra5_86FC
-	BCC bra5_86FF
-bra5_86F5:
-	LDA objYDistLo,X
-	CMP #$00
-	BCS bra5_86FF
-bra5_86FC:
-	CLC
-	BCC bra5_8700
-bra5_86FF:
-	SEC
-bra5_8700:
-	BCC bra5_870C_RTS
-	LDA objFlags,X
-	AND #$E0
-	STA objFlags,X
-	PLA
-	PLA
-bra5_870C_RTS:
-	RTS
 .export obj0x4A
 obj0x4A:
 	LDX $A4
@@ -1562,7 +526,7 @@ bra5_8B1D:
 loc5_8B21:
 	JSR sub5_8C27
 	LDA objSlot,X
-	CMP #$50
+	CMP #OBJ_CLIMBINGKOOPA_VERTICAL
 	BCS bra5_8B83
 	LDA objFlags,X
 	AND #$40
@@ -1974,52 +938,8 @@ bra5_8E4E_RTS:
 .export obj0x54
 obj0x54:
 	LDX $A4
-	LDA objXLo,X
-	SEC
-	SBC playerXLoDup
-	STA objXDistLo,X
-	LDA objXHi,X
-	SBC playerXHiDup
-	STA objXDistHi,X
-	STA $28
-	BEQ bra5_8E6D
-	CMP #$FF
-	BEQ bra5_8E6D
-	JMP objRemoveObject
-bra5_8E6D:
-	LDA objYLo,X
-	SEC
-	SBC playerYLoDup
-	STA objYDistLo,X
-	LDA objYHi,X
-	SBC playerYHiDup
-	STA objYDistHi,X
-	LDA playerYHiDup
-	CMP objYHi,X
-	BEQ bra5_8EAF
-	LDA objYDistHi,X
-	BPL bra5_8E9E
-	LDA objYDistLo,X
-	CLC
-	ADC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	ADC #$00
-	STA objYDistHi,X
-	JMP loc5_8EAF
-bra5_8E9E:
-	LDA objYDistLo,X
-	SEC
-	SBC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	SBC #$00
-	STA objYDistHi,X
-bra5_8EAF:
-loc5_8EAF:
-	LDA freezeFlag
-	BEQ bra5_8EB5
-	RTS
+	objDistCalc bra5_8EB5
+
 bra5_8EB5:
 	LDA objVar,X
 	BMI bra5_8EBD
@@ -2027,13 +947,14 @@ bra5_8EB5:
 bra5_8EBD:
 	JSR objFacePlayer
 	LDA objSlot,X
-	CMP #$55
+	CMP #OBJ_LINEPLATFORM_ALT
 	BCC bra5_8EEB
-	CMP #$56
+	CMP #OBJ_CHAINPLATFORM_GREEN
 	BEQ bra5_8F25
-	CMP #$57
+	CMP #OBJ_CHAINPLATFORM_RED
 	BCC bra5_8F0D
 	BEQ bra5_8EE2
+; 0x55
 	LDA objXLo,X
 	SEC
 	SBC #$08
@@ -2046,6 +967,7 @@ bra5_8EE2:
 	SEC
 	SBC #$08
 	JMP loc5_8F02
+; 0x54
 bra5_8EEB:
 	LDA objXLo,X
 	SEC
@@ -2062,22 +984,24 @@ loc5_8F02:
 	LDA objYHi,X
 	SBC #$00
 	STA objYHi,X
+; 0x57
 bra5_8F0D:
 	LDY objSlot,X
-	CPY #$57
+	CPY #OBJ_CHAINPLATFORM_RED
 	BNE bra5_8F18
-	LDY #$54
+	LDY #OBJ_LINEPLATFORM
 	BNE bra5_8F1E
 bra5_8F18:
-	CPY #$79
+	CPY #OBJ_FUZZY
 	BNE bra5_8F1E
-	LDY #$57
+	LDY #OBJ_CHAINPLATFORM_RED
 bra5_8F1E:
 	DEY
 	DEY
 	TYA
 	STA enemyAnimFrame,X
 	RTS
+; 0x56
 bra5_8F25:
 	LDA objXLo,X
 	CLC
@@ -2092,11 +1016,11 @@ bra5_8F25:
 	JMP loc5_8F02
 loc5_8F3F:
 	LDY objSlot,X
-	CPY #$79
+	CPY #OBJ_FUZZY
 	BEQ bra5_8F7E
-	CPY #$57
+	CPY #OBJ_CHAINPLATFORM_RED
 	BNE bra5_8F4C
-	LDY #$54
+	LDY #OBJ_LINEPLATFORM
 bra5_8F4C:
 	DEY
 	DEY
@@ -2117,10 +1041,10 @@ bra5_8F62:
 	JSR jmp_54_B896
 	LDY #$DA
 	LDA objSlot,X
-	CMP #$58
+	CMP #OBJ_PARATROOPA_GREEN
 	BCS bra5_8F78
 	SEC
-	SBC #$54
+	SBC #OBJ_LINEPLATFORM
 	TAY
 	LDA tbl5_8FA5,Y
 	TAY
@@ -2246,7 +1170,7 @@ bra5_904A:
 sub5_9056:
 	LDA objSlot,X
 	AND #$FE
-	CMP #$60
+	CMP #OBJ_CHAINSAW_DOWN
 	BNE bra5_9063
 	LDA #$E2
 	BNE bra5_9074
@@ -2254,13 +1178,13 @@ bra5_9063:
 	LDA objSlot,X
 	AND #$FE
 	SEC
-	SBC #$5A
+	SBC #OBJ_ROPE-2
 	STA $32
 	LSR
 	CLC
 	ADC $32
 	CLC
-	ADC #$59
+	ADC #OBJ_ROPE-3
 bra5_9074:
 	STA $32
 	LDA objFrameCount
@@ -2332,7 +1256,7 @@ bra5_90F3:
 	LDA objVar,X
 	BPL bra5_913D
 	LDA objSlot,X
-	CMP #$62
+	CMP #OBJ_CHAINSAW_UP_ALT
 	BCS bra5_9117
 	JSR objFacePlayer
 	LDA objYLo,X
@@ -2496,6 +1420,7 @@ bra5_9231:
 bra5_9262_RTS:
 	RTS
 
+; Movement macros?
 tbl5_9263:
 	.byte $26
 	.byte $01
@@ -2503,7 +1428,7 @@ tbl5_9263:
 	.byte $05
 	.byte $03
 	.byte $04
-	.byte $05
+	.byte $05 ; First platform in 2-2?
 	.byte $05
 	.byte $06
 	.byte $05
@@ -2667,7 +1592,7 @@ bra5_9321:
 bra5_9329:
 	LDY #$50
 	LDA objSlot,X
-	CMP #$5E
+	CMP #OBJ_ROPE_LONG
 	BCC bra5_9334
 	LDY #$88
 bra5_9334:
@@ -3043,52 +1968,8 @@ bra5_95DE_RTS:
 .export obj0x7E
 obj0x7E:
 	LDX $A4
-	LDA objXLo,X
-	SEC
-	SBC playerXLoDup
-	STA objXDistLo,X
-	LDA objXHi,X
-	SBC playerXHiDup
-	STA objXDistHi,X
-	STA $28
-	BEQ bra5_95FD
-	CMP #$FF
-	BEQ bra5_95FD
-	JMP objRemoveObject
-bra5_95FD:
-	LDA objYLo,X
-	SEC
-	SBC playerYLoDup
-	STA objYDistLo,X
-	LDA objYHi,X
-	SBC playerYHiDup
-	STA objYDistHi,X
-	LDA playerYHiDup
-	CMP objYHi,X
-	BEQ bra5_963F
-	LDA objYDistHi,X
-	BPL bra5_962E
-	LDA objYDistLo,X
-	CLC
-	ADC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	ADC #$00
-	STA objYDistHi,X
-	JMP loc5_963F
-bra5_962E:
-	LDA objYDistLo,X
-	SEC
-	SBC #$10
-	STA objYDistLo,X
-	LDA objYDistHi,X
-	SBC #$00
-	STA objYDistHi,X
-bra5_963F:
-loc5_963F:
-	LDA freezeFlag
-	BEQ bra5_9645
-	RTS
+	objDistCalc bra5_9645
+
 bra5_9645:
 	LDA objVar,X
 	BPL bra5_964E
@@ -3494,9 +2375,9 @@ bra5_98E3:
 bra5_98E4:
 	BCS bra5_9920_RTS
 	LDA objSlot,X
-	CMP #$F0
+	CMP #OBJ_PIPE_CANNON
 	BEQ bra5_98F6
-	CMP #$F1
+	CMP #OBJ_PIPE_CANNON+1
 	BEQ bra5_98F6
 	LDA playerYoshiState
 	BNE bra5_9920_RTS
@@ -3510,12 +2391,12 @@ bra5_9900:
 	STY $25
 	LDA objSlot,X
 	SEC
-	SBC #$EF
+	SBC #OBJ_PIPE_CANNON-1
 	TAY
 	LDA objSlot,X
-	CMP #$F5
+	CMP #OBJ_PIPE_BONUS_EXIT
 	BEQ bra5_9940
-	CMP #$EF
+	CMP #OBJ_PIPE_CANNON-1
 	BNE bra5_9921
 	LDA #$01
 	STA $06E9

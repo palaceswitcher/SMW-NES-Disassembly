@@ -3,10 +3,10 @@
 .include "macros.asm"
 
 ; Movement vector macros?
-; Format (0x4 per macro):
-; > 0x1: Macro type?
-; > 0x2: unknown
-; > 0x3: unknown
+; Format Type 0x1 (0x4 per macro):
+; > 0x1: Macro type
+; > 0x2: Movement Data
+; > 0x3: Speed (Works via frame counter bitmask. 07 is every 8 frames, 03 is every 4, etc.)
 ; > 0x4: Sentinel (usually 0)
 .export tbl_51_F000
 tbl_51_F000:
@@ -977,6 +977,7 @@ ofs_F3D7:
 	.byte $03
 	.byte $00
 	.byte $05
+; 2-2 first platform?
 ofs_F3E4:
 	.byte $01
 	.byte $0C
