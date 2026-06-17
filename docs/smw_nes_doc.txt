@@ -1,4 +1,4 @@
-SMW NES Hacking Document (2026-6-3)
+SMW NES Hacking Document (2026-6-17)
 Note: Some information here may be inaccurate or wrong.
 
 -----Level Data-----
@@ -854,11 +854,13 @@ $0500 - $0513:	Object Slots
 > 0x50 = Climbing Koopa (Vertical)
 > 0x52 = Blurp (Still)
 > 0x54 = Line-Guided Platform
-> 0x56 = Short platform
+> 0x55 = Line-Guided Platform (Alt? Seems to be aligned slightly differently on spawn)
+> 0x56 = Short Circular Platform
+> 0x57 = Long Circular Platform
 > 0x58 = Green Paratroopa (Horizontal)
 > 0x5A = Chainsaw (Up)
 > 0x5C = Rope
-> 0x5F = Long Rope
+> 0x5E = Long Rope
 > 0x60 = Chainsaw (Down)
 > 0x62 = Chainsaw (Up, Alt?)
 > 0x64 = Diagonal Podoboo
@@ -876,7 +878,7 @@ $0500 - $0513:	Object Slots
 > 0x75 = Lemmy/Wendy Dummy 2
 > 0x76 = ON/OFF sign
 > 0x77 = Reznor
-> 0x78 = Reznor fire
+> 0x78 = Reznor Fireball
 > 0x79 = Fuzzy
 > 0x7A = Sliding Unshelled Koopa (4-3 Variant, moves in a specific way)
 > 0x7C = Yoshi House Exit
@@ -948,10 +950,11 @@ $0500 - $0513:	Object Slots
 > 0xEC = Bonus Question Block (Row 3)
 > 0xED = Bonus Question Block (Row 4)
 > 0xEE = Bonus Question Block (Row 5)
-> 0xF0 = Nothing?
+> 0xF0 = Cannon Pipe Enter
 > 0xF2 = BG Priority Flag Up (Applies to sprites above this)
 > 0xF3 = BG Priority Flag Down (Applies to sprites below this)
-> 0xF4/F5 = Exit Pipe
+> 0xF4 = Bonus Pipe
+> 0xF5 = Bonus Pipe Exit
 > 0xF6 = Spike Up (Alt?)
 > 0xF8 = Spike Down
 > 0xFA = Green Paratroopa, vertical
