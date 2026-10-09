@@ -8,3 +8,13 @@ If you are interested in contributing, we recommend you get in contact with us v
 - Ask before adding or changing frequently used RAM labels, especially if you're new. This can create a lot of merge conflicts.
 - Summarize what you changed, if possible. A vague description is fine if you've changed a lot.
 - Ensure the assembled ROM is identical to the final version's code. The `diff` scripts can verify this for you.
+
+# AI Assistance
+
+You may not use AI assistance for any of the following:
+
+- Naming labels
+- Revising or creating code comments
+- Reverse engineering code in any capacity
+
+Additionally, do not use AI to summarize your changes when submitting pull requests.
