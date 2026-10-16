@@ -135,7 +135,7 @@ bra7_8B34:
 	STA playerMoveFlags
 	RTS
 bra7_8B3F:
-	LDA $1E
+	LDA playerPrevAction
 	CMP #$05
 	BEQ bra7_8B15
 	INC objFlags,X

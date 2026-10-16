@@ -245,7 +245,7 @@ ptr8_E1C9:
 	LDA prgDataBank2
 	CMP #$23
 	BEQ bra_E1F2_RTS
-	LDA $1E
+	LDA playerPrevAction
 	CMP #$08
 	BNE bra_E1F2_RTS
 	LDA worldNumber

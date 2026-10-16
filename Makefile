@@ -2,7 +2,7 @@
 AS = ca65
 LD = ld65
 CONFIG = smw.cfg
-FLAGS = -g --feature force_range -U -I include -I data/sound -I data/levels
+FLAGS = --feature force_range -U -I include -I data/sound -I data/levels
 
 # OS Detection
 ifeq ($(OS),Windows_NT)
@@ -122,12 +122,36 @@ PRG48_OBJS := \
 
 PRG49_OBJS := \
 	$(OBJ_DIR)/src/obj/render/ObjDrawShared_SpecialObjects.o \
-	$(OBJ_DIR)/src/obj/render/ObjDrawShared_LineGuidedObjects.o \
+	$(OBJ_DIR)/src/obj/render/ObjDrawShared_GuidedObjects.o \
 	$(OBJ_DIR)/data/obj/sprites/ObjSpr_SpecialObjects.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_ReznorFireball.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_HurtPlayerColl.o \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Reznor.o \
-	$(OBJ_DIR)/src/prg049.o
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_SpikeTop.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_ClimbingKoopa.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_OnOffSwitch.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_GuidedPlatform.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Rope.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Chainsaw.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_PSwitchPlatformDoor.o \
+	$(OBJ_DIR)/data/obj/Obj_GuidedObjectMovementData.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_RopeClimbCheck.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_PlatformColl.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhvFunc_RopeMove.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_GuidedUrchin.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_GuidedUrchin.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_GuidedUrchin.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_TimedPlatform.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_TimedPlatform.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_TimedPlatform.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Pipe.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_BonusBlock.o \
+	$(OBJ_DIR)/data/obj/sprites/ObjSpr_BonusObjs.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_BonusBlockCoin.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_BonusBlock.o \
+	$(OBJ_DIR)/src/obj/render/ObjDraw_Bonus1UP.o \
+	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Bonus1UP.o \
+	$(OBJ_DIR)/src/padding/padding049.o
 
 PRG50_OBJS := \
 	$(OBJ_DIR)/src/obj/behavior/ObjBhv_Ninji.o \

@@ -1,0 +1,131 @@
+.segment "PRG49"
+
+.include "constants.asm"
+.include "macros.asm"
+.include "variables.asm"
+
+; Yes, line-guided objects have hardcoded movement. The lines don't do anything
+
+; Movement macros?
+.export tbl5_9263
+tbl5_9263:
+	.byte $26
+	.byte $01
+	.byte $26
+	.byte $05
+	.byte $03
+	.byte $04
+	.byte $05 ; First platform in 2-2?
+	.byte $05
+	.byte $06
+	.byte $05
+	.byte $05
+	.byte $05
+	.byte $06
+	.byte $0B
+	.byte $0C
+	.byte $0D
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $21
+	.byte $22
+	.byte $23
+	.byte $23
+	.byte $24
+	.byte $25
+	.byte $25
+	.byte $25
+	.byte $25
+	.byte $25
+	.byte $25
+	.byte $3E
+	.byte $05
+	.byte $06
+	.byte $05
+	.byte $06
+	.byte $05
+	.byte $06
+	.byte $05
+	.byte $06
+	.byte $05
+	.byte $06
+	.byte $05
+	.byte $06
+	.byte $05
+	.byte $06
+	.byte $05
+	.byte $06
+	.byte $05
+	.byte $06
+	.byte $05
+	.byte $06
+.export tbl5_9297
+tbl5_9297:
+	.byte $07
+	.byte $08
+	.byte $09
+	.byte $0A
+	.byte $27
+	.byte $28
+	.byte $29
+	.byte $2A
+	.byte $2B
+	.byte $2C
+	.byte $2D
+	.byte $2E
+	.byte $2F
+	.byte $30
+	.byte $31
+	.byte $32
+	.byte $33
+	.byte $34
+	.byte $35
+	.byte $FF
+	.byte $2C
+	.byte $2D
+	.byte $2E
+	.byte $2F
+	.byte $30
+	.byte $31
+	.byte $32
+	.byte $33
+	.byte $41
+	.byte $41
+	.byte $41
+	.byte $41
+.export tbl5_92B7
+tbl5_92B7:
+	.byte $0E
+	.byte $0F
+	.byte $10
+	.byte $17
+	.byte $17
+	.byte $18
+	.byte $18
+	.byte $19
+	.byte $19
+	.byte $18
+	.byte $1A
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $1B
+	.byte $1C
+	.byte $1D
+	.byte $1E
+	.byte $1F
+	.byte $20
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF
+	.byte $FF

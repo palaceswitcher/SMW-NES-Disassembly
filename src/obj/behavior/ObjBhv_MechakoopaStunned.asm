@@ -136,7 +136,7 @@ loc8_9523:
 bra8_9529:
 	JSR jmp_54_A773
 	JSR setObjectCarryState
-	LDA $1E
+	LDA playerPrevAction
 	CMP #$05
 	BEQ bra8_9541
 bra8_9535:

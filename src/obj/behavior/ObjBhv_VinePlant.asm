@@ -230,7 +230,7 @@ bra6_9BAD:
 	CMP $06DF
 	BCC bra6_9BD7
 bra6_9BB4:
-	LDA $1E
+	LDA playerPrevAction
 	CMP #$0D
 	BEQ bra6_9BD6_RTS
 	CMP #$0E
@@ -249,7 +249,7 @@ bra6_9BB4:
 bra6_9BD6_RTS:
 	RTS
 bra6_9BD7:
-	LDA $1E
+	LDA playerPrevAction
 	CMP #$0D
 	BEQ bra6_9BE1
 	CMP #$0E
