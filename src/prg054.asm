@@ -893,11 +893,11 @@ tbl3_A435:
 	.word obj0xA6
 	.word obj0xA6
 
-	.export OBJ_DRYBONES_THROW_BROKEN := (*-tbl3_A435)/2 + $80
+	.export OBJ_DRYBONES_THROW_CRUMBLED := (*-tbl3_A435)/2 + $80
 	.word obj0xA8
 	.word obj0xA8
 
-	.export OBJ_DRYBONES_BROKEN := (*-tbl3_A435)/2 + $80
+	.export OBJ_DRYBONES_CRUMBLED := (*-tbl3_A435)/2 + $80
 	.word obj0xA8 ; AA
 	.word obj0xA8 ; AB
 
@@ -905,7 +905,7 @@ tbl3_A435:
 	.word obj0xAA ; AC
 	.word obj0xAA ; AD
 
-	.export OBJ_BONYBEETLE_BROKEN := (*-tbl3_A435)/2 + $80
+	.export OBJ_BONYBEETLE_CRUMBLED := (*-tbl3_A435)/2 + $80
 	.word obj0xAC ; AE
 	.word obj0xAC ; AF
 
