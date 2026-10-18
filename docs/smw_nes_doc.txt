@@ -1,4 +1,4 @@
-SMW NES Hacking Document (2026-6-17)
+SMW NES Hacking Document (2026-10-18)
 Note: Some information here may be inaccurate or wrong.
 
 -----Level Data-----
@@ -891,7 +891,7 @@ $0500 - $0513:	Object Slots
 > 0x88 = Ninji
 > 0x8A = Fishbone
 > 0x8C/8D = Spike Ball
-> 0x8E = Crashes game, seems to be variant of the parachute goomba
+> 0x8E = Parachute Goomba (Broken variant, always crashes)
 > 0x90 = Fuzzy (Alt?)
 > 0x92 = Urchin (Horizontal)
 > 0x94 = Goomba
@@ -904,12 +904,10 @@ $0500 - $0513:	Object Slots
 > 0xA2 = Dry Bones (Throws Bones)
 > 0xA4 = Dry Bones
 > 0xA6 = Dry Bones Bone
-> 0xA8 = Dry Bones (Throws Bones) Shattered
-> 0xAA = Dry Bones Shattered
-> 0xAC = Bony Beetle, left?
-> 0xAD = Bony Beetle, right?
-> 0xAE = Crumbled Bony Beetle
-> 0xAF = Crumbled Bony Beetle
+> 0xA8 = Dry Bones (Throws Bones, Crumbled)
+> 0xAA = Dry Bones (Crumbled)
+> 0xAC = Bony Beetle
+> 0xAE = Bony Beetle (Crumbled)
 > 0xB0 = Baseball
 > 0xB2 = Football
 > 0xB4 = Rock
