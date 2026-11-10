@@ -247,6 +247,12 @@ function main()
 	str = "" -- Blank return string
 	p = emu.read(0x399, emu.memType.nesMemory) -- Current player
 	
+	-- Draw screen boundaries
+	local cameraX = emu.read(0x52, emu.memType.nesMemory) + (emu.read(0x51, emu.memType.nesMemory) * 256)
+	local cameraY = emu.read(0x54, emu.memType.nesMemory) + (emu.read(0x53, emu.memType.nesMemory) * 256)
+	
+	emu.drawLine(0, (0x100 - cameraY) - 0x10, 255, (0x100 - cameraY) - 0x10)
+	
 	-- Draw list of object IDs
 	if emu.read(0xDE, emu.memType.nesMemory) == 1 then
 	if showObjList then
