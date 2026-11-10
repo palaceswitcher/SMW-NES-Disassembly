@@ -7,35 +7,44 @@
 .export jmp_39_E000
 jmp_39_E000:
 	LDA playerState
-	CMP #$03 ; If the player isn't climbing,
-	BNE bra_E02C ; branch
-	LDA $06DC
-	BEQ bra_E01D
-	LDA $06DE
-	BEQ bra_E02C
-	LDA btnHeld
-	AND #BTN_DOWN ; If down isn't held,
-	BEQ bra_E02C ; branch
-	LDA playerBackColl
-	BNE bra_E023 ; Branch if player is behind a tile
-	BEQ bra_E02C ; Branch if player is behind air
-bra_E01D:
-	LDA playerBackColl
-	CMP #$F8
-	BEQ bra_E02C ; Branch if the player is behind a climbable tile. Otherwise, continue and make the player fall off
-bra_E023:
-	LDA #$00
-	STA playerState ; Stop climbing
-	LDA #$0A
-	STA playerAction ; Make the player fall
-	RTS
+	CMP #PSTATE_CLIMBING
+	BNE bra_E02C
+		; If player is climbing
+		LDA $06DC
+		BEQ bra_E01D
+			; If climbing a vine or rope (not climbable tiles)
+			LDA $06DE
+			BEQ bra_E02C
+			LDA btnHeld
+			AND #BTN_DOWN
+			BEQ bra_E02C
+				; If player presses down while on vine
+				LDA playerBackColl
+				BNE bra_E023 ; Make player fall off if they go off the vine tile
+				BEQ bra_E02C ; Otherwise, handle back tile is normal
+
+		; If not on a vine or rope (check for climbing tile)
+		bra_E01D:
+			LDA playerBackColl
+			CMP #$F8
+			BEQ bra_E02C ; Handle tiles as normal if on a climbing tile. Otherwise, make player fall since they must be behind nothing
+	
+	; Make player fall
+	bra_E023:
+		LDA #$00
+		STA playerState ; Stop climbing
+		LDA #PACT_FALL
+		STA playerAction ; Make the player fall
+		RTS
+	
+; If player is touching an air tile
 bra_E02C:
 	LDA playerBackColl
 	TAX ; Copy the background tile collision ID into the X register
 	AND #%00001111
 	TAY ; Use the lower nybble of the ID as the Y index
-	LDA tbl_EE19,Y ; Get the high nybble for the corresponding low byte (Why not just shift it right 4 times?)
-	STA $97 ; Move the low nybble of the back collision to the high nybble of this (most likely the bottom collision)
+	LDA tbl_EE19,Y
+	STA $97 ; Get low nybble of back collision moved to high nybble (back coll << 4)
 	TXA
 	AND #%11111110 ; Make the collision ID an even number so it will work as a pointer index
 	TAY ; Get pointer for collision ID
@@ -241,149 +250,95 @@ bra_E1C2:
 	LDA playerYSpd
 	BEQ bra_E1C1_RTS ; Make sure the player has vertical speed
 	JMP loc_E1F4 ; Jump
+
+;----------------------------------------
+; DOOR TILE BEHAVIOR ($EE29)
+;----------------------------------------
 ptr8_E1C9:
 	LDA prgDataBank2
 	CMP #$23
 	BEQ bra_E1F2_RTS
 	LDA playerPrevAction
-	CMP #$08
+	CMP #PACT_LOOKUP
 	BNE bra_E1F2_RTS
 	LDA worldNumber
 	ASL
 	ASL
 	CLC
-	ADC levelNumber
+	ADC levelNumber ; (worldNumber * 4) + levelNumber = levelId
 	ASL
 	STA warpLvlNumber
-	LDA #$03
+	LDA #GAMESTATE_DOOR
 	STA gameState
 	LDA playerBackColl
 	SEC
-	SBC #$78
+	SBC #$78 ; Get warp number from door number (TODO: GIVE THIS A CONSTANT VALUE SOMEWHERE)
 	ASL
 	ASL
 	ASL
 	STA warpNumber
+
 bra_E1F2_RTS:
 	RTS
+
+; Unimplemented code?
 	RTS
+
 loc_E1F4:
 	LDA #$01
-	STA $95 ; Currently unknown flag
+	STA $95
 	LDA playerMoveFlags
-	AND #$04
+	AND #PMOVE_VERT
 	BNE bra_E224 ; Branch if the player is moving upwards
-	LDA pTilePosXLo
-	AND #$0F
-	ORA $97
-	AND #$7F
-	TAY
-	LDA tbl_E232,Y
-	STA $25
-	CMP #$FF
-	BEQ bra_E224
-	LDA pTilePosYLo
-	AND #$0F
-	CMP $25
-	BCC bra_E224
-	LDA pTilePosYLo
-	AND #$F0
-	ORA $25
-	STA pTilePosYLo
-	LDA #$00
-	STA playerYSpd
+		LDA pTilePosXLo
+		AND #%00001111
+		ORA $97
+		AND #%01111111 ; Get elevation index
+		TAY
+		LDA tbl_E232,Y
+		STA $25 ; Get elevation
+		CMP #-1 ; -1 means no collision 
+		BEQ bra_E224
+		; Apply elevation
+			LDA pTilePosYLo
+			AND #%00001111
+			CMP $25
+			BCC bra_E224
+			; Only change elevation if needed
+				LDA pTilePosYLo
+				AND #%11110000
+				ORA $25
+				STA pTilePosYLo ; Offset position with elevation
+				LDA #0
+				STA playerYSpd ; Clear vertical speed
 bra_E224:
 	LDA playerXSpd
 	SEC
-	SBC #$01
+	SBC #1
 	CMP #$F8
 	BCC bra_E22F ; Subtract the player's speed until it underflows to #$F8
 	LDA #$00
 bra_E22F:
 	STA playerXSpd ; Clear the player's X speed if its greater than #$F8
 	RTS
+
 .export tbl_E232
 tbl_E232:
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $0F
-	.byte $0E
-	.byte $0D
-	.byte $0C
-	.byte $0B
-	.byte $0A
-	.byte $09
-	.byte $08
-	.byte $07
-	.byte $06
-	.byte $05
-	.byte $04
-	.byte $03
-	.byte $02
-	.byte $01
-	.byte $00
-	.byte $00
-	.byte $01
-	.byte $02
-	.byte $03
-	.byte $04
-	.byte $05
-	.byte $06
-	.byte $07
-	.byte $08
-	.byte $09
-	.byte $0A
-	.byte $0B
-	.byte $0C
-	.byte $0D
-	.byte $0E
-	.byte $0F
+	; Air (no collision)
+	.byte -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
+
+	; Solid ground (flat)
+	.byte 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+
+	; Solid ground (1 pixel/unit lower)
+	.byte 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2
+
+	; Upwards slanted slope
+	.byte 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
+
+	; Downwards slanted slope
+	.byte 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+
 ptr8_E282:
 	LDA #$01
 	STA $95
@@ -453,118 +408,13 @@ bra_E2EB:
 	RTS
 .export tbl_E2EE
 tbl_E2EE:
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $02
-	.byte $03
-	.byte $03
-	.byte $03
-	.byte $04
-	.byte $04
-	.byte $05
-	.byte $05
-	.byte $06
-	.byte $07
-	.byte $07
-	.byte $07
-	.byte $08
-	.byte $08
-	.byte $09
-	.byte $09
-	.byte $0A
-	.byte $0A
-	.byte $0B
-	.byte $0B
-	.byte $0C
-	.byte $0C
-	.byte $0D
-	.byte $0D
-	.byte $0D
-	.byte $0E
-	.byte $0E
-	.byte $08
-	.byte $09
-	.byte $0A
-	.byte $0B
-	.byte $0B
-	.byte $0C
-	.byte $0C
-	.byte $0D
-	.byte $0D
-	.byte $0E
-	.byte $0E
-	.byte $0F
-	.byte $0F
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $09
-	.byte $09
-	.byte $0A
-	.byte $0B
-	.byte $0C
-	.byte $0D
-	.byte $0E
-	.byte $0F
-	.byte $0F
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $FF
-	.byte $01
-	.byte $01
-	.byte $01
-	.byte $02
-	.byte $02
-	.byte $02
-	.byte $03
-	.byte $03
-	.byte $03
-	.byte $04
-	.byte $04
-	.byte $04
-	.byte $05
-	.byte $05
-	.byte $05
-	.byte $06
-	.byte $06
-	.byte $06
-	.byte $07
-	.byte $07
-	.byte $07
-	.byte $07
-	.byte $08
-	.byte $08
-	.byte $08
-	.byte $08
-	.byte $09
-	.byte $09
-	.byte $09
-	.byte $0A
-	.byte $0A
-	.byte $0A
-	.byte $06
-	.byte $06
-	.byte $06
-	.byte $06
-	.byte $07
-	.byte $07
-	.byte $07
-	.byte $08
-	.byte $08
-	.byte $08
-	.byte $09
-	.byte $09
-	.byte $0A
-	.byte $0A
-	.byte $0B
-	.byte $0B
+	.byte 1, 1, 1, 1, 1, 2, 3, 3, 3, 4, 4, 5, 5, 6, 7, 7
+	.byte 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 13, 14, 14
+	.byte 8, 9, 10, 11, 11, 12, 12, 13, 13, 14, 14, 15, 15, -1, -1, -1
+	.byte 9, 9, 10, 11, 12, 13, 14, 15, 15, -1, -1, -1, -1, -1, -1, -1
+	.byte 1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6
+	.byte 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, 9, 9, 9, 10, 10, 10
+	.byte 6, 6, 6, 6, 7, 7, 7, 8, 8, 8, 9, 9, 10, 10, 11, 11
 ptr8_E35E:
 	LDA #$01
 	STA $95
@@ -871,9 +721,9 @@ bra_E4C6:
 	SBC #$10
 	ORA #$0F
 	STA pTilePosYLo
-	LDA $66
+	LDA pTilePosYHi
 	SBC #$00
-	STA $66
+	STA pTilePosYHi
 	LDA #$01
 	STA $26
 	LDA #$00
@@ -1034,9 +884,9 @@ ptr8_E56E:
 	SBC #$10
 	ORA #$0F
 	STA pTilePosYLo
-	LDA $66
+	LDA pTilePosYHi
 	SBC #$00
-	STA $66
+	STA pTilePosYHi
 	LDA #$01
 	STA $26
 	LDA #$00
@@ -1103,20 +953,20 @@ loc_E5ED:
 	SEC
 	SBC pTilePosYLo
 	LDA playerYHiDup
-	SBC $66
+	SBC pTilePosYHi
 	BMI bra_E605
 	LDA playerYLoDup
 	AND #$F0
 	STA pTilePosYLo
 	LDA playerYHiDup
-	STA $66
+	STA pTilePosYHi
 	JMP loc_E60F
 bra_E605:
 	LDA playerYLoDup
 	ORA #$0F
 	STA pTilePosYLo
 	LDA playerYHiDup
-	STA $66
+	STA pTilePosYHi
 loc_E60F:
 	LDA #$00
 	STA $95
@@ -1163,20 +1013,20 @@ loc_E64C:
 	SEC
 	SBC pTilePosYLo
 	LDA $0C
-	SBC $66
+	SBC pTilePosYHi
 	BMI bra_E670
 	LDA $0D
 	AND #$F0
 	STA pTilePosYLo
 	LDA $0C
-	STA $66
+	STA pTilePosYHi
 	JMP loc_E67A
 bra_E670:
 	LDA $0D
 	ORA #$0F
 	STA pTilePosYLo
 	LDA $0C
-	STA $66
+	STA pTilePosYHi
 bra_E67A:
 loc_E67A:
 	LDA #$01
@@ -1361,9 +1211,9 @@ bra_E795:
 	SBC #$10
 	ORA #$0F
 	STA pTilePosYLo
-	LDA $66
+	LDA pTilePosYHi
 	SBC #$00
-	STA $66
+	STA pTilePosYHi
 	RTS
 loc_E7A5:
 	LDA pTilePosYLo
@@ -1450,9 +1300,9 @@ bra_E827:
 	SBC #$10
 	ORA #$0F
 	STA pTilePosYLo
-	LDA $66
+	LDA pTilePosYHi
 	SBC #$00
-	STA $66
+	STA pTilePosYHi
 	RTS
 	LDA #$01
 	STA $95
@@ -1503,9 +1353,9 @@ bra_E885:
 	ADC #$10
 	AND #$F0
 	STA pTilePosYLo
-	LDA $66
+	LDA pTilePosYHi
 	ADC #$00
-	STA $66
+	STA pTilePosYHi
 	RTS
 .export tbl_E897
 tbl_E897:
@@ -1563,9 +1413,9 @@ bra_E8E2:
 	ADC #$10
 	AND #$F0
 	STA pTilePosYLo
-	LDA $66
+	LDA pTilePosYHi
 	ADC #$00
-	STA $66
+	STA pTilePosYHi
 	RTS
 .export tbl_E8F4
 tbl_E8F4:
@@ -1786,9 +1636,9 @@ bra_EA41:
 	SBC #$10
 	ORA #$0F
 	STA pTilePosYLo
-	LDA $66
+	LDA pTilePosYHi
 	SBC #$00
-	STA $66
+	STA pTilePosYHi
 	RTS
 loc_EA51:
 	LDA pTilePosYLo
@@ -2806,109 +2656,129 @@ tbl_EE19:
 	.byte $D0
 	.byte $E0
 	.byte $F0
+
+;----------------------------------------
+; YOSHI COIN/COIN TILE BEHAVIOR ($EE29)
+;----------------------------------------
 ptr8_EE29:
 	LDA playerBackColl
-	AND #$0F
+	AND #%00001111
 	TAX
 	LDA pTilePosXHi
 	ASL
 	CLC
 	ADC tbl_EF17,X
-	TAY
+	TAY ; Get index for current coin number for this screen
 	LDA dynamicTileStates,Y
-	AND tbl_EF27,X
+	AND tbl_EF27,X ; Get bitmask for current number
 	BNE bra_EE3F
 	RTS
 bra_EE3F:
 	LDA dynamicTileStates,Y
 	AND tbl_EF37,X
-	STA dynamicTileStates,Y
+	STA dynamicTileStates,Y ; Set current coin as collected by flipping its bit for the current screen 
 	LDX curPlayer
 	TXA
 	ASL
 	TAY
+
 	LDA playerBackColl
 	CMP #$8E
-	BCC bra_EE78 ; Branch if not touching a yoshi coin tile
-	LDA playerDragonCoins,X
-	CMP #$05
-	BCS bra_EE62 ; Branch if the player has more than 5 yoshi coins
-	INC playerDragonCoins,X
-	LDA #$06 ; Load the yoshi coin sound effect
-	BNE bra_EEA1 ; Branch and play it
-bra_EE62:
-	LDA #$01
-	STA playerDragonCoins,X ; Set the yoshi coin coin to 1
-	LDA playerScores,Y
-	CLC
-	ADC #$E8
-	STA playerScores,Y
-	LDA playerScores+1,Y
-	ADC #$03 ; Give the player 10000 points
-	JMP loc_EE99
-bra_EE78:
-	LDA playerCoins,X
-	CMP #$64
-	BCS bra_EE86 ; Branch if the player has 100 or more coins
-	INC playerCoins,X ; Otherwise, add to the coin counter
-	LDA #$08 ; Load the coin sound effect
-	BNE bra_EEA1 ; Branch and play it
-bra_EE86:
-	LDA #$01
-	STA playerCoins,X ; Set the player's coin count to 1
-	LDA playerScores,Y
-	CLC
-	ADC #$64
-	STA playerScores,Y ; Give the player 1000 points
-	LDA playerScores+1,Y
-	ADC #$00 ; Add to high byte (if needed)
+	BCC bra_EE78
+	; If dragon coin
+		LDA playerDragonCoins,X
+		CMP #$05
+		BCS bra_EE62 ; Branch if the player has more than 5 yoshi coins
+		; If this is the 5th or less dragon coin collected
+			INC playerDragonCoins,X
+			LDA #SFX_DRAGONCOIN ; Load sound effect
+			BNE bra_EEA1 ; Branch and play it
+
+		; If dragon coin is collected after 5th (BUG: should trigger for every coin after 4th)
+		bra_EE62:
+			LDA #$01
+			STA playerDragonCoins,X ; Reset yoshi count to 1 (why?)
+			LDA playerScores,Y
+			CLC
+			ADC #(1000 & $FF)
+			STA playerScores,Y
+			LDA playerScores+1,Y
+			ADC #(1000 >> 8) ; Give the player 10000 points
+			JMP loc_EE99 ; Give player 1up
+
+	; If normal coin
+	bra_EE78:
+		LDA playerCoins,X
+		CMP #100
+		BCS bra_EE86 
+		INC playerCoins,X
+			; If 100 or fewer coins collected
+			LDA #SFX_COIN ; Load coin sound effect
+			BNE bra_EEA1
+
+	; If more than 100 coins collected
+	bra_EE86:
+		LDA #$01
+		STA playerCoins,X ; Set the player's coin count to 1
+		LDA playerScores,Y
+		CLC
+		ADC #100
+		STA playerScores,Y
+		LDA playerScores+1,Y
+		ADC #0 ; Give the player 1000 points
+		;.. This then gives player the 1up
+
 loc_EE99:
 	STA playerScores+1,Y ; Store added high byte
 	INC playerLives,X
-	LDA #$07 ; Load 1up sound effect
+	LDA #SFX_1UP ; Load 1up sound effect
+
 bra_EEA1:
 	STA sndSfx ; Play the loaded sound effect
 	LDA pTilePosXLo
 	SEC
-	SBC $52
+	SBC cameraXLo
 	STA $28
 	LDA pTilePosYLo
 	SEC
 	SBC cameraYLo
 	TAX
-	LDA $66
+	LDA pTilePosYHi
 	CMP cameraYHi
 	BEQ bra_EEBB
-	TXA
-	SEC
-	SBC #$10
-	TAX
+	; Subtract 16 if on lower screen
+		TXA
+		SEC
+		SBC #16
+		TAX
+
 bra_EEBB:
 	STX $2B
-	LDA $02
+	LDA scrollX
 	CLC
 	ADC $28
-	AND #$F0
+	AND #%11110000
 	STA $28
-	LDA $03
+	LDA scrollY
 	CLC
 	ADC $2B
 	BCS bra_EEDB
-	CMP #$F0
+	CMP #256-16
 	BCS bra_EEDB
-	AND #$F0
-	STA $2B
-	LDA $5B
-	STA $25
-	BPL bra_EEE8
-bra_EEDB:
-	CLC
-	ADC #$10
-	AND #$F0
-	STA $2B
-	LDA $5B
-	EOR #$02
-	STA $25
+		AND #%11110000
+		STA $2B
+		LDA $5B
+		STA $25
+		BPL bra_EEE8
+	bra_EEDB:
+		CLC
+		ADC #16
+		AND #$F0
+		STA $2B
+		LDA $5B
+		EOR #$02
+		STA $25
+
 bra_EEE8:
 	LDX $28
 	LDY $2B
@@ -2932,6 +2802,8 @@ bra_EF01:
 	STA $03E4,X
 	STA $26
 	RTS
+
+; Equivalent to (x & 0b00001000) >> 3
 .export tbl_EF17
 tbl_EF17:
 	.byte $00
@@ -3814,7 +3686,7 @@ loc_F290:
 	BCS bra_F2A1
 	LDA #$EF
 	STA pTilePosYLo
-	DEC $66
+	DEC pTilePosYHi
 bra_F2A1:
 	LDA #$00
 	STA playerYSpd
@@ -4042,7 +3914,7 @@ sub_F3EA:
 	ADC #$02
 	CMP #$F0
 	BCC bra_F403
-	INC $66
+	INC pTilePosYHi
 	LDA #$00
 bra_F403:
 	STA pTilePosYLo

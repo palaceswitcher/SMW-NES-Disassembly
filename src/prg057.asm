@@ -4879,7 +4879,7 @@ loc4_BB43:
 	STA M90_PRG0 ; Swap in tileset PRG bank
 	LDA (tilesetDataPtrs+10),Y ; Get current metatile's behavior
 	STA playerBackColl
-	LDA #$27
+	LDA #.bank(jmp_39_E000)
 	STA M90_PRG3 ; Swap the collision bank into the 4th PRG slot
 	JSR jmp_39_E000 ; Jump
 	LDA #$3F
