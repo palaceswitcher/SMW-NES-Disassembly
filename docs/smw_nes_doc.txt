@@ -1130,6 +1130,8 @@ Each has 16 dynamic tiles for each horizontal screen that are hardcoded to be me
 $06A2 - $06BD:	Checkpoint Flags
 $06DA:	Player 1 Power-up Backup
 $06DB:	Player 2 Power-up Backup
+$06DC:	On Non-Tile/Special Thing (Nonzero when on spawned vine or ropes)
+$06DD:	Player Upwards Climbing Lock (Stops player from climbing up if nonzero)
 $06E0:	Player Attribute Override (Used for BG priority)
 $06E1:	Object Attribute Override (Used for BG priority)
 $06E2:	Bowser X Position?
